@@ -29,6 +29,7 @@ DEPEND="dev-cpp/gtest
 	sys-devel/gcc:4.6
 	unity-base/appmenu-gtk
 	unity-base/bamf
+	unity-base/ccsm
 	unity-base/compiz
 	unity-base/compizconfig-python
 	unity-base/compiz-plugins-main
