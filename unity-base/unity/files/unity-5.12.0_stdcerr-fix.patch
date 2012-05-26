@@ -1,0 +1,23 @@
+diff -urN unity-5.12.0/UnityCore/DBusIndicators.cpp unity-5.12.0-patched//UnityCore/DBusIndicators.cpp
+--- unity-5.12.0/UnityCore/DBusIndicators.cpp	2012-04-27 16:01:09.000000000 +0930
++++ unity-5.12.0-patched//UnityCore/DBusIndicators.cpp	2012-05-21 10:12:26.439329363 +0930
+@@ -18,6 +18,8 @@
+  *              Marco Trevisan (Treviño) <3v1n0@ubuntu.com>
+  */
+ 
++#include <iostream>
++
+ #include "config.h"
+ #include "DBusIndicators.h"
+ 
+diff -urN unity-5.12.0/plugins/unityshell/src/DebugDBusInterface.cpp unity-5.12.0-patched//plugins/unityshell/src/DebugDBusInterface.cpp
+--- unity-5.12.0/plugins/unityshell/src/DebugDBusInterface.cpp	2012-04-27 16:01:09.000000000 +0930
++++ unity-5.12.0-patched//plugins/unityshell/src/DebugDBusInterface.cpp	2012-05-21 17:20:32.410900522 +0930
+@@ -17,6 +17,7 @@
+  * Authored by: Alex Launi <alex.launi@canonical.com>
+  */
+ 
++#include <iostream>
+ #include <queue>
+ #include <fstream>
+ #include <sstream>
