@@ -17,6 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="vala"
 
 DEPEND="!dev-libs/libappindicator
+	unity-base/libindicator
 	dev-dotnet/gtk-sharp:2
 	=x11-libs/gtk+-3.4.2-r9999
 	vala? ( dev-lang/vala:0.14[vapigen] )"

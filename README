@@ -3,33 +3,35 @@ unity-gentoo
 
 A Gentoo overlay to install the Unity desktop
 
- unity-base/unity-5.12.0
-  unity-base/compiz-plugins-main-0.9.7.0
-  unity-base/ccsm-0.9.5.92
-   unity-base/compizconfig-python-0.9.5.94
+~ # emerge unity-meta
+
+ unity-base/unity-meta-5.12.0
   unity-base/unity-lens-files-5.10.0
    unity-base/unity-lens-applications-5.12.0
-  unity-base/indicator-applet-0.5.0
-#unity-base/ccsm-0.9.5.92
-  unity-base/compizconfig-backend-gconf-0.9.5.92
-#unity-base/unity-5.12.0
-  unity-base/libcompizconfig-0.9.5.94
-   unity-base/compiz-0.9.7.8
-  unity-base/nux-2.12.0
-   unity-base/utouch-geis-2.2.9
-    unity-base/utouch-grail-3.0.5
-     unity-base/utouch-frame-2.2.3
-     unity-base/utouch-evemu-1.0.9
-  unity-base/libunity-5.12.0
-  x11-themes/unity-asset-pool-0.8.23
-  unity-base/indicator-application-0.5.0
-  unity-base/appmenu-gtk-0.3.92
-   unity-base/indicator-appmenu-0.3.97
-    unity-base/libindicator-0.5.0
-    unity-base/libappindicator-0.4.92
-     x11-libs/gtk+-3.4.2-r9999
-      x11-libs/gtk+-2.24.10-r1
-  unity-base/libunity-misc-4.0.4
-  unity-base/bamf-0.2.114
-   x11-libs/libXfixes-5.0-r9999
-    x11-proto/fixesproto-5.0-r9999
+    unity-base/unity-5.12.0
+     unity-base/compiz-plugins-main-0.9.7.0
+     unity-base/ccsm-0.9.5.92
+      unity-base/compizconfig-python-0.9.5.94
+      unity-base/compizconfig-backend-gconf-0.9.5.92
+     unity-base/appmenu-gtk-0.3.92
+     unity-base/indicator-application-0.5.0
+     unity-base/indicator-appmenu-0.3.97
+      unity-base/libappindicator-0.4.92
+     unity-base/libcompizconfig-0.9.5.94
+      unity-base/compiz-0.9.7.8
+     unity-base/nux-2.12.0
+      unity-base/utouch-geis-2.2.9
+       unity-base/utouch-grail-3.0.5
+        unity-base/utouch-frame-2.2.3
+        unity-base/utouch-evemu-1.0.9
+     unity-base/libunity-5.12.0
+     x11-themes/unity-asset-pool-0.8.23
+     unity-base/indicator-applet-0.5.0
+     unity-base/libunity-misc-4.0.4
+     unity-base/bamf-0.2.114
+#unity-base/indicator-application-0.5.0
+  unity-base/libindicator-0.5.0
+   x11-libs/gtk+-3.4.2-r9999
+    x11-libs/gtk+-2.24.10-r1
+     x11-libs/libXfixes-5.0-r9999
+      x11-proto/fixesproto-5.0-r9999

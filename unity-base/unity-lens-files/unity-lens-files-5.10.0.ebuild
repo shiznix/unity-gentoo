@@ -17,7 +17,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="unity-base/unity-lens-applications"
+DEPEND="unity-base/unity
+	unity-base/unity-lens-applications"
 
 src_configure() {
 	export VALAC=$(type -P valac-0.14)

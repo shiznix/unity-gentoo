@@ -36,7 +36,6 @@ DEPEND="dev-cpp/gtest
 	unity-base/indicator-applet
 	unity-base/indicator-application
 	unity-base/indicator-appmenu
-	unity-base/unity-lens-files
 	unity-base/libcompizconfig
 	unity-base/libunity
 	unity-base/libunity-misc
