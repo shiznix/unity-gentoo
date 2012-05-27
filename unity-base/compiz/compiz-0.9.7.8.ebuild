@@ -70,7 +70,7 @@ src_configure() {
 		-DCOMPIZ_PACKAGING_ENABLED=ON
 		-DCOMPIZ_DEFAULT_PLUGINS="core,composite,opengl,compiztoolbox,decor,vpswitch,\
 snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,\
-unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"
+unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"	# Default set of plugins taken from unity.ini
 		-DCOMPIZ_DISABLE_PLUGIN_KDE=ON
 		-DUSE_KDE4=OFF
 		-DUSE_GNOME=OFF
@@ -84,6 +84,14 @@ unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"
 
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
+
+	sed -e "s:Exec=compiz:Exec=compiz ccp:g" \
+		-i gtk/gnome/compiz.desktop || die
+	sed -e "s:Name=Compiz:Name=Unity:g" \
+		-i gtk/gnome/compiz.desktop || die
+	sed -e '/NoDisplay=true/d' \
+		-i gtk/gnome/compiz.desktop || die
+	
 	dodir /usr/share/cmake/Modules
 	emake findcompiz_install
 	emake install
@@ -97,5 +105,8 @@ src_install() {
 
 	insinto /usr/bin
 	doins "${WORKDIR}/debian/compiz-decorator"
-	chmod +x "${D}"usr/bin/compiz-decorator
+	chmod +x "${D}usr/bin/compiz-decorator"
+
+	dosym /usr/share/applications/compiz.desktop /usr/share/xsessions/compiz.desktop
+	dosym /usr/share/applications/compiz.desktop /usr/share/apps/kdm/sessions/compiz.desktop
 }

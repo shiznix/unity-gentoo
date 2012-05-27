@@ -16,5 +16,22 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="=x11-libs/gtk+-3.4.2-r9999
+DEPEND="dev-lang/vala:0.14[vapigen]
+	=x11-libs/gtk+-3.4.2-r9999
 	=x11-libs/libXfixes-5.0-r9999"
+
+src_configure() {
+        export VALAC=$(type -P valac-0.14)
+        export VALA_API_GEN=$(type -p vapigen-0.14)
+	econf
+}
+
+src_install() {
+	DESTDIR="${D}" emake install
+
+	# Create a fresh bamf.index from bamfdaemon.postinst #
+	perl -ne '/^(.*?)=(.*)/; $$d{$ARGV}{$1} = $2; END { for $f (keys %$d) { printf "%s\t%s%s\n", $f =~ m{.*/([^/]+)$}, $$d{$f}{'Exec'},$$d{$f}{'StartupWMClass'} ? "\tBAMF_WM_CLASS::$$d{$f}{'StartupWMClass'}" : "" } }' \
+		/usr/share/applications/*.desktop > bamf.index
+	insinto /usr/share/applications
+	doins bamf.index
+}
