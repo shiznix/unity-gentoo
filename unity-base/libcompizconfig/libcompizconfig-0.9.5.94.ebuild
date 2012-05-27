@@ -35,6 +35,7 @@ src_prepare() {
 src_configure() {
 	mycmakeargs="${mycmakeargs}
 		-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON
+		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
 		-DCOMPIZ_DESTDIR=${D}"
 	cmake-utils_src_configure
 }

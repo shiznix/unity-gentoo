@@ -64,15 +64,14 @@ src_prepare() {
 }
 
 src_configure() {
-	mycompiz_plugins="( 'core' 'composite' 'opengl' 'compiztoolbox' 'decor' 'vpswitch' 'snap'
-    				'mousepoll' 'resize' 'place' 'move' 'wall' 'grid' 'regex' 'imgpng'
-    				'session' 'gnomecompat' 'animation' 'fade' 'unitymtgrabhandles'
-				'workarounds' 'scale' 'expo' 'ezoom' )"
 	mycmakeargs="${mycmakeargs}
 		-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
 		-DCOMPIZ_PACKAGING_ENABLED=ON
-		-DCOMPIZ_DEFAULT_PLUGINS="${mycompiz_plugins[@]}"
+		-DCOMPIZ_DEFAULT_PLUGINS="core,composite,opengl,compiztoolbox,decor,vpswitch,\
+snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,\
+unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"
+		-DCOMPIZ_DISABLE_PLUGIN_KDE=ON
 		-DUSE_KDE4=OFF
 		-DUSE_GNOME=OFF
 		-DUSE_GTK=ON
@@ -95,4 +94,8 @@ src_install() {
 
 	insinto /etc/X11/xinit/xinitrc.d
 	doins "${WORKDIR}/debian/65compiz_profile-on-session"
+
+	insinto /usr/bin
+	doins "${WORKDIR}/debian/compiz-decorator"
+	chmod +x "${D}"usr/bin/compiz-decorator
 }

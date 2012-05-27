@@ -63,6 +63,7 @@ src_configure() {
 	mycmakeargs="${mycmakeargs}
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_PLUGIN_INSTALL_TYPE=package
+		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
 		-DCMAKE_INSTALL_PREFIX=/usr"
 	cmake-utils_src_configure
 }
