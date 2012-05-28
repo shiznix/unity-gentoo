@@ -24,6 +24,7 @@ DEPEND="dev-cpp/gtest
 	dev-libs/boost:1.49
 	dev-python/gconf-python
 	gnome-base/gnome-desktop:3
+	gnome-base/gnome-shell
 	gnome-base/libgdu
 	media-libs/clutter-gtk:1.0
 	sys-devel/gcc:4.6
@@ -33,9 +34,6 @@ DEPEND="dev-cpp/gtest
 	unity-base/compiz
 	unity-base/compizconfig-python
 	unity-base/compiz-plugins-main
-	unity-base/indicator-applet
-	unity-base/indicator-application
-	unity-base/indicator-appmenu
 	unity-base/libcompizconfig
 	unity-base/libunity
 	unity-base/libunity-misc

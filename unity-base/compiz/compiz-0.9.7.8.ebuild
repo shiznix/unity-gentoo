@@ -30,6 +30,7 @@ COMMONDEPEND="!x11-wm/compiz
 	>=media-libs/mesa-6.5.1-r1
 	>=x11-base/xorg-server-1.1.1-r1
 	>=x11-libs/cairo-1.0
+	=x11-libs/gtk+-3.4.2-r9999
 	x11-libs/pango
 	x11-libs/libwnck:1
 	x11-libs/libX11
