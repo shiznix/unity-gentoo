@@ -17,7 +17,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 DEPEND="unity-base/indicator-appmenu
-	=x11-libs/gtk+-3.4.2-r9999"
+	=x11-libs/gtk+-99.3.4.2"
 
 src_install() {
 	base_src_install

@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="=x11-libs/gtk+-3.4.2-r9999
+DEPEND="=x11-libs/gtk+-99.3.4.2
 	>=gnome-base/gnome-panel-3.4.1"
 
 src_prepare() {

@@ -2,13 +2,18 @@ EAPI=4
 
 inherit base eutils flag-o-matic gnome.org gnome2-utils libtool virtualx
 
+# Naming gtk+-3.4.2 to gtk+-99.3.4.2 so as not to break the overlay with x11-libs/gtk+ upgrades in the main tree #
 MY_PN="gtk+3.0"
-MY_P="${MY_PN}_${PV}"
+MY_PV="${PV/99./}"
+MY_P="${MY_PN}_${MY_PV}"
+
+S="${WORKDIR}/${PN}-${MY_PV}"
+
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
 UVER="0ubuntu2"
 URELEASE="quantal"
 
-DESCRIPTION="Gimp ToolKit + patched for the Unity desktop"
+DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"

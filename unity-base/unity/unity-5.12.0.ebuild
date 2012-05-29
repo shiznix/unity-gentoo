@@ -55,6 +55,9 @@ src_prepare() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
 		die "${P} requires an active gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
+
+	sed -e "s:Ubuntu Desktop:Unity Gentoo Desktop:g" \
+		-i "plugins/unityshell/src/PanelMenuView.cpp" || die
 }
 
 src_configure() {

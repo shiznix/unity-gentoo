@@ -30,7 +30,7 @@ COMMONDEPEND="!x11-wm/compiz
 	>=media-libs/mesa-6.5.1-r1
 	>=x11-base/xorg-server-1.1.1-r1
 	>=x11-libs/cairo-1.0
-	=x11-libs/gtk+-3.4.2-r9999
+	=x11-libs/gtk+-99.3.4.2
 	x11-libs/pango
 	x11-libs/libwnck:1
 	x11-libs/libX11
@@ -85,14 +85,6 @@ unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"	# Default set of plu
 
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
-
-	sed -e "s:Exec=compiz:Exec=compiz ccp:g" \
-		-i gtk/gnome/compiz.desktop || die
-	sed -e "s:Name=Compiz:Name=Unity:g" \
-		-i gtk/gnome/compiz.desktop || die
-	sed -e '/NoDisplay=true/d' \
-		-i gtk/gnome/compiz.desktop || die
-	
 	dodir /usr/share/cmake/Modules
 	emake findcompiz_install
 	emake install
@@ -108,6 +100,13 @@ src_install() {
 	doins "${WORKDIR}/debian/compiz-decorator"
 	chmod +x "${D}usr/bin/compiz-decorator"
 
+	insinto /usr/bin
+	doins "${FILESDIR}/unity-session"
+	chmod +x "${D}usr/bin/unity-session"
+
+	rm "${D}usr/share/applications/compiz.desktop"
+	insinto /usr/share/applications
+	doins "${FILESDIR}/compiz.desktop"
 	dosym /usr/share/applications/compiz.desktop /usr/share/xsessions/compiz.desktop
 	dosym /usr/share/applications/compiz.desktop /usr/share/apps/kdm/sessions/compiz.desktop
 }

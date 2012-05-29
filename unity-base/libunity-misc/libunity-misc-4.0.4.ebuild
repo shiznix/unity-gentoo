@@ -16,5 +16,5 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="=x11-libs/gtk+-3.4.2-r9999
+DEPEND="=x11-libs/gtk+-99.3.4.2
 	=x11-libs/libXfixes-5.0-r9999"
