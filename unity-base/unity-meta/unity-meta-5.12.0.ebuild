@@ -16,3 +16,9 @@ DEPEND="unity-base/ido
 	unity-base/indicator-power
 	unity-base/unity
 	unity-base/unity-lens-files"
+
+pkg_postinst() {
+	einfo "It is recommended to enable the 'ayatana' USE flag"
+	einfo "for portage packages that can use the Unity"
+	einfo "libindicate or libappindicator notification plugins"
+}

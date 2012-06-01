@@ -22,6 +22,8 @@ IUSE=""
 
 DEPEND="dev-cpp/gtest
 	dev-libs/boost:1.49
+	>=dev-libs/libappindicator-0.4.92
+	>=dev-libs/libindicate-0.6.92
 	dev-python/gconf-python
 	gnome-base/gnome-desktop:3
 	gnome-base/gnome-shell

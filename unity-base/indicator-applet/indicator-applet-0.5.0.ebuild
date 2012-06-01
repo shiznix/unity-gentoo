@@ -20,6 +20,7 @@ DEPEND="=x11-libs/gtk+-99.3.4.2
 	>=gnome-base/gnome-panel-3.4.1"
 
 src_prepare() {
+	# "Only <glib.h> can be included directly." #
 	sed -e "s:glib/gtypes.h:glib.h:g" \
 		-i src/tomboykeybinder.h
 }

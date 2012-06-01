@@ -12,15 +12,16 @@ HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
-SLOT="0"
+SLOT="3"
 KEYWORDS="~amd64 ~x86"
 IUSE="vala"
 
-DEPEND="!dev-libs/libappindicator
-	unity-base/libindicator
+DEPEND=">=dev-libs/libindicator-0.5.0
 	dev-dotnet/gtk-sharp:2
 	=x11-libs/gtk+-99.3.4.2
 	vala? ( dev-lang/vala:0.14[vapigen] )"
+
+MAKEOPTS="${MAKEOPTS} -j1"
 
 src_configure() {
 	use vala && \

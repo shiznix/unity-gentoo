@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=">=dev-libs/libdbusmenu-0.6.1[gtk]
-	sys-power/upower
-	unity-base/libappindicator
-	>=unity-base/libindicator-0.4.90"
+DEPEND=">=dev-libs/libappindicator-0.4.92
+	>=dev-libs/libdbusmenu-0.6.1[gtk]
+	>=dev-libs/libindicate-0.6.92
+	sys-power/upower"

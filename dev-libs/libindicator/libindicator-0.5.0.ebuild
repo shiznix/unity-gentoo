@@ -16,6 +16,14 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="!dev-libs/libindicator
-	=x11-libs/gtk+-99.3.4.2
+RDEPEND="=x11-libs/gtk+-99.3.4.2
 	=x11-libs/libXfixes-5.0-r9999"
+DEPEND="${RDEPEND}
+        virtual/pkgconfig
+        !<${CATEGORY}/${PN}-0.4.1-r201"
+
+src_configure() {
+	econf \
+		--disable-static \
+		--with-gtk=3
+}
