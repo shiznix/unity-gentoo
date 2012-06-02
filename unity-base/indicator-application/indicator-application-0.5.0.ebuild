@@ -18,4 +18,4 @@ IUSE=""
 
 DEPEND=">=dev-libs/libappindicator-0.4.92
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
-	>=dev-libs/libindicate-0.6.92"
+	dev-libs/libindicate-qt"

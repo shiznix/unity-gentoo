@@ -8,12 +8,14 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="unity-base/ido
+DEPEND=">=gnome-extra/nm-applet-99.0.9.4.1
+	unity-base/ido
 	unity-base/indicator-applet
 	unity-base/indicator-application
 	unity-base/indicator-appmenu
 	unity-base/indicator-datetime
 	unity-base/indicator-power
+	unity-base/indicator-session
 	unity-base/unity
 	unity-base/unity-lens-files"
 

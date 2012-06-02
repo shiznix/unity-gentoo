@@ -19,7 +19,7 @@ IUSE=""
 
 DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libzeitgeist
-	gnome-base/gnome-menus:0
+	gnome-base/gnome-menus:3
 	sys-libs/db:5.1
 	unity-base/unity"
 

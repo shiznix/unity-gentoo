@@ -18,6 +18,7 @@ IUSE="vala"
 
 DEPEND=">=dev-libs/libindicator-0.5.0
 	dev-dotnet/gtk-sharp:2
+	gnome-extra/zeitgeist[dbus,extensions,passiv,plugins]
 	=x11-libs/gtk+-99.3.4.2
 	vala? ( dev-lang/vala:0.14[vapigen] )"
 
