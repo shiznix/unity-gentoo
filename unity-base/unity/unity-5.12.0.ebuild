@@ -79,4 +79,15 @@ src_install() {
 	addpredict $(python_get_sitedir)
 	DESTDIR="${D}" emake install
 	popd ${CMAKE_BUILD_DIR}
+
+	dodir /usr/share/gnome-session/sessions
+	insinto /usr/share/gnome-session/sessions   
+	doins "${FILESDIR}/${PN}.session"
+
+	exeinto /etc/X11/Sessions
+	newexe "${FILESDIR}/${PN}.xsession" unity
+
+	dodir /usr/share/xsessions
+	insinto /usr/share/xsessions
+	doins "${FILESDIR}/${PN}.desktop"
 }

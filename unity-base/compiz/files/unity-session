@@ -1,4 +1,0 @@
-#!/bin/sh
-
-/usr/bin/gnome-session &
-/usr/bin/compiz ccp --replace

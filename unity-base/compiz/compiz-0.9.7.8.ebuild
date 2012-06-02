@@ -96,17 +96,6 @@ src_install() {
 	insinto /etc/X11/xinit/xinitrc.d
 	doins "${WORKDIR}/debian/65compiz_profile-on-session"
 
-	insinto /usr/bin
+	exeinto /usr/bin
 	doins "${WORKDIR}/debian/compiz-decorator"
-	chmod +x "${D}usr/bin/compiz-decorator"
-
-	insinto /usr/bin
-	doins "${FILESDIR}/unity-session"
-	chmod +x "${D}usr/bin/unity-session"
-
-	rm "${D}usr/share/applications/compiz.desktop"
-	insinto /usr/share/applications
-	doins "${FILESDIR}/compiz.desktop"
-	dosym /usr/share/applications/compiz.desktop /usr/share/xsessions/compiz.desktop
-	dosym /usr/share/applications/compiz.desktop /usr/share/apps/kdm/sessions/compiz.desktop
 }
