@@ -97,5 +97,5 @@ src_install() {
 	doins "${WORKDIR}/debian/65compiz_profile-on-session"
 
 	exeinto /usr/bin
-	doins "${WORKDIR}/debian/compiz-decorator"
+	doexe "${WORKDIR}/debian/compiz-decorator"
 }
