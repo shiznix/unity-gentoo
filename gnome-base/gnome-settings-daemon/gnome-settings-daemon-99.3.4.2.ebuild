@@ -88,6 +88,7 @@ pkg_setup() {
 	G2CONF="${G2CONF}
 		--disable-static
 		--disable-schemas-compile
+		--enable-gconf-bridge
 		$(use_enable cups)
 		$(use_enable debug)
 		$(use_enable debug more-warnings)

@@ -1,0 +1,7 @@
+[GNOME Session]
+Name=GNOME fallback (Safe Mode)
+RequiredComponents=gnome-panel;gnome-settings-daemon;
+RequiredProviders=windowmanager;
+DefaultProvider-windowmanager=metacity
+DefaultProvider-notifications=notify-osd
+DesktopName=GNOME

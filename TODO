@@ -1,0 +1,4 @@
+* USE="doc debug mono tests"
+* Licenses audit
+* Get indicator panel working
+* Improve dependency tracking

@@ -1,0 +1,10 @@
+/apps/compiz-1/plugins/move/screen0/options/constrain_y                true
+/apps/compiz-1/general/screen0/options/hsize				2
+/apps/compiz-1/general/screen0/options/vsize				2
+/apps/gwd/blur_type							all
+/apps/gwd/metacity_theme_opacity					1.0
+/apps/gwd/metacity_theme_shade_opacity					true
+/apps/compizconfig-1/profiles/unity/general/screen0/options/active_plugins [core,composite,opengl,compiztoolbox,decor,vpswitch,snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell]
+/apps/compizconfig-1/profiles/unity/plugins/gnomecompat/screen0/options/main_menu_key ""
+/apps/compizconfig-1/profiles/unity/plugins/gnomecompat/screen0/options/run_key ""
+/apps/compizconfig-1/profiles/Default/general/screen0/options/active_plugins [core,composite,opengl,compiztoolbox,decor,vpswitch,snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,workarounds,scale,expo,ezoom]

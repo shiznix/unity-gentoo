@@ -10,7 +10,6 @@ GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
@@ -30,7 +29,7 @@ COMMONDEPEND="!x11-wm/compiz
 	>=media-libs/mesa-6.5.1-r1
 	>=x11-base/xorg-server-1.1.1-r1
 	>=x11-libs/cairo-1.0
-	=x11-libs/gtk+-99.3.4.2
+	>=x11-libs/gtk+-99.3.4.2
 	x11-libs/pango
 	x11-libs/libwnck:1
 	x11-libs/libX11
@@ -66,12 +65,10 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs="${mycmakeargs}
+		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
 		-DCOMPIZ_PACKAGING_ENABLED=ON
-		-DCOMPIZ_DEFAULT_PLUGINS="core,composite,opengl,compiztoolbox,decor,vpswitch,\
-snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,\
-unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"	# Default set of plugins taken from unity.ini
 		-DCOMPIZ_DISABLE_PLUGIN_KDE=ON
 		-DUSE_KDE4=OFF
 		-DUSE_GNOME=OFF
@@ -79,7 +76,11 @@ unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"	# Default set of plu
 		-DUSE_GSETTINGS=OFF
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=ON
 		-DCOMPIZ_BUILD_TESTING=OFF
-		-DCOMPIZ_DESTDIR="${D}""
+		-DCOMPIZ_DESTDIR="${D}"
+		-DCOMPIZ_DEFAULT_PLUGINS="core,composite,opengl,compiztoolbox,decor,vpswitch,\
+snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,\
+unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell""	# Default set of plugins taken from unity.ini #
+#		-DCOMPIZ_DEFAULT_PLUGINS="ccp"
 	cmake-utils_src_configure
 }
 
@@ -93,9 +94,31 @@ src_install() {
 	insinto /etc/compizconfig
 	doins "${WORKDIR}/debian/unity.ini"
 
-	insinto /etc/X11/xinit/xinitrc.d
-	doins "${WORKDIR}/debian/65compiz_profile-on-session"
-
 	exeinto /usr/bin
 	doexe "${WORKDIR}/debian/compiz-decorator"
+
+	exeinto /usr/bin
+	doexe "${FILESDIR}/update-gconf-defaults"
+
+	insinto /usr/share/compiz
+	doins -r "${FILESDIR}/gconf-defaults"
+	
 }
+
+#pkg_postinst() {
+#	elog
+#	elog "To use compiz for the Unity desktop it is necessary to first configure"
+#	elog "it's defaults by running the following command as root:"
+#	elog "    emerge --config =${PF}"
+#	elog
+#}
+
+#pkg_config() {
+#	einfo "Setting compiz gconf defaults"
+#	/usr/bin/update-gconf-defaults \
+#		--source="/usr/share/compiz/gconf-defaults" \
+#		--destination="/etc/gconf/gconf.xml.defaults/" || die
+#
+#	# 'update-gconf-defaults' overwrites %gconf.tree.xml so refresh all installed schemas again to re-create it #
+#	gnome2_gconf_install
+#}

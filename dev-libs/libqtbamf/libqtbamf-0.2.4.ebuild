@@ -1,0 +1,29 @@
+EAPI=4
+
+inherit gnome2 cmake-utils
+
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/libq/${PN}"
+UVER="0ubuntu1"
+URELEASE="quantal"
+MY_P="${P/-/_}"
+GNOME2_LA_PUNT="1"
+
+DESCRIPTION="Qt binding and QML plugin for bamf for the Unity desktop"
+HOMEPAGE="http://unity.ubuntu.com/"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+
+LICENSE="GPL-2"
+SLOT="0"
+KEYWORDS="~x86 ~amd64"
+IUSE=""
+
+RDEPEND="unity-base/bamf"
+DEPEND="${RDEPEND}"
+
+src_configure() {
+	mycmakeargs="${mycmakeargs} \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DIMPORT_INSTALL_DIR=lib/qt/imports/QConf \
+		-DCMAKE_BUILD_TYPE=Release"
+	cmake-utils_src_configure
+}

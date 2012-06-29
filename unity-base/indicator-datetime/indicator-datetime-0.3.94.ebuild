@@ -19,4 +19,45 @@ IUSE=""
 
 DEPEND=">=dev-libs/libappindicator-0.4.92
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
-	dev-libs/libindicate-qt"
+	dev-libs/libindicate-qt
+	dev-libs/libtimezonemap"
+
+src_configure() {
+	# Build GTK2 support #
+	[[ -d build-gtk2 ]] || mkdir build-gtk2
+	pushd build-gtk2
+	../configure --prefix=/usr \
+		--with-gtk=2 || die
+	popd
+
+	# Build GTK3 support #
+	[[ -d build-gtk3 ]] || mkdir build-gtk3
+	pushd build-gtk3
+	../configure --prefix=/usr \
+		--with-gtk=3 || die
+	popd
+}
+
+src_compile() {
+	# Build GTK2 support #
+	pushd build-gtk2
+	emake || die
+	popd
+
+	# Build GTK3 support #
+	pushd build-gtk3
+	emake || die
+	popd
+}
+
+src_install() {
+	# Install GTK2 support #
+	pushd build-gtk2
+	emake DESTDIR="${D}" install || die
+	popd
+
+	# Install GTK3 support #
+	pushd build-gtk3
+	emake DESTDIR="${D}" install || die
+	popd
+}

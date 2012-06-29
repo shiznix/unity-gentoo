@@ -25,7 +25,7 @@ IUSE="doc +introspection sendto"
 KEYWORDS="~amd64 ~x86"
 
 COMMON_DEPEND=">=dev-libs/glib-2.29.90:2
-	>=x11-libs/gtk+-2.91.3:3[introspection?]
+	>=x11-libs/gtk+-99.3.4.2:3[introspection?]
 	>=x11-libs/libnotify-0.7.0
 	introspection? ( >=dev-libs/gobject-introspection-0.9.5 )
 	sendto? ( >=gnome-extra/nautilus-sendto-2.91 )"

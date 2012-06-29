@@ -1,0 +1,8 @@
+[GNOME Session]
+Name=Unity 2D
+RequiredComponents=gnome-settings-daemon;
+RequiredProviders=windowmanager;panel;shell;
+DefaultProvider-windowmanager=metacity
+DefaultProvider-panel=unity-2d-panel
+DefaultProvider-shell=unity-2d-shell
+DesktopName=Unity

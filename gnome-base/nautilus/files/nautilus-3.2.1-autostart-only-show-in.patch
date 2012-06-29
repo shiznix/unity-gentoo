@@ -1,0 +1,26 @@
+From 0d64367e9abb67329133b2e05cb63309479b7f24 Mon Sep 17 00:00:00 2001
+From: Alexandre Rostovtsev <tetromino@gentoo.org>
+Date: Wed, 14 Dec 2011 16:34:46 -0500
+Subject: [PATCH] Autostart only in GNOME and Unity
+
+We do not want to autostart and manage the desktop in DEs that use other
+applications for managing the desktop.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=666218
+---
+ data/nautilus-autostart.desktop.in |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/data/nautilus-autostart.desktop.in b/data/nautilus-autostart.desktop.in
+index f105b7b..7252f87 100644
+--- a/data/nautilus-autostart.desktop.in
++++ b/data/nautilus-autostart.desktop.in
+@@ -2,4 +2,5 @@
+ Type=Application
+ Name=Files
+ Exec=nautilus -n
++OnlyShowIn=GNOME;Unity;
+ AutostartCondition=GSettings org.gnome.desktop.background show-desktop-icons
+-- 
+1.7.8
+

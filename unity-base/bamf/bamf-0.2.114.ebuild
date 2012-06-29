@@ -17,18 +17,46 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+introspection"
 
 DEPEND="dev-lang/vala:0.14[vapigen]
-	=x11-libs/gtk+-99.3.4.2
+	>=x11-libs/gtk+-99.2.24.10
+	>=x11-libs/gtk+-99.3.4.2
 	=x11-libs/libXfixes-5.0-r9999"
 
+src_prepare() {
+	use introspection && \
+		export VALAC=$(type -P valac-0.14) && \
+		export VALA_API_GEN=$(type -p vapigen-0.14)
+}
+
 src_configure() {
-        export VALAC=$(type -P valac-0.14)
-        export VALA_API_GEN=$(type -p vapigen-0.14)
-	econf \
-		$(use_enable introspection)
+	# Build GTK2 support #
+	[[ -d build-gtk2 ]] || mkdir build-gtk2
+	pushd build-gtk2
+	../configure --prefix=/usr \
+		$(use_enable introspection) \
+		--disable-static \
+		--with-gtk=2
+	popd
+
+	# Build GTK3 support #
+	[[ -d build-gtk3 ]] || mkdir build-gtk3
+	pushd build-gtk3
+	../configure --prefix=/usr \
+		$(use_enable introspection) \
+		--disable-static \
+		--with-gtk=3
+	popd
 }
 
 src_install() {
-	DESTDIR="${D}" emake install
+	# Install GTK2 support #
+	pushd build-gtk2
+	emake DESTDIR="${D}" install || die
+	popd
+
+	# Install GTK3 support #
+	pushd build-gtk3
+	emake DESTDIR="${D}" install || die
+	popd
 
 	# Install dbus interfaces #
 	insinto /usr/share/dbus-1/interfaces

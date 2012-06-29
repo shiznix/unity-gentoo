@@ -1,0 +1,3 @@
+* To rebuild all packages against new GTK and QT libs using qdepends (part of app-portage/portage-utils):
+emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
+emerge -1 `qdepends -CNQ x11-libs/qt 2> /dev/null`

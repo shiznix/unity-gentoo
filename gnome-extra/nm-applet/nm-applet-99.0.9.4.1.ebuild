@@ -25,14 +25,14 @@ SLOT="0"
 IUSE="bluetooth"
 KEYWORDS="~amd64 ~ppc ~x86"
 
-RDEPEND=">=dev-libs/glib-2.16:2
+RDEPEND=">=dev-libs/glib-99.2.32.1:2
 	>=dev-libs/dbus-glib-0.88
 	>=dev-libs/libappindicator-0.4.92
 	>=gnome-base/gconf-2.20:2
 	>=gnome-base/gnome-keyring-2.20
 	>=sys-apps/dbus-1.4.1
 	>=sys-auth/polkit-0.96-r1
-	>=x11-libs/gtk+-2.91.4:3
+	>=x11-libs/gtk+-99.3.4.2:3
 	>=x11-libs/libnotify-0.7.0
 	app-text/iso-codes
 	>=net-misc/networkmanager-0.9.4
@@ -50,6 +50,7 @@ pkg_setup() {
 		--disable-more-warnings
 		--disable-static
 		--localstatedir=/var
+		--enable-appindicator
 		$(use_with bluetooth)"
 }
 

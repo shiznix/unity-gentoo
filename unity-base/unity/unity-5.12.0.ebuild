@@ -3,7 +3,7 @@ EAPI=4
 inherit gnome2 cmake-utils eutils python toolchain-funcs
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1"
+UVER="0ubuntu3"
 URELEASE="quantal"
 GNOME2_LA_PUNT="1"
 
@@ -18,31 +18,37 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-# mising-depends=('gconf-ubuntu' 'glib2-ubuntu' 'gnome-session-ubuntu' 'libgnomeui' 'libnotify' 'libunique')
-
-DEPEND="dev-cpp/gtest
-	dev-libs/boost:1.49
+DEPEND="dev-libs/boost:1.49
+	dev-libs/libcompizconfig
 	>=dev-libs/libappindicator-0.4.92
 	dev-libs/libindicate-qt
+	dev-libs/libqtbamf
+	dev-libs/libqtdee
+	dev-libs/libqtgconf
+	dev-libs/libunity
+	dev-libs/libunity-misc
 	dev-python/gconf-python
 	gnome-base/gnome-desktop:3
+	>=gnome-base/gnome-control-center-99.3.4.2
+	>=gnome-base/gnome-menus-99.3.5.2
 	>=gnome-base/gnome-settings-daemon-99.3.4.2
+	>=gnome-base/gnome-session-99.3.5.2
+	>=gnome-base/gsettings-desktop-schemas-99.3.5.2
+	>=gnome-base/nautilus-99.3.5.1
 	gnome-base/gnome-shell
 	gnome-base/libgdu
 	media-libs/clutter-gtk:1.0
 	sys-devel/gcc:4.6
-	unity-base/appmenu-gtk
-	unity-base/bamf
 	unity-base/ccsm
 	unity-base/compiz
 	unity-base/compizconfig-python
 	unity-base/compiz-plugins-main
-	unity-base/libcompizconfig
-	unity-base/libunity
-	unity-base/libunity-misc
+	unity-base/dconf-qt
 	unity-base/nux
 	>=x11-base/xorg-server-1.12.0
 	=x11-libs/libXfixes-5.0-r9999
+	x11-misc/appmenu-gtk
+	x11-misc/appmenu-qt
 	x11-themes/unity-asset-pool"
 
 PATCHES=( "${WORKDIR}/${PN}_5.12-${UVER}.diff" )
@@ -79,15 +85,17 @@ src_install() {
 	addpredict $(python_get_sitedir)
 	DESTDIR="${D}" emake install
 	popd ${CMAKE_BUILD_DIR}
+}
 
-	dodir /usr/share/gnome-session/sessions
-	insinto /usr/share/gnome-session/sessions   
-	doins "${FILESDIR}/${PN}.session"
-
-	exeinto /etc/X11/Sessions
-	newexe "${FILESDIR}/${PN}.xsession" unity
-
-	dodir /usr/share/xsessions
-	insinto /usr/share/xsessions
-	doins "${FILESDIR}/${PN}.desktop"
+pkg_postinst() {
+	einfo
+	einfo "It is recommended to enable the 'ayatana' USE flag"
+	einfo "for portage packages so they can use the Unity"
+	einfo "libindicate or libappindicator notification plugins"
+	einfo
+	einfo "If you would like to use Unity's icons and themes"
+	einfo "'emerge light-themes humanity-icon-theme gnome-tweak-tool'"
+	einfo "then run 'gnome-tweak-tool' as your desktop user and choose"
+	einfo "Ambiance and Humanity themes"
+	einfo
 }

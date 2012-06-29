@@ -23,6 +23,16 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 	sys-libs/db:5.1
 	unity-base/unity"
 
+src_prepare() {
+	# Alter source to work with Gentoo's sys-libs/db slots #
+	sed -e 's:"db.h":"db5.1/db.h":g' \
+		-i configure || die
+	sed -e 's:-ldb$:-ldb-5.1:g' \
+		-i src/* || die
+	sed -e 's:<db.h>:<db5.1/db.h>:g' \
+		-i src/* || die
+}
+
 src_configure() {
 	export VALAC=$(type -P valac-0.14)
 	export VALA_API_GEN=$(type -p vapigen-0.14)

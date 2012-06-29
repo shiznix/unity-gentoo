@@ -2,7 +2,7 @@ EAPI=4
 
 inherit base eutils flag-o-matic gnome.org gnome2-utils libtool virtualx
 
-# Naming gtk+-3.4.2 to gtk+-99.3.4.2 so as not to break the overlay with x11-libs/gtk+ upgrades in the main tree #
+# Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PN="gtk+3.0"
 MY_PV="${PV/99./}"
 MY_P="${MY_PN}_${MY_PV}"
@@ -46,12 +46,12 @@ COMMON_DEPEND="X? (
 		x11-libs/cairo[opengl]
 		x11-libs/libxkbcommon
 	)
-	>=dev-libs/glib-2.32
+	dev-libs/glib
 	>=x11-libs/pango-1.30[introspection?]
 	>=dev-libs/atk-2.2[introspection?]
 	>=x11-libs/cairo-1.10.0[aqua?,glib,svg,X?]
 	>=x11-libs/gdk-pixbuf-2.26:2[introspection?,X?]
-	>=x11-libs/gtk+-2.24:2
+	>=x11-libs/gtk+-99.2.24.10:2
 	media-libs/fontconfig
 	x11-misc/shared-mime-info
 	colord? ( >=x11-misc/colord-0.1.9 )

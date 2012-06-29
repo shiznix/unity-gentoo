@@ -1,0 +1,16 @@
+WIFEXITED and friends are defined in sys/wait.h
+Fixes a build failure on BSD.
+
+https://bugs.gentoo.org/show_bug.cgi?id=309443
+https://bugzilla.gnome.org/show_bug.cgi?id=605460
+
+--- metacity-2.28.1/src/core/delete.c.old	2010-03-15 07:46:52.000000000 +0100
++++ metacity-2.28.1/src/core/delete.c	2010-03-15 07:47:12.000000000 +0100
+@@ -32,6 +32,7 @@
+ #include "workspace.h"
+ 
+ #include <sys/types.h>
++#include <sys/wait.h> /* WIF* macros */
+ #include <signal.h>
+ #include <unistd.h>
+ #include <errno.h>

@@ -22,7 +22,8 @@ RDEPEND="dev-dotnet/gtk-sharp:2
 	>=dev-libs/libdbusmenu-0.6.1:3[introspection?]
 	dev-libs/libxml2:2
 	>=dev-python/pygtk-2.10
-	=x11-libs/gtk+-99.3.4.2
+	>=x11-libs/gtk+-99.2.24.10
+	>=x11-libs/gtk+-99.3.4.2
 	=x11-libs/libXfixes-5.0-r9999
 	introspection? ( dev-libs/gobject-introspection )
 	!<${CATEGORY}/${PN}-0.6.1-r201"
@@ -33,9 +34,8 @@ DEPEND="${RDEPEND}
         dev-lang/vala:0.14[vapigen]
         virtual/pkgconfig"
 
-MAKEOPTS="${MAKEOPTS} -j1"
-
 src_prepare() {
+	export MAKEOPTS="${MAKEOPTS} -j1"
 	export VALAC=$(type -P valac-0.14)
 	export VALA_API_GEN=$(type -p vapigen-0.14)
 
@@ -45,10 +45,49 @@ src_prepare() {
 }
 
 src_configure() {
-	econf \
-		--docdir=/usr/share/doc/${PF} \
-		--disable-static \
+	# Build GTK2 support #
+	[[ -d build-gtk2 ]] || mkdir build-gtk2
+	pushd build-gtk2
+	../configure --prefix=/usr \
 		$(use_enable introspection) \
-		--with-gtk=3 \
-		--with-html-dir=/usr/share/doc/${PF}
+		--disable-static \
+		--docdir=/usr/share/doc/${PF} \
+		--with-html-dir=/usr/share/doc/${PF} \
+		--with-gtk=2 || die
+	popd
+
+	# Build GTK3 support #
+	[[ -d build-gtk3 ]] || mkdir build-gtk3
+	pushd build-gtk3
+	../configure --prefix=/usr \
+		$(use_enable introspection) \
+		--disable-static \
+		--docdir=/usr/share/doc/${PF} \
+		--with-html-dir=/usr/share/doc/${PF} \
+		--with-gtk=3 || die
+	popd
+}
+
+src_compile() {
+	# Build GTK2 support #
+	pushd build-gtk2
+	emake || die
+	popd
+
+	# Build GTK3 support #
+	pushd build-gtk3
+	emake || die
+	popd
+}
+
+src_install() {
+        # Install GTK2 support #
+        pushd build-gtk2
+        emake DESTDIR="${D}" install || die
+        popd
+
+        # Install GTK3 support #
+        pushd build-gtk3
+        emake DESTDIR="${D}" install || die
+        popd
 }

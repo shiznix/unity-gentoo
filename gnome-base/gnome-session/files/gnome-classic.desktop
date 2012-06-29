@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=GNOME Classic
+Comment=This session logs you into GNOME with the traditional panel
+Exec=gnome-session --session=gnome-classic
+TryExec=gnome-session
+Icon=
+Type=Application

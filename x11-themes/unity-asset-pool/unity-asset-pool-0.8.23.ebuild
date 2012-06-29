@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit eutils
+inherit eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu10"   
@@ -23,6 +23,14 @@ DEPEND="${RDEPEND}
 	>=dev-util/intltool-0.35
 	>=dev-util/pkgconfig-0.19
 	>=sys-devel/gettext-0.15"
+
+src_configure() {
+	:
+}
+
+src_compile() {
+	:
+}
 
 src_install() {
 	insinto /usr/share/unity/themes

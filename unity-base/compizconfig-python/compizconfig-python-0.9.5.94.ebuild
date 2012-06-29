@@ -23,5 +23,5 @@ IUSE=""
 
 DEPEND=">=dev-libs/glib-2.6
 	dev-python/cython
-	=unity-base/libcompizconfig-${PV}"
+	=dev-libs/libcompizconfig-${PV}"
 RDEPEND="${DEPEND}"
