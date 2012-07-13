@@ -5,7 +5,7 @@ inherit base eutils
 MY_PN="libindicator"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libi/${MY_PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${MY_PN}_${PV}"
 
 DESCRIPTION="A set of symbols and convience functions that all indicators would like to use"

@@ -10,14 +10,14 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
+UVER="0ubuntu8"
+URELEASE="precise"
 MY_P="${MY_P/session-/session_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Gnome session manager patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2 LGPL-2 FDL-1.1"

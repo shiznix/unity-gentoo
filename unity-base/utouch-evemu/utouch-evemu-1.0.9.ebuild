@@ -4,7 +4,7 @@ inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/evemu-/evemu_}"
 
 DESCRIPTION="Event Emulation for the uTouch Stack"

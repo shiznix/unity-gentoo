@@ -3,8 +3,8 @@ EAPI=4
 inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu2"
-URELEASE="quantal"
+UVER="0ubuntu3"
+URELEASE="precise"
 MY_P="${P/geis-/geis_}"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"

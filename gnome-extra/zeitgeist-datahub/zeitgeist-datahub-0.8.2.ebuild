@@ -4,7 +4,7 @@ inherit base autotools-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/z/${PN}"
 UVER="1ubuntu2"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/datahub-/datahub_}"
 GNOME2_LA_PUNT="1"
 

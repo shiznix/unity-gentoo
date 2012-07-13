@@ -4,7 +4,7 @@ inherit base eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/files-/files_}"
 GNOME2_LA_PUNT="1"
 

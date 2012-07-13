@@ -4,7 +4,7 @@ inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/grail-/grail_}"
 
 DESCRIPTION="An implementation of the GRAIL (Gesture Recognition And Instantiation Library) interface"

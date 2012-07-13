@@ -2,7 +2,7 @@ EAPI=4
 
 inherit autotools base eutils gnome2
 
-# Renaming version to 99.0.9.4.1 so as not to break the overlay with gnome-extra/nm-applet upgrades in the main tree #
+# Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PN="network-manager-applet"
 MY_PV="${PV/99./}"
 MY_P="${MY_PN}_${MY_PV}"
@@ -10,8 +10,8 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${MY_PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${MY_PN}"
-UVER="0ubuntu3"
-URELEASE="quantal"
+UVER="0ubuntu2"
+URELEASE="precise"
 MY_P="${MY_P/applet-/applet_}"
 GNOME2_LA_PUNT="1"
 
@@ -37,7 +37,7 @@ RDEPEND=">=dev-libs/glib-99.2.32.1:2
 	app-text/iso-codes
 	>=net-misc/networkmanager-0.9.4
 	net-misc/mobile-broadband-provider-info
-	bluetooth? ( >=net-wireless/gnome-bluetooth-99.3.4.0 )
+	bluetooth? ( >=net-wireless/gnome-bluetooth-99.3.2.2 )
 	virtual/freedesktop-icon-theme"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig

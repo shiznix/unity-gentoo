@@ -13,7 +13,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/m/${PN}"
 UVER="1ubuntu11"
-URELEASE="quantal"
+URELEASE="precise"
 
 DESCRIPTION="GNOME default window manager"
 HOMEPAGE="http://blogs.gnome.org/metacity/"

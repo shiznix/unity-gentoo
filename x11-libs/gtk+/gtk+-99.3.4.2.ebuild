@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit base eutils flag-o-matic gnome.org gnome2-utils libtool virtualx
+inherit autotools base eutils flag-o-matic gnome.org gnome2-utils libtool virtualx
 
 # Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PN="gtk+3.0"
@@ -10,8 +10,8 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
-UVER="0ubuntu2"
-URELEASE="quantal"
+UVER="0ubuntu0.3"
+URELEASE="precise"
 
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
@@ -46,9 +46,10 @@ COMMON_DEPEND="X? (
 		x11-libs/cairo[opengl]
 		x11-libs/libxkbcommon
 	)
-	dev-libs/glib
+	>=app-accessibility/at-spi2-atk-2.5.3
+	>=dev-libs/glib-99.2.32.3
 	>=x11-libs/pango-1.30[introspection?]
-	>=dev-libs/atk-2.2[introspection?]
+	>=dev-libs/atk-2.4[introspection?]
 	>=x11-libs/cairo-1.10.0[aqua?,glib,svg,X?]
 	>=x11-libs/gdk-pixbuf-2.26:2[introspection?,X?]
 	>=x11-libs/gtk+-99.2.24.10:2
@@ -131,6 +132,8 @@ src_prepare() {
 		# don't waste time building demos
 		strip_builddir SRC_SUBDIRS demos Makefile.am
 	fi
+
+	eautoreconf
 }
 
 src_configure() {

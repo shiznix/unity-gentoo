@@ -9,8 +9,8 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${PN}"
-UVER="0ubuntu4"
-URELEASE="quantal"
+UVER="0ubuntu3"
+URELEASE="precise"
 MY_P="${MY_P/-/_}"
 GNOME2_LA_PUNT="1"
 
@@ -34,6 +34,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.31.9:2
 
 	gnome-base/dconf
 	gnome-base/gsettings-desktop-schemas
+	unity-base/launchpad-integration
 	>=x11-libs/libnotify-0.7
 	x11-libs/libX11
 	x11-libs/libXext
@@ -74,7 +75,7 @@ pkg_setup() {
 		$(use_enable sendto nst-extension)
 		$(use_enable tracker)
 		$(use_enable xmp)"
-	DOCS="AUTHORS ChangeLog* HACKING MAINTAINERS NEWS README THANKS TODO"
+	DOCS="AUTHORS ChangeLog* HACKING MAINTAINERS NEWS README THANKS"
 }
 
 src_prepare() {

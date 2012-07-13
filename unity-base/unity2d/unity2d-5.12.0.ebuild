@@ -4,14 +4,14 @@ inherit gnome2 cmake-utils eutils python toolchain-funcs
 
 MY_PN="unity-2d"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${MY_PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
+UVER="0ubuntu1.1"
+URELEASE="precise"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The Ubuntu Unity Desktop for non-accelerated graphics cards"
 HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
-	${UURL}/${MY_PN}_${PV}-${UVER}.1.diff.gz"
+	${UURL}/${MY_PN}_${PV}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -25,7 +25,7 @@ DEPEND="dev-libs/libqtgconf
 
 S="${WORKDIR}/unity-2d-${PV}"
 
-PATCHES=( "${WORKDIR}/${MY_PN}_${PV}-${UVER}.1.diff" 
+PATCHES=( "${WORKDIR}/${MY_PN}_${PV}-${UVER}.diff" 
 		"${FILESDIR}/libqt-QMouseEvent_fix.patch" )
 
 src_prepare() {

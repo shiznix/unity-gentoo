@@ -3,8 +3,8 @@ EAPI=4
 inherit base eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
+UVER="0ubuntu2"
+URELEASE="precise"
 MY_P="${P/datetime-/datetime_}"
 GNOME2_LA_PUNT="1"
 

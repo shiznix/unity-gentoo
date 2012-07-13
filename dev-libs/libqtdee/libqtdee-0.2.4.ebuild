@@ -4,7 +4,7 @@ inherit gnome2 cmake-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libq/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 
@@ -18,7 +18,8 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-RDEPEND="unity-base/bamf
+RDEPEND="dev-libs/dee
+	unity-base/bamf
 	>=x11-libs/qt-core-99.4.8.2:4"
 DEPEND="${RDEPEND}"
 

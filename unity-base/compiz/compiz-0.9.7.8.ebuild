@@ -4,7 +4,7 @@ inherit gnome2 cmake-utils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
 UVER="0ubuntu1"   
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 
@@ -102,7 +102,7 @@ src_install() {
 
 	insinto /usr/share/compiz
 	doins -r "${FILESDIR}/gconf-defaults"
-	
+
 }
 
 #pkg_postinst() {

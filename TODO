@@ -1,4 +1,5 @@
 * USE="doc debug mono tests"
 * Licenses audit
+* Check unneeded *.la files are being removed
 * Get indicator panel working
 * Improve dependency tracking

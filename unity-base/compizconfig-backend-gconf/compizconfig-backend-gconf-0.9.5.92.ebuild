@@ -4,7 +4,7 @@ inherit cmake-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
 UVER="0ubuntu5"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/gconf-/gconf_}"
 
 DESCRIPTION="Ubuntu's Compiz configuration gconf backend for the Unity desktop"

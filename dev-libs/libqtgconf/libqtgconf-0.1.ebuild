@@ -3,8 +3,8 @@ EAPI=4
 inherit gnome2 cmake-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libq/${PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
+UVER="0ubuntu5"
+URELEASE="precise"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 

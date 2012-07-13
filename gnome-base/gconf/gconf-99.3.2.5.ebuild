@@ -12,7 +12,7 @@ S="${WORKDIR}/GConf-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 UVER="0ubuntu2"
-URELEASE="quantal"
+URELEASE="precise"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Gnome Configuration System and Daemon patched for the Unity desktop"

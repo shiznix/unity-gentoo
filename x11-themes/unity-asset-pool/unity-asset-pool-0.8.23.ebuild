@@ -3,8 +3,8 @@ EAPI=4
 inherit eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu10"   
-URELEASE="quantal"
+UVER="0ubuntu1"
+URELEASE="precise"
 MY_P="${P/pool-/pool_}"
 
 DESCRIPTION="Unity desktop icon theme"

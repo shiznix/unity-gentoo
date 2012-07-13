@@ -12,7 +12,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
 UVER="0ubuntu6"
-URELEASE="quantal"
+URELEASE="precise"
 
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"

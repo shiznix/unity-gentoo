@@ -12,8 +12,8 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
-UVER="0ubuntu2"
-URELEASE="quantal"
+UVER="0ubuntu1"
+URELEASE="precise"
 MY_P="${MY_P/-/_}"
 GNOME2_LA_PUNT="1"
 
@@ -197,12 +197,6 @@ src_install() {
 	rm -rf "${ED}/usr/share/gdb/" "${ED}/usr/share/glib-2.0/gdb/"
 
 	dodoc AUTHORS ChangeLog* NEWS* README
-
-	insinto /usr/share/bash-completion
-	for f in gdbus gsettings; do
-		newins "${ED}/etc/bash_completion.d/${f}-bash-completion.sh" ${f}
-	done
-	rm -rf "${ED}/etc"
 
 	# Completely useless with or without USE static-libs, people need to use
 	# pkg-config

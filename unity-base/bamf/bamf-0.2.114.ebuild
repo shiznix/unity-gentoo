@@ -3,8 +3,8 @@ EAPI=4
 inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/b/${PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
+UVER="0ubuntu0.1"
+URELEASE="precise"
 MY_P="${P/-/_}"
 
 DESCRIPTION="BAMF Application Matching Framework"

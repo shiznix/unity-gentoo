@@ -4,7 +4,7 @@ inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/gtk-/gtk_}"
 
 DESCRIPTION="Export GTK menus over DBus"

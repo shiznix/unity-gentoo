@@ -4,7 +4,7 @@ inherit gnome2 cmake-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
 UVER="0ubuntu10"   
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/main-/main_}"
 GNOME2_LA_PUNT="1"
 

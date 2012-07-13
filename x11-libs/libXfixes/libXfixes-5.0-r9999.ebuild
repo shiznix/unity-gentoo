@@ -4,7 +4,7 @@ inherit base eutils xorg-2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libx/${PN}"
 UVER="4ubuntu4"
-URELEASE="quantal"
+URELEASE="precise"
 MY_PV="${PV/-r//}"
 MY_PN="${PN/libXfixes/libxfixes}"
 

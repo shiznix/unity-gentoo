@@ -10,7 +10,7 @@ MY_PN="compizconfig-settings-manager"
 MY_P="${MY_PN}_${PV}"
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${PN}"
 UVER="0ubuntu3"
-URELEASE="quantal"
+URELEASE="precise"
 
 DESCRIPTION="Compizconfig Settings Manager for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"

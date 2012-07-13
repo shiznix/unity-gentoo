@@ -4,7 +4,7 @@ inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/-/_}"
 
 DESCRIPTION="Application indicators used by the Unity desktop"

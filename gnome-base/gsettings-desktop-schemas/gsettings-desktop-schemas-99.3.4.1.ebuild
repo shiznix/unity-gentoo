@@ -8,8 +8,8 @@ MY_PV="${PV/99./}"
 MY_P="${PN}_${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu1"   
-URELEASE="quantal"
+UVER="0ubuntu1"
+URELEASE="precise"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Collection of GSettings schemas for GNOME desktop"

@@ -4,7 +4,7 @@ inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/applet-/applet_}"
 
 DESCRIPTION="Gnome panel indicator for the Unity desktop"

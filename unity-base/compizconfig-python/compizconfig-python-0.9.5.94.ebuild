@@ -8,7 +8,7 @@ inherit base distutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${PN}"
 UVER="0ubuntu4"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/python-/python_}"
 
 DESCRIPTION="Compizconfig Python Bindings for the Unity desktop"

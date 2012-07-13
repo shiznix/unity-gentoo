@@ -4,7 +4,7 @@ inherit base eutils xorg-2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/x/x11proto-fixes"
 UVER="2ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_PV="${PV/-r//}"
 
 DESCRIPTION="Ubuntu patched version of X.Org Fixes protocol headers needed for Unity desktop"

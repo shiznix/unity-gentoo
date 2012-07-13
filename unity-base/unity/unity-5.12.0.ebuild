@@ -3,8 +3,8 @@ EAPI=4
 inherit gnome2 cmake-utils eutils python toolchain-funcs
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu3"
-URELEASE="quantal"
+UVER="0ubuntu4"
+URELEASE="precise"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
@@ -30,14 +30,15 @@ DEPEND="dev-libs/boost:1.49
 	dev-python/gconf-python
 	gnome-base/gnome-desktop:3
 	>=gnome-base/gnome-control-center-99.3.4.2
-	>=gnome-base/gnome-menus-99.3.5.2
+	>=gnome-base/gnome-menus-99.3.4.0
 	>=gnome-base/gnome-settings-daemon-99.3.4.2
-	>=gnome-base/gnome-session-99.3.5.2
-	>=gnome-base/gsettings-desktop-schemas-99.3.5.2
-	>=gnome-base/nautilus-99.3.5.1
+	>=gnome-base/gnome-session-99.3.2.1
+	>=gnome-base/gsettings-desktop-schemas-99.3.4.1
+	>=gnome-base/nautilus-99.3.4.2
 	gnome-base/gnome-shell
 	gnome-base/libgdu
 	media-libs/clutter-gtk:1.0
+	<sys-apps/dbus-1.6.0
 	sys-devel/gcc:4.6
 	unity-base/ccsm
 	unity-base/compiz

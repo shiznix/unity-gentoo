@@ -2,7 +2,7 @@ EAPI=4
 
 inherit base gnome2 multilib
 
-# Renaming version to 99.0.9.4.1 so as not to break the overlay with gnome-extra/nm-applet upgrades in the main tree #
+# Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PV="${PV/99./}"
 MY_P="${PN}_${MY_PV}"
 
@@ -10,7 +10,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${MY_P/bluetooth-/bluetooth_}"
 GNOME2_LA_PUNT="1"
 

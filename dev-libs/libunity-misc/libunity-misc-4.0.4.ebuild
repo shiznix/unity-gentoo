@@ -3,8 +3,8 @@ EAPI=4
 inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
+UVER="0ubuntu2"
+URELEASE="precise"
 MY_P="${P/misc-/misc_}"
 
 DESCRIPTION="Miscellaneous modules for the Unity desktop"

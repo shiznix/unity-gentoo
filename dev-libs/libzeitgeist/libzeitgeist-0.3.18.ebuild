@@ -6,7 +6,7 @@ inherit autotools-utils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libz/${PN}"
 UVER="1ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 

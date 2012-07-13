@@ -4,7 +4,7 @@ inherit gnome2 cmake-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libc/${PN}"
 UVER="0ubuntu6"
-URELEASE="quantal"
+URELEASE="precise"
 MY_PV="0.9.7.0"	# Tarball version is 0.9.7.0 but source inside is version 0.9.5.94 ?!
 GNOME2_LA_PUNT="1"
 
