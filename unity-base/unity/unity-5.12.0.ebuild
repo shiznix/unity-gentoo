@@ -37,6 +37,7 @@ DEPEND="dev-libs/boost:1.49
 	>=gnome-base/nautilus-99.3.4.2
 	gnome-base/gnome-shell
 	gnome-base/libgdu
+	>=gnome-extra/polkit-gnome-99.0.105
 	media-libs/clutter-gtk:1.0
 	<sys-apps/dbus-1.6.0
 	sys-devel/gcc:4.6
@@ -95,8 +96,8 @@ pkg_postinst() {
 	einfo "libindicate or libappindicator notification plugins"
 	einfo
 	einfo "If you would like to use Unity's icons and themes"
-	einfo "'emerge light-themes humanity-icon-theme gnome-tweak-tool'"
+	einfo "'emerge light-themes ubuntu-mono gnome-tweak-tool'"
 	einfo "then run 'gnome-tweak-tool' as your desktop user and choose"
-	einfo "Ambiance and Humanity themes"
+	einfo "Ambiance GTK+ theme and Ubunto-mono-dark icon theme"
 	einfo
 }

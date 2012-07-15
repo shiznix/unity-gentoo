@@ -20,6 +20,7 @@ gnome-base/gnome-settings-daemon
 gnome-base/gsettings-desktop-schemas
 gnome-base/nautilus
 gnome-extra/nm-applet
+gnome-extra/polkit-gnome
 gnome-extra/zeitgeist-datahub
 net-wireless/gnome-bluetooth
 x11-libs/gtk+
