@@ -125,7 +125,12 @@ pkg_setup() {
 }
 
 src_prepare() {
-	sed -e 's:00git_online_accounts_gtkgrid:^#00git_online_accounts_gtkgrid:g' \
+	# Disable selected patches #
+	sed \
+		`# Causes compilation to fail` \
+			-e 's:00git_online_accounts_gtkgrid:^#00git_online_accounts_gtkgrid:g' \
+		`# Causes clicking on 'User Accounts' to crash gnome-control-center` \
+			-e 's:52_ubuntu_language_list_mods:^#52_ubuntu_language_list_mods:g' \
 		-i "${WORKDIR}/debian/patches/series"
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
