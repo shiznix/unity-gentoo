@@ -9,6 +9,7 @@ dev-libs/libqtbamf
 dev-libs/libqtdee
 dev-libs/libqtgconf
 dev-libs/libtimezonemap
+dev-libs/libubuntuone
 dev-libs/libunity
 dev-libs/libunity-misc
 dev-libs/libzeitgeist
