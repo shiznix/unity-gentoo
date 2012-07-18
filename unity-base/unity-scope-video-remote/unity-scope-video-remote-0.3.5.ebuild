@@ -8,7 +8,7 @@ URELEASE="precise"
 MY_P="${P/remote-/remote_}"
 GNOME2_LA_PUNT="1"
 
-DESCRIPTION="Application lens for the Unity desktop"
+DESCRIPTION="Remote video feeds fetched for the Unity desktop video lens"
 HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"

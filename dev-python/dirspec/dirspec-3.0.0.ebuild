@@ -8,7 +8,7 @@ URELEASE="precise"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 
-DESCRIPTION="Ubuntu One control panel for the Unity desktop"
+DESCRIPTION="Python User Folders Specification Library"
 HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
