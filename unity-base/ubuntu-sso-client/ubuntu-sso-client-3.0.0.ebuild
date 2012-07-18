@@ -23,6 +23,7 @@ DEPEND="dev-lang/python
 	dev-python/dbus-python
 	dev-python/gnome-keyring-python
 	dev-python/httplib2
+	dev-python/imaging
 	dev-python/notify-python
 	>=dev-python/oauth-1.0
 	dev-python/PyQt4
