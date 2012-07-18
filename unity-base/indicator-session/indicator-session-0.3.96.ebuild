@@ -19,23 +19,32 @@ IUSE=""
 
 DEPEND="app-admin/packagekit[gtk,qt4]
 	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]
+	app-admin/system-config-printer-gnome
 	>=dev-libs/libappindicator-0.4.92
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libindicate-qt"
+
+src_prepare() {
+	# Fix '--disable-apt' configure switch #
+	sed -e '/#include <libdbusmenu-glib\/client.h>/ a\#include <libdbusmenu-gtk\/menuitem.h>' \
+		-i src/device-menu-mgr.c
+}
 
 src_configure() {
 	# Build GTK2 support #
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
 	../configure --prefix=/usr \
-		--with-gtk=2 || die
+		--with-gtk=2 \
+		--disable-apt || die
 	popd
 
 	# Build GTK3 support #
 	[[ -d build-gtk3 ]] || mkdir build-gtk3
 	pushd build-gtk3
 	../configure --prefix=/usr \
-		--with-gtk=3 || die
+		--with-gtk=3 \
+		--disable-apt || die
 	popd
 }
 
