@@ -8,7 +8,7 @@ URELEASE="precise"
 MY_P="${P/session-/session_}"
 GNOME2_LA_PUNT="1"
 
-DESCRIPTION="Indicator showing power state used by the Unity desktop"
+DESCRIPTION="Indicator showing session management, status and user switching used by the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 

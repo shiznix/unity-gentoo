@@ -47,7 +47,7 @@ DEPEND="dev-libs/boost:1.49
 	unity-base/compiz-plugins-main
 	unity-base/dconf-qt
 	unity-base/nux
-	>=x11-base/xorg-server-1.12.0
+	>=x11-base/xorg-server-99.1.12.3
 	=x11-libs/libXfixes-5.0-r9999
 	x11-misc/appmenu-gtk
 	x11-misc/appmenu-qt

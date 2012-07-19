@@ -1,0 +1,16 @@
+# We always try and start X on a static VT. The various DMs normally default
+# to using VT7. If you wish to use the xdm init script, then you should ensure
+# that the VT checked is the same VT your DM wants to use. We do this check to
+# ensure that you haven't accidentally configured something to run on the VT
+# in your /etc/inittab file so that you don't get a dead keyboard.
+CHECKVT=7
+
+# What display manager do you use ?  [ xdm | gdm | kdm | kdm-4.3 | gpe | entrance ]
+# NOTE: If this is set in /etc/rc.conf, that setting will override this one.
+#
+# KDE-specific note:
+# - If you are using kdeprefix go with "kdm-4.Y", e.g. "kdm-4.3".
+#     You can find possible versions by looking at the directories in /usr/kde/.
+# - Else, if you are using KDE 3 enter "kdm-3.5"
+# - Else, if you are using KDE 4 enter "kdm" without a version
+DISPLAYMANAGER="xdm"

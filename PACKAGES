@@ -60,6 +60,7 @@ unity-base/utouch-evemu
 unity-base/utouch-frame
 unity-base/utouch-geis
 unity-base/utouch-grail
+x11-base/xorg-server
 x11-libs/gtk+
 x11-libs/libXfixes
 x11-misc/appmenu-gtk
