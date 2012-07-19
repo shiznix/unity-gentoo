@@ -9,7 +9,7 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu0.2"   
+UVER="0ubuntu0.2"
 URELEASE="precise"
 MY_P="${MY_P/daemon-/daemon_}"
 GNOME2_LA_PUNT="1"
@@ -17,7 +17,7 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -99,10 +99,10 @@ pkg_setup() {
 }
 
 src_prepare() {
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-        base_src_prepare
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	base_src_prepare
 	eautoreconf
 	gnome2_src_prepare
 }

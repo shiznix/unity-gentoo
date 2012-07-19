@@ -11,7 +11,7 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="Provides passive plugins to insert events into zeitgeist"
 HOMEPAGE="http://launchpad.net/zeitgeist-datahub"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

@@ -8,7 +8,7 @@ URELEASE="precise"
 MY_P="${P/gtk-/gtk_}"
 
 DESCRIPTION="Export GTK menus over DBus"
-HOMEPAGE="http://unity.ubuntu.com/" 
+HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"

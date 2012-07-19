@@ -28,11 +28,11 @@ RDEPEND="dev-dotnet/gtk-sharp:2
 	introspection? ( dev-libs/gobject-introspection )
 	!<${CATEGORY}/${PN}-0.6.1-r201"
 DEPEND="${RDEPEND}
-        gnome-base/gnome-common
-        app-text/gnome-doc-utils
-        dev-util/gtk-doc-am
-        dev-lang/vala:0.14[vapigen]
-        virtual/pkgconfig"
+	gnome-base/gnome-common
+	app-text/gnome-doc-utils
+	dev-util/gtk-doc-am
+	dev-lang/vala:0.14[vapigen]
+	virtual/pkgconfig"
 
 src_prepare() {
 	export MAKEOPTS="${MAKEOPTS} -j1"
@@ -81,13 +81,13 @@ src_compile() {
 }
 
 src_install() {
-        # Install GTK2 support #
-        pushd build-gtk2
-        emake DESTDIR="${D}" install || die
-        popd
+	# Install GTK2 support #
+	pushd build-gtk2
+	emake DESTDIR="${D}" install || die
+	popd
 
-        # Install GTK3 support #
-        pushd build-gtk3
-        emake DESTDIR="${D}" install || die
-        popd
+	# Install GTK3 support #
+	pushd build-gtk3
+	emake DESTDIR="${D}" install || die
+	popd
 }

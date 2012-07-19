@@ -20,7 +20,7 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz
 	http://pkgconfig.freedesktop.org/releases/pkg-config-0.26.tar.gz" # pkg.m4 for eautoreconf
 
 LICENSE="LGPL-2"

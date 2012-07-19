@@ -18,7 +18,7 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="Gnome Configuration System and Daemon patched for the Unity desktop"
 HOMEPAGE="http://projects.gnome.org/gconf/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="LGPL-2"
 SLOT="2"

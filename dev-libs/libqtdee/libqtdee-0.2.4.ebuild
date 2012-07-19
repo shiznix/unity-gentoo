@@ -11,7 +11,7 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="Qt binding and QML plugin for dee for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-        ${UURL}/${MY_P}-${UVER}.diff.gz"
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

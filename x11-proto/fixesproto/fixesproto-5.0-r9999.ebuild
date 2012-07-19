@@ -22,9 +22,9 @@ RDEPEND=">=x11-proto/xextproto-7.0.99.1"
 DEPEND="${RDEPEND}"
 
 src_prepare() {
-        epatch "${WORKDIR}/x11proto-fixes_${MY_PV}-${UVER}.diff"
-        for patch in $(cat "${WORKDIR}/${P}/x11proto-fixes-${MY_PV}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/${P}/x11proto-fixes-${MY_PV}/debian/patches/${patch}" )
-        done
-        base_src_prepare
+	epatch "${WORKDIR}/x11proto-fixes_${MY_PV}-${UVER}.diff"
+	for patch in $(cat "${WORKDIR}/${P}/x11proto-fixes-${MY_PV}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/${P}/x11proto-fixes-${MY_PV}/debian/patches/${patch}" )
+	done
+	base_src_prepare
 }

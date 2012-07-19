@@ -9,9 +9,9 @@ MY_PV="0.9.7.0"	# Tarball version is 0.9.7.0 but source inside is version 0.9.5.
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Settings library for compiz plugins for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/" 
+HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${PN}_${MY_PV}~bzr428.orig.tar.bz2
-        ${UURL}/${PN}_${MY_PV}~bzr428-${UVER}.debian.tar.gz"
+	${UURL}/${PN}_${MY_PV}~bzr428-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

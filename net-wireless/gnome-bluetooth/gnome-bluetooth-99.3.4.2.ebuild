@@ -17,7 +17,7 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="Fork of bluez-gnome focused on integration with GNOME, patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/GnomeBluetooth"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="2"
