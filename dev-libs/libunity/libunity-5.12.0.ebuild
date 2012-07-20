@@ -4,7 +4,7 @@ inherit eutils autotools
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 UVER="0ubuntu1"
-URELEASE="precise"
+URELEASE="precise-updates"
 MY_P="${P/-/_}"
 
 DESCRIPTION="Essential libraries needed for the Unity desktop"

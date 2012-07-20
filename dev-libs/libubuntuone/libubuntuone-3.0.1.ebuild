@@ -4,7 +4,7 @@ inherit mono versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 UVER="0ubuntu1"
-URELEASE="precise"
+URELEASE="precise-updates"
 MY_P="${P/-/_}"
 
 DESCRIPTION="GTK widgets for integration of Ubuntu One functionalities into GTK applications."
