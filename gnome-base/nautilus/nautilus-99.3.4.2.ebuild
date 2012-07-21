@@ -35,6 +35,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.31.9:2
 	gnome-base/dconf
 	gnome-base/gsettings-desktop-schemas
 	unity-base/launchpad-integration
+	unity-base/unity
 	>=x11-libs/libnotify-0.7
 	x11-libs/libX11
 	x11-libs/libXext

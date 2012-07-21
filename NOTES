@@ -1,3 +1,8 @@
 * To rebuild all packages against new GTK and QT libs using qdepends (part of app-portage/portage-utils):
 emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 emerge -1 `qdepends -CNQ x11-libs/qt 2> /dev/null`
+
+* Ubuntu QT patchset and Gentoo's QT split ebuilds
+ - Ubuntu's QT patchset is downloaded and applied in qt4-build.eclass and is mostly needed for unity2d to function with some QT5 accessibility backports
+ - With the exception of x11-libs/qt-gui, all QT ebuilds in the overlay are direct copies of those in the main portage tree and mostly serve as placeholders for the 99. version prefix
+ - x11-libs/qt-gui has some extra qtdeclarative targets added to enable qt-gui to build

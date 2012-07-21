@@ -20,7 +20,7 @@ IUSE=""
 
 DEPEND="dev-lang/python
 	dev-libs/dbus-glib
-	gnome-base/nautilus"
+	>=gnome-base/nautilus-99.3.4.2"
 RDEPEND="${DEPEND}
 	dev-python/configglue
 	dev-python/dbus-python

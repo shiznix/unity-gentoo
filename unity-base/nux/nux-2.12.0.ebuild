@@ -19,6 +19,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="app-i18n/ibus
+	>=dev-libs/glib-99.2.32.3
 	unity-base/utouch-geis"
 
 PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" )

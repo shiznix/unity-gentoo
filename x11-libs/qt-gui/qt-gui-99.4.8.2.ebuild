@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit eutils qt4-build
+inherit eutils qt4-build multilib
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
@@ -78,6 +78,7 @@ pkg_setup() {
 
 	QT4_TARGET_DIRECTORIES="
 		src/gui
+		src/declarative
 		src/scripttools
 		tools/designer
 		tools/linguist/linguist
@@ -225,6 +226,13 @@ src_install() {
 		tools/linguist/linguist/images/icons/linguist-128-32.png
 	make_desktop_entry designer Designer designer 'Qt;Development;GUIDesigner'
 	make_desktop_entry linguist Linguist linguist-128-32 'Qt;Development;GUIDesigner'
+
+	# Remove QtDeclarative files to avoid collisions with x11-libs/qt-declarative #
+	rm -rfv "${D}"usr/$(get_libdir)/qt4/libQtDeclarative*
+	rm -rfv "${D}"usr/$(get_libdir)/pkgconfig/QtDeclarative.pc
+	rm -rfv "${D}"usr/include/qt4/QtDeclarative*
+	rm -rfv "${D}"usr/include/qt4/Qt/qdeclarative*
+	rm -rfv "${D}"usr/include/qt4/Qt/QtDeclarative
 }
 
 pkg_postinst() {

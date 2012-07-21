@@ -34,7 +34,6 @@ DEPEND="dev-libs/boost:1.49
 	>=gnome-base/gnome-settings-daemon-99.3.4.2
 	>=gnome-base/gnome-session-99.3.2.1
 	>=gnome-base/gsettings-desktop-schemas-99.3.4.1
-	>=gnome-base/nautilus-99.3.4.2
 	gnome-base/gnome-shell
 	gnome-base/libgdu
 	>=gnome-extra/polkit-gnome-99.0.105

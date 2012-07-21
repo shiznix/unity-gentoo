@@ -75,7 +75,7 @@ src_install() {
 	DESTDIR="${D}" emake install
 
 	insinto /usr/share/icons/hicolor/22x22/apps
-	doins "${WORKDIR}/debian/icons/22/*.png"
+	doins "${WORKDIR}"/debian/icons/22/*.png
 	dosym nm-signal-00.png \
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-none.png
 	dosym nm-signal-00-secure.png \
