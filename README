@@ -3,4 +3,7 @@ unity-gentoo
 
 A Gentoo overlay to install the Unity desktop
 
-~ # emerge -apt unity-meta
+~ # echo "unity-base" >> /etc/portage/categories
+~ # echo "unity-extra" >> /etc/portage/categories
+~ # emerge -1a $(qlist -IC x11-libs/qt)
+~ # emerge -at unity-meta
