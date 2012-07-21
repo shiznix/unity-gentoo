@@ -3,8 +3,8 @@ EAPI=4
 inherit distutils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu2"
-URELEASE="precise"
+UVER="0ubuntu1"
+URELEASE="precise-updates"
 MY_P="${P/client-/client_}"
 GNOME2_LA_PUNT="1"
 

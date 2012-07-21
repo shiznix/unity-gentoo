@@ -3,8 +3,8 @@ EAPI=4
 inherit gnome2 cmake-utils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
-UVER="0ubuntu1"   
-URELEASE="precise"
+UVER="0ubuntu1.2"
+URELEASE="precise-updates"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 
@@ -104,21 +104,3 @@ src_install() {
 	doins -r "${FILESDIR}/gconf-defaults"
 
 }
-
-#pkg_postinst() {
-#	elog
-#	elog "To use compiz for the Unity desktop it is necessary to first configure"
-#	elog "it's defaults by running the following command as root:"
-#	elog "    emerge --config =${PF}"
-#	elog
-#}
-
-#pkg_config() {
-#	einfo "Setting compiz gconf defaults"
-#	/usr/bin/update-gconf-defaults \
-#		--source="/usr/share/compiz/gconf-defaults" \
-#		--destination="/etc/gconf/gconf.xml.defaults/" || die
-#
-#	# 'update-gconf-defaults' overwrites %gconf.tree.xml so refresh all installed schemas again to re-create it #
-#	gnome2_gconf_install
-#}

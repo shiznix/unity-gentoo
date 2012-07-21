@@ -2,7 +2,7 @@ EAPI=4
 
 inherit autotools base eutils gnome2 virtualx
 
-# Renaming version to 99.3.4.2 so as not to break the overlay with gnome-base/gnome-settings-daemon upgrades in the main tree #
+# Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PV="${PV/99./}"
 MY_P="${PN}_${MY_PV}"
 
@@ -10,7 +10,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 UVER="0ubuntu0.2"
-URELEASE="precise"
+URELEASE="precise-updates"
 MY_P="${MY_P/daemon-/daemon_}"
 GNOME2_LA_PUNT="1"
 

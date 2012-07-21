@@ -4,7 +4,7 @@ inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${PN}"
 UVER="0ubuntu1"
-URELEASE="precise"
+URELEASE="precise-updates"
 MY_P="${P/-/_}"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"

@@ -14,8 +14,6 @@ DEPEND=">=gnome-extra/nm-applet-99.0.9.4.1
 	unity-base/indicator-application
 	unity-base/indicator-appmenu
 	unity-base/indicator-datetime
-	unity-base/indicator-messages
-	unity-base/indicator-power
 	unity-base/indicator-session
 	unity-base/indicator-sound
 	unity-base/ubuntuone-control-panel

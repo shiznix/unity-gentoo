@@ -4,7 +4,7 @@ inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu3"
-URELEASE="precise"
+URELEASE="precise-updates"
 MY_P="${P/geis-/geis_}"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"

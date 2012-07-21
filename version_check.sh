@@ -5,7 +5,7 @@ for pack in `find $(pwd) -name "*.ebuild"`; do
 	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
 	. ${pack} &> /dev/null
 	if [ -n "${UVER}" ]; then
-		current="${packbasename}-${UVER}"
+		current=`echo "${packbasename}-${UVER}" | sed 's/99.//g'`
 		upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p"`
 		echo
 		echo "Checking http://packages.ubuntu.com/${URELEASE}/source/${packname}"

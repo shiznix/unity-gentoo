@@ -3,7 +3,7 @@ EAPI=4
 inherit base eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libt/${PN}"
-UVER="0ubuntu1"
+UVER=""
 URELEASE="precise"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"

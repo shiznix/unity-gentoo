@@ -4,7 +4,7 @@ inherit distutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu1"
-URELEASE="precise"
+URELEASE="precise-updates"
 MY_P="${P/panel-/panel_}"
 GNOME2_LA_PUNT="1"
 

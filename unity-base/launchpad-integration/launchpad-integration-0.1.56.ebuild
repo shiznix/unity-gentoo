@@ -3,7 +3,7 @@ EAPI=4
 inherit base eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${PN}"
-UVER="0ubuntu2.1"
+UVER=""
 URELEASE="precise"
 MY_P="${P/integration-/integration_}"
 GNOME2_LA_PUNT="1"
