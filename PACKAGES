@@ -16,6 +16,7 @@ dev-libs/libzeitgeist
 dev-python/configglue
 dev-python/dirspec
 dev-python/lazr-restfulclient
+dev-python/pywapi
 gnome-base/gconf
 gnome-base/gnome-control-center
 gnome-base/gnome-session
@@ -60,6 +61,7 @@ unity-base/utouch-evemu
 unity-base/utouch-frame
 unity-base/utouch-geis
 unity-base/utouch-grail
+unity-extra/indicator-weather
 x11-base/xorg-server
 x11-libs/gtk+
 x11-libs/libXfixes
