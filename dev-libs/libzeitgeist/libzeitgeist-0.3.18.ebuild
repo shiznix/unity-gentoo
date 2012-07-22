@@ -21,8 +21,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="static-libs"
 
 CDEPEND="dev-libs/glib:2"
-RDEPEND="${CDEPEND}
-	gnome-extra/zeitgeist"
+RDEPEND="${CDEPEND}"
 DEPEND="${CDEPEND}
 	dev-util/gtk-doc
 	virtual/pkgconfig"

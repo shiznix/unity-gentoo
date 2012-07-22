@@ -52,7 +52,6 @@ COMMON_DEPEND="!aqua? (
 	x11-misc/shared-mime-info
 	cups? ( net-print/cups )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.3 )
-	!dev-util/gtk-builder-convert
 	!<gnome-base/gail-1000"
 DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
@@ -207,7 +206,8 @@ src_install() {
 		sed -i -e "s:Libs\: :Libs\: -framework Carbon :" "${ED%/}"/usr/lib/pkgconfig/$i || die "sed failed"
 	done
 
-	python_convert_shebangs 2 "${ED}"usr/bin/gtk-builder-convert
+	# dev-util/gtk-builder-convert split off into a separate package, #402905
+	rm "${ED}"usr/bin/gtk-builder-convert
 
 	find "${D}" -name '*.la' -exec rm -f {} +
 }

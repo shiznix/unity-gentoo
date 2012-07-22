@@ -27,6 +27,7 @@ IUSE="doc exif gnome +introspection packagekit +previewer sendto tracker xmp"
 # Require {glib,gdbus-codegen}-2.30.0 due to GDBus API changes between 2.29.92
 # and 2.30.0
 COMMON_DEPEND=">=dev-libs/glib-2.31.9:2
+	dev-libs/libzeitgeist
 	>=x11-libs/pango-1.28.3
 	>=x11-libs/gtk+-3.3.17:3[introspection?]
 	>=dev-libs/libxml2-2.7.8:2
