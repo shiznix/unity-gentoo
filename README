@@ -3,13 +3,10 @@ unity-gentoo
 
 A Gentoo overlay to install the Unity desktop
 
-~ # echo "unity-base" >> /etc/portage/categories
-~ # echo "unity-extra" >> /etc/portage/categories
 ~ # emerge -at unity-meta
-
 
 * If you experience blocks with regard to x11-libs/qt packages, then do:
   ~ # emerge -1a $(qlist -IC x11-libs/qt)
 
-This will upgrade all at once the installed QT packages to the new overlay version.
+This will upgrade all at once your already installed QT packages to the new overlay version.
 If you're missing the 'qlist' command then 'emerge portage-utils'.
