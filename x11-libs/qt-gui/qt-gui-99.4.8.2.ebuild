@@ -21,6 +21,8 @@ RDEPEND="app-admin/eselect-qtgraphicssystem
 	virtual/jpeg
 	~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support=]
 	~x11-libs/qt-script-${PV}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-xmlpatterns-${PV}[aqua=,c++0x=,qpa=,debug=]
 	!aqua? (
 		x11-libs/libICE
 		x11-libs/libSM

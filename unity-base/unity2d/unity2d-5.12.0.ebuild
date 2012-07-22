@@ -19,7 +19,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-libs/libqtgconf
-	>=x11-libs/qt-gui-99.4.8.2:4
 	=unity-base/unity-${PV}
 	>=x11-wm/metacity-99.2.34.1"
 

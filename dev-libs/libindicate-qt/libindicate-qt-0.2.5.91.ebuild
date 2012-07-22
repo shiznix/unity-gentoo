@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=dev-libs/libindicate-0.6.92
-	>=x11-libs/qt-gui-99.4.8.2:4
+	>=x11-libs/qt-core-99.4.8.2:4
 	>=x11-libs/qt-test-99.4.8.2:4"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
