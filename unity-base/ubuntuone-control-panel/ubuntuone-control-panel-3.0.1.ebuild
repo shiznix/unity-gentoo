@@ -18,8 +18,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-lang/python
-	dev-libs/dbus-glib
-	>=gnome-base/nautilus-99.3.4.2"
+	dev-libs/dbus-glib"
 RDEPEND="${DEPEND}
 	dev-python/configglue
 	dev-python/dbus-python
