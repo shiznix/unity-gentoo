@@ -75,7 +75,8 @@ src_install() {
 	# Install GTK3 support #
 	pushd build-gtk3
 	make -C src DESTDIR="${D}" install || die
-	use vala && \
+	if use vala; then
 		make -C bindings/vala DESTDIR="${D}" install || die
+	fi
 	popd
 }
