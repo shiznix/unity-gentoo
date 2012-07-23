@@ -2,11 +2,11 @@ EAPI=4
 
 inherit base eutils xorg-2
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/libx/${PN}"
+MY_PN="${PN/libXfixes/libxfixes}"
+MY_PV="${PV/-r//}"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/libx/${MY_PN}"
 UVER="4ubuntu4"
 URELEASE="precise"
-MY_PV="${PV/-r//}"
-MY_PN="${PN/libXfixes/libxfixes}"
 
 DESCRIPTION="Ubuntu patched version of X.Org Xfixes library needed for Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"

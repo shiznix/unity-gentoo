@@ -16,7 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-libs/libxml2
+DEPEND="dev-lang/python
+	dev-libs/libxml2
 	dev-libs/dbus-glib
 	dev-libs/openssl
 	dev-lang/mono
@@ -26,7 +27,7 @@ DEPEND="dev-libs/libxml2
 	gnome-base/gconf
 	gnome-base/gnome-keyring
 	>=net-libs/webkit-gtk-1.1.15
-	dev-lang/python"
+	unity-base/ubuntuone-client"
 
 src_install() {
 	emake DESTDIR="${D}" install || die "Install failed"
