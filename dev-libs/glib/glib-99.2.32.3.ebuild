@@ -13,7 +13,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
 UVER="0ubuntu1"
-URELEASE="precise"
+URELEASE="precise-updates"
 MY_P="${MY_P/-/_}"
 GNOME2_LA_PUNT="1"
 

@@ -11,7 +11,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
 UVER="0ubuntu0.4"
-URELEASE="precise"
+URELEASE="precise-updates"
 
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
