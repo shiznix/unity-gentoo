@@ -8,7 +8,7 @@ inherit base distutils
 
 MY_PN="compizconfig-settings-manager"
 MY_P="${MY_PN}_${PV}"
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${PN}"
+UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${MY_PN}"
 UVER="0ubuntu3"
 URELEASE="precise"
 
