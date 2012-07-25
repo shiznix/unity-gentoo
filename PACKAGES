@@ -14,6 +14,7 @@ dev-libs/libunity
 dev-libs/libunity-misc
 dev-libs/libzeitgeist
 dev-python/configglue
+dev-python/dbus-python
 dev-python/dirspec
 dev-python/lazr-restfulclient
 dev-python/pywapi
