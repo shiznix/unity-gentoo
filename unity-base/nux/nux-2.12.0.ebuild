@@ -20,6 +20,13 @@ IUSE=""
 
 DEPEND="app-i18n/ibus
 	>=dev-libs/glib-99.2.32.3
+	sys-devel/gcc:4.6
 	unity-base/utouch-geis"
 
 PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" )
+
+src_prepare() {
+	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
+		die "${P} requires an active gcc:4.6, please consult the output of 'gcc-config -l'"
+	fi
+}
