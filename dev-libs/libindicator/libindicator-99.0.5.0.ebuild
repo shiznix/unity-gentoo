@@ -2,11 +2,15 @@ EAPI=4
 
 inherit base eutils
 
-MY_PN="libindicator"
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/libi/${MY_PN}"
+# Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
+MY_PV="${PV/99./}"   
+MY_P="${PN}_${MY_PV}"
+
+S="${WORKDIR}/${PN}-${MY_PV}"
+
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/libi/${PN}"
 UVER="0ubuntu1"
 URELEASE="precise"
-MY_P="${MY_PN}_${PV}"
 
 DESCRIPTION="A set of symbols and convience functions that all indicators would like to use"
 HOMEPAGE="http://unity.ubuntu.com/"

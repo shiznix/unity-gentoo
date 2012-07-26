@@ -19,7 +19,7 @@ IUSE=""
 
 DEPEND="dev-python/pywapi
 	dev-lang/vala:0.14[vapigen]
-	>=dev-libs/libappindicator-0.4.92
+	>=dev-libs/libappindicator-99.0.4.92
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libindicate-qt"
 

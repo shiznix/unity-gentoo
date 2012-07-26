@@ -12,7 +12,9 @@ To preserve the function of the overlay packages from being broken by main tree 
 some package versions in the overlay are prefixed with '99.' so that they become the preferred
 choice.
 Packages effected are:
+dev-libs/libappindicator
 dev-libs/libindicate
+dev-libs/libindicator
 dev-python/dbus-python
 gnome-base/gconf
 gnome-base/gnome-control-center

@@ -2,10 +2,15 @@ EAPI=4
 
 inherit base eutils
 
+# Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
+MY_PV="${PV/99./}"
+MY_P="${PN}_${MY_PV}"
+
+S="${WORKDIR}/${PN}-${MY_PV}"
+
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
 UVER="0ubuntu1"
 URELEASE="precise"
-MY_P="${P/-/_}"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
@@ -16,7 +21,7 @@ SLOT="3"
 KEYWORDS="~amd64 ~x86"
 IUSE="vala"
 
-DEPEND=">=dev-libs/libindicator-0.5.0
+DEPEND=">=dev-libs/libindicator-99.0.5.0
 	dev-dotnet/gtk-sharp:2
 	dev-libs/xapian-bindings[python]
 	dev-python/dbus-python

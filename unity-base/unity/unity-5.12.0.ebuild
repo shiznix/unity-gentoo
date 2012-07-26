@@ -21,7 +21,7 @@ IUSE=""
 DEPEND="dev-libs/boost:1.49
 	<dev-libs/dbus-glib-0.100
 	dev-libs/libcompizconfig
-	>=dev-libs/libappindicator-0.4.92
+	>=dev-libs/libappindicator-99.0.4.92
 	dev-libs/libindicate-qt
 	dev-libs/libqtbamf
 	dev-libs/libqtdee
