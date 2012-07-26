@@ -22,5 +22,5 @@ DEPEND=">=dev-libs/libappindicator-0.4.92
 
 src_configure() {
 	econf \
-		--with-gtk=3
+		--with-gtk=3 || die
 }

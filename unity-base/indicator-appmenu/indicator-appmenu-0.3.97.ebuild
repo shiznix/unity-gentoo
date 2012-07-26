@@ -20,7 +20,9 @@ IUSE=""
 DEPEND="dev-lang/vala:0.16[vapigen]
 	>=dev-libs/libappindicator-0.4.92
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
-	dev-libs/libindicate-qt"
+	dev-libs/libindicate-qt
+	x11-libs/libwnck:1
+	x11-libs/libwnck:3"
 
 src_prepare() {
 	export VALAC=$(type -P valac-0.16)

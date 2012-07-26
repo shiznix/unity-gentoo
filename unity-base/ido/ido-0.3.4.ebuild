@@ -26,7 +26,7 @@ src_configure() {
 	pushd build-gtk2
 	../configure --prefix=/usr \
 		--disable-static \
-		--with-gtk=2
+		--with-gtk=2 || die
 	popd
 
 	# Build GTK3 support #
@@ -34,7 +34,7 @@ src_configure() {
 	pushd build-gtk3
 	../configure --prefix=/usr \
 		--disable-static \
-		--with-gtk=3
+		--with-gtk=3 || die
 	popd
 }
 

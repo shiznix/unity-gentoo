@@ -20,6 +20,7 @@ IUSE=""
 
 DEPEND="dev-libs/libqtgconf
 	=unity-base/unity-${PV}
+	x11-libs/libwnck:3
 	>=x11-wm/metacity-99.2.34.1"
 
 S="${WORKDIR}/unity-2d-${PV}"

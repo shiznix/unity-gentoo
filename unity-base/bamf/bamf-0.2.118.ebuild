@@ -19,6 +19,8 @@ IUSE="+introspection"
 DEPEND="dev-lang/vala:0.14[vapigen]
 	>=x11-libs/gtk+-99.2.24.10
 	>=x11-libs/gtk+-99.3.4.2
+	x11-libs/libwnck:1
+	x11-libs/libwnck:3
 	=x11-libs/libXfixes-5.0-r9999"
 
 src_prepare() {
@@ -34,7 +36,7 @@ src_configure() {
 	../configure --prefix=/usr \
 		$(use_enable introspection) \
 		--disable-static \
-		--with-gtk=2
+		--with-gtk=2 || die
 	popd
 
 	# Build GTK3 support #
@@ -43,7 +45,7 @@ src_configure() {
 	../configure --prefix=/usr \
 		$(use_enable introspection) \
 		--disable-static \
-		--with-gtk=3
+		--with-gtk=3 || die
 	popd
 }
 
