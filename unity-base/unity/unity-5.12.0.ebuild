@@ -51,6 +51,7 @@ DEPEND="dev-libs/boost:1.49
 	=x11-libs/libXfixes-5.0-r9999
 	x11-misc/appmenu-gtk
 	x11-misc/appmenu-qt
+	x11-plugins/compiz-plugins-main
 	x11-themes/unity-asset-pool"
 
 PATCHES=( "${WORKDIR}/${PN}_5.12-${UVER}.diff" )
