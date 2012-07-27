@@ -15,7 +15,8 @@ IUSE=""
 
 DEPEND=">=dev-libs/libappindicator-99.0.4.92
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
-	dev-libs/libindicate-qt"
+	dev-libs/libindicate-qt
+	dev-python/feedparser"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 
