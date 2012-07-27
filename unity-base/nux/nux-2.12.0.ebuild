@@ -20,6 +20,7 @@ IUSE=""
 
 DEPEND="app-i18n/ibus
 	>=dev-libs/glib-99.2.32.3
+	media-libs/glew
 	sys-devel/gcc:4.6
 	unity-base/utouch-geis"
 
