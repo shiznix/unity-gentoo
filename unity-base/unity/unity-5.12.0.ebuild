@@ -43,7 +43,6 @@ DEPEND="dev-libs/boost:1.49
 	unity-base/ccsm
 	unity-base/compiz
 	unity-base/compizconfig-python
-	unity-base/compiz-plugins-main
 	unity-base/dconf-qt
 	unity-base/nux
 	>=x11-base/xorg-server-99.1.12.3
