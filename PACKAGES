@@ -18,6 +18,7 @@ dev-python/dbus-python
 dev-python/dirspec
 dev-python/lazr-restfulclient
 dev-python/pywapi
+dev-python/unity-singlet
 gnome-base/gconf
 gnome-base/gnome-control-center
 gnome-base/gnome-session

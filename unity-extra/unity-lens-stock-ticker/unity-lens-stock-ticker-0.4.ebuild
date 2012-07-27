@@ -27,9 +27,11 @@ src_install() {
 	doins stockquote.lens
 	doins yahoostock.scope
 
-	insinto /usr/lib/${PN}
-	doins stockquote-lens \
+	exeinto /opt/extras.ubuntu.com/${MY_PN}
+	doexe stockquote-lens \
 		yahoostock-scope \
-		yahoo_stock.py \
-		*.png
+		yahoo_stock.py
+
+	insinto /opt/extras.ubuntu.com/${MY_PN}
+	doins *.png
 }

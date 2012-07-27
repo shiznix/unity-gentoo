@@ -18,7 +18,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-lang/vala:0.16[vapigen]
-	>=99.dev-libs/libappindicator-0.4.92
+	>=dev-libs/libappindicator-99.0.4.92
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libindicate-qt
 	x11-libs/libwnck:1
