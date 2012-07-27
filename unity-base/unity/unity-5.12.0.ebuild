@@ -20,7 +20,6 @@ IUSE=""
 
 DEPEND="dev-libs/boost:1.49
 	<dev-libs/dbus-glib-0.100
-	dev-libs/libcompizconfig
 	>=dev-libs/libappindicator-99.0.4.92
 	dev-libs/libindicate-qt
 	dev-libs/libqtbamf
@@ -48,6 +47,7 @@ DEPEND="dev-libs/boost:1.49
 	unity-base/dconf-qt
 	unity-base/nux
 	>=x11-base/xorg-server-99.1.12.3
+	x11-libs/libcompizconfig
 	=x11-libs/libXfixes-5.0-r9999
 	x11-misc/appmenu-gtk
 	x11-misc/appmenu-qt

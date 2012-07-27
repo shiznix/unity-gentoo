@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-DEPEND="dev-libs/libcompizconfig"
+DEPEND="x11-libs/libcompizconfig"
 
 src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do

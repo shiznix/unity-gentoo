@@ -1,6 +1,5 @@
 dev-libs/glib
 dev-libs/libappindicator
-dev-libs/libcompizconfig
 dev-libs/libdbusmenu
 dev-libs/libindicate
 dev-libs/libindicate-qt
@@ -66,6 +65,7 @@ unity-extra/indicator-weather
 unity-extra/unity-lens-stock-ticker
 x11-base/xorg-server
 x11-libs/gtk+
+x11-libs/libcompizconfig
 x11-libs/libXfixes
 x11-libs/qt-assistant
 x11-libs/qt-bearer
