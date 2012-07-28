@@ -96,7 +96,7 @@ DEPEND="${RDEPEND}
 	)"
 
 PDEPEND="
-	xorg? ( >=x11-base/xorg-drivers-$(get_version_component_range 2-3) )"
+	xorg? ( >=x11-base/xorg-drivers-$(get_version_component_range 1-2) )"
 
 REQUIRED_USE="!minimal? (
 		|| ( ${IUSE_SERVERS} )

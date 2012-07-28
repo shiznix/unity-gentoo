@@ -27,7 +27,7 @@ COMMONDEPEND="!x11-wm/compiz
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/libpng
 	<=media-libs/mesa-8.0.4
-	>=x11-base/xorg-server-1.1.1-r1
+	=x11-base/xorg-server-1.12.3-r9999
 	>=x11-libs/cairo-1.0
 	>=x11-libs/gtk+-99.3.4.2
 	x11-libs/pango

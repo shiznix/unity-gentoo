@@ -80,7 +80,7 @@ RDEPEND="${COMMON_DEPEND}
 	!<gnome-base/gail-1000
 	!<x11-libs/vte-0.31.0:2.90
 	packagekit? ( app-admin/packagekit-base )
-	X? ( !<x11-base/xorg-server-1.11.4 )"
+	X? ( =x11-base/xorg-server-1.12.3-r9999 )"
 
 PDEPEND="vim-syntax? ( app-vim/gtk-syntax )"
 

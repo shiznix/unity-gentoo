@@ -18,7 +18,7 @@ IUSE=""
 
 DEPEND="sys-devel/gcc:4.6
 	sys-libs/mtdev
-	>=x11-base/xorg-server-99.1.12.3
+	=x11-base/xorg-server-1.12.3-r9999
 	>=x11-libs/libXi-1.5.99.1"
 
 src_prepare() {
