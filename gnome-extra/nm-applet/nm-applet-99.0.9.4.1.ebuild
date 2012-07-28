@@ -28,7 +28,7 @@ KEYWORDS="~amd64 ~ppc ~x86"
 RDEPEND=">=dev-libs/glib-99.2.32.1:2
 	>=dev-libs/dbus-glib-0.88
 	>=dev-libs/libappindicator-99.0.4.92
-	>=gnome-base/gconf-2.20:2
+	>=gnome-base/gconf-99.3.2.5
 	>=gnome-base/gnome-keyring-2.20
 	>=sys-apps/dbus-1.4.1
 	>=sys-auth/polkit-0.96-r1

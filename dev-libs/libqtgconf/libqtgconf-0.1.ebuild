@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-RDEPEND="gnome-base/gconf
+RDEPEND=">=gnome-base/gconf-99.3.2.5
 	>=x11-libs/qt-core-99.4.8.2:4
 	>=x11-libs/qt-declarative-99.4.8.2:4"
 DEPEND="${RDEPEND}"

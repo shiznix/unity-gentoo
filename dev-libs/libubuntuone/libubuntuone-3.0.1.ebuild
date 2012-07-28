@@ -24,7 +24,7 @@ DEPEND="dev-lang/python
 	dev-dotnet/gtk-sharp
 	dev-dotnet/gtk-sharp-gapi
 	>=dev-python/pygtk-2.10
-	gnome-base/gconf
+	>=gnome-base/gconf-99.3.2.5
 	gnome-base/gnome-keyring
 	>=net-libs/webkit-gtk-1.1.15
 	unity-base/ubuntuone-client"

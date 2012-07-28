@@ -34,7 +34,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
 	>=x11-libs/gtk+-2.90.7:3
 	>=dev-libs/json-glib-0.10
 	>=dev-libs/dbus-glib-0.76
-	>=gnome-base/gconf-2:2
+	>=gnome-base/gconf-99.3.2.5
 	>=sys-power/upower-0.9.0
 	elibc_FreeBSD? ( dev-libs/libexecinfo )
 
