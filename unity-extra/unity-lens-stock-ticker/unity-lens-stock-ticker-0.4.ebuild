@@ -16,7 +16,8 @@ IUSE="asx"
 DEPEND=">=dev-libs/libappindicator-99.0.4.92
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libindicate-qt
-	dev-python/feedparser"
+	dev-python/feedparser
+	dev-python/unity-singlet"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 
