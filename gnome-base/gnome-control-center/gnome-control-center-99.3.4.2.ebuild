@@ -44,7 +44,7 @@ COMMON_DEPEND="
 
 	app-text/iso-codes
 	dev-libs/libxml2:2
-	gnome-base/gnome-menus:3
+	>=gnome-base/gnome-menus-99.3.4.0:3
 	gnome-base/libgtop:2
 	media-libs/fontconfig
 
