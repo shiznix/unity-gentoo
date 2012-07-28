@@ -21,7 +21,8 @@ IUSE=""
 DEPEND="dev-dotnet/gtk-sharp:2
 	>=dev-libs/glib-99.2.32.3
 	dev-libs/gobject-introspection
-	dev-python/pygtk"
+	dev-python/pygtk
+	>=x11-libs/gtk+-99.2.24.10"
 
 src_prepare() {
 	sed -i "/AssemblyKeyFile/ s@\".*\"@\"${WORKDIR}/mono.snk\"@g" lib/AssemblyInfo.cs
