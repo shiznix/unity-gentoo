@@ -28,6 +28,7 @@ DEPEND="dev-libs/boost:1.49
 	dev-libs/libunity
 	dev-libs/libunity-misc
 	dev-python/gconf-python
+	>=gnome-base/gconf-99.3.2.5
 	gnome-base/gnome-desktop:3
 	>=gnome-base/gnome-menus-99.3.4.0
 	>=gnome-base/gnome-control-center-99.3.4.2
