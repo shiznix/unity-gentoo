@@ -11,7 +11,7 @@ SRC_URI="https://code.launchpad.net/~scopes-packagers/+archive/ppa/+files/${MY_P
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="asx"
 
 DEPEND=">=dev-libs/libappindicator-99.0.4.92
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
@@ -19,6 +19,13 @@ DEPEND=">=dev-libs/libappindicator-99.0.4.92
 	dev-python/feedparser"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
+
+src_prepare() {
+	# Support quotes from the ASX #
+	use asx && \
+		sed -e 's:\?s=\%s\&:\?s=\%s.ax\&:g' \
+			-i "yahoo_stock.py"
+}
 
 src_install() {
 	insinto /usr/share/dbus-1/services
