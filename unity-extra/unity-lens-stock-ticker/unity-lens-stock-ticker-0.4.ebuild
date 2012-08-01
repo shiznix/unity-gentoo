@@ -4,7 +4,7 @@ URELEASE="precise"
 MY_PN="unity-stock-ticker-lens"
 MY_P="${MY_PN}_${PV}"
 
-DESCRIPTION="Stocks quote ticker indicator used by the Unity desktop"
+DESCRIPTION="Stocks quote ticker lens used by the Unity desktop"
 HOMEPAGE="https://code.launchpad.net/~scopes-packagers/+archive/ppa/+packages"
 SRC_URI="https://code.launchpad.net/~scopes-packagers/+archive/ppa/+files/${MY_P}.tar.gz"
 
@@ -13,11 +13,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="asx"
 
-DEPEND=">=dev-libs/libappindicator-99.0.4.92
-	>=dev-libs/libdbusmenu-0.6.1[gtk]
-	dev-libs/libindicate-qt
-	dev-python/feedparser
-	dev-python/unity-singlet"
+DEPEND="dev-python/feedparser
+	dev-python/unity-singlet
+	unity-base/unity"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 

@@ -1,4 +1,5 @@
 EAPI=4
+SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils
 
@@ -6,7 +7,6 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/universe/p/${PN}"
 UVER="1"
 URELEASE="precise"
 MY_P="${P/-/_}"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Python wrapper around different weather APIs"
 HOMEPAGE="http://unity.ubuntu.com/"

@@ -1,4 +1,5 @@
 EAPI=4
+SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils
 
@@ -18,14 +19,4 @@ IUSE=""
 
 S="${WORKDIR}"
 
-DEPEND="dev-lang/vala:0.14[vapigen]
-	>=dev-libs/libappindicator-99.0.4.92
-	>=dev-libs/libdbusmenu-0.6.1[gtk]
-	dev-libs/libindicate-qt"
-
-src_install() {
-	# Delete some files that are only useful on Ubuntu
-	rm -rf "${D}"etc/apport "${D}"usr/share/apport
-
-	distutils_src_install
-}
+DEPEND="dev-lang/python"
