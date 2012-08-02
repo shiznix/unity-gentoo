@@ -50,7 +50,7 @@ COMMON_DEPEND="!aqua? (
 	>=dev-libs/atk-1.29.2[introspection?]
 	media-libs/fontconfig
 	x11-misc/shared-mime-info
-	cups? ( net-print/cups )
+	cups? ( <net-print/cups-1.6.1 )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.3 )
 	!<gnome-base/gail-1000"
 DEPEND="${COMMON_DEPEND}
