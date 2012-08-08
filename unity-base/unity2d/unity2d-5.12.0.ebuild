@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit gnome2 cmake-utils eutils python toolchain-funcs
+inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
 MY_PN="unity-2d"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${MY_PN}"

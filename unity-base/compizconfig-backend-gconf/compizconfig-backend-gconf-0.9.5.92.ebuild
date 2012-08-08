@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit cmake-utils
+inherit base cmake-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
 UVER="0ubuntu5"

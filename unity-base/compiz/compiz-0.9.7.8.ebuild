@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit gnome2 cmake-utils eutils
+inherit base gnome2 cmake-utils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
 UVER="0ubuntu1.2"

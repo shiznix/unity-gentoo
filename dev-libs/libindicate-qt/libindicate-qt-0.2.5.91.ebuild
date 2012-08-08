@@ -1,5 +1,5 @@
 EAPI=4
-inherit cmake-utils eutils
+inherit base cmake-utils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libi/${PN}"
 UVER="1ubuntu3"
