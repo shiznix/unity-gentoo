@@ -16,9 +16,11 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="!unity-base/utouch-frame
+DEPEND="!!unity-base/utouch-evemu
+	!!unity-base/utouch-frame
 	sys-devel/gcc:4.6
 	sys-libs/mtdev
+	unity-base/evemu
 	=x11-base/xorg-server-1.12.3-r9999
 	>=x11-libs/libXi-1.5.99.1"
 

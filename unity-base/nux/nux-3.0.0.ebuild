@@ -18,7 +18,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="app-i18n/ibus
+DEPEND="!unity-base/utouch-geis
+	app-i18n/ibus
 	>=dev-libs/glib-99.2.32.3
 	<media-libs/glew-1.8
 	sys-devel/gcc:4.6

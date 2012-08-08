@@ -16,7 +16,9 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="!unity-base/utouch-grail
+DEPEND="!!unity-base/utouch-evemu
+	!!unity-base/utouch-frame
+	!!unity-base/utouch-grail
 	sys-devel/gcc:4.6
 	sys-libs/mtdev
 	unity-base/evemu

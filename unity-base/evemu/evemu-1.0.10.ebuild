@@ -16,4 +16,4 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="!unity-base/utouch-evemu"
+DEPEND="!!unity-base/utouch-evemu"

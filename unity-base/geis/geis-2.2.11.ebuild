@@ -17,7 +17,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="!unity-base/utouch-geis
+DEPEND="!!unity-base/utouch-geis
+	!!unity-base/utouch-grail
 	unity-base/grail"
 
 src_prepare() {
