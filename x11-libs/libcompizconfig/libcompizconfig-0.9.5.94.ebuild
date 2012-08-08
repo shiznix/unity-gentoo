@@ -21,7 +21,7 @@ IUSE=""
 RDEPEND="dev-libs/libxml2
 	dev-libs/libxslt
 	dev-libs/protobuf
-	=unity-base/compiz-0.9.7.8"
+	>=unity-base/compiz-0.9.7.8"
 DEPEND="${RDEPEND}
 	>=dev-util/pkgconfig-0.19"
 

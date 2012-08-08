@@ -11,7 +11,7 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="Compiz Window Manager Plugins for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}~bzr19.orig.tar.bz2
-        ${UURL}/${MY_P}~bzr19-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}~bzr19-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

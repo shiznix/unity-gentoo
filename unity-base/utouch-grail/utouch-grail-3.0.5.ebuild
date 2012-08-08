@@ -16,7 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="sys-devel/gcc:4.6
+DEPEND="!unity-base/grail
+	sys-devel/gcc:4.6
 	sys-libs/mtdev
 	unity-base/utouch-evemu
 	unity-base/utouch-frame

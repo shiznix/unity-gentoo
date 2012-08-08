@@ -1,11 +1,11 @@
 EAPI=4
 
-inherit gnome2 cmake-utils eutils python toolchain-funcs
+inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
 MY_PN="unity-2d"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${MY_PN}"
-UVER="0ubuntu1.1"
-URELEASE="precise"
+UVER="0ubuntu3"
+URELEASE="quantal"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The Ubuntu Unity Desktop for non-accelerated graphics cards"
@@ -15,11 +15,13 @@ SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="dev-libs/libqtgconf
-	unity-base/unity
+	unity-base/geis
+	>=unity-base/nux-3.0.0
+	>=unity-base/unity-6.0.0
 	x11-libs/libwnck:3
 	>=x11-wm/metacity-99.2.34.1"
 

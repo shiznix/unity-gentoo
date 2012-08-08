@@ -2,10 +2,10 @@ EAPI=4
 
 inherit base eutils
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu3"
-URELEASE="precise-updates"
-MY_P="${P/geis-/geis_}"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
+UVER="0ubuntu1"
+URELEASE="quantal"
+MY_P="${P/-/_}"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"
 HOMEPAGE="http://unity.ubuntu.com/"
@@ -14,11 +14,11 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 
-DEPEND="!unity-base/geis
-	unity-base/utouch-grail"
+DEPEND="!unity-base/utouch-geis
+	unity-base/grail"
 
 src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do

@@ -3,19 +3,20 @@ EAPI=4
 inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1.1"
-URELEASE="precise-updates"
+UVER="0ubuntu6"
+URELEASE="quantal"
+MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-SRC_URI="${UURL}/${PN}_5.12.orig.tar.gz
-	${UURL}/${PN}_5.12-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="|| ( >=unity-base/compiz-0.9.8 
@@ -45,16 +46,12 @@ DEPEND="|| ( >=unity-base/compiz-0.9.8
 	sys-devel/gcc:4.6
 	unity-base/compiz
 	unity-base/dconf-qt
-	<unity-base/nux-3.0
+	>=unity-base/nux-3.0.0
 	=x11-base/xorg-server-1.12.3-r9999
 	=x11-libs/libXfixes-5.0-r9999
 	x11-misc/appmenu-gtk
 	x11-misc/appmenu-qt
 	x11-themes/unity-asset-pool"
-
-PATCHES=( "${WORKDIR}/${PN}_5.12-${UVER}.diff" 
-		"${FILESDIR}/stdcerr-fix.patch"
-		"${FILESDIR}/gtestdir_fix.patch" )
 
 pkg_pretend() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
@@ -63,13 +60,19 @@ pkg_pretend() {
 }
 
 src_prepare() {
+	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${S}/debian/patches/${patch}" )
+	done
+	PATCHES+=( "${FILESDIR}/stdcerr-fix.patch"
+			"${FILESDIR}/gtestdir_fix.patch" )
 	base_src_prepare
 
 	sed -e "s:/desktop:/org/unity/desktop:g" \
 		-i "com.canonical.Unity.gschema.xml" || die
 
 	sed -e "s:Ubuntu Desktop:Unity Gentoo Desktop:g" \
-		-i "plugins/unityshell/src/PanelMenuView.cpp" || die
+		-i "panel/PanelMenuView.cpp" || die
 }
 
 src_configure() {
