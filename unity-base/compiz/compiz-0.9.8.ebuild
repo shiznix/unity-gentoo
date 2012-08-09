@@ -77,7 +77,7 @@ src_prepare() {
 	# Fix installation of ccsm and compizconfig-python #
 	sed -e "/message/d" \
 		-i compizconfig/cmake/exec_setup_py_with_destdir.cmake || die
-	sed -e "s:prefix=\${PREFIX}:prefix=${D}usr:g" \
+	sed -e "s:\${INSTALL_ROOT_ARGS}:--root=${D}:g" \
 		-i compizconfig/cmake/exec_setup_py_with_destdir.cmake || die
 }
 
@@ -97,10 +97,9 @@ src_configure() {
 		-DCOMPIZ_DESTDIR="${D}"
 		-DCOMPIZ_SYSCONFDIR="${D}etc"
 		-DCMAKE_MODULE_PATH="${D}usr/share/cmake"
-		-DCOMPIZ_DEFAULT_PLUGINS="core,composite,opengl,compiztoolbox,decor,vpswitch,\
+		-DCOMPIZ_DEFAULT_PLUGINS="ccp,core,composite,opengl,compiztoolbox,decor,vpswitch,\
 snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,\
 unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell""	# Default set of plugins taken from unity.ini #
-#		-DCOMPIZ_DEFAULT_PLUGINS="ccp"
 	cmake-utils_src_configure
 }
 
