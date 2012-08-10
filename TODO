@@ -2,3 +2,4 @@
 * Licenses audit
 * Check unneeded *.la files are being removed
 * Improve dependency tracking
+* Get user account switching to work from inicator-session

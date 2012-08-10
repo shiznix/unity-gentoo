@@ -126,7 +126,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	PATCHES+=( "${FILESDIR}/gnome-control-center-${MY_PV}-optional-bt-colord-goa-wacom.patch" )
+	PATCHES+=( "${FILESDIR}/gnome-control-center-optional-bt-colord-goa-wacom.patch" )
 	# Disable selected patches #
 	sed \
 		`# Causes compilation to fail` \

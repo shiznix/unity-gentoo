@@ -4,20 +4,19 @@ inherit base gnome2 multilib
 
 # Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PV="${PV/99./}"
-MY_P="${PN}_${MY_PV}"
+MY_P="${PN}-${MY_PV}"
 
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
-MY_P="${MY_P/bluetooth-/bluetooth_}"
+UVER="0ubuntu5"
+URELEASE="precise"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Fork of bluez-gnome focused on integration with GNOME, patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/GnomeBluetooth"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="http://ftp.gnome.org/pub/GNOME/sources/${PN}/3.4/${MY_P}.tar.xz
+	${UURL}/${PN}_3.2.2-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="2"
@@ -70,9 +69,13 @@ pkg_setup() {
 }
 
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	PATCHES+=(
+		"${FILESDIR}/01_use_app_indicator.patch"
+		"${FILESDIR}/nodisplay_autostart.patch"
+		"${FILESDIR}/start_in_classic_session.patch"
+		"${FILESDIR}/menu_update_on_rfkill.patch"
+		"${FILESDIR}/unity_sound_nua.patch"
+	)
 	base_src_prepare
 }
 
