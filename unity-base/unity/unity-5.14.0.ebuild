@@ -3,15 +3,16 @@ EAPI=4
 inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1.1"
+UVER="0ubuntu1"
 URELEASE="precise-updates"
 GNOME2_LA_PUNT="1"
+MY_P="${P/-/_}"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-SRC_URI="${UURL}/${PN}_5.12.orig.tar.gz
-	${UURL}/${PN}_5.12-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -52,7 +53,7 @@ DEPEND="|| ( >=unity-base/compiz-0.9.8
 	x11-misc/appmenu-qt
 	x11-themes/unity-asset-pool"
 
-PATCHES=( "${WORKDIR}/${PN}_5.12-${UVER}.diff" 
+PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" 
 		"${FILESDIR}/stdcerr-fix.patch"
 		"${FILESDIR}/gtestdir_fix.patch" )
 
