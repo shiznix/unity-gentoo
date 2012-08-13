@@ -1,6 +1,10 @@
 #!/bin/sh
 
-for pack in `find $(pwd) -name "*.ebuild"`; do
+## Script to compare upstream versions of packages with versions in overlay tree ##
+# If run without any arguments it recurses through the overlay tree and compares versions for all packages #
+# Or can be run on individual packages as 'version_check <package>-<version>.ebuild'
+
+version_check() {
 	packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
 	if [ -n "`echo "${packbasename}" | grep 'ccsm'`" ]; then packname="compizconfig-settings-manager"
@@ -29,4 +33,13 @@ for pack in `find $(pwd) -name "*.ebuild"`; do
 	fi
 	UVER=
 	upstream=
-done
+}
+
+if [ -n "$1" ]; then
+        pack="$1"
+        version_check
+else
+        for pack in `find $(pwd) -name "*.ebuild"`; do
+                version_check
+        done
+fi
