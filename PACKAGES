@@ -59,9 +59,9 @@ unity-base/utouch-evemu
 unity-base/utouch-frame
 unity-base/utouch-geis
 unity-base/utouch-grail
+unity-extra/glipper
 unity-extra/indicator-power
 unity-extra/indicator-weather
-unity-extra/unity-lens-radios
 unity-extra/unity-lens-stock-ticker
 x11-base/xorg-server
 x11-libs/gtk+
