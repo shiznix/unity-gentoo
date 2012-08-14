@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit base eutils
+inherit base eutils python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu1"
@@ -16,4 +16,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="!unity-base/evemu"
+DEPEND="!!unity-base/evemu
+	dev-lang/python:2.7"
+
+pkg_setup() {
+	python_set_active_version 2
+	python_pkg_setup
+}

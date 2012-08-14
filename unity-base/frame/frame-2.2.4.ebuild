@@ -17,7 +17,7 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="!!unity-base/utouch-evemu
-	!!unity-base/utouch-frame
+	!unity-base/utouch-frame
 	sys-devel/gcc:4.6
 	sys-libs/mtdev
 	unity-base/evemu

@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit base eutils
+inherit base eutils python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu3"
@@ -17,8 +17,14 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="!unity-base/geis
+DEPEND="!!unity-base/geis
+	dev-lang/python:2.7
 	unity-base/utouch-grail"
+
+pkg_setup() {
+	python_set_active_version 2
+	python_pkg_setup
+}
 
 src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
