@@ -23,6 +23,7 @@ COMMONDEPEND="!x11-wm/compiz
 	!x11-libs/compiz-plugins-main
 	>=dev-libs/boost-1.34.0
 	dev-libs/glib:2
+	dev-cpp/glibmm
 	dev-libs/libxml2
 	dev-libs/libxslt
 	>=gnome-base/librsvg-2.14.0:2
@@ -31,6 +32,7 @@ COMMONDEPEND="!x11-wm/compiz
 	=x11-base/xorg-server-1.12.3-r9999
 	>=x11-libs/cairo-1.0
 	>=x11-libs/gtk+-99.3.4.2
+	x11-libs/libnotify
 	x11-libs/pango
 	x11-libs/libwnck:1
 	x11-libs/libX11
