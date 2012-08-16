@@ -29,6 +29,7 @@ COMMONDEPEND="!unity-base/ccsm
 	dev-cpp/glibmm
 	dev-libs/libxml2
 	dev-libs/libxslt
+	gnome-base/gconf
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/libpng
 	<=media-libs/mesa-8.0.4
