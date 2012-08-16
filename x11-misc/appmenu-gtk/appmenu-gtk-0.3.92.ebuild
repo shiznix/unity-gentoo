@@ -17,7 +17,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 DEPEND="unity-base/indicator-appmenu
-	x11-libs/gtk+:2
+	>=x11-libs/gtk+-99.2.24.11:2
 	>=x11-libs/gtk+-99.3.4.2"
 
 src_configure() {

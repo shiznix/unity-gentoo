@@ -33,6 +33,10 @@ unity-base/compiz
 unity-base/compizconfig-backend-gconf
 unity-base/compizconfig-python
 unity-base/dconf-qt
+unity-base/evemu
+unity-base/frame
+unity-base/geis
+unity-base/grail
 unity-base/ido
 unity-base/indicator-applet
 unity-base/indicator-application

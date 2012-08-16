@@ -3,10 +3,9 @@ EAPI=4
 inherit distutils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1.3"
-URELEASE="precise-updates"
+UVER="0ubuntu2"
+URELEASE="quantal"
 MY_P="${P/video-/video_}"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Application lens for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"

@@ -1,7 +1,6 @@
-EAPI=4
-PYTHON_DEPEND="2:2.5"
+EAPI="4"
 
-inherit base eutils flag-o-matic gnome.org python virtualx autotools
+inherit base eutils flag-o-matic gnome.org virtualx autotools
 
 # Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PN="gtk+2.0"
@@ -11,8 +10,8 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
-UVER="0ubuntu6"
-URELEASE="precise"
+UVER="0ubuntu1"
+URELEASE="quantal"
 
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
@@ -22,7 +21,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="LGPL-2"
 SLOT="2"
-KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 sh sparc x86 ~x86-fbsd ~x86-freebsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 IUSE="aqua cups debug doc examples +introspection test vim-syntax xinerama"
 
 # NOTE: cairo[svg] dep is due to bug 291283 (not patched to avoid eautoreconf)
@@ -45,12 +44,12 @@ COMMON_DEPEND="!aqua? (
 		x11-libs/gdk-pixbuf:2[introspection?]
 	)
 	xinerama? ( x11-libs/libXinerama )
-	>=dev-libs/glib-2.27.3:2
+	>=dev-libs/glib-2.30:2
 	>=x11-libs/pango-1.20[introspection?]
 	>=dev-libs/atk-1.29.2[introspection?]
 	media-libs/fontconfig
 	x11-misc/shared-mime-info
-	cups? ( <net-print/cups-1.6.1 )
+	cups? ( net-print/cups )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.3 )
 	!<gnome-base/gail-1000"
 DEPEND="${COMMON_DEPEND}
@@ -94,17 +93,28 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
+	epatch "${FILESDIR}/fix-ubuntumenuproxy-build.patch"
 
-	epatch "${FILESDIR}/${P}_ubuntu_gtk_menu_shell_activate_mnemonic-fix.patch"
+	# gold detected underlinking
+	# Add missing libs, patch sent upstream
+	epatch "${FILESDIR}/${PN}-2.24.10-gold.patch"
+
+	# Prevent stuck grab in pidgin, bug #427148, upstream 680346
+	epatch "${FILESDIR}/${PN}-2.24.11-stuck-grab.patch"
+
+	# use an arch-specific config directory so that 32bit and 64bit versions
+	# dont clash on multilib systems
+#	epatch "${FILESDIR}/${PN}-2.21.3-multilib.patch"
 
 	# Don't break inclusion of gtkclist.h, upstream bug 536767
 	epatch "${FILESDIR}/${PN}-2.14.3-limit-gtksignal-includes.patch"
 
-	# Create symlinks to old icons until apps are ported, bug #339319
-	epatch "${FILESDIR}/${PN}-2.24.4-old-icons.patch"
-
 	# fix building with gir #372953, upstream bug #642085
 	epatch "${FILESDIR}"/${PN}-2.24.7-darwin-quartz-introspection.patch
+
+	# marshalers code was pre-generated with glib-2.31, upstream bug #671763
+	rm -v gdk/gdkmarshalers.c gtk/gtkmarshal.c gtk/gtkmarshalers.c \
+		perf/marshalers.c || die
 
 	# Stop trying to build unmaintained docs, bug #349754
 	strip_builddir SUBDIRS tutorial docs/Makefile.am docs/Makefile.in
@@ -118,7 +128,8 @@ src_prepare() {
 
 	if ! use test; then
 		# don't waste time building tests
-		strip_builddir SRC_SUBDIRS tests Makefile.am Makefile.in
+		strip_builddir SRC_SUBDIRS tests Makefile.{am,in}
+		strip_builddir SUBDIRS tests gdk/Makefile.{am,in} gtk/Makefile.{am,in}
 	else
 		# Non-working test in gentoo's env
 		sed 's:\(g_test_add_func ("/ui-tests/keys-events.*\):/*\1*/:g' \

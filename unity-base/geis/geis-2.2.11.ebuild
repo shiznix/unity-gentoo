@@ -13,7 +13,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="!!unity-base/utouch-geis

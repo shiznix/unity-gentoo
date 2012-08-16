@@ -20,7 +20,7 @@ IUSE="download"
 
 CDEPEND="dev-libs/libzeitgeist
 	dev-libs/glib:2
-	x11-libs/gtk+:2
+	>=x11-libs/gtk+-99.2.24.11:2
 	dev-lang/vala:0.12"
 RDEPEND="${CDEPEND}"
 DEPEND="${CDEPEND}
