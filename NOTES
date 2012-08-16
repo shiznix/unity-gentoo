@@ -16,3 +16,12 @@ emerge -1 `qdepends -CNQ x11-libs/qt 2> /dev/null`
 	The overlay however achieves this by passing the same list of plugins to compiz using the cmake -DCOMPIZ_DEFAULT_PLUGINS=... switch at build time
 	If you're interested in getting the gconf way working, look at 'unity-base/compiz/files/gconf-defaults/compiz-gnome.gconf-defaults'
 		and the 'unity-base/compiz/files/gconf-defaults/update-gconf-defaults' application
+
+* Using portage tree libindicate packages
+	- unity-base/indicator-appmenu requires
+		dev-libs/libdbusmenu, dev-libs/libindicator and dev-libs/libappindicator all be built with x11-libs/gtk:2 support
+	- Many indicators (bluetooth, weather, etc.) require dev-libs/libappindicator be built with Python GTK+-2.x bindings to function
+	- Gentoo is in the position of dropping GTK+-2.x Ubuntu Ayatana libraries from tree so we must maintain our own versions of
+		dev-libs/libdbusmenu
+		dev-libs/libindicator
+		dev-libs/libappindicator

@@ -22,8 +22,8 @@ IUSE=""
 DEPEND="|| ( >=unity-base/compiz-0.9.8 
 		( <unity-base/compiz-0.9.8 unity-base/ccsm unity-base/compizconfig-python x11-libs/libcompizconfig x11-plugins/compiz-plugins-main ) )
 	dev-libs/boost:1.49
-	<dev-libs/dbus-glib-0.100
-	>=dev-libs/libappindicator-99.0.4.92
+	dev-libs/dbus-glib
+	dev-libs/libappindicator
 	dev-libs/libindicate-qt
 	dev-libs/libqtbamf
 	dev-libs/libqtdee
@@ -42,7 +42,7 @@ DEPEND="|| ( >=unity-base/compiz-0.9.8
 	gnome-base/libgdu
 	>=gnome-extra/polkit-gnome-99.0.105
 	media-libs/clutter-gtk:1.0
-	<sys-apps/dbus-1.6.0
+	sys-apps/dbus
 	sys-devel/gcc:4.6
 	unity-base/compiz
 	unity-base/dconf-qt

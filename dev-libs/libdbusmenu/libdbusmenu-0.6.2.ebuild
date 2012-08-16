@@ -18,9 +18,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+introspection +gtk"
 
 RDEPEND="dev-libs/glib:2
-	<dev-libs/dbus-glib-0.100
+	dev-libs/dbus-glib
 	dev-libs/libxml2:2
-	<sys-apps/dbus-1.6.0
+	sys-apps/dbus
 	>=x11-libs/gtk+-99.2.24.10
 	>=x11-libs/gtk+-99.3.4.2:3"
 DEPEND="${RDEPEND}
