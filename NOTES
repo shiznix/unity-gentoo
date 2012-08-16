@@ -9,9 +9,6 @@ emerge -1 `qdepends -CNQ x11-libs/qt 2> /dev/null`
 	src/qtdeclarative added to QT4_TARGET_DIRECTORIES after src/qtgui to enable qt-gui to build
 	x11-libs/qt-sql and x11-libs/qt-xmlpatterns added to DEPEND
 
-* Until Ubuntu start using sys-apps/dbus-1.6, Unity needs <sys-apps/dbus-1.6 for the indicator panel to refresh itself
-	This has the effect of also needing <dev-libs/dbus-glib-0.100 and <dev-python/dbus-python-1.1.1
-
 * Ubuntu uses the compiz gconf plugin (unity-base/compizconfig-backend-gconf) to read the list of default compiz plugins for using Unity
 	The overlay however achieves this by passing the same list of plugins to compiz using the cmake -DCOMPIZ_DEFAULT_PLUGINS=... switch at build time
 	If you're interested in getting the gconf way working, look at 'unity-base/compiz/files/gconf-defaults/compiz-gnome.gconf-defaults'
