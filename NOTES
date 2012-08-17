@@ -13,6 +13,9 @@ emerge -1 `qdepends -CNQ x11-libs/qt 2> /dev/null`
 	The overlay however achieves this by passing the same list of plugins to compiz using the cmake -DCOMPIZ_DEFAULT_PLUGINS=... switch at build time
 	If you're interested in getting the gconf way working, look at 'unity-base/compiz/files/gconf-defaults/compiz-gnome.gconf-defaults'
 		and the 'unity-base/compiz/files/gconf-defaults/update-gconf-defaults' application
+	EDIT: Ubuntu have indicated they will be porting compiz to use dconf instead of gconf for Quantal, so wait until they do before attempting this
+		One side effect of the port is that unity-2d will be dropped in favour of using llvmpipe/gallium software rendering for unity-3d,
+		which could mean that we can drop patching QT as we only really do this currently for unity-2d to function
 
 * Using portage tree libindicate packages
 	- unity-base/indicator-appmenu requires
