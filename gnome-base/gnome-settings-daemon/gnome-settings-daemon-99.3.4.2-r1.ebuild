@@ -9,7 +9,7 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu0.2"
+UVER="0ubuntu0.4"
 URELEASE="precise-updates"
 MY_P="${MY_P/daemon-/daemon_}"
 GNOME2_LA_PUNT="1"
@@ -89,20 +89,33 @@ pkg_setup() {
 		--disable-static
 		--disable-schemas-compile
 		--enable-gconf-bridge
+		$(use_enable colord color)
 		$(use_enable cups)
 		$(use_enable debug)
 		$(use_enable debug more-warnings)
 		$(use_enable packagekit)
 		$(use_enable smartcard smartcard-support)
 		$(use_enable systemd)
-		$(use_enable udev gudev)"
+		$(use_enable udev gudev)
+		$(use_enable wacom)"
 }
 
 src_prepare() {
+	# Make colord and wacom optional; requires eautoreconf
+	epatch "${FILESDIR}/${PN}-3.4.0-optional-color-wacom.patch"
+
+	# Useful patches in next release
+	epatch "${FILESDIR}/${PN}-${MY_PV}-double-unref.patch"
+	epatch "${FILESDIR}/${PN}-${MY_PV}-XI-2.2.patch"
+
+	# bug #428816, https://bugzilla.gnome.org/show_bug.cgi?id=679761
+	epatch "${FILESDIR}/${PN}-3.4.2-cups-1.6.patch"
+
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
+
 	eautoreconf
 	gnome2_src_prepare
 }

@@ -15,6 +15,7 @@ dev-libs/libzeitgeist
 dev-python/configglue
 dev-python/dbus-python
 dev-python/dirspec
+dev-python/python-distutils-extra
 dev-python/lazr-restfulclient
 dev-python/pywapi
 dev-python/unity-singlet

@@ -3,7 +3,7 @@ EAPI=4
 inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${PN}"
-UVER="0ubuntu2"
+UVER="0ubuntu3"
 URELEASE="quantal"
 MY_P="${P/-/_}"
 

@@ -3,8 +3,8 @@ EAPI=4
 inherit base eutils autotools
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
-UVER="0ubuntu1.1"
-URELEASE="precise-updates"
+UVER="0ubuntu1"
+URELEASE="quantal"
 MY_P="${P/-/_}"
 
 DESCRIPTION="Essential libraries needed for the Unity desktop"
@@ -20,11 +20,11 @@ IUSE=""
 DEPEND="dev-libs/dee
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libgee
-	dev-lang/vala:0.14"
+	dev-lang/vala:0.16"
 
 src_prepare() {
-	export VALAC=$(type -P valac-0.14) && \
-	export VALA_API_GEN=$(type -p vapigen-0.14)
+	export VALAC=$(type -P valac-0.16) && \
+	export VALA_API_GEN=$(type -p vapigen-0.16)
 
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"
 
