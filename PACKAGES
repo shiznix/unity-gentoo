@@ -2,7 +2,6 @@ dev-libs/glib
 dev-libs/libappindicator
 dev-libs/libdbusmenu
 dev-libs/libindicate
-dev-libs/libindicate-qt
 dev-libs/libindicator
 dev-libs/libqtbamf
 dev-libs/libqtdee
@@ -13,7 +12,6 @@ dev-libs/libunity
 dev-libs/libunity-misc
 dev-libs/libzeitgeist
 dev-python/configglue
-dev-python/dbus-python
 dev-python/dirspec
 dev-python/python-distutils-extra
 dev-python/lazr-restfulclient
@@ -65,6 +63,8 @@ unity-base/utouch-frame
 unity-base/utouch-geis
 unity-base/utouch-grail
 unity-extra/glipper
+unity-extra/indicator-evolution
+unity-extra/indicator-messages
 unity-extra/indicator-power
 unity-extra/indicator-weather
 unity-extra/unity-lens-stock-ticker
