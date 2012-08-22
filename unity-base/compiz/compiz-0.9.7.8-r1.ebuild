@@ -57,6 +57,9 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/xvinfo"
 
 src_prepare() {
+	# Set compiz Window Decorations to !state=maxvert so top appmenu bar behaviour functions correctly #
+	PATCHES+=( "${FILESDIR}/compiz-0.9.8_decor-setting.diff" )
+
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
         	PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done

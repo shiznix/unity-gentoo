@@ -71,9 +71,14 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
+
+	# Set metacity show_maximized_titlebars to false so top appmenu bar behaviour functions correctly #
+	PATCHES+=( "${FILESDIR}/metacity-window_titlebars_fix.diff" )
+
 	base_src_prepare
 	gnome2_src_prepare
 
