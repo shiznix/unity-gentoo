@@ -3,13 +3,14 @@ EAPI=4
 inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
-UVER="0ubuntu1"
-URELEASE="precise"
+UVER="0ubuntu2"
+URELEASE="quantal"
 MY_P="${P/gtk-/gtk_}"
 
 DESCRIPTION="Export GTK menus over DBus"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -19,6 +20,8 @@ IUSE=""
 DEPEND="unity-base/indicator-appmenu
 	>=x11-libs/gtk+-99.2.24.11:2
 	>=x11-libs/gtk+-99.3.4.2"
+
+PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" )
 
 src_configure() {
 	# Build GTK2 support #

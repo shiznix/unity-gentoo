@@ -45,7 +45,7 @@ src_prepare() {
 	done
 	base_src_prepare
 
-	sed -e "s:ubuntuone-launch:mkdir \"\$HOME/Ubuntu One\" \&\& ubuntuone-launch || ubuntuone-launch:" \
+	sed -e "s:\[ -d \"\$HOME\/Ubuntu One\" \] && ubuntuone-launch:\[ ! -d \"\$HOME\/Ubuntu One\" \] && mkdir \"\$HOME/Ubuntu One\" \&\& ubuntuone-launch || ubuntuone-launch:" \
 		-i "${S}/data/ubuntuone-launch.desktop.in" || die
 }
 

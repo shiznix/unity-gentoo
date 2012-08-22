@@ -1,7 +1,8 @@
 [Desktop Entry]
 Name=Unity 2D
 Comment=This session logs you into Unity 2D Mode
-Exec=gnome-session --session=unity-2d
+Exec=gnome-session --session=ubuntu-2d
 TryExec=unity-2d-panel
 Icon=
 Type=Application
+X-Ubuntu-Gettext-Domain=gnome-session-3.0

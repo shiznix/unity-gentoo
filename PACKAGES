@@ -1,7 +1,6 @@
 dev-libs/glib
 dev-libs/libappindicator
 dev-libs/libdbusmenu
-dev-libs/libindicate
 dev-libs/libindicator
 dev-libs/libqtbamf
 dev-libs/libqtdee
@@ -63,8 +62,6 @@ unity-base/utouch-frame
 unity-base/utouch-geis
 unity-base/utouch-grail
 unity-extra/glipper
-unity-extra/indicator-evolution
-unity-extra/indicator-messages
 unity-extra/indicator-power
 unity-extra/indicator-weather
 unity-extra/unity-lens-stock-ticker

@@ -44,6 +44,7 @@ DEPEND="|| ( >=unity-base/compiz-0.9.8
 	media-libs/clutter-gtk:1.0
 	sys-apps/dbus
 	sys-devel/gcc:4.6
+	unity-base/bamf
 	unity-base/compiz
 	unity-base/dconf-qt
 	>=unity-base/nux-3.0.0

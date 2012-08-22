@@ -5,5 +5,5 @@ RequiredProviders=windowmanager;panel;
 DefaultProvider-windowmanager=compiz
 DefaultProvider-panel=compiz
 IsRunnableHelper=/usr/libexec/unity_support_test
-FallbackSession=unity-2d
+FallbackSession=ubuntu-2d
 DesktopName=Unity

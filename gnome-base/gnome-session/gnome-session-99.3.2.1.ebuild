@@ -125,15 +125,15 @@ src_install() {
 
 	# XDM visible #
 	insinto /usr/share/xsessions
-		doins "${FILESDIR}/unity.desktop"
-		doins "${FILESDIR}/unity-2d.desktop"
+		doins "${FILESDIR}/ubuntu.desktop"
+		doins "${FILESDIR}/ubuntu-2d.desktop"
 		doins "${FILESDIR}/gnome-classic.desktop"
 		doins "${FILESDIR}/gnome-fallback.desktop"
 
 	# 'gnome-session' visible as executed by --session=... #
 	insinto /usr/share/gnome-session/sessions
-		doins "${FILESDIR}/unity.session"
-		doins "${FILESDIR}/unity-2d.session"
+		doins "${FILESDIR}/ubuntu.session"
+		doins "${FILESDIR}/ubuntu-2d.session"
 		doins "${FILESDIR}/gnome-classic.session"
 		doins "${FILESDIR}/gnome-fallback.session"
 

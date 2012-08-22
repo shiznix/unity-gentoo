@@ -21,6 +21,7 @@ DEPEND="dev-lang/vala:0.16[vapigen]
 	dev-libs/libappindicator
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libindicate-qt
+	unity-base/bamf
 	x11-libs/libwnck:1
 	x11-libs/libwnck:3"
 
