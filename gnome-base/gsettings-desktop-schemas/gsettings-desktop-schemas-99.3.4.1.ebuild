@@ -23,7 +23,9 @@ IUSE="+introspection"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~sparc-solaris ~x86-solaris"
 
 RDEPEND=">=dev-libs/glib-2.31:2
-	introspection? ( >=dev-libs/gobject-introspection-1.31.0 )"
+	introspection? ( >=dev-libs/gobject-introspection-1.31.0 )
+	x11-themes/light-themes
+	x11-themes/ubuntu-mono"
 DEPEND="${RDEPEND}
 	sys-devel/gettext
 	>=dev-util/intltool-0.40
@@ -41,6 +43,8 @@ src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
+	PATCHES+=( "${FILESDIR}/nautilus_show_desktop_icons.diff" )
+
 	base_src_prepare
 	gnome2_src_prepare
 }

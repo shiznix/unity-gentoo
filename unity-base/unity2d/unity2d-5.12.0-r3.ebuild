@@ -58,9 +58,7 @@ pkg_postinst() {
 	einfo "libindicate or libappindicator notification plugins"
 	einfo
 	einfo "If you would like to use Unity's icons and themes"
-	einfo "'emerge light-themes ubuntu-mono gnome-tweak-tool'"
-	einfo "then run 'gnome-tweak-tool' as your desktop user and choose"
-	einfo "Ambiance GTK+ theme and Ubunto-mono-dark icon theme"
+	einfo "select the Ambiance theme in 'System Settings > Appearance'"
 	einfo
 
 	gnome2_pkg_postinst
