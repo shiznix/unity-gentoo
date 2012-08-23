@@ -3,7 +3,7 @@ EAPI=4
 inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1"
+UVER="0ubuntu3"
 URELEASE="quantal"
 MY_P="${P/music-/music_}"
 
@@ -20,6 +20,7 @@ IUSE=""
 DEPEND="dev-lang/vala:0.16[vapigen]
 	dev-libs/libzeitgeist
 	gnome-base/gnome-menus:3
+	>=media-libs/gstreamer-0.10.36
 	unity-base/rhythmbox-ubuntuone
 	unity-base/unity"
 
