@@ -76,4 +76,16 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     done
 fi
 
-exec ck-launch-session dbus-launch --exit-with-session gnome-session --session=ubuntu
+# Check we have 'video' group permissions as a minimum #
+if [[ -z "`groups | grep video`" ]]; then
+        echo -e "\nOOps... this user is not part of the 'video' group"
+        echo "Unity will not function correctly until this user has been added to the 'video' group"
+        echo -e "Exiting...\n"
+        exit 1
+else
+        if [[ -z "`groups | grep plugdev`" ]]; then
+                echo "WARNING: User is not part of the 'plugdev' group"
+                echo "Some devices and indicators may fail to function"
+        fi
+        exec ck-launch-session dbus-launch --exit-with-session gnome-session --session=ubuntu
+fi
