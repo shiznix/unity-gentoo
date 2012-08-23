@@ -6,7 +6,7 @@ inherit distutils gnome2-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
 UVER="0ubuntu1"
-URELEASE="precise"
+URELEASE="quantal"
 MY_P="${P/weather-/weather_}"
 GNOME2_LA_PUNT="1"
 
@@ -26,7 +26,7 @@ DEPEND="dev-python/python-distutils-extra
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libindicate-qt"
 
-S="${WORKDIR}/cloudy"
+S="${WORKDIR}/${MY_P}"
 
 src_install() {
 	distutils_src_install

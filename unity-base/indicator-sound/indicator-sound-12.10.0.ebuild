@@ -3,13 +3,13 @@ EAPI=4
 inherit base eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
-UVER="0ubuntu2.1"
-URELEASE="precise-updates"
+UVER="0ubuntu2"
+URELEASE="quantal"
 MY_P="${P/sound-/sound_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="System sound indicator used by the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/indicator-sound"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"

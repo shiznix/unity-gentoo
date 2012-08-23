@@ -12,8 +12,8 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
-UVER="0ubuntu1"
-URELEASE="precise-updates"
+UVER="0ubuntu3"
+URELEASE="quantal"
 MY_P="${MY_P/-/_}"
 GNOME2_LA_PUNT="1"
 
@@ -72,7 +72,7 @@ pkg_setup() {
 
 src_prepare() {
 	# Disable this patch, totally breaks gio with 'GLib-GObject-WARNING **: Two different plugins tried to register ...' errors #
-	sed -e 's:^90-gio-modules:#90-gio-modules:g' \
+	sed -e 's:^90_gio-modules:#90_gio-modules:g' \
 		-i "${WORKDIR}/debian/patches/series"
 
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do

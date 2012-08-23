@@ -16,7 +16,6 @@ dev-python/python-distutils-extra
 dev-python/lazr-restfulclient
 dev-python/pywapi
 dev-python/unity-singlet
-dev-util/gambas
 gnome-base/gconf
 gnome-base/gnome-control-center
 gnome-base/gnome-session
