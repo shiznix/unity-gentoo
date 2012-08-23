@@ -7,7 +7,7 @@ inherit distutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/d/${PN}"
 UVER="0ubuntu1"
-URELEASE="precise"
+URELEASE="quantal"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 

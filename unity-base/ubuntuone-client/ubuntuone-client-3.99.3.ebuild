@@ -4,7 +4,7 @@ inherit base eutils gnome2-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu1"
-URELEASE="precise-updates"
+URELEASE="quantal"
 MY_P="${P/client-/client_}"
 GNOME2_LA_PUNT="1"
 

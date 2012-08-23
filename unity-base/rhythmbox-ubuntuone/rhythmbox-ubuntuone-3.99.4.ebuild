@@ -7,7 +7,7 @@ inherit distutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/r/${PN}"
 UVER="0ubuntu1"
-URELEASE="precise"
+URELEASE="quantal"
 MY_P="${P/ubuntuone-/ubuntuone_}"
 
 DESCRIPTION="Ubuntu One rhythmbox plugin for the Unity desktop"
@@ -20,7 +20,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-lang/vala:0.14[vapigen]
-	dev-libs/libubuntuone
+	=dev-libs/libubuntuone-${PV}
 	dev-libs/libzeitgeist
 	dev-python/pygobject
 	>=gnome-base/gnome-menus-99.3.4.0:3
