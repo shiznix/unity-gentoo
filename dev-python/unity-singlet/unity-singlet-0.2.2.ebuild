@@ -5,7 +5,7 @@ inherit distutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u/${PN}"
 UVER="0ubuntu1"
-URELEASE="precise"
+URELEASE="quantal"
 MY_P="${P/singlet-/singlet_}"
 
 DESCRIPTION="Python library for quickly building simple Unity lenses and scopes"

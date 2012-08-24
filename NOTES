@@ -27,3 +27,9 @@ emerge -1 `qdepends -CNQ x11-libs/qt 2> /dev/null`
 		dev-libs/libappindicator
 
 * Some artifact glitches may sometimes show on 'Dash Home' HUD on intial use. Alt+Tab'bing to 'Show Desktop' cleans this up.
+
+* Quantal Upgrade
+	unity-base/indicator-session-12.10.0 requires >=dev-libs/glib-2.33.10
+		dev-libs/glib-2.33.10 breaks x11-libs/gtk+-3.4.2 with CSS parsing errors. eg.Theme parsing error: gtk-widgets.css:86:23: 'px' is not a valid color name
+		dev-libs/glib-2.33.10 breaks nautilus thumbnail previews, could be related to CSS parsing error above.
+		x11-libs/gtk+-3.5.12 as used in Quantal may fix above issue(s) but is very buggy at present and breaks lots of GUIs for GTK+ based apps. in tree

@@ -4,7 +4,7 @@ inherit base eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${P/session-/session_}"
 GNOME2_LA_PUNT="1"
 
@@ -14,13 +14,13 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="app-admin/packagekit[gtk,qt4]
 	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]
 	app-admin/system-config-printer-gnome
-	>=dev-libs/glib-99.2.33.10
+	>=dev-libs/glib-99.2.32.3
 	dev-libs/libappindicator
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libindicate-qt"

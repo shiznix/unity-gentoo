@@ -6,8 +6,8 @@ RESTRICT_PYTHON_ABIS="3.*"
 inherit distutils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu2.1"
-URELEASE="precise-updates"
+UVER="0ubuntu1"
+URELEASE="quantal"
 MY_P="${P/remote-/remote_}"
 GNOME2_LA_PUNT="1"
 

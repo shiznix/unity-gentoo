@@ -1,6 +1,6 @@
 EAPI=4
 
-URELEASE="precise"
+URELEASE="quantal"
 MY_PN="unity-stock-ticker-lens"
 MY_P="${MY_PN}_${PV}"
 
