@@ -76,7 +76,6 @@ x11-libs/qt-dbus
 x11-libs/qt-declarative
 x11-libs/qt-demo
 x11-libs/qt-gui
-x11-libs/qt-meta
 x11-libs/qt-mobility
 x11-libs/qt-multimedia
 x11-libs/qt-opengl

@@ -3,8 +3,8 @@ EAPI=4
 inherit base eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
+UVER="0ubuntu2"
+URELEASE="precise"
 MY_P="${P/datetime-/datetime_}"
 GNOME2_LA_PUNT="1"
 
@@ -20,7 +20,9 @@ IUSE=""
 DEPEND="dev-libs/libappindicator
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libindicate-qt
-	dev-libs/libtimezonemap"
+	dev-libs/libtimezonemap
+	>=gnome-extra/evolution-data-server-3.2
+	<gnome-extra/evolution-data-server-3.5"
 
 src_configure() {
 	# Build GTK2 support #
