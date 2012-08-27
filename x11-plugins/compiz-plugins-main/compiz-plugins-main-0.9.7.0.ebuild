@@ -21,7 +21,7 @@ IUSE=""
 RDEPEND=">=gnome-base/librsvg-2.14.0
 	virtual/jpeg
 	x11-libs/cairo
-	=unity-base/compiz-0.9.7.8"
+	<unity-base/compiz-0.9.8"
 
 DEPEND="${RDEPEND}
 	>=dev-util/intltool-0.35
