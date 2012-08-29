@@ -3,7 +3,7 @@ EAPI=4
 inherit distutils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu2"
+UVER="0ubuntu1"
 URELEASE="quantal"
 MY_P="${P/video-/video_}"
 

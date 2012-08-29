@@ -3,14 +3,15 @@ EAPI=4
 inherit base gnome2 cmake-utils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
-UVER="0ubuntu4"
+UVER="0ubuntu3"
 URELEASE="quantal"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}+bzr3249-${UVER}.tar.gz"
+SRC_URI="${UURL}/${MY_P}+bzr3319.orig.tar.gz
+	${UURL}/${MY_P}+bzr3319-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -60,16 +61,16 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/mesa-progs
 	x11-apps/xvinfo"
 
-S="${WORKDIR}/${P}+bzr3249"
-
 src_prepare() {
-	# Set compiz Window Decorations to !state=maxvert so top appmenu bar behaviour functions correctly #
-	PATCHES+=( "${FILESDIR}/compiz-0.9.8_decor-setting.diff" )
-
 	# Apply Ubuntu patchset #
+	epatch "${WORKDIR}/${MY_P}+bzr3319-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${S}/debian/patches/${patch}" )
 	done
+
+	# Set compiz Window Decorations to !state=maxvert so top appmenu bar behaviour functions correctly #
+	PATCHES+=( "${FILESDIR}/compiz-0.9.8_decor-setting.diff" )
+
 	base_src_prepare
 
 	# Fix DESTDIR #
@@ -90,6 +91,7 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs="${mycmakeargs}
+		-DCOMPIZ_BIN_PATH="/usr/bin"
 		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="${D}etc/gconf/schemas"

@@ -3,7 +3,7 @@ EAPI=4
 inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu2"
+UVER="0ubuntu4"
 URELEASE="quantal"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
@@ -11,8 +11,8 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+#	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -61,10 +61,11 @@ pkg_pretend() {
 }
 
 src_prepare() {
-	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${S}/debian/patches/${patch}" )
-	done
+# Stick with the base release instead of applying experimental patches #
+#	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+#	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
+#		PATCHES+=( "${S}/debian/patches/${patch}" )
+#	done
 	PATCHES+=( "${FILESDIR}/stdcerr-fix.patch"
 			"${FILESDIR}/gtestdir_fix.patch" )
 	base_src_prepare

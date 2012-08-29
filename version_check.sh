@@ -19,7 +19,7 @@ version_check() {
 	fi
 	. ${pack} &> /dev/null
 	if [ -n "${UVER}" ]; then
-		current=`echo "${packbasename}-${UVER}" | sed 's/99.//g'`
+		current=`echo "${packbasename}-${UVER}" | sed 's/-99./-/g'`
 		upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
 		echo
 		echo "Checking http://packages.ubuntu.com/${URELEASE}/source/${packname}"

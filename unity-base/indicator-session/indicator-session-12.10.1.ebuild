@@ -3,7 +3,7 @@ EAPI=4
 inherit base eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
-UVER="0ubuntu1"
+UVER="0ubuntu3"
 URELEASE="quantal"
 MY_P="${P/session-/session_}"
 GNOME2_LA_PUNT="1"
