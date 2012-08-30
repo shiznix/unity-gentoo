@@ -8,7 +8,7 @@ URELEASE="quantal"
 MY_P="${P/-/_}"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="http://launchpad.net/nux"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="debug examples tests"
 
 DEPEND="!unity-base/utouch-geis
 	app-i18n/ibus
@@ -38,4 +38,18 @@ src_prepare() {
 	sed -e "s:libutouch-geis:libgeis:g" \
 		-i configure \
 			NuxGraphics/nux-graphics.pc.in
+}
+
+src_configure() {
+	! use debug && \
+		myconf="${myconf} 
+			--enable-debug=no"
+	! use examples && \
+		myconf="${myconf}
+			--enable-examples=no"
+	! use tests && \
+		myconf="${myconf} 
+			--enable-tests=no
+			--enable-gputests=no"
+	econf ${myconf}
 }
