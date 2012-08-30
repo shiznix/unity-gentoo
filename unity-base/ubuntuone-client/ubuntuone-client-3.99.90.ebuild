@@ -3,15 +3,14 @@ EAPI=4
 inherit base eutils gnome2-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1"
+UVER="0ubuntu2"
 URELEASE="quantal"
 MY_P="${P/client-/client_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Ubuntu One client for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -40,11 +39,6 @@ RDEPEND="${DEPEND}
 	x11-misc/xdg-utils"
 
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
-
 	sed -e "s:\[ -d \"\$HOME\/Ubuntu One\" \] && ubuntuone-launch:\[ ! -d \"\$HOME\/Ubuntu One\" \] && mkdir \"\$HOME/Ubuntu One\" \&\& ubuntuone-launch || ubuntuone-launch:" \
 		-i "${S}/data/ubuntuone-launch.desktop.in" || die
 }
