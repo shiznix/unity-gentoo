@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="dev-lang/vala:0.16[vapigen]

@@ -5,7 +5,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND=">=gnome-extra/nm-applet-99.0.9.4.1
