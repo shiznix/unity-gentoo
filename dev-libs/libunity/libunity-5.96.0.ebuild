@@ -1,6 +1,9 @@
 EAPI=4
+PYTHON_DEPEND="2:2.7"
+#SUPPORT_PYTHON_ABIS="1"
+RESTRICT_PYTHON_ABIS="3.*"
 
-inherit base eutils autotools
+inherit base eutils autotools python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 UVER="0ubuntu1"
@@ -21,6 +24,11 @@ DEPEND="dev-libs/dee
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libgee
 	dev-lang/vala:0.16"
+
+pkg_setup() {
+	python_set_active_version 2
+	python_pkg_setup
+}
 
 src_prepare() {
 	export VALAC=$(type -P valac-0.16) && \

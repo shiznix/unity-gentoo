@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-lang/vala:0.16[vapigen]
+DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libzeitgeist
 	>=gnome-base/gnome-menus-3.0.1-r1:0
 	sys-libs/db:5.1
@@ -34,7 +34,7 @@ src_prepare() {
 }
 
 src_configure() {
-	export VALAC=$(type -P valac-0.16)
-	export VALA_API_GEN=$(type -p vapigen-0.16)
+	export VALAC=$(type -P valac-0.14)
+	export VALA_API_GEN=$(type -p vapigen-0.14)
 	econf
 }

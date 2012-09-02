@@ -17,12 +17,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-lang/vala:0.16[vapigen]
+DEPEND="dev-lang/vala:0.14[vapigen]
 	unity-base/unity
 	unity-base/unity-lens-applications"
 
 src_configure() {
-	export VALAC=$(type -P valac-0.16)
-	export VALA_API_GEN=$(type -p vapigen-0.16)
+	export VALAC=$(type -P valac-0.14)
+	export VALA_API_GEN=$(type -p vapigen-0.14)
 	econf
 }

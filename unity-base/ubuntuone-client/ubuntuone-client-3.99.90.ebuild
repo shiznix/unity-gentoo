@@ -1,6 +1,9 @@
 EAPI=4
+PYTHON_DEPEND="2:2.7"
+#SUPPORT_PYTHON_ABIS="1"
+RESTRICT_PYTHON_ABIS="3.*"
 
-inherit base eutils gnome2-utils
+inherit base eutils gnome2-utils python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu2"
@@ -37,6 +40,11 @@ RDEPEND="${DEPEND}
 	unity-base/ubuntuone-storage-protocol
 	x11-misc/lndir
 	x11-misc/xdg-utils"
+
+pkg_setup() {
+	python_set_active_version 2
+	python_pkg_setup
+}
 
 src_prepare() {
 	sed -e "s:\[ -d \"\$HOME\/Ubuntu One\" \] && ubuntuone-launch:\[ ! -d \"\$HOME\/Ubuntu One\" \] && mkdir \"\$HOME/Ubuntu One\" \&\& ubuntuone-launch || ubuntuone-launch:" \
