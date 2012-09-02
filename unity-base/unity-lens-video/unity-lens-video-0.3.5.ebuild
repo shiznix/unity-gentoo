@@ -6,8 +6,8 @@ RESTRICT_PYTHON_ABIS="3.*"
 inherit distutils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
+UVER="0ubuntu1.3"
+URELEASE="precise-updates"
 MY_P="${P/video-/video_}"
 
 DESCRIPTION="Application lens for the Unity desktop"

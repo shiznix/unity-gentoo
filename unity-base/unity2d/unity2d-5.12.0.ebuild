@@ -4,8 +4,8 @@ inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
 MY_PN="unity-2d"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${MY_PN}"
-UVER="0ubuntu3"
-URELEASE="quantal"
+UVER="0ubuntu1.1"
+URELEASE="precise"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The Ubuntu Unity Desktop for non-accelerated graphics cards"
@@ -19,9 +19,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-libs/libqtgconf
-	unity-base/geis
-	>=unity-base/nux-3.0.0
-	>=unity-base/unity-6.0.0
+	unity-base/unity
 	x11-libs/libwnck:3
 	>=x11-wm/metacity-99.2.34.1"
 
@@ -58,7 +56,9 @@ pkg_postinst() {
 	einfo "libindicate or libappindicator notification plugins"
 	einfo
 	einfo "If you would like to use Unity's icons and themes"
-	einfo "select the Ambiance theme in 'System Settings > Appearance'"
+	einfo "'emerge light-themes ubuntu-mono gnome-tweak-tool'"
+	einfo "then run 'gnome-tweak-tool' as your desktop user and choose"
+	einfo "Ambiance GTK+ theme and Ubunto-mono-dark icon theme"
 	einfo
 
 	gnome2_pkg_postinst

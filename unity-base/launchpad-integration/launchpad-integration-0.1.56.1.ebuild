@@ -1,10 +1,12 @@
 EAPI=4
+PYTHON_DEPEND="2:2.7"
+RESTRICT_PYTHON_ABIS="3.*"
 
-inherit base eutils gnome2
+inherit base eutils gnome2 python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${PN}"
 UVER=""
-URELEASE="precise"
+URELEASE="quantal"
 MY_P="${P/integration-/integration_}"
 GNOME2_LA_PUNT="1"
 
@@ -23,6 +25,13 @@ DEPEND="dev-dotnet/gtk-sharp:2
 	dev-libs/gobject-introspection
 	dev-python/pygtk
 	>=x11-libs/gtk+-99.2.24.10"
+
+S="${WORKDIR}/${PN}-0.1.56"
+
+pkg_setup() {
+	python_set_active_version 2
+	python_pkg_setup
+}
 
 src_prepare() {
 	sed -i "/AssemblyKeyFile/ s@\".*\"@\"${WORKDIR}/mono.snk\"@g" lib/AssemblyInfo.cs
