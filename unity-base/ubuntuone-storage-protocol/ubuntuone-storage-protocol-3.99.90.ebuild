@@ -23,7 +23,7 @@ IUSE=""
 
 DEPEND="dev-libs/protobuf[python]"
 RDEPEND="${DEPEND}
-	dev-lang/python
+	dev-python/dirspec
 	>=dev-python/oauth-1.0
 	dev-python/pyopenssl
 	dev-python/twisted

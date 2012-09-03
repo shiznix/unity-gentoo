@@ -11,7 +11,7 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}-${UVER}.tar.gz"
 #	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"

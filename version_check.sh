@@ -7,7 +7,8 @@
 version_check() {
 	packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
-	if [ -n "`echo "${packbasename}" | grep 'ccsm'`" ]; then treepackname="${packname}"; packname="compizconfig-settings-manager"
+	if [ -n "`echo "${packbasename}" | grep 'qt4'`" ]; then treepackname="${packname}"; packname="qt4-x11"
+	elif [ -n "`echo "${packbasename}" | grep 'ccsm'`" ]; then treepackname="${packname}"; packname="compizconfig-settings-manager"
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"
 	elif [ -n "`echo "${packbasename}" | grep 'glib'`" ]; then treepackname="${packname}"; packname="glib2.0"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.2'`" ]; then treepackname="${packname}"; packname="gtk+2.0"
@@ -18,7 +19,8 @@ version_check() {
 	elif [ -n "`echo "${packbasename}" | grep 'unity2d'`" ]; then treepackname="${packname}"; packname="unity-2d"
 	elif [ -n "`echo "${packbasename}"`" ]; then treepackname="${packname}"
 	fi
-	. ${pack} &> /dev/null
+	UVER=`grep UVER= ${pack} | awk -F\" '{print $2}'`
+	URELEASE=`grep URELEASE= ${pack} | awk -F\" '{print $2}'`
 	if [ -n "${UVER}" ]; then
 		current=`echo "${packbasename}-${UVER}" | sed 's/-99./-/g'`
 		upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
@@ -42,7 +44,14 @@ if [ -n "$1" ]; then
         pack="$1"
         version_check
 else
+	for pack in `find $(pwd) -name "*.eclass"`; do
+		packbasename=`basename ${pack} | awk -F.eclass '{print $1}'`
+		packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
+		version_check
+	done
         for pack in `find $(pwd) -name "*.ebuild"`; do
-                version_check
-        done
+		packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
+		packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
+		version_check
+	done
 fi

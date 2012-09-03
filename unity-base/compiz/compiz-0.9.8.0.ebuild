@@ -3,15 +3,15 @@ EAPI=4
 inherit base gnome2 cmake-utils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
-UVER="0ubuntu3"
+UVER="0ubuntu1"
 URELEASE="quantal"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}+bzr3319.orig.tar.gz
-	${UURL}/${MY_P}+bzr3319-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
