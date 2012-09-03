@@ -19,3 +19,10 @@ IUSE=""
 DEPEND=""
 
 S="${WORKDIR}/${MY_P}"
+
+src_prepare() {
+	# Repair library naming #
+	sed -e 's:lunity_webapps:lunity-webapps:g' \
+		-i src/libunity-webapps/libunity_webapps-0.2.pc.in \
+			src/libunity-webapps-repository/libunity-webapps-repository.pc.in
+}
