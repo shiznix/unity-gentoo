@@ -63,13 +63,13 @@ RDEPEND="${COMMONDEPEND}
 
 src_prepare() {
 	# Apply Ubuntu patchset #
-	epatch "${WORKDIR}/${MY_P}+bzr3319-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${S}/debian/patches/${patch}" )
 	done
 
 	# Set compiz Window Decorations to !state=maxvert so top appmenu bar behaviour functions correctly #
-	PATCHES+=( "${FILESDIR}/compiz-0.9.8_decor-setting.diff" )
+	PATCHES+=( "${FILESDIR}/${PN}-0.9.8_decor-setting.diff" )
 
 	base_src_prepare
 
