@@ -48,6 +48,7 @@ RDEPEND=">=x11-libs/gtk+-99.2.24.10:2
 	!x11-misc/expocity"
 DEPEND="${RDEPEND}
 	>=app-text/gnome-doc-utils-0.8
+	>=gnome-base/gconf-99.3.2.5
 	sys-devel/gettext
 	>=dev-util/intltool-0.35
 	virtual/pkgconfig
