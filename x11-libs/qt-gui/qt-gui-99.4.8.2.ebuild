@@ -51,10 +51,7 @@ DEPEND="${RDEPEND}
 	)"
 PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,c++0x=,debug=,qpa=] )"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-4.7.3-cups.patch"
-	"${FILESDIR}/${PV}-qatomic-x32.patch"
-)
+PATCHES=( "${FILESDIR}/${PV}-qatomic-x32.patch" )
 
 pkg_setup() {
 	# this belongs to pkg_pretend, we have to upgrade to EAPI 4 :)

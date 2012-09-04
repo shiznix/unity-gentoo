@@ -19,8 +19,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="|| ( >=unity-base/compiz-0.9.8 
-		( <unity-base/compiz-0.9.8 unity-base/ccsm unity-base/compizconfig-python x11-libs/libcompizconfig x11-plugins/compiz-plugins-main ) )
+DEPEND="( <unity-base/compiz-0.9.8 unity-base/ccsm unity-base/compizconfig-python x11-libs/libcompizconfig x11-plugins/compiz-plugins-main )
 	dev-libs/boost:1.49
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
@@ -79,6 +78,7 @@ src_configure() {
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_PLUGIN_INSTALL_TYPE=package
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
+		-DCOMPIZ_INCLUDEDIR=/usr/include/compiz
 		-DCMAKE_INSTALL_PREFIX=/usr"
 	cmake-utils_src_configure
 }

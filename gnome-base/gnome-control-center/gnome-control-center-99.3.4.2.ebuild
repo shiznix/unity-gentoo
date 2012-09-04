@@ -47,6 +47,7 @@ COMMON_DEPEND="
 	>=gnome-base/gnome-menus-99.3.4.0:3
 	gnome-base/libgtop:2
 	media-libs/fontconfig
+	media-libs/gst-plugins-base
 
 	>=media-libs/libcanberra-0.13[gtk3]
 	>=media-sound/pulseaudio-2.0[glib]
@@ -126,7 +127,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	PATCHES+=( "${FILESDIR}/gnome-control-center-optional-bt-colord-goa-wacom.patch" )
+	PATCHES+=( "${FILESDIR}/gnome-control-center-optional-bt-colord-goa-wacom.patch" 
+			"${FILESDIR}/gnome-control-center-cups-1.6.patch" )
 	# Disable selected patches #
 	sed \
 		`# Causes compilation to fail` \
