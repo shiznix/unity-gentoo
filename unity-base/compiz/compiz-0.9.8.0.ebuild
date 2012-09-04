@@ -30,6 +30,7 @@ COMMONDEPEND="!unity-base/ccsm
 	dev-cpp/glibmm
 	dev-libs/libxml2
 	dev-libs/libxslt
+	dev-python/pyrex
 	gnome-base/gconf
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/libpng
