@@ -16,7 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=""
+DEPEND="app-admin/packagekit-gtk
+	dev-libs/libindicate[gtk]"
 
 S="${WORKDIR}/${MY_P}"
 

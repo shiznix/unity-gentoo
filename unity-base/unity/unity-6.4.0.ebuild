@@ -24,6 +24,7 @@ DEPEND="|| ( >=unity-base/compiz-0.9.8
 	dev-libs/boost:1.49
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
+	dev-libs/libindicate[gtk]
 	dev-libs/libindicate-qt
 	dev-libs/libqtbamf
 	dev-libs/libqtdee
