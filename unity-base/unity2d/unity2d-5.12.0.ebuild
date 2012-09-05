@@ -21,6 +21,7 @@ IUSE=""
 DEPEND="dev-libs/libqtgconf
 	unity-base/unity
 	x11-libs/libwnck:3
+	>=x11-libs/qt-declarative-99.4.8.2:4[accessibility]
 	>=x11-libs/qt-test-99.4.8.2:4
 	>=x11-wm/metacity-99.2.34.1"
 
