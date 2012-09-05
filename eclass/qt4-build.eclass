@@ -27,7 +27,7 @@ MY_PV=${MY_PV/_/-}
 MY_P=qt-everywhere-opensource-src-${MY_PV}
 [[ ${PV} == 99.* ]] && \
 	PVR=$(get_version_component_range 2-)
-UVER="0ubuntu6"
+UVER="0ubuntu7"
 URELEASE="quantal"
 
 case ${QT4_BUILD_TYPE} in
