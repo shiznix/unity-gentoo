@@ -6,7 +6,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 inherit distutils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1"
+UVER="0ubuntu2"
 URELEASE="quantal"
 MY_P="${P/client-/client_}"
 GNOME2_LA_PUNT="1"
