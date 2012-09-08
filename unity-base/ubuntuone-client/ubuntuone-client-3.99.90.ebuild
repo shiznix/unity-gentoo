@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="doc"
 
 DEPEND="dev-lang/python
 	dev-libs/dbus-glib
@@ -54,6 +54,11 @@ src_prepare() {
 src_configure() {
 	export VALAC=$(type -P valac-0.14)
 	export VALA_API_GEN=$(type -p vapigen-0.14)
+
+	# Configure doesn't honour it's own doc disabling switches #
+	! use doc && \
+		sed -e 's:po docs:po:' \
+			-i Makefile.in
 	econf
 }
 
@@ -62,4 +67,16 @@ src_install() {
 
 	# Delete some files that are only useful on Ubuntu
 	rm -rf "${D}"etc/apport "${D}"usr/share/apport
+}
+
+pkg_preinst() {
+	gnome2_icon_savelist
+}
+
+pkg_postinst() {
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	gnome2_icon_cache_update
 }
