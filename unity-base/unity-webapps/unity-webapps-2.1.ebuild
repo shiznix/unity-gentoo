@@ -14,7 +14,7 @@ SRC_URI="https://launchpad.net/libunity-webapps/trunk/${PV}/+download/${MY_P}.ta
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="doc"
 
 DEPEND="app-admin/packagekit-gtk
 	dev-libs/libindicate[gtk]"
@@ -26,4 +26,9 @@ src_prepare() {
 	sed -e 's:lunity_webapps:lunity-webapps:g' \
 		-i src/libunity-webapps/libunity_webapps-0.2.pc.in \
 			src/libunity-webapps-repository/libunity-webapps-repository.pc.in
+
+	# Make docs optional #
+	! use doc && \
+		sed -e 's:data docs:po:' \
+			-i Makefile.in
 }

@@ -55,7 +55,7 @@ src_configure() {
 	export VALAC=$(type -P valac-0.14)
 	export VALA_API_GEN=$(type -p vapigen-0.14)
 
-	# Configure doesn't honour it's own doc disabling switches #
+	# Make docs optional #
 	! use doc && \
 		sed -e 's:po docs:po:' \
 			-i Makefile.in
