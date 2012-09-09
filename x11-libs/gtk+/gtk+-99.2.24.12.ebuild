@@ -100,7 +100,7 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-2.24.10-gold.patch"
 
 	# Prevent stuck grab in pidgin, bug #427148, upstream 680346
-	epatch "${FILESDIR}/${PN}-2.24.11-stuck-grab.patch"
+#	epatch "${FILESDIR}/${PN}-2.24.11-stuck-grab.patch"
 
 	# use an arch-specific config directory so that 32bit and 64bit versions
 	# dont clash on multilib systems
