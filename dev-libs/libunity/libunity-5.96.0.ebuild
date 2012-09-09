@@ -1,7 +1,7 @@
 EAPI=4
-PYTHON_DEPEND="2:2.7"
-#SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
+PYTHON_DEPEND="2:2.7 3:3.2"
+SUPPORT_PYTHON_ABIS="1"
+#RESTRICT_PYTHON_ABIS="3.*"
 
 inherit base eutils autotools python
 
@@ -20,15 +20,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-libs/dee
+DEPEND=">=dev-libs/dee-99.1.0.14
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libgee
 	dev-lang/vala:0.16"
-
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
 
 src_prepare() {
 	export VALAC=$(type -P valac-0.16) && \
@@ -40,4 +35,44 @@ src_prepare() {
 		PATCHES+=( "debian/patches/${patch}" )
 	done
 	base_src_prepare
+}
+
+src_configure() {
+        # Build PYTHON2 support #
+	export EPYTHON="$(PYTHON -2)"
+        [[ -d build-python2 ]] || mkdir build-python2
+        pushd build-python2
+	../configure --prefix=/usr || die
+        popd
+
+        # Build PYTHON3 support #
+	export EPYTHON="$(PYTHON -3)"
+        [[ -d build-python3 ]] || mkdir build-python3
+        pushd build-python3
+	../configure --prefix=/usr || die
+        popd
+}
+
+src_compile() {
+        # Build PYTHON2 support #
+        pushd build-python2
+        emake || die
+        popd
+
+        # Build PYTHON3 support #
+        pushd build-python3
+        emake || die
+        popd
+}
+
+src_install() {
+        # Install PYTHON2 support #
+        pushd build-python2
+        emake DESTDIR="${D}" install || die
+        popd
+
+        # Install PYTHON3 support #
+        pushd build-python3
+        emake DESTDIR="${D}" install || die
+        popd
 }
