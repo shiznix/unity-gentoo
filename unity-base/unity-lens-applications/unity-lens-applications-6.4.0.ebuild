@@ -17,7 +17,10 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="dev-lang/vala:0.16[vapigen]
+RDEPEND=">=dev-libs/dee-99.1.0.14
+	dev-libs/libunity"
+DEPEND="${RDEPEND}
+	dev-lang/vala:0.16[vapigen]
 	dev-libs/libzeitgeist
 	>=gnome-base/gnome-menus-3.0.1-r1:0
 	sys-libs/db:5.1

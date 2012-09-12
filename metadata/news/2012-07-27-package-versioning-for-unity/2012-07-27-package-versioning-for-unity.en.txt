@@ -12,6 +12,7 @@ To preserve the function of the overlay packages from being broken by main tree 
 some package versions in the overlay are prefixed with '99.' so that they become the preferred
 choice.
 Packages effected are:
+dev-libs/dee
 dev-libs/libappindicator
 dev-libs/libindicator
 gnome-base/gconf

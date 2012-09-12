@@ -1,9 +1,8 @@
 EAPI=4
-PYTHON_DEPEND="2:2.7"
+PYTHON_DEPEND="2:2.7 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
 
-inherit distutils
+inherit distutils python
 
 DESCRIPTION="Library that glues together python's optparse.OptionParser and ConfigParser.ConfigParser"
 HOMEPAGE="https://launchpad.net/configglue"
@@ -13,3 +12,7 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+
+pkg_postinst() {
+	python_disable_pyc
+}

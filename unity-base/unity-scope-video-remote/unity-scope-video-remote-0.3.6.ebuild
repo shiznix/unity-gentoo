@@ -1,7 +1,6 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
 
 inherit distutils eutils
 
@@ -26,5 +25,6 @@ DEPEND="unity-base/unity
 
 src_prepare() {
 	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"
+	python_convert_shebangs -r 2 .
 	distutils_src_prepare
 }
