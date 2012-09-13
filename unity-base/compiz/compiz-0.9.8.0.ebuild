@@ -109,7 +109,8 @@ src_configure() {
 		-DCMAKE_MODULE_PATH="${D}usr/share/cmake"
 		-DCOMPIZ_DEFAULT_PLUGINS="ccp,core,composite,opengl,compiztoolbox,decor,vpswitch,\
 snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,\
-unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell""	# Default set of plugins taken from unity.ini #
+unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"
+		"
 	cmake-utils_src_configure
 }
 
