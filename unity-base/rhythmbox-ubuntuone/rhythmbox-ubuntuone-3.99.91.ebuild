@@ -6,7 +6,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 inherit base distutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/r/${PN}"
-UVER="0ubuntu2"
+UVER="0ubuntu1"
 URELEASE="quantal"
 MY_P="${P/ubuntuone-/ubuntuone_}"
 
