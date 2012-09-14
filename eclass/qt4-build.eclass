@@ -27,7 +27,7 @@ MY_PV=${MY_PV/_/-}
 MY_P=qt-everywhere-opensource-src-${MY_PV}
 [[ ${PV} == 99.* ]] && \
 	PVR=$(get_version_component_range 2-)
-UVER="0ubuntu7"
+UVER="dfsg-2ubuntu1"
 URELEASE="quantal"
 
 case ${QT4_BUILD_TYPE} in
@@ -39,7 +39,7 @@ case ${QT4_BUILD_TYPE} in
 	release)
 		if version_is_at_least 4.8.1; then
 			SRC_URI="http://releases.qt-project.org/qt4/source/${MY_P}.tar.gz
-				http://archive.ubuntu.com/ubuntu/pool/main/q/qt4-x11/qt4-x11_${PVR}-${UVER}.debian.tar.gz"
+				http://archive.ubuntu.com/ubuntu/pool/main/q/qt4-x11/qt4-x11_${PVR}+${UVER}.debian.tar.gz"
 		else
 			SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
 		fi
@@ -178,7 +178,7 @@ qt4-build_src_unpack() {
 			local tarball="${MY_P}.tar.gz" target= targets=
 			ebegin "Creating patchset tarball"
 			tar -xzf "${DISTDIR}/${tarball}" || die
-			tar -xzf "${DISTDIR}/qt4-x11_${PVR}-${UVER}.debian.tar.gz" || die	# Ubuntu's patchset tarball
+			tar -xzf "${DISTDIR}/qt4-x11_${PVR}+${UVER}.debian.tar.gz" || die	# Ubuntu's patchset tarball
 			# Disable selected patches #
 			sed -i \
 			`# Patch for adding '-qt4' to the end of the filenames of binaries`		\
