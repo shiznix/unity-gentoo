@@ -13,8 +13,7 @@ GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Ubuntu One file storage and sharing service for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -28,10 +27,3 @@ RDEPEND="${DEPEND}
 	dev-python/pyopenssl
 	dev-python/twisted
 	dev-python/pyxdg"
-
-src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
-	done
-	distutils_src_prepare
-}

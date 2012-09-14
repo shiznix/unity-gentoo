@@ -1,20 +1,18 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7"
-SUPPORT_PYTHON_ABIS="1"
+#SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="3.*"
 
-inherit distutils eutils
+inherit distutils eutils python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu1"
 URELEASE="quantal"
 MY_P="${P/client-/client_}"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Ubuntu Single Sign-On client for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -38,9 +36,15 @@ DEPEND="dev-lang/python
 	dev-python/twisted-names
 	dev-python/twisted-web"
 
+pkg_setup() {
+	python_set_active_version 2
+	python_pkg_setup
+}
+
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
-	done
-	distutils_src_prepare
+	python_convert_shebangs -r 2 .
+}
+
+pkg_postinst() {
+	python_disable_pyc
 }

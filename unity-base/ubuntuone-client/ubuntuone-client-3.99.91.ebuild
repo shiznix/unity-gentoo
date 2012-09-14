@@ -47,8 +47,9 @@ pkg_setup() {
 }
 
 src_prepare() {
-	sed -e "s:\[ -d \"\$HOME\/Ubuntu One\" \] && ubuntuone-launch:\[ ! -d \"\$HOME\/Ubuntu One\" \] && mkdir \"\$HOME/Ubuntu One\" \&\& ubuntuone-launch || ubuntuone-launch:" \
+	sed -e "s:\[ -d \"\$HOME\/Ubuntu One\" \] \&\& ubuntuone-launch:\[ ! -d \"\$HOME\/Ubuntu One\" \] \&\& mkdir \"\$HOME/Ubuntu One\" \&\& ubuntuone-launch || ubuntuone-launch:" \
 		-i "${S}/data/ubuntuone-launch.desktop.in" || die
+	python_convert_shebangs -r 2 .
 }
 
 src_configure() {

@@ -46,7 +46,5 @@ src_install() {
 	# Delete some files that are only useful on Ubuntu
 	rm -rf "${D}"etc/apport "${D}"usr/share/apport
 
-	insinto /usr/share/applications/
-	doins "${FILESDIR}/${PN}.desktop"
 	distutils_src_install
 }
