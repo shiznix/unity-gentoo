@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit base gnome2 cmake-utils eutils
+inherit base gnome2 cmake-utils eutils python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
 UVER="0ubuntu1"
@@ -61,6 +61,10 @@ DEPEND="${COMMONDEPEND}
 RDEPEND="${COMMONDEPEND}
 	x11-apps/mesa-progs
 	x11-apps/xvinfo"
+
+pkg_setup() {
+	python_set_active_version 2
+}
 
 src_prepare() {
 	# Apply Ubuntu patchset #

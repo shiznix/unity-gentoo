@@ -67,6 +67,9 @@ src_prepare() {
 
 	sed -e "s:COMPIZ_CORE_INCLUDE_DIR \${includedir}/compiz/core:COMPIZ_CORE_INCLUDE_DIR ${D}usr/include/compiz/core:g" \
 		-i cmake/CompizDefaults.cmake
+
+	sed -e "s: -Werror::g" \
+		-i cmake/CompizCommon.cmake
 }
 
 src_configure() {
