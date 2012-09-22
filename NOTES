@@ -29,8 +29,10 @@ emerge -1 `qdepends -CNQ x11-libs/qt 2> /dev/null`
 * Some artifact glitches may sometimes show on 'Dash Home' HUD on intial use. Alt+Tab'bing to 'Show Desktop' cleans this up.
 
 * Quantal Upgrade
-	unity-base/indicator-session-12.10.0 requires >=dev-libs/glib-2.33.10
-		dev-libs/glib-2.33.10 breaks nautilus thumbnail previews
+	unity-base/indicator-session-12.10*
+		requires >=dev-libs/glib-2.33.10 and dev-libs/glib-2.33.10 breaks nautilus thumbnail previews
+	unity-base/indicator-appmenu-12.10*
+		requires >=x11-libs/gtk+-3.5 and gtk+-3.5 needs testing against main tree GTK applications
 
 * Core python deps. for Unity and it's Dash lens to work
 	dev-libs/dee
