@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug examples tests"
+IUSE="+debug examples tests"
 
 DEPEND="!unity-base/utouch-geis
 	app-i18n/ibus
@@ -31,6 +31,12 @@ pkg_pretend() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
 		die "${P} requires an active gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
+
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
+	for patch in $(cat "debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "debian/patches/${patch}" )
+	done
+	base_src_prepare
 }
 
 src_prepare() {
@@ -41,14 +47,14 @@ src_prepare() {
 }
 
 src_configure() {
-	! use debug && \
-		myconf="${myconf} 
-			--enable-debug=no"
+	use debug && \
+		myconf="${myconf}
+			--enable-debug=yes"
 	! use examples && \
 		myconf="${myconf}
 			--enable-examples=no"
 	! use tests && \
-		myconf="${myconf} 
+		myconf="${myconf}
 			--enable-tests=no
 			--enable-gputests=no"
 	econf ${myconf}
