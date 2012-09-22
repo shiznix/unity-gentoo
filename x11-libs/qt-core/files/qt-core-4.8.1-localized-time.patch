@@ -1,0 +1,11 @@
+--- src/corelib/tools/qlocale_unix.cpp.org	2012-04-14 11:02:06.425917171 +0200
++++ src/corelib/tools/qlocale_unix.cpp	2012-04-14 11:02:50.247920549 +0200
+@@ -68,6 +68,8 @@
+             lang = QByteArray("C");
+         if (numeric.isEmpty())
+             numeric = lang;
++	if (time.isEmpty())
++	    time = lang;
+         if (monetary.isEmpty())
+             monetary = lang;
+         if (lc_messages_var.isEmpty())

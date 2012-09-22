@@ -1,6 +1,6 @@
---- qt-everywhere-opensource-src-4.8.2/configure        2012-06-29 13:19:09.522267364 +0930
-+++ qt-everywhere-opensource-src-4.8.2-patched//configure       2012-06-29 14:31:05.939927478 +0930
-@@ -1110,7 +1110,7 @@
+--- configure.orig	2012-09-22 18:11:08.821660385 +0930
++++ configure	2012-09-22 18:12:21.577663906 +0930
+@@ -1132,7 +1132,7 @@
          VAL=no
          ;;
      #Qt style yes options
@@ -9,7 +9,7 @@
          VAR=`echo $1 | sed "s,^-\(.*\),\1,"`
          VAL=yes
          ;;
-@@ -2399,6 +2399,13 @@
+@@ -2503,6 +2503,13 @@
          else
              UNKNOWN_OPT=yes
          fi

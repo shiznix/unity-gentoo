@@ -1,0 +1,44 @@
+From 7ac8d8597db1f58b11338f91fb27f6ad8696b34b Mon Sep 17 00:00:00 2001
+From: Mark Brand <mabrand@mabrand.nl>
+Date: Fri, 23 Mar 2012 16:29:57 +0100
+Subject: [PATCH] gcc 4.7.0 compatibility fix for javascript
+
+taken from http://qt-project.org/forums/viewthread/15071
+
+Change-Id: I701fb5a8d754afe9fcd6b327d779365673e07b5d
+Reviewed-by: Alexis Menard <alexis.menard@openbossa.org>
+Reviewed-by: Girish Ramakrishnan <girish.1.ramakrishnan@nokia.com>
+---
+ .../JavaScriptCore/runtime/JSGlobalObject.h        |    2 +-
+ .../JavaScriptCore/runtime/JSStaticScopeObject.h   |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSGlobalObject.h b/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSGlobalObject.h
+index 7c20272..9eb86e7 100644
+--- a/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSGlobalObject.h
++++ b/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSGlobalObject.h
+@@ -59,7 +59,7 @@ namespace JSC {
+     protected:
+         using JSVariableObject::JSVariableObjectData;
+ 
+-        struct JSGlobalObjectData : public JSVariableObjectData {
++        struct JSGlobalObjectData : public JSVariableObject::JSVariableObjectData {
+             // We use an explicit destructor function pointer instead of a
+             // virtual destructor because we want to avoid adding a vtable
+             // pointer to this struct. Adding a vtable pointer would force the
+diff --git a/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSStaticScopeObject.h b/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSStaticScopeObject.h
+index 2542878..3cb66a0 100644
+--- a/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSStaticScopeObject.h
++++ b/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSStaticScopeObject.h
+@@ -33,7 +33,7 @@ namespace JSC{
+     class JSStaticScopeObject : public JSVariableObject {
+     protected:
+         using JSVariableObject::JSVariableObjectData;
+-        struct JSStaticScopeObjectData : public JSVariableObjectData {
++        struct JSStaticScopeObjectData : public JSVariableObject::JSVariableObjectData {
+             JSStaticScopeObjectData()
+                 : JSVariableObjectData(&symbolTable, &registerStore + 1)
+             {
+-- 
+1.7.6
+
