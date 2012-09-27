@@ -155,6 +155,7 @@ src_prepare() {
 	fi
 
 	[[ ${PV} = 9999 ]] && gnome2_src_prepare
+	eautoreconf
 }
 
 src_configure() {

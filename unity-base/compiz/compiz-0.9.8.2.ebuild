@@ -18,6 +18,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
+S="${WORKDIR}/${PN}-0.9.8.3"	# WTF?!
+
 COMMONDEPEND="!unity-base/ccsm
 	!unity-base/compizconfig-python
 	!unity-base/compizconfig-backend-gconf
@@ -79,7 +81,7 @@ src_prepare() {
 	base_src_prepare
 
 	# Fix DESTDIR #
-	epatch "${FILESDIR}/${P}_base.cmake.diff"
+	epatch "${FILESDIR}/${PN}-0.9.8.0_base.cmake.diff"
 	einfo "Fixing DESTDIR for the following files:"
 	for file in $(grep -r 'DESTINATION \$' * | grep -v DESTDIR | awk -F: '{print $1}' | uniq); do
 		echo "    "${file}""
@@ -105,35 +107,70 @@ src_configure() {
 		-DUSE_KDE4=OFF
 		-DUSE_GNOME=OFF
 		-DUSE_GTK=ON
-		-DUSE_GSETTINGS=OFF
-		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=ON
+		-DUSE_GSETTINGS=ON
+		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF
 		-DCOMPIZ_BUILD_TESTING=OFF
 		-DCOMPIZ_DESTDIR="${D}"
 		-DCOMPIZ_SYSCONFDIR="${D}etc"
 		-DCMAKE_MODULE_PATH="${D}usr/share/cmake"
-		-DCOMPIZ_DEFAULT_PLUGINS="ccp,core,composite,opengl,compiztoolbox,decor,vpswitch,\
-snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,\
-unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"
+		-DCOMPIZ_DEFAULT_PLUGINS="ccp"
 		"
 	cmake-utils_src_configure
 }
 
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
-	emake findcompiz_install
-	emake findcompizconfig_install
-	emake install
+		emake findcompiz_install
+		emake findcompizconfig_install
+		emake install
+
+		# Window manager desktop file for GNOME #
+		insinto /usr/share/gnome/wm-properties/
+		doins gtk/gnome/compiz.desktop
+
+		# Keybinding files #
+		insinto /usr/share/gnome-control-center/keybindings
+		doins -r gtk/gnome/*.xml
+
 	popd ${CMAKE_BUILD_DIR}
 
-#	insinto /etc/compizconfig
-#	doins "${WORKDIR}/debian/unity.ini"
+	pushd ${CMAKE_USE_DIR}
 
-#	exeinto /usr/bin
-#	doexe "${WORKDIR}/debian/compiz-decorator"
+		# Docs #
+		dodoc AUTHORS NEWS README
+		doman debian/{ccsm,compiz,gtk-window-decorator}.1
 
-#	exeinto /usr/bin
-#	doexe "${FILESDIR}/update-gconf-defaults"
+		# X11 startup script #
+		insinto /etc/X11/xinit/xinitrc.d/
+		doins debian/65compiz_profile-on-session
 
-#	insinto /usr/share/compiz
-#	doins -r "${FILESDIR}/gconf-defaults"
+		# Unity Compiz profile configuration file #
+		insinto /etc/compizconfig
+		doins debian/unity.ini
+
+		# Compiz profile upgrade helper files for ensuring smooth upgrades from older configuration files #
+		insinto /etc/compizconfig/upgrades/
+		doins debian/profile_upgrades/*.upgrade
+		insinto /usr/lib/compiz/migration/
+		doins postinst/convert-files/*.convert
+
+		# Default GConf settings #
+		insinto /usr/share/gconf/defaults
+		newins debian/compiz-gnome.gconf-defaults 10_compiz-gnome
+
+		# Default GSettings settings #
+		insinto /usr/share/glib-2.0/schemas
+		newins debian/compiz-gnome.gsettings-override 10_compiz-ubuntu.gschema.override
+
+		# Script for resetting all of Compiz's settings #
+		insinto /usr/bin
+		doins "${FILESDIR}/compiz.reset"
+
+		# Script for migrating GConf settings to GSettings #
+		insinto /usr/lib/compiz/
+		doins postinst/migration-scripts/02_migrate_to_gsettings.py
+		insinto /etc/xdg/autostart/
+		doins "${FILESDIR}/compiz-migrate-to-dconf.desktop"
+
+	popd ${CMAKE_USE_DIR}
 }

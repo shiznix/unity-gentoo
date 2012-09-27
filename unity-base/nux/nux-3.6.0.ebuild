@@ -27,7 +27,7 @@ DEPEND="!unity-base/utouch-geis
 
 PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" )
 
-pkg_pretend() {
+src_prepare() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
 		die "${P} requires an active gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
@@ -37,9 +37,7 @@ pkg_pretend() {
 		PATCHES+=( "debian/patches/${patch}" )
 	done
 	base_src_prepare
-}
 
-src_prepare() {
 	# Fix building with libgeis #
 	sed -e "s:libutouch-geis:libgeis:g" \
 		-i configure \

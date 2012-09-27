@@ -11,16 +11,15 @@ GNOME2_LA_PUNT="1"
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
-#	${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="|| ( >=unity-base/compiz-0.9.8 
-		( <unity-base/compiz-0.9.8 unity-base/ccsm unity-base/compizconfig-python x11-libs/libcompizconfig x11-plugins/compiz-plugins-main ) )
+DEPEND="!unity-base/unity2d
 	dev-libs/boost:1.49
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
@@ -46,7 +45,7 @@ DEPEND="|| ( >=unity-base/compiz-0.9.8
 	sys-apps/dbus
 	sys-devel/gcc:4.6
 	unity-base/bamf
-	unity-base/compiz
+	>=unity-base/compiz-0.9.8
 	unity-base/dconf-qt
 	>=unity-base/nux-3.0.0
 	=x11-base/xorg-server-1.12.3-r9999
@@ -62,11 +61,10 @@ pkg_pretend() {
 }
 
 src_prepare() {
-# Stick with the base release instead of applying experimental patches #
-#	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-#	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
-#		PATCHES+=( "${S}/debian/patches/${patch}" )
-#	done
+	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${S}/debian/patches/${patch}" )
+	done
 	PATCHES+=( "${FILESDIR}/stdcerr-fix.patch"
 			"${FILESDIR}/gtestdir_fix.patch" )
 	base_src_prepare
