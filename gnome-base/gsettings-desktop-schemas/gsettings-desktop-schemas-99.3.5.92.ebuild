@@ -24,7 +24,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd6
 
 RDEPEND=">=dev-libs/glib-2.31:2
 	introspection? ( >=dev-libs/gobject-introspection-1.31.0 )
-	x11-themes/light-themes
+	x11-themes/light-themes[gtk3]
 	x11-themes/ubuntu-mono"
 DEPEND="${RDEPEND}
 	sys-devel/gettext

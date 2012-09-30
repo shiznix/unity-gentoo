@@ -9,7 +9,7 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="!unity-base/unity2d
-	>=gnome-base/nautilus-99.3.5.90
+	>=gnome-base/nautilus-99.3.4.2
 	>=gnome-extra/nm-applet-99.0.9.4.1
 	unity-base/ido
 	unity-base/indicator-applet

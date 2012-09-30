@@ -2,15 +2,14 @@ EAPI=4
 
 inherit autotools base eutils gnome2
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
+UURL="https://launchpad.net/${PN}/0.4/${PV}/+download/"
 UVER="0ubuntu1"
 URELEASE="precise"
-MY_P="${P/appmenu-/appmenu_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

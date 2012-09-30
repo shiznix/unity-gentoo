@@ -79,50 +79,43 @@ src_prepare() {
 	PATCHES+=( "${FILESDIR}/${PN}-0.9.8_decor-setting.diff" )
 
 	base_src_prepare
-
-	# Fix DESTDIR #
-	epatch "${FILESDIR}/${PN}-0.9.8.0_base.cmake.diff"
-	einfo "Fixing DESTDIR for the following files:"
-	for file in $(grep -r 'DESTINATION \$' * | grep -v DESTDIR | awk -F: '{print $1}' | uniq); do
-		echo "    "${file}""
-		sed -e "s:DESTINATION :DESTINATION \${COMPIZ_DESTDIR}:g" \
-			-i "${file}"
-	done
-
-	# Fix installation of ccsm and compizconfig-python #
-	sed -e "/message/d" \
-		-i compizconfig/cmake/exec_setup_py_with_destdir.cmake || die
-	sed -e "s:\${INSTALL_ROOT_ARGS}:--root=${D}:g" \
-		-i compizconfig/cmake/exec_setup_py_with_destdir.cmake || die
 }
 
 src_configure() {
 	mycmakeargs="${mycmakeargs}
-		-DCOMPIZ_BIN_PATH="/usr/bin"
+		-DCMAKE_INSTALL_PREFIX=/usr
+		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="/etc/gconf/schemas"
 		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
-		-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON
-		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="${D}etc/gconf/schemas"
-		-DCOMPIZ_PACKAGING_ENABLED=ON
+		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_DISABLE_PLUGIN_KDE=ON
 		-DUSE_KDE4=OFF
-		-DUSE_GNOME=OFF
-		-DUSE_GTK=ON
+		-DUSE_GCONF=OFF
 		-DUSE_GSETTINGS=ON
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF
 		-DCOMPIZ_BUILD_TESTING=OFF
-		-DCOMPIZ_DESTDIR="${D}"
-		-DCOMPIZ_SYSCONFDIR="${D}etc"
-		-DCMAKE_MODULE_PATH="${D}usr/share/cmake"
 		-DCOMPIZ_DEFAULT_PLUGINS="ccp"
 		"
 	cmake-utils_src_configure
 }
 
+src_compile() {
+	# Disable unitymtgrabhandles plugin #
+	sed -e "s:unitymtgrabhandles;::g" \
+		-i "${CMAKE_USE_DIR}/debian/unity.ini"
+	sed -e "s:unitymtgrabhandles,::g" \
+		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gconf-defaults"
+	sed -e "s:'unitymtgrabhandles',::g" \
+		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gsettings-override"
+
+	# Disable '-Bsymbolic-functions' if present so libcompiz_core won't be loaded once per plugin #
+	LDFLAGS="$(echo ${LDFLAGS} | sed 's/-B[ ]*symbolic-functions//')" \
+		cmake-utils_src_compile
+}
+
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
-		emake findcompiz_install
-		emake findcompizconfig_install
-		emake install
+		addpredict /root/.gconf/
+		GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 emake DESTDIR="${D}" install
 
 		# Window manager desktop file for GNOME #
 		insinto /usr/share/gnome/wm-properties/
@@ -130,23 +123,28 @@ src_install() {
 
 		# Keybinding files #
 		insinto /usr/share/gnome-control-center/keybindings
-		doins -r gtk/gnome/*.xml
+		doins gtk/gnome/*.xml
 
 	popd ${CMAKE_BUILD_DIR}
 
 	pushd ${CMAKE_USE_DIR}
+		CMAKE_DIR=$(cmake --system-information | grep '^CMAKE_ROOT' | awk -F\" '{print $2}')
+		insinto "${CMAKE_DIR}/Modules/"
+		doins cmake/FindCompiz.cmake
+		doins compizconfig/libcompizconfig/cmake/FindCompizConfig.cmake
 
 		# Docs #
 		dodoc AUTHORS NEWS README
 		doman debian/{ccsm,compiz,gtk-window-decorator}.1
 
 		# X11 startup script #
-		insinto /etc/X11/xinit/xinitrc.d/
-		doins debian/65compiz_profile-on-session
+		exeinto /etc/X11/xinit/xinitrc.d/
+		doexe debian/65compiz_profile-on-session
 
 		# Unity Compiz profile configuration file #
 		insinto /etc/compizconfig
 		doins debian/unity.ini
+		doins debian/config
 
 		# Compiz profile upgrade helper files for ensuring smooth upgrades from older configuration files #
 		insinto /etc/compizconfig/upgrades/
@@ -157,6 +155,8 @@ src_install() {
 		# Default GConf settings #
 		insinto /usr/share/gconf/defaults
 		newins debian/compiz-gnome.gconf-defaults 10_compiz-gnome
+		exeinto /usr/bin
+		doexe "${FILESDIR}/update-gconf-defaults"
 
 		# Default GSettings settings #
 		insinto /usr/share/glib-2.0/schemas
@@ -173,4 +173,23 @@ src_install() {
 		doins "${FILESDIR}/compiz-migrate-to-dconf.desktop"
 
 	popd ${CMAKE_USE_DIR}
+}
+
+pkg_postinst() {
+	gnome2_gconf_install
+	elog
+	elog "To use compiz for the Unity desktop it is necessary to first configure"
+	elog "it's defaults by running the following command as root:"
+	elog "    emerge --config =${PF}"
+	elog
+}
+
+pkg_config() {
+	einfo "Setting compiz gconf defaults"
+	/usr/bin/update-gconf-defaults \
+		--source="/usr/share/gconf/defaults" \
+		--destination="/etc/gconf/gconf.xml.defaults/" || die
+
+	# 'update-gconf-defaults' overwrites %gconf.tree.xml so refresh all installed schemas again to re-create it #
+	gnome2_gconf_install
 }

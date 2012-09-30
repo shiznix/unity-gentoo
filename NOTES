@@ -31,8 +31,11 @@ emerge -1 `qdepends -CNQ x11-libs/qt 2> /dev/null`
 * Quantal Upgrade
 	unity-base/indicator-session-12.10*
 		requires >=dev-libs/glib-2.33.10 and dev-libs/glib-2.33.10 breaks nautilus thumbnail previews
-	unity-base/indicator-appmenu-12.10*
+	>=unity-base/indicator-appmenu-12.10.1
 		requires >=x11-libs/gtk+-3.5 and gtk+-3.5 needs testing against main tree GTK applications
+	# BUGS #
+	Nautilus consumes 95% CPU when idle
+	gtk+-3.5 breaks gtk-engines-unico GTK themes including Quantal's Ambiance theme as it uses unico, and so causes Unity to fail at runtime
 
 * Core python deps. for Unity and it's Dash lens to work
 	dev-libs/dee
