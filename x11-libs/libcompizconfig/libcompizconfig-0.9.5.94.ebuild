@@ -43,7 +43,11 @@ src_configure() {
 src_install() {
 	insinto "/usr/share/cmake/Modules"
 	doins "cmake/FindCompizConfig.cmake" || die "Failed to install FindCompizConfig.cmake"
+
 	pushd ${CMAKE_BUILD_DIR}
 	emake install
 	popd ${CMAKE_BUILD_DIR}
+
+	insinto /etc/compizconfig
+	doins ${CMAKE_USE_DIR}/config/config
 }

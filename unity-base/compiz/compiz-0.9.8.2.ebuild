@@ -34,6 +34,7 @@ COMMONDEPEND="!unity-base/ccsm
 	dev-libs/libxslt
 	dev-python/pyrex
 	gnome-base/gconf
+	>=gnome-base/gsettings-desktop-schemas-99.3.4.1
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/libpng
 	<=media-libs/mesa-8.0.4
@@ -83,7 +84,7 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs="${mycmakeargs}
-		-DCMAKE_INSTALL_PREFIX=/usr
+		-DCMAKE_INSTALL_PREFIX="/usr"
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="/etc/gconf/schemas"
 		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE

@@ -74,42 +74,89 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs="${mycmakeargs}
-		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
+		-DCMAKE_INSTALL_PREFIX="/usr"
 		-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON
-		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
-		-DCOMPIZ_PACKAGING_ENABLED=ON
+		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="/etc/gconf/schemas"
+		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
+		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_DISABLE_PLUGIN_KDE=ON
 		-DUSE_KDE4=OFF
-		-DUSE_GNOME=OFF
-		-DUSE_GTK=ON
+		-DUSE_GCONF=ON
 		-DUSE_GSETTINGS=OFF
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=ON
-		-DCOMPIZ_BUILD_TESTING=OFF
 		-DCOMPIZ_DESTDIR="${D}"
-		-DCOMPIZ_DEFAULT_PLUGINS="ccp,core,composite,opengl,compiztoolbox,decor,vpswitch,\
-snap,mousepoll,resize,place,move,wall,grid,regex,imgpng,session,gnomecompat,animation,fade,\
-unitymtgrabhandles,workarounds,scale,expo,ezoom,unityshell"
+		-DCOMPIZ_BUILD_TESTING=OFF
+		-DCOMPIZ_DEFAULT_PLUGINS="ccp"
 		"
 	cmake-utils_src_configure
 }
 
+src_compile() {
+	# Disable '-Bsymbolic-functions' if present so libcompiz_core won't be loaded once per plugin #
+	LDFLAGS="$(echo ${LDFLAGS} | sed 's/-B[ ]*symbolic-functions//')" \
+		cmake-utils_src_compile
+}
+
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
-	dodir /usr/share/cmake/Modules
-	emake findcompiz_install
-	emake install
+		dodir /usr/share/cmake/Modules
+		emake findcompiz_install
+		emake install
+
+		# Window manager desktop file for GNOME #
+		insinto /usr/share/gnome/wm-properties/
+		doins gtk/gnome/compiz.desktop
 	popd ${CMAKE_BUILD_DIR}
 
+	# Docs #
+	pushd ${CMAKE_USE_DIR}
+		dodoc AUTHORS NEWS README
+	popd ${CMAKE_USE_DIR}
+	doman "${WORKDIR}"/debian/{compiz,compiz-decorator,gtk-window-decorator}.1
+
+	# X11 startup script #
+	exeinto /etc/X11/xinit/xinitrc.d/
+	doexe "${WORKDIR}/debian/65compiz_profile-on-session"
+
+	# Unity Compiz profile configuration file #
 	insinto /etc/compizconfig
 	doins "${WORKDIR}/debian/unity.ini"
 
-	exeinto /usr/bin
-	doexe "${WORKDIR}/debian/compiz-decorator"
+	# Compiz profile upgrade helper files for ensuring smooth upgrades from older configuration files #
+	insinto /etc/compizconfig/upgrades/
+	doins "${WORKDIR}"/debian/profile_upgrades/*.upgrade
 
+	# Default GConf settings #
+	insinto /usr/share/gconf/defaults
+	newins "${WORKDIR}/debian/compiz-gnome.gconf-defaults" 10_compiz-gnome
 	exeinto /usr/bin
 	doexe "${FILESDIR}/update-gconf-defaults"
 
-	insinto /usr/share/compiz
-	doins -r "${FILESDIR}/gconf-defaults"
+	# Compiz decorator wrapper and reset scripts #
+	exeinto /usr/bin
+	doexe "${WORKDIR}/debian/compiz-decorator"
+	doexe "${FILESDIR}/compiz.reset"
+}
 
+pkg_postinst() {
+	gnome2_gconf_install
+	elog
+	elog "To use compiz for the Unity desktop it is necessary to first configure"
+	elog "it's defaults by running the following command as root:"
+	elog "    emerge --config =${PF}"
+	elog "To reset your previous settings back to default, execute as desktop user:"
+	elog "    compiz.reset"
+	elog "Then re-run as root:"
+	elog "    emerge --config =${PF}"
+	elog
+}
+
+pkg_config() {
+	einfo "Setting compiz gconf defaults"
+	/usr/bin/update-gconf-defaults \
+		--source="/usr/share/gconf/defaults" \
+		--destination="/etc/gconf/gconf.xml.defaults/" || die
+
+	# 'update-gconf-defaults' overwrites %gconf.tree.xml so refresh all installed schemas again to re-create it #
+	gnome2_gconf_install
 }

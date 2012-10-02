@@ -19,7 +19,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="( <unity-base/compiz-0.9.8 unity-base/ccsm unity-base/compizconfig-python x11-libs/libcompizconfig x11-plugins/compiz-plugins-main )
+DEPEND="!unity-base/unity2d
+	( <unity-base/compiz-0.9.8 unity-base/ccsm unity-base/compizconfig-python x11-libs/libcompizconfig x11-plugins/compiz-plugins-main )
 	dev-libs/boost:1.49
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
