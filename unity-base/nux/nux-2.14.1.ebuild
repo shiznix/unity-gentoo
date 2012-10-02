@@ -22,7 +22,7 @@ DEPEND="app-i18n/ibus
 	>=dev-libs/glib-99.2.32.3
 	<media-libs/glew-1.8
 	sys-devel/gcc:4.6
-	unity-base/utouch-geis"
+	unity-base/geis"
 
 src_prepare() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
@@ -34,6 +34,9 @@ src_prepare() {
 		PATCHES+=( "debian/patches/${patch}" )
 	done
 	base_src_prepare
+
+        sed -e "s:-Werror::g" \
+		-i configure
 }
 
 src_configure() {
