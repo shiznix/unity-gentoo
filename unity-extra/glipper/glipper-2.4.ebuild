@@ -7,7 +7,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 inherit distutils gnome2-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/g/${PN}"
-UVER="3"
+UVER="1"
 URELEASE="quantal"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"

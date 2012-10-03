@@ -3,7 +3,7 @@ EAPI=4
 inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu2"
+UVER="0ubuntu3"
 URELEASE="quantal"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"

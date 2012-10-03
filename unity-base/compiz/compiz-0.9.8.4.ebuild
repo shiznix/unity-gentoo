@@ -10,8 +10,8 @@ GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}+bzr3377.orig.tar.gz
-	${UURL}/${MY_P}+bzr3377-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -71,7 +71,7 @@ pkg_setup() {
 
 src_prepare() {
 	# Apply Ubuntu patchset #
-	epatch "${WORKDIR}/${MY_P}+bzr3377-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${S}/debian/patches/${patch}" )
 	done
