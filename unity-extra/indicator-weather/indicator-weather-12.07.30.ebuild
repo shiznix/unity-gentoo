@@ -1,6 +1,6 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7"
-SUPPORT_PYTHON_ABIS="1"	# See bug notes below #
+#SUPPORT_PYTHON_ABIS="1"	# See bug notes below #
 RESTRICT_PYTHON_ABIS="3.*"
 
 # dev-python/python-distutils-extra-<all-versions> has a bug where it can't parse 'python2.7 setup.py build -b build-2.7 ...'
@@ -36,6 +36,15 @@ DEPEND="dev-python/python-distutils-extra
 	dev-libs/libindicate-qt"
 
 S="${WORKDIR}/${MY_P}"
+
+pkg_setup() {
+	python_set_active_version 2
+	python_pkg_setup
+}
+
+src_prepare() {
+	python_convert_shebangs -r 2 .
+}
 
 src_install() {
 	distutils_src_install
