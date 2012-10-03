@@ -27,4 +27,3 @@ gnome-extra/polkit-gnome
 gnome-extra/zeitgeist-datahub
 net-wireless/gnome-bluetooth
 x11-libs/gtk+
-x11-libs/qt-*

@@ -18,8 +18,8 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 RDEPEND=">=gnome-base/gconf-99.3.2.5
-	>=x11-libs/qt-core-99.4.8.2:4
-	>=x11-libs/qt-declarative-99.4.8.2:4"
+	x11-libs/qt-core:4
+	x11-libs/qt-declarative:4"
 DEPEND="${RDEPEND}"
 
 src_configure() {

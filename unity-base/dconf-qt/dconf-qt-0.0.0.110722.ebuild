@@ -20,8 +20,8 @@ IUSE=""
 
 RDEPEND=">=dev-libs/glib-99.2.32.3
 	gnome-base/dconf
-	>=x11-libs/qt-core-99.4.8.2:4
-	>=x11-libs/qt-declarative-99.4.8.2:4"
+	x11-libs/qt-core:4
+	x11-libs/qt-declarative:4"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/lib${PN}-0.0.0"
