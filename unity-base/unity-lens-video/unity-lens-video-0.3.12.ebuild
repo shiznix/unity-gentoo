@@ -5,7 +5,7 @@ SUPPORT_PYTHON_ABIS="1"
 inherit distutils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1"
+UVER="0ubuntu2"
 URELEASE="quantal"
 MY_P="${P/video-/video_}"
 
