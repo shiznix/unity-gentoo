@@ -5,13 +5,13 @@ RESTRICT_PYTHON_ABIS="2.*"
 
 inherit distutils
 
-UVER="0.1-0ubuntu1"
+UVER="0ubuntu1"
 URELEASE="quantal"
 MY_P="${P/radios-/radios_}"
 
 DESCRIPTION="Online radio lens used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/ubuntu/${URELEASE}/+source/${PN}"
-SRC_URI="https://launchpad.net/ubuntu/${URELEASE}/+source/${PN}/${UVER}/+files/${MY_P}.orig.tar.gz"
+SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
