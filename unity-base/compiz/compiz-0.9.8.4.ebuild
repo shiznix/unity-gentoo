@@ -54,7 +54,8 @@ COMMONDEPEND="!unity-base/ccsm
 	x11-libs/libXinerama
 	x11-libs/libICE
 	x11-libs/libSM
-	>=x11-libs/startup-notification-0.7"
+	>=x11-libs/startup-notification-0.7
+	>=x11-wm/metacity-99.2.34.1"
 
 DEPEND="${COMMONDEPEND}
 	dev-util/pkgconfig
