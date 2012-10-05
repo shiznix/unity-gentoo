@@ -9,8 +9,8 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu0.4"
-URELEASE="precise-updates"
+UVER="0ubuntu14"
+URELEASE="quantal"
 MY_P="${MY_P/daemon-/daemon_}"
 GNOME2_LA_PUNT="1"
 
@@ -22,7 +22,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
-IUSE="+colord +cups debug packagekit policykit smartcard systemd +udev"
+IUSE="+colord +cups debug packagekit policykit smartcard systemd +udev wacom"
 
 # colord-0.1.13 needed to avoid polkit errors in CreateProfile and CreateDevice
 COMMON_DEPEND="
@@ -106,10 +106,6 @@ src_prepare() {
 
 	# Useful patches in next release
 	epatch "${FILESDIR}/${PN}-${MY_PV}-double-unref.patch"
-	epatch "${FILESDIR}/${PN}-${MY_PV}-XI-2.2.patch"
-
-	# bug #428816, https://bugzilla.gnome.org/show_bug.cgi?id=679761
-	epatch "${FILESDIR}/${PN}-3.4.2-cups-1.6.patch"
 
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )

@@ -6,7 +6,7 @@ SUPPORT_PYTHON_ABIS="1"
 inherit base eutils autotools python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
-UVER="0ubuntu1"
+UVER="0ubuntu2"
 URELEASE="quantal"
 MY_P="${P/-/_}"
 
