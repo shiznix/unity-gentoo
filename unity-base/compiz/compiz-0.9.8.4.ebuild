@@ -18,8 +18,6 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-S="${WORKDIR}/${PN}-0.9.8.3"	# WTF?!
-
 COMMONDEPEND="!unity-base/ccsm
 	!unity-base/compizconfig-python
 	!unity-base/compizconfig-backend-gconf

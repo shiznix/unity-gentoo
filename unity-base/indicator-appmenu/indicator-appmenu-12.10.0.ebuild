@@ -2,7 +2,7 @@ EAPI=4
 
 inherit autotools base eutils gnome2
 
-UURL="https://launchpad.net/${PN}/12.10/${PV}/+download/"
+UURL="https://launchpad.net/${PN}/12.10/${PV}/+download"
 UVER="0ubuntu1"
 URELEASE="quantal"
 GNOME2_LA_PUNT="1"

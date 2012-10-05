@@ -1,14 +1,6 @@
 * To rebuild all packages against new GTK libs using qdepends (part of app-portage/portage-utils):
 emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
-* Ubuntu uses the compiz gconf plugin (unity-base/compizconfig-backend-gconf) to read the list of default compiz plugins for using Unity
-	The overlay however achieves this by passing the same list of plugins to compiz using the cmake -DCOMPIZ_DEFAULT_PLUGINS=... switch at build time
-	If you're interested in getting the gconf way working, look at 'unity-base/compiz/files/gconf-defaults/compiz-gnome.gconf-defaults'
-		and the 'unity-base/compiz/files/gconf-defaults/update-gconf-defaults' application
-	EDIT: Ubuntu have indicated they will be porting compiz to use dconf instead of gconf for Quantal, so wait until they do before attempting this
-		One side effect of the port is that unity-2d will be dropped in favour of using llvmpipe/gallium software rendering for unity-3d,
-		which could mean that we can drop patching QT as we only really do this currently for unity-2d to function
-
 * Using portage tree libindicate packages
 	- unity-base/indicator-appmenu requires
 		dev-libs/libdbusmenu, dev-libs/libindicator and dev-libs/libappindicator all be built with x11-libs/gtk:2 support
@@ -22,10 +14,10 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
 * Quantal Upgrade
 	- Packages require >=dev-libs/glib-2.33.10 which breaks nautilus thumbnail previews
-		>=unity-base/indicator-session-12.10
+		>=unity-base/indicator-session-12.10	# Currently we patch out the new glib requirement
 	- Packages require gtk+-3.5 which needs testing against main tree GTK applications
-		>=unity-base/indicator-appmenu-12.10
-		>=unity-base/indicator-datetime-12.10
+		>unity-base/indicator-appmenu-12.10.0
+		>unity-base/indicator-datetime-12.10.0
 	# BUGS #
 	Nautilus consumes 95% CPU when idle
 	gtk+-3.5 breaks gtk-engines-unico GTK themes including Quantal's Ambiance theme as it uses unico, and so causes Unity to fail at runtime
@@ -37,4 +29,3 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 	unity-base/launchpad-integration	# Not python-3 compatible
 	unity-base/unity-lens-video
 	unity-base/unity-scope-video-remote
-	x11-proto/xcb-proto
