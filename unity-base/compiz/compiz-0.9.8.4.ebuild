@@ -108,10 +108,6 @@ src_compile() {
 		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gconf-defaults"
 	sed -e "s:'unitymtgrabhandles',::g" \
 		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gsettings-override"
-
-	# Disable '-Bsymbolic-functions' if present so libcompiz_core won't be loaded once per plugin #
-	LDFLAGS="$(echo ${LDFLAGS} | sed 's/-B[ ]*symbolic-functions//')" \
-		cmake-utils_src_compile
 }
 
 src_install() {

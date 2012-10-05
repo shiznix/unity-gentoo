@@ -92,12 +92,6 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
-src_compile() {
-	# Disable '-Bsymbolic-functions' if present so libcompiz_core won't be loaded once per plugin #
-	LDFLAGS="$(echo ${LDFLAGS} | sed 's/-B[ ]*symbolic-functions//')" \
-		cmake-utils_src_compile
-}
-
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
 		dodir /usr/share/cmake/Modules
