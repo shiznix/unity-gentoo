@@ -24,8 +24,6 @@ RDEPEND=">=dev-libs/dee-99.1.0.14
 DEPEND="${RDEPEND}
 	unity-base/unity"
 
-S="${WORKDIR}/unity-lens-videos-0.3.10"	# WTF ?!
-
 src_prepare() {
 	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"
 	python_convert_shebangs -r 2 .
