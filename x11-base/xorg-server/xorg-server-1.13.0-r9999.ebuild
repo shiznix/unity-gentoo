@@ -4,10 +4,15 @@ XORG_DOC=doc
 inherit base xorg-2 multilib versionator flag-o-matic
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
-MY_PV="${PV/99./}"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/x/${PN}"
+UVER="0ubuntu5"
+URELEASE="quantal"
+MY_P="${P/server-/server_}"
+
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
-SRC_URI="http://xorg.freedesktop.org/releases/individual/xserver/${PN}-${MY_PV}.tar.bz2"
+SRC_URI="http://xorg.freedesktop.org/releases/individual/xserver/${PN}-${PV}.tar.bz2
+        ${UURL}/${MY_P}-${UVER}.diff.gz"
 
 IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} ipv6 minimal nptl selinux tslib +udev"
@@ -62,10 +67,10 @@ DEPEND="${RDEPEND}
 	>=x11-proto/damageproto-1.1
 	>=x11-proto/fixesproto-5.0
 	>=x11-proto/fontsproto-2.0.2
-	>=x11-proto/glproto-1.4.14
+	>=x11-proto/glproto-1.4.16
 	>=x11-proto/inputproto-2.1.99.3
 	>=x11-proto/kbproto-1.0.3
-	>=x11-proto/randrproto-1.2.99.3
+	>=x11-proto/randrproto-1.4.0
 	>=x11-proto/recordproto-1.13.99.1
 	>=x11-proto/renderproto-0.11
 	>=x11-proto/resourceproto-1.0.2
@@ -91,7 +96,7 @@ DEPEND="${RDEPEND}
 	)
 	!minimal? (
 		>=x11-proto/xf86driproto-2.1.0
-		>=x11-proto/dri2proto-2.6
+		>=x11-proto/dri2proto-2.8
 		>=x11-libs/libdrm-2.4.20
 	)"
 
@@ -106,20 +111,24 @@ REQUIRED_USE="!minimal? (
 #	"${WORKDIR}/patches/"
 #)
 
-S="${WORKDIR}/${PN}-${MY_PV}"
-
-# 500_pointer_barrier_thresholds patch from Ubuntu for XFixes protocol version 6
-#  (needed for revealing the launcher in Unity)
 PATCHES=(
 	"${UPSTREAMED_PATCHES[@]}"
 	"${FILESDIR}/${PN}-1.12-disable-acpi.patch"
-	"${FILESDIR}/500_pointer_barrier_thresholds-${PV}.diff"
 )
 
 pkg_pretend() {
 	# older gcc is not supported
 	[[ "${MERGE_TYPE}" != "binary" && $(gcc-major-version) -lt 4 ]] && \
 		die "Sorry, but gcc earlier than 4.0 wont work for xorg-server."
+}
+
+src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	PATCHES+=(	"${S}/debian/patches/208_switch_on_release.diff"
+			"${S}/debian/patches/229_udev-fix.diff"
+			"${S}/debian/patches/500_pointer_barrier_thresholds.diff"
+		)
+	base_src_prepare
 }
 
 src_configure() {

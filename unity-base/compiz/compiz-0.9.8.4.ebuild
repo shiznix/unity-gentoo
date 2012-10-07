@@ -36,7 +36,7 @@ COMMONDEPEND="!unity-base/ccsm
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/libpng
 	<=media-libs/mesa-8.0.4
-	=x11-base/xorg-server-1.12.3-r9999
+	=x11-base/xorg-server-1.13.0-r9999
 	>=x11-libs/cairo-1.0
 	>=x11-libs/gtk+-99.3.4.2
 	x11-libs/libnotify
@@ -159,8 +159,8 @@ src_install() {
 		newins debian/compiz-gnome.gsettings-override 10_compiz-ubuntu.gschema.override
 
 		# Script for resetting all of Compiz's settings #
-		insinto /usr/bin
-		doins "${FILESDIR}/compiz.reset"
+		exeinto /usr/bin
+		doexe "${FILESDIR}/compiz.reset"
 
 		# Script for migrating GConf settings to GSettings #
 		insinto /usr/lib/compiz/

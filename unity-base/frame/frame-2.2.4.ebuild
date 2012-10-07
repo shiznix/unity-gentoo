@@ -21,7 +21,7 @@ DEPEND="!!unity-base/utouch-evemu
 	sys-devel/gcc:4.6
 	sys-libs/mtdev
 	unity-base/evemu
-	=x11-base/xorg-server-1.12.3-r9999
+	=x11-base/xorg-server-1.13.0-r9999
 	>=x11-libs/libXi-1.5.99.1"
 
 pkg_pretend() {

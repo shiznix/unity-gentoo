@@ -12,12 +12,12 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/m/${PN}"
-UVER="1ubuntu11"
-URELEASE="precise"
+UVER="0ubuntu4"
+URELEASE="quantal"
 
 DESCRIPTION="GNOME default window manager"
 HOMEPAGE="http://blogs.gnome.org/metacity/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
         ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
@@ -78,7 +78,7 @@ src_prepare() {
 	done
 
 	# Set metacity show_maximized_titlebars to false so top appmenu bar behaviour functions correctly #
-	PATCHES+=( "${FILESDIR}/metacity-window_titlebars_fix.diff" )
+#	PATCHES+=( "${FILESDIR}/metacity-window_titlebars_fix.diff" )
 
 	base_src_prepare
 	gnome2_src_prepare
