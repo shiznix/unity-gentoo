@@ -182,10 +182,12 @@ pkg_postinst() {
 
 pkg_config() {
 	einfo "Setting compiz gconf defaults"
+	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path`" ]; then
+		echo "/etc/gconf/gconf.xml.unity" >> /etc/gconf/2/local-defaults.path
+	fi
+	mkdir -p /etc/gconf/gconf.xml.unity 2> /dev/null
 	/usr/bin/update-gconf-defaults \
 		--source="/usr/share/gconf/defaults" \
-		--destination="/etc/gconf/gconf.xml.defaults/" || die
-
-	# 'update-gconf-defaults' overwrites %gconf.tree.xml so refresh all installed schemas again to re-create it #
+			--destination="/etc/gconf/gconf.xml.unity" || die
 	gnome2_gconf_install
 }

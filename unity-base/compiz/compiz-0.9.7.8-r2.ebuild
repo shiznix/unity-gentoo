@@ -148,14 +148,12 @@ pkg_postinst() {
 
 pkg_config() {
 	einfo "Setting compiz gconf defaults"
-
+	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path`" ]; then
+		echo "/etc/gconf/gconf.xml.unity" >> /etc/gconf/2/local-defaults.path
+	fi
+	mkdir -p /etc/gconf/gconf.xml.unity 2> /dev/null
 	/usr/bin/update-gconf-defaults \
 		--source="/usr/share/gconf/defaults" \
-		--destination="/etc/gconf/gconf.xml.defaults" || die
-	export GCONF_CONFIG_SOURCE="xml:merged:/etc/gconf/gconf.xml.defaults/"
-	for SCHEMAS in /etc/gconf/schemas/*; do
-		gconftool-2 --makefile-install-rule "${SCHEMAS}"
-	done
-
+		--destination="/etc/gconf/gconf.xml.unity" || die
 	gnome2_gconf_install
 }

@@ -20,6 +20,7 @@ gnome-base/gconf
 gnome-base/gnome-control-center
 gnome-base/gnome-session
 gnome-base/gnome-settings-daemon
+gnome-base/gsettings-desktop-schemas
 gnome-base/nautilus
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome
