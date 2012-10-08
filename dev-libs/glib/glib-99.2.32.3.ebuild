@@ -36,20 +36,20 @@ RDEPEND="virtual/libiconv
 		>=dev-libs/libelf-0.8.11 )
 	xattr? ( sys-apps/attr )
 	fam? ( virtual/fam )
-	utils? ( >=dev-util/gdbus-codegen-${PV} )"
+	utils? ( >=dev-util/gdbus-codegen-${MY_PV} )"
 DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.11
 	>=dev-util/gtk-doc-am-1.15
 	doc? (
 		>=dev-libs/libxslt-1.0
-		>=dev-util/gdbus-codegen-${PV}
+		>=dev-util/gdbus-codegen-${MY_PV}
 		>=dev-util/gtk-doc-1.15
 		~app-text/docbook-xml-dtd-4.1.2 )
 	systemtap? ( >=dev-util/systemtap-1.3 )
 	test? (
 		sys-devel/gdb
 		=dev-lang/python-2*
-		>=dev-util/gdbus-codegen-${PV}
+		>=dev-util/gdbus-codegen-${MY_PV}
 		>=sys-apps/dbus-1.2.14 )
 	!<dev-util/gtk-doc-1.15-r2"
 PDEPEND="x11-misc/shared-mime-info
