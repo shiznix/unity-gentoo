@@ -20,7 +20,7 @@ DEPEND="!unity-base/frame
 	sys-devel/gcc:4.6
 	sys-libs/mtdev
 	unity-base/utouch-evemu
-	=x11-base/xorg-server-1.13.0-r9999
+	=x11-base/xorg-server-1.13.0-r9999[dmx]
 	>=x11-libs/libXi-1.5.99.1"
 
 src_prepare() {

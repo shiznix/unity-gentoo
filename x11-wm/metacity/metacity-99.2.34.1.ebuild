@@ -12,18 +12,17 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/m/${PN}"
-UVER="0ubuntu4"
+UVER="1ubuntu11"
 URELEASE="quantal"
 
 DESCRIPTION="GNOME default window manager"
 HOMEPAGE="http://blogs.gnome.org/metacity/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
         ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~x86-solaris"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~x86-solaris"
 IUSE="test xinerama"
 
 # XXX: libgtop is automagic, hard-enabled instead

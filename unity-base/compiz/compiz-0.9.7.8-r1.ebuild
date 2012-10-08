@@ -29,7 +29,7 @@ COMMONDEPEND="!x11-wm/compiz
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/libpng
 	<=media-libs/mesa-8.0.4
-	=x11-base/xorg-server-1.13.0-r9999
+	=x11-base/xorg-server-1.13.0-r9999[dmx]
 	>=x11-libs/cairo-1.0
 	>=x11-libs/gtk+-99.3.4.2
 	x11-libs/libnotify
@@ -148,10 +148,14 @@ pkg_postinst() {
 
 pkg_config() {
 	einfo "Setting compiz gconf defaults"
+
 	/usr/bin/update-gconf-defaults \
 		--source="/usr/share/gconf/defaults" \
-		--destination="/etc/gconf/gconf.xml.defaults/" || die
+		--destination="/etc/gconf/gconf.xml.defaults" || die
+	export GCONF_CONFIG_SOURCE="xml:merged:/etc/gconf/gconf.xml.defaults/"
+	for SCHEMAS in /etc/gconf/schemas/*; do
+		gconftool-2 --makefile-install-rule "${SCHEMAS}"
+	done
 
-	# 'update-gconf-defaults' overwrites %gconf.tree.xml so refresh all installed schemas again to re-create it #
 	gnome2_gconf_install
 }
