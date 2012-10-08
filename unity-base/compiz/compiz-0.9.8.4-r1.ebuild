@@ -151,8 +151,6 @@ src_install() {
 		# Default GConf settings #
 		insinto /usr/share/gconf/defaults
 		newins debian/compiz-gnome.gconf-defaults 10_compiz-gnome
-		exeinto /usr/bin
-		doexe "${FILESDIR}/update-gconf-defaults"
 
 		# Default GSettings settings #
 		insinto /usr/share/glib-2.0/schemas
@@ -169,25 +167,15 @@ src_install() {
 		doins "${FILESDIR}/compiz-migrate-to-dconf.desktop"
 
 	popd ${CMAKE_USE_DIR}
-}
 
-pkg_postinst() {
-	gnome2_gconf_install
-	elog
-	elog "To use compiz for the Unity desktop it is necessary to first configure"
-	elog "it's defaults by running the following command as root:"
-	elog "    emerge --config =${PF}"
-	elog
-}
-
-pkg_config() {
-	einfo "Setting compiz gconf defaults"
+	# Setup gconf defaults #
+	dodir /etc/gconf/2
 	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path`" ]; then
-		echo "/etc/gconf/gconf.xml.unity" >> /etc/gconf/2/local-defaults.path
+		echo "/etc/gconf/gconf.xml.unity" >> ${D}etc/gconf/2/local-defaults.path
 	fi
-	mkdir -p /etc/gconf/gconf.xml.unity 2> /dev/null
+	dodir /etc/gconf/gconf.xml.unity 2> /dev/null
 	/usr/bin/update-gconf-defaults \
-		--source="/usr/share/gconf/defaults" \
-			--destination="/etc/gconf/gconf.xml.unity" || die
+		--source="${D}usr/share/gconf/defaults" \
+			--destination="${D}etc/gconf/gconf.xml.unity" || die
 	gnome2_gconf_install
 }

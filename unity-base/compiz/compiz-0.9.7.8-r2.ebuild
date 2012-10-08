@@ -124,36 +124,20 @@ src_install() {
 	# Default GConf settings #
 	insinto /usr/share/gconf/defaults
 	newins "${WORKDIR}/debian/compiz-gnome.gconf-defaults" 10_compiz-gnome
-	exeinto /usr/bin
-	doexe "${FILESDIR}/update-gconf-defaults"
 
 	# Compiz decorator wrapper and reset scripts #
 	exeinto /usr/bin
 	doexe "${WORKDIR}/debian/compiz-decorator"
 	doexe "${FILESDIR}/compiz.reset"
-}
 
-pkg_postinst() {
-	gnome2_gconf_install
-	elog
-	elog "To use compiz for the Unity desktop it is necessary to first configure"
-	elog "it's defaults by running the following command as root:"
-	elog "    emerge --config =${PF}"
-	elog "To reset your previous settings back to default, execute as desktop user:"
-	elog "    compiz.reset"
-	elog "Then re-run as root:"
-	elog "    emerge --config =${PF}"
-	elog
-}
-
-pkg_config() {
-	einfo "Setting compiz gconf defaults"
+	# Setup gconf defaults #
+	dodir /etc/gconf/2
 	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path`" ]; then
-		echo "/etc/gconf/gconf.xml.unity" >> /etc/gconf/2/local-defaults.path
+		echo "/etc/gconf/gconf.xml.unity" >> ${D}etc/gconf/2/local-defaults.path
 	fi
-	mkdir -p /etc/gconf/gconf.xml.unity 2> /dev/null
+	dodir /etc/gconf/gconf.xml.unity 2> /dev/null
 	/usr/bin/update-gconf-defaults \
-		--source="/usr/share/gconf/defaults" \
-		--destination="/etc/gconf/gconf.xml.unity" || die
+		--source="${D}usr/share/gconf/defaults" \
+			--destination="${D}etc/gconf/gconf.xml.unity" || die
 	gnome2_gconf_install
 }
