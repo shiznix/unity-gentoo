@@ -1,0 +1,19 @@
+## This file is provided to ease unmasking Quantal missing keyword masked packages ##
+
+gnome-base/nautilus **
+unity-base/compiz **
+unity-base/indicator-appmenu **
+unity-base/indicator-datetime **
+unity-base/indicator-session **
+unity-base/nux **
+unity-base/unity **
+unity-base/unity-lens-applications **
+unity-base/unity-lens-files **
+unity-base/unity-lens-music **
+unity-base/unity-lens-video **
+unity-base/unity-meta **
+unity-extra/indicator-power **
+x11-wm/metacity **
+
+#x11-libs/gtk+ **
+#dev-libs/glib **
