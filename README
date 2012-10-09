@@ -5,9 +5,10 @@ A Gentoo overlay to install the Unity desktop
 
 ~ # emerge -at unity-meta
 
------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
 
 * To add the overlay using layman, do 'layman -a unity-gentoo'
+
 
 * A list of packages provided by the overlay can be found in /var/lib/layman/unity-gentoo/PACKAGES
 
@@ -18,5 +19,12 @@ A Gentoo overlay to install the Unity desktop
 	If you already have an /etc/portage/package.keywords file, rename it first to something	other than
 	'package.keywords' and then copy that renamed file into the new /etc/portage/package.keywords/ directory
 
+
 * A list of packages that are in testing can be found in /var/lib/layman/unity-gentoo/unity-gentoo.quantal
 	Packages in testing (usually beta Ubuntu releases) are masked by missing keyword
+
+	To use these packages do the following:
+	~ # ln -s /var/lib/layman/unity-gentoo/unity-gentoo.quantal /etc/portage/package.keywords/unity-gentoo.quantal
+
+	To revert back to 'stable' do the following:
+	~ # rm /etc/portage/package.keywords/unity-gentoo.quantal
