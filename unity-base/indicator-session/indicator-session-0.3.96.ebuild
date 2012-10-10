@@ -23,7 +23,8 @@ DEPEND="app-admin/packagekit[gtk,qt4]
 	>=dev-libs/glib-99.2.32.3
 	dev-libs/libappindicator
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
-	dev-libs/libindicate-qt"
+	dev-libs/libindicate-qt
+	>=gnome-extra/gnome-screensaver-3.4"
 
 src_prepare() {
 	# Fix '--disable-apt' configure switch #
