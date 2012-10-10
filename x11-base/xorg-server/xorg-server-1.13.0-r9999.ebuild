@@ -62,6 +62,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 
 DEPEND="${RDEPEND}
 	sys-devel/flex
+	<=sys-devel/patch-2.6.1
 	>=x11-proto/bigreqsproto-1.1.0
 	>=x11-proto/compositeproto-0.4
 	>=x11-proto/damageproto-1.1
