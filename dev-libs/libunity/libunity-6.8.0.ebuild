@@ -21,7 +21,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=dev-libs/dee-99.1.0.14
-	>=dev-libs/libdbusmenu-0.6.1[gtk]
+	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libgee
 	dev-lang/vala:0.16"
 

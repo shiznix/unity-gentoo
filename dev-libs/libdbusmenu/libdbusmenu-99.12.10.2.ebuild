@@ -2,10 +2,15 @@ EAPI=3
 
 inherit base autotools eutils virtualx
 
+# Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
+MY_PV="${PV/99./}"
+MY_P="${PN}_${MY_PV}"
+
+S="${WORKDIR}/${PN}-${MY_PV}"
+
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libd/${PN}"
-UVER="0ubuntu0.1"
-URELEASE="precise-updates"
-MY_P="${P/-/_}"
+UVER="0ubuntu1"
+URELEASE="quantal"
 
 DESCRIPTION="Library to pass menu structure across DBus"
 HOMEPAGE="https://launchpad.net/dbusmenu"
@@ -47,7 +52,6 @@ src_configure() {
 		$(use_enable introspection) \
 		--disable-static \
 		--disable-scrollkeeper \
-		--disable-tests \
 		--with-gtk=2 || die
 	popd
 
@@ -58,7 +62,6 @@ src_configure() {
 		$(use_enable introspection) \
 		--disable-static \
 		--disable-scrollkeeper \
-		--disable-tests \
 		--with-gtk=3 || die
 	popd
 }

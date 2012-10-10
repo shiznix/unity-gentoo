@@ -17,8 +17,8 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="dev-lang/vala:0.16[vapigen]
-	dev-libs/libappindicator
-	>=dev-libs/libdbusmenu-0.6.1[gtk]
+	>=dev-libs/libappindicator-99.12.10.0
+	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt
 	unity-base/bamf
 	>=x11-libs/gtk+-3.5.12:3

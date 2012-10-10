@@ -21,7 +21,7 @@ SLOT="3"
 KEYWORDS="~amd64 ~x86"
 IUSE="vala"
 
-DEPEND=">=dev-libs/libindicator-99.0.5.0
+DEPEND=">=dev-libs/libindicator-99.0.5.0:3
 	dev-dotnet/gtk-sharp:2
 	dev-libs/xapian-bindings[python]
 	dev-python/dbus-python

@@ -16,8 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-libs/libappindicator
-	>=dev-libs/libdbusmenu-0.6.1[gtk]
+DEPEND=">=dev-libs/libappindicator-99.12.10.0
+	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt"
 
 src_configure() {

@@ -23,7 +23,7 @@ IUSE=""
 
 RDEPEND="!x11-misc/glipper
 	dev-libs/keybinder:0[python]
-	dev-libs/libappindicator
+	>=dev-libs/libappindicator-99.12.10.0
 	dev-python/gconf-python
 	dev-python/pycrypto
 	dev-python/pygtk:2

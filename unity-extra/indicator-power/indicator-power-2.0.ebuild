@@ -18,6 +18,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-libs/libappindicator
-	>=dev-libs/libdbusmenu-0.6.1[gtk]
+	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt
 	sys-power/upower"

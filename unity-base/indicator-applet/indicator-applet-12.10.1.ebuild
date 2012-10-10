@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=">=dev-libs/libindicator-0.5.0:3
+DEPEND=">=dev-libs/libindicator-99.0.5.0:3
 	>=x11-libs/gtk+-99.3.4.2
 	>=gnome-base/gnome-panel-3.4.1"
 
