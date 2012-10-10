@@ -5,7 +5,6 @@ gnome-base/nautilus **
 unity-base/compiz **
 unity-base/indicator-appmenu **
 unity-base/indicator-datetime **	# Requires >=evolution-data-server-3.5.3 (not in portage tree yet) which we patch out, version kept at 12.10.0 so patch applies
-unity-base/indicator-session **
 unity-base/nux **
 unity-base/unity **
 unity-base/unity-lens-applications **
