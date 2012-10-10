@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="app-admin/packagekit[gtk,qt4]
@@ -24,7 +24,7 @@ DEPEND="app-admin/packagekit[gtk,qt4]
 	dev-libs/libappindicator
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
 	dev-libs/libindicate-qt
-	>=gnome-extra/gnome-screensaver-3.4"
+	>=gnome-extra/gnome-screensaver-99.3.6.0"
 
 PATCHES=( "${FILESDIR}/revert-glib-2.33.10-support.diff" )
 
