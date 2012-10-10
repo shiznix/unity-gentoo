@@ -15,6 +15,7 @@ Packages effected are:
 dev-libs/dee
 dev-libs/libappindicator
 dev-libs/libindicator
+dev-libs/libzeitgeist
 gnome-base/gconf
 gnome-base/gnome-control-center
 gnome-base/gnome-menus
