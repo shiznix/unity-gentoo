@@ -62,9 +62,9 @@ pkg_pretend() {
 
 src_prepare() {
 	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${S}/debian/patches/${patch}" )
-	done
+#	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
+#		PATCHES+=( "${S}/debian/patches/${patch}" )
+#	done
 	PATCHES+=( "${FILESDIR}/stdcerr-fix.patch"
 			"${FILESDIR}/gtestdir_fix.patch" )
 	base_src_prepare

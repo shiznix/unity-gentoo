@@ -3,7 +3,7 @@
 gnome-base/nautilus **
 unity-base/compiz **
 unity-base/indicator-appmenu **
-unity-base/indicator-datetime **
+unity-base/indicator-datetime **	# Requires >=evolution-data-server-3.5.3 (not in portage tree yet) which we patch out, version kept at 12.10.0 so patch applies
 unity-base/indicator-session **
 unity-base/nux **
 unity-base/unity **
@@ -15,5 +15,5 @@ unity-base/unity-meta **
 unity-extra/indicator-power **
 x11-wm/metacity **
 
-#x11-libs/gtk+ **
-#dev-libs/glib **
+#x11-libs/gtk+ **			# >=x11-libs/gtk+-3.5 breaks or makes buggy, many application UI layouts and themes
+#dev-libs/glib **			# >=dev-libs/glib-2.33.10 breaks nautilus thumbnail previews
