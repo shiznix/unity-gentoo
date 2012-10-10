@@ -1,5 +1,6 @@
 ## This file is provided to ease unmasking Quantal missing keyword masked packages ##
 
+gnome-base/gnome-control-center **
 gnome-base/nautilus **
 unity-base/compiz **
 unity-base/indicator-appmenu **
