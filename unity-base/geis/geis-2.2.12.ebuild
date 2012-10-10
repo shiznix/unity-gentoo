@@ -1,4 +1,6 @@
 EAPI=4
+PYTHON_DEPEND="2:2.7"
+SUPPORT_PYTHON_ABIS="1"
 
 inherit base eutils python
 
@@ -21,11 +23,10 @@ DEPEND="!!unity-base/utouch-geis
 	dev-lang/python:2.7
 	unity-base/grail"
 
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
-
 src_prepare() {
 	sed -i 's/python >= 2.7/python-2.7 >= 2.7/g' configure
+
+	export EPYTHON="$(PYTHON -2)"
+        python_convert_shebangs -r 2 .
+        python_src_prepare
 }
