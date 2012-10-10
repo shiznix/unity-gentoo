@@ -1,9 +1,8 @@
 ## This file is provided to ease unmasking Quantal missing keyword masked packages ##
 
 gnome-base/gnome-control-center **
-gnome-base/nautilus **
 unity-base/compiz **
-unity-base/indicator-appmenu **
+unity-base/indicator-appmenu **		# Requires gtk+-3.5, version kept at 12.10.0 until gtk+-3.5 stabilises
 unity-base/indicator-datetime **	# Requires >=evolution-data-server-3.5.3 (not in portage tree yet) which we patch out, version kept at 12.10.0 so patch applies
 unity-base/nux **
 unity-base/unity **
@@ -12,7 +11,7 @@ unity-base/unity-lens-files **
 unity-base/unity-lens-music **
 unity-base/unity-lens-video **
 unity-base/unity-meta **
-unity-extra/indicator-power **
+unity-extra/indicator-power **		# Requires >=dev-libs/glib-2.33.10, version kept at 0.2 until glib stabilises
 x11-wm/metacity **
 
 #x11-libs/gtk+ **			# >=x11-libs/gtk+-3.5 breaks or makes buggy, many application UI layouts and themes
