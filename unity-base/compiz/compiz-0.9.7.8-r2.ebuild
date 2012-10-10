@@ -16,9 +16,10 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="kde"
 
-COMMONDEPEND="!x11-wm/compiz
+COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
+	!x11-wm/compiz
 	!x11-libs/compiz-bcop
 	!x11-libs/compiz-plugins-main
 	>=dev-libs/boost-1.34.0
@@ -74,14 +75,16 @@ src_prepare() {
 }
 
 src_configure() {
+	use kde && \
+		mycmakeargs="${mycmakeargs} -DUSE_KDE4=ON" || \
+		mycmakeargs="${mycmakeargs} -DUSE_KDE4=OFF"
+
 	mycmakeargs="${mycmakeargs}
 		-DCMAKE_INSTALL_PREFIX="/usr"
 		-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="/etc/gconf/schemas"
 		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
-		-DCOMPIZ_DISABLE_PLUGIN_KDE=ON
-		-DUSE_KDE4=OFF
 		-DUSE_GCONF=ON
 		-DUSE_GSETTINGS=OFF
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=ON

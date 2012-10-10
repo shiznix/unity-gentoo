@@ -3,7 +3,7 @@ EAPI=4
 inherit base gnome2 cmake-utils eutils python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
-UVER="0ubuntu1"
+UVER="0ubuntu2"
 URELEASE="quantal"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
@@ -16,9 +16,10 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="kde"
 
-COMMONDEPEND="!unity-base/ccsm
+COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
+	!unity-base/ccsm
 	!unity-base/compizconfig-python
 	!unity-base/compizconfig-backend-gconf
 	!x11-wm/compiz
@@ -82,13 +83,15 @@ src_prepare() {
 }
 
 src_configure() {
+        use kde && \
+                mycmakeargs="${mycmakeargs} -DUSE_KDE4=ON" || \
+                mycmakeargs="${mycmakeargs} -DUSE_KDE4=OFF"
+
 	mycmakeargs="${mycmakeargs}
 		-DCMAKE_INSTALL_PREFIX="/usr"
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="/etc/gconf/schemas"
 		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
-		-DCOMPIZ_DISABLE_PLUGIN_KDE=ON
-		-DUSE_KDE4=OFF
 		-DUSE_GCONF=OFF
 		-DUSE_GSETTINGS=ON
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF
@@ -120,7 +123,6 @@ src_install() {
 		# Keybinding files #
 		insinto /usr/share/gnome-control-center/keybindings
 		doins gtk/gnome/*.xml
-
 	popd ${CMAKE_BUILD_DIR}
 
 	pushd ${CMAKE_USE_DIR}
@@ -165,7 +167,6 @@ src_install() {
 		doins postinst/migration-scripts/02_migrate_to_gsettings.py
 		insinto /etc/xdg/autostart/
 		doins "${FILESDIR}/compiz-migrate-to-dconf.desktop"
-
 	popd ${CMAKE_USE_DIR}
 
 	# Setup gconf defaults #
