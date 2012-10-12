@@ -171,7 +171,7 @@ src_install() {
 
 	# Setup gconf defaults #
 	dodir /etc/gconf/2
-	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path`" ]; then
+	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path 2> /dev/null`" ]; then
 		echo "/etc/gconf/gconf.xml.unity" >> ${D}etc/gconf/2/local-defaults.path
 	fi
 	dodir /etc/gconf/gconf.xml.unity 2> /dev/null
