@@ -35,8 +35,8 @@ RDEPEND="${DEPEND}
 	dev-python/pyinotify
 	dev-python/pyxdg
 	dev-python/simplejson
-	dev-python/twisted-names
-	dev-python/twisted-web
+	>=dev-python/twisted-names-12.2.0
+	>=dev-python/twisted-web-12.2.0
 	unity-base/ubuntu-sso-client
 	unity-base/ubuntuone-storage-protocol
 	x11-misc/lndir

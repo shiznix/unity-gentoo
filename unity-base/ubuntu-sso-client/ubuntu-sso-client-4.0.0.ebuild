@@ -34,8 +34,8 @@ DEPEND="dev-lang/python
 	>=dev-python/python-distutils-extra-2.29
 	dev-python/pyxdg
 	dev-python/simplejson
-	dev-python/twisted-names
-	dev-python/twisted-web"
+	>=dev-python/twisted-names-12.2.0
+	>=dev-python/twisted-web-12.2.0"
 
 pkg_setup() {
 	python_set_active_version 2
