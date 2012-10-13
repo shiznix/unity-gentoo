@@ -8,7 +8,7 @@ MY_PV="${PV/99./}"
 MY_P="${PN}_${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu2"
+UVER="0ubuntu3"
 URELEASE="quantal"
 GNOME2_LA_PUNT="1"
 
