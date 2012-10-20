@@ -18,7 +18,7 @@ RDEPEND=">=dev-libs/glib-2.22:2
 	dev-libs/libxml2:2
 	app-text/iso-codes
 	introspection? ( >=dev-libs/gobject-introspection-0.9.12 )
-	orc? ( >=dev-lang/orc-0.4.11 )
+	orc? ( >=dev-lang/orc-0.4.16 )
 	!<media-libs/gst-plugins-bad-0.10.10"
 DEPEND="${RDEPEND}
 	nls? ( >=sys-devel/gettext-0.11.5 )
