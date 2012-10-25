@@ -48,4 +48,5 @@ src_configure() {
 
 src_install() {
 	gnome2_src_install
+	find "${D}" -name '*.la' -exec rm -f {} +
 }

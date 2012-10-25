@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit autotools base eutils gnome2
+inherit eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 UVER="0ubuntu1"
@@ -20,17 +20,8 @@ IUSE=""
 DEPEND="app-admin/packagekit[gtk,qt4]
 	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]
 	app-admin/system-config-printer-gnome
-	>=dev-libs/glib-99.2.32.3
+	>=dev-libs/glib-99.2.34
 	>=dev-libs/libappindicator-99.12.10.0
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt
 	>=gnome-extra/gnome-screensaver-99.3.6.0"
-
-PATCHES=( "${FILESDIR}/revert-glib-2.33.10-support.diff" )
-
-src_prepare() {
-	# Use stable dev-libs/glib #
-	sed -i 's/2\.33/2.32/g' configure.ac
-	eautoreconf
-	base_src_prepare
-}

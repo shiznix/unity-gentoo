@@ -72,6 +72,10 @@ src_prepare() {
 
 	sed -e "s: -Werror::g" \
 		-i cmake/CompizCommon.cmake
+
+	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
+	sed -e 's:xubuntu:xunity:g' \
+		-i "${WORKDIR}/debian/65compiz_profile-on-session" || die
 }
 
 src_configure() {

@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=GNOME Classic (No effects)
-Comment=This session logs you into GNOME with the traditional panel without any graphical effect.
-Exec=gnome-session --session=gnome-fallback
-TryExec=gnome-session
-Icon=
-Type=Application

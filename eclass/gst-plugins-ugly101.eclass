@@ -135,6 +135,7 @@ gst-plugins-ugly101_src_install() {
 
 	gst-plugins101_find_plugin_dir
 	einstall || die
+	find "${D}" -name '*.la' -exec rm -f {} +
 
 	[[ -e README ]] && dodoc README
 }

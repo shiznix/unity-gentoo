@@ -1,0 +1,43 @@
+From 33c8c10af27a132735485a3be32249102259517a Mon Sep 17 00:00:00 2001
+From: Alexandre Rostovtsev <tetromino@gentoo.org>
+Date: Thu, 27 Sep 2012 17:23:13 -0400
+Subject: [PATCH] .desktop files require a main category
+
+Otherwise, they do not validate with desktop-file-validate from
+desktop-file-utils-0.20
+
+https://bugzilla.gnome.org/show_bug.cgi?id=685002
+---
+ sendto/bluetooth-sendto.desktop.in.in | 2 +-
+ wizard/bluetooth-wizard.desktop.in.in | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sendto/bluetooth-sendto.desktop.in.in b/sendto/bluetooth-sendto.desktop.in.in
+index 5365927..810de89 100644
+--- a/sendto/bluetooth-sendto.desktop.in.in
++++ b/sendto/bluetooth-sendto.desktop.in.in
+@@ -5,7 +5,7 @@ Icon=bluetooth
+ Exec=bluetooth-sendto
+ Terminal=false
+ Type=Application
+-Categories=GTK;GNOME;
++Categories=GTK;GNOME;Utility;FileTools;
+ StartupNotify=true
+ NoDisplay=true
+ X-GNOME-Bugzilla-Bugzilla=GNOME
+diff --git a/wizard/bluetooth-wizard.desktop.in.in b/wizard/bluetooth-wizard.desktop.in.in
+index b331639..d18a8ff 100644
+--- a/wizard/bluetooth-wizard.desktop.in.in
++++ b/wizard/bluetooth-wizard.desktop.in.in
+@@ -5,7 +5,7 @@ Icon=bluetooth
+ Exec=bluetooth-wizard
+ Terminal=false
+ Type=Application
+-Categories=GTK;GNOME;
++Categories=GTK;GNOME;Settings;HardwareSettings;
+ StartupNotify=true
+ NoDisplay=true
+ X-GNOME-Bugzilla-Bugzilla=GNOME
+-- 
+1.7.12
+

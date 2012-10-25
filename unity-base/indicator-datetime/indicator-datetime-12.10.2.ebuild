@@ -1,9 +1,9 @@
 EAPI=4
 
-inherit base eutils gnome2
+inherit eutils gnome2
 
 UURL="https://launchpad.net/${PN}/12.10/${PV}/+download"
-UVER="0ubuntu1"
+UVER="0ubuntu3"
 URELEASE="quantal"
 MY_P="${P/datetime-/datetime_}"
 GNOME2_LA_PUNT="1"
@@ -21,10 +21,4 @@ DEPEND=">=dev-libs/libappindicator-99.12.10.0
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt
 	dev-libs/libtimezonemap
-	>=gnome-extra/evolution-data-server-3.2
-	<gnome-extra/evolution-data-server-3.5"
-
-src_prepare() {
-	PATCHES+=( "${FILESDIR}/0001_Revert_port_to_EDS_3.6_API.patch" )
-	base_src_prepare
-}
+	>=gnome-extra/evolution-data-server-3.6"

@@ -141,6 +141,7 @@ gst-plugins-bad101_src_compile() {
 gst-plugins-bad101_src_install() {
 	gst-plugins101_find_plugin_dir
 	einstall || die "install failed"
+	find "${D}" -name '*.la' -exec rm -f {} +
 
 	[[ -e README ]] && dodoc README
 }

@@ -1,4 +1,6 @@
-EAPI=4
+EAPI="4"
+GCONF_DEBUG="no"
+GNOME2_LA_PUNT="yes"
 
 inherit autotools base eutils gnome2
 
@@ -10,8 +12,8 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${MY_PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${MY_PN}"
-UVER="0ubuntu2"
-URELEASE="precise"
+UVER="0ubuntu6"
+URELEASE="quantal"
 MY_P="${MY_P/applet-/applet_}"
 GNOME2_LA_PUNT="1"
 
@@ -22,23 +24,25 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="bluetooth"
+IUSE="bluetooth gconf"
 KEYWORDS="~amd64 ~ppc ~x86"
 
-RDEPEND=">=dev-libs/glib-99.2.32.1:2
+RDEPEND=">=dev-libs/glib-99.2.26:2
 	>=dev-libs/dbus-glib-0.88
-	>=dev-libs/libappindicator-99.12.10.0
-	>=gnome-base/gconf-99.3.2.5
 	>=gnome-base/gnome-keyring-2.20
 	>=sys-apps/dbus-1.4.1
 	>=sys-auth/polkit-0.96-r1
-	>=x11-libs/gtk+-99.3.4.2:3
+	>=x11-libs/gtk+-99.2.91.4:3
 	>=x11-libs/libnotify-0.7.0
+
 	app-text/iso-codes
-	>=net-misc/networkmanager-0.9.4
+	>=net-misc/networkmanager-0.9.6
 	net-misc/mobile-broadband-provider-info
-	bluetooth? ( >=net-wireless/gnome-bluetooth-99.3.2.2 )
+
+	bluetooth? ( >=net-wireless/gnome-bluetooth-2.27.6 )
+	gconf? ( >=gnome-base/gconf-2.20:2 )
 	virtual/freedesktop-icon-theme"
+
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	>=dev-util/intltool-0.40"
@@ -50,8 +54,8 @@ pkg_setup() {
 		--disable-more-warnings
 		--disable-static
 		--localstatedir=/var
-		--enable-appindicator
-		$(use_with bluetooth)"
+		$(use_with bluetooth)
+		$(use_enable gconf migration)"
 }
 
 src_prepare() {

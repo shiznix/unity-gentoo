@@ -34,12 +34,12 @@ KEYWORDS="~amd64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solari
 # gnome-settings-daemon-3.1.4 is needed for power panel (commit 4f08a325)
 # g-s-d[policykit] needed for bug #403527
 COMMON_DEPEND="
-	>=dev-libs/glib-2.31.0:2
+	>=dev-libs/glib-99.2.31.0:2
 	>=x11-libs/gdk-pixbuf-2.23.0:2
 	>=x11-libs/gtk+-99.3.4.2:3
-	>=gnome-base/gsettings-desktop-schemas-3.3.0
+	>=gnome-base/gsettings-desktop-schemas-99.3.3.0
 	>=gnome-base/gnome-desktop-3.1.91:3
-	>=gnome-base/gnome-settings-daemon-3.3.92[colord?,policykit]
+	>=gnome-base/gnome-settings-daemon-99.3.3.92[colord?,policykit]
 	>=gnome-base/libgnomekbd-2.91.91
 
 	app-text/iso-codes
@@ -70,7 +70,7 @@ COMMON_DEPEND="
 	cups? ( >=net-print/cups-1.4[dbus] )
 	gnome-online-accounts? ( net-libs/gnome-online-accounts )
 	networkmanager? (
-		>=gnome-extra/nm-applet-0.9.1.90
+		>=gnome-extra/nm-applet-99.0.9.1.90
 		>=net-misc/networkmanager-0.8.997 )
 	socialweb? ( net-libs/libsocialweb )
 	systemd? ( >=sys-apps/systemd-31 )
@@ -92,7 +92,7 @@ RDEPEND="${COMMON_DEPEND}
 	!<gnome-extra/gnome-media-2.32.0-r300
 	!<net-wireless/gnome-bluetooth-3.3.2"
 # PDEPEND to avoid circular dependency
-PDEPEND=">=gnome-base/gnome-session-2.91.6-r1"
+PDEPEND=">=gnome-base/gnome-session-99.2.91.6-r1"
 DEPEND="${COMMON_DEPEND}
 	x11-proto/xproto
 	x11-proto/xf86miscproto

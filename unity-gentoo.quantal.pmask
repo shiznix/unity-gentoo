@@ -1,0 +1,14 @@
+# 'gnome' overlay has live-9999 packages masked by missing keyword #
+# Each of these packages in 'unity-gentoo' overlay that we unmask missing keyword, #
+# we need to explicitly mask the live-9999 packages so that we don't also unmask the live-9999 packages #
+
+=dev-libs/glib-9999
+=gnome-base/gnome-control-center-9999
+=gnome-base/gnome-menus-9999
+=gnome-base/gnome-session-9999
+=media-video/cheese-9999
+=media-video/totem-9999
+=net-wireless/gnome-bluetooth-9999
+=x11-libs/gtk+-9999
+=x11-themes/gtk-engines-unico-9999
+=x11-wm/metacity-9999

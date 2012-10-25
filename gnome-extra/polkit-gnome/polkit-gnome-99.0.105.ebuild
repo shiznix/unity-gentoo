@@ -37,8 +37,9 @@ src_install() {
 	Type=Application
 	Categories=
 	NoDisplay=true
-	NotShowIn=KDE;
-	X-GNOME-Autostart-enabled=true
+	OnlyShowIn=Gnome;XFCE;Unity
+	X-GNOME-AutoRestart=true
+	AutostartCondition=GNOME3 unless-session gnome
 	EOF
 
 	insinto /etc/xdg/autostart

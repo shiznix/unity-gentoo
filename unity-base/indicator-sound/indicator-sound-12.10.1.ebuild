@@ -21,7 +21,8 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 	>=dev-libs/libappindicator-99.12.10.0
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt
-	media-sound/pulseaudio"
+	media-sound/pulseaudio
+	unity-base/ido"
 
 src_prepare() {
         export VALAC=$(type -P valac-0.14)

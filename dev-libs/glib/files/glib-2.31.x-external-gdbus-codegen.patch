@@ -1,21 +1,21 @@
-From 732f04b55f59b8107a7fbe317317edb5f184ea8f Mon Sep 17 00:00:00 2001
+From 457ac2926e754bbebd72ee3606ad405ccfd2e952 Mon Sep 17 00:00:00 2001
 From: Priit Laes <plaes@plaes.org>
 Date: Fri, 3 Feb 2012 09:08:28 +0200
 Subject: [PATCH] Split out gdbus codegen
 
 ---
- configure.ac                                       |    4 +---
+ configure.ac                                       |    3 +--
  docs/reference/gio/Makefile.am                     |    3 +--
  gio/Makefile.am                                    |    2 +-
  gio/tests/Makefile.am                              |    6 ++----
  gio/tests/gdbus-object-manager-example/Makefile.am |    6 ++----
- 5 files changed, 7 insertions(+), 14 deletions(-)
+ 5 files changed, 7 insertions(+), 13 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 4cf04a1..0bb18c8 100644
+index 833891b..697ce60 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -356,7 +356,7 @@ fi
+@@ -380,7 +380,7 @@ fi
  AC_SUBST(PERL_PATH)
  
  # Need suitable python path for greport
@@ -24,20 +24,19 @@ index 4cf04a1..0bb18c8 100644
  
  
  dnl ***********************
-@@ -3525,8 +3525,6 @@ gobject/glib-mkenums
+@@ -3561,7 +3561,6 @@ gobject/glib-mkenums
  gobject/tests/Makefile
  gthread/Makefile
  gio/Makefile
 -gio/gdbus-2.0/codegen/Makefile
--gio/gdbus-2.0/codegen/config.py
+ gio/gdbus-2.0/codegen/config.py
  gio/xdgmime/Makefile
  gio/inotify/Makefile
- gio/fen/Makefile
 diff --git a/docs/reference/gio/Makefile.am b/docs/reference/gio/Makefile.am
-index 535aa26..5027dd5 100644
+index 7d2d264..7cac0b2 100644
 --- a/docs/reference/gio/Makefile.am
 +++ b/docs/reference/gio/Makefile.am
-@@ -144,8 +144,7 @@ man_MANS =			\
+@@ -148,8 +148,7 @@ man_MANS =			\
  	glib-compile-resources.1	\
  	gsettings.1		\
  	gresource.1		\
@@ -48,7 +47,7 @@ index 535aa26..5027dd5 100644
  if ENABLE_MAN
  
 diff --git a/gio/Makefile.am b/gio/Makefile.am
-index 67eeae6..277931b 100644
+index dae04b4..835ccc7 100644
 --- a/gio/Makefile.am
 +++ b/gio/Makefile.am
 @@ -2,7 +2,7 @@ include $(top_srcdir)/Makefile.decl
@@ -61,10 +60,10 @@ index 67eeae6..277931b 100644
  if OS_UNIX
  SUBDIRS += xdgmime
 diff --git a/gio/tests/Makefile.am b/gio/tests/Makefile.am
-index e987fd1..66af8cf 100644
+index c5cf59d..be9e48c 100644
 --- a/gio/tests/Makefile.am
 +++ b/gio/tests/Makefile.am
-@@ -275,10 +275,8 @@ gdbus_close_pending_SOURCES = gdbus-close-pending.c gdbus-sessionbus.c gdbus-ses
+@@ -293,10 +293,8 @@ gdbus_close_pending_SOURCES = gdbus-close-pending.c gdbus-sessionbus.c gdbus-ses
  gdbus_close_pending_LDADD = $(progs_ldadd)
  
  if OS_UNIX
@@ -95,5 +94,5 @@ index 9861d0e..9ca6eb9 100644
  		--c-namespace Example \
  		--c-generate-object-manager \
 -- 
-1.7.8.4
+1.7.8.6
 

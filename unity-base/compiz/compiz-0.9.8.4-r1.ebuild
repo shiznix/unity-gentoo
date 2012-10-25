@@ -80,6 +80,10 @@ src_prepare() {
 	PATCHES+=( "${FILESDIR}/${PN}-0.9.8_decor-setting.diff" )
 
 	base_src_prepare
+
+	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
+	sed -e 's:xubuntu:xunity:g' \
+		-i debian/65compiz_profile-on-session || die
 }
 
 src_configure() {

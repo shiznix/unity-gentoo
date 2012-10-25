@@ -20,7 +20,8 @@ IUSE=""
 DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libzeitgeist
 	gnome-base/gnome-menus:3
-	>=media-libs/gstreamer-0.10.36
+	>=media-libs/gstreamer-0.10.36:0.10
+	>=media-libs/gst-plugins-base-0.10.36:0.10
 	unity-base/rhythmbox-ubuntuone
 	unity-base/unity"
 

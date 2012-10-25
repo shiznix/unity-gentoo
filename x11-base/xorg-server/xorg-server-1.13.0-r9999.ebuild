@@ -39,7 +39,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 		>=x11-libs/libX11-1.1.5
 		>=x11-libs/libXaw-1.0.4
 		>=x11-libs/libXext-1.0.99.4
-		>=x11-libs/libXfixes-5.0
+		=x11-libs/libXfixes-5.0-r9999
 		>=x11-libs/libXi-1.2.99.1
 		>=x11-libs/libXmu-1.0.3
 		x11-libs/libXrender

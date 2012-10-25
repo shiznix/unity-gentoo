@@ -29,9 +29,9 @@ IUSE="doc elibc_FreeBSD ipv6 systemd"
 # create .config/user-dirs.dirs which is read by glib to get G_USER_DIRECTORY_*
 # xdg-user-dirs-update is run during login (see 10-user-dirs-update-gnome below).
 # gdk-pixbuf used in the inhibit dialog
-COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
+COMMON_DEPEND=">=dev-libs/glib-99.2.28.0:2
 	x11-libs/gdk-pixbuf:2
-	>=x11-libs/gtk+-2.90.7:3
+	>=x11-libs/gtk+-99.2.90.7:3
 	>=dev-libs/json-glib-0.10
 	>=dev-libs/dbus-glib-0.76
 	>=gnome-base/gconf-99.3.2.5
@@ -55,8 +55,8 @@ COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
 # gnome-themes-standard is needed for the failwhale dialog themeing
 # sys-apps/dbus[X] is needed for session management
 RDEPEND="${COMMON_DEPEND}
-	gnome-base/gnome-settings-daemon
-	>=gnome-base/gsettings-desktop-schemas-0.1.7
+	>=gnome-base/gnome-settings-daemon-99.3.4.2
+	>=gnome-base/gsettings-desktop-schemas-99.3.6.0
 	>=x11-themes/gnome-themes-standard-2.91.92
 	sys-apps/dbus[X]
 	systemd? ( >=sys-apps/systemd-38 )
@@ -85,13 +85,25 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Disable this patch as totally breaks gnome-session #
-	sed -e 's:^96_no_catch_sigsegv:#96_no_catch_sigsegv:g' \
+	# Disable selected patches #
+	sed \
+		`# Totally breaks gnome-session #` \
+			-e 's:^96_no_catch_sigsegv:#96_no_catch_sigsegv:g' \
+		`# Don't disable fail whale, we need this so desktop doesn't hang on failure #` \
+			-e 's:^103_kill_the_fail_whale:#103_kill_the_fail_whale:g' \
 		-i "${WORKDIR}/debian/patches/series"
 
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
 	done
+
+	sed \
+		-e 's:Ubuntu:Unity:g' \
+		-e 's:session=ubuntu:session=unity:g' \
+		-i data/ubuntu.desktop.in || die
+	sed -e 's:Ubuntu:Unity:g' \
+		-i data/ubuntu.session.desktop.in.in || die
+
 	eautoreconf
 	gnome2_src_prepare
 }
@@ -114,28 +126,6 @@ src_install() {
 	# This should be done here as discussed in bug #270852
 	newexe "${FILESDIR}/10-user-dirs-update-gnome-r1" 10-user-dirs-update-gnome
 #-----------------------------------------------------------------------------------#
-	rm "${D}usr/share/gnome-session/sessions/ubuntu.session"
-	rm "${D}usr/share/gnome-session/sessions/ubuntu-2d.session"
-	rm "${D}/usr/share/gnome-session/sessions/gnome-classic.session"
-	rm "${D}/usr/share/gnome-session/sessions/gnome-fallback.session"
-	rm "${D}/usr/share/xsessions/ubuntu.desktop"
-	rm "${D}/usr/share/xsessions/ubuntu-2d.desktop"
-	rm "${D}/usr/share/xsessions/gnome-classic.desktop"
-	rm "${D}/usr/share/xsessions/gnome-fallback.desktop"
-
-	# XDM visible #
-	insinto /usr/share/xsessions
-		doins "${FILESDIR}/ubuntu.desktop"
-		doins "${FILESDIR}/ubuntu-2d.desktop"
-		doins "${FILESDIR}/gnome-classic.desktop"
-		doins "${FILESDIR}/gnome-fallback.desktop"
-
-	# 'gnome-session' visible as executed by --session=... #
-	insinto /usr/share/gnome-session/sessions
-		doins "${FILESDIR}/ubuntu.session"
-		doins "${FILESDIR}/ubuntu-2d.session"
-		doins "${FILESDIR}/gnome-classic.session"
-		doins "${FILESDIR}/gnome-fallback.session"
 
 	# 'startx' visible via the XSESSION variable #
 	exeinto /etc/X11/Sessions
@@ -143,7 +133,15 @@ src_install() {
 
 	# Set Unity XDG desktop session variables #
 	exeinto /etc/X11/xinit/xinitrc.d
-	newexe "${FILESDIR}/15-xdg-data-unity" "15-xdg-data-unity"
+	newexe "${FILESDIR}/15-xdg-data-unity" 15-xdg-data-unity
+
+	# Set ubuntu naming to unity (important for XSESSION to DESKTOP_SESSION mapping when using 'startx') #
+	mv ${D}usr/share/gnome-session/sessions/ubuntu.session ${D}usr/share/gnome-session/sessions/unity.session
+	mv ${D}usr/share/xsessions/ubuntu.desktop ${D}usr/share/xsessions/unity.desktop
+
+	# Enables and fills $DESKTOP_SESSION variable for sessions started using 'startx'
+	exeinto /etc/X11/xinit/xinitrc.d/
+	newexe "${FILESDIR}/05-desktop-session" 05-desktop-session
 }
 
 pkg_postinst() {

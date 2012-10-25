@@ -2,13 +2,13 @@ Title: Package versioning for the unity-gentoo overlay
 Author: shiznix <rickfharris@yahoo.com.au>
 Content-Type: text/plain
 Posted: 2012-10-11
-Revision: 1
+Revision: 3
 News-Item-Format: 1.0
 Display-If-Installed: >=x11-libs/gtk+-99.3.4.2
 
 Be aware!!
 The unity-gentoo overlay includes package versions that are heavily patched by Ubuntu.
-To preserve the function of the overlay packages from being broken by main tree upgrades,
+To preserve the function of these integrated packages from being broken by main tree upgrades,
 some package versions in the overlay are prefixed with '99.' so that they become the preferred
 choice.
 Packages effected are:

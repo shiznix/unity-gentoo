@@ -39,6 +39,7 @@ src_compile() {
 
 src_install() {
 	gnome2_src_install
+	find "${D}" -name '*.la' -exec rm -f {} +
 }
 
 DOCS="AUTHORS ChangeLog NEWS README RELEASE"
