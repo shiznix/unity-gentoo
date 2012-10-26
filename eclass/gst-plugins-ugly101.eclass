@@ -108,7 +108,7 @@ gst-plugins-ugly101_src_unpack() {
 	unpack ${A}
 
 	# Link with the syswide installed gst-libs if needed
-#	gst-plugins-101_find_plugin_dir
+#	gst-plugins101_find_plugin_dir
 #	cd ${S}
 
 	# Remove generation of any other Makefiles except the plugin's Makefile
@@ -135,7 +135,6 @@ gst-plugins-ugly101_src_install() {
 
 	gst-plugins101_find_plugin_dir
 	einstall || die
-	find "${D}" -name '*.la' -exec rm -f {} +
 
 	[[ -e README ]] && dodoc README
 }
