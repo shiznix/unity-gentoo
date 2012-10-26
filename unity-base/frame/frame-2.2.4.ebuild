@@ -26,6 +26,6 @@ DEPEND="!!unity-base/utouch-evemu
 
 pkg_pretend() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
-		die "${P} requires an active gcc:4.6, please consult the output of 'gcc-config -l'"
+		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
 }

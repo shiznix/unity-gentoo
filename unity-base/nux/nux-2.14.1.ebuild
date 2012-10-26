@@ -26,7 +26,7 @@ DEPEND="app-i18n/ibus
 
 src_prepare() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
-		die "${P} requires an active gcc:4.6, please consult the output of 'gcc-config -l'"
+		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
 
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
