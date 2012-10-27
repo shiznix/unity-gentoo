@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if test "x$DESKTOP_SESSION" = "x"; then
+if [ "x$DESKTOP_SESSION" = "x" -a "x$XSESSION" = "xunity" ]; then
 	DESKTOP_SESSION="${XSESSION}"
 	export DESKTOP_SESSION
 fi

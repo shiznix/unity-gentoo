@@ -146,7 +146,7 @@ src_install() {
 
 	# Enables and fills $DESKTOP_SESSION variable for sessions started using 'startx'
 	exeinto /etc/X11/xinit/xinitrc.d/
-	newexe "${FILESDIR}/05-desktop-session" 05-desktop-session
+	newexe "${FILESDIR}/05-unity-desktop-session" 05-unity-desktop-session
 }
 
 pkg_postinst() {
