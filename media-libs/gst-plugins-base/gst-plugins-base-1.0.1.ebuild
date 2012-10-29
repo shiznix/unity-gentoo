@@ -10,7 +10,7 @@ HOMEPAGE="http://gstreamer.freedesktop.org/"
 SRC_URI="http://gstreamer.freedesktop.org/src/${PN}/${P}.tar.xz"
 
 LICENSE="GPL-2"
-KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 sh sparc x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
 IUSE="+introspection nls +orc"
 
 RDEPEND=">=dev-libs/glib-2.22:2

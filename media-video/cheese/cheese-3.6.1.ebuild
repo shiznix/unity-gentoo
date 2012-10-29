@@ -28,9 +28,9 @@ COMMON_DEPEND="
 	>=gnome-base/gnome-desktop-2.91.6:3
 	>=gnome-base/librsvg-2.32.0:2
 	>=media-libs/libcanberra-0.26[gtk3]
-	>=media-libs/clutter-1.6.1:1.0[introspection?]
+	>=media-libs/clutter-1.10.0:1.0[introspection?]
 	>=media-libs/clutter-gtk-0.91.8:1.0
-	>=media-libs/clutter-gst-1.0.0:1.0
+	media-libs/clutter-gst:2.0
 
 	media-video/gnome-video-effects
 	x11-libs/gdk-pixbuf:2[jpeg,introspection?]
@@ -38,18 +38,17 @@ COMMON_DEPEND="
 	x11-libs/libX11
 	x11-libs/libXtst
 
-	>=media-libs/gstreamer-0.10.32:0.10[introspection?]
-	>=media-libs/gst-plugins-base-0.10.32:0.10[introspection?]
+	media-libs/gstreamer:1.0[introspection?]
+	media-libs/gst-plugins-base:1.0[introspection?]
 
 	introspection? ( >=dev-libs/gobject-introspection-0.6.7 )"
 RDEPEND="${COMMON_DEPEND}
-	>=media-libs/gst-plugins-bad-1.0.1:1.0
-	>=media-libs/gst-plugins-good-1.0.1:1.0
-	>=media-plugins/gst-plugins-ogg-1.0.1:1.0
-	>=media-plugins/gst-plugins-pango-1.0.1:1.0
-	>=media-plugins/gst-plugins-theora-1.0.1:1.0
-	>=media-plugins/gst-plugins-vorbis-1.0.1:1.0
-
+	media-libs/gst-plugins-bad:1.0
+	media-libs/gst-plugins-good:1.0
+	media-plugins/gst-plugins-ogg:1.0
+	media-plugins/gst-plugins-pango:1.0
+	media-plugins/gst-plugins-theora:1.0
+	media-plugins/gst-plugins-vorbis:1.0
 	media-plugins/gst-plugins-jpeg:1.0
 	media-plugins/gst-plugins-v4l2:1.0
 	media-plugins/gst-plugins-vpx:1.0
@@ -84,8 +83,7 @@ pkg_setup() {
 }
 
 src_configure() {
-	# Work around sandbox violations when FEATURES=-userpriv caused by
-	# gst-inspect-0.10 (bug #410061)
+	# Work around sandbox violations when FEATURES=-userpriv (bug #410061)
 	unset DISPLAY
 	gnome2_src_configure
 }

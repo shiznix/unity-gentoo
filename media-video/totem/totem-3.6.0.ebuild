@@ -38,10 +38,10 @@ RDEPEND=">=dev-libs/glib-2.27.92:2
 	x11-libs/cairo
 	>=dev-libs/libxml2-2.6:2
 	>=media-libs/clutter-1.6.8:1.0
-	>=media-libs/clutter-gst-1.3.9:1.0
+	media-libs/clutter-gst:2.0
 	>=media-libs/clutter-gtk-1.0.2:1.0
-	>=media-libs/gstreamer-1.0.1:1.0
-	>=media-libs/gst-plugins-base-1.0.1:1.0
+	media-libs/gstreamer:1.0
+	media-libs/gst-plugins-base:1.0
 	x11-libs/mx:1.0
 
 	media-libs/gst-plugins-good:1.0
@@ -169,8 +169,7 @@ src_prepare() {
 }
 
 src_configure() {
-	# Work around sandbox violations when FEATURES=-userpriv caused by
-	# gst-inspect-0.10 (bug #358755)
+	# Work around sandbox violations when FEATURES=-userpriv (bug #358755)
 	unset DISPLAY
 	gnome2_src_configure
 }
