@@ -57,3 +57,8 @@ src_configure() {
 			--enable-gputests=no"
 	econf ${myconf}
 }
+
+src_install() {
+	emake DESTDIR="${D}" install || die
+	dosym /usr/libexec/unity_support_test /usr/lib/nux/unity_support_test
+}

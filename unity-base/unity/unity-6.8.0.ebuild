@@ -1,4 +1,6 @@
 EAPI=4
+PYTHON_DEPEND="2:2.7"
+SUPPORT_PYTHON_ABIS="1"
 
 inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
@@ -69,6 +71,9 @@ src_prepare() {
 			"${FILESDIR}/gtestdir_fix.patch" )
 	base_src_prepare
 
+	python_convert_shebangs -r 2 .
+	python_src_prepare
+
 	sed -e "s:/desktop:/org/unity/desktop:g" \
 		-i "com.canonical.Unity.gschema.xml" || die
 
@@ -89,7 +94,7 @@ src_install() {
 	pushd ${CMAKE_BUILD_DIR}
 	addpredict /root/.gconf		 	# FIXME
 	addpredict /usr/share/glib-2.0/schemas/	# FIXME
-	addpredict $(python_get_sitedir)	# FIXME
+#	addpredict $(python_get_sitedir)	# FIXME
 	emake DESTDIR="${D}" install
 	popd ${CMAKE_BUILD_DIR}
 }
