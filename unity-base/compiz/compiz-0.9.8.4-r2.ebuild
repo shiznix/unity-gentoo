@@ -26,7 +26,7 @@ COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
 	!x11-libs/compiz-bcop
 	!x11-libs/libcompizconfig
 	!x11-plugins/compiz-plugins-main
-	>=dev-libs/boost-1.34.0
+	dev-libs/boost
 	dev-libs/glib:2
 	dev-cpp/glibmm
 	dev-libs/libxml2

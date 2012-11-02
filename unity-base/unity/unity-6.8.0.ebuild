@@ -22,7 +22,7 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="!unity-base/unity2d
-	dev-libs/boost:1.49
+	dev-libs/boost
 	dev-libs/dbus-glib
 	>=dev-libs/libappindicator-99.12.10.0
 	dev-libs/libindicate[gtk]
