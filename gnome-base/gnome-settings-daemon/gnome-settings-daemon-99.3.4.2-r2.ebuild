@@ -27,7 +27,6 @@ IUSE="+colord +cups debug packagekit policykit smartcard systemd +udev wacom"
 # colord-0.1.13 needed to avoid polkit errors in CreateProfile and CreateDevice
 COMMON_DEPEND="
 	>=dev-libs/glib-2.31.0:2
-	>=dev-libs/libwacom-0.3
 	>=x11-libs/gtk+-99.3.4.2:3
 	>=gnome-base/libgnomekbd-2.91.1
 	>=gnome-base/gnome-desktop-3.3.92:3
@@ -38,7 +37,6 @@ COMMON_DEPEND="
 	media-libs/libcanberra[gtk3]
 	>=media-sound/pulseaudio-0.9.16
 	>=sys-power/upower-0.9.11
-	>=x11-drivers/xf86-input-wacom-0.14.0
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/libnotify-0.7.3
@@ -58,7 +56,9 @@ COMMON_DEPEND="
 		sys-fs/udev[gudev]
 		>=dev-libs/nss-3.11.2 )
 	systemd? ( >=sys-apps/systemd-31 )
-	udev? ( sys-fs/udev[gudev] )"
+	udev? ( sys-fs/udev[gudev] )
+	wacom? ( >=dev-libs/libwacom-0.3 
+		>=x11-drivers/xf86-input-wacom-0.14.0 )"
 # Themes needed by g-s-d, gnome-shell, gtk+:3 apps to work properly
 # <gnome-power-manager-3.1.3 has file collisions with g-s-d-3.1.x
 RDEPEND="${COMMON_DEPEND}
