@@ -12,8 +12,8 @@ dev-libs/libunity-misc
 dev-libs/libzeitgeist
 dev-python/configglue
 dev-python/dirspec
-dev-python/python-distutils-extra
 dev-python/lazr-restfulclient
+dev-python/python-distutils-extra
 dev-python/pywapi
 dev-python/unity-singlet
 gnome-base/gconf
