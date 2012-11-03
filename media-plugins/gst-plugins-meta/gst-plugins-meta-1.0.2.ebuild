@@ -12,7 +12,7 @@ RDEPEND=">=media-libs/gstreamer-${PV}:${SLOT}
 	>=media-libs/gst-plugins-base-${PV}:${SLOT}
 	>=media-libs/gst-plugins-good-${PV}:${SLOT}
 	aac? ( >=media-plugins/gst-plugins-faad-${PV}:${SLOT} )
-	alsa? ( >=media-plugins/gst-plugins-alsa-${PV}:${SLOT} )
+	alsa? ( >=media-libs/gst-plugins-base-${PV}:${SLOT}[alsa] )
 	dts? ( >=media-plugins/gst-plugins-dts-${PV}:${SLOT} )
 	dv? ( >=media-plugins/gst-plugins-dv-${PV}:${SLOT} )
 	dvb? (
@@ -34,23 +34,19 @@ RDEPEND=">=media-libs/gstreamer-${PV}:${SLOT}
 		>=media-plugins/gst-plugins-mad-${PV}:${SLOT} )
 	mpeg? ( >=media-plugins/gst-plugins-mpeg2dec-${PV}:${SLOT} )
 	musepack? ( >=media-plugins/gst-plugins-musepack-${PV}:${SLOT} )
-	ogg? ( >=media-plugins/gst-plugins-ogg-${PV}:${SLOT} )
+	ogg? ( >=media-libs/gst-plugins-base-${PV}:${SLOT}[ogg] )
 	oss? ( >=media-plugins/gst-plugins-oss-${PV}:${SLOT} )
 	pulseaudio? ( >=media-plugins/gst-plugins-pulse-${PV}:${SLOT} )
-	theora? (
-		>=media-plugins/gst-plugins-ogg-${PV}:${SLOT}
-		>=media-plugins/gst-plugins-theora-${PV}:${SLOT} )
+	theora? ( >=media-libs/gst-plugins-base-${PV}:${SLOT}[ogg,theora] )
 	taglib? ( >=media-plugins/gst-plugins-taglib-${PV}:${SLOT} )
 	v4l? ( >=media-plugins/gst-plugins-v4l2-${PV}:${SLOT} )
 	vcd? (	>=media-plugins/gst-plugins-mplex-${PV}:${SLOT}
 		>=media-plugins/gst-plugins-mpeg2dec-${PV}:${SLOT} )
-	vorbis? (
-		>=media-plugins/gst-plugins-ogg-${PV}:${SLOT}
-		>=media-plugins/gst-plugins-vorbis-${PV}:${SLOT} )
+	vorbis? ( >=media-libs/gst-plugins-base-${PV}:${SLOT}[ogg,vorbis] )
 	vpx? ( >=media-plugins/gst-plugins-vpx-${PV}:${SLOT} )
 	wavpack? ( >=media-plugins/gst-plugins-wavpack-${PV}:${SLOT} )
-	X? ( >=media-plugins/gst-plugins-x-${PV}:${SLOT} )
-	xv? ( >=media-plugins/gst-plugins-xvideo-${PV}:${SLOT} )"
+	X? ( >=media-libs/gst-plugins-base-${PV}:${SLOT}[X] )
+	xv? ( >=media-libs/gst-plugins-base-${PV}:${SLOT}[X] )"
 
 # Usage note:
 # The idea is that apps depend on this for optional gstreamer plugins.  Then,

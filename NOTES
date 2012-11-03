@@ -33,11 +33,4 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
 * Packages bumped and added for 'gnome'overlay
 	- media-libs/clutter-gst-1.6.0:1.0 requires <=media-libs/cogl-1.10.4
-	- media-libs/clutter-gst-1.9.92:2.0 requires >=media-libs/gstreamer-1.0.1:1.0
-	- media-video/cheese-3.6.1 requires >=media-libs/gstreamer-1.0.1:1.0
-
-	media-libs/gst-plugins-*:1.0
-	media-plugins/gst-plugins-*:1.0
-	media-libs/clutter-gst
-	media-video/cheese
-	media-video/totem
+	- media-libs/gst-plugins-meta:1.0
