@@ -22,6 +22,7 @@ gnome-base/gnome-session
 gnome-base/gnome-settings-daemon
 gnome-base/gsettings-desktop-schemas
 gnome-base/nautilus
+gnome-extra/gnome-screensaver
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome
 gnome-extra/zeitgeist-datahub
@@ -81,8 +82,6 @@ x11-themes/ubuntu-mono
 x11-themes/unity-asset-pool
 x11-wm/metacity
 
-
-## Packages bumped and added for 'gnome'overlay ##
 
 media-libs/clutter-gst
 media-plugins/gst-plugins-meta
