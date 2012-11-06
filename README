@@ -3,7 +3,7 @@ unity-gentoo
 
 A Gentoo overlay to install the Unity desktop
 
-~ # emerge -at unity-meta
+~ # emerge -uDNvta unity-meta
 
 --------------------------------------------------------------
 
