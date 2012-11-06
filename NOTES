@@ -12,17 +12,6 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
 * Some artifact glitches may sometimes show on 'Dash Home' HUD on intial use. Opening any application then Alt+Tab'bing to 'Show Desktop' cleans this up.
 
-* Quantal Upgrade
-	- Packages require >=dev-libs/glib-2.33.10 which breaks nautilus thumbnail previews
-		>=unity-base/indicator-session-12.10	# Currently we patch out the new glib requirement
-		>=unity-base/indicator-power-12.10.0	# Stick with unity-base/indicator-power-2.0 for now
-	- Packages require gtk+-3.5 which needs testing against main tree GTK applications
-		>unity-base/indicator-appmenu-12.10.0	# Stick with unity-base/indicator-appmenu-0.3.97 for now
-		>unity-base/indicator-datetime-12.10.0	# Currently we patch out the dependance on EDS-3.5 and so gtk+-3.5
-	# BUGS #
-	Nautilus consumes 95% CPU when idle
-	gtk+-3.5 breaks gtk-engines-unico GTK themes including Quantal's Ambiance theme as it uses unico, and so causes Unity to fail at runtime
-
 * Core python deps. for Unity and it's Dash lens to work
 	dev-libs/dee
 	dev-libs/libappindicator
