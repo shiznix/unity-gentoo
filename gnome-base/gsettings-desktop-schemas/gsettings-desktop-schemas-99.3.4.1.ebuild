@@ -8,8 +8,8 @@ MY_PV="${PV/99./}"
 MY_P="${PN}_${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu3"
-URELEASE="quantal"
+UVER="0ubuntu1"
+URELEASE="precise"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Collection of GSettings schemas for GNOME desktop"
@@ -20,12 +20,11 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="+introspection"
-#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~sparc-solaris ~x86-solaris"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~sparc-solaris ~x86-solaris"
 
 RDEPEND=">=dev-libs/glib-2.31:2
 	introspection? ( >=dev-libs/gobject-introspection-1.31.0 )
-	>=x11-themes/gtk-engines-unico-99.1.0.2
+	x11-themes/gtk-engines-unico
 	x11-themes/light-themes[gtk3]
 	x11-themes/ubuntu-mono"
 DEPEND="${RDEPEND}

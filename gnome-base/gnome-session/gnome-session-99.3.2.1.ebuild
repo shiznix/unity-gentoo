@@ -56,7 +56,7 @@ COMMON_DEPEND=">=dev-libs/glib-99.2.28.0:2
 # sys-apps/dbus[X] is needed for session management
 RDEPEND="${COMMON_DEPEND}
 	>=gnome-base/gnome-settings-daemon-99.3.4.2
-	>=gnome-base/gsettings-desktop-schemas-99.3.6.0
+	>=gnome-base/gsettings-desktop-schemas-99.3.4.1
 	>=x11-themes/gnome-themes-standard-2.91.92
 	sys-apps/dbus[X]
 	systemd? ( >=sys-apps/systemd-38 )

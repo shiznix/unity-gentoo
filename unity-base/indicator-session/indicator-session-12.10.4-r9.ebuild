@@ -14,14 +14,14 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="app-admin/packagekit[gtk,qt4]
 	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]
 	app-admin/system-config-printer-gnome
-	>=dev-libs/glib-99.2.32
+	>=dev-libs/glib-99.2.34
 	>=dev-libs/libappindicator-99.12.10.0
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt
-	>=gnome-extra/gnome-screensaver-99.3.4.1"
+	>=gnome-extra/gnome-screensaver-99.3.6.0"

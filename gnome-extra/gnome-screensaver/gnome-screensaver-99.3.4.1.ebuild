@@ -11,7 +11,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="precise"
 MY_P="${MY_P/screensaver-/screensaver_}"
 
 DESCRIPTION="Replaces xscreensaver, integrating with and patched for the Unity desktop"
@@ -22,10 +22,10 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="debug doc pam systemd"
-#KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 
-RDEPEND=">=dev-libs/glib-2.25.6:2
+RDEPEND="
+	>=dev-libs/glib-2.25.6:2
 	>=x11-libs/gtk+-2.99.3:3
 	>=gnome-base/gnome-desktop-3.1.91:3
 	>=gnome-base/gsettings-desktop-schemas-0.1.7
@@ -43,19 +43,21 @@ RDEPEND=">=dev-libs/glib-2.25.6:2
 	x11-themes/gnome-icon-theme-symbolic
 
 	pam? ( virtual/pam )
-	systemd? ( >=sys-apps/systemd-31 )"
+	systemd? ( >=sys-apps/systemd-31 )
+"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	>=dev-util/intltool-0.35
 	sys-devel/gettext
 	doc? (
 		app-text/xmlto
-		app-text/docbook-xml-dtd:4.1.2
-		app-text/docbook-xml-dtd:4.4 )
+		~app-text/docbook-xml-dtd-4.1.2
+		~app-text/docbook-xml-dtd-4.4 )
 	x11-proto/xextproto
 	x11-proto/randrproto
 	x11-proto/scrnsaverproto
-	x11-proto/xf86miscproto"
+	x11-proto/xf86miscproto
+"
 
 pkg_setup() {
 	DOCS="AUTHORS ChangeLog HACKING NEWS README"
@@ -79,9 +81,9 @@ src_prepare() {
 	# Disable selected patches #
 	sed \
 		`# Disable lightdm patches` \
-			-e 's:26_lightdm_greeter_on_lock:^#26_lightdm_greeter_on_lock:g' \
-			-e 's:27_lightdm_switch_user:^#27_lightdm_switch_user:g' \
-		-i "${WORKDIR}/debian/patches/series"
+		-e 's:26_lightdm_greeter_on_lock:^#26_lightdm_greeter_on_lock:g' \
+		-e 's:27_lightdm_switch_user:^#27_lightdm_switch_user:g' \
+			-i "${WORKDIR}/debian/patches/series"
 
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )

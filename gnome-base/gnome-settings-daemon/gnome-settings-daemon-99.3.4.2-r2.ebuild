@@ -26,12 +26,12 @@ IUSE="+colord +cups debug packagekit policykit smartcard systemd +udev wacom"
 
 # colord-0.1.13 needed to avoid polkit errors in CreateProfile and CreateDevice
 COMMON_DEPEND="
-	>=dev-libs/glib-2.31.0:2
+	>=dev-libs/glib-99.2.31.0:2
 	>=dev-libs/libappindicator-99.12.10.0
 	>=x11-libs/gtk+-99.3.4.2:3
 	>=gnome-base/libgnomekbd-2.91.1
 	>=gnome-base/gnome-desktop-3.3.92:3
-	>=gnome-base/gsettings-desktop-schemas-3.3.0
+	>=gnome-base/gsettings-desktop-schemas-99.3.4.1
 	media-fonts/cantarell
 	media-libs/fontconfig
 	>=media-libs/lcms-2.2:2

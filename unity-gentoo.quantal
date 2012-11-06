@@ -3,13 +3,14 @@
 gnome-base/gnome-control-center **
 gnome-base/gnome-menus **
 gnome-base/gnome-session **
+gnome-extra/gnome-screensaver **
 media-video/totem **
 media-video/cheese **
 net-wireless/gnome-bluetooth **
 
 unity-base/compiz **
-unity-base/indicator-appmenu **		# Requires gtk+-3.5, version kept at 12.10.0 until gtk+-3.5 stabilises
-unity-base/indicator-datetime **	# Requires >=evolution-data-server-3.5.3 (not in portage tree yet) which we patch out, version kept at 12.10.0 so patch applies
+unity-base/indicator-appmenu **
+unity-base/indicator-datetime **
 unity-base/nux **
 unity-base/unity **
 unity-base/unity-lens-applications **
@@ -17,9 +18,11 @@ unity-base/unity-lens-files **
 unity-base/unity-lens-music **
 unity-base/unity-lens-video **
 unity-base/unity-meta **
-unity-extra/indicator-power **		# Requires >=dev-libs/glib-2.33.10, version kept at 0.2 until glib stabilises
+unity-extra/indicator-power **
 x11-themes/gtk-engines-unico **
 x11-wm/metacity **
 
-x11-libs/gtk+ **			# >=x11-libs/gtk+-3.5 breaks or makes buggy, many application UI layouts and themes
-dev-libs/glib **			# >=dev-libs/glib-2.33.10 breaks nautilus thumbnail previews
+x11-libs/gtk+ **
+dev-libs/glib **
+
+media-plugins/gst-plugins-meta **
