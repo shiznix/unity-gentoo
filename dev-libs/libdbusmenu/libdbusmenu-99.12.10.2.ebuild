@@ -72,28 +72,28 @@ src_configure() {
 src_compile() {
 	# Build GTK2 support #
 	pushd build-gtk2
-	emake || die
+		emake || die
 	popd
 
 	# Build GTK3 support #
 	pushd build-gtk3
-	emake || die
+		emake || die
 	popd
 }
 
 src_install() {
 	# Install GTK3 support #
 	pushd build-gtk3
-	make -C libdbusmenu-glib DESTDIR="${D}" install || die
-	make -C libdbusmenu-gtk DESTDIR="${D}" install || die
-	make -C tools DESTDIR="${D}" install || die
-	make -C docs/libdbusmenu-glib DESTDIR="${D}" install || die
-	make -C po DESTDIR="${D}" install || die
+		make -C libdbusmenu-glib DESTDIR="${D}" install || die
+		make -C libdbusmenu-gtk DESTDIR="${D}" install || die
+		make -C tools DESTDIR="${D}" install || die
+		make -C docs/libdbusmenu-glib DESTDIR="${D}" install || die
+		make -C po DESTDIR="${D}" install || die
 	popd
 
 	# Install GTK2 support #
 	pushd build-gtk2
-	make -C libdbusmenu-gtk DESTDIR="${D}" install || die
-	make -C docs/libdbusmenu-gtk DESTDIR="${D}" install || die
+		make -C libdbusmenu-gtk DESTDIR="${D}" install || die
+		make -C docs/libdbusmenu-gtk DESTDIR="${D}" install || die
 	popd
 }
