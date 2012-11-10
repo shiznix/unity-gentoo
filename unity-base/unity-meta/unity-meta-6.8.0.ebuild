@@ -16,7 +16,7 @@ DEPEND="!unity-base/unity2d
 	unity-base/indicator-application
 	unity-base/indicator-appmenu
 	unity-base/indicator-datetime
-	>=unity-base/indicator-session-12.10.4-r9
+	>=unity-base/indicator-session-12.10.4
 	unity-base/indicator-sound
 	unity-base/ubuntuone-control-panel
 	>=unity-base/unity-6.8.0
