@@ -1,5 +1,5 @@
 EAPI="4"
-PYTHON_DEPEND="2 3:3.2"
+PYTHON_DEPEND="2:2.7 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils
