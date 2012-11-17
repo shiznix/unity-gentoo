@@ -76,16 +76,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Disable selected patches #
-	sed \
-		`# Disable lightdm patches` \
-			-e 's:26_lightdm_greeter_on_lock:^#26_lightdm_greeter_on_lock:g' \
-			-e 's:27_lightdm_switch_user:^#27_lightdm_switch_user:g' \
-		-i "${WORKDIR}/debian/patches/series"
-
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	PATCHES=( "${WORKDIR}/debian/patches/05_dbus_service.patch" )
 	base_src_prepare
 	eautoreconf
 
