@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="kde"
+IUSE="+debug kde"
 
 COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
 	!unity-base/ccsm
@@ -113,11 +113,14 @@ src_compile() {
 		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gconf-defaults"
 	sed -e "s:'unitymtgrabhandles',::g" \
 		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gsettings-override"
+
+	cmake-utils_src_compile VERBOSE=1
 }
 
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
 		addpredict /root/.gconf/
+		addpredict /usr/share/glib-2.0/schemas/
 		GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 emake DESTDIR="${D}" install
 
 		# Window manager desktop file for GNOME #

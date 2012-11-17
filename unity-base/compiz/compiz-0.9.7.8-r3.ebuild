@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="kde"
+IUSE="+debug kde"
 
 COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
 	!x11-wm/compiz
