@@ -10,8 +10,6 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 		dev-libs/libindicator
 		dev-libs/libappindicator
 
-* Some artifact glitches may sometimes show on 'Dash Home' HUD on intial use. Opening any application then Alt+Tab'bing to 'Show Desktop' cleans this up.
-
 * Core python deps. for Unity and it's Dash lens to work
 	dev-libs/dee
 	dev-libs/libappindicator

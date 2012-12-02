@@ -44,7 +44,7 @@ DEPEND="!unity-base/unity2d
 	>=gnome-extra/polkit-gnome-99.0.105
 	media-libs/clutter-gtk:1.0
 	sys-apps/dbus
-	sys-devel/gcc:4.6
+	>=sys-devel/gcc-4.6
 	unity-base/compiz
 	unity-base/dconf-qt
 	<unity-base/nux-3.0

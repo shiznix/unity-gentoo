@@ -128,21 +128,11 @@ pkg_setup() {
 
 src_prepare() {
 	PATCHES+=( "${FILESDIR}/gnome-control-center-optional-bt-colord-goa-wacom.patch" )
-	# Disable selected patches #
+
+#	# Disable selected patches #
 #	sed \
-#		`# We don't use the new gnome-bluetooth yet` \
-#			-e 's:git_new_bluetooth_api:#git_new_bluetooth_api:g' \
-#		-i "${WORKDIR}/debian/patches/series"
-#sed \
-#		`# Causes compilation to fail` \
-#			-e 's:00git_online_accounts_gtkgrid:#00git_online_accounts_gtkgrid:g' \
-#		`# Causes clicking on 'User Accounts' to crash gnome-control-center` \
-#			-e 's:52_ubuntu_language_list_mods:#52_ubuntu_language_list_mods:g' \
-#		`# Disabled patches to postpone the gtk+-3.5 upgrade` \
-#			-e 's:git_fix_big_editable_labels:#git_fix_big_editable_labels:g' \
-#			-e 's:git_gnome_desktop_update:#git_gnome_desktop_update:g' \
-#		`# We don't use the new gnome-bluetooth yet` \
-#			-e 's:git_new_bluetooth_api:#git_new_bluetooth_api:g' \
+#		`# Don't disable gnome-online-accounts settings` \
+#			-e 's:61_workaround_online_account:#61_workaround_online_account:g' \
 #		-i "${WORKDIR}/debian/patches/series"
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )

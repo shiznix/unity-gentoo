@@ -7,11 +7,13 @@ gnome-base/gsettings-desktop-schemas **
 gnome-extra/gnome-screensaver **
 media-video/totem **
 media-video/cheese **
+net-libs/telepathy-indicator **
 net-wireless/gnome-bluetooth **
 
 unity-base/compiz **
 unity-base/indicator-appmenu **
 unity-base/indicator-datetime **
+unity-base/indicator-messages **
 unity-base/indicator-session **
 unity-base/nux **
 unity-base/unity **

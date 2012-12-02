@@ -26,6 +26,7 @@ gnome-extra/gnome-screensaver
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome
 gnome-extra/zeitgeist-datahub
+net-libs/telepathy-indicator
 net-wireless/gnome-bluetooth
 unity-base/bamf
 unity-base/ccsm
@@ -42,6 +43,7 @@ unity-base/indicator-applet
 unity-base/indicator-application
 unity-base/indicator-appmenu
 unity-base/indicator-datetime
+unity-base/indicator-messages
 unity-base/indicator-session
 unity-base/indicator-sound
 unity-base/launchpad-integration
@@ -57,12 +59,12 @@ unity-base/unity-lens-files
 unity-base/unity-lens-music
 unity-base/unity-lens-video
 unity-base/unity-meta
-unity-base/unity-webapps
 unity-base/unity-scope-video-remote
 unity-base/utouch-evemu
 unity-base/utouch-frame
 unity-base/utouch-geis
 unity-base/utouch-grail
+unity-base/webapps-applications
 unity-extra/glipper
 unity-extra/indicator-power
 unity-extra/indicator-weather
@@ -74,7 +76,6 @@ x11-libs/libcompizconfig
 x11-libs/libXfixes
 x11-misc/appmenu-firefox
 x11-misc/appmenu-gtk
-x11-misc/touchegg
 x11-plugins/compiz-plugins-main
 x11-proto/fixesproto
 x11-themes/gtk-engines-unico

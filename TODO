@@ -2,6 +2,4 @@
 * Licenses audit
 * Check unneeded *.la files are being removed
 * Improve dependency tracking
-* Get user account switching to work from inicator-session
-* Test with gcc:4.7
 * Migrate ebuild SRC_URI to use launchpad.net so tarballs don't disappear

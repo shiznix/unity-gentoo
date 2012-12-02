@@ -2,7 +2,7 @@ EAPI=4
 
 MY_PN="firefox-globalmenu"
 UURL="mirror://ubuntu/pool/main/f/firefox"
-UVER="build1-0ubuntu0.12.10.1"
+UVER="build2-0ubuntu0.12.10.1"
 URELEASE="precise-updates"
 
 DESCRIPTION="Unity appmenu integration for Firefox"
@@ -31,6 +31,7 @@ src_unpack() {
 }
 
 src_install() {
+	rm -r usr/lib/firefox
 	mv usr/lib/firefox-addons usr/lib/firefox
 	cp -R usr "${D}"
 	dosym "/usr/lib/firefox/extensions/globalmenu@ubuntu.com" "/opt/firefox/extensions/globalmenu@ubuntu.com"

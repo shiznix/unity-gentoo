@@ -18,7 +18,7 @@ IUSE=""
 
 DEPEND="!!unity-base/utouch-evemu
 	!unity-base/utouch-frame
-	sys-devel/gcc:4.6
+	>=sys-devel/gcc-4.6
 	sys-libs/mtdev
 	unity-base/evemu
 	=x11-base/xorg-server-1.13.0-r9999[dmx]
