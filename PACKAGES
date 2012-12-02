@@ -60,11 +60,11 @@ unity-base/unity-lens-music
 unity-base/unity-lens-video
 unity-base/unity-meta
 unity-base/unity-scope-video-remote
+unity-base/unity-webapps
 unity-base/utouch-evemu
 unity-base/utouch-frame
 unity-base/utouch-geis
 unity-base/utouch-grail
-unity-base/webapps-applications
 unity-extra/glipper
 unity-extra/indicator-power
 unity-extra/indicator-weather

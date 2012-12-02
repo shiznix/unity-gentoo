@@ -6,7 +6,7 @@ MY_PN="libunity-webapps"
 MY_P="${MY_PN}_${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${MY_PN}"
-UVER="0ubuntu2"
+UVER="0ubuntu3.2"
 URELEASE="quantal"
 
 DESCRIPTION="Webapps integration with the Unity desktop"
