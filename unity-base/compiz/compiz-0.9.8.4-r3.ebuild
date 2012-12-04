@@ -35,6 +35,7 @@ COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
 	gnome-base/gconf
 	>=gnome-base/gsettings-desktop-schemas-99.3.4.1
 	>=gnome-base/librsvg-2.14.0:2
+	<media-libs/glew-1.8
 	media-libs/libpng
 	media-libs/mesa[gallium,llvm,xorg]
 	=x11-base/xorg-server-1.13.0-r9999[dmx]

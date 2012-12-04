@@ -28,6 +28,7 @@ COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
 	dev-libs/libxml2
 	dev-libs/libxslt
 	>=gnome-base/librsvg-2.14.0:2
+	<media-libs/glew-1.8
 	media-libs/libpng
 	media-libs/mesa[gallium,llvm,xorg]
 	=x11-base/xorg-server-1.13.0-r9999[dmx]
