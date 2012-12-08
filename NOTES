@@ -19,5 +19,4 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 	unity-base/unity-scope-video-remote
 
 * Packages bumped and added for 'gnome'overlay
-	- media-libs/clutter-gst-1.6.0:1.0 requires <=media-libs/cogl-1.10.4
 	- media-libs/gst-plugins-meta:1.0
