@@ -11,12 +11,12 @@ IUSE=""
 DEPEND="!unity-base/unity2d
 	>=gnome-base/nautilus-99.3.4.2
 	>=gnome-extra/nm-applet-99.0.9.4.1
+	net-libs/telepathy-indicator
 	unity-base/ido
 	unity-base/indicator-applet
 	unity-base/indicator-application
 	unity-base/indicator-appmenu
 	unity-base/indicator-datetime
-	unity-base/indicator-messages
 	>=unity-base/indicator-session-12.10.4
 	unity-base/indicator-sound
 	unity-base/ubuntuone-control-panel
