@@ -135,6 +135,8 @@ src_prepare() {
 			-e 's:00git_online_accounts_gtkgrid:^#00git_online_accounts_gtkgrid:g' \
 		`# Causes clicking on 'User Accounts' to crash gnome-control-center` \
 			-e 's:52_ubuntu_language_list_mods:^#52_ubuntu_language_list_mods:g' \
+		`# Disable Ubuntu branding` \
+			-e 's:56_use_ubuntu_info_branding:#56_use_ubuntu_info_branding:g' \
 		-i "${WORKDIR}/debian/patches/series"
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )

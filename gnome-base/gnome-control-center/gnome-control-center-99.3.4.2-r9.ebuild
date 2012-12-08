@@ -129,11 +129,11 @@ pkg_setup() {
 src_prepare() {
 	PATCHES+=( "${FILESDIR}/gnome-control-center-optional-bt-colord-goa-wacom.patch" )
 
-#	# Disable selected patches #
-#	sed \
-#		`# Don't disable gnome-online-accounts settings` \
-#			-e 's:61_workaround_online_account:#61_workaround_online_account:g' \
-#		-i "${WORKDIR}/debian/patches/series"
+	# Disable selected patches #
+	sed \
+		`# Disable Ubuntu branding` \
+			-e 's:56_use_ubuntu_info_branding:#56_use_ubuntu_info_branding:g' \
+		-i "${WORKDIR}/debian/patches/series"
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
