@@ -21,8 +21,7 @@ DEPEND="!net-im/indicator-messages
 	dev-lang/vala:0.14[vapigen]
 	dev-libs/libappindicator
 	>=dev-libs/libdbusmenu-0.6.1[gtk]
-	dev-libs/libindicate-qt
-	net-libs/telepathy-indicator"
+	dev-libs/libindicate-qt"
 
 src_prepare() {
         export VALAC=$(type -P valac-0.14)
