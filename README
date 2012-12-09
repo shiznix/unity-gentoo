@@ -27,8 +27,7 @@ A Gentoo overlay to install the Unity desktop
 
 * A list of packages that are in testing can be found in
 	/var/lib/layman/unity-gentoo/unity-gentoo.quantal
-  - Packages in testing (usually beta Ubuntu releases) are
-	masked by missing keyword
+  - Packages in testing are masked by missing keyword
 
   - To use these packages do the following:
 	~ # ln -s /var/lib/layman/unity-gentoo/unity-gentoo.quantal \
