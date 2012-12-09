@@ -25,13 +25,16 @@ DEPEND="app-admin/packagekit[gtk,qt4]
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt
 	>=gnome-extra/gnome-screensaver-99.3.6.0
-	help? ( gnome-extra/yelp )"
+	help? ( gnome-extra/yelp
+		gnome-extra/gnome-user-docs
+		unity-base/ubuntu-docs )"
 
 src_prepare() {
 	if ! use help || has nodoc ${FEATURES}; then
 		epatch "${FILESDIR}/indicator-session_remove-help.patch"
 	else
 		sed -e 's:Ubuntu Help:Unity Help:g' \
+			-e 's:yelp:yelp help\:ubuntu-help:g' \
 			-i src/session-menu-mgr.c
 	fi
 }
