@@ -11,7 +11,7 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu0.5"
+UVER="0ubuntu0.7"
 URELEASE="precise-updates"
 MY_P="${MY_P/daemon-/daemon_}"
 GNOME2_LA_PUNT="1"
