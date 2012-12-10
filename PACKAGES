@@ -48,6 +48,7 @@ unity-base/indicator-session
 unity-base/indicator-sound
 unity-base/launchpad-integration
 unity-base/nux
+unity-base/overlay-scrollbar
 unity-base/rhythmbox-ubuntuone
 unity-base/ubuntu-docs
 unity-base/ubuntuone-client
