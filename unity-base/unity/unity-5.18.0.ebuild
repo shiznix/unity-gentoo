@@ -44,7 +44,7 @@ DEPEND="!unity-base/unity2d
 	>=gnome-extra/polkit-gnome-99.0.105
 	media-libs/clutter-gtk:1.0
 	sys-apps/dbus
-	<=sys-devel/gcc-4.6
+	sys-devel/gcc:4.6
 	unity-base/compiz
 	unity-base/dconf-qt
 	<unity-base/nux-3.0
@@ -60,8 +60,8 @@ PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff"
 		"${FILESDIR}/dbus-1.6.patch" )
 
 pkg_pretend() {
-	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
-		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
+	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -ne 6 ) ]]; then
+		die "${P} requires an active =gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
 }
 
