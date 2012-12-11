@@ -59,6 +59,8 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/mesa-progs
 	x11-apps/xvinfo"
 
+S="${WORKDIR}/${PN}-0.9.7.9"
+
 src_prepare() {
 	# Set compiz Window Decorations to !state=maxvert so top appmenu bar behaviour functions correctly #
 	PATCHES+=( "${FILESDIR}/compiz-0.9.8_decor-setting.diff" )
