@@ -1,10 +1,12 @@
 dev-libs/glib
+dev-libs/libaccounts-glib
 dev-libs/libappindicator
 dev-libs/libdbusmenu
 dev-libs/libindicator
 dev-libs/libqtbamf
 dev-libs/libqtdee
 dev-libs/libqtgconf
+dev-libs/libsignon-glib
 dev-libs/libtimezonemap
 dev-libs/libubuntuone
 dev-libs/libunity
@@ -50,6 +52,7 @@ unity-base/launchpad-integration
 unity-base/nux
 unity-base/overlay-scrollbar
 unity-base/rhythmbox-ubuntuone
+unity-base/signon
 unity-base/ubuntu-docs
 unity-base/ubuntuone-client
 unity-base/ubuntuone-control-panel
@@ -59,6 +62,7 @@ unity-base/unity
 unity-base/unity-lens-applications
 unity-base/unity-lens-files
 unity-base/unity-lens-music
+unity-base/unity-lens-photos
 unity-base/unity-lens-video
 unity-base/unity-meta
 unity-base/unity-scope-video-remote
