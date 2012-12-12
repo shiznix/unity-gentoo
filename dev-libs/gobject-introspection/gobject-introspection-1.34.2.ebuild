@@ -17,7 +17,7 @@ IUSE="doctool test"
 
 RDEPEND="
 	>=dev-libs/gobject-introspection-common-${PV}
-	>=dev-libs/glib-99.2.34:2
+	>=dev-libs/glib-99.2.34.1:2
 	doctool? ( dev-python/mako )
 	virtual/libffi
 "

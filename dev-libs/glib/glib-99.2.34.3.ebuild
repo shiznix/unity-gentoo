@@ -12,8 +12,8 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
-UVER="1ubuntu1"
-URELEASE="quantal"
+UVER="1"
+URELEASE="raring"
 MY_P="${MY_P/-/_}"
 GNOME2_LA_PUNT="1"
 

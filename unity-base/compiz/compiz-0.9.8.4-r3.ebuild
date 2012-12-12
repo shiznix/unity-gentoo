@@ -19,13 +19,13 @@ KEYWORDS=""
 IUSE="+debug kde"
 
 COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
-	!unity-base/ccsm
-	!unity-base/compizconfig-python
-	!unity-base/compizconfig-backend-gconf
-	!x11-wm/compiz
-	!x11-libs/compiz-bcop
-	!x11-libs/libcompizconfig
-	!x11-plugins/compiz-plugins-main
+	!!unity-base/ccsm
+	!!unity-base/compizconfig-python
+	!!unity-base/compizconfig-backend-gconf
+	!!x11-wm/compiz
+	!!x11-libs/compiz-bcop
+	!!x11-libs/libcompizconfig
+	!!x11-plugins/compiz-plugins-main
 	dev-libs/boost
 	dev-libs/glib:2
 	dev-cpp/glibmm
