@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -z "$XDG_MENU_PREFIX" ] && { [ "$DESKTOP_SESSION" = "gnome" ] || [ "$DESKTOP_SESSION" = "cinnamon" ]; }
+if [ -z "$XDG_MENU_PREFIX" ] && { [ -n "`echo "$DESKTOP_SESSION" | grep "gnome"`" ] || [ "$DESKTOP_SESSION" = "cinnamon" ]; }
 then
 	export XDG_MENU_PREFIX=gnome-
 fi

@@ -19,6 +19,7 @@ dev-python/pywapi
 dev-python/unity-singlet
 gnome-base/gconf
 gnome-base/gnome-control-center
+gnome-base/gnome-menus
 gnome-base/gnome-session
 gnome-base/gnome-settings-daemon
 gnome-base/gsettings-desktop-schemas

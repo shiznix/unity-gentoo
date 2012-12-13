@@ -28,7 +28,7 @@ dev-libs/libdbusmenu			# See above
 dev-libs/libindicator			# See above
 gnome-base/gconf			# Add compizconfig settings to gconf keys
 gnome-base/gnome-control-center		# Include Dash Launcher Appearance and UbuntuOne settings
-gnome-base/gnome-menus			# UNKNOWN
+gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
 gnome-base/gnome-settings-daemon	# Patched to have gnome-settings-daemon xdg-autostart on Unity login
 gnome-base/gsettings-desktop-schemas	# Includes Unity desktop settings patches
