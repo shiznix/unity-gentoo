@@ -22,7 +22,8 @@ DEPEND=">=dev-libs/libappindicator-99.12.10.0
 	dev-libs/libindicate-qt
 	dev-libs/libtimezonemap
 	>=gnome-extra/evolution-data-server-3.2
-	<gnome-extra/evolution-data-server-3.5"
+	<gnome-extra/evolution-data-server-3.5
+	unity-base/ido"
 
 src_configure() {
 	# Build GTK2 support #
