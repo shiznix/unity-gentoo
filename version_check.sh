@@ -7,10 +7,8 @@
 version_check() {
 	packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
-	if [ -n "`echo "${packbasename}" | grep 'qt4'`" ]; then treepackname="${packname}"; packname="qt4-x11"
-	elif [ -n "`echo "${packbasename}" | grep 'ccsm'`" ]; then treepackname="${packname}"; packname="compizconfig-settings-manager"
+	if [ -n "`echo "${packbasename}" | grep 'ccsm'`" ]; then treepackname="${packname}"; packname="compizconfig-settings-manager"
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"
-	elif [ -n "`echo "${packbasename}" | grep 'glib'`" ]; then treepackname="${packname}"; packname="glib2.0"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.2'`" ]; then treepackname="${packname}"; packname="gtk+2.0"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.3'`" ]; then treepackname="${packname}"; packname="gtk+3.0"
 	elif [ -n "`echo "${packbasename}" | grep 'libXfixes'`" ]; then treepackname="${packname}"; packname="libxfixes"

@@ -37,7 +37,7 @@ gnome-extra/gnome-screensaver		# Patched to have gnome-screensaver xdg-autostart
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 net-wireless/gnome-bluetooth		# Shows bluetooth in indicator-panel
-x11-base/xorg-server			# Needed for revealing side Dash launcher panel
+x11-base/xorg-server			# Needed for revealing side Dash launcher panel when it's set to autohide
 x11-libs/gtk+				# Needed for global appmenu
 x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme for gtk+-3.6 (Unity fails to start otherwise)
 x11-wm/metacity				# Patched to support compiz window decoration

@@ -7,8 +7,6 @@ gnome-base/gnome-menus **
 gnome-base/gnome-session **
 gnome-base/gsettings-desktop-schemas **
 gnome-extra/gnome-screensaver **
-media-video/totem **
-media-video/cheese **
 net-libs/telepathy-indicator **
 net-wireless/gnome-bluetooth **
 
