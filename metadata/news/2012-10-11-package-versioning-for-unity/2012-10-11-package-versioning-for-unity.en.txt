@@ -16,7 +16,6 @@ dev-libs/dee
 dev-libs/libappindicator
 dev-libs/libdbusmenu
 dev-libs/libindicator
-dev-libs/libzeitgeist
 gnome-base/gconf
 gnome-base/gnome-control-center
 gnome-base/gnome-menus
@@ -27,7 +26,6 @@ gnome-base/nautilus
 gnome-extra/gnome-screensaver
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome
-gnome-extra/zeitgeist-datahub
 net-wireless/gnome-bluetooth
 x11-libs/gtk+
 x11-themes/gtk-engines-unico

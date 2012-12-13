@@ -1,4 +1,3 @@
-dev-libs/glib
 dev-libs/libaccounts-glib
 dev-libs/libappindicator
 dev-libs/libdbusmenu
@@ -11,7 +10,6 @@ dev-libs/libtimezonemap
 dev-libs/libubuntuone
 dev-libs/libunity
 dev-libs/libunity-misc
-dev-libs/libzeitgeist
 dev-python/configglue
 dev-python/dirspec
 dev-python/lazr-restfulclient
@@ -27,7 +25,6 @@ gnome-base/nautilus
 gnome-extra/gnome-screensaver
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome
-gnome-extra/zeitgeist-datahub
 net-libs/telepathy-indicator
 net-wireless/gnome-bluetooth
 unity-base/bamf
