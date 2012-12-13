@@ -19,7 +19,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-RDEPEND=">=dev-libs/dee-99.1.0.14
+RDEPEND=">=dev-libs/dee-1.0.14
 	dev-libs/libunity"
 DEPEND="${RDEPEND}
 	unity-base/unity"

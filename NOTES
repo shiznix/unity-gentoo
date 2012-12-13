@@ -22,7 +22,7 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 	- media-libs/gst-plugins-meta:1.0
 
 * Reasons for patching packages:
-dev-libs/dee				# UNKNOWN
+dev-libs/dee				# Mainline portage tree ebuild lacks support for multi-python ABI installation needed by Dash lenses
 dev-libs/libappindicator		# See above
 dev-libs/libdbusmenu			# See above
 dev-libs/libindicator			# See above
