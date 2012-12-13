@@ -31,3 +31,4 @@ gnome-extra/zeitgeist-datahub
 net-wireless/gnome-bluetooth
 x11-libs/gtk+
 x11-themes/gtk-engines-unico
+x11-wm/metacity

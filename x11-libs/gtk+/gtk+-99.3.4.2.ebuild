@@ -47,7 +47,7 @@ COMMON_DEPEND="X? (
 		x11-libs/libxkbcommon
 	)
 	app-accessibility/at-spi2-atk
-	>=dev-libs/glib-99.2.32.3
+	>=dev-libs/glib-2.32.3
 	>=x11-libs/pango-1.30[introspection?]
 	>=dev-libs/atk-2.4[introspection?]
 	>=x11-libs/cairo-1.10.0[aqua?,glib,svg,X?]

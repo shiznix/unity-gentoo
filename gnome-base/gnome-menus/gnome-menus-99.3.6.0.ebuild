@@ -31,7 +31,7 @@ KEYWORDS=""
 # +python for gmenu-simple-editor
 IUSE="debug +introspection +python test"
 
-COMMON_DEPEND=">=dev-libs/glib-99.2.29.15:2
+COMMON_DEPEND=">=dev-libs/glib-2.29.15:2
 	introspection? ( >=dev-libs/gobject-introspection-0.9.5 )
 	python? (
 		>=dev-libs/gobject-introspection-0.9.5

@@ -56,7 +56,7 @@ COMMON_DEPEND="X? (
 		x11-libs/libxkbcommon
 		egl? ( x11-libs/cairo[opengl] )
 	)
-	>=dev-libs/glib-99.2.33.1
+	>=dev-libs/glib-2.33.1
 	>=x11-libs/pango-1.30[introspection?]
 	>=dev-libs/atk-2.5.3[introspection?]
 	>=x11-libs/cairo-1.10.0[aqua?,glib,svg,X?]

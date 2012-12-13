@@ -22,7 +22,7 @@ SLOT="3"
 KEYWORDS="~amd64 ~x86"
 IUSE="+introspection +gtk"
 
-RDEPEND=">=dev-libs/glib-99.2.32.3:2
+RDEPEND=">=dev-libs/glib-2.32.3:2
 	dev-libs/dbus-glib
 	dev-libs/json-glib
 	dev-libs/libxml2:2

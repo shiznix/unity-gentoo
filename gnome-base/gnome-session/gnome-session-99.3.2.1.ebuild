@@ -29,7 +29,7 @@ IUSE="doc elibc_FreeBSD ipv6 systemd"
 # create .config/user-dirs.dirs which is read by glib to get G_USER_DIRECTORY_*
 # xdg-user-dirs-update is run during login (see 10-user-dirs-update-gnome below).
 # gdk-pixbuf used in the inhibit dialog
-COMMON_DEPEND=">=dev-libs/glib-99.2.28.0:2
+COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/gtk+-99.2.90.7:3
 	>=dev-libs/json-glib-0.10

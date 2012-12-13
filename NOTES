@@ -23,7 +23,6 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
 * Reasons for patching packages:
 dev-libs/dee				# UNKNOWN
-dev-libs/glib				# UNKNOWN
 dev-libs/libappindicator		# See above
 dev-libs/libdbusmenu			# See above
 dev-libs/libindicator			# See above
@@ -34,7 +33,7 @@ gnome-base/gnome-menus			# UNKNOWN
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
 gnome-base/gnome-settings-daemon	# Patched to have gnome-settings-daemon xdg-autostart on Unity login
 gnome-base/gsettings-desktop-schemas	# Includes Unity desktop settings patches
-gnome-base/nautilus			# Give progressbar on Dash launcher icon
+gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/gnome-screensaver		# Patched to have gnome-screensaver xdg-autostart on Unity login
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
@@ -43,4 +42,4 @@ net-wireless/gnome-bluetooth		# Shows bluetooth in indicator-panel
 x11-base/xorg-server			# Needed for revealing side Dash launcher panel
 x11-libs/gtk+				# Needed for global appmenu
 x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme (Unity fails to start otherwise)
-
+x11-wm/metacity				# Patched to support compiz window decoration

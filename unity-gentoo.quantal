@@ -34,6 +34,5 @@ x11-themes/gtk-engines-unico **
 x11-wm/metacity **
 
 x11-libs/gtk+ **
-dev-libs/glib **
 
 media-plugins/gst-plugins-meta **

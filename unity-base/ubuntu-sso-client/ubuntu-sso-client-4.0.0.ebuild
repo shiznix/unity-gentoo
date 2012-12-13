@@ -20,7 +20,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-lang/python
-	>=dev-libs/glib-99.2.32.3
+	>=dev-libs/glib-2.32.3
 	dev-python/configglue
 	dev-python/dbus-python
 	dev-python/gnome-keyring-python

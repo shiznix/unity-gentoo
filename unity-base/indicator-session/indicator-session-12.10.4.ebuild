@@ -20,7 +20,7 @@ IUSE="+help"
 DEPEND="app-admin/packagekit[gtk,qt4]
 	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]
 	app-admin/system-config-printer-gnome
-	>=dev-libs/glib-99.2.34
+	>=dev-libs/glib-2.34
 	>=dev-libs/libappindicator-99.12.10.0
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt

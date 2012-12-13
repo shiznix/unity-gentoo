@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND=">=dev-libs/glib-99.2.34
+DEPEND=">=dev-libs/glib-2.34
 	dev-libs/libappindicator
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
 	dev-libs/libindicate-qt

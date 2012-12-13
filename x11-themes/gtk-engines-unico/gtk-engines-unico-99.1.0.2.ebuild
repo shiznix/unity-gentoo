@@ -23,7 +23,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-RDEPEND=">=dev-libs/glib-99.2.26
+RDEPEND=">=dev-libs/glib-2.26
 	>=x11-libs/cairo-1.10[glib]
 	>=x11-libs/gtk+-99.3.3.14:3"
 DEPEND="${RDEPEND}

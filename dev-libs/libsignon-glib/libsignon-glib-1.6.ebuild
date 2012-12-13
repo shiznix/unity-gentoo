@@ -19,7 +19,7 @@ KEYWORDS=""
 IUSE="debug"
 
 RDEPEND="dev-libs/check
-	>=dev-libs/glib-99.2.34
+	>=dev-libs/glib-2.34
 	>=dev-libs/gobject-introspection-1.34.2
 	unity-base/signon"
 DEPEND="${RDEPEND}"

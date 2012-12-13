@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
 DEPEND="app-admin/packagekit-gtk
-	>=dev-libs/glib-99.2.32.3
+	>=dev-libs/glib-2.32.3
 	dev-libs/libindicate[gtk]
 	dev-libs/libunity
 	>=x11-libs/gtk+-99.3.4.2:3"

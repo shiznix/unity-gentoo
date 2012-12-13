@@ -34,7 +34,7 @@ KEYWORDS="~amd64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solari
 # gnome-settings-daemon-3.1.4 is needed for power panel (commit 4f08a325)
 # g-s-d[policykit] needed for bug #403527
 COMMON_DEPEND="
-	>=dev-libs/glib-99.2.31.0:2
+	>=dev-libs/glib-2.31.0:2
 	>=x11-libs/gdk-pixbuf-2.23.0:2
 	>=x11-libs/gtk+-99.3.4.2:3
 	>=gnome-base/gsettings-desktop-schemas-99.3.4.1

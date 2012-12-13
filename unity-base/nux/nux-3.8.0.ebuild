@@ -20,7 +20,7 @@ IUSE="debug examples tests"
 
 DEPEND="!unity-base/utouch-geis
 	app-i18n/ibus
-	>=dev-libs/glib-99.2.32.3
+	>=dev-libs/glib-2.32.3
 	<media-libs/glew-1.8
 	>=sys-devel/gcc-4.6
 	unity-base/geis"

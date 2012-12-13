@@ -21,7 +21,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-dotnet/gtk-sharp:2
-	>=dev-libs/glib-99.2.32.3
+	>=dev-libs/glib-2.32.3
 	dev-libs/gobject-introspection
 	dev-python/pygtk
 	>=x11-libs/gtk+-99.2.24.10"

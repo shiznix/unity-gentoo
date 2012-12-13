@@ -24,5 +24,6 @@ DEPEND="!unity-base/unity2d
 	>=unity-base/unity-lens-applications-6.8.0
 	>=unity-base/unity-lens-files-6.6.0
 	>=unity-base/unity-lens-music-6.8.0
+	unity-base/unity-lens-photos
 	>=unity-base/unity-lens-video-0.3.10
 	unity-base/unity-scope-video-remote"

@@ -27,7 +27,7 @@ SLOT="0"
 IUSE="bluetooth gconf"
 KEYWORDS="~amd64 ~ppc ~x86"
 
-RDEPEND=">=dev-libs/glib-99.2.26:2
+RDEPEND=">=dev-libs/glib-2.26:2
 	>=dev-libs/dbus-glib-0.88
 	>=dev-libs/libappindicator-99.12.10.0
 	>=gnome-base/gnome-keyring-2.20

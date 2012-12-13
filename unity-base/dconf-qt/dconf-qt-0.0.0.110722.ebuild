@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-RDEPEND=">=dev-libs/glib-99.2.32.3
+RDEPEND=">=dev-libs/glib-2.32.3
 	gnome-base/dconf
 	x11-libs/qt-core:4
 	x11-libs/qt-declarative:4"

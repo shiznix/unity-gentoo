@@ -21,7 +21,7 @@ IUSE="debug"
 RDEPEND="dev-db/sqlite:3
 	dev-libs/check
 	dev-libs/dbus-glib
-	>=dev-libs/glib-99.2.34
+	>=dev-libs/glib-2.34
 	>=dev-libs/gobject-introspection-1.34.2
 	dev-libs/libxml2"
 DEPEND="${RDEPEND}"
