@@ -32,7 +32,7 @@ gnome-base/gconf			# Add compizconfig settings to gconf keys
 gnome-base/gnome-control-center		# Include Dash Launcher Appearance and UbuntuOne settings
 gnome-base/gnome-menus			# UNKNOWN
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
-gnome-base/gnome-settings-daemon	# Patched to have gnome-settings-daemon xdg-autostart on Unity login
+gnome-base/gnome-settings-daemon	# UNKNOWN
 gnome-base/gsettings-desktop-schemas	# Includes Unity desktop settings patches
 gnome-base/nautilus			# Give progressbar on Dash launcher icon
 gnome-extra/gnome-screensaver		# Patched to have gnome-screensaver xdg-autostart on Unity login
@@ -42,5 +42,6 @@ gnome-extra/zeitgeist-datahub		# UNKNOWN
 net-wireless/gnome-bluetooth		# Shows bluetooth in indicator-panel
 x11-base/xorg-server			# Needed for revealing side Dash launcher panel
 x11-libs/gtk+				# Needed for global appmenu
-x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme (Unity fails to start otherwise)
+x11-libs/libXfixes			# Needed for unity to compile
+x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme for gtk+-3.6 (Unity fails to start otherwise)
 

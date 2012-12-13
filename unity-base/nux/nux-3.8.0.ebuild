@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="+debug examples tests"
+IUSE="debug examples tests"
 
 DEPEND="!unity-base/utouch-geis
 	app-i18n/ibus

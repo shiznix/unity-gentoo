@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+debug examples tests"
+IUSE="debug examples tests"
 
 DEPEND="app-i18n/ibus
 	>=dev-libs/glib-99.2.32.3
