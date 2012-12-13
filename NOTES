@@ -26,7 +26,7 @@ dev-libs/dee				# Mainline portage tree ebuild lacks support for multi-python AB
 dev-libs/libappindicator		# See above
 dev-libs/libdbusmenu			# See above
 dev-libs/libindicator			# See above
-gnome-base/gconf			# Add compizconfig settings to gconf keys
+gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-control-center		# Include Dash Launcher Appearance and UbuntuOne settings
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
