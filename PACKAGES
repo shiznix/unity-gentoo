@@ -81,6 +81,7 @@ x11-libs/libcompizconfig
 x11-libs/libXfixes
 x11-misc/appmenu-firefox
 x11-misc/appmenu-gtk
+x11-misc/appmenu-libreoffice
 x11-misc/appmenu-thunderbird
 x11-plugins/compiz-plugins-main
 x11-proto/fixesproto
