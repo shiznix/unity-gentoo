@@ -22,7 +22,7 @@ RDEPEND=">=dev-libs/dee-1.0.14
 DEPEND="${RDEPEND}
 	dev-lang/vala:0.14[vapigen]
 	dev-libs/libzeitgeist
-	>=gnome-base/gnome-menus-99.3.0.1-r1:0
+	>=gnome-base/gnome-menus-99.3.4.0:3
 	sys-libs/db:5.1
 	unity-base/unity"
 

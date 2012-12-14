@@ -1,7 +1,6 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
-#RESTRICT_PYTHON_ABIS="3.*"
 
 AUTOTOOLS_AUTORECONF=y
 
@@ -70,24 +69,24 @@ src_configure() {
 src_compile() {
         # Build PYTHON2 support #
         pushd build-python2
-        emake || die
+        	emake || die
         popd
 
         # Build PYTHON3 support #
         pushd build-python3
-        emake || die
+        	emake || die
         popd
 }
 
 src_install() {
         # Install PYTHON2 support #
         pushd build-python2
-        emake DESTDIR="${D}" install || die
+        	emake DESTDIR="${D}" install || die
         popd
 
         # Install PYTHON3 support #
         pushd build-python3
-        emake DESTDIR="${D}" install || die
+	        emake DESTDIR="${D}" install || die
         popd
 
 	if use examples; then
