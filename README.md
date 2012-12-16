@@ -24,8 +24,7 @@ A list of packages provided by the overlay can be found in
 
 A list of packages that are in testing can be found in
 	/var/lib/layman/unity-gentoo/unity-gentoo.quantal
-* Packages in testing are masked by missing keyword
-  - To use these packages:
+* Packages in testing are masked by missing keyword, to use these packages:
 	- Add the gnome overlay 'layman -a gnome'
 	- Symlink portage configs from the gnome overlay in
 		/var/lib/layman/gnome/status/portage-configs/
