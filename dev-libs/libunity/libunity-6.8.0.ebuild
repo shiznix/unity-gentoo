@@ -22,7 +22,7 @@ IUSE=""
 
 DEPEND=">=dev-libs/dee-1.0.14
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
-	dev-libs/libgee
+	dev-libs/libgee:0
 	dev-lang/vala:0.16"
 
 src_prepare() {
