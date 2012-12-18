@@ -2,7 +2,7 @@ EAPI=4
 
 MY_PN="firefox-globalmenu"
 UURL="mirror://ubuntu/pool/main/f/firefox"
-UVER="build2-0ubuntu0.12.10.1"
+UVER="build1-0ubuntu0.12.10.1"
 URELEASE="precise-updates"
 
 DESCRIPTION="Unity appmenu integration for Firefox"

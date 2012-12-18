@@ -18,9 +18,9 @@ DEPEND="!unity-base/unity2d
 	unity-base/indicator-session
 	unity-base/indicator-sound
 	unity-base/ubuntuone-control-panel
-	<unity-base/unity-6.0
-	<=unity-base/unity-lens-applications-5.12.0
-	<=unity-base/unity-lens-files-5.12.0
-	<=unity-base/unity-lens-music-5.12.0
+	<unity-base/unity-6
+	<unity-base/unity-lens-applications-6
+	<unity-base/unity-lens-files-6
+	<unity-base/unity-lens-music-6
 	<=unity-base/unity-lens-video-0.3.5
 	unity-base/unity-scope-video-remote"
