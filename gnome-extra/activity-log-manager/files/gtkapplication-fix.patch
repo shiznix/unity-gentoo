@@ -1,0 +1,52 @@
+diff --git a/src/alm.vala~ b/src/alm.vala
+index 6bd941c..048d023 100644
+--- a/src/alm.vala~
++++ b/src/alm.vala
+@@ -23,6 +23,23 @@ using Gtk;
+ 
+ 
+ namespace Alm {
++	public class App : Gtk.Application
++	{
++		public App()
++		{
++			Object(application_id: "org.zeitgeist.Alm", flags: ApplicationFlags.FLAGS_NONE);
++		}
++		public override void activate()
++		{
++			var window = new Main();
++			add_window(window);
++		}
++		public static void main(string[] args)
++		{
++			var app = new App();
++			app.run();
++		}
++	}
+ 	public class Main : Gtk.Window 
+ 	{
+ 		public Main ()
+@@ -31,23 +48,6 @@ namespace Alm {
+ 			var widget = new ActivityLogManager();
+ 			this.add(widget);
+ 			this.show_all();
+-			this.destroy.connect(on_destroy);
+-		}
+-		[CCode (instance_pos = -1)]
+-		public void on_destroy (Widget window) 
+-		{
+-			Gtk.main_quit();
+-		}
+-		static int main (string[] args) 
+-		{
+-			Gtk.init (ref args);
+-			var alm = new Gtk.Application ("org.zeitgeist.Alm", 
+-										ApplicationFlags.FLAGS_NONE);
+-			var window = new Main ();
+-			alm.add_window (window);
+-			
+-			Gtk.main ();
+-			return 0;
+ 		}
+ 	}
+ }
