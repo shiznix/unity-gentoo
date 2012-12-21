@@ -3,8 +3,8 @@ EAPI=4
 inherit autotools base eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
-UVER="0ubuntu6.1"
-URELEASE="raring"
+UVER="0ubuntu4"
+URELEASE="quantal"
 MY_P="${P/manager-/manager_}"
 
 DESCRIPTION="Blacklist configuration user interface for Zeitgeist"
@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="dev-lang/vala:0.16[vapigen]

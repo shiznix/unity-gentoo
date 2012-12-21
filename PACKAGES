@@ -24,6 +24,7 @@ gnome-base/gnome-session
 gnome-base/gnome-settings-daemon
 gnome-base/gsettings-desktop-schemas
 gnome-base/nautilus
+gnome-extra/activity-log-manager
 gnome-extra/gnome-screensaver
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome

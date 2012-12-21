@@ -6,6 +6,7 @@ gnome-base/gnome-control-center **
 gnome-base/gnome-menus **
 gnome-base/gnome-session **
 gnome-base/gsettings-desktop-schemas **
+gnome-extra/activity-log-manager **
 gnome-extra/gnome-screensaver **
 net-libs/telepathy-indicator **
 net-wireless/gnome-bluetooth **

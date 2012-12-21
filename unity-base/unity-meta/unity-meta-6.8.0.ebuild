@@ -10,6 +10,7 @@ IUSE=""
 
 DEPEND="!unity-base/unity2d
 	>=gnome-base/nautilus-99.3.4.2
+	gnome-extra/activity-log-manager
 	>=gnome-extra/nm-applet-99.0.9.4.1
 	net-libs/telepathy-indicator
 	unity-base/ido
