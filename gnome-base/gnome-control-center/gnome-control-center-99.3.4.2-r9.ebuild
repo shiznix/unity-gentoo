@@ -140,6 +140,11 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
+
+	# Fix printer settings visibility #
+	sed -e 's:OnlyShowIn=GNOME;:OnlyShowIn=GNOME;Unity;:g' \
+		-i panels/printers/gnome-printers-panel.desktop.in.in
+
 	eautoreconf
 
 	gnome2_src_prepare
