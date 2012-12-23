@@ -71,7 +71,6 @@ unity-extra/glipper
 unity-extra/indicator-power
 unity-extra/indicator-weather
 unity-extra/unity-lens-radios
-unity-extra/unity-lens-stock-ticker
 x11-base/xorg-server
 x11-libs/gtk+
 x11-libs/libcompizconfig

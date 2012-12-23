@@ -25,7 +25,7 @@ DEPEND=">=dev-libs/libindicator-99.0.5.0:3
 	dev-dotnet/gtk-sharp:2
 	dev-libs/xapian-bindings[python]
 	dev-python/dbus-python
-	dev-python/pygobject
+	dev-python/pygobject:2
 	dev-python/pyxdg
 	gnome-extra/zeitgeist[dbus,extensions,fts,passiv,plugins]
 	gnome-extra/zeitgeist-datasources[telepathy]

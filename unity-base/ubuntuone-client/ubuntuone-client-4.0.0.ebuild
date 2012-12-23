@@ -30,6 +30,7 @@ RDEPEND="${DEPEND}
 	dev-python/httplib2
 	dev-python/notify-python
 	>=dev-python/oauth-1.0
+	dev-python/pygobject:2
 	>=dev-python/pygtk-2.10
 	dev-python/pyinotify
 	dev-python/pyxdg
