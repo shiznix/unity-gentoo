@@ -2,7 +2,7 @@ EAPI="4"
 GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes"
 
-inherit base eutils gnome2 multilib toolchain-funcs user
+inherit autotools base eutils gnome2 multilib toolchain-funcs user
 
 # Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PV="${PV/99./}"
@@ -75,9 +75,14 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
+	eautoreconf
 
 	# https://bugzilla.gnome.org/show_bug.cgi?id=685002
 	epatch "${FILESDIR}/${PN}-3.6.0-desktop-files.patch"
+
+	# Have bluetooth-applet start in a Unity session #
+	sed -e 's:OnlyShowIn=GNOME;:OnlyShowIn=GNOME;Unity;:' \
+		-i applet/bluetooth-applet.desktop.in.in || die
 
 	# Regenerate gdbus-codegen files to allow using any glib version; bug #436236
 	if [[ ${PV} != 9999 ]]; then
