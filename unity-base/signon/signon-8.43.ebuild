@@ -26,6 +26,10 @@ RDEPEND="x11-libs/qt-core
 DEPEND="${RDEPEND}"
 
 src_prepare() {
+	# Fix building if sys-fs/cryptsetup is installed, requires specially patched cryptsetup #
+	#  http://code.google.com/p/accounts-sso/issues/detail?id=114 #
+	epatch -p1 "${FILESDIR}/cryptsetup-optional.patch"
+
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
