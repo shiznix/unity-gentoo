@@ -5,7 +5,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="!unity-base/unity2d

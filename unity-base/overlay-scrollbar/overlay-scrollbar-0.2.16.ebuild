@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}${UVER}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="gnome-base/dconf

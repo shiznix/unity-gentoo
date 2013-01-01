@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
 RDEPEND="x11-libs/qt-core

@@ -27,22 +27,12 @@ A Gentoo overlay to install the Unity desktop
 
 * A list of packages that are in testing can be found in
 
-	/var/lib/layman/unity-gentoo/unity-gentoo.quantal
+	/var/lib/layman/unity-gentoo/unity-gentoo.raring
 
 * Packages in testing are masked by missing keyword, to use these packages:
-	- Add the gnome overlay 'layman -a gnome'
-	- Symlink portage configs from the gnome overlay in
-		/var/lib/layman/gnome/status/portage-configs/
-	- And do the following:
 
-	~ # ln -s /var/lib/layman/unity-gentoo/unity-gentoo.quantal /etc/portage/package.keywords/unity-gentoo.quantal
-
-	~ # ln -s /var/lib/layman/unity-gentoo/unity-gentoo.quantal.pmask /etc/portage/package.mask/unity-gentoo.quantal.pmask
+	~ # ln -s /var/lib/layman/unity-gentoo/unity-gentoo.raring /etc/portage/package.keywords/unity-gentoo.raring
 
 	- To revert back to 'stable' do the following:
 
-	~ # layman -d gnome
-
-	~ # rm /etc/portage/package.keywords/unity-gentoo.quantal
-
-	~ # rm /etc/portage/package.mask/unity-gentoo.quantal.pmask
+	~ # rm /etc/portage/package.keywords/unity-gentoo.raring

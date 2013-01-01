@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=app-text/gnome-doc-utils-0.20.5
