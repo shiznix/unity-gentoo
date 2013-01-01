@@ -1,4 +1,4 @@
-EAPI="4"
+EAPI=4
 
 inherit autotools base eutils flag-o-matic gnome.org gnome2-utils multilib virtualx
 

@@ -1,4 +1,4 @@
-EAPI="4"
+EAPI=4
 # debug only changes CFLAGS
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"

@@ -3,8 +3,8 @@ EAPI=4
 MY_PN="thunderbird-globalmenu"
 
 UURL="mirror://ubuntu/pool/main/t/thunderbird"
-UVER="+build2-0ubuntu0.12.04.1"
-URELEASE="precise-updates"
+UVER="+build2-0ubuntu0.12.10.1"
+URELEASE="quantal"
 
 DESCRIPTION="Unity appmenu integration for Thunderbird mail client"
 HOMEPAGE="https://code.launchpad.net/~extension-hackers/globalmenu-extension"

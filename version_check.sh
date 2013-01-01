@@ -7,7 +7,8 @@
 version_check() {
 	packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
-	if [ -n "`echo "${packbasename}" | grep 'ccsm'`" ]; then treepackname="${packname}"; packname="compizconfig-settings-manager"
+	if [ -n "`echo "${packbasename}" | grep 'appmenu-firefox'`" ]; then treepackname="${packname}"; packname="firefox-globalmenu"
+	elif [ -n "`echo "${packbasename}" | grep 'appmenu-thunderbird'`" ]; then treepackname="${packname}"; packname="thunderbird-globalmenu"
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.2'`" ]; then treepackname="${packname}"; packname="gtk+2.0"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.3'`" ]; then treepackname="${packname}"; packname="gtk+3.0"
@@ -22,8 +23,14 @@ version_check() {
 	if [ -n "${UVER}" ]; then
 		current=`echo "${packbasename}-${UVER}" | sed 's/-99./-/g'`
 		upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
-		echo
-		echo "Checking http://packages.ubuntu.com/${URELEASE}/source/${packname}"
+		if [ -z "${upstream}" ]; then
+			upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+			echo
+			echo "Checking http://packages.ubuntu.com/${URELEASE}/${packname}"
+		else
+			echo
+			echo "Checking http://packages.ubuntu.com/${URELEASE}/source/${packname}"
+		fi
 		echo "Current version:  ${current}"
 		current_version=`echo "${current}" | sed "s/^\${treepackname}-//"`
 		upstream_version=`echo "${upstream}" | sed "s/^\${packname}-//"`

@@ -7,8 +7,8 @@ inherit distutils
 
 MY_PN="lazr.restfulclient"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${MY_PN}"
-UVER="1ubuntu1"
-URELEASE="precise"
+UVER="2"
+URELEASE="quantal"
 MY_P="${MY_PN}_${PV}"
 GNOME2_LA_PUNT="1"
 
@@ -22,6 +22,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-lang/python"
+DEPEND="dev-python/httplib2
+	dev-python/oauth
+	dev-python/simplejson
+	net-zope/zope-interface"
 
 S="${WORKDIR}/lazr.restfulclient-${PV}"

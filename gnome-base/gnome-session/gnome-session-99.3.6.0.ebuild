@@ -1,4 +1,4 @@
-EAPI="4"
+EAPI=4
 GCONF_DEBUG="yes"
 
 inherit autotools gnome2

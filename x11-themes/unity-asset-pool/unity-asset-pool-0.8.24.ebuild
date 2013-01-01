@@ -3,8 +3,8 @@ EAPI=4
 inherit eutils gnome2
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1"
-URELEASE="precise"
+UVER="0ubuntu2"
+URELEASE="quantal"
 MY_P="${P/pool-/pool_}"
 
 DESCRIPTION="Unity desktop icon theme"
@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-RDEPEND=">=x11-themes/gnome-icon-theme-3.4.0
+RDEPEND=">=x11-themes/gnome-icon-theme-3.6
 	x11-themes/hicolor-icon-theme"
 
 DEPEND="${RDEPEND}

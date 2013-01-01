@@ -1,4 +1,4 @@
-EAPI="4"
+EAPI=4
 GCONF_DEBUG="no"
 
 inherit base gnome2

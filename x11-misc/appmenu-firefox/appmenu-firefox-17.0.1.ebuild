@@ -3,7 +3,7 @@ EAPI=4
 MY_PN="firefox-globalmenu"
 UURL="mirror://ubuntu/pool/main/f/firefox"
 UVER="build1-0ubuntu0.12.10.1"
-URELEASE="precise-updates"
+URELEASE="quantal"
 
 DESCRIPTION="Unity appmenu integration for Firefox"
 HOMEPAGE="https://code.launchpad.net/~extension-hackers/globalmenu-extension"

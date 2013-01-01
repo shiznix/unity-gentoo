@@ -14,6 +14,7 @@ DEPEND="!unity-base/unity2d
 	>=gnome-extra/nm-applet-99.0.9.4.1
 	net-libs/telepathy-indicator
 	unity-base/ido
+	unity-base/ido-gtk2
 	unity-base/indicator-applet
 	unity-base/indicator-application
 	unity-base/indicator-appmenu

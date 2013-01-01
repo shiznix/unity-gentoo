@@ -1,4 +1,4 @@
-EAPI="4"
+EAPI=4
 
 inherit mono versionator
 

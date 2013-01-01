@@ -1,4 +1,4 @@
-EAPI="4"
+EAPI=4
 GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes"
 
