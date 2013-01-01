@@ -5,7 +5,7 @@ inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu2"
-URELEASE="quantal"
+URELEASE="quantal-updates"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 

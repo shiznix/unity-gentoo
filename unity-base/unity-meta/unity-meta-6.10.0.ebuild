@@ -22,7 +22,7 @@ DEPEND="!unity-base/unity2d
 	>=unity-base/indicator-session-12.10.4
 	unity-base/indicator-sound
 	unity-base/ubuntuone-control-panel
-	>=unity-base/unity-6.8.0
+	>=unity-base/unity-${PV}
 	>=unity-base/unity-lens-applications-6.8.0
 	>=unity-base/unity-lens-files-6.6.0
 	>=unity-base/unity-lens-music-6.8.0

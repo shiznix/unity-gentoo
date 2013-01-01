@@ -122,13 +122,15 @@ DEPEND="${COMMON_DEPEND}
 src_prepare() {
 	# Disable selected patches #
 	sed \
+		`# Causes clicking on 'User Accounts' to crash gnome-control-center` \
+			-e 's:52_ubuntu_language_list_mods:^#52_ubuntu_language_list_mods:g' \
 		`# Disable Ubuntu branding` \
 			-e 's:56_use_ubuntu_info_branding:#56_use_ubuntu_info_branding:g' \
 				-i "${WORKDIR}/debian/patches/series"
 		for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 			PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 		done
-	base_src_prepare*
+	base_src_prepare
 
 	# Fix printer settings visibility #
 	sed -e 's:OnlyShowIn=GNOME;:OnlyShowIn=GNOME;Unity;:g' \
@@ -141,7 +143,7 @@ src_prepare() {
 	# Fix some absolute paths to be appropriate for Gentoo
 	epatch "${FILESDIR}/${PN}-3.5.91-gentoo-paths.patch"
 	# Needed for g-c-c 3.6.3 and PulseAudio >2.1. Remove in 3.6.4.
-	epatch "${FILESDIR}/${P}-pulseaudio-3-fix.patch"
+	epatch "${FILESDIR}/${PN}-${MY_PV}-pulseaudio-3-fix.patch"
 	eautoreconf
 
 	gnome2_src_prepare
