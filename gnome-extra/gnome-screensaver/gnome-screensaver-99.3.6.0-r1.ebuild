@@ -10,7 +10,7 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu1"
+UVER="0ubuntu2"
 URELEASE="quantal"
 MY_P="${MY_P/screensaver-/screensaver_}"
 
