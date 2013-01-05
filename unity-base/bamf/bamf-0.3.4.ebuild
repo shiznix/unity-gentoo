@@ -4,7 +4,7 @@ inherit base eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/b/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="quantal-updates"
 MY_P="${P/-/_}"
 
 DESCRIPTION="BAMF Application Matching Framework"
