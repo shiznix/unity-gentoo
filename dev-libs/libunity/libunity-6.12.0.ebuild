@@ -6,11 +6,11 @@ SUPPORT_PYTHON_ABIS="1"
 inherit base eutils autotools python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
-UVER="0ubuntu2"
-URELEASE="quantal"
+UVER="0ubuntu0.1"
+URELEASE="quantal-updates"
 MY_P="${P/-/_}"
 
-DESCRIPTION="Essential libraries needed for the Unity desktop"
+DESCRIPTION="Binding to get places into the Unity desktop launcher"
 HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"

@@ -19,13 +19,13 @@ DEPEND="!unity-base/unity2d
 	unity-base/indicator-application
 	unity-base/indicator-appmenu
 	unity-base/indicator-datetime
-	>=unity-base/indicator-session-12.10.4
+	unity-base/indicator-session
 	unity-base/indicator-sound
 	unity-base/ubuntuone-control-panel
-	>=unity-base/unity-${PV}
-	>=unity-base/unity-lens-applications-6.8.0
-	>=unity-base/unity-lens-files-6.6.0
-	>=unity-base/unity-lens-music-6.8.0
+	=unity-base/unity-${PV}
+	unity-base/unity-lens-applications
+	unity-base/unity-lens-files
+	unity-base/unity-lens-music
 	unity-base/unity-lens-photos
-	>=unity-base/unity-lens-video-0.3.10
+	unity-base/unity-lens-video
 	unity-base/unity-scope-video-remote"

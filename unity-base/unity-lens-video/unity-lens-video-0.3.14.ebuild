@@ -5,8 +5,8 @@ SUPPORT_PYTHON_ABIS="1"
 inherit distutils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu3"
-URELEASE="quantal"
+UVER="0ubuntu1"
+URELEASE="quantal-updates"
 MY_P="${P/video-/video_}"
 
 DESCRIPTION="Application lens for the Unity desktop"
@@ -18,6 +18,8 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+
+S="${WORKDIR}/unity-lens-videos-${PV}"
 
 RDEPEND=">=dev-libs/dee-1.0.14
 	dev-libs/libunity"
