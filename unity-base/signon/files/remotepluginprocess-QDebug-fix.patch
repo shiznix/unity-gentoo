@@ -1,0 +1,11 @@
+diff -urN signon-8.43/src/remotepluginprocess/remotepluginprocess.cpp signon-8.43-patched/src/remotepluginprocess/remotepluginprocess.cpp
+--- signon-8.43/src/remotepluginprocess/remotepluginprocess.cpp	2012-09-18 22:29:58.000000000 +0930
++++ signon-8.43-patched/src/remotepluginprocess/remotepluginprocess.cpp	2013-01-05 14:37:03.580355673 +1030
+@@ -19,6 +19,7 @@
+  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+  * 02110-1301 USA
+  */
++#include <QDebug>
+ #include <QProcess>
+ #include <QUrl>
+ #include <QTimer>

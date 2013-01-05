@@ -30,6 +30,9 @@ src_prepare() {
 	#  http://code.google.com/p/accounts-sso/issues/detail?id=114 #
 	epatch -p1 "${FILESDIR}/cryptsetup-optional.patch"
 
+	# Fix remotepluginprocess.cpp missing QDebug include on some systems #
+	epatch "${FILESDIR}/remotepluginprocess-QDebug-fix.patch"
+
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
