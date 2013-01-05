@@ -9,7 +9,7 @@ inherit autotools eutils gnome2 python
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER=""
-URELEASE="quantal"
+URELEASE="quantal-updates"
 MY_P="${P/mono-/mono_}"
 
 DESCRIPTION="Unity desktop default icon theme"
