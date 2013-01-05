@@ -39,7 +39,13 @@ version_check() {
 		else
 			echo "Upstream version: ${upstream}"
 		fi
-		echo
+		echo "Available versions:"
+		for release in {quantal-updates,raring}; do
+			avail_release=`wget -q "http://packages.ubuntu.com/${release}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+			if [ -n "${avail_release}" ]; then
+				echo -e "  ${avail_release}  ::  ${release}"
+			fi
+		done
 	fi
 	UVER=
 	upstream=
