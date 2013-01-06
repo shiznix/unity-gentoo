@@ -1,12 +1,14 @@
 #!/bin/sh
 
-## Script to compare upstream versions of packages with versions in overlay tree ##
+## Basic script to compare upstream versions of packages with versions in overlay tree ##
 # If run without any arguments it recurses through the overlay tree and compares versions for all packages #
-# Or can be run on individual packages as 'version_check <package>-<version>.ebuild'
+# Or can be run on individual packages as 'version_check.sh <package>-<version>.ebuild'
 
 version_check() {
 	packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
+
+	## Overlay package names to upstream package names mapping ##
 	if [ -n "`echo "${packbasename}" | grep 'appmenu-firefox'`" ]; then treepackname="${packname}"; packname="firefox-globalmenu"
 	elif [ -n "`echo "${packbasename}" | grep 'appmenu-thunderbird'`" ]; then treepackname="${packname}"; packname="thunderbird-globalmenu"
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"
@@ -18,10 +20,15 @@ version_check() {
 	elif [ -n "`echo "${packbasename}" | grep 'unity-webapps'`" ]; then treepackname="${packname}"; packname="libunity-webapps"
 	elif [ -n "`echo "${packbasename}"`" ]; then treepackname="${packname}"
 	fi
+
 	UVER=`grep UVER= ${pack} | awk -F\" '{print $2}'`
 	URELEASE=`grep URELEASE= ${pack} | awk -F\" '{print $2}'`
-	if [ -n "${UVER}" ]; then
-		current=`echo "${packbasename}-${UVER}" | sed 's/-99./-/g'`
+	if [ -n "${URELEASE}" ]; then
+		if [ -n "${UVER}" ]; then
+			current=`echo "${packbasename}-${UVER}" | sed 's/-99./-/g'`
+		else
+			current=`echo "${packbasename}" | sed 's/-99./-/g'`
+		fi
 		upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
 		if [ -z "${upstream}" ]; then
 			upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
@@ -31,19 +38,24 @@ version_check() {
 			echo
 			echo "Checking http://packages.ubuntu.com/${URELEASE}/source/${packname}"
 		fi
-		echo "Current version:  ${current}"
+		echo "  Current version:  ${current}"
 		current_version=`echo "${current}" | sed "s/^\${treepackname}-//"`
 		upstream_version=`echo "${upstream}" | sed "s/^\${packname}-//"`
 		if [ "${current_version}" != "${upstream_version}" ]; then
-			echo -e "Upstream version: \033[5m\033[1m${upstream}\033[0m"
+			echo -e "  Upstream version: \033[5m\033[1m${upstream}\033[0m"
 		else
-			echo "Upstream version: ${upstream}"
+			echo "  Upstream version: ${upstream}"
 		fi
-		echo "Available versions:"
+		echo "    Higher available versions:"
 		for release in {quantal-updates,raring}; do
-			avail_release=`wget -q "http://packages.ubuntu.com/${release}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
-			if [ -n "${avail_release}" ]; then
-				echo -e "  ${avail_release}  ::  ${release}"
+			if [ "${release}" != "${URELEASE}" ]; then
+				avail_release=`wget -q "http://packages.ubuntu.com/${release}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+				if [ -z "${avail_release}" ]; then
+					avail_release=`wget -q "http://packages.ubuntu.com/${release}/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+				fi
+				if [ -n "${avail_release}" ]; then
+					echo -e "      ${avail_release}  ::  ${release}"
+				fi
 			fi
 		done
 	fi
