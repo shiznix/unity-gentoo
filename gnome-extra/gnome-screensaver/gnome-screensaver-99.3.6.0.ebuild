@@ -10,8 +10,8 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu1"
-URELEASE="quantal"
+UVER="0ubuntu2"
+URELEASE="quantal-updates"
 MY_P="${MY_P/screensaver-/screensaver_}"
 
 DESCRIPTION="Replaces xscreensaver, integrating with and patched for the Unity desktop"
