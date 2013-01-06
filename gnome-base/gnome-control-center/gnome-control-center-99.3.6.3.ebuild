@@ -45,7 +45,7 @@ COMMON_DEPEND="
 	app-text/iso-codes
 	dev-libs/libpwquality
 	dev-libs/libxml2:2
-	>=gnome-base/gnome-menus-99.3.4.0:3
+	>=gnome-base/gnome-menus-99.3.6.0:3
 	gnome-base/libgtop:2
 	media-libs/fontconfig
 
@@ -132,10 +132,6 @@ src_prepare() {
 		done
 	base_src_prepare
 
-	# Fix printer settings visibility #
-	sed -e 's:OnlyShowIn=GNOME;:OnlyShowIn=GNOME;Unity;:g' \
-		-i panels/printers/gnome-printers-panel.desktop.in.in
-
 	# Make some panels optional; requires eautoreconf
 	epatch "${FILESDIR}/${PN}-3.5.91-optional-bt-colord-goa-wacom.patch"
 	# https://bugzilla.gnome.org/show_bug.cgi?id=686840
@@ -164,7 +160,6 @@ src_configure() {
 		$(use_enable colord color)
 		$(use_enable cups)
 		$(use_enable gnome-online-accounts goa)
-		$(use_enable i18n ibus)
 		$(use_with socialweb libsocialweb)
 		$(use_enable systemd)
 		$(use_with v4l cheese)

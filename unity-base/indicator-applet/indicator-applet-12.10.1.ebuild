@@ -17,8 +17,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=dev-libs/libindicator-99.0.5.0:3
-	>=x11-libs/gtk+-99.3.4.2
-	>=gnome-base/gnome-panel-3.4.1"
+	>=x11-libs/gtk+-99.3.6.0:3
+	>=gnome-base/gnome-panel-3.6.2"
 
 src_prepare() {
 	# "Only <glib.h> can be included directly." #

@@ -22,7 +22,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=x11-libs/gtk+-99.2.24.10:2
-	>=x11-libs/gtk+-99.3.4.2:3
+	>=x11-libs/gtk+-99.3.6.0:3
 	=x11-libs/libXfixes-5.0-r9999"
 DEPEND="${RDEPEND}
         virtual/pkgconfig

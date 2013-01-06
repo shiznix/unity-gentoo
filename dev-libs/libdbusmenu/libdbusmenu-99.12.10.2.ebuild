@@ -29,7 +29,7 @@ RDEPEND=">=dev-libs/glib-2.32.3:2
 	introspection? ( >=dev-libs/gobject-introspection-1 )
 	sys-apps/dbus
 	>=x11-libs/gtk+-99.2.24.10:2
-	>=x11-libs/gtk+-99.3.4.2:3"
+	>=x11-libs/gtk+-99.3.6.0:3"
 DEPEND="${RDEPEND}
 	introspection? ( >=dev-libs/gobject-introspection-0.6.7
 				dev-lang/vala:0.14 )

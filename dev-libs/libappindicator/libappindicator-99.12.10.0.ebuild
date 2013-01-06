@@ -31,7 +31,7 @@ DEPEND=">=dev-libs/libindicator-99.0.5.0:3
 	gnome-extra/zeitgeist-datasources[telepathy]
 	gnome-extra/zeitgeist-extensions[geolocation]
 	>=x11-libs/gtk+-99.2.24.10:2
-	>=x11-libs/gtk+-99.3.4.2:3
+	>=x11-libs/gtk+-99.3.6.0:3
 	vala? ( dev-lang/vala:0.14[vapigen] )"
 
 src_prepare () {

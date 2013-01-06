@@ -24,7 +24,7 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 	=dev-libs/libubuntuone-${PV}
 	dev-libs/libzeitgeist
 	dev-python/pygobject:2
-	>=gnome-base/gnome-menus-99.3.4.0:3
+	>=gnome-base/gnome-menus-99.3.6.0:3
 	>=media-sound/rhythmbox-2.96[dbus,python]
 	unity-base/ubuntuone-client
 	unity-base/unity"

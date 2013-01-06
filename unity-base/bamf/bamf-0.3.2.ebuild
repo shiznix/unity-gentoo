@@ -20,7 +20,7 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libunity
 	unity-base/unity-webapps
 	>=x11-libs/gtk+-99.2.24.10:2
-	>=x11-libs/gtk+-99.3.4.2:3
+	>=x11-libs/gtk+-99.3.6.0:3
 	x11-libs/libwnck:1
 	x11-libs/libwnck:3
 	=x11-libs/libXfixes-5.0-r9999"

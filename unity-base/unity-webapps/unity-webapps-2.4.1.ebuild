@@ -23,7 +23,7 @@ DEPEND="app-admin/packagekit-gtk
 	>=dev-libs/glib-2.32.3
 	dev-libs/libindicate[gtk]
 	dev-libs/libunity
-	>=x11-libs/gtk+-99.3.4.2:3
+	>=x11-libs/gtk+-99.3.6.0:3
 	unity-base/indicator-messages"
 
 S="${WORKDIR}/lib${P}"

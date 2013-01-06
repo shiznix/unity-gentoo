@@ -35,10 +35,10 @@ DEPEND="!unity-base/unity2d
 	>=gnome-base/gconf-99.3.2.5
 	gnome-base/gnome-desktop:3
 	>=gnome-base/gnome-menus-99.3.6.0:3
-	>=gnome-base/gnome-control-center-99.3.4.2-r9
-	>=gnome-base/gnome-settings-daemon-99.3.4.2
-	>=gnome-base/gnome-session-99.3.2.1
-	>=gnome-base/gsettings-desktop-schemas-99.3.4.1
+	>=gnome-base/gnome-control-center-99.3.6.3
+	>=gnome-base/gnome-settings-daemon-99.3.6.3
+	>=gnome-base/gnome-session-99.3.6.0
+	>=gnome-base/gsettings-desktop-schemas-99.3.6.0
 	gnome-base/gnome-shell
 	gnome-base/libgdu
 	>=gnome-extra/polkit-gnome-99.0.105

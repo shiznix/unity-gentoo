@@ -21,6 +21,6 @@ DEPEND="dev-libs/glib:2
 	dev-libs/json-glib
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
-	>=x11-libs/gtk+-99.3.4.2"
+	>=x11-libs/gtk+-99.3.6.0"
 
 S="${WORKDIR}/timezonemap"

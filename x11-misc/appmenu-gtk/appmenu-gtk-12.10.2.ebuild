@@ -19,7 +19,7 @@ IUSE=""
 
 DEPEND="unity-base/indicator-appmenu
 	>=x11-libs/gtk+-99.2.24.11:2
-	>=x11-libs/gtk+-99.3.4.2"
+	>=x11-libs/gtk+-99.3.6.0"
 
 PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" )
 

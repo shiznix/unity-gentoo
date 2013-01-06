@@ -9,10 +9,11 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="!unity-base/unity2d
-	>=gnome-base/nautilus-99.3.4.2
+	>=gnome-base/nautilus-99.3.6.3
 	gnome-extra/activity-log-manager
 	>=gnome-extra/nm-applet-99.0.9.4.1
 	net-libs/telepathy-indicator
+	unity-base/gnome-control-center-unity
 	unity-base/ido
 	unity-base/ido-gtk2
 	unity-base/indicator-applet
