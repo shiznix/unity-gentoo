@@ -70,6 +70,7 @@ DEPEND="${COMMON_DEPEND}
 	app-text/docbook-xsl-stylesheets
 	app-text/docbook-xml-dtd:4.1.2
 	dev-libs/libxslt
+	dev-util/gdbus-codegen
 	virtual/pkgconfig
 	X? (
 		x11-proto/xextproto
