@@ -74,7 +74,8 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
-	eautoreconf
+
+#	eautoreconf
 
 	# https://bugzilla.gnome.org/show_bug.cgi?id=685002
 	epatch "${FILESDIR}/${PN}-3.6.0-desktop-files.patch"
