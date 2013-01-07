@@ -38,6 +38,7 @@ RDEPEND="${COMMON_DEPEND}
 DEPEND="${COMMON_DEPEND}
 	!net-wireless/bluez-gnome
 	app-text/docbook-xml-dtd:4.1.2
+	app-text/yelp-tools
 	dev-libs/libxml2:2
 	>=dev-util/intltool-0.40.0
 	dev-util/gdbus-codegen
@@ -74,8 +75,7 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
-
-#	eautoreconf
+	eautoreconf
 
 	# https://bugzilla.gnome.org/show_bug.cgi?id=685002
 	epatch "${FILESDIR}/${PN}-3.6.0-desktop-files.patch"

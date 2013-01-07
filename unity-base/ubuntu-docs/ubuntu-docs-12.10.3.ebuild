@@ -18,6 +18,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=app-text/gnome-doc-utils-0.20.5
+	app-text/yelp-tools
 	dev-libs/libxml2
 	gnome-extra/yelp"
 
