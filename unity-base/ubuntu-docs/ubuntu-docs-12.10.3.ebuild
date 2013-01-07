@@ -24,10 +24,6 @@ DEPEND=">=app-text/gnome-doc-utils-0.20.5
 # This ebuild does not install any binaries
 RESTRICT="binchecks strip"
 
-#src_prepare() {
-#	eautoreconf
-#}
-
-src_configure() {
-	./autogen.sh
+src_prepare() {
+	eautoreconf
 }
