@@ -85,6 +85,10 @@ src_prepare() {
 	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
 	sed -e 's:xubuntu:xunity:g' \
 		-i debian/65compiz_profile-on-session || die
+
+	# Don't let compiz install /etc/compizconfig/config, violates sandbox and we install it from "${WORKDIR}/debian/config" anyway #
+	sed '/add_subdirectory (config)/d' \
+		-i compizconfig/libcompizconfig/CMakeLists.txt || die
 }
 
 src_configure() {
