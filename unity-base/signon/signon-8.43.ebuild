@@ -17,13 +17,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
-RDEPEND="x11-libs/qt-core
-	x11-libs/qt-dbus
-	x11-libs/qt-gui
-	x11-libs/qt-sql
-	x11-libs/qt-xmlpatterns
-	doc? ( app-doc/doxygen )"
-DEPEND="${RDEPEND}"
+RDEPEND="unity-base/signon-keyring-extension
+	unity-base/signon-plugin-oauth2"
+
+DEPEND="${RDEPEND}
+	x11-libs/qt-core
+        x11-libs/qt-dbus
+        x11-libs/qt-gui
+        x11-libs/qt-sql
+        x11-libs/qt-xmlpatterns
+        doc? ( app-doc/doxygen )"
 
 src_prepare() {
 	# Fix building if sys-fs/cryptsetup is installed, requires specially patched cryptsetup #

@@ -1,5 +1,6 @@
 dev-libs/dee
 dev-libs/libaccounts-glib
+dev-libs/libaccounts-qt
 dev-libs/libappindicator
 dev-libs/libdbusmenu
 dev-libs/libindicator
@@ -28,6 +29,8 @@ gnome-extra/activity-log-manager
 gnome-extra/gnome-screensaver
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome
+net-im/empathy
+net-libs/account-plugins
 net-libs/telepathy-indicator
 net-wireless/gnome-bluetooth
 unity-base/bamf
@@ -36,6 +39,7 @@ unity-base/dconf-qt
 unity-base/evemu
 unity-base/frame
 unity-base/geis
+unity-base/gnome-control-center-signon
 unity-base/gnome-control-center-unity
 unity-base/grail
 unity-base/ido
@@ -52,6 +56,9 @@ unity-base/nux
 unity-base/overlay-scrollbar
 unity-base/rhythmbox-ubuntuone
 unity-base/signon
+unity-base/signon-keyring-extension
+unity-base/signon-plugin-oauth2
+unity-base/signon-ui
 unity-base/ubuntu-docs
 unity-base/ubuntuone-client
 unity-base/ubuntuone-control-panel
