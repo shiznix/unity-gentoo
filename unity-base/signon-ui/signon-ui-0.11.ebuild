@@ -17,6 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-libs/libaccounts-qt
+	net-libs/libproxy
 	x11-libs/qt-core
 	x11-libs/qt-dbus
 	x11-libs/qt-gui
