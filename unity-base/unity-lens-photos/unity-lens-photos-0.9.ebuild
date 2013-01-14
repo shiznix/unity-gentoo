@@ -6,7 +6,7 @@ inherit distutils eutils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="quantal-updates"
 MY_P="${P/photos-/photos_}"
 
 DESCRIPTION="Photo lens for the Unity desktop"

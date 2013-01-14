@@ -10,7 +10,7 @@ URELEASE="quantal"
 MY_P="${P/plugins-/plugins_}"
 
 DESCRIPTION="Online account plugin for gnome-control-center used by the Unity desktop"
-HOMEPAGE="http://www.gnome.org/"
+HOMEPAGE="https://launchpad.net/account-plugins"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
