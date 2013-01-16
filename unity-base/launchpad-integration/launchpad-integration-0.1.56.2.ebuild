@@ -4,7 +4,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 
 inherit base eutils gnome2 python
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${PN}"
+UURL="http://archive.ubuntu.com/ubuntu/pool/universe/l/${PN}"
 UVER=""
 URELEASE="quantal"
 MY_P="${P/integration-/integration_}"
@@ -25,8 +25,6 @@ DEPEND="dev-dotnet/gtk-sharp:2
 	dev-libs/gobject-introspection
 	dev-python/pygtk
 	>=x11-libs/gtk+-99.2.24.10:2"
-
-S="${WORKDIR}/${PN}-0.1.56"
 
 pkg_setup() {
 	python_set_active_version 2

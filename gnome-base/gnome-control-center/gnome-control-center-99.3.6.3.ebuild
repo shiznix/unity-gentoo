@@ -11,7 +11,7 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu9"
+UVER="0ubuntu10"
 URELEASE="raring"
 MY_P="${MY_P/daemon-/daemon_}"
 
@@ -138,8 +138,8 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-3.5.91-optional-kerberos.patch"
 	# Fix some absolute paths to be appropriate for Gentoo
 	epatch "${FILESDIR}/${PN}-3.5.91-gentoo-paths.patch"
-	# Needed for g-c-c 3.6.3 and PulseAudio >2.1. Remove in 3.6.4.
-	epatch "${FILESDIR}/${PN}-${MY_PV}-pulseaudio-3-fix.patch"
+#	# Needed for g-c-c 3.6.3 and PulseAudio >2.1. Remove in 3.6.4.
+#	epatch "${FILESDIR}/${PN}-${MY_PV}-pulseaudio-3-fix.patch"
 	eautoreconf
 
 	gnome2_src_prepare

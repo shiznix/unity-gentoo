@@ -4,7 +4,7 @@ PYTHON_DEPEND="2:2.7"
 inherit base gnome2 cmake-utils eutils python toolchain-funcs
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu2"
+UVER="0ubuntu0.2"
 URELEASE="quantal-updates"
 MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
