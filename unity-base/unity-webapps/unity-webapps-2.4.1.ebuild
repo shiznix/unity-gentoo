@@ -7,7 +7,7 @@ MY_P="${MY_PN}_${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${MY_PN}"
 UVER="0ubuntu3.2"
-URELEASE="quantal"
+URELEASE="quantal-updates"
 
 DESCRIPTION="Webapps integration with the Unity desktop"
 HOMEPAGE="https://launchpad.net/libunity-webapps"
@@ -20,11 +20,19 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
 DEPEND="app-admin/packagekit-gtk
+	app-misc/geoclue
+	dev-db/sqlite:3
 	>=dev-libs/glib-2.32.3
+	dev-libs/libdbusmenu
+	dev-libs/json-glib
 	dev-libs/libindicate[gtk]
 	dev-libs/libunity
+	net-libs/libsoup
+	net-libs/telepathy-glib
 	>=x11-libs/gtk+-99.3.6.0:3
-	unity-base/indicator-messages"
+	unity-base/indicator-messages
+	x11-libs/libnotify
+	x11-libs/libwnck:3"
 
 S="${WORKDIR}/lib${P}"
 

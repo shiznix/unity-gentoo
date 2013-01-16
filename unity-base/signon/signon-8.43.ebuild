@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc"
+IUSE="+debug doc"
 
 RDEPEND="unity-base/signon-keyring-extension
 	unity-base/signon-plugin-oauth2"
@@ -42,8 +42,14 @@ src_prepare() {
 	done
 	base_src_prepare
 
+	use debug && \
+		for file in $(grep -r debug * | grep \\.pro | awk -F: '{print $1}' | uniq); do
+			sed -e 's:CONFIG -= debug_and_release:CONFIG += debug_and_release:g' \
+				-i "${file}"
+		done
+
 	use doc || \
-		for file in $(grep -r doc/doc.pri * | grep .pro | awk -F: '{print $1}'); do
+		for file in $(grep -r doc/doc.pri * | grep \\.pro | awk -F: '{print $1}'); do
 			sed -e '/doc\/doc.pri/d' -i "${file}"
 		done
 }

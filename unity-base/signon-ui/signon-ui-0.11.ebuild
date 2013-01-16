@@ -18,9 +18,11 @@ IUSE=""
 
 DEPEND="dev-libs/libaccounts-qt
 	net-libs/libproxy
+	unity-base/signon
 	x11-libs/qt-core
 	x11-libs/qt-dbus
 	x11-libs/qt-gui
 	x11-libs/qt-sql
 	x11-libs/qt-xmlpatterns
-	x11-libs/qt-webkit"
+	x11-libs/qt-webkit
+	x11-libs/libnotify"

@@ -16,7 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
-RDEPEND="unity-base/signon
+RDEPEND="gnome-base/libgnome-keyring
+	unity-base/signon
 	x11-libs/qt-core"
 DEPEND="${RDEPEND}"
 

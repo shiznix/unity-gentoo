@@ -3,7 +3,7 @@ GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2:2.7"
 
-inherit base gnome2 python virtualx
+inherit autotools base gnome2 python virtualx
 
 # Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PV="${PV/99./}"
@@ -12,8 +12,8 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/e/${PN}"
-UVER="0ubuntu2"
-URELEASE="raring"
+UVER="0ubuntu1"
+URELEASE="quantal"
 MY_P="${MY_P/-/_}"
 
 DESCRIPTION="Telepathy instant messaging and video/audio call client for GNOME patched for the Unity desktop"
@@ -23,7 +23,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2 CCPL-Attribution-ShareAlike-3.0 FDL-1.3 LGPL-2.1"
 SLOT="0"
-IUSE="debug +geocode +geoloc gnome gnome-online-accounts +map sendto spell test +v4l"
+IUSE="gnome test +v4l"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-linux"
 
 # gdk-pixbuf and pango extensively used in libempathy-gtk
@@ -59,17 +59,10 @@ COMMON_DEPEND="
 	net-libs/libsoup:2.4
 	x11-libs/libX11
 
-	geocode? ( sci-geosciences/geocode-glib )
-	geoloc? ( >=app-misc/geoclue-0.12 )
-	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.5.1 )
-	map? (
-		>=media-libs/clutter-1.7.14:1.0
-		>=media-libs/clutter-gtk-0.90.3:1.0
-		>=media-libs/libchamplain-0.12.1:0.12[gtk] )
-	sendto? ( >=gnome-extra/nautilus-sendto-2.90.0 )
-	spell? (
-		>=app-text/enchant-1.2
-		>=app-text/iso-codes-0.35 )
+	>=net-libs/gnome-online-accounts-3.5.1
+	>=gnome-extra/nautilus-sendto-2.90.0
+	>=app-text/enchant-1.2
+	>=app-text/iso-codes-0.35
 	v4l? (
 		media-plugins/gst-plugins-v4l2:1.0
 		>=media-video/cheese-3.4
@@ -77,8 +70,14 @@ COMMON_DEPEND="
 # >=empathy-3.4 is incompatible with telepathy-rakia-0.6, bug #403861
 RDEPEND="${COMMON_DEPEND}
 	media-libs/gst-plugins-base:1.0
+	net-im/pidgin[-eds]
 	net-im/telepathy-connection-managers
+	net-irc/telepathy-idle
 	net-libs/account-plugins
+	net-voip/telepathy-gabble
+	net-voip/telepathy-haze
+	net-voip/telepathy-rakia
+	>=net-voip/telepathy-salut-0.8.1
 	!<net-voip/telepathy-rakia-0.7
 	x11-themes/gnome-icon-theme-symbolic
 	gnome? ( gnome-extra/gnome-contacts )"
@@ -114,32 +113,45 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
+	eautoreconf
 }
 
 src_configure() {
 	DOCS="CONTRIBUTORS AUTHORS ChangeLog NEWS README"
+
 	G2CONF="${G2CONF}
-		--enable-libunity
-		--enable-ubuntu-online-accounts
-		--disable-coding-style-checks
+		--enable-debug
+		--libexecdir=/usr/lib/empathy
+		--disable-schemas-compile
 		--disable-static
-		--disable-Werror
-		--enable-gst-1.0
-		$(use_enable debug)
-		$(use_enable geocode)
-		$(use_enable geoloc location)
-		$(use_enable gnome-online-accounts goa)
-		$(use_enable map)
-		$(use_enable sendto nautilus-sendto)
-		$(use_enable spell)
-		$(use_with v4l cheese)
-		$(use_enable v4l gudev)
+		--enable-gst-1.0=yes
+		--enable-spell=yes
+		--enable-webkit=yes
+		--enable-map=no
+		--enable-location=no
+		--enable-geocode=no
+		--enable-gudev=yes
+		--enable-call-logs=yes
+		--enable-call=yes
+		--enable-ubuntu-online-accounts=yes
+		--enable-goa=yes
+		--enable-libunity=yes
+		--enable-nautilus-sendto=yes
+		--enable-control-center-embedding=yes
+		--with-connectivity=nm
 		ITSTOOL=$(type -P true)"
 	gnome2_src_configure
 }
 
 src_test() {
 	Xemake check
+}
+
+src_install() {
+	gnome2_src_install
+
+	insinto /usr/share/indicators/messages/applications/
+	doins "${WORKDIR}/debian/indicators/empathy"
 }
 
 pkg_postinst() {

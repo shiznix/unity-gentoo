@@ -33,9 +33,22 @@ gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/gnome-screensaver		# Patched to have gnome-screensaver xdg-autostart on Unity login
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
-net-im/empathy				# Integrates with Unity online accounts and it's associated plugins
+net-im/empathy				# Integrates with Unity online accounts, it's associated plugins and the messages indicator
 net-wireless/gnome-bluetooth		# Shows bluetooth in indicator-panel
 x11-base/xorg-server			# Needed for revealing side Dash launcher panel when it's set to autohide
 x11-libs/gtk+				# Needed for global appmenu
 x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme for gtk+-3.6 (Unity fails to start otherwise)
 x11-wm/metacity				# Patched to support compiz window decoration
+
+
+* Empathy and message indicator integration
+	- To reset all empathy accounts and configurations:
+		rm -rfv ~/.cache/telepathy
+		rm -rfv ~/.local/share/telepathy
+		rm -rfv ~/.config/libaccounts-glib
+		rm -rfv ~/.config/Empathy
+	- To debug signond, edit /etc/signond.conf and change 'LoggingLevel=...'
+	- To debug signon-ui:
+		killall signon-ui
+		export SSOUI_LOGGING_LEVEL=2
+		signon-ui

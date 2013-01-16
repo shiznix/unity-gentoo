@@ -10,7 +10,7 @@ URELEASE="quantal"
 MY_P="${P/signon-/signon_}"
 
 DESCRIPTION="Online account plugin for gnome-control-center used by the Unity desktop"
-HOMEPAGE="http://www.gnome.org/"
+HOMEPAGE="https://launchpad.net/online-accounts-gnome-control-center"
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
