@@ -17,11 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+debug doc"
 
-RDEPEND="unity-base/signon-keyring-extension
-	unity-base/signon-plugin-oauth2"
-
-DEPEND="${RDEPEND}
-	x11-libs/qt-core
+DEPEND="x11-libs/qt-core
         x11-libs/qt-dbus
         x11-libs/qt-gui
         x11-libs/qt-sql
