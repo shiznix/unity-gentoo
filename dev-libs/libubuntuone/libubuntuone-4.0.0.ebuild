@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit mono versionator
+inherit mono
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 UVER="0ubuntu1"

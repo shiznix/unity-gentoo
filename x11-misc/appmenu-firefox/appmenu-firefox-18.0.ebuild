@@ -1,5 +1,7 @@
 EAPI=4
 
+inherit versionator
+
 MY_PN="firefox-globalmenu"
 UURL="mirror://ubuntu/pool/main/f/firefox"
 UVER="build1-0ubuntu0.12.10.3"
@@ -16,7 +18,7 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-DEPEND="|| ( ~www-client/firefox-${PV} ~www-client/firefox-bin-${PV} )
+DEPEND="|| ( =www-client/firefox-$(get_version_component_range 1-2)* =www-client/firefox-bin-$(get_version_component_range 1-2)* )
 		x11-misc/appmenu-gtk
 		app-text/gnome-doc-utils"
 RDEPEND="${DEPEND}"

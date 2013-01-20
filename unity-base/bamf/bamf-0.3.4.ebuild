@@ -18,7 +18,7 @@ IUSE="+introspection"
 
 DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libunity
-	unity-base/unity-webapps
+	dev-libs/libunity-webapps
 	>=x11-libs/gtk+-99.2.24.10:2
 	>=x11-libs/gtk+-99.3.6.0:3
 	x11-libs/libwnck:1

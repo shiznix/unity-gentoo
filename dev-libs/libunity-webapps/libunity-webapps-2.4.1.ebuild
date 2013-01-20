@@ -2,12 +2,10 @@ EAPI=4
 
 inherit base eutils autotools gnome2
 
-MY_PN="libunity-webapps"
-MY_P="${MY_PN}_${PV}"
-
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${MY_PN}"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 UVER="0ubuntu3.2"
 URELEASE="quantal-updates"
+MY_P="${P/webapps-/webapps_}"
 
 DESCRIPTION="Webapps integration with the Unity desktop"
 HOMEPAGE="https://launchpad.net/libunity-webapps"
@@ -34,8 +32,6 @@ DEPEND="app-admin/packagekit-gtk
 	x11-libs/libnotify
 	x11-libs/libwnck:3"
 
-S="${WORKDIR}/lib${P}"
-
 src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
@@ -47,4 +43,15 @@ src_prepare() {
 		-i configure.ac
 
 	eautoreconf
+}
+
+src_configure() {
+	econf \
+		--disable-static \
+		--libexecdir=/usr/lib/libunity-webapps
+}
+
+pkg_postinst() {
+	elog "Unity webapps will only currently work if your default browser is set to Firefox"
+	elog "Chromium support is being worked on"
 }

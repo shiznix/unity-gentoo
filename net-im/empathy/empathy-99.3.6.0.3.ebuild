@@ -121,7 +121,6 @@ src_configure() {
 
 	G2CONF="${G2CONF}
 		--enable-debug
-		--libexecdir=/usr/lib/empathy
 		--disable-schemas-compile
 		--disable-static
 		--enable-gst-1.0=yes

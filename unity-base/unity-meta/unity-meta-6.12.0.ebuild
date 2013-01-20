@@ -6,7 +6,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="chat"
+IUSE="chat webapps"
 
 DEPEND="!unity-base/unity2d
 	>=gnome-base/nautilus-99.3.6.3
@@ -30,4 +30,9 @@ DEPEND="!unity-base/unity2d
 	unity-base/unity-lens-photos
 	unity-base/unity-lens-video
 	unity-base/unity-scope-video-remote
+	webapps? ( unity-base/webapps
+			unity-extra/unsettings
+			x11-misc/webaccounts-browser-extension
+			x11-misc/webapps-greasemonkey
+			x11-misc/unity-firefox-extension )
 	chat? ( >=net-im/empathy-99.3.6.0.3 )"

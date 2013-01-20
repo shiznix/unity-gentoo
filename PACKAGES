@@ -12,12 +12,14 @@ dev-libs/libtimezonemap
 dev-libs/libubuntuone
 dev-libs/libunity
 dev-libs/libunity-misc
+dev-libs/libunity-webapps
 dev-python/configglue
 dev-python/dirspec
 dev-python/lazr-restfulclient
 dev-python/python-distutils-extra
 dev-python/pywapi
 dev-python/unity-singlet
+dev-util/xxd
 gnome-base/gconf
 gnome-base/gnome-control-center
 gnome-base/gnome-menus
@@ -72,7 +74,7 @@ unity-base/unity-lens-photos
 unity-base/unity-lens-video
 unity-base/unity-meta
 unity-base/unity-scope-video-remote
-unity-base/unity-webapps
+unity-base/webapps
 unity-extra/glipper
 unity-extra/indicator-power
 unity-extra/indicator-weather
@@ -85,6 +87,9 @@ x11-misc/appmenu-firefox
 x11-misc/appmenu-gtk
 x11-misc/appmenu-libreoffice
 x11-misc/appmenu-thunderbird
+x11-misc/unity-firefox-extension
+x11-misc/webaccounts-browser-extension
+x11-misc/webapps-greasemonkey
 x11-proto/fixesproto
 x11-themes/gtk-engines-unico
 x11-themes/ubuntu-mono

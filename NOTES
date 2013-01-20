@@ -24,7 +24,7 @@ dev-libs/libappindicator		# See above
 dev-libs/libdbusmenu			# See above
 dev-libs/libindicator			# See above
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
-gnome-base/gnome-control-center		# Include Dash Launcher Appearance and UbuntuOne settings
+gnome-base/gnome-control-center		# 
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
 gnome-base/gnome-settings-daemon	# Patched to have gnome-settings-daemon xdg-autostart on Unity login
@@ -33,8 +33,9 @@ gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/gnome-screensaver		# Patched to have gnome-screensaver xdg-autostart on Unity login
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
-net-im/empathy				# Integrates with Unity online accounts, it's associated plugins and the messages indicator
+net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 net-wireless/gnome-bluetooth		# Shows bluetooth in indicator-panel
+www-client/chromium			# Requires patching for x11-misc/webaccounts-browser-extension[chromium]
 x11-base/xorg-server			# Needed for revealing side Dash launcher panel when it's set to autohide
 x11-libs/gtk+				# Needed for global appmenu
 x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme for gtk+-3.6 (Unity fails to start otherwise)
@@ -52,3 +53,32 @@ x11-wm/metacity				# Patched to support compiz window decoration
 		killall signon-ui
 		export SSOUI_LOGGING_LEVEL=2
 		signon-ui
+
+* Webapps integration
+	- Requires the following packages:
+		- dev-libs/libunity-webapps
+		- unity-base/webapps
+		- x11-misc/webapps-greasemonkey			(Unity Websites Integration browser plugin)
+		- x11-misc/webaccounts-browser-extension	(Ubuntu Online Accounts browser plugin)
+		- x11-misc/unity-firefox-extension		(Unity Desktop Integration browser plugin)
+	- How it works (maybe):
+		- The UWI browser extension (x11-misc/webapps-greasemonkey) monitors websites visited and when it gets a match from
+			'unity-webapps-service' daemon (unity-base/unity-webapps) triggers the UDI browser extension (x11-misc/unity-firefox-extension)
+			to throw a pop-up offering to integrate the website into the desktop (HUD, launcher and indicators)
+	- Problems:
+		- 'unity-webapps-runner' (unity-base/unity-webapps) is used by the *.desktop files installed into
+			Ubuntu packages but will only work if either chromium or firefox are set as the default browser
+			Default browser setting is read from desktop user's ~/.local/share/applications/mimeapps.list
+		- The webapp service sometimes breaks on Ubuntu for Firefox when Mozilla update their browser
+	- Other stuff:
+		- Webapps shown in the messages indicator are provided by the desktop user's ~/.local/share/applications/<provider>.desktop
+		- Available webapps are stored in the desktop user's ~/.local/share/unity-webapps/availableapps-v2.db
+		- Installed webapps are stored in the desktop user's ~/.local/share/unity-webapps/apps2.db
+	- To reset all installed webapps back to zero (and so get re-prompted to integrate each site), and remove indicator integration:
+		rm -rfv ~/.local/share/applications/<webapp_provider>.desktop
+		gsettings set com.canonical.unity.webapps allowed-domains ['']
+	- Possible TODO:
+		- Have 'unity-webapps-runner' fallback to either chromium or firefox if default browser is not set to something else
+			Or just print an elog warning if text/html= mimetype is set to something other than firefox or chromium
+				when unity-webapps gets installed
+		- Package Ubuntu's version of app-misc/geoclue so that the Amazon webapp regional settings work when running 'unity-webapps-runner -a'
