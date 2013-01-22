@@ -17,7 +17,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-libs/libxslt
+DEPEND="dev-libs/libunity-webapps
+	dev-libs/libxslt
 	>=x11-libs/gtk+-99.2.24:2"
 
 src_prepare() {

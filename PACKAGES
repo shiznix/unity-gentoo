@@ -18,7 +18,6 @@ dev-python/dirspec
 dev-python/lazr-restfulclient
 dev-python/python-distutils-extra
 dev-python/pywapi
-dev-python/unity-singlet
 dev-util/xxd
 gnome-base/gconf
 gnome-base/gnome-control-center

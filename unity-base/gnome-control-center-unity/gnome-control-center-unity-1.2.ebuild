@@ -20,6 +20,8 @@ IUSE="+socialweb"
 KEYWORDS="~amd64 ~x86"
 
 DEPEND="socialweb? ( net-libs/libsocialweb )
+	>=gnome-base/gnome-control-center-99.3.6.3
+	>=gnome-base/gsettings-desktop-schemas-99.3.6.0
 	x11-proto/xproto
         x11-proto/xf86miscproto
         x11-proto/kbproto

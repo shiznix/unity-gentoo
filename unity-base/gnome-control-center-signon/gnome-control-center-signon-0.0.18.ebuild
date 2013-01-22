@@ -24,6 +24,7 @@ RDEPEND="unity-base/signon-ui"
 DEPEND="${RDEPEND}
 	dev-libs/libaccounts-glib
 	dev-libs/libsignon-glib
+	>=gnome-base/gnome-control-center-99.3.6.3
 	x11-proto/xproto
         x11-proto/xf86miscproto
         x11-proto/kbproto
@@ -32,7 +33,8 @@ DEPEND="${RDEPEND}
         dev-libs/libxslt
         >=dev-util/intltool-0.40.1
         >=sys-devel/gettext-0.17
-        virtual/pkgconfig"
+        virtual/pkgconfig
+	>=x11-libs/gtk+-99.3.6.0:3"
 
 S="${WORKDIR}/credentials-control-center-${PV}"
 

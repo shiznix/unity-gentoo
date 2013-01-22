@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="unity-base/unity-webapps"
+DEPEND="unity-base/webapps"
 
 OLDDATE="$(date +%Y.%m.%d)"
 

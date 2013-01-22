@@ -14,6 +14,7 @@ version_check() {
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.2'`" ]; then treepackname="${packname}"; packname="gtk+2.0"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.3'`" ]; then treepackname="${packname}"; packname="gtk+3.0"
+	elif [ -n "`echo "${packbasename}" | grep 'gtk-engines-unico'`" ]; then treepackname="${packname}"; packname="gtk3-engines-unico"
 	elif [ -n "`echo "${packbasename}" | grep 'libXfixes'`" ]; then treepackname="${packname}"; packname="libxfixes"
 	elif [ -n "`echo "${packbasename}" | grep 'lazr-restfulclient'`" ]; then treepackname="${packname}"; packname="lazr.restfulclient"
 	elif [ -n "`echo "${packbasename}" | grep 'nm-applet'`" ]; then treepackname="${packname}"; packname="network-manager-applet"
