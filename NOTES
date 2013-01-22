@@ -78,7 +78,4 @@ x11-wm/metacity				# Patched to support compiz window decoration
 		rm -rfv ~/.local/share/applications/<webapp_provider>.desktop
 		gsettings set com.canonical.unity.webapps allowed-domains ['']
 	- Possible TODO:
-		- Have 'unity-webapps-runner' fallback to either chromium or firefox if default browser is not set to something else
-			Or just print an elog warning if text/html= mimetype is set to something other than firefox or chromium
-				when unity-webapps gets installed
 		- Package Ubuntu's version of app-misc/geoclue so that the Amazon webapp regional settings work when running 'unity-webapps-runner -a'
