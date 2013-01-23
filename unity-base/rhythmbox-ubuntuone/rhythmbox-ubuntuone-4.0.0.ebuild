@@ -19,6 +19,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="dev-lang/vala:0.14[vapigen]
 	=dev-libs/libubuntuone-${PV}

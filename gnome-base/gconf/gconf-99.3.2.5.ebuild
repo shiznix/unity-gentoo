@@ -24,6 +24,7 @@ LICENSE="LGPL-2"
 SLOT="2"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 IUSE="debug doc +introspection ldap orbit policykit"
+RESTRICT="mirror"
 
 RDEPEND=">=dev-libs/glib-2.31:2
 	>=x11-libs/gtk+-2.90:3

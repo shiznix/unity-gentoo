@@ -18,6 +18,7 @@ LICENSE="GPL-2+"
 SLOT="0"
 IUSE=""
 KEYWORDS="~amd64 ~x86"
+RESTRICT="mirror"
 
 RDEPEND="unity-base/signon-keyring-extension
 	unity-base/signon-plugin-oauth2"

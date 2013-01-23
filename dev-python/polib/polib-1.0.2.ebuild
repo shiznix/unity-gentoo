@@ -10,6 +10,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND=""
 RDEPEND="${DEPEND}"

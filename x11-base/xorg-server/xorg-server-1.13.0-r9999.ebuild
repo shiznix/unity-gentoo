@@ -16,6 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 
 IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} ipv6 minimal nptl selinux tslib +udev"
+RESTRICT="mirror"
 
 RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	dev-libs/openssl

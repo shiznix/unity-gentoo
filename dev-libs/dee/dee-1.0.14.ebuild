@@ -25,6 +25,7 @@ SLOT="0"
 LICENSE="GPL-3"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc debug examples +icu static-libs test"
+RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
 	dev-libs/icu"

@@ -15,6 +15,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="!!unity-base/utouch-evemu
 	dev-lang/python:2.7"

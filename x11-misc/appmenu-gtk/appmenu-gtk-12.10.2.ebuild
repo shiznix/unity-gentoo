@@ -16,6 +16,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="unity-base/indicator-appmenu
 	>=x11-libs/gtk+-99.2.24.11:2

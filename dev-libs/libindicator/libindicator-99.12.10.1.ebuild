@@ -20,6 +20,7 @@ LICENSE="GPL-2"
 SLOT="3"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 RDEPEND=">=x11-libs/gtk+-99.2.24.10:2
 	>=x11-libs/gtk+-99.3.6.0:3

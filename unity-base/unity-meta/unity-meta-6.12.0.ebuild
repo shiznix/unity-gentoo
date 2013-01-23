@@ -7,6 +7,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="chat webapps"
+RESTRICT="mirror"
 
 DEPEND="!unity-base/unity2d
 	>=gnome-base/nautilus-99.3.6.3

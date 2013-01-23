@@ -16,6 +16,7 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 RDEPEND="dev-libs/qjson
 	unity-base/signon-ui

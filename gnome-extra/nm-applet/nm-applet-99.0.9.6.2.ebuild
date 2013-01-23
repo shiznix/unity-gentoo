@@ -26,6 +26,7 @@ LICENSE="GPL-2"
 SLOT="0"
 IUSE="bluetooth gconf"
 KEYWORDS="~amd64 ~ppc ~x86"
+RESTRICT="mirror"
 
 RDEPEND=">=dev-libs/glib-2.26:2
 	>=dev-libs/dbus-glib-0.88

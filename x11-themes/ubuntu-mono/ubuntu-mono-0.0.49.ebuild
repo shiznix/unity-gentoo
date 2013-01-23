@@ -19,6 +19,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~sparc-solaris ~x64-solaris ~x86-solaris"
 IUSE=""
+RESTRICT="mirror"
 
 RDEPEND=">=x11-themes/hicolor-icon-theme-0.10"
 DEPEND="${RDEPEND}

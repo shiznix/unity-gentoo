@@ -25,6 +25,7 @@ LICENSE="GPL-2 CCPL-Attribution-ShareAlike-3.0 FDL-1.3 LGPL-2.1"
 SLOT="0"
 IUSE="gnome test +v4l"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-linux"
+RESTRICT="mirror"
 
 # gdk-pixbuf and pango extensively used in libempathy-gtk
 COMMON_DEPEND="

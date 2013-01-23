@@ -16,6 +16,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+help"
+RESTRICT="mirror"
 
 DEPEND="app-admin/packagekit[gtk,qt4]
 	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]

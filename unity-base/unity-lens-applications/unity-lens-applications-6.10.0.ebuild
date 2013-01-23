@@ -16,6 +16,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 RDEPEND=">=dev-libs/dee-1.0.14
 	dev-libs/libunity"

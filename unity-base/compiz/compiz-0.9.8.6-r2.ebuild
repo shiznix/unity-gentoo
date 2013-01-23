@@ -17,6 +17,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+debug kde"
+RESTRICT="mirror"
 
 COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
 	!!unity-base/ccsm

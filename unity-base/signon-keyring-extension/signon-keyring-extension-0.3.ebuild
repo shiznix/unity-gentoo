@@ -15,6 +15,7 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
+RESTRICT="mirror"
 
 RDEPEND="gnome-base/libgnome-keyring
 	unity-base/signon

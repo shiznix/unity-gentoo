@@ -16,6 +16,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="gnome-base/dconf
 	>=x11-libs/gtk+-99.2.24.11:2

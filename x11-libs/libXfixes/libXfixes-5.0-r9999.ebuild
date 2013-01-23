@@ -18,6 +18,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 RDEPEND="x11-libs/libX11
 	=x11-proto/fixesproto-5.0-r9999

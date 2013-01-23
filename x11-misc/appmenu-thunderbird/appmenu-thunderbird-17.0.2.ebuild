@@ -16,6 +16,7 @@ LICENSE="|| ( MPL-1.1 GPL-2 LGPL-2.1 )"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="|| ( ~mail-client/thunderbird-${PV} ~mail-client/thunderbird-bin-${PV} )
 		x11-misc/appmenu-gtk

@@ -17,6 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 #IUSE="chromium firefox"
+RESTRICT="mirror"
 
 DEPEND="dev-libs/json-glib
 	dev-libs/libaccounts-glib

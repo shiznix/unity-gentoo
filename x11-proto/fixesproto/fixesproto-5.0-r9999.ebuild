@@ -17,6 +17,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 RDEPEND=">=x11-proto/xextproto-7.0.99.1"
 DEPEND="${RDEPEND}"

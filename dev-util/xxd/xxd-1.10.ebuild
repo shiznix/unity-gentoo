@@ -10,6 +10,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 src_prepare() {
 	# use implicit make rules as they're better than the makefile

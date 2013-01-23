@@ -17,6 +17,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug examples tests"
+RESTRICT="mirror"
 
 DEPEND="!unity-base/utouch-geis
 	app-i18n/ibus

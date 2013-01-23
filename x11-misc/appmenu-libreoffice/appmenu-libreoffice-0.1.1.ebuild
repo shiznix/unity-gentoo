@@ -16,6 +16,7 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="|| ( app-office/libreoffice app-office/libreoffice-bin )
 		app-text/gnome-doc-utils

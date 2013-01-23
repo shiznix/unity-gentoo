@@ -28,6 +28,7 @@ if [[ ${PV} = 9999 ]]; then
 else
 	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 fi
+RESTRICT="mirror"
 
 # XXX: NetworkManager-0.9 support is automagic, make hard-dep once it's released
 #

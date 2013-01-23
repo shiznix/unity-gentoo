@@ -23,6 +23,7 @@ LICENSE="GPL-2+ LGPL-2.1+ FDL-1.1+"
 SLOT="2"
 IUSE="doc +introspection sendto"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+RESTRICT="mirror"
 
 COMMON_DEPEND=">=dev-libs/glib-2.29.90:2
 	>=x11-libs/gtk+-99.2.91.3:3[introspection?]

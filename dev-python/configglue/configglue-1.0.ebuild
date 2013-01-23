@@ -12,6 +12,7 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 pkg_postinst() {
 	python_disable_pyc

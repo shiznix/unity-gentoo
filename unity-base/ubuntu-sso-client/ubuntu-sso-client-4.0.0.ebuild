@@ -18,6 +18,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="dev-lang/python
 	>=dev-libs/glib-2.32.3

@@ -16,6 +16,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND=">=app-text/gnome-doc-utils-0.20.5
 	app-text/yelp-tools

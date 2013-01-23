@@ -20,6 +20,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 RDEPEND="!x11-misc/glipper
 	dev-libs/keybinder:0[python]

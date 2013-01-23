@@ -15,6 +15,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
+RESTRICT="mirror"
 
 DEPEND=">=x11-libs/gtk+-99.3.6.0
 	>=x11-libs/libXfixes-5.0-r9999"

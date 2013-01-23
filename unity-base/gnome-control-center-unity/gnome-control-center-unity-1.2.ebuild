@@ -18,6 +18,7 @@ LICENSE="GPL-2+"
 SLOT="0"
 IUSE="+socialweb"
 KEYWORDS="~amd64 ~x86"
+RESTRICT="mirror"
 
 DEPEND="socialweb? ( net-libs/libsocialweb )
 	>=gnome-base/gnome-control-center-99.3.6.3

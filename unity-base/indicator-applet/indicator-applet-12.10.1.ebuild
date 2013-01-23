@@ -15,6 +15,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND=">=dev-libs/libindicator-99.0.5.0:3
 	>=x11-libs/gtk+-99.3.6.0:3

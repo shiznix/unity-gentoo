@@ -12,6 +12,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="dev-python/setuptools"
 RDEPEND="${DEPEND}"

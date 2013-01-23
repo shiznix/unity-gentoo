@@ -29,7 +29,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sh ~x86 ~x86-fbsd ~x86-interix ~
 
 # FIXME: tests fails under Xvfb, but pass when building manually
 # "FAIL: check failed in nautilus-file.c, line 8307"
-RESTRICT="test"
+RESTRICT="mirror test"
 
 # FIXME: selinux support is automagic
 # Require {glib,gdbus-codegen}-2.30.0 due to GDBus API changes between 2.29.92

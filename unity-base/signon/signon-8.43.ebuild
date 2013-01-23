@@ -16,6 +16,7 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+debug doc"
+RESTRICT="mirror"
 
 DEPEND="x11-libs/qt-core
         x11-libs/qt-dbus

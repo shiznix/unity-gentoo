@@ -16,6 +16,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
+RESTRICT="mirror"
 
 RDEPEND=">=gnome-base/gconf-99.3.2.5
 	x11-libs/qt-core:4

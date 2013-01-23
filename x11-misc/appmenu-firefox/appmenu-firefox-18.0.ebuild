@@ -17,6 +17,7 @@ LICENSE="|| ( MPL-1.1 GPL-2 LGPL-2.1 )"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="|| ( =www-client/firefox-$(get_version_component_range 1-2)* =www-client/firefox-bin-$(get_version_component_range 1-2)* )
 		x11-misc/appmenu-gtk

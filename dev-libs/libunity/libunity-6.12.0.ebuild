@@ -1,7 +1,6 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
-#RESTRICT_PYTHON_ABIS="3.*"
 
 inherit base eutils autotools python
 
@@ -19,6 +18,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND=">=dev-libs/dee-1.0.14
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]

@@ -17,6 +17,7 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
+RESTRICT="mirror"
 
 RDEPEND="dev-db/sqlite:3
 	dev-libs/check

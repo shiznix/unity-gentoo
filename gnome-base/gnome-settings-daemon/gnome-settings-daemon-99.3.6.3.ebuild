@@ -29,6 +29,7 @@ REQUIRED_USE="
 	packagekit? ( udev )
 	smartcard? ( udev )
 "
+RESTRICT="mirror"
 
 # colord-0.1.13 needed to avoid polkit errors in CreateProfile and CreateDevice
 COMMON_DEPEND="

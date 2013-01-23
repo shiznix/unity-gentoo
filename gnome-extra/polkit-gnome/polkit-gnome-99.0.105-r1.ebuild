@@ -13,6 +13,7 @@ LICENSE="LGPL-2"
 SLOT="0"
 KEYWORDS="alpha amd64 arm ia64 ~mips ppc ppc64 sh sparc x86 ~x86-fbsd"
 IUSE=""
+RESTRICT="mirror"
 
 RDEPEND=">=dev-libs/glib-2.30
 	>=sys-auth/polkit-0.102

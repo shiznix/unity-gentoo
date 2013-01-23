@@ -16,6 +16,7 @@ DESCRIPTION="GStreamer Integration library for Clutter"
 SLOT="1.0"
 KEYWORDS="~alpha amd64 ~ppc x86"
 IUSE="examples +introspection"
+RESTRICT="mirror"
 
 RDEPEND="
 	>=dev-libs/glib-2.20:2

@@ -15,6 +15,7 @@ LICENSE="LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
+RESTRICT="mirror"
 
 RDEPEND="dev-libs/libaccounts-glib
 	x11-libs/qt-core

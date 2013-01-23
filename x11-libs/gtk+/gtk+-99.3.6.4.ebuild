@@ -29,6 +29,7 @@ IUSE="aqua colord cups debug egl examples +introspection packagekit test vim-syn
 REQUIRED_USE="
 	|| ( aqua wayland X )
 	xinerama? ( X )"
+RESTRICT="mirror"
 
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 

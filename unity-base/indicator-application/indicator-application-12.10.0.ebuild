@@ -15,6 +15,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND=">=dev-libs/libappindicator-99.12.10.0
 	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
