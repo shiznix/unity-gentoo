@@ -86,6 +86,7 @@ x11-misc/appmenu-firefox
 x11-misc/appmenu-gtk
 x11-misc/appmenu-libreoffice
 x11-misc/appmenu-thunderbird
+x11-misc/unity-chromium-extension
 x11-misc/unity-firefox-extension
 x11-misc/webaccounts-browser-extension
 x11-misc/webapps-greasemonkey
@@ -94,3 +95,4 @@ x11-themes/gtk-engines-unico
 x11-themes/ubuntu-mono
 x11-themes/unity-asset-pool
 x11-wm/metacity
+www-client/chromium

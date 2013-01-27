@@ -34,6 +34,5 @@ DEPEND="!unity-base/unity2d
 	webapps? ( unity-base/webapps
 			unity-extra/unsettings
 			x11-misc/webaccounts-browser-extension
-			x11-misc/webapps-greasemonkey
-			x11-misc/unity-firefox-extension )
+			x11-misc/webapps-greasemonkey )
 	chat? ( >=net-im/empathy-99.3.6.0.3 )"

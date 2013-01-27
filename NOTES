@@ -35,7 +35,7 @@ gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 net-wireless/gnome-bluetooth		# Shows bluetooth in indicator-panel
-www-client/chromium			# Requires patching for x11-misc/webaccounts-browser-extension[chromium]
+www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 x11-base/xorg-server			# Needed for revealing side Dash launcher panel when it's set to autohide
 x11-libs/gtk+				# Needed for global appmenu
 x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme for gtk+-3.6 (Unity fails to start otherwise)
@@ -61,6 +61,7 @@ x11-wm/metacity				# Patched to support compiz window decoration
 		- x11-misc/webapps-greasemonkey			(Unity Websites Integration browser plugin)
 		- x11-misc/webaccounts-browser-extension	(Ubuntu Online Accounts browser plugin)
 		- x11-misc/unity-firefox-extension		(Unity Desktop Integration browser plugin)
+		- x11-misc/unity-chromium-extension              (Unity Desktop Integration browser plugin)
 	- How it works (maybe):
 		- The UWI browser extension (x11-misc/webapps-greasemonkey) monitors websites visited and when it gets a match from
 			'unity-webapps-service' daemon (unity-base/unity-webapps) triggers the UDI browser extension (x11-misc/unity-firefox-extension)

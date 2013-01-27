@@ -2,7 +2,7 @@
 
 ## Basic script to compare upstream versions of packages with versions in overlay tree ##
 # If run without any arguments it recurses through the overlay tree and compares versions for all packages #
-# Or can be run on individual packages as 'version_check.sh <package>-<version>.ebuild'
+# Or can be run on individual packages as 'version_check.sh category/package-version.ebuild'
 
 version_check() {
 	packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
@@ -11,6 +11,7 @@ version_check() {
 	## Overlay package names to upstream package names mapping ##
 	if [ -n "`echo "${packbasename}" | grep 'appmenu-firefox'`" ]; then treepackname="${packname}"; packname="firefox-globalmenu"
 	elif [ -n "`echo "${packbasename}" | grep 'appmenu-thunderbird'`" ]; then treepackname="${packname}"; packname="thunderbird-globalmenu"
+	elif [ -n "`echo "${packbasename}" | grep 'chromium'`" ]; then treepackname="${packname}"; packname="chromium-browser"
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.2'`" ]; then treepackname="${packname}"; packname="gtk+2.0"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.3'`" ]; then treepackname="${packname}"; packname="gtk+3.0"
