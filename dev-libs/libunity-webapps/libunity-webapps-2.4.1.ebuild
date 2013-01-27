@@ -53,6 +53,6 @@ src_configure() {
 }
 
 pkg_postinst() {
-	elog "Unity webapps will only currently work if your default browser is set to Firefox"
-	elog "Chromium support is being worked on"
+	elog "Unity webapps will only currently work if your default browser"
+	elog "is set to either Firefox or Chromium"
 }
