@@ -6,7 +6,7 @@ MY_PN="${PN/libXfixes/libxfixes}"
 MY_PV="${PV/-r//}"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libx/${MY_PN}"
 UVER="4ubuntu5"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Ubuntu patched version of X.Org Xfixes library needed for Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"

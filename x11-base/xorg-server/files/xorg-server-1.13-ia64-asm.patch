@@ -1,0 +1,21 @@
+diff -ur a/hw/xfree86/common/compiler.h b/hw/xfree86/common/compiler.h
+--- a/hw/xfree86/common/compiler.h	2012-10-14 01:38:50.000000000 +0200
++++ b/hw/xfree86/common/compiler.h	2012-12-25 14:59:05.637854813 +0100
+@@ -1351,7 +1351,7 @@
+ #else                           /* ix86 */
+ 
+ #if !defined(__SUNPRO_C)
+-#if !defined(FAKEIT) && !defined(__mc68000__) && !defined(__arm__) && !defined(__sh__) && !defined(__hppa__) && !defined(__s390__) && !defined(__m32r__)
++#if !defined(FAKEIT) && !defined(__mc68000__) && !defined(__arm__) && !defined(__sh__) && !defined(__hppa__) && !defined(__s390__) && !defined(__m32r__) && !defined(__ia64__)
+ #ifdef GCCUSESGAS
+ 
+ /*
+@@ -1453,7 +1453,7 @@
+ 
+ #endif                          /* GCCUSESGAS */
+ 
+-#else                           /* !defined(FAKEIT) && !defined(__mc68000__)  && !defined(__arm__) && !defined(__sh__) && !defined(__hppa__) && !defined(__m32r__) */
++#else                           /* !defined(FAKEIT) && !defined(__mc68000__)  && !defined(__arm__) && !defined(__sh__) && !defined(__hppa__) && !defined(__m32r__) && !defined(__ia64__) */
+ 
+ static __inline__ void
+ outb(unsigned short port, unsigned char val)

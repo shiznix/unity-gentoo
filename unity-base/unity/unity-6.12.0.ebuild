@@ -51,7 +51,7 @@ DEPEND="!unity-base/unity2d
 	unity-base/dconf-qt
 	>=unity-base/nux-3.0.0
 	unity-base/overlay-scrollbar
-	=x11-base/xorg-server-1.13.0-r9999[dmx]
+	=x11-base/xorg-server-1.13.1.901-r9999[dmx]
 	=x11-libs/libXfixes-5.0-r9999
 	x11-misc/appmenu-gtk
 	x11-misc/appmenu-qt

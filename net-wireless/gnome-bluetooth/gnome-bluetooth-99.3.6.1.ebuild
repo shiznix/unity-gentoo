@@ -12,7 +12,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Fork of bluez-gnome focused on integration with GNOME, patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/GnomeBluetooth"
@@ -77,9 +77,6 @@ src_prepare() {
 	done
 	base_src_prepare
 	eautoreconf
-
-	# https://bugzilla.gnome.org/show_bug.cgi?id=685002
-	epatch "${FILESDIR}/${PN}-3.6.0-desktop-files.patch"
 
 	# Have bluetooth-applet start in a Unity session #
 	sed -e 's:OnlyShowIn=GNOME;:OnlyShowIn=GNOME;Unity;:' \

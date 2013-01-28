@@ -1,7 +1,7 @@
 #!/sbin/runscript
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License, v2
-# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/files/xdm.initd-3,v 1.5 2012/06/12 11:27:07 chithanh Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/files/xdm.initd-9,v 1.1 2012/11/11 01:49:30 chithanh Exp $
 
 # This is here to serve as a note to myself, and future developers.
 #
@@ -45,13 +45,15 @@ depend() {
 	# (#145219 #180163) Could use lirc mouse as input device
 	# (#70689 comment #92) Start after consolefont to avoid display corruption
 	# (#291269) Start after quota, since some dm need readable home
+	# (#390609) gdm-3 will fail when dbus is not running
+	# (#366753) starting keymaps after X causes problems
 	after bootmisc consolefont modules netmount
 	after readahead-list ypbind autofs openvpn gpm lircmd
-	after quota
+	after quota keymaps
 	before alsasound
 
 	# Start before X
-	use consolekit xfs
+	use consolekit dbus xfs
 }
 
 setup_dm() {
@@ -66,16 +68,12 @@ setup_dm() {
 	NAME=
 	case "${MY_XDM}" in
 		kdm|kde)
-			EXE="$(which kdm)"
-			PIDFILE=/var/run/kdm.pid
-			;;
-		kdm-*)
-			EXE="/usr/kde/${MY_XDM#kdm-}/bin/kdm"
+			EXE=/usr/bin/kdm
 			PIDFILE=/var/run/kdm.pid
 			;;
 		entrance*)
-			EXE=/usr/sbin/entranced
-			PIDFILE=/var/lib/entranced.pid
+			EXE=/usr/sbin/entrance
+			PIDFILE=/var/run/entrance.pid
 			;;
 		gdm|gnome)
 			EXE=/usr/bin/gdm
@@ -102,7 +100,7 @@ setup_dm() {
 			;;
 		*)
 			# first find out if there is such executable
-			EXE="$(which ${MY_XDM} 2>/dev/null)"
+			EXE="$(command -v ${MY_XDM} 2>/dev/null)"
 			PIDFILE="/var/run/${MY_XDM}.pid"
 
 			# warn user that he is doing sick things if the exe was not found

@@ -10,6 +10,7 @@ version_check() {
 
 	## Overlay package names to upstream package names mapping ##
 	if [ -n "`echo "${packbasename}" | grep 'appmenu-firefox'`" ]; then treepackname="${packname}"; packname="firefox-globalmenu"
+	elif [ -n "`echo "${packbasename}" | grep 'appmenu-libreoffice'`" ]; then treepackname="${packname}"; packname="lo-menubar"
 	elif [ -n "`echo "${packbasename}" | grep 'appmenu-thunderbird'`" ]; then treepackname="${packname}"; packname="thunderbird-globalmenu"
 	elif [ -n "`echo "${packbasename}" | grep 'chromium'`" ]; then treepackname="${packname}"; packname="chromium-browser"
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"

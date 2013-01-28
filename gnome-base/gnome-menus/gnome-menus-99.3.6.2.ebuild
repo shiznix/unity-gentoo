@@ -16,7 +16,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 UVER="0ubuntu1"
-URELEASE="quantal"
+URELEASE="raring"
 MY_P="${MY_P/menus-/menus_}"
 
 DESCRIPTION="The GNOME menu system patched for the Unity desktop"
