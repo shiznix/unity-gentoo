@@ -1,6 +1,8 @@
---- configure.ac
-+++ configure.ac
-@@ -240,7 +240,20 @@
+diff --git a/configure.ac b/configure.ac
+index d1739c4..752c09d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -241,7 +241,20 @@ dnl ---------------------------------------------------------------------------
  dnl - color
  dnl ---------------------------------------------------------------------------
  
@@ -22,7 +24,7 @@
  
  dnl ---------------------------------------------------------------------------
  dnl - wacom (disabled for s390/s390x and non Linux platforms)
-@@ -252,11 +265,22 @@
+@@ -253,11 +266,22 @@ case $host_os in
        have_wacom=no
      else
        if test x$enable_gudev != xno; then
@@ -32,12 +34,12 @@
 +	                 [turn off wacom plugin]),
 +	       [with_wacom=$enableval],
 +	       [with_wacom=no]) dnl Default value
-+	
++
 +	if test x$with_wacom = xyes; then
 +		PKG_CHECK_MODULES(WACOM, [libwacom >= $LIBWACOM_REQUIRED_VERSION x11 xi xtst gudev-1.0 gnome-desktop-3.0 >= $GNOME_DESKTOP_REQUIRED_VERSION xorg-wacom])
-+      		have_wacom=yes
++		have_wacom=yes
 +	fi
-+	
++
 +	AC_SUBST(WACOM_CFLAGS)
 +	AC_SUBST(WACOM_LIBS)
        else
@@ -47,32 +49,11 @@
      fi
      ;;
    *)
---- data/Makefile.am
-+++ data/Makefile.am
-@@ -11,7 +11,6 @@
- 	org.gnome.settings-daemon.plugins.gschema.xml			\
- 	org.gnome.settings-daemon.plugins.keyboard.gschema.xml		\
- 	org.gnome.settings-daemon.plugins.power.gschema.xml		\
--	org.gnome.settings-daemon.plugins.color.gschema.xml		\
- 	org.gnome.settings-daemon.plugins.media-keys.gschema.xml	\
- 	org.gnome.settings-daemon.plugins.xsettings.gschema.xml		\
- 	org.gnome.settings-daemon.plugins.housekeeping.gschema.xml	\
-@@ -20,6 +19,12 @@
- 
- all_schemas = $(gsettings_SCHEMAS)
- 
-+if WITH_COLOR
-+gsettings_SCHEMAS += org.gnome.settings-daemon.plugins.color.gschema.xml
-+else
-+all_schemas += org.gnome.settings-daemon.plugins.color.gschema.xml
-+endif
-+
- if HAVE_PACKAGEKIT
- gsettings_SCHEMAS += org.gnome.settings-daemon.plugins.updates.gschema.xml
- else
---- plugins/Makefile.am
-+++ plugins/Makefile.am
-@@ -6,7 +6,6 @@
+diff --git a/plugins/Makefile.am b/plugins/Makefile.am
+index 69b7181..a1cdf6c 100644
+--- a/plugins/Makefile.am
++++ b/plugins/Makefile.am
+@@ -6,7 +6,6 @@ enabled_plugins =	\
  	automount	\
  	background	\
  	clipboard	\
@@ -80,7 +61,7 @@
  	cursor		\
  	dummy		\
  	power		\
-@@ -21,6 +20,12 @@
+@@ -22,6 +21,12 @@ enabled_plugins =	\
  
  disabled_plugins = $(NULL)
  

@@ -11,7 +11,7 @@ MY_P="${PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-UVER="0ubuntu4"
+UVER="0ubuntu1"
 URELEASE="raring"
 MY_P="${MY_P/daemon-/daemon_}"
 GNOME2_LA_PUNT="1"
@@ -101,7 +101,7 @@ src_prepare() {
 		epatch "${FILESDIR}/${PN}-3.5.91-short-touchpad-timeout.patch"
 
 	# Make colord and wacom optional; requires eautoreconf
-	epatch "${FILESDIR}/${PN}-3.5.91-optional-color-wacom.patch"
+	epatch "${FILESDIR}/${PN}-3.6.4-optional-color-wacom.patch"
 
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
