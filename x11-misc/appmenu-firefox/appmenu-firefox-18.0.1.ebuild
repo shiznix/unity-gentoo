@@ -4,7 +4,7 @@ inherit versionator
 
 MY_PN="firefox-globalmenu"
 UURL="mirror://ubuntu/pool/main/f/firefox"
-UVER="build1-0ubuntu0.12.10.3"
+UVER="build1-0ubuntu0.12.10.1"
 URELEASE="quantal"
 
 DESCRIPTION="Unity appmenu integration for Firefox"

@@ -24,3 +24,7 @@ DEPEND=">=dev-libs/libappindicator-99.12.10.0
 	dev-libs/libtimezonemap
 	>=gnome-extra/evolution-data-server-3.6
 	unity-base/ido"
+
+src_configure() {
+	econf --with-ccpanel
+}
