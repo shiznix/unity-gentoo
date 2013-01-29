@@ -9,7 +9,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 #	File "/usr/lib64/python2.7/distutils/versionpredicate.py", line 160, in split_provision
 #	  raise ValueError("illegal provides specification: %r" % value)
 
-inherit distutils gnome2-utils
+inherit distutils eutils gnome2-utils
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
 UVER="0ubuntu1"
@@ -43,6 +43,7 @@ pkg_setup() {
 
 src_prepare() {
 	python_convert_shebangs -r 2 .
+	epatch "${FILESDIR}/lp821233.diff"
 }
 
 src_install() {
