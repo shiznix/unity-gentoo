@@ -32,8 +32,9 @@ pkg_setup() {
 src_install() {
 	distutils_src_install
 
-	dodir /etc/X11/xinit/xinitrc.d/
-	mv ${ED}etc/X11/Xsession.d/85unsettings ${ED}etc/X11/xinit/xinitrc.d/
+	exeinto /etc/X11/xinit/xinitrc.d/
+	doexe xsession/85unsettings
+	rm -rf ${ED}etc/X11/Xsession.d/
 }
 
 pkg_preinst() {
