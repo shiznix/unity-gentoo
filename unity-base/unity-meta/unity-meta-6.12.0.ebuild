@@ -10,6 +10,7 @@ IUSE="chat webapps"
 RESTRICT="mirror"
 
 DEPEND="!unity-base/unity2d
+	>=app-backup/deja-dup-25.3[nautilus]
 	>=gnome-base/nautilus-99.3.6.3
 	gnome-extra/activity-log-manager
 	>=gnome-extra/nm-applet-99.0.9.4.1
