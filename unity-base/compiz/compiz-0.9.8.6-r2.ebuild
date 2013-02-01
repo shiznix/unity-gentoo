@@ -39,7 +39,7 @@ COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
 	<media-libs/glew-1.9
 	media-libs/libpng
 	media-libs/mesa[gallium,llvm,xorg]
-	=x11-base/xorg-server-1.13.1.901-r9999[dmx]
+	=x11-base/xorg-server-1.13.2-r9999[dmx]
 	>=x11-libs/cairo-1.0
 	>=x11-libs/gtk+-99.3.6.0:3
 	x11-libs/libnotify

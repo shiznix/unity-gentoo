@@ -92,7 +92,7 @@ RDEPEND="${COMMON_DEPEND}
 	!<gnome-base/gail-1000
 	!<x11-libs/vte-0.31.0:2.90
 	packagekit? ( app-admin/packagekit-base )
-	X? ( =x11-base/xorg-server-1.13.1.901-r9999[dmx] )"
+	X? ( =x11-base/xorg-server-1.13.2-r9999[dmx] )"
 PDEPEND="vim-syntax? ( app-vim/gtk-syntax )"
 
 strip_builddir() {

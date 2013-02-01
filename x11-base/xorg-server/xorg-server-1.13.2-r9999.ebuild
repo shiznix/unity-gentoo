@@ -5,7 +5,7 @@ inherit base xorg-2 multilib versionator flag-o-matic
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/x/${PN}"
-UVER="0ubuntu2"
+UVER="0ubuntu1"
 URELEASE="raring"
 MY_P="${P/server-/server_}"
 
