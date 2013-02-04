@@ -16,7 +16,7 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${MY_PN}-${MY_PV}/src"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${MY_PN}"
-UVER="0ubuntu0.12.10.3"
+UVER="0ubuntu0.12.10.1"
 URELEASE="quantal-updates"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
