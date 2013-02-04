@@ -3,8 +3,8 @@ EAPI=4
 inherit autotools base
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER="0ubuntu1"  
-URELEASE="raring"
+UVER="0ubuntu1.2"
+URELEASE="quantal-updates"
 MY_P="${P/extension-/extension_}"
 
 DESCRIPTION="Firefox extension for Unity desktop integration"

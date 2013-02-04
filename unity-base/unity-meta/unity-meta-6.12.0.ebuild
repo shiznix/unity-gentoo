@@ -7,7 +7,6 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="chat webapps"
-RESTRICT="mirror"
 
 DEPEND="!unity-base/unity2d
 	>=app-backup/deja-dup-25.3[nautilus]

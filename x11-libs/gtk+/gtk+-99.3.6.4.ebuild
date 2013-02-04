@@ -10,7 +10,7 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
-UVER="0ubuntu4"
+UVER="0ubuntu5"
 URELEASE="raring"
 
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"

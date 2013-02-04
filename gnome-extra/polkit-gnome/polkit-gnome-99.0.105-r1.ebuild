@@ -1,11 +1,12 @@
 EAPI=4
-inherit gnome.org
+inherit gnome.org versionator
 
 DESCRIPTION="A dbus session bus service that is used to bring up authentication dialogs"
 HOMEPAGE="http://www.freedesktop.org/wiki/Software/PolicyKit"
 
 # Prefixing version with 99. so as not to break the overlay with upgrades in the main tree #
 MY_PV="${PV/99./}"
+GNOME_ORG_PVP=$(get_version_component_range 2-3)
 SRC_URI="mirror://gnome/sources/${GNOME_ORG_MODULE}/${GNOME_ORG_PVP}/${GNOME_ORG_MODULE}-${MY_PV}.tar.${GNOME_TARBALL_SUFFIX}"
 S="${WORKDIR}/${GNOME_ORG_MODULE}-${MY_PV}"
 
