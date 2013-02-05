@@ -1,4 +1,4 @@
-EAPI="4"
+EAPI="5"
 PYTHON_DEPEND="2:2.6"
 
 CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
@@ -16,7 +16,7 @@ MY_P="${MY_PN}_${MY_PV}"
 S="${WORKDIR}/${MY_PN}-${MY_PV}/src"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${MY_PN}"
-UVER="0ubuntu0.12.10.1"
+UVER="0ubuntu0.12.10.3"
 URELEASE="quantal-updates"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
@@ -34,7 +34,8 @@ RDEPEND="app-arch/bzip2
 		dev-libs/libgcrypt
 		>=net-print/cups-1.3.11
 	)
-	>=dev-lang/v8-3.11.10.6
+	>=dev-lang/v8-3.14.5:=
+	dev-libs/dbus-glib
 	>=dev-libs/elfutils-0.149
 	dev-libs/expat
 	>=dev-libs/icu-49.1.1-r1
@@ -48,10 +49,13 @@ RDEPEND="app-arch/bzip2
 	media-libs/flac
 	>=media-libs/libjpeg-turbo-1.2.0-r1
 	media-libs/libpng
+	media-libs/libvpx
 	>=media-libs/libwebp-0.2.0_rc1
+	media-libs/opus
 	media-libs/speex
 	pulseaudio? ( media-sound/pulseaudio )
 	sys-apps/dbus
+	sys-libs/zlib[minizip]
 	virtual/udev
 	virtual/libusb:1
 	>=x11-libs/gtk+-99.2.24.13:2
@@ -132,29 +136,31 @@ src_prepare() {
 	# sed -i '1i#define OF(x) x' \
 	#	third_party/zlib/contrib/minizip/{ioapi,{,un}zip}.h || die
 
+#	epatch "${FILESDIR}/${PN}-arm-r0.patch"
+
 	# Fix build without NaCl glibc toolchain.
 	epatch "${FILESDIR}/${PN}-ppapi-r0.patch"
 
-	# Fix unnecessary dependency on dbus-glib, bug #434346.
-	epatch "${FILESDIR}/${PN}-dbus-glib-r0.patch"
+	# Fix build without NaCl pnacl toolchain.
+	epatch "${FILESDIR}/${PN}-no-pnacl-r0.patch"
 
-	# Fix build with system ICU.
-	epatch "${FILESDIR}/${PN}-system-icu-r0.patch"
+	# Missing gyp files in tarball.
+	# https://code.google.com/p/chromium/issues/detail?id=144823
+#	if [[ -e chrome/test/data/nacl/nacl_test_data.gyp ]]; then
+#		die "tarball fixed, please remove workaround"
+#	fi
 
-	# Fix build with system speex, bug #432748.
-	epatch "${FILESDIR}/${PN}-system-speex-r0.patch"
-
-	mkdir -p chrome/test/data/nacl
-	cat > chrome/test/data/nacl/nacl_test_data.gyp <<-EOF
-	{
-	  'targets': [
-	    {
-	      'target_name': 'nacl_tests',
-	      'type': 'none',
-	    },
-	  ],
-	}
-	EOF
+#	mkdir -p chrome/test/data/nacl
+#	cat > chrome/test/data/nacl/nacl_test_data.gyp <<-EOF
+#	{
+#	  'targets': [
+#	    {
+#	      'target_name': 'nacl_tests',
+#	      'type': 'none',
+#	    },
+#	  ],
+#	}
+#	EOF
 
 	epatch_user
 
@@ -164,11 +170,13 @@ src_prepare() {
 		\! -path 'third_party/angle/*' \
 		\! -path 'third_party/cacheinvalidation/*' \
 		\! -path 'third_party/cld/*' \
+		\! -path 'third_party/cros_system_api/*' \
 		\! -path 'third_party/ffmpeg/*' \
 		\! -path 'third_party/flac/flac.h' \
 		\! -path 'third_party/flot/*' \
 		\! -path 'third_party/gpsd/*' \
 		\! -path 'third_party/harfbuzz/*' \
+		\! -path 'third_party/harfbuzz-ng/*' \
 		\! -path 'third_party/hunspell/*' \
 		\! -path 'third_party/hyphen/*' \
 		\! -path 'third_party/iccjpeg/*' \
@@ -181,7 +189,7 @@ src_prepare() {
 		\! -path 'third_party/libsrtp/*' \
 		\! -path 'third_party/libusb/libusb.h' \
 		\! -path 'third_party/libva/*' \
-		\! -path 'third_party/libvpx/*' \
+		\! -path 'third_party/libvpx/libvpx.h' \
 		\! -path 'third_party/libxml/chromium/*' \
 		\! -path 'third_party/libXNVCtrl/*' \
 		\! -path 'third_party/libyuv/*' \
@@ -192,8 +200,10 @@ src_prepare() {
 		\! -path 'third_party/mt19937ar/*' \
 		\! -path 'third_party/npapi/*' \
 		\! -path 'third_party/openmax/*' \
+		\! -path 'third_party/opus/opus.h*' \
 		\! -path 'third_party/ots/*' \
 		\! -path 'third_party/protobuf/*' \
+		\! -path 'third_party/pywebsocket/*' \
 		\! -path 'third_party/qcms/*' \
 		\! -path 'third_party/re2/*' \
 		\! -path 'third_party/scons-2.0.1/*' \
@@ -210,6 +220,7 @@ src_prepare() {
 		\! -path 'third_party/webdriver/*' \
 		\! -path 'third_party/webgl_conformance/*' \
 		\! -path 'third_party/webrtc/*' \
+		\! -path 'third_party/widevine/*' \
 		\! -path 'third_party/zlib/*' \
 		-delete || die
 
@@ -226,10 +237,6 @@ src_prepare() {
 	# TODO: find a solution that can be upstreamed.
 	rmdir v8/include || die
 	ln -s /usr/include v8/include || die
-
-	# Make sure the build system will use the right python, bug #344367.
-	# Only convert directories that need it, to save time.
-	python_convert_shebangs -q -r 2 build tools
 }
 
 src_configure() {
@@ -256,11 +263,9 @@ src_configure() {
 	# Use system-provided libraries.
 	# TODO: use_system_ffmpeg
 	# TODO: use_system_hunspell (upstream changes needed).
-	# TODO: use_system_speex (needs additional shims, bug #432748).
+	# TODO: use_system_libsrtp (bug #348600).
 	# TODO: use_system_ssl (http://crbug.com/58087).
 	# TODO: use_system_sqlite (http://crbug.com/22208).
-	# TODO: use_system_vpx
-	# TODO: use_system_zlib (forked, bug #432746).
 	myconf+="
 		-Duse_third_party_translations=1
 		-Duse_system_bzip2=1
@@ -270,13 +275,16 @@ src_configure() {
 		-Duse_system_libjpeg=1
 		-Duse_system_libpng=1
 		-Duse_system_libusb=1
+		-Duse_system_libvpx=1
 		-Duse_system_libwebp=1
 		-Duse_system_libxml=1
+		-Duse_system_minizip=1
+		-Duse_system_opus=1
 		-Duse_system_speex=1
 		-Duse_system_v8=1
 		-Duse_system_xdg_utils=1
 		-Duse_system_yasm=1
-		-Duse_system_zlib=0"
+		-Duse_system_zlib=1"
 
 	# Optional dependencies.
 	# TODO: linux_link_kerberos, bug #381289.
@@ -319,6 +327,7 @@ src_configure() {
 	elif [[ $myarch = arm ]] ; then
 		# TODO: re-enable NaCl (NativeClient).
 		myconf+=" -Dtarget_arch=arm
+			-Darmv7=0
 			-Darm_neon=0
 			-Ddisable_nacl=1"
 	else
@@ -403,19 +412,21 @@ src_test() {
 	runtest out/Release/crypto_unittests
 	runtest out/Release/googleurl_unittests
 	runtest out/Release/gpu_unittests
-	runtest out/Release/media_unittests
 
-	local excluded_net_unittests=(
-		"NetUtilTest.IDNToUnicode*" # bug 361885
-		"NetUtilTest.FormatUrl*" # see above
-		"DnsConfigServiceTest.GetSystemConfig" # bug #394883
-		"CertDatabaseNSSTest.ImportServerCert_SelfSigned" # bug #399269
-		"URLFetcher*" # bug #425764
-		"HTTPSOCSPTest.*" # bug #426630
-		"HTTPSEVCRLSetTest.*" # see above
-		"HTTPSCRLSetTest.*" # see above
-	)
-	runtest out/Release/net_unittests "${excluded_net_unittests[@]}"
+	# TODO: re-enable when we get the test data in a separate tarball.
+	# runtest out/Release/media_unittests
+
+	# local excluded_net_unittests=(
+	#	"NetUtilTest.IDNToUnicode*" # bug 361885
+	#	"NetUtilTest.FormatUrl*" # see above
+	#	"DnsConfigServiceTest.GetSystemConfig" # bug #394883
+	#	"CertDatabaseNSSTest.ImportServerCert_SelfSigned" # bug #399269
+	#	"URLFetcher*" # bug #425764
+	#	"HTTPSOCSPTest.*" # bug #426630
+	#	"HTTPSEVCRLSetTest.*" # see above
+	#	"HTTPSCRLSetTest.*" # see above
+	#)
+	# runtest out/Release/net_unittests "${excluded_net_unittests[@]}"
 
 	runtest out/Release/printing_unittests
 	runtest out/Release/sql_unittests
