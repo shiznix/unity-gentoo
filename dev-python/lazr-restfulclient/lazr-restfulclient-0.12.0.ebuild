@@ -3,7 +3,7 @@ PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="3.*"
 
-inherit distutils
+inherit distutils ubuntu-versionator
 
 MY_PN="lazr.restfulclient"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${MY_PN}"

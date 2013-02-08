@@ -1,7 +1,7 @@
 EAPI=4
 SUPPORT_PYTHON_ABIS="1"
 
-inherit distutils
+inherit distutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/p/${PN}"
 UVER="1"
@@ -19,8 +19,8 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-lang/vala:0.14[vapigen]
-	>=dev-libs/libappindicator-99.12.10.0
-	>=dev-libs/libdbusmenu-99.12.10.2[gtk]
+	dev-libs/libappindicator
+	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt"
 
 src_install() {

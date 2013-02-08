@@ -14,8 +14,8 @@ version_check() {
 	elif [ -n "`echo "${packbasename}" | grep 'appmenu-thunderbird'`" ]; then treepackname="${packname}"; packname="thunderbird-globalmenu"
 	elif [ -n "`echo "${packbasename}" | grep 'chromium-[0-9]'`" ]; then treepackname="${packname}"; packname="chromium-browser"
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"
-	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.2'`" ]; then treepackname="${packname}"; packname="gtk+2.0"
-	elif [ -n "`echo "${packbasename}" | grep 'gtk+-99.3'`" ]; then treepackname="${packname}"; packname="gtk+3.0"
+	elif [ -n "`echo "${packbasename}" | grep 'gtk+-2'`" ]; then treepackname="${packname}"; packname="gtk+2.0"
+	elif [ -n "`echo "${packbasename}" | grep 'gtk+-3'`" ]; then treepackname="${packname}"; packname="gtk+3.0"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk-engines-unico'`" ]; then treepackname="${packname}"; packname="gtk3-engines-unico"
 	elif [ -n "`echo "${packbasename}" | grep 'libXfixes'`" ]; then treepackname="${packname}"; packname="libxfixes"
 	elif [ -n "`echo "${packbasename}" | grep 'lazr-restfulclient'`" ]; then treepackname="${packname}"; packname="lazr.restfulclient"
@@ -24,7 +24,7 @@ version_check() {
 	elif [ -n "`echo "${packbasename}"`" ]; then treepackname="${packname}"
 	fi
 
-	UVER=`grep UVER= ${pack} | awk -F\" '{print $2}'`
+	[ -z "`grep UVER= ${pack}`" ] && uver
 	URELEASE=`grep URELEASE= ${pack} | awk -F\" '{print $2}'`
 	if [ -n "${URELEASE}" ]; then
 		if [ -n "${UVER}" ]; then
@@ -66,16 +66,30 @@ version_check() {
 	upstream=
 }
 
+uver() {
+	PVR=`echo "${packbasename}" | awk -F_p '{print "_p"$(NF-1)"_p"$NF }'`
+	packbasename=`echo "${packbasename}" | sed "s/${PVR}//"`
+	PVR_PL_MAJOR="${PVR#*_p}"
+	PVR_PL_MAJOR="${PVR_PL_MAJOR%_p*}"
+	PVR_PL="${PVR##*_p}"
+	char=2
+	while [ "${PVR_PL}" != "" ]; do
+		strtmp="${PVR_PL:0:$char}"
+		strtmp="${strtmp#0}"
+		strarray+=( "${strtmp}" )
+		PVR_PL="${PVR_PL:$char}"
+	done
+	PVR_PL_MINOR="${strarray[@]}"
+	PVR_PL_MINOR="${PVR_PL_MINOR// /.}"	# Convert spaces in array to decimal points
+	UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
+	unset strarray[@]
+}
+
 if [ -n "$1" ]; then
         pack="$1"
         version_check
 else
-	for pack in `find $(pwd) -name "*.eclass"`; do
-		packbasename=`basename ${pack} | awk -F.eclass '{print $1}'`
-		packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
-		version_check
-	done
-        for pack in `find $(pwd) -name "*.ebuild"`; do
+	for pack in `find $(pwd) -name "*.ebuild"`; do
 		packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 		packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
 		version_check

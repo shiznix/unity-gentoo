@@ -1,6 +1,6 @@
 EAPI=3
 
-inherit distutils
+inherit distutils ubuntu-versionator
 
 DESCRIPTION="A library to manipulate gettext files (po and mo files)"
 HOMEPAGE="http://bitbucket.org/izi/polib/"

@@ -2,12 +2,11 @@ EAPI=4
 PYTHON_DEPEND="2:2.7"
 RESTRICT_PYTHON_ABIS="3.*"
 
-inherit base eutils gnome2 python
+inherit base eutils gnome2 python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/l/${PN}"
 UVER=""
 URELEASE="quantal"
-MY_P="${P/integration-/integration_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Launchpad integration library to integrate launchpad URLs into the menus"
@@ -25,7 +24,7 @@ DEPEND="dev-dotnet/gtk-sharp:2
 	>=dev-libs/glib-2.32.3
 	dev-libs/gobject-introspection
 	dev-python/pygtk
-	>=x11-libs/gtk+-99.2.24.10:2"
+	x11-libs/gtk+:2"
 
 pkg_setup() {
 	python_set_active_version 2

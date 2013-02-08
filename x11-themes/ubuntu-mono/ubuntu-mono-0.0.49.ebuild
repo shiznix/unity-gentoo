@@ -4,12 +4,11 @@ RESTRICT_PYTHON_ABIS="3.*"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="1"
 
-inherit autotools eutils gnome2 python
+inherit autotools eutils gnome2 python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER=""
 URELEASE="quantal"
-MY_P="${P/mono-/mono_}"
 
 DESCRIPTION="Unity desktop default icon theme"
 HOMEPAGE="unity.ubuntu.com"

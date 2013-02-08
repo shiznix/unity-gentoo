@@ -10,9 +10,9 @@ IUSE="chat webapps"
 
 DEPEND="!unity-base/unity2d
 	>=app-backup/deja-dup-25.3[nautilus]
-	>=gnome-base/nautilus-99.3.6.3
+	gnome-base/nautilus
 	gnome-extra/activity-log-manager
-	>=gnome-extra/nm-applet-99.0.9.4.1
+	gnome-extra/nm-applet
 	net-libs/telepathy-indicator
 	unity-base/gnome-control-center-unity
 	unity-base/ido
@@ -35,4 +35,4 @@ DEPEND="!unity-base/unity2d
 			unity-extra/unsettings
 			x11-misc/webaccounts-browser-extension
 			x11-misc/webapps-greasemonkey )
-	chat? ( >=net-im/empathy-99.3.6.0.3 )"
+	chat? ( net-im/empathy )"

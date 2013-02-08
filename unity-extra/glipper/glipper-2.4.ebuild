@@ -4,12 +4,11 @@ PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="3.*"
 
-inherit distutils gnome2-utils
+inherit distutils gnome2-utils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/g/${PN}"
 UVER="1"
 URELEASE="quantal"
-MY_P="${P/-/_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="A PyGTK+ based advanced clipboard manager"
@@ -24,14 +23,14 @@ RESTRICT="mirror"
 
 RDEPEND="!x11-misc/glipper
 	dev-libs/keybinder:0[python]
-	>=dev-libs/libappindicator-99.12.10.0
+	dev-libs/libappindicator
 	dev-python/gconf-python
 	dev-python/pycrypto
 	dev-python/pygtk:2
 	dev-python/python-prctl
 	dev-python/pyxdg"
 DEPEND="${RDEPEND}
-	dev-python/python-distutils-extra"
+	>=dev-python/python-distutils-extra-2.37"
 
 src_install() {
 	sed -e "s:DATA_DIR = \"\":DATA_DIR = \"/usr/share\":g" \

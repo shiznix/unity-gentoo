@@ -1,0 +1,43 @@
+Title: Package versioning for the unity-gentoo overlay
+Author: shiznix <rickfharris@yahoo.com.au>
+Content-Type: text/plain
+Posted: 2013-02-07
+Revision: 8
+News-Item-Format: 1.0
+Display-If-Installed: >=x11-libs/gtk+-3.4.2
+
+Be aware!!
+The unity-gentoo overlay includes package versions that are heavily patched by Ubuntu.
+To preserve the function of these integrated packages from being broken by main portage tree upgrades,
+the affected packages need to be masked from being emerged from the main portage tree
+
+Packages affected are:
+dev-libs/dee
+dev-libs/libappindicator
+dev-libs/libdbusmenu
+dev-libs/libindicator
+gnome-base/gconf
+gnome-base/gnome-control-center
+gnome-base/gnome-menus
+gnome-base/gnome-session
+gnome-base/gnome-settings-daemon
+gnome-base/gsettings-desktop-schemas
+gnome-base/nautilus
+gnome-extra/gnome-screensaver
+gnome-extra/nm-applet
+gnome-extra/polkit-gnome
+net-im/empathy
+net-wireless/gnome-bluetooth
+www-client/chromium
+x11-libs/gtk+
+x11-themes/gtk-engines-unico
+x11-wm/metacity
+
+The overlay requires symlinking the file 'unity-portage.pmask' to '/etc/portage/package.mask/unity-portage.pmask'
+	'ln -s /var/lib/layman/unity-gentoo/unity-portage.pmask /etc/portage/package.mask/unity-portage.pmask'
+
+package.unmask files override package.mask files, so be sure that none of the packages listed above already lie in your
+	/etc/portage/package.unmask file, or if they do that they unmask in a repo specific way
+		eg. www-client/chromium::unity-gentoo
+
+All packages are keyword masked and require keyword unmasking by adding '*/*::unity-gentoo' to your package.keywords file

@@ -2,7 +2,7 @@ EAPI=4
 PYTHON_DEPEND="2:2.7"
 RESTRICT_PYTHON_ABIS="3.*"
 
-inherit bzr distutils gnome2-utils python
+inherit bzr distutils gnome2-utils python ubuntu-versionator
 
 DESCRIPTION="Configuration frontend for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/unsettings/"

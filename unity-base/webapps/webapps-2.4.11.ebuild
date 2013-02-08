@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit autotools eutils gnome2-utils python versionator
+inherit autotools eutils gnome2-utils python versionator ubuntu-versionator
 
 URELEASE="raring"
 UURL="https://launchpad.net/webapps-applications/$(get_version_component_range 1-2)/${PV}/+download"
@@ -22,7 +22,7 @@ DEPEND="app-admin/packagekit-gtk
 	dev-libs/libunity
 	dev-libs/libunity-webapps
 	dev-python/polib
-	>=x11-libs/gtk+-99.3.4.2:3"
+	x11-libs/gtk+:3"
 
 src_prepare() {
 	python_convert_shebangs 2 scripts/install-default-webapps-in-launcher.py
