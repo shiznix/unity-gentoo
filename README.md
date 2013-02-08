@@ -15,4 +15,4 @@ A Gentoo overlay to install the Unity desktop
 
 * All packages are keyword masked and can be unmasked by entering the following into your package.keywords file:
 
-	*\*/\*::unity-gentoo*
+	\*/\*::unity-gentoo
