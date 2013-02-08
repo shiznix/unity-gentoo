@@ -8,8 +8,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="chat webapps"
 
-DEPEND="!unity-base/unity2d
-	app-backup/deja-dup[nautilus]
+DEPEND="app-backup/deja-dup[nautilus]
 	gnome-base/nautilus
 	gnome-extra/activity-log-manager
 	gnome-extra/nm-applet

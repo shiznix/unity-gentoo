@@ -19,8 +19,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="!unity-base/unity2d
-	dev-libs/boost
+DEPEND="dev-libs/boost
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
 	dev-libs/libindicate[gtk]
