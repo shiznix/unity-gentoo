@@ -21,6 +21,7 @@ COMMON_DEPEND="
 	app-crypt/libsecret[vala]
 	dev-libs/glib:2
 	dev-libs/libpeas
+	gnome-base/gnome-control-center
 	x11-libs/gtk+:3
 	x11-libs/libnotify
 
