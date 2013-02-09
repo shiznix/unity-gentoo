@@ -6,7 +6,7 @@ PYTHON_DEPEND="2:2.7"
 inherit autotools base gnome2 python virtualx ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/e/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Telepathy instant messaging and video/audio call client for GNOME patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Empathy"
