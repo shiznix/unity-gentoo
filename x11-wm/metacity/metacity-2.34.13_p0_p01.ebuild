@@ -6,7 +6,7 @@ GNOME2_LA_PUNT="yes"
 inherit base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/m/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="GNOME default window manager"
 HOMEPAGE="http://blogs.gnome.org/metacity/"
