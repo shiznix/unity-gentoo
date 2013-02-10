@@ -3,6 +3,7 @@ EAPI=4
 inherit autotools eutils gnome2-utils python versionator ubuntu-versionator
 
 URELEASE="raring"
+UVER=""
 UURL="https://launchpad.net/webapps-applications/$(get_version_component_range 1-2)/${PV}/+download"
 
 DESCRIPTION="WebApps: Initial set of Apps for the Unity desktop"
