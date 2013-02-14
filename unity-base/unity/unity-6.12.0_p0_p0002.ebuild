@@ -19,6 +19,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
+RDEPEND="unity-base/unity-language-pack"
 DEPEND="dev-libs/boost
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
@@ -102,6 +103,10 @@ src_install() {
 		addpredict /usr/share/glib-2.0/schemas/	# FIXME
 		emake DESTDIR="${D}" install
 	popd ${CMAKE_BUILD_DIR}
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf ${ED}usr/share/locale
 }
 
 pkg_postinst() {

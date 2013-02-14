@@ -20,6 +20,7 @@ version_check() {
 	elif [ -n "`echo "${packbasename}" | grep 'libXfixes'`" ]; then treepackname="${packname}"; packname="libxfixes"
 	elif [ -n "`echo "${packbasename}" | grep 'lazr-restfulclient'`" ]; then treepackname="${packname}"; packname="lazr.restfulclient"
 	elif [ -n "`echo "${packbasename}" | grep 'nm-applet'`" ]; then treepackname="${packname}"; packname="network-manager-applet"
+        elif [ -n "`echo "${packbasename}" | grep 'unity-language-pack'`" ]; then treepackname="${packname}"; packname="language-pack-gnome-en"
 	elif [ -n "`echo "${packbasename}" | grep 'unity-webapps'`" ]; then treepackname="${packname}"; packname="libunity-webapps"
 	elif [ -n "`echo "${packbasename}"`" ]; then treepackname="${packname}"
 	fi

@@ -62,6 +62,7 @@ DEPEND="${COMMONDEPEND}
 	x11-proto/xineramaproto"
 
 RDEPEND="${COMMONDEPEND}
+	unity-base/unity-language-pack
 	x11-apps/mesa-progs
 	x11-apps/xvinfo"
 
@@ -183,6 +184,10 @@ src_install() {
 		insinto /etc/xdg/autostart/
 		doins "${FILESDIR}/compiz-migrate-to-dconf.desktop"
 	popd ${CMAKE_USE_DIR}
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf ${ED}usr/share/locale
 
 	# Setup gconf defaults #
 	dodir /etc/gconf/2
