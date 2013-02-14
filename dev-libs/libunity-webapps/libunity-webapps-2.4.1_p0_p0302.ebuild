@@ -19,11 +19,13 @@ RESTRICT="mirror"
 DEPEND="app-admin/packagekit-gtk
 	app-misc/geoclue
 	dev-db/sqlite:3
-	>=dev-libs/glib-2.32.3
+	>=dev-libs/glib-2.32.3:2
+	dev-libs/gobject-introspection
 	dev-libs/libdbusmenu
 	dev-libs/json-glib
 	dev-libs/libindicate[gtk]
 	dev-libs/libunity
+	dev-util/intltool
 	net-libs/libsoup
 	net-libs/telepathy-glib
 	x11-libs/gtk+:3

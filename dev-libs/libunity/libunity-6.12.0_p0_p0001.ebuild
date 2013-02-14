@@ -21,7 +21,8 @@ RESTRICT="mirror"
 DEPEND=">=dev-libs/dee-1.0.14
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libgee:0
-	dev-lang/vala:0.16"
+	dev-lang/vala:0.16
+	x11-libs/gtk+:3"
 
 src_prepare() {
 	export VALAC=$(type -P valac-0.16) && \

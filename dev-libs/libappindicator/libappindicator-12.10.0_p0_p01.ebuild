@@ -20,9 +20,12 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/libindicator:3
 	dev-dotnet/gtk-sharp:2
+	dev-libs/dbus-glib
 	dev-libs/xapian-bindings[python]
+	dev-perl/XML-LibXML
 	dev-python/dbus-python
 	dev-python/pygobject:2
+	dev-python/pygtk
 	dev-python/pyxdg
 	gnome-extra/zeitgeist[dbus,extensions,fts,passiv,plugins]
 	gnome-extra/zeitgeist-datasources[telepathy]
