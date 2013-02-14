@@ -37,3 +37,11 @@ src_prepare() {
 			-i src/session-menu-mgr.c
 	fi
 }
+
+src_install() {
+	gnome2_src_install
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf ${ED}usr/share/locale
+}

@@ -1,5 +1,7 @@
 EAPI="4"
 
+inherit ubuntu-versionator
+
 DESCRIPTION="Language translations pack for Unity desktop"
 HOMEPAGE="https://translations.launchpad.net/ubuntu"
 
@@ -12,6 +14,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
+
+DEPEND="sys-devel/gettext"
 
 IUSE_LINGUAS="aa af am an ar as ast az be be@latin bem ber
 bg bn bo br bs ca ca@valencia crh cs csb cv cy da de dv
@@ -73,6 +77,10 @@ src_install() {
 						-delete || die
 
 				if has ${SUB_LANG} ${LINGUAS}; then
+					for pofile in `find "${WORKDIR}/language-pack-gnome-${TARBALL_LANG}-base/data/${SUB_LANG}/LC_MESSAGES/" -type f -name "*.po"`; do
+						msgfmt -o ${pofile%%.po}.mo ${pofile}
+						rm ${pofile}
+					done
 					insinto /usr/share/locale
 					doins -r language-pack-gnome-${TARBALL_LANG}-base/data/${SUB_LANG}
 				fi

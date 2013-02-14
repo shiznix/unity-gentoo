@@ -33,3 +33,11 @@ src_prepare() {
 	python_convert_shebangs -r 3 .
 	distutils_src_prepare
 }
+
+src_install() {
+	distutils_src_install
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf ${ED}usr/share/locale
+}
