@@ -6,11 +6,12 @@ inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 URELEASE="raring"
+UVER_PREFIX="daily13.02.15"
 
 DESCRIPTION="GNOME control center module to change the settings of the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-        ${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+        ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -31,7 +32,8 @@ DEPEND="socialweb? ( net-libs/libsocialweb )
         >=sys-devel/gettext-0.17
         virtual/pkgconfig"
 
-PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" )
+PATCHES=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	base_src_prepare

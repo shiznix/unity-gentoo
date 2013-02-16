@@ -25,17 +25,23 @@ version_check() {
 	elif [ -n "`echo "${packbasename}"`" ]; then treepackname="${packname}"
 	fi
 
-	[ -z "`grep UVER= ${pack}`" ] && uver
+	if [ -z "`grep UVER= ${pack}`" ];then
+		uver
+	else
+		UVER=`grep UVER= ${pack} | awk -F\" '{print $2}'`
+	fi
+	UVER_PREFIX=`grep UVER_PREFIX= ${pack} | awk -F\" '{print $2}'`
+	UVER_SUFFIX=`grep UVER_SUFFIX= ${pack} | awk -F\" '{print $2}'`
 	URELEASE=`grep URELEASE= ${pack} | awk -F\" '{print $2}'`
 	if [ -n "${URELEASE}" ]; then
 		if [ -n "${UVER}" ]; then
-			current=`echo "${packbasename}-${UVER}" | sed 's/-99./-/g'`
+			current=`echo "${packbasename}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}"`
 		else
-			current=`echo "${packbasename}" | sed 's/-99./-/g'`
+			current=`echo "${packbasename}"`
 		fi
-		upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+		upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/[0-9]://g'`
 		if [ -z "${upstream}" ]; then
-			upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+			upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/[0-9]://g'`
 			echo
 			echo "Checking http://packages.ubuntu.com/${URELEASE}/${packname}"
 		else

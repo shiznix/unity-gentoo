@@ -6,7 +6,7 @@ DESCRIPTION="Language translations pack for Unity desktop"
 HOMEPAGE="https://translations.launchpad.net/ubuntu"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/l"
-UVER="20121009"
+UVER="+20121009"
 URELEASE="quantal"
 
 LICENSE="GPL-2"
@@ -46,7 +46,7 @@ done
 ## CAUTION: Be sure to enable *all* LINGUAS in /etc/make.conf when creating Manifest ##
 for TARBALL_LANG in ${TARBALL_LANGS}; do
 	if has ${TARBALL_LANG} ${LINGUAS}; then
-		SRC_URI_array+=( linguas_${TARBALL_LANG}? \( ${UURL}/language-pack-gnome-${TARBALL_LANG}-base/language-pack-gnome-${TARBALL_LANG}-base_${PV}+${UVER}.tar.gz \) )
+		SRC_URI_array+=( linguas_${TARBALL_LANG}? \( ${UURL}/language-pack-gnome-${TARBALL_LANG}-base/language-pack-gnome-${TARBALL_LANG}-base_${PV}${UVER}.tar.gz \) )
 	fi
 	SRC_URI="${SRC_URI_array[@]}"
 done

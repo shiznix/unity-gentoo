@@ -10,13 +10,14 @@ S="${WORKDIR}/${MY_PN}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${MY_PN}"
 URELEASE="raring"
+UVER_PREFIX="+git201301311844.0376019"
 MY_P="${MY_P/applet-/applet_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="GNOME applet for NetworkManager patched for the Unity desktop"
 HOMEPAGE="http://projects.gnome.org/NetworkManager/"
-SRC_URI="${UURL}/${MY_P}+git201301311844.0376019.orig.tar.gz
-	${UURL}/${MY_P}+git201301311844.0376019-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

@@ -6,11 +6,12 @@ MY_PN="firefox-globalmenu"
 MY_P="${MY_PN}_${PV}"
 UURL="mirror://ubuntu/pool/main/f/firefox"
 URELEASE="quantal"
+UVER_PREFIX="+build1"
 
 DESCRIPTION="Unity appmenu integration for Firefox"
 HOMEPAGE="https://code.launchpad.net/~extension-hackers/globalmenu-extension"
-SRC_URI="( x86? ( mirror://ubuntu/pool/main/f/firefox/${MY_P}+build1-${UVER}_i386.deb )
-		 amd64? ( mirror://ubuntu/pool/main/f/firefox/${MY_P}+build1-${UVER}_amd64.deb )
+SRC_URI="( x86? ( mirror://ubuntu/pool/main/f/firefox/${MY_P}${UVER_PREFIX}-${UVER}_i386.deb )
+		 amd64? ( mirror://ubuntu/pool/main/f/firefox/${MY_P}${UVER_PREFIX}-${UVER}_amd64.deb )
 		 )"
 
 LICENSE="|| ( MPL-1.1 GPL-2 LGPL-2.1 )"

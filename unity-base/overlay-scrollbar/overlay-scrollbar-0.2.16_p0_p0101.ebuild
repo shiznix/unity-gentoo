@@ -4,11 +4,12 @@ inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/o/${PN}"
 URELEASE="quantal-updates"
+UVER_PREFIX="+r357"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Ayatana Scrollbars use an overlay to ensure scrollbars take up no active screen real-estate"
 HOMEPAGE="http://launchpad.net/ayatana-scrollbar"
-SRC_URI="${UURL}/${MY_P}+r357-${UVER}.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -20,7 +21,7 @@ DEPEND="gnome-base/dconf
 	x11-libs/gtk+:2
 	>=x11-libs/gtk+-3.6.0:3"
 
-S="${WORKDIR}/${PN}-${PV}+r357"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	eautoreconf
