@@ -16,6 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+help"
 RESTRICT="mirror"
 
+RDEPEND="unity-base/unity-language-pack"
 DEPEND="app-admin/packagekit[gtk,qt4]
 	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]
 	app-admin/system-config-printer-gnome

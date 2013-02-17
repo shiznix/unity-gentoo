@@ -21,6 +21,7 @@ S="${WORKDIR}/${PN}-${PV}"
 PVR_PL_MAJOR="${PVR#*_p}"
 PVR_PL_MAJOR="${PVR_PL_MAJOR%_p*}"
 PVR_PL="${PVR##*_p}"
+PVR_PL="${PVR_PL%%-r*}"
 
 char=2
 while [ "${PVR_PL}" != "" ]; do

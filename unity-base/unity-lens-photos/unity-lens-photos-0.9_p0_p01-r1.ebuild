@@ -19,7 +19,8 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND=">=dev-libs/dee-1.0.14
-	dev-libs/libunity"
+	dev-libs/libunity
+	unity-base/unity-language-pack"
 DEPEND="${RDEPEND}
 	dev-libs/libaccounts-glib
 	dev-libs/libsignon-glib

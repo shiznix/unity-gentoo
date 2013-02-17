@@ -20,7 +20,7 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}daily13.02.08"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 RDEPEND="unity-base/unity-language-pack"
 DEPEND="dev-libs/boost
