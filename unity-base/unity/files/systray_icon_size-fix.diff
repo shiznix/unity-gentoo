@@ -1,0 +1,13 @@
+diff -urN unity-6.12.0daily13.02.08/panel/PanelTray.cpp unity-6.12.0daily13.02.08-patched/panel/PanelTray.cpp
+--- unity-6.12.0daily13.02.08/panel/PanelTray.cpp	2013-02-08 14:31:43.000000000 +1030
++++ unity-6.12.0daily13.02.08-patched/panel/PanelTray.cpp	2013-02-19 13:36:42.380072028 +1030
+@@ -40,7 +40,8 @@
+   : View(NUX_TRACKER_LOCATION)
+   , window_(gtk_window_new(GTK_WINDOW_TOPLEVEL))
+ {
+-  int panel_height = panel::Style::Instance().panel_height;
++//  int panel_height = panel::Style::Instance().panel_height;
++  int panel_height = 24;
+ 
+   auto gtkwindow = glib::object_cast<GtkWindow>(window_);
+   gtk_window_set_type_hint(gtkwindow, GDK_WINDOW_TYPE_HINT_DOCK);

@@ -72,7 +72,8 @@ pkg_setup() {
 src_prepare() {
 	epatch "${WORKDIR}/${MY_P}daily13.02.08-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist.diff"
-			"${FILESDIR}/remove-gtest-dep.diff" )
+			"${FILESDIR}/remove-gtest-dep.diff"
+			"${FILESDIR}/systray_icon_size-fix.diff" )
 	base_src_prepare
 
 	python_convert_shebangs -r 2 .
@@ -90,6 +91,9 @@ src_prepare() {
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	#       resulting in build failure with 'fatal error: unitycore_pch.hh: No such file or directory' #
 	export CMAKE_BUILD_TYPE=none
+
+	# Disable '-Werror'
+	sed -i 's/[ ]*-Werror[ ]*//g' CMakeLists.txt services/CMakeLists.txt
 }
 
 src_configure() {
