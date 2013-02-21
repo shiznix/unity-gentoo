@@ -62,15 +62,11 @@ x11-wm/metacity				# Patched to support compiz window decoration
 		- x11-misc/webaccounts-browser-extension	(Ubuntu Online Accounts browser plugin)
 		- x11-misc/unity-firefox-extension		(Unity Desktop Integration browser plugin)
 		- x11-misc/unity-chromium-extension              (Unity Desktop Integration browser plugin)
-	- How it works (maybe):
-		- The UWI browser extension (x11-misc/webapps-greasemonkey) monitors websites visited and when it gets a match from
-			'unity-webapps-service' daemon (unity-base/unity-webapps) triggers the UDI browser extension (x11-misc/unity-firefox-extension)
-			to throw a pop-up offering to integrate the website into the desktop (HUD, launcher and indicators)
+
 	- Problems:
-		- 'unity-webapps-runner' (unity-base/unity-webapps) is used by the *.desktop files installed into
+		- 'unity-webapps-runner' (unity-base/unity-webapps) is used by the *.desktop files installed by
 			Ubuntu packages but will only work if either chromium or firefox are set as the default browser
 			Default browser setting is read from desktop user's ~/.local/share/applications/mimeapps.list
-		- The webapp service sometimes breaks on Ubuntu for Firefox when Mozilla update their browser
 	- Other stuff:
 		- Webapps shown in the messages indicator are provided by the desktop user's ~/.local/share/applications/<provider>.desktop
 		- Available webapps are stored in the desktop user's ~/.local/share/unity-webapps/availableapps-v2.db
@@ -80,3 +76,10 @@ x11-wm/metacity				# Patched to support compiz window decoration
 		gsettings set com.canonical.unity.webapps allowed-domains ['']
 	- Possible TODO:
 		- Package Ubuntu's version of app-misc/geoclue so that the Amazon webapp regional settings work when running 'unity-webapps-runner -a'
+
+* Debugging Unity
+	- Emerge unity-base/nux with the 'debug' USE flag enabled, then:
+		echo 'export UNITY_LOG_SEVERITY="unity=DEBUG"' > /etc/X11/xinit/xinitrc.d/99-unity-debug
+		chmod +x /etc/X11/xinit/xinitrc.d/99-unity-debug
+		Restart xsession
+	

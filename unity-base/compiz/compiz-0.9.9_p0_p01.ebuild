@@ -4,7 +4,7 @@ inherit base gnome2 cmake-utils eutils python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
 URELEASE="raring"
-UVER_PREFIX="~daily13.02.08"
+UVER_PREFIX="~daily13.02.19"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
@@ -75,7 +75,7 @@ pkg_setup() {
 
 src_prepare() {
 	# Apply Ubuntu patchset #
-	epatch -p1 "${WORKDIR}/${MY_P}~daily13.02.08-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${S}/debian/patches/${patch}" )
 	done

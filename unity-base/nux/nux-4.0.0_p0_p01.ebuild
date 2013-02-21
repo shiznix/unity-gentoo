@@ -4,7 +4,7 @@ inherit base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.02.04"
+UVER_PREFIX="daily13.02.19"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
 HOMEPAGE="http://launchpad.net/nux"
@@ -41,7 +41,7 @@ src_prepare() {
 		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
 
-	epatch -p1 "${WORKDIR}/${MY_P}daily13.02.04-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "debian/patches/${patch}" )
 	done
@@ -70,5 +70,5 @@ src_configure() {
 
 src_install() {
 	emake DESTDIR="${D}" install || die
-	dosym /usr/libexec/unity_support_test /usr/lib/nux/unity_support_test
+	dosym /usr/libexec/nux/unity_support_test /usr/lib/nux/unity_support_test
 }
