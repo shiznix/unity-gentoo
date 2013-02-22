@@ -7,7 +7,8 @@ URELEASE="quantal"
 
 DESCRIPTION="Miscellaneous modules for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -19,6 +20,8 @@ DEPEND="x11-libs/gtk+:3
 	x11-libs/libXfixes"
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"
+
         # Make docs optional #
 	! use doc && \
 		sed -e 's:unity-misc doc:unity-misc:' \

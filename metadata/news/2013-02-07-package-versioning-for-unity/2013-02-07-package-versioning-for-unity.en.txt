@@ -29,7 +29,10 @@ gnome-extra/polkit-gnome
 net-im/empathy
 net-wireless/gnome-bluetooth
 www-client/chromium
+x11-base/xorg-server
 x11-libs/gtk+
+x11-libs/libXfixes  
+x11-proto/fixesproto
 x11-themes/gtk-engines-unico
 x11-wm/metacity
 

@@ -20,7 +20,7 @@ RESTRICT="mirror"
 DEPEND="!unity-base/utouch-geis
 	app-i18n/ibus
 	>=dev-libs/glib-2.32.3
-	<media-libs/glew-1.9
+	<media-libs/glew-1.7
 	>=sys-devel/gcc-4.6
 	unity-base/geis"
 

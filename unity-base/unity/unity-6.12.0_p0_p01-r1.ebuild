@@ -72,6 +72,7 @@ pkg_setup() {
 src_prepare() {
 	epatch "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist.diff"
+			"${FILESDIR}/systray-enabled-by-default.diff"
 			"${FILESDIR}/remove-gtest-dep.diff" )
 	base_src_prepare
 
