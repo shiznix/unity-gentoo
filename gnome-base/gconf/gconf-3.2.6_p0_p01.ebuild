@@ -1,6 +1,7 @@
-EAPI=4
+EAPI=5
 GCONF_DEBUG="yes"
 GNOME_ORG_MODULE="GConf"
+GNOME2_LA_PUNT="yes"
 
 inherit base eutils gnome2 ubuntu-versionator
 
@@ -9,48 +10,35 @@ S="${WORKDIR}/GConf-${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Gnome Configuration System and Daemon patched for the Unity desktop"
 HOMEPAGE="http://projects.gnome.org/gconf/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
-LICENSE="LGPL-2"
+LICENSE="LGPL-2+"
 SLOT="2"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 IUSE="debug doc +introspection ldap orbit policykit"
 RESTRICT="mirror"
 
 RDEPEND=">=dev-libs/glib-2.31:2
-	>=x11-libs/gtk+-2.90:3
-	>=dev-libs/dbus-glib-0.74
-	>=sys-apps/dbus-1
+	>=dev-libs/dbus-glib-0.74:=
+	>=sys-apps/dbus-1:=
 	>=dev-libs/libxml2-2:2
-	introspection? ( >=dev-libs/gobject-introspection-0.9.5 )
-	ldap? ( net-nds/openldap )
+	>=x11-libs/gtk+-2.90:3
+	introspection? ( >=dev-libs/gobject-introspection-0.9.5:= )
+	ldap? ( net-nds/openldap:= )
 	orbit? ( >=gnome-base/orbit-2.4:2 )
-	policykit? ( sys-auth/polkit )"
+	policykit? ( sys-auth/polkit:= )"
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
+	dev-util/gtk-doc-am
 	>=dev-util/intltool-0.35
-	virtual/pkgconfig
-	doc? ( >=dev-util/gtk-doc-1 )"
+	virtual/pkgconfig"
 
 pkg_setup() {
-	DOCS="AUTHORS ChangeLog NEWS README TODO"
-	G2CONF="${G2CONF}
-		--enable-gtk
-		--disable-static
-		--enable-gsettings-backend
-		--with-gtk=3.0
-		$(use_enable introspection)
-		$(use_with ldap openldap)
-		$(use_enable orbit)
-		$(use_enable policykit defaults-service)
-		ORBIT_IDL=$(type -P orbit-idl-2)"
-		# Need host's IDL compiler for cross or native build, bug #262747
-	kill_gconf
+        kill_gconf
 }
 
 src_prepare() {
@@ -66,6 +54,19 @@ src_prepare() {
 
 	# Do not crash in gconf_entry_set_value() when entry pointer is NULL, upstream #631985
 	epatch "${FILESDIR}/${PN}-2.28.0-entry-set-value-sigsegv.patch"
+}
+
+src_configure() {
+	gnome2_src_configure \
+		--disable-static \
+		--enable-gsettings-backend \
+		--enable-gtk \
+		--with-gtk=3.0 \
+		$(use_enable introspection) \
+		$(use_with ldap openldap) \
+		$(use_enable orbit) \
+		$(use_enable policykit defaults-service) \
+		ORBIT_IDL=$(type -P orbit-idl-2)
 }
 
 src_install() {
