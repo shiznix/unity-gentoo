@@ -1,0 +1,19 @@
+diff -urN unity-lens-cooking-9999/setup.py unity-lens-cooking-9999-patched/setup.py
+--- unity-lens-cooking-9999/setup.py	2013-02-23 18:37:38.049820000 +1030
++++ unity-lens-cooking-9999-patched/setup.py	2013-02-23 19:48:35.234703355 +1030
+@@ -16,8 +16,14 @@
+       'unity-scope-recipefy',
+       'unity-scope-recipepuppy',
+       'cooking.svg',
+-      'cuisine.png',
++      'gourmet.scope',
++      'recipefy.scope',
++      'recipepuppy.scope',
++      ]),
++    ('share/unity/lenses/cooking/icons',
++     ['cuisine.png',
+       'gourmet.png',
++      'recipefy.png',
+       'recipepuppy.png',
+       ]),
+     ('share/dbus-1/services',
