@@ -1,4 +1,6 @@
-EAPI=4
+EAPI=5
+
+XORG_MULTILIB=yes
 
 inherit base eutils xorg-2 ubuntu-versionator
 
@@ -19,7 +21,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND=">=x11-proto/xextproto-7.0.99.1"
+RDEPEND=">=x11-proto/xextproto-7.0.99.1[${MULTILIB_USEDEP}]"
 DEPEND="${RDEPEND}"
 
 src_prepare() {
@@ -28,5 +30,5 @@ src_prepare() {
 	for patch in $(cat "${WORKDIR}/${PN}-${PV}/${MY_PN}-${PV}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/${PN}-${PV}/${MY_PN}-${PV}/debian/patches/${patch}" )
 	done
-	base_src_prepare
+	xorg-2_src_configure
 }

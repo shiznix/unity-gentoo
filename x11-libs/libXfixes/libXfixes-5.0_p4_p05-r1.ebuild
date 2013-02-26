@@ -1,5 +1,6 @@
-EAPI=4
+EAPI=5
 
+XORG_MULTILIB=yes
 inherit base eutils xorg-2 ubuntu-versionator
 
 MY_PN="libxfixes"
@@ -19,10 +20,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="x11-libs/libX11
-	x11-proto/fixesproto
-	x11-proto/xproto
-	x11-proto/xextproto"
+RDEPEND="x11-libs/libX11[${MULTILIB_USEDEP}]
+	>=x11-proto/fixesproto-5[${MULTILIB_USEDEP}]
+	x11-proto/xproto[${MULTILIB_USEDEP}]
+	x11-proto/xextproto[${MULTILIB_USEDEP}]"
 DEPEND="${RDEPEND}"
 
 src_prepare() {
@@ -31,5 +32,5 @@ src_prepare() {
 	for patch in $(cat "${WORKDIR}/${PN}-${PV}/${MY_PN}-${PV}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/${PN}-${PV}/${MY_PN}-${PV}/debian/patches/${patch}" )
 	done
-	base_src_prepare
+	xorg-2_src_configure
 }
