@@ -4,22 +4,27 @@ PYTHON_DEPEND="2:2.7"
 inherit base gnome2 cmake-utils eutils python toolchain-funcs ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-URELEASE="quantal-updates"
+URELEASE="raring"
+UVER_PREFIX="daily13.02.26"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="unity-base/unity-language-pack"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
+RDEPEND="unity-base/unity-language-pack
+	x11-themes/humanity-icon-theme
+	x11-themes/unity-asset-pool"
 DEPEND="dev-libs/boost
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
@@ -45,15 +50,14 @@ DEPEND="dev-libs/boost
 	sys-apps/dbus
 	>=sys-devel/gcc-4.6
 	unity-base/bamf
-	>=unity-base/compiz-0.9.8
+	>=unity-base/compiz-0.9.9
 	unity-base/dconf-qt
-	>=unity-base/nux-3.0.0
+	>=unity-base/nux-4.0.0
 	unity-base/overlay-scrollbar
 	x11-base/xorg-server[dmx]
 	x11-libs/libXfixes
 	x11-misc/appmenu-gtk
-	x11-misc/appmenu-qt
-	x11-themes/unity-asset-pool"
+	x11-misc/appmenu-qt"
 
 pkg_pretend() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
@@ -67,10 +71,10 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-	PATCHES+=( "${FILESDIR}/systray-enabled-by-default.diff"
-			"${FILESDIR}/stdcerr-fix.patch"
-			"${FILESDIR}/gtestdir_fix.patch" )
+	epatch "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	PATCHES+=( "${FILESDIR}/re-whitelist.diff"
+			"${FILESDIR}/systray-enabled-by-default.diff"
+			"${FILESDIR}/remove-gtest-dep.diff" )
 	base_src_prepare
 
 	python_convert_shebangs -r 2 .
@@ -84,6 +88,13 @@ src_prepare() {
 	# Remove autopilot test suite files #
 	sed -e '/python setup.py install/d' \
 		-i tests/CMakeLists.txt || die
+
+	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
+	#       resulting in build failure with 'fatal error: unitycore_pch.hh: No such file or directory' #
+	export CMAKE_BUILD_TYPE=none
+
+	# Disable '-Werror'
+	sed -i 's/[ ]*-Werror[ ]*//g' CMakeLists.txt services/CMakeLists.txt
 }
 
 src_configure() {

@@ -94,6 +94,8 @@ x11-misc/webaccounts-browser-extension
 x11-misc/webapps-greasemonkey
 x11-proto/fixesproto
 x11-themes/gtk-engines-unico
+x11-themes/humanity-icon-theme
+x11-themes/tangerine-icon-theme
 x11-themes/ubuntu-mono
 x11-themes/unity-asset-pool
 x11-wm/metacity
