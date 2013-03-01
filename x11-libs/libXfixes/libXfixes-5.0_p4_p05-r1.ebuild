@@ -28,6 +28,7 @@ RDEPEND="x11-libs/libX11[${MULTILIB_USEDEP}]
 DEPEND="${RDEPEND}"
 
 src_prepare() {
+	PV="${PV%%_p*}"
 	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"
 	for patch in $(cat "${WORKDIR}/${PN}-${PV}/${MY_PN}-${PV}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/${PN}-${PV}/${MY_PN}-${PV}/debian/patches/${patch}" )
