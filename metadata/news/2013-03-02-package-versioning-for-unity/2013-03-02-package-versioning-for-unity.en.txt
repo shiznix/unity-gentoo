@@ -1,10 +1,10 @@
 Title: Package versioning for the unity-gentoo overlay
 Author: shiznix <rickfharris@yahoo.com.au>
 Content-Type: text/plain
-Posted: 2013-02-07
-Revision: 8
+Posted: 2013-03-02
+Revision: 9
 News-Item-Format: 1.0
-Display-If-Installed: >=x11-libs/gtk+-3.4.2
+Display-If-Installed: sys-apps/portage
 
 Be aware!!
 The unity-gentoo overlay includes package versions that are heavily patched by Ubuntu.
