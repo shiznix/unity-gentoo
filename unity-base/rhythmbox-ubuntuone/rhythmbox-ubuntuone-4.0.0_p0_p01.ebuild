@@ -3,15 +3,14 @@ PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="3.*"
 
-inherit base distutils ubuntu-versionator
+inherit distutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/r/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="Ubuntu One rhythmbox plugin for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -24,14 +23,6 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libzeitgeist
 	dev-python/pygobject:2
 	gnome-base/gnome-menus:3
-	>=media-sound/rhythmbox-2.98[dbus,python]
+	>=media-sound/rhythmbox-2.98[dbus,python,zeitgeist]
 	unity-base/ubuntuone-client
 	unity-base/unity"
-
-src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
-	distutils_src_prepare
-}

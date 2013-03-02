@@ -22,6 +22,7 @@ DEPEND="${RDEPEND}
 	dev-lang/vala:0.16[vapigen]
 	dev-libs/libzeitgeist
 	>=gnome-base/gnome-menus-3.0.1-r1:0
+	gnome-extra/zeitgeist[dbus,extensions,fts,passiv,plugins]
 	sys-libs/db:5.1
 	unity-base/unity"
 

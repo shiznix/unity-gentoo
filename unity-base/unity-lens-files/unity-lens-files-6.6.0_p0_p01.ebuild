@@ -17,6 +17,8 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-lang/vala:0.16[vapigen]
+	dev-libs/libzeitgeist
+	gnome-extra/zeitgeist[dbus,extensions,fts,passiv,plugins]
 	unity-base/unity
 	unity-base/unity-lens-applications"
 

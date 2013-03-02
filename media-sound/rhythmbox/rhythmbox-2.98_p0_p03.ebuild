@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="cdr clutter daap dbus gnome-keyring html ipod libnotify lirc musicbrainz mtp nsplugin +python test +udev upnp-av webkit zeitgeist"
+IUSE="cdr daap dbus gnome-keyring html ipod libnotify lirc mtp nsplugin +python test +udev upnp-av webkit zeitgeist"
 # vala
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 RESTRICT="mirror"
@@ -44,11 +44,6 @@ COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
 	>=sys-libs/tdb-1.2.6
 	dev-libs/json-glib
 
-	clutter? (
-		>=media-libs/clutter-1.2:1.0
-		>=media-libs/clutter-gst-1.0:1.0
-		>=media-libs/clutter-gtk-1.0:1.0
-		>=x11-libs/mx-1.0.1:1.0 )
 	cdr? ( >=app-cdr/brasero-3.4 )
 	daap? (
 		>=net-libs/libdmapsharing-2.9.11:3.0
@@ -57,11 +52,10 @@ COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
 	html? ( <net-libs/webkit-gtk-1.10:3 )
 	libnotify? ( >=x11-libs/libnotify-0.7.0 )
 	lirc? ( app-misc/lirc )
-	musicbrainz? (
-		media-libs/libdiscid
-		|| ( >=media-libs/musicbrainz-4.0.0:4
+	media-libs/libdiscid
+	|| ( >=media-libs/musicbrainz-4.0.0:4
 		     >=media-libs/musicbrainz-3.0.2:3 )
-		gnome-base/gconf:2 )
+	gnome-base/gconf:2
 	python? ( dev-python/pygobject:3 )
 	udev? (
 		virtual/udev[gudev]
@@ -119,16 +113,13 @@ pkg_setup() {
 		VALAC=$(type -P valac-0.14)
 		--enable-mmkeys
 		--disable-more-warnings
-		--disable-scrollkeeper
 		--disable-schemas-compile
 		--disable-static
 		--disable-vala
 		--without-hal
-		$(use_enable clutter visualizer)
 		$(use_enable daap)
 		$(use_enable libnotify)
 		$(use_enable lirc)
-		$(use_enable musicbrainz)
 		$(use_enable nsplugin browser-plugin)
 		$(use_enable python)
 		$(use_enable upnp-av grilo)

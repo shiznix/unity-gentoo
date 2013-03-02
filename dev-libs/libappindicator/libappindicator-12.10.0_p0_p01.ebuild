@@ -27,9 +27,6 @@ DEPEND="dev-libs/libindicator:3
 	dev-python/pygobject:2
 	dev-python/pygtk
 	dev-python/pyxdg
-	gnome-extra/zeitgeist[dbus,extensions,fts,passiv,plugins]
-	gnome-extra/zeitgeist-datasources[telepathy]
-	gnome-extra/zeitgeist-extensions[geolocation]
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
 	vala? ( dev-lang/vala:0.14[vapigen] )"

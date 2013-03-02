@@ -17,10 +17,10 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-lang/vala:0.16[vapigen]
-	dev-libs/libzeitgeist
 	gnome-base/gnome-menus:3
 	>=media-libs/gstreamer-0.10.36:0.10
 	>=media-libs/gst-plugins-base-0.10.36:0.10
+	sys-libs/tdb
 	unity-base/rhythmbox-ubuntuone
 	unity-base/unity"
 
