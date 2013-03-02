@@ -44,3 +44,8 @@ package.unmask files override package.mask files, so be sure that none of the pa
 		eg. www-client/chromium::unity-gentoo
 
 All packages are keyword masked and require keyword unmasking by adding '*/*::unity-gentoo' to your package.keywords file
+
+The overlay requires many packages from the main portage tree be keyword unmasked.
+
+This command can ease the pain of getting an initial list of packages that are needing to be keyword unmasked:
+emerge -p unity-meta 2>&1 | grep ^= | grep \~ | sed 's/^=//g;s/-[0-9].*//g' | sort > /etc/portage/package.keywords/unity

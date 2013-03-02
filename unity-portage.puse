@@ -1,0 +1,24 @@
+app-admin/packagekit-base networkmanager
+app-backup/deja-dup nautilus
+app-cdr/brasero nautilus
+app-crypt/libsecret vala
+app-i18n/ibus dconf
+dev-lang/python sqlite
+dev-libs/protobuf python
+dev-libs/xapian-bindings python
+dev-libs/libxml2 icu
+gnome-base/gdm -gnome-shell
+gnome-base/gvfs fuse
+gnome-base/nautilus sendto
+media-libs/mesa xorg
+media-libs/gst-plugins-base theora
+media-plugins/alsa-plugins pulseaudio
+media-sound/rhythmbox zeitgeist
+sys-auth/pambase consolekit
+sys-libs/zlib minizip
+unity-base/unity-meta chat webapps
+x11-base/xorg-server dmx
+x11-libs/libdrm libkms
+x11-libs/qt-webkit icu
+x11-misc/webaccounts-browser-extension firefox chromium
+x11-themes/light-themes gtk3

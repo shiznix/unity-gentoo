@@ -24,6 +24,7 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="bindist cups gnome gnome-keyring kerberos pulseaudio selinux tcmalloc"
+RESTRICT="mirror"
 
 RDEPEND="app-arch/bzip2
 	cups? (

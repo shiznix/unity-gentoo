@@ -55,7 +55,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.33.4:2
 RDEPEND="${COMMON_DEPEND}
 	>=gnome-base/gnome-settings-daemon-3.6.0
 	>=gnome-base/gsettings-desktop-schemas-3.6.0
-	>=x11-themes/gnome-themes-standard-2.91.92
+	>=x11-themes/gnome-themes-standard-3.6.2
 	sys-apps/dbus[X]
 	systemd? ( >=sys-apps/systemd-183 )
 	!systemd? ( sys-auth/consolekit )"
