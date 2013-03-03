@@ -30,3 +30,10 @@ src_prepare() {
 	done
 	base_src_prepare
 }
+
+src_install() {
+	qt4-r2_src_install
+
+	# Already provided by net-libs/account-plugins with sensible settings #
+	rm ${ED}etc/signon-ui/webkit-options.d/www.facebook.com.conf
+}
