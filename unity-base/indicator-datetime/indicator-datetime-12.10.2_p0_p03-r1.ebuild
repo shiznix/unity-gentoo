@@ -21,6 +21,7 @@ DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt
 	dev-libs/libtimezonemap
+	gnome-base/gnome-control-center
 	>=gnome-extra/evolution-data-server-3.6
 	unity-base/ido"
 
