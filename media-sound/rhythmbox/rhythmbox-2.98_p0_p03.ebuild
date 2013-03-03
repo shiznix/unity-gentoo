@@ -36,7 +36,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
 	>=x11-libs/gdk-pixbuf-2.18.0:2
 	>=dev-libs/gobject-introspection-0.10.0
 	>=dev-libs/libpeas-0.7.3[gtk,python?]
-	>=dev-libs/totem-pl-parser-2.32.1
+	>=dev-libs/totem-pl-parser-3.4
 	>=net-libs/libsoup-2.26:2.4
 	>=net-libs/libsoup-gnome-2.26:2.4
 	>=media-libs/gst-plugins-base-0.10.32:0.10[introspection]
