@@ -16,8 +16,8 @@ IUSE="doc"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/libaccounts-glib
-	x11-libs/qt-core
-	x11-libs/qt-xmlpatterns
+	dev-qt/qtcore:4
+	dev-qt/qtxmlpatterns:4
 	doc? ( app-doc/doxygen )"
 DEPEND="${RDEPEND}"
 

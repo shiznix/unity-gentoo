@@ -19,6 +19,7 @@ RESTRICT="mirror"
 DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
+	dev-libs/libgee:0
 	dev-libs/libindicate-qt
 	media-sound/pulseaudio
 	unity-base/ido"

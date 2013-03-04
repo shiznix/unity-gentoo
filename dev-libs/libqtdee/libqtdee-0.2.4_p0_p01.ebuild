@@ -18,9 +18,9 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee
-	unity-base/bamf
-	x11-libs/qt-core:4
-	x11-libs/qt-declarative:4"
+	dev-qt/qtcore:4
+	dev-qt/qtdeclarative:4
+	unity-base/bamf"
 DEPEND="${RDEPEND}"
 
 PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" )

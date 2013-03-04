@@ -20,4 +20,5 @@ DEPEND=">=dev-libs/glib-2.34
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt
+	>=gnome-base/gnome-settings-daemon-3.1.4
 	sys-power/upower"

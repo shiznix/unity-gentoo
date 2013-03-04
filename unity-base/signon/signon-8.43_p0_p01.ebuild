@@ -16,12 +16,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+debug doc"
 RESTRICT="mirror"
 
-DEPEND="x11-libs/qt-core
-        x11-libs/qt-dbus
-        x11-libs/qt-gui
-        x11-libs/qt-sql
-        x11-libs/qt-xmlpatterns
-        doc? ( app-doc/doxygen )"
+DEPEND="dev-qt/qtcore:4
+	dev-qt/qtdbus:4
+	dev-qt/qtgui:4
+	dev-qt/qtsql:4
+	dev-qt/qtxmlpatterns:4
+	doc? ( app-doc/doxygen )"
 
 src_prepare() {
 	# Fix building if sys-fs/cryptsetup is installed, requires specially patched cryptsetup #

@@ -16,9 +16,9 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="gnome-base/gconf
-	x11-libs/qt-core:4
-	x11-libs/qt-declarative:4"
+RDEPEND="dev-qt/qtcore:4
+	dev-qt/qtdeclarative:4
+	gnome-base/gconf"
 DEPEND="${RDEPEND}"
 
 src_configure() {

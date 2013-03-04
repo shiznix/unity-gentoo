@@ -16,12 +16,12 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-libs/libaccounts-qt
+	dev-qt/qtcore:4
+	dev-qt/qtdbus:4
+	dev-qt/qtgui:4
+	dev-qt/qtsql:4
+	dev-qt/qtxmlpatterns:4
+	dev-qt/qtwebkit:4
 	net-libs/libproxy
 	unity-base/signon
-	x11-libs/qt-core
-	x11-libs/qt-dbus
-	x11-libs/qt-gui
-	x11-libs/qt-sql
-	x11-libs/qt-xmlpatterns
-	x11-libs/qt-webkit
 	x11-libs/libnotify"

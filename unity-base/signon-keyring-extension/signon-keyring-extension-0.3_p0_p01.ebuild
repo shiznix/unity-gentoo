@@ -16,8 +16,8 @@ IUSE="doc"
 RESTRICT="mirror"
 
 RDEPEND="gnome-base/libgnome-keyring
-	unity-base/signon
-	x11-libs/qt-core"
+	dev-qt/qtcore:4
+	unity-base/signon"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/keyring-${PV}"

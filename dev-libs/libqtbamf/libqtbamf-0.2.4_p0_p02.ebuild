@@ -16,9 +16,9 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="unity-base/bamf
-	x11-libs/qt-core:4
-	x11-libs/qt-declarative:4"
+RDEPEND="dev-qt/qtcore:4
+	dev-qt/qtdeclarative:4
+	unity-base/bamf"
 DEPEND="${RDEPEND}"
 
 src_configure() {

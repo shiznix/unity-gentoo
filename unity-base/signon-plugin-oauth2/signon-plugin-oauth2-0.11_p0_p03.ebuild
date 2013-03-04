@@ -17,8 +17,8 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/qjson
-	unity-base/signon-ui
-	x11-libs/qt-core"
+	dev-qt/qtcore:4
+	unity-base/signon-ui"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/signon-oauth2-${PV}"

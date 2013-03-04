@@ -7,6 +7,7 @@ dev-lang/python sqlite
 dev-libs/protobuf python
 dev-libs/xapian-bindings python
 dev-libs/libxml2 icu
+dev-qt/qtwebkit icu
 gnome-base/gdm -gnome-shell
 gnome-base/gvfs fuse
 gnome-base/nautilus sendto
@@ -19,6 +20,5 @@ sys-libs/zlib minizip
 unity-base/unity-meta chat webapps
 x11-base/xorg-server dmx
 x11-libs/libdrm libkms
-x11-libs/qt-webkit icu
 x11-misc/webaccounts-browser-extension firefox chromium
 x11-themes/light-themes gtk3

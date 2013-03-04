@@ -18,9 +18,9 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND=">=dev-libs/glib-2.32.3
-	gnome-base/dconf
-	x11-libs/qt-core:4
-	x11-libs/qt-declarative:4"
+	dev-qt/qtcore:4
+	dev-qt/qtdeclarative:4
+	gnome-base/dconf"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/lib${PN}-0.0.0"
