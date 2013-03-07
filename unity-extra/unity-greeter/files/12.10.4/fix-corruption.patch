@@ -1,0 +1,46 @@
+=== modified file 'src/greeter-list.vala'
+Index: unity-greeter-12.10.4/src/greeter-list.vala
+===================================================================
+--- unity-greeter-12.10.4.orig/src/greeter-list.vala	2013-01-04 14:12:35.586895232 -0500
++++ unity-greeter-12.10.4/src/greeter-list.vala	2013-01-04 14:12:35.570895232 -0500
+@@ -853,7 +853,7 @@
+         background.draw_grid = false;
+         background.queue_draw ();
+ 
+-        UnityGreeter.singleton.start_session (get_lightdm_session ());
++        UnityGreeter.singleton.start_session (get_lightdm_session (), background);
+     }
+ 
+     public void login_complete ()
+Index: unity-greeter-12.10.4/src/unity-greeter.vala
+===================================================================
+--- unity-greeter-12.10.4.orig/src/unity-greeter.vala	2013-01-04 14:12:35.586895232 -0500
++++ unity-greeter-12.10.4/src/unity-greeter.vala	2013-01-04 14:12:35.574895232 -0500
+@@ -152,9 +152,12 @@
+         return null;
+     }
+ 
+-    public void start_session (string? session)
++    public void start_session (string? session, Background bg)
+     {
+-        /* Set the background */
++        /* Paint our background onto the root window before we close our own window */
++        var c = new Cairo.Context (background_surface);
++        bg.draw_full (c, Background.DrawFlags.NONE);
++        c = null;
+         refresh_background (Gdk.Screen.get_default (), background_surface);
+ 
+         if (test_mode)
+Index: unity-greeter-12.10.4/tests/unity-greeter.vala
+===================================================================
+--- unity-greeter-12.10.4.orig/tests/unity-greeter.vala	2013-01-04 14:12:35.586895232 -0500
++++ unity-greeter-12.10.4/tests/unity-greeter.vala	2013-01-04 14:12:35.574895232 -0500
+@@ -93,7 +93,7 @@
+         return false;
+     }
+ 
+-    public void start_session (string? session)
++    public void start_session (string? session, Background bg)
+     {
+         session_started = true;
+     }
