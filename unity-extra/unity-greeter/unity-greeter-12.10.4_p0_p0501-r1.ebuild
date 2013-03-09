@@ -54,6 +54,9 @@ src_install() {
         # Remove all installed language files as they can be incomplete #
         # due to being provided by Ubuntu's language-pack packages #
         rm -rf ${ED}usr/share/locale
+
+	# Remove Ubuntu logo -> would be nice, if we can replace it with a gentoo logo
+	rm -rf ${ED}usr/share/unity-greeter/logo.png
 }
 
 pkg_preinst() {
@@ -63,11 +66,7 @@ pkg_preinst() {
 pkg_postinst() {
 	gnome2_schemas_update
         elog
-        elog "To use '${PN}' as greeter UI for LightDM"
-        elog
-        elog "- set 'greeter-session=${PN}' in [SeatDefaults] section in /etc/lightdm/lightdm.conf"
-        elog "or"
-	elog "- set 'LIGHTDM_GREETER' to 'unity-greeter' in make.conf and rebuild 'x11-misc/lightdm'"
+        elog "Don't forget to set 'greeter-session=${PN}' in [SeatDefaults] section in /etc/lightdm/lightdm.conf"
 	elog
 }
 
