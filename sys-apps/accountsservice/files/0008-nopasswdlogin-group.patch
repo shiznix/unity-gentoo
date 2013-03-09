@@ -1,0 +1,75 @@
+---
+ src/user.c |   46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
+
+Index: accountsservice-0.6.29/src/user.c
+===================================================================
+--- accountsservice-0.6.29.orig/src/user.c	2012-11-29 17:48:30.644502117 +0100
++++ accountsservice-0.6.29/src/user.c	2012-11-29 17:48:36.024501914 +0100
+@@ -1478,6 +1478,21 @@
+                                 return;
+                         }
+ 
++                        if (mode == PASSWORD_MODE_NONE) {
++                                argv[0] = "/usr/bin/gpasswd";
++                                argv[1] = "-a";
++                                argv[2] = user->user_name;
++                                argv[3] = "nopasswdlogin";
++                                argv[4] = NULL;
++
++                                error = NULL;
++                                if (!spawn_with_login_uid (context, argv, &error)) {
++                                        throw_error (context, ERROR_FAILED, "running '%s' failed: %s", argv[0], error->message);
++                                        g_error_free (error);
++                                        return;
++                                }
++                        }
++
+                         if (mode == PASSWORD_MODE_SET_AT_LOGIN) {
+                                 argv[0] = "/usr/bin/chage";
+                                 argv[1] = "-d";
+@@ -1525,6 +1540,23 @@
+                         g_object_notify (G_OBJECT (user), "locked");
+                 }
+ 
++                /* Remember to remove user from nopasswdlogin group if we're
++                   switching away from no-password mode */
++                if (user->password_mode == PASSWORD_MODE_NONE) {
++                        argv[0] = "/usr/bin/gpasswd";
++                        argv[1] = "-d";
++                        argv[2] = user->user_name;
++                        argv[3] = "nopasswdlogin";
++                        argv[4] = NULL;
++
++                        error = NULL;
++                        if (!spawn_with_login_uid (context, argv, &error)) {
++                                throw_error (context, ERROR_FAILED, "running '%s' failed: %s", argv[0], error->message);
++                                g_error_free (error);
++                                return;
++                        }
++                }
++
+                 user->password_mode = mode;
+ 
+                 g_object_notify (G_OBJECT (user), "password-mode");
+@@ -1592,6 +1624,20 @@
+ 
+         error = NULL;
+         if (!spawn_with_login_uid (context, argv, &error)) {
++                throw_error (context, ERROR_FAILED, "running '%s' failed: %s", argv[0], error->message);
++                g_error_free (error);
++                return;
++        }
++
++        /* Drop user from nopasswdlogin group */
++        argv[0] = "/usr/bin/gpasswd";
++        argv[1] = "-d";
++        argv[2] = user->user_name;
++        argv[3] = "nopasswdlogin";
++        argv[4] = NULL;
++
++        error = NULL;
++        if (!spawn_with_login_uid (context, argv, &error)) {
+                 throw_error (context, ERROR_FAILED, "running '%s' failed: %s", argv[0], error->message);
+                 g_error_free (error);
+                 return;

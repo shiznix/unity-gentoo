@@ -22,3 +22,4 @@ x11-libs/libXfixes::gentoo
 x11-proto/fixesproto::gentoo
 x11-themes/gtk-engines-unico::gentoo
 x11-wm/metacity::gentoo
+sys-apps/accountsservice::gentoo
