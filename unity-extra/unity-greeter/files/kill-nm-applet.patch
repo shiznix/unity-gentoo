@@ -1,0 +1,75 @@
+--- unity-greeter-13.04.1_orig/src/unity-greeter.vala	2013-01-22 20:22:42.000000000 +0100
++++ unity-greeter-13.04.1/src/unity-greeter.vala	2013-03-10 20:01:05.688005260 +0100
+@@ -30,6 +30,8 @@
+ 
+     public bool test_mode = false;
+ 
++    private Pid nm_applet_pid = 0;
++
+     private string state_file;
+     private KeyFile state;
+ 
+@@ -45,10 +47,11 @@
+ 
+     private static Timer log_timer;
+ 
+-    private UnityGreeter (bool test_mode_)
++    private UnityGreeter (bool test_mode_, Pid _nm_applet_pid_)
+     {
+         singleton = this;
+         test_mode = test_mode_;
++        nm_applet_pid = _nm_applet_pid_;
+ 
+         /* Prepare to set the background */
+         debug ("Creating background surface");
+@@ -169,6 +172,16 @@
+             starting_session ();
+             try
+             {
++                debug ("start session!");
++                if (nm_applet_pid != 0)
++                {
++                    debug ("try too stop nm-applet");
++                    Posix.kill (nm_applet_pid, Posix.SIGKILL);
++                    int status;
++                    Posix.waitpid (nm_applet_pid, out status, 0);
++                    nm_applet_pid = 0;
++                }
++                
+                 greeter.start_session_sync (session);
+             }
+             catch (Error e)
+@@ -414,6 +427,7 @@
+         Environment.set_variable ("GTK_MODULES", "atk-bridge", false);
+ 
+         Pid atspi_pid = 0;
++        Pid _nm_applet_pid = 0;
+ 
+         try
+         {
+@@ -488,7 +502,15 @@
+ 
+             try
+             {
+-                Process.spawn_command_line_async ("nm-applet");
++                string[] argv;
++
++                Shell.parse_argv ("nm-applet", out argv);
++                Process.spawn_async (null,
++                                     argv,
++                                     null,
++                                     SpawnFlags.SEARCH_PATH,
++                                     null,
++                                     out _nm_applet_pid);
+             }
+             catch (Error e)
+             {
+@@ -521,7 +543,7 @@
+             settings.set ("gtk-xft-rgba", value, null);
+ 
+         debug ("Creating Unity Greeter");
+-        var greeter = new UnityGreeter (do_test_mode);
++        var greeter = new UnityGreeter (do_test_mode,_nm_applet_pid);
+ 
+         debug ("Showing greeter");
+         greeter.show ();
