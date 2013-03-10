@@ -4,7 +4,7 @@ GNOME2_LA_PUNT="yes"
 VALA_MIN_API_VERSION="0.16"
 VALA_USE_DEPEND="vapigen"
 
-inherit eutils gnome2 systemd vala ubuntu-versionator
+inherit autotools eutils gnome2 systemd vala ubuntu-versionator
 
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
@@ -56,7 +56,7 @@ src_prepare() {
 	epatch "${FILESDIR}/2001-filtering_out_users.patch"
 	epatch "${FILESDIR}/2002-disable_systemd.patch"
 
-	./autogen.sh
+	eautoreconf
 
 	use vala && vala_src_prepare
 	gnome2_src_prepare
