@@ -61,8 +61,9 @@ pkg_preinst() {
 pkg_postinst() {
 	gnome2_schemas_update
         elog
-        elog "Don't forget to set 'greeter-session=${PN}' in [SeatDefaults] section in /etc/lightdm/lightdm.conf"
+        elog "Set ${PN} as default greeter of LightDM"
 	elog
+	/usr/libexec/lightdm/lightdm-set-defaults --keep-old --greeter=${PN}
 }
 
 pkg_postrm() {
