@@ -8,7 +8,8 @@ GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The greeter (login screen) application for Unity. It is implemented as a LightDM greeter."
 HOMEPAGE="https://launchpad.net/unity-greeter"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -33,15 +34,9 @@ RDEPEND="unity-base/unity-language-pack
 	x11-themes/ubuntu-wallpapers"
 
 src_prepare() {
-#apply patches
-	PV=${PV%%_p*}
-	epatch "${FILESDIR}/${PV}/move-nm-applet.patch"
-	epatch "${FILESDIR}/${PV}/do-not-mention-citrix-support.patch"
-	epatch "${FILESDIR}/${PV}/sigterm-onboard.patch"
-	epatch "${FILESDIR}/${PV}/close-orca.patch"
-	epatch "${FILESDIR}/${PV}/do-not-read-password.patch"
-	epatch "${FILESDIR}/${PV}/fix-timed-autologin.patch"
-	epatch "${FILESDIR}/${PV}/fix-corruption.patch"
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 
 #patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
