@@ -31,7 +31,8 @@ RDEPEND="unity-base/unity-language-pack
 	unity-base/indicator-application
 	unity-extra/indicator-power
 	media-fonts/ubuntu-font-family
-	x11-themes/ubuntu-wallpapers"
+	x11-themes/ubuntu-wallpapers
+	>=gnome-base/gsettings-desktop-schemas-3.6.1"
 
 src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
