@@ -6,18 +6,17 @@ inherit autotools base eutils gnome2 ubuntu-versionator
 
 MY_PN="network-manager-applet"
 MY_P="${MY_PN}_${PV}"
-S="${WORKDIR}/${MY_PN}"
+S="${WORKDIR}/${MY_PN}-${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${MY_PN}"
 URELEASE="raring"
-UVER_PREFIX="+git201301311844.0376019"
 MY_P="${MY_P/applet-/applet_}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="GNOME applet for NetworkManager patched for the Unity desktop"
 HOMEPAGE="http://projects.gnome.org/NetworkManager/"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -35,7 +34,7 @@ RDEPEND=">=dev-libs/glib-2.26:2
 	>=x11-libs/libnotify-0.7.0
 
 	app-text/iso-codes
-	>=net-misc/networkmanager-0.9.7
+	>=net-misc/networkmanager-0.9.8
 	net-misc/mobile-broadband-provider-info
 
 	bluetooth? ( >=net-wireless/gnome-bluetooth-2.27.6 )
