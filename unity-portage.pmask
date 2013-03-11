@@ -14,7 +14,7 @@ gnome-extra/gnome-screensaver::gentoo
 gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
 net-im/empathy::gentoo
-=net-misc/networkmanager-9999::gentoo
+net-misc/networkmanager::gentoo
 www-client/chromium::gentoo
 x11-base/xorg-server::gentoo
 x11-libs/gtk+::gentoo
