@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit ubuntu-versionator
+inherit versionator ubuntu-versionator
 
 MY_PN="thunderbird-globalmenu"
 MY_P="${MY_PN}_${PV}"
@@ -21,7 +21,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="|| ( ~mail-client/thunderbird-${PV} ~mail-client/thunderbird-bin-${PV} )
+DEPEND="|| ( =mail-client/thunderbird-$(get_version_component_range 1-2)* =mail-client/thunderbird-bin-$(get_version_component_range 1-2)* )
 		x11-misc/appmenu-gtk
 		app-text/gnome-doc-utils"
 RDEPEND="${DEPEND}"
