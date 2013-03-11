@@ -24,7 +24,7 @@ RDEPEND=">=dev-libs/glib-2.31:2
 	introspection? ( >=dev-libs/gobject-introspection-1.31.0 )
 	>=x11-themes/gnome-backgrounds-3.6.1
 	x11-themes/gtk-engines-unico
-	x11-themes/light-themes[gtk3]
+	>=x11-themes/light-themes-0.1.93[gtk3]
 	x11-themes/ubuntu-mono"
 DEPEND="${RDEPEND}
 	sys-devel/gettext
