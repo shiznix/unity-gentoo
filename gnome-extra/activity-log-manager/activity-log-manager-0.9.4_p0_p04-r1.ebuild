@@ -59,4 +59,8 @@ src_install() {
 		${ED}usr/share/dbus-1 \
 		${ED}usr/share/polkit-1 \
 		${ED}usr/share/gnome-control-center
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf ${ED}usr/share/locale
 }

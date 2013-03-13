@@ -40,6 +40,6 @@ ubuntu-versionator_pkg_pretend() {
 	readlink /etc/portage/package.mask/unity-portage.pmask &> /dev/null || \
 		die "Please create symlink 'ln -s /var/lib/layman/unity-gentoo/unity-portage.pmask /etc/portage/package.mask/unity-portage.pmask'"
 
-	grep -r '\*/\*::unity-gentoo' /etc/portage/package.keywords* &> /dev/null || \
+	grep -R '\*/\*::unity-gentoo' /etc/portage/package.keywords* &> /dev/null || \
 		die "Please place '*/*::unity-gentoo' in your package.keywords file"
 }
