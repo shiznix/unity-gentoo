@@ -4,7 +4,7 @@ inherit base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.02.26"
+UVER_PREFIX="daily13.03.13.1"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
 HOMEPAGE="http://launchpad.net/nux"

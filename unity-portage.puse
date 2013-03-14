@@ -20,5 +20,4 @@ sys-libs/zlib minizip
 unity-base/unity-meta chat webapps
 x11-base/xorg-server dmx
 x11-libs/libdrm libkms
-x11-misc/webaccounts-browser-extension firefox chromium
 x11-themes/light-themes gtk3

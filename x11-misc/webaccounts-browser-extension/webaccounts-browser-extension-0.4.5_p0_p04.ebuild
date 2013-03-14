@@ -13,7 +13,9 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="chromium firefox"
+# Chromium enabled by default as it seems to work the best so far
+#  (get rid of firefox-bin dep. and patch firefox to get some webapps to work?)
+IUSE="+chromium firefox"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/json-glib
