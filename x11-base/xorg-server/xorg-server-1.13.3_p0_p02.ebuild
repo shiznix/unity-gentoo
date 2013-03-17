@@ -6,11 +6,12 @@ EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/x/${PN}"
 URELEASE="raring"
+UVER_SUFFIX="b1"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-        ${UURL}/${MY_P}-${UVER}.diff.gz"
+        ${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.diff.gz"
 
 IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} ipv6 minimal nptl selinux +suid tslib +udev"
@@ -125,7 +126,7 @@ pkg_pretend() {
 }
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${S}/debian/patches/500_pointer_barrier_thresholds.diff" )
 	base_src_prepare
 }
