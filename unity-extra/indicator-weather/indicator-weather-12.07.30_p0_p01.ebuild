@@ -44,6 +44,15 @@ src_prepare() {
 	epatch "${FILESDIR}/lp821233.diff"
 }
 
+src_compile() {
+	# Unable to reproduce but can still happen on some systems #
+	#  Maybe some imported python lib from python-distutils-extra causing issue ? #
+	addpredict /root/.cache/dconf/user	# FIXME
+	addpredict /root/.config/dconf/user	# FIXME
+
+	distutils_src_compile
+}
+
 src_install() {
 	distutils_src_install
 
