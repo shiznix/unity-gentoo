@@ -39,8 +39,8 @@ COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
 	>=dev-libs/totem-pl-parser-3.4
 	>=net-libs/libsoup-2.26:2.4
 	>=net-libs/libsoup-gnome-2.26:2.4
-	>=media-libs/gst-plugins-base-0.10.32:0.10[introspection]
-	>=media-libs/gstreamer-0.10.32:0.10[introspection]
+	media-libs/gst-plugins-base:1.0[introspection]
+	media-libs/gstreamer:1.0[introspection]
 	>=sys-libs/tdb-1.2.6
 	dev-libs/json-glib
 
@@ -64,19 +64,19 @@ COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
 	zeitgeist? ( gnome-extra/zeitgeist )
 "
 RDEPEND="${COMMON_DEPEND}
-	>=media-plugins/gst-plugins-soup-0.10:0.10
-	>=media-plugins/gst-plugins-libmms-0.10:0.10
+	media-plugins/gst-plugins-soup:1.0
+	media-plugins/gst-plugins-libmms:1.0
 	|| (
-		>=media-plugins/gst-plugins-cdparanoia-0.10:0.10
-		>=media-plugins/gst-plugins-cdio-0.10:0.10 )
-	>=media-plugins/gst-plugins-meta-0.10-r2:0.10
-	>=media-plugins/gst-plugins-taglib-0.10.6:0.10
+		media-plugins/gst-plugins-cdparanoia:1.0
+		media-plugins/gst-plugins-cdio:1.0 )
+	media-plugins/gst-plugins-meta:1.0
+	media-plugins/gst-plugins-taglib:1.0
 	x11-themes/gnome-icon-theme-symbolic
 	upnp-av? (
 		>=media-libs/grilo-0.1.17:0.1
 		>=media-plugins/grilo-plugins-0.1.17:0.1[upnp-av] )
 	python? (
-		>=dev-python/gst-python-0.10.8:0.10
+		dev-python/gst-python:0.10
 
 		x11-libs/gdk-pixbuf:2[introspection]
 		x11-libs/gtk+:3[introspection]
