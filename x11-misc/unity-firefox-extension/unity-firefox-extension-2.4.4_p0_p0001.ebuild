@@ -7,8 +7,7 @@ URELEASE="quantal-updates"
 
 DESCRIPTION="Firefox extension for Unity desktop integration"
 HOMEPAGE="https://launchpad.net/unity-firefox-extension"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -21,10 +20,6 @@ DEPEND="dev-libs/libunity-webapps
 	x11-libs/gtk+:2"
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
 	pushd libufe-xidgetter/
 		eautoreconf
 	popd
@@ -38,11 +33,11 @@ src_configure() {
 
 src_compile() {
 	pushd libufe-xidgetter/
-		emake
+		emake || die
 	popd
 
 	pushd unity-firefox-extension/
-		bash ./build.sh
+		bash ./build.sh || die
 	popd
 }
 
