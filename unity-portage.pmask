@@ -19,6 +19,7 @@ www-client/chromium::gentoo
 x11-base/xorg-server::gentoo
 x11-libs/gtk+::gentoo
 x11-libs/libXfixes::gentoo
+x11-libs/libXi::gentoo
 x11-proto/fixesproto::gentoo
 x11-themes/gtk-engines-unico::gentoo
 x11-wm/metacity::gentoo
