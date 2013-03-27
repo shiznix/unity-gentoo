@@ -1,0 +1,104 @@
+diff -urN glib-2.35.8/configure.ac glib-2.35.8-patched/configure.ac
+--- glib-2.35.8/configure.ac	2013-02-19 19:59:09.000000000 +1030
++++ glib-2.35.8-patched/configure.ac	2013-02-22 22:01:25.981392370 +1030
+@@ -381,7 +381,7 @@
+ if test x"$PYTHON" = xyes; then
+   AC_MSG_ERROR([--with-python option requires a path or program argument])
+ fi
+-AM_PATH_PYTHON(2.5,,PYTHON="/usr/bin/env python2.5")
++#AM_PATH_PYTHON(2.5,,PYTHON="/usr/bin/env python2.5")
+ 
+ 
+ dnl ***********************
+@@ -3678,8 +3678,6 @@
+ gobject/tests/Makefile
+ gthread/Makefile
+ gio/Makefile
+-gio/gdbus-2.0/codegen/Makefile
+-gio/gdbus-2.0/codegen/config.py
+ gio/gnetworking.h
+ gio/xdgmime/Makefile
+ gio/inotify/Makefile
+diff -urN glib-2.35.8/docs/reference/gio/Makefile.am glib-2.35.8-patched/docs/reference/gio/Makefile.am
+--- glib-2.35.8/docs/reference/gio/Makefile.am	2013-02-13 02:05:02.000000000 +1030
++++ glib-2.35.8-patched/docs/reference/gio/Makefile.am	2013-02-22 22:02:39.318395919 +1030
+@@ -118,7 +118,6 @@
+ 	gsettings.xml		\
+ 	gresource.xml		\
+ 	gdbus.xml		\
+-	gdbus-codegen.xml	\
+ 	$(NULL)
+ 
+ expand_content_files =		\
+@@ -127,7 +126,6 @@
+ 	migrating-gnome-vfs.xml	\
+ 	migrating-gconf.xml	\
+ 	migrating-gdbus.xml	\
+-	gdbus-codegen.xml	\
+ 	$(NULL)
+ 
+ extra_files =			\
+@@ -152,8 +150,7 @@
+ 	glib-compile-resources.1	\
+ 	gsettings.1		\
+ 	gresource.1		\
+-	gdbus.1			\
+-	gdbus-codegen.1
++	gdbus.1
+ 
+ XSLTPROC_FLAGS = \
+         --nonet \
+diff -urN glib-2.35.8/gio/Makefile.am glib-2.35.8-patched/gio/Makefile.am
+--- glib-2.35.8/gio/Makefile.am	2013-02-22 21:57:31.686381030 +1030
++++ glib-2.35.8-patched/gio/Makefile.am	2013-02-22 22:03:02.263397029 +1030
+@@ -2,7 +2,7 @@
+ 
+ NULL =
+ 
+-SUBDIRS = gdbus-2.0/codegen
++SUBDIRS =
+ 
+ if OS_UNIX
+ SUBDIRS += xdgmime
+diff -urN glib-2.35.8/gio/tests/gdbus-object-manager-example/Makefile.am glib-2.35.8-patched/gio/tests/gdbus-object-manager-example/Makefile.am
+--- glib-2.35.8/gio/tests/gdbus-object-manager-example/Makefile.am	2013-02-13 02:05:03.000000000 +1030
++++ glib-2.35.8-patched/gio/tests/gdbus-object-manager-example/Makefile.am	2013-02-22 22:09:36.924416130 +1030
+@@ -21,10 +21,8 @@
+ 	gdbus-example-objectmanager-generated-org.gtk.GDBus.Example.ObjectManager.Cat.xml 	\
+ 	$(NULL)
+ 
+-$(GDBUS_GENERATED) : gdbus-example-objectmanager.xml Makefile $(top_builddir)/gio/gdbus-2.0/codegen/gdbus-codegen
+-	$(AM_V_GEN) UNINSTALLED_GLIB_SRCDIR=$(top_srcdir) \
+-		UNINSTALLED_GLIB_BUILDDIR=$(top_builddir) \
+-		$(PYTHON) $(top_builddir)/gio/gdbus-2.0/codegen/gdbus-codegen \
++$(GDBUS_GENERATED) : gdbus-example-objectmanager.xml Makefile
++	$(AM_V_GEN) gdbus-codegen \
+ 		--interface-prefix org.gtk.GDBus.Example.ObjectManager. \
+ 		--c-namespace Example \
+ 		--c-generate-object-manager \
+diff -urN glib-2.35.8/gio/tests/Makefile.am glib-2.35.8-patched/gio/tests/Makefile.am
+--- glib-2.35.8/gio/tests/Makefile.am	2013-02-19 05:50:13.000000000 +1030
++++ glib-2.35.8-patched/gio/tests/Makefile.am	2013-02-22 22:08:32.401413007 +1030
+@@ -140,7 +140,7 @@
+ 	unix-streams 		\
+ 	gapplication 		\
+ 	basic-application	\
+-	gdbus-test-codegen 	\
++	gdbus-test-codegen      \
+ 	$(NULL)
+ SAMPLE_PROGS +=					\
+ 	gdbus-example-unix-fd-client 		\
+@@ -211,10 +211,9 @@
+ gdbus_close_pending_SOURCES = gdbus-close-pending.c gdbus-sessionbus.c gdbus-sessionbus.h gdbus-tests.h gdbus-tests.c
+ 
+ if OS_UNIX
+-gdbus-test-codegen-generated.h gdbus-test-codegen-generated.c : test-codegen.xml Makefile $(top_builddir)/gio/gdbus-2.0/codegen/gdbus-codegen
+-	$(AM_V_GEN) UNINSTALLED_GLIB_SRCDIR=$(top_srcdir) \
+-		UNINSTALLED_GLIB_BUILDDIR=$(top_builddir) \
+-		$(PYTHON) $(top_builddir)/gio/gdbus-2.0/codegen/gdbus-codegen \
++
++gdbus-test-codegen-generated.h gdbus-test-codegen-generated.c : test-codegen.xml Makefile
++	$(AM_V_GEN) gdbus-codegen \
+ 		--interface-prefix org.project. \
+ 		--generate-c-code gdbus-test-codegen-generated \
+ 		--c-generate-object-manager \

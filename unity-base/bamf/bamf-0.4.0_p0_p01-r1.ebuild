@@ -35,6 +35,9 @@ src_prepare() {
 }
 
 src_configure() {
+	sed -e "s:-Werror::g" \
+		-i "configure.ac" || die
+
 	./autogen.sh --prefix=/usr \
 		--enable-introspection=yes \
 		--disable-static || die
