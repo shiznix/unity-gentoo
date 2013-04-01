@@ -5,7 +5,7 @@ inherit base gnome2 cmake-utils eutils python toolchain-funcs ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.25.1"
+UVER_PREFIX="daily13.03.29.1"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
@@ -49,7 +49,7 @@ DEPEND="dev-libs/boost
 	>=gnome-extra/polkit-gnome-0.105
 	media-libs/clutter-gtk:1.0
 	sys-apps/dbus
-	>=sys-devel/gcc-4.6
+	>=sys-devel/gcc-4.7.3:4.7
 	>=unity-base/bamf-0.4.0
 	>=unity-base/compiz-0.9.9
 	unity-base/dconf-qt
@@ -61,8 +61,8 @@ DEPEND="dev-libs/boost
 	x11-misc/appmenu-qt"
 
 pkg_pretend() {
-	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
-		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
+	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
+		die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
 	fi
 }
 

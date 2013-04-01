@@ -12,7 +12,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 inherit distutils eutils gnome2-utils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Weather indicator used by the Unity desktop"
