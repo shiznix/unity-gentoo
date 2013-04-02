@@ -13,7 +13,7 @@ MY_P="${MY_PN}_${PV}"
 S="${WORKDIR}/${MY_PN}-${PV}/src"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${MY_PN}"
-URELEASE="quantal-updates"
+URELEASE="raring"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
