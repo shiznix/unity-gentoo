@@ -5,7 +5,7 @@ inherit base gnome2 cmake-utils eutils python toolchain-funcs ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.08"
+UVER_PREFIX="daily13.04.01"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
@@ -30,6 +30,7 @@ DEPEND="dev-libs/boost
 	dev-libs/libappindicator
 	dev-libs/libindicate[gtk]
 	dev-libs/libindicate-qt
+	>=dev-libs/libindicator-12.10.2
 	dev-libs/libqtbamf
 	dev-libs/libqtdee
 	dev-libs/libqtgconf
@@ -48,8 +49,8 @@ DEPEND="dev-libs/boost
 	>=gnome-extra/polkit-gnome-0.105
 	media-libs/clutter-gtk:1.0
 	sys-apps/dbus
-	>=sys-devel/gcc-4.6
-	unity-base/bamf
+	>=sys-devel/gcc-4.7.3:4.7
+	>=unity-base/bamf-0.4.0
 	>=unity-base/compiz-0.9.9
 	unity-base/dconf-qt
 	>=unity-base/nux-4.0.0
@@ -60,8 +61,8 @@ DEPEND="dev-libs/boost
 	x11-misc/appmenu-qt"
 
 pkg_pretend() {
-	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
-		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
+	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
+		die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
 	fi
 }
 
@@ -71,8 +72,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-	PATCHES+=( "${FILESDIR}/re-whitelist.diff"
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
 			"${FILESDIR}/systray-enabled-by-default.diff"
 			"${FILESDIR}/remove-gtest-dep.diff" )
 	base_src_prepare

@@ -1,0 +1,26 @@
+--- chromium-browser-25.0.1364.5/src/media/filters/opus_audio_decoder.cc~	2012-12-20 10:01:10.000000000 +0200
++++ chromium-browser-25.0.1364.5/src/media/filters/opus_audio_decoder.cc	2013-01-06 13:47:49.557009450 +0200
+@@ -15,8 +15,7 @@
+ #include "media/base/decoder_buffer.h"
+ #include "media/base/demuxer.h"
+ #include "media/base/pipeline.h"
+-#include "third_party/opus/src/include/opus.h"
+-#include "third_party/opus/src/include/opus_multistream.h"
++#include "third_party/opus/opus.h"
+ 
+ namespace media {
+ 
+--- chromium-browser-25.0.1364.5/src/third_party/opus/opus.h	2013-01-06 14:34:57.267997054 +0200
++++ chromium-browser-25.0.1364.5/src/third_party/opus/opus.h	2013-01-06 17:26:46.252153771 +0200
+@@ -7,6 +7,11 @@
+ 
++#if !defined(THIRD_PARTY_OPUS_H)
++#define THIRD_PARTY_OPUS_H
+ #if defined(USE_SYSTEM_OPUS)
+ #include <opus/opus.h>
++#include <opus/opus_multistream.h>
+ #else
+ #include "third_party/opus/src/include/opus.h"
++#include "third_party/opus/src/include/opus_multistream.h"
++#endif
+ #endif

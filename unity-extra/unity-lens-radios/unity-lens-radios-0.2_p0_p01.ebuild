@@ -18,6 +18,5 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-lang/python:3.2
-	dev-python/argparse
 	>=dev-python/python-distutils-extra-2.37
 	unity-base/unity"

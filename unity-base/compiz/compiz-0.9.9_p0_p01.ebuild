@@ -4,7 +4,7 @@ inherit base gnome2 cmake-utils eutils python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
 URELEASE="raring"
-UVER_PREFIX="~daily13.03.08"
+UVER_PREFIX="~daily13.03.29"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
@@ -20,7 +20,7 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
+COMMONDEPEND="kde? ( kde-base/kwin )
 	!!unity-base/ccsm
 	!!unity-base/compizconfig-python
 	!!unity-base/compizconfig-backend-gconf

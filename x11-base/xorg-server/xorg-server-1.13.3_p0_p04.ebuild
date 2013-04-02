@@ -125,7 +125,7 @@ pkg_pretend() {
 }
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${S}/debian/patches/500_pointer_barrier_thresholds.diff" )
 	base_src_prepare
 }

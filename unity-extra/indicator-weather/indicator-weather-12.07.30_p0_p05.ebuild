@@ -12,7 +12,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 inherit distutils eutils gnome2-utils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Weather indicator used by the Unity desktop"
@@ -42,6 +42,15 @@ pkg_setup() {
 src_prepare() {
 	python_convert_shebangs -r 2 .
 	epatch "${FILESDIR}/lp821233.diff"
+}
+
+src_compile() {
+	# Unable to reproduce but can still happen on some systems #
+	#  Maybe some imported python lib from python-distutils-extra causing issue ? #
+	addpredict /root/.cache/dconf/user	# FIXME
+	addpredict /root/.config/dconf/user	# FIXME
+
+	distutils_src_compile
 }
 
 src_install() {

@@ -120,3 +120,4 @@ pkg_postinst() {
 
 	gnome2_pkg_postinst
 }
+
