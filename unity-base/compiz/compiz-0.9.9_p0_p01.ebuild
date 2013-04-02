@@ -20,7 +20,7 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-COMMONDEPEND="kde? ( <=kde-base/kwin-4.8.5 )
+COMMONDEPEND="kde? ( kde-base/kwin )
 	!!unity-base/ccsm
 	!!unity-base/compizconfig-python
 	!!unity-base/compizconfig-backend-gconf
