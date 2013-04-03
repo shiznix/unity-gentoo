@@ -3,7 +3,7 @@ EAPI=4
 inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Blacklist configuration user interface for Zeitgeist"
 HOMEPAGE="http://unity.ubuntu.com/"

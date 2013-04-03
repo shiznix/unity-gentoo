@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit base eutils ubuntu-versionator
+inherit base eutils flag-o-matic ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="quantal"
@@ -19,7 +19,6 @@ DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt"
 
-src_configure() {
-	econf \
-		--with-gtk=3 || die
+src_prepare() {
+	append-cflags -Wno-error
 }

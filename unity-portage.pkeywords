@@ -1,3 +1,5 @@
+## A base set of packages that require keyword unmasking for Unity installation ##
+
 */*::unity-gentoo
 app-accessibility/at-spi2-atk
 app-accessibility/at-spi2-core

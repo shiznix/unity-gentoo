@@ -1,3 +1,5 @@
+## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
+
 app-backup/deja-dup::gentoo
 dev-libs/dee::gentoo
 dev-libs/libappindicator::gentoo

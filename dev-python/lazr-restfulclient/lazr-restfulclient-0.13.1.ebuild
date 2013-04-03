@@ -7,8 +7,8 @@ inherit distutils ubuntu-versionator
 
 MY_PN="lazr.restfulclient"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${MY_PN}"
-UVER="2"
-URELEASE="quantal"
+UVER="1"
+URELEASE="raring"
 MY_P="${MY_PN}_${PV}"
 GNOME2_LA_PUNT="1"
 

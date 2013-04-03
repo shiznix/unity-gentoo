@@ -3,8 +3,7 @@ EAPI=4
 inherit base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libt/${PN}"
-UVER="build1"
-URELEASE="quantal"
+URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="GTK+3 timezone map widget used by the Unity desktop"
@@ -23,4 +22,6 @@ DEPEND="dev-libs/glib:2
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3"
 
-S="${WORKDIR}/timezonemap"
+src_prepare() {
+	./autogen.sh
+}

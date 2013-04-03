@@ -6,7 +6,7 @@ MY_PN="thunderbird-globalmenu"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/main/t/thunderbird"
-URELEASE="quantal"
+URELEASE="raring"
 UVER_PREFIX="+build1"
 
 DESCRIPTION="Unity appmenu integration for Thunderbird mail client"

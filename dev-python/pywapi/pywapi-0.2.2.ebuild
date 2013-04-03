@@ -5,7 +5,7 @@ inherit distutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/p/${PN}"
 UVER="1"
-URELEASE="quantal"
+URELEASE="raring"
 MY_P="${P/-/_}"
 
 DESCRIPTION="Python wrapper around different weather APIs"

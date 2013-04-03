@@ -4,7 +4,7 @@ GNOME2_LA_PUNT="yes"
 
 inherit eutils gnome2 ubuntu-versionator
 
-URELEASE="quantal-updates"
+URELEASE="raring"
 
 DESCRIPTION="Simple backup tool using duplicity back-end"
 HOMEPAGE="https://launchpad.net/deja-dup/"

@@ -3,7 +3,7 @@ EAPI=4
 inherit base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"
