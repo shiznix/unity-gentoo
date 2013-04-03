@@ -3,6 +3,7 @@ EAPI=4
 inherit base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libt/${PN}"
+UVER=""
 URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
