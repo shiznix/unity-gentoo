@@ -36,3 +36,4 @@ DEPEND="app-backup/deja-dup[nautilus]
 			x11-misc/webaccounts-browser-extension
 			x11-misc/webapps-greasemonkey )
 	chat? ( net-im/empathy )"
+RDEPEND="${DEPEND}"

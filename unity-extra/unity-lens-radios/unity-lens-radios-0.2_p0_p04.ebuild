@@ -5,7 +5,7 @@ RESTRICT_PYTHON_ABIS="2.*"
 
 inherit distutils ubuntu-versionator
 
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Online radio lens used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/ubuntu/${URELEASE}/+source/${PN}"

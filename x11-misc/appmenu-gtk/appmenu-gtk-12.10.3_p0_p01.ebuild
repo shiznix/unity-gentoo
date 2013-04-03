@@ -3,12 +3,12 @@ EAPI=4
 inherit base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="daily13.03.01"
 
 DESCRIPTION="Export GTK menus over DBus"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -20,7 +20,12 @@ DEPEND="unity-base/indicator-appmenu
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3"
 
-PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" )
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
+src_prepare() {
+	./autogen.sh
+	make distclean
+}
 
 src_configure() {
 	# Build GTK2 support #

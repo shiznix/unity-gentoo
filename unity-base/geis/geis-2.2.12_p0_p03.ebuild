@@ -5,7 +5,7 @@ SUPPORT_PYTHON_ABIS="1"
 inherit base eutils python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-URELEASE="quantal"
+URELEASE="quantal-updates"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"
 HOMEPAGE="http://unity.ubuntu.com/"

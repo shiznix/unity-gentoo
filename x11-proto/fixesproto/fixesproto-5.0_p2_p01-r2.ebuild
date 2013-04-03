@@ -6,7 +6,7 @@ inherit base eutils xorg-2 ubuntu-versionator
 MY_PN="x11proto-fixes"
 MY_P="${MY_PN}_${PV}"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/x/x11proto-fixes"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Ubuntu patched version of X.Org Fixes protocol headers needed for Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"

@@ -3,7 +3,7 @@ EAPI=4
 inherit gnome2 cmake-utils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libq/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Qt binding and QML plugin for bamf for the Unity desktop"

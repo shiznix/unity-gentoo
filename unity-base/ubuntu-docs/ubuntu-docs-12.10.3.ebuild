@@ -4,7 +4,7 @@ inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="https://launchpad.net/ubuntu/+archive/primary/+files/"
 UVER=""
-URELEASE="quantal"
+URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Help files for the Unity desktop"

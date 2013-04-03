@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit base eutils gnome2 ubuntu-versionator
+inherit base eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="quantal"
@@ -25,4 +25,6 @@ DEPEND="!net-im/indicator-messages
 src_prepare() {
         export VALAC=$(type -P valac-0.14)
         export VALA_API_GEN=$(type -p vapigen-0.14)
+
+	append-cflags -Wno-error
 }

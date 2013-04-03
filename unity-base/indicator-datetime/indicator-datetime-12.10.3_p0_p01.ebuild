@@ -1,18 +1,19 @@
 EAPI=4
 
-inherit eutils gnome2 ubuntu-versionator
+inherit eutils flag-o-matic gnome2 ubuntu-versionator
 
-UURL="https://launchpad.net/${PN}/12.10/${PV}/+download"
-URELEASE="quantal"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
+URELEASE="raring"
+UVER_PREFIX="daily13.03.26"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${PN}-${PV}.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -25,8 +26,15 @@ DEPEND="dev-libs/libappindicator
 	>=gnome-extra/evolution-data-server-3.6
 	unity-base/ido"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
+src_prepare() {
+	append-cflags -Wno-error
+}
+
 src_configure() {
-	econf --with-ccpanel
+	./autogen.sh --prefix=/usr \
+		--with-ccpanel
 }
 
 src_install() {
@@ -36,4 +44,3 @@ src_install() {
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf ${ED}usr/share/locale
 }
-

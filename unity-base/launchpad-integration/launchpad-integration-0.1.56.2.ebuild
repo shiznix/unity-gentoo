@@ -6,7 +6,7 @@ inherit base eutils gnome2 python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/l/${PN}"
 UVER=""
-URELEASE="quantal"
+URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Launchpad integration library to integrate launchpad URLs into the menus"
