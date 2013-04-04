@@ -31,9 +31,6 @@ DEPEND="dev-libs/boost
 	dev-libs/libindicate[gtk]
 	dev-libs/libindicate-qt
 	>=dev-libs/libindicator-12.10.2
-	dev-libs/libqtbamf
-	dev-libs/libqtdee
-	dev-libs/libqtgconf
 	dev-libs/libunity
 	dev-libs/libunity-misc
 	dev-python/gconf-python

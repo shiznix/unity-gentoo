@@ -5,9 +5,6 @@ dev-libs/libaccounts-qt
 dev-libs/libappindicator
 dev-libs/libdbusmenu
 dev-libs/libindicator
-dev-libs/libqtbamf
-dev-libs/libqtdee
-dev-libs/libqtgconf
 dev-libs/libsignon-glib
 dev-libs/libtimezonemap
 dev-libs/libubuntuone

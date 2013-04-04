@@ -27,9 +27,6 @@ DEPEND="dev-libs/boost
 	dev-libs/libappindicator
 	dev-libs/libindicate[gtk]
 	dev-libs/libindicate-qt
-	dev-libs/libqtbamf
-	dev-libs/libqtdee
-	dev-libs/libqtgconf
 	dev-libs/libunity
 	dev-libs/libunity-misc
 	dev-python/gconf-python
