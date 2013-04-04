@@ -6,10 +6,10 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/e/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="Event Emulation for the uTouch Stack"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/evemu"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

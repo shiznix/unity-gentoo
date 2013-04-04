@@ -9,10 +9,10 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="Ubuntu Single Sign-On client for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/ubuntu-sso-client"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

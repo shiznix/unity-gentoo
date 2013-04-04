@@ -6,10 +6,10 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/s/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
-HOMEPAGE="http://code.google.com/p/accounts-sso/"
+HOMEPAGE="https://launchpad.net/signon-ui"
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2"
 
-LICENSE="|| ( GPL-2 GPL-3 )"
+LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

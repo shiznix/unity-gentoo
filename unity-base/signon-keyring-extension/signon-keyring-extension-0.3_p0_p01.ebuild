@@ -6,10 +6,10 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/s/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="GNOME keyring extension for signond used by the Unity desktop"
-HOMEPAGE="http://code.google.com/p/accounts-sso/"
+HOMEPAGE="https://launchpad.net/signon-keyring-extension"
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2"
 
-LICENSE="LGPL-3"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"

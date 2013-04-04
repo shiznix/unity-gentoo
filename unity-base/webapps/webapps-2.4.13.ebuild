@@ -10,7 +10,7 @@ DESCRIPTION="WebApps: Initial set of Apps for the Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-applications"
 SRC_URI="${UURL}/${P}.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

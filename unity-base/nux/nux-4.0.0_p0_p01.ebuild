@@ -12,7 +12,7 @@ HOMEPAGE="http://launchpad.net/nux"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE="debug examples tests"

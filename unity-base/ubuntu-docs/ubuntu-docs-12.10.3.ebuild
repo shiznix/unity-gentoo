@@ -2,16 +2,16 @@ EAPI=4
 
 inherit autotools eutils gnome2 ubuntu-versionator
 
-UURL="https://launchpad.net/ubuntu/+archive/primary/+files/"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER=""
 URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Help files for the Unity desktop"
-HOMEPAGE="https://launchpad.net/ubuntu-docs/quantal"
+HOMEPAGE="https://launchpad.net/ubuntu-docs"
 SRC_URI="${UURL}/${MY_P}.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

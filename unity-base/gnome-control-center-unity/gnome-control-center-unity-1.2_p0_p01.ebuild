@@ -9,11 +9,11 @@ URELEASE="raring"
 UVER_PREFIX="daily13.04.01"
 
 DESCRIPTION="GNOME control center module to change the settings of the Unity desktop"
-HOMEPAGE="http://www.gnome.org/"
+HOMEPAGE="https://launchpad.net/gnome-control-center-unity"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
         ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
-LICENSE="GPL-2+"
+LICENSE="GPL-2"
 SLOT="0"
 IUSE="+socialweb"
 KEYWORDS="~amd64 ~x86"

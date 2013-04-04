@@ -6,10 +6,10 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/b/${PN}"
 URELEASE="quantal-updates"
 
 DESCRIPTION="BAMF Application Matching Framework"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/bamf"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+introspection"

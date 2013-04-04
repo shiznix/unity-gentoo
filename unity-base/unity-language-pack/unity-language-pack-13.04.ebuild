@@ -9,7 +9,7 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/l"
 UVER="+20130321"
 URELEASE="raring"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
@@ -24,6 +24,7 @@ RDEPEND="!<unity-base/compiz-0.9.8.6_p0_p01-r1
 	!<unity-base/unity-lens-photos-0.9_p0_p01-r1"
 DEPEND="sys-devel/gettext"
 
+## Only languages that are listed in /usr/portage/profiles/desc/linguas.desc are supported ##
 IUSE_LINGUAS="aa af ak am an ar as ast az be be@latin bem ber
 bg bn bo br bs ca ca@valencia crh cs csb cv cy da de dv dz el
 en en_AU en_CA en_GB en@shaw en_US en_US@piglatin eo es et eu

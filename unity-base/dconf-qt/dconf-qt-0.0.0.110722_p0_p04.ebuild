@@ -7,11 +7,11 @@ URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Dconf Qt bindings for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/dconf-qt"
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
         ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""

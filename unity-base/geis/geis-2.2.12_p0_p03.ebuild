@@ -8,10 +8,10 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 URELEASE="quantal-updates"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/geis"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
@@ -19,7 +19,6 @@ RESTRICT="mirror"
 
 DEPEND="!!unity-base/utouch-geis
 	!!unity-base/utouch-grail
-	dev-lang/python:2.7
 	unity-base/grail"
 
 src_prepare() {
