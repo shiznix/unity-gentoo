@@ -6,11 +6,11 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="Miscellaneous modules for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/libunity-misc"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"

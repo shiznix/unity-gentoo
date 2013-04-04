@@ -8,7 +8,7 @@ URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="GTK+3 timezone map widget used by the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/libtimezonemap"
 SRC_URI="${UURL}/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"

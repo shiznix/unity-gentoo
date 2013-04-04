@@ -13,11 +13,11 @@ MY_P="${MY_PN}_${PV}"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Client for lazr.restful-based web services for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/lazr.restfulclient"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

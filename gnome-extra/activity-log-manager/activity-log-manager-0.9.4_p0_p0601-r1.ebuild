@@ -6,7 +6,7 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Blacklist configuration user interface for Zeitgeist"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/activity-log-manager"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 

@@ -7,7 +7,7 @@ URELEASE="quantal"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/indicator-datetime"
 SRC_URI="${UURL}/${PN}-${PV}.tar.gz"
 
 LICENSE="GPL-3"

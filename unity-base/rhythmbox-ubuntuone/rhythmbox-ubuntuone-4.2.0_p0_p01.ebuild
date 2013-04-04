@@ -9,7 +9,7 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/r/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Ubuntu One rhythmbox plugin for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/rhythmbox-ubuntuone"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
