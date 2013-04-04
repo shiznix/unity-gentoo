@@ -12,8 +12,8 @@ KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd6
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
         ${UURL}/${MY_P}-${UVER}.diff.gz"
 
-IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
-IUSE="${IUSE_SERVERS} ipv6 minimal nptl selinux +suid tslib +udev"
+IUSE_SERVERS="kdrive xnest xorg xvfb"
+IUSE="${IUSE_SERVERS} +dmx ipv6 minimal nptl selinux +suid tslib +udev"
 RESTRICT="mirror"
 
 RDEPEND=">=app-admin/eselect-opengl-1.0.8

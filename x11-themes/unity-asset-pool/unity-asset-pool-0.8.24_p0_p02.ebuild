@@ -9,7 +9,7 @@ DESCRIPTION="Unity desktop icon theme"
 HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
-LICENSE="CCPL-Attribution-ShareAlike-3.0"
+LICENSE="CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""

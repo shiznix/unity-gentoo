@@ -6,7 +6,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 inherit distutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/d/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Python User Folders Specification Library"
