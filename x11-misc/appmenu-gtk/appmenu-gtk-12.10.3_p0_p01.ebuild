@@ -7,10 +7,10 @@ URELEASE="raring"
 UVER_PREFIX="daily13.03.01"
 
 DESCRIPTION="Export GTK menus over DBus"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/appmenu-gtk"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""

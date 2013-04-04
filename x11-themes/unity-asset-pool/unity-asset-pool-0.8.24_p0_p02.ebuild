@@ -6,7 +6,7 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="Unity desktop icon theme"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/unity-asset-pool"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="CC-BY-SA-3.0"
