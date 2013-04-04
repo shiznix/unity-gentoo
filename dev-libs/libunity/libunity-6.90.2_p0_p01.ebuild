@@ -9,11 +9,11 @@ URELEASE="quantal-updates"
 UVER_PREFIX="daily13.03.06.1"
 
 DESCRIPTION="Binding to get places into the Unity desktop launcher"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/libunity"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE=""

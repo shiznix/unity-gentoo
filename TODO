@@ -1,5 +1,2 @@
 * USE="doc debug mono tests"
-* Licenses audit
 * Check unneeded *.la files are being removed
-* Improve dependency tracking
-* Investigate migrating ebuild SRC_URI from archive.ubuntu.com to use launchpad.net instead so tarballs don't disappear

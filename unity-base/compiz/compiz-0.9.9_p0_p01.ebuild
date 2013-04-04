@@ -8,11 +8,11 @@ UVER_PREFIX="~daily13.03.29"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/compiz"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE="+debug kde"

@@ -7,10 +7,10 @@ URELEASE="raring"
 UVER_PREFIX="daily13.03.07"
 
 DESCRIPTION="BAMF Application Matching Framework"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/bamf"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="LGPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE=""

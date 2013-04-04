@@ -11,7 +11,7 @@ DESCRIPTION="Indicator showing session management, status and user switching use
 HOMEPAGE="https://launchpad.net/indicator-session"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE="+help"

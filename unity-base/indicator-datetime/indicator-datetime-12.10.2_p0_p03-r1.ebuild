@@ -2,15 +2,15 @@ EAPI=4
 
 inherit eutils gnome2 ubuntu-versionator
 
-UURL="https://launchpad.net/${PN}/12.10/${PV}/+download"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="quantal"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/indicator-datetime"
 SRC_URI="${UURL}/${PN}-${PV}.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

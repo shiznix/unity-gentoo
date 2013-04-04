@@ -9,10 +9,10 @@ URELEASE="raring"
 MY_P="${P/-/_}"
 
 DESCRIPTION="Python wrapper around different weather APIs"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://code.google.com/p/python-weather-api/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

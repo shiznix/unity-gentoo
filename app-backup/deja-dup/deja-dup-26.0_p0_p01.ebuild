@@ -13,7 +13,7 @@ SRC_URI="http://launchpad.net/${PN}/26/${PV}/+download/${PN}-${PV}.tar.xz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="nautilus"
+IUSE="+nautilus"
 
 RESTRICT="test"
 

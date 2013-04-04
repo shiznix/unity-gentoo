@@ -9,11 +9,11 @@ URELEASE="quantal-updates"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Remote video feeds fetched for the Unity desktop video lens"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/unity-scope-video-remote"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

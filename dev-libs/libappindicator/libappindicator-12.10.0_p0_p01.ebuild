@@ -9,10 +9,10 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/libappindicator"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="LGPL-2.1 LGPL-3"
 SLOT="3"
 KEYWORDS="~amd64 ~x86"
 IUSE="vala"

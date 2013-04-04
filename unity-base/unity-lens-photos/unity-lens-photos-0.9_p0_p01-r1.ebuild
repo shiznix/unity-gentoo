@@ -8,11 +8,11 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="quantal-updates"
 
 DESCRIPTION="Photo lens for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/unity-lens-photos"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

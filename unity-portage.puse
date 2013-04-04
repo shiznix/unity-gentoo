@@ -1,7 +1,6 @@
 ## A base set of USE flags for packages required for Unity installation ##
 
 app-admin/packagekit-base networkmanager
-app-backup/deja-dup nautilus
 app-cdr/brasero nautilus
 app-crypt/libsecret vala
 app-i18n/ibus dconf
@@ -12,14 +11,11 @@ dev-libs/libxml2 icu
 dev-qt/qtwebkit icu
 gnome-base/gdm -gnome-shell
 gnome-base/gvfs fuse
-gnome-base/nautilus sendto
 media-libs/mesa xorg
 media-libs/gst-plugins-base theora
 media-plugins/alsa-plugins pulseaudio
-media-sound/rhythmbox zeitgeist
+net-im/pidgin -eds
 sys-auth/pambase consolekit
 sys-libs/zlib minizip
-unity-base/unity-meta chat webapps
-x11-base/xorg-server dmx
 x11-libs/libdrm libkms
 x11-themes/light-themes gtk3

@@ -10,10 +10,10 @@ URELEASE="quantal"
 UVER_PREFIX="daily13.02.25"
 
 DESCRIPTION="A set of symbols and convenience functions that all indicators would like to use"
-HOMEPAGE="http://unity.ubuntu.com/"
+HOMEPAGE="https://launchpad.net/libindicator"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="3"
 #KEYWORDS="~amd64 ~x86"
 IUSE=""

@@ -13,7 +13,7 @@ HOMEPAGE="http://live.gnome.org/Empathy"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.bz2"
 
-LICENSE="GPL-2 CCPL-Attribution-ShareAlike-3.0 FDL-1.3 LGPL-2.1"
+LICENSE="GPL-2 CC-BY-SA-3.0 FDL-1.3 LGPL-2.1"
 SLOT="0"
 IUSE="gnome test +v4l"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-linux"
