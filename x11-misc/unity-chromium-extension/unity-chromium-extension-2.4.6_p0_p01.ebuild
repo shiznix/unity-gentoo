@@ -8,7 +8,7 @@ URELEASE="raring"
 DESCRIPTION="Ubuntu Online Accounts browser extension"
 HOMEPAGE="https://launchpad.net/online-accounts-browser-extension"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -20,10 +20,9 @@ DEPEND="dev-libs/libunity-webapps
 	www-client/chromium"
 # Webapp integration doesn't work for www-client/google-chrome #
 
-S="${WORKDIR}/unity_webapps_chromium-${PV}"
-
 src_prepare() {
-	cp "${WORKDIR}/debian/unity-webapps.pem" .
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	cp debian/unity-webapps.pem .
 	eautoreconf
 }
 
