@@ -25,4 +25,5 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 	gnome-base/gnome-menus:3
 	>=media-sound/rhythmbox-2.98[dbus,python,zeitgeist]
 	unity-base/ubuntuone-client
-	unity-base/unity"
+	unity-base/unity
+	x11-themes/ubuntuone-client-data"

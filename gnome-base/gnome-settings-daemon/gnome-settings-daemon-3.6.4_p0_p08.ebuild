@@ -5,11 +5,9 @@ GNOME2_LA_PUNT="yes"
 inherit autotools base eutils gnome2 virtualx ubuntu-versionator
 
 MY_P="${PN}_${PV}"
-
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 URELEASE="raring"
 MY_P="${MY_P/daemon-/daemon_}"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org"

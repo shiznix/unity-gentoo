@@ -9,8 +9,6 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/libx/${MY_PN}"
 URELEASE="raring"
 
 DESCRIPTION="Ubuntu patched version of X.Org Xfixes library needed for Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
-
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 

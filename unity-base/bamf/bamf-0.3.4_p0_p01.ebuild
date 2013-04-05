@@ -70,4 +70,6 @@ src_install() {
 		/usr/share/applications/*.desktop > bamf.index
 	insinto /usr/share/applications
 	doins bamf.index
+
+	prune_libtool_files --modules
 }

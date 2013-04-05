@@ -1,11 +1,10 @@
 EAPI=4
 
-inherit autotools base eutils gnome2 ubuntu-versionator
+inherit autotools base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/o/${PN}"
 URELEASE="quantal-updates"
 UVER_PREFIX="+r357"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Ayatana Scrollbars use an overlay to ensure scrollbars take up no active screen real-estate"
 HOMEPAGE="http://launchpad.net/ayatana-scrollbar"
@@ -33,6 +32,7 @@ src_configure() {
 	pushd build-gtk2
 	../configure --prefix=/usr \
 		--disable-static \
+		--disable-tests \
 		--with-gtk=2 || die
 	popd
 
@@ -41,6 +41,7 @@ src_configure() {
 	pushd build-gtk3
 	../configure --prefix=/usr \
 		--disable-static \
+		--disable-tests \
 		--with-gtk=3 || die
 	popd
 }
@@ -70,5 +71,7 @@ src_install() {
 
 	rm -rf ${D}usr/etc &> /dev/null
 	exeinto /etc/X11/xinit/xinitrc.d/
-	doexe data/81overlay-scrollbar	
+	doexe data/81overlay-scrollbar
+
+	prune_libtool_files --modules
 }

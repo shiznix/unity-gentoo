@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit autotools multilib ubuntu-versionator
+inherit autotools eutils multilib ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/w/${PN}"
 URELEASE="raring"
@@ -66,4 +66,6 @@ src_install() {
 			${D}usr/lib/firefox/extensions/${emid}/ || die
 		dosym /usr/lib/firefox/extensions/${emid} /opt/firefox/extensions/${emid}
 	fi
+
+	prune_libtool_files --modules
 }

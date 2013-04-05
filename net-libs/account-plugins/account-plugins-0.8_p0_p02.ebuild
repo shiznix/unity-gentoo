@@ -1,5 +1,4 @@
 EAPI="5"
-GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes"
 
 inherit autotools base eutils gnome2 ubuntu-versionator

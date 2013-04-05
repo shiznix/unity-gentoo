@@ -1,5 +1,6 @@
 EAPI=4
 GCONF_DEBUG="no"
+GNOME2_LA_PUNT="yes"
 
 inherit base gnome2 ubuntu-versionator
 
@@ -7,7 +8,6 @@ MY_P="${PN}_${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Collection of GSettings schemas for GNOME desktop"
 HOMEPAGE="http://www.gnome.org/"

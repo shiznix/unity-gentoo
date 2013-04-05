@@ -70,4 +70,6 @@ src_install() {
 	emake -C libindicator DESTDIR="${D}" install || die
 	emake -C tools DESTDIR="${D}" install || die
 	popd
+
+	prune_libtool_files --modules
 }

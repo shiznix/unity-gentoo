@@ -1,5 +1,4 @@
 EAPI=4
-
 GNOME2_LA_PUNT="yes"
 
 inherit eutils gnome2 ubuntu-versionator

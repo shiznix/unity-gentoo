@@ -1,10 +1,10 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="quantal"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"
 HOMEPAGE="https://launchpad.net/ido"

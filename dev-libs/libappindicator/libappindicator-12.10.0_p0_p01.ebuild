@@ -81,4 +81,6 @@ src_install() {
 		make -C bindings/vala DESTDIR="${D}" install || die
 	fi
 	popd
+
+	prune_libtool_files --modules
 }

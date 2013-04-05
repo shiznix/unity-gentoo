@@ -1,8 +1,6 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7"
 RESTRICT_PYTHON_ABIS="3.*"
-GCONF_DEBUG="no"
-GNOME2_LA_PUNT="1"
 
 inherit autotools eutils gnome2 python ubuntu-versionator
 
@@ -10,11 +8,11 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER=""
 URELEASE="quantal"
 
-DESCRIPTION="Unity desktop default icon theme"
-HOMEPAGE="unity.ubuntu.com"
+DESCRIPTION="Monochrome icons for the Unity desktop (default icon theme)"
+HOMEPAGE="https://launchpad.net/ubuntu-mono"
 SRC_URI="${UURL}/${MY_P}.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3 CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~sparc-solaris ~x64-solaris ~x86-solaris"
 IUSE=""

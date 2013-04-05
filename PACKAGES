@@ -5,9 +5,6 @@ dev-libs/libaccounts-qt
 dev-libs/libappindicator
 dev-libs/libdbusmenu
 dev-libs/libindicator
-dev-libs/libqtbamf
-dev-libs/libqtdee
-dev-libs/libqtgconf
 dev-libs/libsignon-glib
 dev-libs/libtimezonemap
 dev-libs/libubuntuone
@@ -53,7 +50,6 @@ unity-base/indicator-datetime
 unity-base/indicator-messages
 unity-base/indicator-session
 unity-base/indicator-sound
-unity-base/launchpad-integration
 unity-base/nux
 unity-base/overlay-scrollbar
 unity-base/rhythmbox-ubuntuone
@@ -97,6 +93,7 @@ x11-themes/gtk-engines-unico
 x11-themes/humanity-icon-theme
 x11-themes/tangerine-icon-theme
 x11-themes/ubuntu-mono
+x11-themes/ubuntuone-client-data
 x11-themes/unity-asset-pool
 x11-wm/metacity
 www-client/chromium

@@ -1,11 +1,11 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libt/${PN}"
 UVER=""
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="GTK+3 timezone map widget used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libtimezonemap"

@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit mono ubuntu-versionator
+inherit eutils mono ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 URELEASE="raring"
@@ -11,7 +11,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -30,4 +30,5 @@ DEPEND="dev-lang/python
 
 src_install() {
 	emake DESTDIR="${D}" install || die "Install failed"
+	prune_libtool_files --modules
 }

@@ -1,4 +1,6 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
+
 PYTHON_DEPEND="2:2.7"
 #SUPPORT_PYTHON_ABIS="1"	# See bug notes below #
 RESTRICT_PYTHON_ABIS="3.*"
@@ -13,7 +15,6 @@ inherit distutils eutils gnome2-utils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Weather indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-weather"

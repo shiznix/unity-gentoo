@@ -1,11 +1,11 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit autotools base gnome2 ubuntu-versionator
 
 MY_PN="evolution-indicator"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/e/${MY_PN}"
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Indicator for the Evolution mail client used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/evolution-indicator"

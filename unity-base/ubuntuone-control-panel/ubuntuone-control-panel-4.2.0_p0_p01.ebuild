@@ -1,4 +1,6 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
+
 PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="3.*"
@@ -7,7 +9,6 @@ inherit distutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Ubuntu One control panel for the Unity desktop"
 HOMEPAGE="https://launchpad.net/ubuntuone-control-panel"
@@ -15,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -27,8 +28,9 @@ RDEPEND="${DEPEND}
 	dev-python/gnome-keyring-python
 	dev-python/httplib2
 	dev-python/notify-python
-	>=dev-python/oauth-1.0
-	>=dev-python/pygtk-2.10
+	dev-python/oauth
+	<=dev-python/oauthlib-0.3.7
+	dev-python/pygtk
 	dev-python/dirspec
 	dev-python/lazr-restfulclient
 	dev-python/pyinotify

@@ -1,4 +1,5 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
@@ -9,7 +10,6 @@ inherit distutils gnome2-utils ubuntu-versionator
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/g/${PN}"
 UVER="3"
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="A PyGTK+ based advanced clipboard manager"
 HOMEPAGE="http://launchpad.net/glipper"

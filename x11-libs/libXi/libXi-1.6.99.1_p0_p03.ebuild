@@ -10,8 +10,6 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/libx/${MY_PN}"
 URELEASE="raring"
 
 DESCRIPTION="X.Org Xi library patched for the Unity desktop"
-HOMEPAGE="http://unity.ubuntu.com/"
-
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 

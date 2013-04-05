@@ -1,2 +1,2 @@
 * USE="doc debug mono tests"
-* Check unneeded *.la files are being removed
+* Audit DEPEND and RDEPEND lists
