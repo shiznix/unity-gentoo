@@ -1,10 +1,10 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/t/${PN}"
 URELEASE="quantal"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Desktop service to integrate Telepathy with the messaging menu used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/telepathy-indicator"

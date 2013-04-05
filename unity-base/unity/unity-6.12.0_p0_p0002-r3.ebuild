@@ -1,11 +1,11 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2:2.7"
 
 inherit base gnome2 cmake-utils eutils python toolchain-funcs ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="quantal-updates"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"

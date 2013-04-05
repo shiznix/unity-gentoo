@@ -27,3 +27,8 @@ src_prepare() {
 		sed -e 's:unity-misc doc:unity-misc:' \
 			-i Makefile.in
 }
+
+src_install() {
+	emake DESTDIR="${D}" install
+	prune_libtool_files --modules
+}

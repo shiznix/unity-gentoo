@@ -1,4 +1,6 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
+
 PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="3.*"
@@ -10,7 +12,6 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${MY_PN}"
 UVER="1"
 URELEASE="raring"
 MY_P="${MY_PN}_${PV}"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Client for lazr.restful-based web services for the Unity desktop"
 HOMEPAGE="https://launchpad.net/lazr.restfulclient"

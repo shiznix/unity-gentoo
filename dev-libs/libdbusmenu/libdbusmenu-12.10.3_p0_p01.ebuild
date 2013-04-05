@@ -96,4 +96,6 @@ src_install() {
 		make -C libdbusmenu-gtk DESTDIR="${D}" install || die
 		make -C docs/libdbusmenu-gtk DESTDIR="${D}" install || die
 	popd
+
+	prune_libtool_files --modules
 }

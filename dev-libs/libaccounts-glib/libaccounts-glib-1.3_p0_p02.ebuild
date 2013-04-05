@@ -81,4 +81,5 @@ src_install() {
 	popd
 
 	rm -rf ${D}usr/doc
+	prune_libtool_files --modules
 }

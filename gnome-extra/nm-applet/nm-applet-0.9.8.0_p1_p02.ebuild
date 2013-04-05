@@ -11,7 +11,6 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${MY_PN}"
 URELEASE="raring"
 MY_P="${MY_P/applet-/applet_}"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="GNOME applet for NetworkManager patched for the Unity desktop"
 HOMEPAGE="http://projects.gnome.org/NetworkManager/"
@@ -74,7 +73,7 @@ src_configure() {
 }
 
 src_install() {
-	DESTDIR="${D}" emake install
+	gnome2_src_install
 
 	insinto /usr/share/icons/hicolor/22x22/apps
 	doins "${WORKDIR}"/debian/icons/22/*.png

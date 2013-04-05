@@ -4,7 +4,7 @@ SUPPORT_PYTHON_ABIS="1"
 
 AUTOTOOLS_AUTORECONF=y
 
-inherit base autotools-utils python ubuntu-versionator
+inherit base autotools-utils eutils python ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -90,4 +90,6 @@ src_install() {
 		insinto /usr/share/doc/${PN}/
 		doins -r examples
 	fi
+
+	prune_libtool_files --modules
 }

@@ -1,11 +1,11 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 UVER=""
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Help files for the Unity desktop"
 HOMEPAGE="https://launchpad.net/ubuntu-docs"

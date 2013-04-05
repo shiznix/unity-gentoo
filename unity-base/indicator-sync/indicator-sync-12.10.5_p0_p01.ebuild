@@ -1,11 +1,11 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit autotools gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.03.28.1"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Indicator for synchronisation processes status used by the Unity desktop"
 HOMEPAGE="http://launchpad.net/indicator-sync"

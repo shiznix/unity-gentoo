@@ -1,11 +1,11 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.02.19"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="System bluetooth indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-bluetooth"

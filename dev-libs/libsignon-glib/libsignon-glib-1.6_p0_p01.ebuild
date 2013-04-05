@@ -1,13 +1,13 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7 3:3.2"
 
-inherit base python ubuntu-versionator
+inherit base eutils python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libs/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="GObject introspection data for the Signon library for the Unity desktop"
-HOMEPAGE="http://code.google.com/p/accounts-sso/"
+HOMEPAGE="https://launchpad.net/libsignon-glib"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
@@ -80,4 +80,5 @@ src_install() {
 	popd
 
 	rm -rf ${D}usr/doc
+	prune_libtool_files --modules
 }

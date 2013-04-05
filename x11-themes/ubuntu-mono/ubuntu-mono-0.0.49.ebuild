@@ -1,8 +1,6 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7"
 RESTRICT_PYTHON_ABIS="3.*"
-GCONF_DEBUG="no"
-GNOME2_LA_PUNT="1"
 
 inherit autotools eutils gnome2 python ubuntu-versionator
 

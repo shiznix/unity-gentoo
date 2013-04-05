@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit autotools multilib ubuntu-versionator
+inherit autotools eutils multilib ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u/${PN}"
 URELEASE="raring"
@@ -25,4 +25,9 @@ S="${WORKDIR}/unity_webapps_chromium-${PV}"
 src_prepare() {
 	cp "${WORKDIR}/debian/unity-webapps.pem" .
 	eautoreconf
+}
+
+src_install() {
+	emake DESTDIR="${D}" install
+	prune_libtool_files --modules
 }

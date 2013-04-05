@@ -28,3 +28,8 @@ src_prepare() {
         python_convert_shebangs -r 2 .
         python_src_prepare
 }
+
+src_install() {
+	emake DESTDIR="${D}" install
+	prune_libtool_files --modules
+}

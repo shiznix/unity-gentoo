@@ -1,5 +1,6 @@
 EAPI=4
 GCONF_DEBUG="yes"
+GNOME2_LA_PUNT="yes"
 
 inherit autotools gnome2 ubuntu-versionator
 
@@ -9,7 +10,6 @@ S="${WORKDIR}/${PN}-${PV}"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 URELEASE="raring"
 MY_P="${MY_P/session-/session_}"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Gnome session manager patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"

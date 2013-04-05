@@ -1,2 +1,1 @@
 * USE="doc debug mono tests"
-* Check unneeded *.la files are being removed

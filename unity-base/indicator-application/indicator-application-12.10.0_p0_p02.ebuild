@@ -22,3 +22,8 @@ DEPEND="dev-libs/libappindicator
 src_prepare() {
 	append-cflags -Wno-error
 }
+
+src_install() {
+	emake DESTDIR="${D}" install
+	prune_libtool_files --modules
+}

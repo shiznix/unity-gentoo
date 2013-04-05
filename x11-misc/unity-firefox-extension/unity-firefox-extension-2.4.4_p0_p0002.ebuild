@@ -1,6 +1,6 @@
-EAPI=4
+EAPI=5
 
-inherit autotools base ubuntu-versionator
+inherit autotools base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="quantal-updates"
@@ -53,4 +53,6 @@ src_install() {
 			"${D}usr/lib/firefox/extensions/${emid}/" || die
 	popd
 	dosym /usr/lib/firefox/extensions/${emid} /opt/firefox/extensions/${emid}
+
+	prune_libtool_files --modules
 }

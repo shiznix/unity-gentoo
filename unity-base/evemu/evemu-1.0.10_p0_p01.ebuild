@@ -1,4 +1,5 @@
 EAPI=4
+PYTHON_DEPEND="2:2.7"
 
 inherit base eutils python ubuntu-versionator
 
@@ -15,10 +16,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="!!unity-base/utouch-evemu
-	dev-lang/python:2.7"
+DEPEND="!!unity-base/utouch-evemu"
 
 pkg_setup() {
 	python_set_active_version 2
 	python_pkg_setup
+}
+
+src_install() {
+	emake DESTDIR="${D}" install
+	prune_libtool_files --modules
 }

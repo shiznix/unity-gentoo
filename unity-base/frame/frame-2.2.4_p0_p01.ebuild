@@ -28,3 +28,8 @@ pkg_pretend() {
 		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
 }
+
+src_install() {
+	emake DESTDIR="${D}" install
+	prune_libtool_files --modules
+}

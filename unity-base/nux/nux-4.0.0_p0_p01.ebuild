@@ -71,4 +71,6 @@ src_configure() {
 src_install() {
 	emake DESTDIR="${D}" install || die
 	dosym /usr/libexec/nux/unity_support_test /usr/lib/nux/unity_support_test
+
+	prune_libtool_files --modules
 }

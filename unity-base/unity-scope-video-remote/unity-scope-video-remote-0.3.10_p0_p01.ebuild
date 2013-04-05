@@ -1,4 +1,6 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
+
 PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
 
@@ -6,7 +8,6 @@ inherit distutils eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="quantal-updates"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Remote video feeds fetched for the Unity desktop video lens"
 HOMEPAGE="https://launchpad.net/unity-scope-video-remote"

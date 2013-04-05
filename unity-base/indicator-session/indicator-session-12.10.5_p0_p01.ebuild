@@ -1,11 +1,11 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="quantal"
 UVER_PREFIX="daily13.03.08"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Indicator showing session management, status and user switching used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-session"

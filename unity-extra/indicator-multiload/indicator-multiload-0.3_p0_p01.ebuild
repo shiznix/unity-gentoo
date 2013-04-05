@@ -1,10 +1,10 @@
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Graphical system load indicator for CPU, ram, etc. used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-multiload"

@@ -80,4 +80,6 @@ src_install() {
         pushd build-python3
         emake DESTDIR="${D}" install || die
         popd
+
+	prune_libtool_files --modules
 }

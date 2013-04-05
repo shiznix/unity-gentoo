@@ -5,11 +5,9 @@ GNOME2_LA_PUNT="yes"
 inherit autotools base eutils gnome2 virtualx ubuntu-versionator
 
 MY_P="${PN}_${PV}"
-
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${PN}"
 URELEASE="raring"
 MY_P="${MY_P/-/_}"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Nautilus"
@@ -40,7 +38,6 @@ COMMON_DEPEND="
 
 	gnome-base/dconf
 	gnome-base/gsettings-desktop-schemas
-	unity-base/launchpad-integration
 	>=x11-libs/libnotify-0.7:=
 	x11-libs/libX11
 	x11-libs/libXext
@@ -74,6 +71,9 @@ PDEPEND="gnome? (
 # Need gvfs[gtk] for recent:/// support
 
 src_prepare() {
+	`# Disable launchpad integration` \
+	sed -e 's:01_lpi:#01_lpi:g' \
+		-i "${WORKDIR}/debian/patches/series"
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
