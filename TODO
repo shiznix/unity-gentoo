@@ -1,1 +1,2 @@
 * USE="doc debug mono tests"
+* Audit DEPEND and RDEPEND lists
