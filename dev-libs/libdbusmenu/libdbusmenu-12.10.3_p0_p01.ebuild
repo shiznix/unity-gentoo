@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="3"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+introspection +gtk"
 RESTRICT="mirror"
 
@@ -26,6 +26,7 @@ RDEPEND=">=dev-libs/glib-2.35.4:2
 	dev-libs/dbus-glib
 	dev-libs/json-glib
 	dev-libs/libxml2:2
+	dev-util/gtk-doc
 	introspection? ( >=dev-libs/gobject-introspection-1 )
 	sys-apps/dbus
 	x11-libs/gtk+:2

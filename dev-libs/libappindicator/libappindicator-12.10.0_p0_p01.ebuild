@@ -19,6 +19,7 @@ IUSE="vala"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/libindicator:3
+	dev-libs/libdbusmenu
 	dev-dotnet/gtk-sharp:2
 	dev-libs/dbus-glib
 	dev-libs/xapian-bindings[python]
