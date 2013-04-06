@@ -4,7 +4,7 @@ inherit base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.01"
+UVER_PREFIX="daily13.04.03"
 
 DESCRIPTION="Export GTK menus over DBus"
 HOMEPAGE="https://launchpad.net/appmenu-gtk"

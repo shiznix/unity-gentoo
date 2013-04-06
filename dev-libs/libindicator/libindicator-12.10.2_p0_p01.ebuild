@@ -6,7 +6,7 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libi/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 UVER_PREFIX="daily13.02.25"
 
 DESCRIPTION="A set of symbols and convenience functions that all indicators would like to use"

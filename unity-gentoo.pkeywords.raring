@@ -1,6 +1,5 @@
 ## Packages masked for testing for the upcoming Raring release ##
 
-dev-libs/libdbusmenu **
 dev-libs/libindicator **
 dev-libs/libunity **
 unity-base/bamf **

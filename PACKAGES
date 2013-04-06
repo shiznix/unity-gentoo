@@ -72,9 +72,14 @@ unity-base/unity-lens-video
 unity-base/unity-meta
 unity-base/unity-scope-video-remote
 unity-base/webapps
+unity-extra/drawers
 unity-extra/glipper
+unity-extra/indicator-classicmenu
+unity-extra/indicator-evolution
+unity-extra/indicator-multiload
 unity-extra/indicator-power
 unity-extra/indicator-weather
+unity-extra/unity-lens-cooking
 unity-extra/unity-lens-radios
 unity-extra/unsettings
 x11-base/xorg-server

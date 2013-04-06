@@ -1,7 +1,7 @@
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
-inherit eutils gnome2 ubuntu-versionator
+inherit eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="quantal"
@@ -24,6 +24,10 @@ DEPEND="dev-libs/libappindicator
 	gnome-base/gnome-control-center
 	>=gnome-extra/evolution-data-server-3.6
 	unity-base/ido"
+
+src_prepare() {
+	append-cflags -Wno-error
+}
 
 src_configure() {
 	econf --with-ccpanel

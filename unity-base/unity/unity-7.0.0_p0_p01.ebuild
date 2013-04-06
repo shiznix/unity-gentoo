@@ -6,7 +6,7 @@ inherit base gnome2 cmake-utils eutils python toolchain-funcs ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.04.01"
+UVER_PREFIX="daily13.04.05.2"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"

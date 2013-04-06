@@ -4,7 +4,7 @@ inherit base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/b/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.07"
+UVER_PREFIX="daily13.04.03"
 
 DESCRIPTION="BAMF Application Matching Framework"
 HOMEPAGE="https://launchpad.net/bamf"
