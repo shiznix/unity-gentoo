@@ -7,7 +7,7 @@ inherit base eutils autotools python ubuntu-versionator
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 URELEASE="quantal-updates"
 
-DESCRIPTION="Binding to get places into the Unity desktop launcher"
+DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"

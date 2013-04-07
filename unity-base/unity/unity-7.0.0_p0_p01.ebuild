@@ -46,7 +46,7 @@ DEPEND="dev-libs/boost
 	>=gnome-extra/polkit-gnome-0.105
 	media-libs/clutter-gtk:1.0
 	sys-apps/dbus
-	>=sys-devel/gcc-4.7.3:4.7
+	>=sys-devel/gcc-4.8.0:4.8
 	>=unity-base/bamf-0.4.0
 	>=unity-base/compiz-0.9.9
 	unity-base/dconf-qt
