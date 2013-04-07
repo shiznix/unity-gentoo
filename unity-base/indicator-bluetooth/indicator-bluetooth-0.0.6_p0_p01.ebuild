@@ -34,3 +34,11 @@ src_prepare() {
         export VALA_API_GEN=$(type -p vapigen-0.16)
 	eautoreconf
 }
+
+src_install() {
+	gnome2_src_install
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf ${ED}usr/share/locale
+}

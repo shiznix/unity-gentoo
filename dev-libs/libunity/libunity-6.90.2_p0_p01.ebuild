@@ -8,7 +8,7 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 URELEASE="quantal-updates"
 UVER_PREFIX="daily13.03.06.1"
 
-DESCRIPTION="Binding to get places into the Unity desktop launcher"
+DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
@@ -45,41 +45,43 @@ src_configure() {
 
         # Build PYTHON2 support #
 	export EPYTHON="$(PYTHON -2)"
-        [[ -d build-python2 ]] || mkdir build-python2
-        pushd build-python2
-	../configure --prefix=/usr || die
-        popd
+	cd "${WORKDIR}"
+	cp -rf "${S}" "${S}"-build_python2
+	pushd "${S}"-build_python2
+		./configure --prefix=/usr || die
+	popd
 
-        # Build PYTHON3 support #
+	# Build PYTHON3 support #
 	export EPYTHON="$(PYTHON -3)"
-        [[ -d build-python3 ]] || mkdir build-python3
-        pushd build-python3
-	../configure --prefix=/usr || die
-        popd
+	cd "${WORKDIR}"
+	cp -rf "${S}" "${S}"-build_python3
+	pushd "${S}"-build_python3
+		./configure --prefix=/usr || die
+	popd
 }
 
 src_compile() {
-        # Build PYTHON2 support #
-        pushd build-python2
-        emake || die
-        popd
+	# Build PYTHON2 support #
+	pushd "${S}"-build_python2
+		emake || die
+	popd
 
-        # Build PYTHON3 support #
-        pushd build-python3
-        emake || die
-        popd
+	# Build PYTHON3 support #
+	pushd "${S}"-build_python3
+		emake || die
+	popd
 }
 
 src_install() {
-        # Install PYTHON2 support #
-        pushd build-python2
-        emake DESTDIR="${D}" install || die
-        popd
+	# Install PYTHON2 support #
+	pushd "${S}"-build_python2
+		emake DESTDIR="${D}" install || die
+	popd
 
-        # Install PYTHON3 support #
-        pushd build-python3
-        emake DESTDIR="${D}" install || die
-        popd
+	# Install PYTHON3 support #
+	pushd "${S}"-build_python3
+		emake DESTDIR="${D}" install || die
+	popd
 
 	prune_libtool_files --modules
 }

@@ -19,7 +19,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-lang/vala:0.14[vapigen]
-	=dev-libs/libubuntuone-${PV}*
+	dev-libs/libubuntuone
 	dev-libs/libzeitgeist
 	dev-python/pygobject:2
 	gnome-base/gnome-menus:3
