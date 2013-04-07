@@ -1,14 +1,15 @@
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
-inherit eutils flag-o-matic gnome2 ubuntu-versionator
+inherit base eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="quantal"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"
-SRC_URI="${UURL}/${PN}-${PV}.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -26,6 +27,7 @@ DEPEND="dev-libs/libappindicator
 	unity-base/ido"
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"
 	append-cflags -Wno-error
 }
 
