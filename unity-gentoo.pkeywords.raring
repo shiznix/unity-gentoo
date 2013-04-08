@@ -4,8 +4,5 @@ dev-libs/libindicator **
 dev-libs/libunity **
 unity-base/bamf **
 unity-base/compiz **
-unity-base/indicator-datetime **
-unity-base/indicator-session **
-unity-base/indicator-sync **
 unity-base/nux **
 unity-base/unity **
