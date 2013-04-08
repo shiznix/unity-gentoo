@@ -28,4 +28,6 @@ src_prepare() {
 		for file in $(grep -r doc/doc.pri * | grep .pro | awk -F: '{print $1}'); do
 			sed -e '/doc\/doc.pri/d' -i "${file}"
 		done
+
+	epatch "${FILESDIR}/0001-Do-not-initialize-QString-to-NULL.patch"
 }

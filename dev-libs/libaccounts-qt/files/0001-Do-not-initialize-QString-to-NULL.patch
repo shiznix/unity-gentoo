@@ -1,0 +1,35 @@
+From beb88cdcaf9636c56b16a364cbac394683aa11c2 Mon Sep 17 00:00:00 2001
+From: Jaroslav Reznik <jreznik@redhat.com>
+Date: Thu, 7 Mar 2013 13:43:15 +0100
+Subject: [PATCH] Do not initialize QString to NULL
+
+Pass QString() as otherwise it causes build failures with GCC 4.8
+NULL leads to QString::QString(const char*) is private error.
+---
+ Accounts/account.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Accounts/account.h b/Accounts/account.h
+index 53a66ad..2a72118 100644
+--- a/Accounts/account.h
++++ b/Accounts/account.h
+@@ -105,7 +105,7 @@ public:
+ 
+     bool supportsService(const QString &serviceType) const;
+ 
+-    ServiceList services(const QString &serviceType = NULL) const;
++    ServiceList services(const QString &serviceType = QString()) const;
+     ServiceList enabledServices() const;
+ 
+     bool enabled() const;
+@@ -169,7 +169,7 @@ public:
+                      bool default_value = false,
+                      SettingSource *source = 0) const;
+ 
+-    Watch *watchKey(const QString &key = NULL);
++    Watch *watchKey(const QString &key = QString());
+ 
+     void sync();
+     bool syncAndBlock();
+-- 
+1.8.1.4

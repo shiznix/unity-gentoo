@@ -1,7 +1,7 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7 3:3.2"
 
-inherit base python ubuntu-versionator
+inherit base flag-o-matic python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
 URELEASE="raring"
@@ -29,6 +29,8 @@ MAKEOPTS="${MAKEOPTS} -j1"
 src_prepare() {
 	./autogen.sh
 	make distclean
+
+	append-cflags -Wno-error
 }
 
 src_configure() {
