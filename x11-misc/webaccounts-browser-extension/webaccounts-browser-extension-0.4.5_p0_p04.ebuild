@@ -21,8 +21,8 @@ DEPEND="dev-libs/json-glib
 	dev-util/xxd
 	gnome-base/dconf
 	unity-base/gnome-control-center-signon
-	firefox? ( www-client/firefox
-			x11-misc/unity-firefox-extension )
+	firefox? ( || ( www-client/firefox www-client/firefox-bin ) 
+		x11-misc/unity-firefox-extension )
 	chromium? ( www-client/chromium
 			x11-misc/unity-chromium-extension )"
 # Webapp integration doesn't work properly for www-client/firefox-bin or www-client/google-chrome #
@@ -68,4 +68,14 @@ src_install() {
 	fi
 
 	prune_libtool_files --modules
+}
+
+pkg_postinst() {
+	if has_version www-client/firefox-bin; then
+		elog
+		elog "www-client/firefox-bin is known to not work with many webapps"
+		elog "and so is completely unsupported but is included"
+		elog "for your convenience should you choose to use it"
+		elog
+	fi
 }
