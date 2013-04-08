@@ -28,6 +28,8 @@ src_prepare() {
 	use introspection && \
 		export VALAC=$(type -P valac-0.14) && \
 		export VALA_API_GEN=$(type -p vapigen-0.14)
+	sed -e 's:Werror:Wno-error:g' \
+		-i configure || die
 }
 
 src_configure() {

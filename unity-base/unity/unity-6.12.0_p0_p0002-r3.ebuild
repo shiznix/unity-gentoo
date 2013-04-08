@@ -43,10 +43,10 @@ DEPEND="dev-libs/boost
 	media-libs/clutter-gtk:1.0
 	sys-apps/dbus
 	>=sys-devel/gcc-4.6
-	unity-base/bamf
-	>=unity-base/compiz-0.9.8
+	=unity-base/bamf-0.3*
+	=unity-base/compiz-0.9.8*
 	unity-base/dconf-qt
-	>=unity-base/nux-3.0.0
+	=unity-base/nux-3*
 	unity-base/overlay-scrollbar
 	x11-base/xorg-server[dmx]
 	x11-libs/libXfixes
@@ -82,6 +82,13 @@ src_prepare() {
 	# Remove autopilot test suite files #
 	sed -e '/python setup.py install/d' \
 		-i tests/CMakeLists.txt || die
+
+	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
+	#       resulting in build failure with 'fatal error: unitycore_pch.hh: No such file or directory' #
+	export CMAKE_BUILD_TYPE=none
+
+	# Disable '-Werror'
+	sed -i 's/[ ]*-Werror[ ]*//g' CMakeLists.txt services/CMakeLists.txt
 }
 
 src_configure() {

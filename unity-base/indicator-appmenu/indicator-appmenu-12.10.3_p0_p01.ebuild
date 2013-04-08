@@ -8,7 +8,7 @@ URELEASE="quantal"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-appmenu"
-SRC_URI="${UURL}/${PN}-${PV}.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

@@ -4,12 +4,11 @@ PYTHON_DEPEND="2:2.7 3:3.2"
 inherit base python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Library for single signon for the Unity desktop"
 HOMEPAGE="http://code.google.com/p/accounts-sso/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -28,11 +27,8 @@ DEPEND="${RDEPEND}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	./autogen.sh
+	make distclean
 }
 
 src_configure() {
