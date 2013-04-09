@@ -1,6 +1,6 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7 3:3.2"
-SUPPORT_PYTHON_ABIS="1"
+#SUPPORT_PYTHON_ABIS="1"
 
 inherit base eutils autotools python ubuntu-versionator
 
@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

@@ -23,6 +23,7 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-base/indicator-datetime
 	unity-base/indicator-session
 	unity-base/indicator-sound
+	unity-base/indicator-sync
 	unity-base/ubuntuone-control-panel
 	unity-base/unity
 	unity-base/unity-lens-applications
