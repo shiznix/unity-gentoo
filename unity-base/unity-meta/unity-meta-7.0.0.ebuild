@@ -32,6 +32,7 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-base/unity-lens-photos
 	unity-base/unity-lens-video
 	unity-base/unity-scope-video-remote
+	x11-themes/ubuntu-wallpapers
 	webapps? ( unity-base/webapps
 			unity-extra/unsettings
 			x11-misc/webaccounts-browser-extension
