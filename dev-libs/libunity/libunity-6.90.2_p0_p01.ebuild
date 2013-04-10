@@ -5,7 +5,7 @@ PYTHON_DEPEND="2:2.7 3:3.2"
 inherit base eutils autotools python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
-URELEASE="quantal-updates"
+URELEASE="raring"
 UVER_PREFIX="daily13.03.06.1"
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
