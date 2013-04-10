@@ -7,7 +7,7 @@ S="${WORKDIR}/${PN}-${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libi/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.02.25"
+UVER_PREFIX="daily13.04.09"
 
 DESCRIPTION="A set of symbols and convenience functions that all indicators would like to use"
 HOMEPAGE="https://launchpad.net/libindicator"

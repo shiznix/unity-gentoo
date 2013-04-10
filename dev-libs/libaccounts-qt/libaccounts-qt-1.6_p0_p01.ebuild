@@ -3,11 +3,12 @@ EAPI=4
 inherit qt4-r2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="bzr13.02.27"
 
 DESCRIPTION="QT library for Single Sign On framework for the Unity desktop"
 HOMEPAGE="http://code.google.com/p/accounts-sso/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.bz2"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-2"
 SLOT="0"
@@ -21,7 +22,7 @@ RDEPEND="dev-libs/libaccounts-glib
 	doc? ( app-doc/doxygen )"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/accounts-qt-${PV}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	use doc || \

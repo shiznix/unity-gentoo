@@ -10,12 +10,13 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/d/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="~daily13.03.13.1"
 
 DESCRIPTION="Provide objects allowing to create Model-View-Controller type programs across DBus"
 HOMEPAGE="https://launchpad.net/dee/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-        ${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+        ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 SLOT="0"
 LICENSE="GPL-3"
@@ -29,14 +30,18 @@ DEPEND="${RDEPEND}
 	dev-util/gtk-doc
 	test? ( dev-util/dbus-test-runner )"
 
-PATCHES=( "${WORKDIR}/${MY_P}-${UVER}.diff" )
+PATCHES=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	./autogen.sh  
+	make distclean
 	sed \
 		-e '/GCC_FLAGS/s:-g::' \
 		-e 's:vapigen:vapigen-0.14:g' \
 		-i configure{,.ac} || die
 	autotools-utils_src_prepare
+	base_src_prepare
 }
 
 src_configure() {
