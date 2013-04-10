@@ -42,6 +42,12 @@ DEPEND="${RDEPEND}
 		>=dev-lang/vala-0.16.1-r1
 		$(vala_depend) )"
 
+pkg_pretend() {
+        if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
+                die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
+        fi
+}
+
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-0.6.21-gentoo-system-users.patch"
 	epatch "${FILESDIR}/${PN}-0.6.29-32bit-crash.patch" # bug #445894, fixed in 0.6.30
