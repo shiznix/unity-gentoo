@@ -3,7 +3,7 @@ EAPI=4
 inherit qt4-r2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 UVER_PREFIX="bzr13.02.27"
 
 DESCRIPTION="QT library for Single Sign On framework for the Unity desktop"
