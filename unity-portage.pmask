@@ -25,4 +25,5 @@ x11-libs/libXi::gentoo
 x11-proto/fixesproto::gentoo
 x11-themes/gtk-engines-unico::gentoo
 x11-wm/metacity::gentoo
+x11-misc/lightdm::gentoo
 sys-apps/accountsservice::gentoo
