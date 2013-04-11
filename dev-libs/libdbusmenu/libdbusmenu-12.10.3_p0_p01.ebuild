@@ -39,11 +39,11 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 PATCHES+=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
+MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	base_src_prepare
 	eautoreconf
-	export MAKEOPTS="${MAKEOPTS} -j1"
 	use introspection && \
 		export VALA_API_GEN=$(type -P vapigen-0.14)
 }

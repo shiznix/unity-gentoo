@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit base eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -27,13 +27,13 @@ DEPEND="${RDEPEND}
         !<${CATEGORY}/${PN}-0.4.1-r201"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+MAKEOPTS="${MAKEOPTS} -j1"
 
-export MAKEOPTS="${MAKEOPTS} -j1"
+src_prepare() {
+	eautoreconf
+}
 
 src_configure() {
-	./autogen.sh
-	make distclean
-
 	# Build GTK2 support #
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2

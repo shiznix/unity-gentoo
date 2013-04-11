@@ -1,14 +1,14 @@
 EAPI=4
 
-inherit base eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="daily13.02.26"
 
 DESCRIPTION="Miscellaneous modules for the Unity desktop"
 HOMEPAGE="https://launchpad.net/libunity-misc"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
@@ -19,13 +19,14 @@ RESTRICT="mirror"
 DEPEND="x11-libs/gtk+:3
 	x11-libs/libXfixes"
 
-src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
+src_prepare() {
         # Make docs optional #
 	! use doc && \
 		sed -e 's:unity-misc doc:unity-misc:' \
-			-i Makefile.in
+			-i Makefile.am
+	eautoreconf
 }
 
 src_install() {
