@@ -23,7 +23,7 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libindicate-qt
 	dev-libs/libunity
 	net-libs/telepathy-glib
-	unity-base/indicator-messages"
+	unity-indicators/indicator-messages"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

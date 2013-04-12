@@ -1,2 +1,20 @@
 move unity-extra/indicator-power unity-base/indicator-power
 move x11-themes/ubuntu-mono x11-themes/ubuntu-themes
+
+move unity-base/indicator-applet unity-indicators/indicator-applet
+move unity-base/indicator-application unity-indicators/indicator-application
+move unity-base/indicator-appmenu unity-indicators/indicator-appmenu
+move unity-base/indicator-bluetooth unity-indicators/indicator-bluetooth
+move unity-base/indicator-datetime unity-indicators/indicator-datetime
+move unity-base/indicator-messages unity-indicators/indicator-messages
+move unity-base/indicator-power unity-indicators/indicator-power
+move unity-base/indicator-session unity-indicators/indicator-session
+move unity-base/indicator-sound unity-indicators/indicator-sound
+move unity-base/indicator-sync unity-indicators/indicator-sync
+
+move unity-base/unity-lens-applications unity-lenses/unity-lens-applications
+move unity-base/unity-lens-files unity-lenses/unity-lens-files
+move unity-base/unity-lens-music unity-lenses/unity-lens-music
+move unity-base/unity-lens-photos unity-lenses/unity-lens-photos
+move unity-base/unity-lens-video unity-lenses/unity-lens-video
+move unity-base/unity-scope-video-remote unity-lenses/unity-scope-video-remote

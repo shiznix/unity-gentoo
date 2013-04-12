@@ -1,9 +1,7 @@
 EAPI=4
-GNOME2_LA_PUNT="yes"
 
-PYTHON_DEPEND="2:2.7"
+PYTHON_DEPEND="2:2.7 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
 
 inherit distutils ubuntu-versionator
 
@@ -19,5 +17,3 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
-
-DEPEND="dev-lang/python"

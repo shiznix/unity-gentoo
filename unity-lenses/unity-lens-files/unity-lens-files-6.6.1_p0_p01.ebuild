@@ -33,7 +33,7 @@ DEPEND="dev-lang/vala:0.16[vapigen]
 	gnome-extra/zeitgeist[dbus,fts,-passiv]
 	gnome-extra/zeitgeist-datahub
 	unity-base/unity
-	unity-base/unity-lens-applications"
+	unity-lenses/unity-lens-applications"
 
 src_configure() {
 	export VALAC=$(type -P valac-0.16)

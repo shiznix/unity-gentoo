@@ -21,7 +21,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="unity-base/unity
-	unity-base/unity-lens-video"
+	unity-lenses/unity-lens-video"
 
 src_prepare() {
 	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"
