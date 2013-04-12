@@ -1,14 +1,15 @@
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
-inherit base eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/t/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="daily13.03.01"
 
 DESCRIPTION="Desktop service to integrate Telepathy with the messaging menu used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/telepathy-indicator"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -24,7 +25,10 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 	net-libs/telepathy-glib
 	unity-base/indicator-messages"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 src_prepare() {
         export VALAC=$(type -P valac-0.14)
         export VALA_API_GEN=$(type -p vapigen-0.14)
+	eautoreconf
 }

@@ -1,15 +1,16 @@
 EAPI=4
-PYTHON_DEPEND="2:2.7"
+PYTHON_DEPEND="3:3.2"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit base eutils python ubuntu-versionator
+inherit autotools eutils python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-URELEASE="quantal-updates"
+URELEASE="raring"
+UVER_PREFIX="daily13.04.03"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"
 HOMEPAGE="https://launchpad.net/geis"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -17,16 +18,17 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="!!unity-base/utouch-geis
-	!!unity-base/utouch-grail
-	unity-base/grail"
+DEPEND="unity-base/grail"
+
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	sed -i 's/python >= 2.7/python-2.7 >= 2.7/g' configure
-
-	export EPYTHON="$(PYTHON -2)"
-        python_convert_shebangs -r 2 .
-        python_src_prepare
+	sed -e "s:python3:python-3.2:" \
+		-i configure.ac || die
+	eautoreconf
+	export EPYTHON="$(PYTHON -3)"
+	python_convert_shebangs -r 3 .
+	python_src_prepare
 }
 
 src_install() {
