@@ -38,6 +38,5 @@ DEPEND="app-backup/deja-dup[nautilus]
 	webapps? ( unity-base/webapps
 			unity-extra/unsettings
 			x11-misc/webaccounts-browser-extension
-			x11-misc/webapps-greasemonkey )
-	chat? ( net-im/empathy )"
+			x11-misc/webapps-greasemonkey )"
 RDEPEND="${DEPEND}"
