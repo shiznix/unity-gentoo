@@ -45,5 +45,8 @@ src_install() {
 	insinto /usr/share/icons
 	doins -r unity-icon-theme
 
+	insinto /usr/share/icons/hicolor/32x32
+	doins account-plugins-icons/*
+
 	dodoc COPYRIGHT
 }

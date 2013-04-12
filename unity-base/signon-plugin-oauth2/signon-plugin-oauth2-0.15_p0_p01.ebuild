@@ -3,7 +3,7 @@ EAPI=4
 inherit base qt4-r2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/s/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Single Signon oauth2 plugin used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-plugin-oauth2"
@@ -29,6 +29,9 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
+
+	sed -e "s:-Werror::g" \
+		-i "common-project-config.pri" || die
 }
 
 src_install() {

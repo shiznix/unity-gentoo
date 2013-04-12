@@ -1,15 +1,15 @@
 EAPI="5"
 GNOME2_LA_PUNT="yes"
 
-inherit autotools base eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="bzr13.04.05"
 
 DESCRIPTION="Online account plugin for gnome-control-center used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/online-accounts-gnome-control-center"
-SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -34,12 +34,8 @@ DEPEND="${RDEPEND}
         virtual/pkgconfig
 	x11-libs/gtk+:3"
 
-S="${WORKDIR}/credentials-control-center-${PV}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
 	eautoreconf
 }
