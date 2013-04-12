@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit base eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/b/${PN}"
 URELEASE="raring"
@@ -31,14 +31,13 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 src_prepare() {
 	export VALAC=$(type -P valac-0.14) && \
 	export VALA_API_GEN=$(type -p vapigen-0.14)
-	epatch "${FILESDIR}/libbamf3.pc_missing-libwnck.diff"
+	sed -e "s:-Werror::g" \
+		-i "configure.ac" || die
+	eautoreconf
 }
 
 src_configure() {
-	sed -e "s:-Werror::g" \
-		-i "configure.ac" || die
-
-	./autogen.sh --prefix=/usr \
+	econf \
 		--enable-introspection=yes \
 		--disable-static || die
 }

@@ -3,11 +3,12 @@ EAPI=4
 inherit eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="daily13.03.29"
 
 DESCRIPTION="Unity desktop icon theme"
 HOMEPAGE="https://launchpad.net/unity-asset-pool"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="CC-BY-SA-3.0"
 SLOT="0"
@@ -23,6 +24,12 @@ DEPEND="${RDEPEND}
 	>=dev-util/pkgconfig-0.19
 	>=sys-devel/gettext-0.15"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
+src_prepare() {
+	:
+}
+
 src_configure() {
 	:
 }
@@ -37,6 +44,9 @@ src_install() {
 
 	insinto /usr/share/icons
 	doins -r unity-icon-theme
+
+	insinto /usr/share/icons/hicolor/32x32
+	doins account-plugins-icons/*
 
 	dodoc COPYRIGHT
 }

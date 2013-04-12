@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit base eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
 URELEASE="raring"
@@ -23,8 +23,7 @@ DEPEND="unity-base/indicator-appmenu
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	./autogen.sh
-	make distclean
+	eautoreconf
 }
 
 src_configure() {

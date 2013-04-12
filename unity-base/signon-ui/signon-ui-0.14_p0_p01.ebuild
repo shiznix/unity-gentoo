@@ -3,11 +3,11 @@ EAPI=4
 inherit qt4-r2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/s/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-ui"
-SRC_URI="${UURL}/${MY_P}.orig.tar.bz2"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"

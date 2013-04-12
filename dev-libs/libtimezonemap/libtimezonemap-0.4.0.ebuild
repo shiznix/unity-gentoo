@@ -1,7 +1,7 @@
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
-inherit base eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libt/${PN}"
 UVER=""
@@ -24,5 +24,5 @@ DEPEND="dev-libs/glib:2
 	x11-libs/gtk+:3"
 
 src_prepare() {
-	./autogen.sh
+	eautoreconf
 }

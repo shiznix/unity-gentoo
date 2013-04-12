@@ -1,1 +1,2 @@
 move unity-extra/indicator-power unity-base/indicator-power
+move x11-themes/ubuntu-mono x11-themes/ubuntu-themes

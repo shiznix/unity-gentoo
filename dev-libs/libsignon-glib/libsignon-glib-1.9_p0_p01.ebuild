@@ -4,7 +4,7 @@ PYTHON_DEPEND="2:2.7 3:3.2"
 inherit base eutils python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libs/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="GObject introspection data for the Signon library for the Unity desktop"
 HOMEPAGE="https://launchpad.net/libsignon-glib"

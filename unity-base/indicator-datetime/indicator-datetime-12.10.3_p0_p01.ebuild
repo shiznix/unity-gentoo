@@ -1,7 +1,7 @@
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
-inherit eutils flag-o-matic gnome2 ubuntu-versionator
+inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="raring"
@@ -30,10 +30,12 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	append-cflags -Wno-error
+	eautoreconf
 }
 
 src_configure() {
-	./autogen.sh --prefix=/usr \
+	econf \
+		--prefix=/usr \
 		--with-ccpanel
 }
 

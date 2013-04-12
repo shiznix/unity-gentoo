@@ -1,13 +1,13 @@
 EAPI=4
 
-inherit base eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libi/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.04.09"
+UVER_PREFIX="daily13.04.10"
 
 DESCRIPTION="A set of symbols and convenience functions that all indicators would like to use"
 HOMEPAGE="https://launchpad.net/libindicator"
@@ -27,13 +27,13 @@ DEPEND="${RDEPEND}
         !<${CATEGORY}/${PN}-0.4.1-r201"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+MAKEOPTS="${MAKEOPTS} -j1"
 
-export MAKEOPTS="${MAKEOPTS} -j1"
+src_prepare() {
+	eautoreconf
+}
 
 src_configure() {
-	./autogen.sh
-	make distclean
-
 	# Build GTK2 support #
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2

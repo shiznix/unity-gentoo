@@ -2,15 +2,15 @@ EAPI=4
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 
-inherit base eutils autotools gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
-URELEASE="quantal-updates"
+URELEASE="raring"
+UVER_PREFIX="~daily13.03.18"
 
 DESCRIPTION="Webapps integration with the Unity desktop"
 HOMEPAGE="https://launchpad.net/libunity-webapps"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -35,16 +35,9 @@ DEPEND="app-admin/packagekit-gtk
 	x11-libs/libnotify
 	x11-libs/libwnck:3"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
-
-	# Fix spelling mistakes #
-	sed -e 's:flavor:flavour:g' \
-		-i configure.ac
-
 	eautoreconf
 }
 
@@ -54,7 +47,17 @@ src_configure() {
 		--libexecdir=/usr/lib/libunity-webapps
 }
 
+src_install() {
+	gnome2_src_install
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf ${ED}usr/share/locale	
+}
+
 pkg_postinst() {
+	elog
 	elog "Unity webapps will only currently work if your default browser"
 	elog "is set to either Firefox or Chromium"
+	elog
 }

@@ -2,7 +2,7 @@ EAPI=4
 PYTHON_DEPEND="2:2.7 3:3.2"
 #SUPPORT_PYTHON_ABIS="1"
 
-inherit base eutils autotools python ubuntu-versionator
+inherit autotools base eutils autotools python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 URELEASE="raring"
@@ -32,17 +32,14 @@ src_prepare() {
 	export VALA_API_GEN=$(type -p vapigen-0.16)
 
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
-
 	for patch in $(cat "debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "debian/patches/${patch}" )
 	done
 	base_src_prepare
+	eautoreconf
 }
 
 src_configure() {
-	./autogen.sh
-	make distclean
-
         # Build PYTHON2 support #
 	export EPYTHON="$(PYTHON -2)"
 	cd "${WORKDIR}"

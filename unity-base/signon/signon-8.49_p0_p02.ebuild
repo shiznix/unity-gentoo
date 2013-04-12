@@ -3,11 +3,11 @@ EAPI=4
 inherit base qt4-r2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/s/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon"
-SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2+"
@@ -24,10 +24,6 @@ DEPEND="dev-qt/qtcore:4
 	doc? ( app-doc/doxygen )"
 
 src_prepare() {
-	# Fix building if sys-fs/cryptsetup is installed, requires specially patched cryptsetup #
-	#  http://code.google.com/p/accounts-sso/issues/detail?id=114 #
-	epatch -p1 "${FILESDIR}/cryptsetup-optional.patch"
-
 	# Fix remotepluginprocess.cpp missing QDebug include on some systems #
 	epatch "${FILESDIR}/remotepluginprocess-QDebug-fix.patch"
 
