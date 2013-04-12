@@ -1,13 +1,14 @@
 EAPI=4
 
-inherit base eutils flag-o-matic ubuntu-versionator
+inherit autotools eutils flag-o-matic ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="daily13.01.25"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-application"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -19,7 +20,10 @@ DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 src_prepare() {
+	eautoreconf
 	append-cflags -Wno-error
 }
 

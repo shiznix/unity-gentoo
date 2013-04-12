@@ -14,6 +14,7 @@ DEPEND="app-backup/deja-dup[nautilus]
 	gnome-extra/nm-applet
 	net-libs/telepathy-indicator
 	unity-base/gnome-control-center-unity
+	unity-base/hud
 	unity-base/ido
 	unity-base/ido-gtk2
 	unity-base/ubuntuone-control-panel

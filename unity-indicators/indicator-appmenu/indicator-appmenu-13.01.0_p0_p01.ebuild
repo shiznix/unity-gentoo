@@ -1,14 +1,15 @@
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
-inherit base eutils flag-o-matic gnome2 ubuntu-versionator
+inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="daily13.03.28"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-appmenu"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -25,11 +26,11 @@ DEPEND="dev-lang/vala:0.16[vapigen]
 	x11-libs/libwnck:1
 	x11-libs/libwnck:3"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 src_prepare() {
+	eautoreconf
 	export VALAC=$(type -P valac-0.16)
 	export VALA_API_GEN=$(type -p vapigen-0.16)
-
-	epatch "${FILESDIR}/indicator-appmenu_strlen-fix.diff"
-
 	append-cflags -Wno-error
 }

@@ -1,13 +1,14 @@
 EAPI=4
 
-inherit base eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="daily13.03.01"
 
 DESCRIPTION="Gnome panel indicator for the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-applet"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2.1 LGPL-3 GPL-3"
 SLOT="0"
@@ -19,8 +20,11 @@ DEPEND="dev-libs/libindicator:3
 	x11-libs/gtk+:3
 	>=gnome-base/gnome-panel-3.6.2"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 src_prepare() {
 	# "Only <glib.h> can be included directly." #
 	sed -e "s:glib/gtypes.h:glib.h:g" \
 		-i src/tomboykeybinder.h
+	eautoreconf
 }
