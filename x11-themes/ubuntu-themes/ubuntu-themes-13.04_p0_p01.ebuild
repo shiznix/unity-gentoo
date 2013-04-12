@@ -2,15 +2,15 @@ EAPI=4
 PYTHON_DEPEND="2:2.7"
 RESTRICT_PYTHON_ABIS="3.*"
 
-inherit autotools eutils gnome2 python ubuntu-versionator
+inherit eutils gnome2 python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER=""
-URELEASE="quantal"
+URELEASE="raring"
+UVER_PREFIX="daily13.03.13.1"
 
 DESCRIPTION="Monochrome icons for the Unity desktop (default icon theme)"
-HOMEPAGE="https://launchpad.net/ubuntu-mono"
-SRC_URI="${UURL}/${MY_P}.tar.gz"
+HOMEPAGE="https://launchpad.net/ubuntu-themes"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3 CC-BY-SA-3.0"
 SLOT="0"
@@ -25,8 +25,14 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 pkg_setup() {
 	python_set_active_version 2
+}
+
+src_prepare() {
+	:
 }
 
 src_configure() {

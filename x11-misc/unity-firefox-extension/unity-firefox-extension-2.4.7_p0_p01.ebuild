@@ -3,11 +3,12 @@ EAPI=5
 inherit autotools base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-URELEASE="quantal-updates"
+URELEASE="raring"
+UVER_PREFIX="bzr13.04.04"
 
 DESCRIPTION="Firefox extension for Unity desktop integration"
 HOMEPAGE="https://launchpad.net/unity-firefox-extension"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -18,6 +19,8 @@ RESTRICT="mirror"
 DEPEND="dev-libs/libunity-webapps
 	dev-libs/libxslt
 	x11-libs/gtk+:2"
+
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	pushd libufe-xidgetter/

@@ -4,8 +4,7 @@ SUPPORT_PYTHON_ABIS="1"
 inherit distutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-UVER=""
-URELEASE="quantal"
+URELEASE="raring"
 
 DESCRIPTION="Data files used by the Ubuntu One suite"
 HOMEPAGE="https://launchpad.net/ubuntuone-client-data"

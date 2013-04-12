@@ -2,16 +2,16 @@ EAPI=4
 
 inherit base autotools ubuntu-versionator
 
-MY_PN="gtk3-engines-unico"
+MY_PN="unico"
 MY_P="${MY_PN}_${PV}"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
-URELEASE="quantal"
-UVER_PREFIX="+r139"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${MY_PN}"
+URELEASE="raring"
+UVER_PREFIX="daily12.12.12"
 
 DESCRIPTION="The Unico GTK+ 3.x Theming Engine"
 HOMEPAGE="https://launchpad.net/unico"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
