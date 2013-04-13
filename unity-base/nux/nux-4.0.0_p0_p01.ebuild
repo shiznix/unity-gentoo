@@ -23,6 +23,7 @@ DEPEND="!unity-base/utouch-geis
 	dev-libs/boost
 	>=dev-libs/glib-2.32.3
 	dev-libs/libsigc++:2
+	gnome-base/gnome-common
 	<media-libs/glew-1.7
 	>=sys-devel/gcc-4.6
 	unity-base/geis

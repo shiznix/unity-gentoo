@@ -3,12 +3,12 @@ EAPI=4
 inherit autotools base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/o/${PN}"
-URELEASE="quantal-updates"
-UVER_PREFIX="+r357"
+URELEASE="raring"
+UVER_PREFIX="+r359daily13.02.06"
 
 DESCRIPTION="Ayatana Scrollbars use an overlay to ensure scrollbars take up no active screen real-estate"
 HOMEPAGE="http://launchpad.net/ayatana-scrollbar"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"

@@ -1,14 +1,15 @@
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
-inherit base eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
-URELEASE="quantal-updates"
+URELEASE="raring"
+UVER_PREFIX="~daily13.02.28"
 
-DESCRIPTION="Application lens for the Unity desktop"
+DESCRIPTION="File lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-files"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -29,11 +30,20 @@ RESTRICT="mirror"
 #               gnome-extra/zeitgeist[-passiv]
 
 DEPEND="dev-lang/vala:0.16[vapigen]
+	dev-libs/dee
+	dev-libs/libgee
+	dev-libs/libunity
 	dev-libs/libzeitgeist
 	gnome-extra/zeitgeist[dbus,fts,-passiv]
 	gnome-extra/zeitgeist-datahub
 	unity-base/unity
 	unity-lenses/unity-lens-applications"
+
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
+src_prepare() {
+	eautoreconf
+}
 
 src_configure() {
 	export VALAC=$(type -P valac-0.16)

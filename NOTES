@@ -16,7 +16,6 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 	dev-libs/libunity
 	unity-base/launchpad-integration	# Not python-3 compatible
 	unity-lenses/unity-lens-video
-	unity-lenses/unity-scope-video-remote
 
 * Reasons for patching packages:
 dev-libs/dee				# Mainline portage tree ebuild lacks support for multi-python ABI installation needed by Dash lenses
