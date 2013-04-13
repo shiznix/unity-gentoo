@@ -31,7 +31,7 @@ DEPEND="app-admin/packagekit-gtk
 	net-libs/libsoup
 	net-libs/telepathy-glib
 	x11-libs/gtk+:3
-	unity-base/indicator-messages
+	unity-indicators/indicator-messages
 	x11-libs/libnotify
 	x11-libs/libwnck:3"
 

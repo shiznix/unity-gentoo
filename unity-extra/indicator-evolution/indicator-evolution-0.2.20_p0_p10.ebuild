@@ -27,7 +27,7 @@ DEPEND=">=dev-libs/glib-2.31.8
 	>=gnome-extra/evolution-data-server-3.6
 	>=mail-client/evolution-3.6
 	media-libs/libcanberra
-	unity-base/indicator-messages
+	unity-indicators/indicator-messages
 	x11-libs/libnotify"
 
 S="${WORKDIR}/${MY_PN}-${PV}"

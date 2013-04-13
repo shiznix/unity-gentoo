@@ -2,7 +2,7 @@
 emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
 * Using portage tree libindicate packages
-	- unity-base/indicator-appmenu requires
+	- unity-indicators/indicator-appmenu requires
 		dev-libs/libdbusmenu, dev-libs/libindicator and dev-libs/libappindicator all be built with x11-libs/gtk:2 support
 	- Many indicators (bluetooth, weather, etc.) require dev-libs/libappindicator be built with Python GTK+-2.x bindings to function
 	- Gentoo is in the position of dropping GTK+-2.x Ubuntu Ayatana libraries from tree so we must maintain our own versions of
@@ -15,8 +15,7 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 	dev-libs/libappindicator
 	dev-libs/libunity
 	unity-base/launchpad-integration	# Not python-3 compatible
-	unity-base/unity-lens-video
-	unity-base/unity-scope-video-remote
+	unity-lenses/unity-lens-video
 
 * Reasons for patching packages:
 dev-libs/dee				# Mainline portage tree ebuild lacks support for multi-python ABI installation needed by Dash lenses

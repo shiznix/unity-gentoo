@@ -58,14 +58,14 @@ version_check() {
 		else
 			echo "  Upstream version: ${upstream}"
 		fi
-		echo "    Other available versions:"
-		for release in {quantal-updates,raring}; do
+		for release in raring; do
 			if [ "${release}" != "${URELEASE}" ]; then
 				avail_release=`wget -q "http://packages.ubuntu.com/${release}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
 				if [ -z "${avail_release}" ]; then
 					avail_release=`wget -q "http://packages.ubuntu.com/${release}/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
 				fi
 				if [ -n "${avail_release}" ]; then
+					echo "    Other available versions:"
 					echo -e "      ${avail_release}  ::  ${release}"
 				fi
 			fi

@@ -6,7 +6,7 @@ inherit eutils gnome2 python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.13.1"
+UVER_PREFIX="daily13.04.12"
 
 DESCRIPTION="Monochrome icons for the Unity desktop (default icon theme)"
 HOMEPAGE="https://launchpad.net/ubuntu-themes"

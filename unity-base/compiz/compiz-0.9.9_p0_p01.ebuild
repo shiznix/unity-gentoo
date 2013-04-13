@@ -13,16 +13,13 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+debug kde"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 COMMONDEPEND="kde? ( kde-base/kwin )
-	!!unity-base/ccsm
-	!!unity-base/compizconfig-python
-	!!unity-base/compizconfig-backend-gconf
 	!!x11-wm/compiz
 	!!x11-libs/compiz-bcop
 	!!x11-libs/libcompizconfig
@@ -36,7 +33,7 @@ COMMONDEPEND="kde? ( kde-base/kwin )
 	gnome-base/gconf
 	>=gnome-base/gsettings-desktop-schemas-3.6.0
 	>=gnome-base/librsvg-2.14.0:2
-	<media-libs/glew-1.7
+	<media-libs/glew-1.9
 	media-libs/libpng
 	media-libs/mesa[gallium,llvm,xorg]
 	x11-base/xorg-server[dmx]

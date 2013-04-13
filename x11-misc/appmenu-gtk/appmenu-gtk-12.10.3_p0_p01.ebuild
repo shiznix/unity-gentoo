@@ -16,7 +16,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="unity-base/indicator-appmenu
+DEPEND="unity-indicators/indicator-appmenu
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3"
 

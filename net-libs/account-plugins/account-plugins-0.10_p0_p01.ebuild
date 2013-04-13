@@ -22,16 +22,15 @@ RDEPEND="unity-base/signon-keyring-extension
 	x11-themes/unity-asset-pool"
 
 DEPEND="${RDEPEND}
+	dev-libs/libxml2:2
+	dev-libs/libxslt
+	>=dev-util/intltool-0.40.1
+	>=sys-devel/gettext-0.17
 	unity-base/gnome-control-center-signon
+	virtual/pkgconfig
 	x11-proto/xproto
-        x11-proto/xf86miscproto
-        x11-proto/kbproto
-
-        dev-libs/libxml2:2
-        dev-libs/libxslt
-        >=dev-util/intltool-0.40.1
-        >=sys-devel/gettext-0.17
-        virtual/pkgconfig"
+	x11-proto/xf86miscproto
+	x11-proto/kbproto"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

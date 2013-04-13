@@ -1,8 +1,0 @@
-## Packages masked for testing for the upcoming Raring release ##
-
-unity-base/bamf **
-unity-base/compiz **
-unity-base/nux **
-unity-base/unity **
-x11-misc/lightdm **
-unity-extra/unity-greeter **

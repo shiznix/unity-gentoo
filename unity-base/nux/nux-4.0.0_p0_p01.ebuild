@@ -14,16 +14,17 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug examples tests"
 RESTRICT="mirror"
 
-DEPEND="!unity-base/utouch-geis
-	app-i18n/ibus
+RDEPEND="!unity-base/utouch-geis"
+DEPEND="app-i18n/ibus
 	dev-libs/boost
 	>=dev-libs/glib-2.32.3
 	dev-libs/libsigc++:2
-	<media-libs/glew-1.7
+	gnome-base/gnome-common
+	<media-libs/glew-1.9
 	>=sys-devel/gcc-4.6
 	unity-base/geis
 	x11-libs/gdk-pixbuf

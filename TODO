@@ -1,2 +1,3 @@
 * USE="doc debug mono tests"
 * Audit DEPEND and RDEPEND lists
+* Convert all ebuilds to EAPI=5 with subslot rebuilds where necessary
