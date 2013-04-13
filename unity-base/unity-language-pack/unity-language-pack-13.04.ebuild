@@ -17,9 +17,7 @@ RESTRICT="mirror"
 
 # Soft blocks to resolve file collisions #
 # Remove these package versions and blocks at next version bump #
-RDEPEND="!<unity-base/compiz-0.9.8.6_p0_p01-r1
-	!<unity-base/unity-6.12.0_p0_p01-r1
-	!<unity-lenses/unity-lens-photos-0.9_p0_p01-r1"
+RDEPEND="!<unity-lenses/unity-lens-photos-0.9_p0_p01-r1"
 DEPEND="sys-devel/gettext"
 
 ## Only languages that are listed in /usr/portage/profiles/desc/linguas.desc are supported ##

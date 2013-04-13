@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -58,8 +58,8 @@ DEPEND="dev-libs/boost
 	x11-misc/appmenu-qt"
 
 pkg_pretend() {
-	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
-		die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
+	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 8) ]]; then
+		die "${P} requires an active >=gcc-4.8.0:4.8, please consult the output of 'gcc-config -l'"
 	fi
 }
 
