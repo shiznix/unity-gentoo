@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+introspection gtk +unity kde qt4 razor"
 REQUIRED_USE="|| ( unity gtk kde razor )"
 RESTRICT="mirror"
@@ -80,7 +80,7 @@ src_configure() {
 	local _greeter _session _user
 	_greeter=${LIGHTDM_GREETER:=lightdm-gtk-greeter}
 	_session=${LIGHTDM_SESSION:=gnome}
-	_user=${LIGHTDM_USER:=root}
+	_user=${LIGHTDM_USER:=lightdm}
 	# Let user know how lightdm is configured
 	einfo "Gentoo configuration"
 	einfo "Default greeter: ${_greeter}"
@@ -98,11 +98,11 @@ src_configure() {
 		--with-html-dir="${EPREFIX}"/usr/share/doc/${PF}/html
 }
 
-#pkg_preinst() {
-	#create user/group
-	#enewgroup lightdm
-	#enewuser lightdm -1 -1 -1 "lightdm"
-#}
+pkg_preinst() {
+	enewgroup lightdm die "problem adding 'lightdm' group"
+	enewgroup video
+	enewuser lightdm -1 -1 /var/lib/lightdm lightdm,video || die "problem adding 'lightdm' user"
+}
 
 src_install() {
 	default
