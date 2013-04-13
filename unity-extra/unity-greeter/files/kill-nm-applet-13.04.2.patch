@@ -1,5 +1,6 @@
---- unity-greeter-13.04.1_orig/src/unity-greeter.vala	2013-01-22 20:22:42.000000000 +0100
-+++ unity-greeter-13.04.1/src/unity-greeter.vala	2013-03-10 20:01:05.688005260 +0100
+diff -Naur unity-greeter-13.04.2_orig/src/unity-greeter.vala unity-greeter-13.04.2/src/unity-greeter.vala
+--- unity-greeter-13.04.2_orig/src/unity-greeter.vala	2013-02-21 10:33:40.000000000 +0100
++++ unity-greeter-13.04.2/src/unity-greeter.vala	2013-04-13 15:45:06.534083796 +0200
 @@ -30,6 +30,8 @@
  
      public bool test_mode = false;
@@ -9,7 +10,7 @@
      private string state_file;
      private KeyFile state;
  
-@@ -45,10 +47,11 @@
+@@ -46,10 +48,11 @@
  
      private static Timer log_timer;
  
@@ -22,11 +23,11 @@
  
          /* Prepare to set the background */
          debug ("Creating background surface");
-@@ -169,6 +172,16 @@
+@@ -170,6 +173,16 @@
              starting_session ();
              try
              {
-+                debug ("start session!");
++                debug ("start session! [nm_applet_pid: %d]", nm_applet_pid);
 +                if (nm_applet_pid != 0)
 +                {
 +                    debug ("try too stop nm-applet");
@@ -35,11 +36,11 @@
 +                    Posix.waitpid (nm_applet_pid, out status, 0);
 +                    nm_applet_pid = 0;
 +                }
-+                
++
                  greeter.start_session_sync (session);
              }
              catch (Error e)
-@@ -414,6 +427,7 @@
+@@ -415,6 +428,7 @@
          Environment.set_variable ("GTK_MODULES", "atk-bridge", false);
  
          Pid atspi_pid = 0;
@@ -47,7 +48,20 @@
  
          try
          {
-@@ -488,7 +502,15 @@
+@@ -506,12 +520,6 @@
+         if (value != "")
+             settings.set ("gtk-xft-rgba", value, null);
+ 
+-        debug ("Creating Unity Greeter");
+-        var greeter = new UnityGreeter (do_test_mode);
+-
+-        debug ("Showing greeter");
+-        greeter.show ();
+-
+         if (!do_test_mode)
+         {
+             /* Make nm-applet hide items the user does not have permissions to interact with */
+@@ -519,7 +527,15 @@
  
              try
              {
@@ -64,12 +78,21 @@
              }
              catch (Error e)
              {
-@@ -521,7 +543,7 @@
-             settings.set ("gtk-xft-rgba", value, null);
+@@ -527,9 +543,17 @@
+             }
+         }
  
-         debug ("Creating Unity Greeter");
--        var greeter = new UnityGreeter (do_test_mode);
++        debug ("Creating Unity Greeter");
 +        var greeter = new UnityGreeter (do_test_mode,_nm_applet_pid);
++
++        debug ("Showing greeter");
++        greeter.show ();
++
+         debug ("Starting main loop");
+         Gtk.main ();
  
-         debug ("Showing greeter");
-         greeter.show ();
++        debug ("Exit Unity Greeter");
++
+         if (atspi_pid != 0)
+         {
+             Posix.kill (atspi_pid, Posix.SIGKILL);
