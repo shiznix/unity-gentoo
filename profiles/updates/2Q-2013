@@ -11,9 +11,11 @@ move unity-base/indicator-power unity-indicators/indicator-power
 move unity-base/indicator-session unity-indicators/indicator-session
 move unity-base/indicator-sound unity-indicators/indicator-sound
 move unity-base/indicator-sync unity-indicators/indicator-sync
+move unity-base/ido unity-indicators/ido
 
 move unity-base/unity-lens-applications unity-lenses/unity-lens-applications
 move unity-base/unity-lens-files unity-lenses/unity-lens-files
 move unity-base/unity-lens-music unity-lenses/unity-lens-music
 move unity-base/unity-lens-photos unity-lenses/unity-lens-photos
 move unity-base/unity-lens-video unity-lenses/unity-lens-video
+

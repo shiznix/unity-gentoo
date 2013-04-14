@@ -83,7 +83,7 @@ DEPEND="${COMMON_DEPEND}
 	dev-libs/libxslt
 	>=dev-util/intltool-0.50.0
 	unity-base/gnome-control-center-signon
-	unity-base/ido
+	unity-indicators/ido
 	virtual/pkgconfig
 	test? (
 		sys-apps/grep

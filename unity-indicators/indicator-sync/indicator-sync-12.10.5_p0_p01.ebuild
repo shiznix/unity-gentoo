@@ -22,7 +22,7 @@ DEPEND=">=dev-libs/glib-2.35.4
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate
 	dev-libs/libindicator
-	unity-base/ido
+	unity-indicators/ido
 	x11-libs/gtk+:3
 	x11-libs/pango"
 
