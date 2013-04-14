@@ -24,7 +24,7 @@ DEPEND="dev-lang/vala:0.16[vapigen]
 	dev-libs/libindicator
 	gnome-base/dconf
 	net-wireless/gnome-bluetooth
-	unity-base/ido
+	unity-indicators/ido
 	x11-libs/gtk+:3"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

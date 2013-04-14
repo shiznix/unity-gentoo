@@ -23,7 +23,7 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libgee:0
 	dev-libs/libindicate-qt
 	media-sound/pulseaudio
-	unity-base/ido"
+	unity-indicators/ido"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
