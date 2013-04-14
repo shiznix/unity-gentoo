@@ -16,4 +16,4 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=x11-misc/lightdm-1.3.3"
+RDEPEND="sys-apps/remote-login-service"

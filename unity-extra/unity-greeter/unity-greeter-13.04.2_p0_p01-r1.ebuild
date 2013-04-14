@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit gnome2 ubuntu-versionator
+inherit gnome2 ubuntu-versionator base
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
@@ -58,7 +58,9 @@ src_prepare() {
 
 	#patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
-                        "${S}"/src/unity-greeter.vala || die
+                   "${S}"/src/unity-greeter.vala || die
+
+	base_src_prepare
 }
 
 src_install() {
@@ -70,6 +72,9 @@ src_install() {
 
 	# Remove Ubuntu logo -> would be nice, if we can replace it with a gentoo logo
 	rm -rf ${ED}usr/share/unity-greeter/logo.png
+
+	insinto /usr/share/polkit-1/rules.d/
+    	newins "${FILESDIR}/50-unity-greeter.rules" 50-unity-greeter.rules || die
 }
 
 pkg_preinst() {

@@ -3,7 +3,7 @@ EAPI=4
 inherit ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${PN}"
-URELEASE="quantal"
+URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Configuration and a script to do a remote session using FreeRDP."
@@ -16,4 +16,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=x11-misc/lightdm-1.3.3"
+RDEPEND="net-misc/freerdp
+	 >=gnome-extra/zenity-3.6.0
+	 sys-apps/remote-login-service"

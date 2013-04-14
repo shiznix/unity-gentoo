@@ -1,6 +1,6 @@
 EAPI=4
 
-inherit eutils autotools ubuntu-versionator
+inherit eutils autotools ubuntu-versionator base
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/r/${PN}"
 URELEASE="raring"
@@ -8,7 +8,8 @@ GNOME2_LA_PUNT="1"
 
 DESCRIPTION="A service that lists remote logins."
 HOMEPAGE="https://launchpad.net/remote-login-service"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -21,7 +22,8 @@ DEPEND="dev-libs/glib:2
 	dev-libs/libgcrypt"
 
 RDEPEND=">=net-misc/networkmanager-0.9.7
-	>=net-libs/libsoup-2.40"
+	>=net-libs/libsoup-2.40
+	unity-extra/thin-client-config-agent"
 
 src_unpack() {
 	unpack ${A}
@@ -34,6 +36,9 @@ src_unpack() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/01_clear_servers.patch"
-	epatch "${FILESDIR}/glib-deprecated.diff"
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+        	PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+
+	base_src_prepare
 }
