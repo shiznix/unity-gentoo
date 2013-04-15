@@ -4,7 +4,7 @@ GNOME2_LA_PUNT="yes"
 VALA_MIN_API_VERSION="0.16"
 VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils gnome2 systemd vala ubuntu-versionator
+inherit autotools eutils gnome2 systemd vala ubuntu-versionator base
 
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
@@ -12,7 +12,9 @@ HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
 URELEASE="raring"
 
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
+
 RESTRICT="mirror"
 
 LICENSE="GPL-3+"
@@ -50,18 +52,15 @@ pkg_pretend() {
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-0.6.21-gentoo-system-users.patch"
-	epatch "${FILESDIR}/${PN}-0.6.29-32bit-crash.patch" # bug #445894, fixed in 0.6.30
-	epatch "${FILESDIR}/0001-formats-locale-property.patch"
-	epatch "${FILESDIR}/0007-add-lightdm-support.patch"
-	epatch "${FILESDIR}/0008-nopasswdlogin-group.patch"
-	epatch "${FILESDIR}/0009-language-tools.patch"
-	epatch "${FILESDIR}/0010-set-language.patch"
-	epatch "${FILESDIR}/0011-add-background-file-support.patch"
-	epatch "${FILESDIR}/0012-add-keyboard-layout-support.patch"
-	epatch "${FILESDIR}/0013-add-has-message-support.patch"
-	epatch "${FILESDIR}/1001-buildsystem.patch"
-	epatch "${FILESDIR}/2001-filtering_out_users.patch"
-	epatch "${FILESDIR}/2002-disable_systemd.patch"
+
+        sed -i '/0002-create-and-manage-groups-like-on-a-ubuntu-system.patch/d' "${WORKDIR}/debian/patches/series" || die
+        sed -i '/0006-adduser_instead_of_useradd.patch/d' "${WORKDIR}/debian/patches/series" || die
+
+        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+        done
+
+	base_src_prepare
 
 	eautoreconf
 
