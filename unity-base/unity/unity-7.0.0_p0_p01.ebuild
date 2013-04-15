@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2:2.7"
 
@@ -22,7 +22,8 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-RDEPEND="unity-base/unity-language-pack
+RDEPEND=">=unity-base/bamf-0.4.0:=
+	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
 	x11-themes/unity-asset-pool"
 DEPEND="dev-libs/boost
