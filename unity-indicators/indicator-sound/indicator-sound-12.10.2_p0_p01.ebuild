@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
@@ -17,12 +17,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
+RDEPEND="unity-base/bamf:="
 DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libgee:0
 	dev-libs/libindicate-qt
 	media-sound/pulseaudio
+	unity-base/bamf
 	unity-indicators/ido"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
