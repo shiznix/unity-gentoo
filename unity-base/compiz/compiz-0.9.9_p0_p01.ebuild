@@ -33,7 +33,7 @@ COMMONDEPEND="kde? ( kde-base/kwin )
 	gnome-base/gconf
 	>=gnome-base/gsettings-desktop-schemas-3.6.0
 	>=gnome-base/librsvg-2.14.0:2
-	<media-libs/glew-1.9
+	media-libs/glew
 	media-libs/libpng
 	media-libs/mesa[gallium,llvm,xorg]
 	x11-base/xorg-server[dmx]

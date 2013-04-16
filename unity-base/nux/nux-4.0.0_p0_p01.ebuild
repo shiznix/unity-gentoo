@@ -24,7 +24,7 @@ DEPEND="app-i18n/ibus
 	>=dev-libs/glib-2.32.3
 	dev-libs/libsigc++:2
 	gnome-base/gnome-common
-	<media-libs/glew-1.9
+	<media-libs/glew-1.8
 	>=sys-devel/gcc-4.6
 	unity-base/geis
 	x11-libs/gdk-pixbuf
