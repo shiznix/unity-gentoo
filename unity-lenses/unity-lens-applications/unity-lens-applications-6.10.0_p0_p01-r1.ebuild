@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
@@ -17,8 +17,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND=">=dev-libs/dee-1.0.14
+RDEPEND="dev-libs/dee:=
 	dev-libs/libunity"
+DEPEND="${RDEPEND}"
 
 # gnome-extra/zeitgeist has circular dependencies when 'passiv' USE flag is enabled
 # * Error: circular dependencies:

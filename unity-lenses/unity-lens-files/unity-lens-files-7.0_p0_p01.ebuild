@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
@@ -29,8 +29,9 @@ RESTRICT="mirror"
 #       so to workaround, add gnome-extra/zeitgeist-datahub to DEPEND list and specify
 #               gnome-extra/zeitgeist[-passiv]
 
-DEPEND="dev-lang/vala:0.16[vapigen]
-	dev-libs/dee
+RDEPEND="dev-libs/dee:="
+DEPEND="${RDEPEND}
+	dev-lang/vala:0.16[vapigen]
 	dev-libs/libgee
 	dev-libs/libunity
 	dev-libs/libzeitgeist

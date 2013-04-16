@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit autotools eutils ubuntu-versionator
 
@@ -16,7 +16,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="unity-base/rhythmbox-ubuntuone"
+RDEPEND="dev-libs/dee:=
+	unity-base/rhythmbox-ubuntuone"
 DEPEND="dev-db/sqlite:3
 	dev-lang/vala:0.18[vapigen]
 	dev-libs/dee

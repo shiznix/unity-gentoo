@@ -22,11 +22,15 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-RDEPEND=">=unity-base/bamf-0.4.0:=
+RDEPEND="dev-libs/dee:=
+	>=unity-base/bamf-0.4.0:=
+	>=unity-base/compiz-0.9.9:=
+	>=unity-base/nux-4.0.0:=
 	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
 	x11-themes/unity-asset-pool"
 DEPEND="dev-libs/boost
+	dev-libs/dee
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
 	dev-libs/libindicate[gtk]

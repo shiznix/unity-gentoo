@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
 
@@ -17,7 +17,7 @@ DESCRIPTION="Provide objects allowing to create Model-View-Controller type progr
 HOMEPAGE="https://launchpad.net/dee/"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
-SLOT="0"
+SLOT="0/4.2"
 LICENSE="GPL-3"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc debug examples +icu static-libs test"

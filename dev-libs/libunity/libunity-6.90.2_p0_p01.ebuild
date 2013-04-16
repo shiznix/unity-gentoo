@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
 #SUPPORT_PYTHON_ABIS="1"
 
@@ -19,7 +19,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/dee-1.0.14
+RDEPEND="dev-libs/dee:="
+DEPEND="${RDEPEND}
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libgee:0
 	dev-lang/vala:0.16

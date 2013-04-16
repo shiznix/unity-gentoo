@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit base eutils ubuntu-versionator
 
@@ -13,7 +13,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3"
-SLOT="0"
+SLOT="0/4"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug examples tests"
 RESTRICT="mirror"

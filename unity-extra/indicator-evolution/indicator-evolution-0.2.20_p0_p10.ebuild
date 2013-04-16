@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools base gnome2 ubuntu-versionator
@@ -18,7 +18,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/glib-2.31.8
+RDEPEND="dev-libs/dee:="
+DEPEND="${RDEPEND}
+	>=dev-libs/glib-2.31.8
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate

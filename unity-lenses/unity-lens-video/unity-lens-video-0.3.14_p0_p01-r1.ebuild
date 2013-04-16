@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
 
@@ -18,7 +18,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="!unity-lenses/unity-scope-video-remote"
+RDEPEND="!unity-lenses/unity-scope-video-remote
+	dev-libs/dee:="
 DEPEND="dev-lang/vala:0.18[vapigen]
 	dev-libs/dee
 	dev-libs/glib:2

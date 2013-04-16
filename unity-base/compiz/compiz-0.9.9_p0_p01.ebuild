@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit base gnome2 cmake-utils eutils python ubuntu-versionator
 
@@ -12,7 +12,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
-SLOT="0"
+SLOT="0/${PV}"
 KEYWORDS="~amd64 ~x86"
 IUSE="+debug kde"
 RESTRICT="mirror"
