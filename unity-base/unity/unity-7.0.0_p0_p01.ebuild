@@ -119,6 +119,10 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf ${ED}usr/share/locale
+
+	# Make searchingthedashlegalnotice.html available to gnome-control-center's Details > Legal Notice #
+	dosym /usr/share/unity/6/searchingthedashlegalnotice.html \
+		/usr/share/gnome-control-center/searchingthedashlegalnotice.html
 }
 
 pkg_postinst() {
