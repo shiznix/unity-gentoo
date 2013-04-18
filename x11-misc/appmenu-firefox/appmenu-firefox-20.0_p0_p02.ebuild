@@ -35,7 +35,7 @@ src_unpack() {
 }
 
 src_install() {
-	rm -r usr/lib/firefox
+	rm -r usr/lib/firefox usr/share/doc
 	mv usr/lib/firefox-addons usr/lib/firefox
 	cp -R usr "${D}"
 	dosym "/usr/lib/firefox/extensions/globalmenu@ubuntu.com" "/opt/firefox/extensions/globalmenu@ubuntu.com"
