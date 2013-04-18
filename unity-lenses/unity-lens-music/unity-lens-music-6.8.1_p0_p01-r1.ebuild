@@ -4,7 +4,7 @@ inherit autotools eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.04"
+UVER_PREFIX="daily13.04.18~13.04"
 
 DESCRIPTION="Music lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-music"
