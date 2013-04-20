@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="+branding"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
@@ -63,8 +63,10 @@ DEPEND="dev-libs/boost
 	x11-misc/appmenu-qt"
 
 pkg_pretend() {
-	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
-		die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
+	if [[ $(gcc-major-version) -lt 4 ]] || \
+		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
+			( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
+				die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
 	fi
 }
 
@@ -115,6 +117,12 @@ src_install() {
 		addpredict /usr/share/glib-2.0/schemas/	# FIXME
 		emake DESTDIR="${D}" install
 	popd ${CMAKE_BUILD_DIR}
+
+	# Gentoo dash launcher icon #
+	if use branding; then
+		insinto /usr/share/unity/6
+		doins "${FILESDIR}/launcher_bfb.png"
+	fi
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
