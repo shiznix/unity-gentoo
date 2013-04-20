@@ -1,4 +1,4 @@
-EAPI="5"
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
@@ -17,10 +17,9 @@ IUSE=""
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-RDEPEND="unity-base/signon-ui"
-
+RDEPEND="dev-libs/libaccounts-glib:=
+	unity-base/signon-ui"
 DEPEND="${RDEPEND}
-	dev-libs/libaccounts-glib
 	dev-libs/libsignon-glib
 	gnome-base/gnome-control-center
 	x11-proto/xproto

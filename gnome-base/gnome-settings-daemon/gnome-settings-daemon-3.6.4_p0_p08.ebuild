@@ -27,7 +27,7 @@ RESTRICT="mirror"
 # colord-0.1.13 needed to avoid polkit errors in CreateProfile and CreateDevice
 COMMON_DEPEND="
 	>=dev-libs/glib-2.31.0:2
-	dev-libs/libappindicator
+	dev-libs/libappindicator:=
 	>=x11-libs/gtk+-3.3.4:3
 	>=gnome-base/gnome-desktop-3.5.3:3=
 	>=gnome-base/gsettings-desktop-schemas-3.5.90

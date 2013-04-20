@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit qt4-r2 ubuntu-versionator
 
@@ -15,7 +15,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-libs/libaccounts-qt
+RDEPEND="dev-libs/libaccounts-qt:="
+DEPEND="${RDEPEND}
 	dev-qt/qtcore:4
 	dev-qt/qtdbus:4
 	dev-qt/qtgui:4

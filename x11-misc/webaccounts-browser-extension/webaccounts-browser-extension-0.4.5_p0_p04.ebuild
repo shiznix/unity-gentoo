@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit autotools eutils multilib ubuntu-versionator
 
@@ -16,8 +16,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+chromium firefox"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/json-glib
-	dev-libs/libaccounts-glib
+RDEPEND="dev-libs/libaccounts-glib:="
+DEPEND="${RDEPEND}
+	dev-libs/json-glib
 	dev-util/xxd
 	gnome-base/dconf
 	unity-base/gnome-control-center-signon

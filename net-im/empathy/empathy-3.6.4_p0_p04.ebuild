@@ -1,4 +1,4 @@
-EAPI="5"
+EAPI=5
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2:2.7"
@@ -62,6 +62,7 @@ COMMON_DEPEND="
 		virtual/udev[gudev] )"
 # >=empathy-3.4 is incompatible with telepathy-rakia-0.6, bug #403861
 RDEPEND="${COMMON_DEPEND}
+	dev-libs/libaccounts-glib:=
 	media-libs/gst-plugins-base:1.0
 	net-im/pidgin[-eds]
 	net-im/telepathy-connection-managers

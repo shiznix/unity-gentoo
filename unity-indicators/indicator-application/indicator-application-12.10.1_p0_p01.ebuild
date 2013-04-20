@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
@@ -16,7 +16,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-libs/libappindicator
+RDEPEND="dev-libs/libappindicator:="
+DEPEND="${RDEPEND}
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt"
 

@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 
@@ -25,7 +25,7 @@ RESTRICT="mirror"
 
 RDEPEND=">=dev-libs/glib-2.26:2
 	>=dev-libs/dbus-glib-0.88
-	dev-libs/libappindicator
+	dev-libs/libappindicator:=
 	>=gnome-base/gnome-keyring-2.20
 	>=sys-apps/dbus-1.4.1
 	>=sys-auth/polkit-0.96-r1

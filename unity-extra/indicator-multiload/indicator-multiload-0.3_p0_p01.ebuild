@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit gnome2 ubuntu-versionator
@@ -16,8 +16,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/glib-2.28.0
-	dev-libs/libappindicator
+RDEPEND="dev-libs/libappindicator:="
+DEPEND="${RDEPEND}
+	>=dev-libs/glib-2.28.0
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate
 	gnome-base/dconf

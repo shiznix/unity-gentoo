@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit qt4-r2 ubuntu-versionator
 
@@ -11,12 +11,12 @@ HOMEPAGE="http://code.google.com/p/accounts-sso/"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-2"
-SLOT="0"
+SLOT="0/1.4"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libaccounts-glib
+RDEPEND="dev-libs/libaccounts-glib:=
 	dev-qt/qtcore:4
 	dev-qt/qtxmlpatterns:4
 	doc? ( app-doc/doxygen )"

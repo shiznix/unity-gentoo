@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
 
 inherit autotools flag-o-matic python ubuntu-versionator
@@ -11,7 +11,7 @@ HOMEPAGE="http://code.google.com/p/accounts-sso/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="LGPL-3"
-SLOT="0"
+SLOT="0/1.3"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 RESTRICT="mirror"
