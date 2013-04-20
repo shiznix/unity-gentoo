@@ -49,13 +49,6 @@ src_prepare() {
 #		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 #	done
 
-
-	# kill 'nm-applet' before login the user, otherwise two instances will be run and shown in the try
-	# One instance of the user with all settings and the left over instance of the greeter without the chance to
-        # make any setting.
-	# If someone has a better idea, let me know!
-	epatch "${FILESDIR}/kill-nm-applet-${PV%%_p*}.patch"
-
 	#patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
                    "${S}"/src/unity-greeter.vala || die

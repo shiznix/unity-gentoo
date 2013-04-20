@@ -60,8 +60,11 @@ src_prepare() {
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
 	epatch "${FILESDIR}"/session-wrapper-${PN}.patch
+	epatch "${FILESDIR}"/03_launch_dbus.patch
 
+	# use own *lauch_dbus* patch
 	sed -i '/03_launch_dbus.patch/d' "${WORKDIR}/debian/patches/series" || die
+
 	sed -i '/04_language_options.patch/d' "${WORKDIR}/debian/patches/series" || die
 
         for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
@@ -114,6 +117,10 @@ src_install() {
 	doins data/{${PN},keys}.conf
 	doins "${FILESDIR}"/Xsession
 	fperms +x /etc/${PN}/Xsession
+
+	# use script for lauching greeter sessions
+	doins "${FILESDIR}"/lightdm-greeter-session
+	fperms +x /etc/${PN}/lightdm-greeter-session
 
 	prune_libtool_files --all
 	rm -rf "${ED}"/etc/init

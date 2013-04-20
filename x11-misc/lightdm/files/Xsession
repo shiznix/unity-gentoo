@@ -4,20 +4,6 @@
 
 echo "Running X session wrapper"
 
-trap cleanup TERM EXIT
-
-cleanup()
-{
-    trap - TERM EXIT
-    if [ -n "$DBUS_SESSION_BUS_PID" ]; then
-        kill "$DBUS_SESSION_BUS_PID"
-    fi
-    if [ -n "$CMD_PID" ]; then
-        kill "$CMD_PID"
-    fi
-    exit 0
-}
-
 # Load profile
 for file in "/etc/profile" "$HOME/.profile" "/etc/xprofile" "$HOME/.xprofile"; do
     if [ -f "$file" ]; then
@@ -80,9 +66,4 @@ fi
 
 echo "X session wrapper complete, running session $@"
 
-eval `dbus-launch --sh-syntax`
-
-exec $@ &
-CMD_PID=$!
-wait $CMD_PID
-CMD_PID=
+exec $@
