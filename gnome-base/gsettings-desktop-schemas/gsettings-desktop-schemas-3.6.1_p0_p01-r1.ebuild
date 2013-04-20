@@ -45,4 +45,12 @@ src_prepare() {
 
 	base_src_prepare
 	gnome2_src_prepare
+
+	# Set Ambiance as the default window theme #
+	sed -e 's:Adwaita:Ambiance:' \
+		-i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in \
+			schemas/org.gnome.desktop.interface.gschema.xml.in.in
+	# Set Ubuntu-mono-dark as the default icon theme #
+	sed -e "s:'gnome':'ubuntu-mono-dark':" \
+		-i schemas/org.gnome.desktop.interface.gschema.xml.in.in
 }
