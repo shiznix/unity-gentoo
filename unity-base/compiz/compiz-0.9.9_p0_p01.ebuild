@@ -1,10 +1,10 @@
-EAPI=4
+EAPI=5
 
 inherit base gnome2 cmake-utils eutils python ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
 URELEASE="raring"
-UVER_PREFIX="~daily13.04.10"
+UVER_PREFIX="~daily13.04.18.1~13.04"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/compiz"
@@ -12,7 +12,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
-SLOT="0"
+SLOT="0/${PV}"
 KEYWORDS="~amd64 ~x86"
 IUSE="+debug kde"
 RESTRICT="mirror"
@@ -33,7 +33,7 @@ COMMONDEPEND="kde? ( kde-base/kwin )
 	gnome-base/gconf
 	>=gnome-base/gsettings-desktop-schemas-3.6.0
 	>=gnome-base/librsvg-2.14.0:2
-	<media-libs/glew-1.9
+	media-libs/glew
 	media-libs/libpng
 	media-libs/mesa[gallium,llvm,xorg]
 	x11-base/xorg-server[dmx]

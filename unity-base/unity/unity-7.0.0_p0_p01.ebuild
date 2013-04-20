@@ -6,7 +6,7 @@ inherit base gnome2 cmake-utils eutils python toolchain-funcs ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.04.10"
+UVER_PREFIX="daily13.04.18~13.04"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
@@ -17,16 +17,20 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="+branding"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-RDEPEND=">=unity-base/bamf-0.4.0:=
+RDEPEND="dev-libs/dee:=
+	>=unity-base/bamf-0.4.0:=
+	>=unity-base/compiz-0.9.9:=
+	>=unity-base/nux-4.0.0:=
 	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
 	x11-themes/unity-asset-pool"
 DEPEND="dev-libs/boost
+	dev-libs/dee
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
 	dev-libs/libindicate[gtk]
@@ -47,7 +51,7 @@ DEPEND="dev-libs/boost
 	>=gnome-extra/polkit-gnome-0.105
 	media-libs/clutter-gtk:1.0
 	sys-apps/dbus
-	>=sys-devel/gcc-4.8.0:4.8
+	>=sys-devel/gcc-4.7.3
 	>=unity-base/bamf-0.4.0
 	>=unity-base/compiz-0.9.9
 	unity-base/dconf-qt
@@ -59,8 +63,10 @@ DEPEND="dev-libs/boost
 	x11-misc/appmenu-qt"
 
 pkg_pretend() {
-	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 8) ]]; then
-		die "${P} requires an active >=gcc-4.8.0:4.8, please consult the output of 'gcc-config -l'"
+	if [[ $(gcc-major-version) -lt 4 ]] || \
+		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
+			( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
+				die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
 	fi
 }
 
@@ -112,9 +118,19 @@ src_install() {
 		emake DESTDIR="${D}" install
 	popd ${CMAKE_BUILD_DIR}
 
+	# Gentoo dash launcher icon #
+	if use branding; then
+		insinto /usr/share/unity/6
+		doins "${FILESDIR}/launcher_bfb.png"
+	fi
+
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf ${ED}usr/share/locale
+
+	# Make searchingthedashlegalnotice.html available to gnome-control-center's Details > Legal Notice #
+	dosym /usr/share/unity/6/searchingthedashlegalnotice.html \
+		/usr/share/gnome-control-center/searchingthedashlegalnotice.html
 }
 
 pkg_postinst() {

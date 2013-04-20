@@ -119,14 +119,12 @@ DEPEND="${COMMON_DEPEND}
 src_prepare() {
 	# Disable selected patches #
 	sed \
-		`# Causes clicking on 'User Accounts' to crash gnome-control-center` \
-			-e 's:52_ubuntu_language_list_mods:^#52_ubuntu_language_list_mods:g' \
-		`# Disable Ubuntu branding` \
-			-e 's:56_use_ubuntu_info_branding:#56_use_ubuntu_info_branding:g' \
 		`# Don't patch out Gnome's Region and Language settings, Ubuntu's Language setting requires apt/dpkg` \
-			-e 's:10_keyboard_layout_on_unity.patch:^#10_keyboard_layout_on_unity.patch:g' \
+			-e 's:10_keyboard_layout_on_unity.patch:#10_keyboard_layout_on_unity.patch:g' \
 		`# Don't use Ubuntu specific language selector settings` \
 			-e 's:52_region_language.patch:^#52_region_language.patch:g' \
+		`# Disable Ubuntu branding` \
+			-e 's:56_use_ubuntu_info_branding:#56_use_ubuntu_info_branding:g' \
 				-i "${WORKDIR}/debian/patches/series"
 		for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 			PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )

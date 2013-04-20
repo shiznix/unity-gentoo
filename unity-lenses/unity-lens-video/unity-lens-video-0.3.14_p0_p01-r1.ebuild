@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
 
@@ -6,7 +6,7 @@ inherit autotools eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.04"
+UVER_PREFIX="daily13.04.15"
 
 DESCRIPTION="Video lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-video"
@@ -18,7 +18,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="!unity-lenses/unity-scope-video-remote"
+RDEPEND="!unity-lenses/unity-scope-video-remote
+	dev-libs/dee:="
 DEPEND="dev-lang/vala:0.18[vapigen]
 	dev-libs/dee
 	dev-libs/glib:2

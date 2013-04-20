@@ -7,7 +7,7 @@ S="${WORKDIR}/${PN}-${PV}"
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.04.09"
+UVER_PREFIX="daily13.04.15"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libappindicator"

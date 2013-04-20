@@ -4,7 +4,7 @@ inherit autotools base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="bzr13.04.04"
+UVER_PREFIX="bzr13.04.15"
 
 DESCRIPTION="Firefox extension for Unity desktop integration"
 HOMEPAGE="https://launchpad.net/unity-firefox-extension"

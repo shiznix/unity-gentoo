@@ -1,10 +1,10 @@
-EAPI=4
+EAPI=5
 
 inherit base eutils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.25"
+UVER_PREFIX="daily13.04.17~13.04"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
 HOMEPAGE="http://launchpad.net/nux"
@@ -13,7 +13,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3"
-SLOT="0"
+SLOT="0/4"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug examples tests"
 RESTRICT="mirror"
@@ -24,7 +24,7 @@ DEPEND="app-i18n/ibus
 	>=dev-libs/glib-2.32.3
 	dev-libs/libsigc++:2
 	gnome-base/gnome-common
-	<media-libs/glew-1.9
+	<media-libs/glew-1.8
 	>=sys-devel/gcc-4.6
 	unity-base/geis
 	x11-libs/gdk-pixbuf

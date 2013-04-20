@@ -1,11 +1,11 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.06"
+UVER_PREFIX="daily13.04.18~13.04"
 
 DESCRIPTION="Application lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-applications"
@@ -17,8 +17,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND=">=dev-libs/dee-1.0.14
+RDEPEND="dev-libs/dee:=
 	dev-libs/libunity"
+DEPEND="${RDEPEND}"
 
 # gnome-extra/zeitgeist has circular dependencies when 'passiv' USE flag is enabled
 # * Error: circular dependencies:

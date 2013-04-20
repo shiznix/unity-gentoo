@@ -48,5 +48,8 @@ src_install() {
 	insinto /usr/share/icons/hicolor/32x32/apps
 	doins account-plugins-icons/*
 
+	# Avoid file collisions with net-im/skype #
+	rm ${ED}usr/share/icons/hicolor/32x32/apps/skype.png
+
 	dodoc COPYRIGHT
 }
