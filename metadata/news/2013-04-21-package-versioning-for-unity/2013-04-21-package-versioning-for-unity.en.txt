@@ -1,7 +1,8 @@
 Title: Package versioning for the unity-gentoo overlay
 Author: shiznix <rickfharris@yahoo.com.au>
+Author: Mirko Guenther <renegart@gmx.de>
 Content-Type: text/plain
-Posted: 2013-03-02
+Posted: 2013-04-21
 Revision: 9
 News-Item-Format: 1.0
 Display-If-Installed: sys-apps/portage
@@ -28,11 +29,13 @@ gnome-extra/nm-applet
 gnome-extra/polkit-gnome
 net-im/empathy
 net-wireless/gnome-bluetooth
+sys-apps/accountsservice
 www-client/chromium
 x11-base/xorg-server
 x11-libs/gtk+
 x11-libs/libXfixes
 x11-libs/libXi
+x11-misc/lightdm
 x11-proto/fixesproto
 x11-themes/gtk-engines-unico
 x11-wm/metacity
