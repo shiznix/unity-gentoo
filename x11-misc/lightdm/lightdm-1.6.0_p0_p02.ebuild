@@ -6,7 +6,7 @@ EAPI=5
 inherit autotools eutils pam readme.gentoo ubuntu-versionator base
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${PN}"
-URELEASE="Raring"
+URELEASE="raring"
 
 DESCRIPTION="A lightweight display manager"
 
@@ -50,8 +50,10 @@ PDEPEND="gtk? ( x11-misc/lightdm-gtk-greeter )
 DOCS=( NEWS )
 
 pkg_pretend() {
-        if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
-                die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
+        if [[ $(gcc-major-version) -lt 4 ]] || \
+                ( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
+                        ( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
+                                die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
         fi
 }
 
@@ -72,13 +74,11 @@ src_prepare() {
         done
 	base_src_prepare
 
-	# Remove bogus Makefile statement. This needs to go upstream
-	sed -i /"@YELP_HELP_RULES@"/d help/Makefile.am || die
-	if has_version dev-libs/gobject-introspection; then
-		eautoreconf
-	else
-		AT_M4DIR=${WORKDIR} eautoreconf
-	fi
+#	if has_version dev-libs/gobject-introspection; then
+#		eautoreconf
+#	else
+#		AT_M4DIR=${WORKDIR} eautoreconf
+#	fi
 }
 
 src_configure() {
@@ -118,7 +118,9 @@ src_install() {
 	doins "${FILESDIR}"/Xsession
 	fperms +x /etc/${PN}/Xsession
 
-	# use script for lauching greeter sessions
+	# script for lauching greeter sessions itself
+	# fixes problems with additional (2nd) nm-applet and
+	# setting icon themes in Unity desktop
 	doins "${FILESDIR}"/lightdm-greeter-session
 	fperms +x /etc/${PN}/lightdm-greeter-session
 
