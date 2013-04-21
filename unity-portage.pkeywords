@@ -59,6 +59,7 @@ gnome-extra/nautilus-sendto
 gnome-extra/sushi
 gnome-extra/zeitgeist
 gnome-extra/zeitgeist-datahub
+gnome-extra/zenity
 media-gfx/shotwell
 media-libs/clutter
 media-libs/clutter-gst
