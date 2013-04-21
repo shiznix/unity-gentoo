@@ -114,6 +114,13 @@ src_test() {
 	unset GSETTINGS_BACKEND
 }
 
+src_install() {
+	gnome2_src_install
+
+	insinto /usr/share/applications
+	doins "${WORKDIR}/debian/nautilus-folder-handler.desktop"
+}
+
 pkg_postinst() {
 	gnome2_pkg_postinst
 
