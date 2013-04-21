@@ -8,6 +8,7 @@ inherit ubuntu-versionator distutils eutils
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/t/${PN}"
 URELEASE="raring"
 GNOME2_LA_PUNT="1"
+UVER=
 
 DESCRIPTION="Retrieve the list of remote desktop servers for a user."
 HOMEPAGE="https://launchpad.net/ubuntu/+source/thin-client-config-agent"
