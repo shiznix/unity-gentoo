@@ -44,6 +44,7 @@ DEPEND="${RDEPEND}
 	>=app-text/gnome-doc-utils-0.8
 	gnome-base/gconf
 	sys-devel/gettext
+	dev-util/itstool
 	>=dev-util/intltool-0.35
 	virtual/pkgconfig
 	test? ( app-text/docbook-xml-dtd:4.5 )
