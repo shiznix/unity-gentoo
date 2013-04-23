@@ -57,8 +57,8 @@ gnome-extra/evolution-data-server
 gnome-extra/gnome-color-manager
 gnome-extra/nautilus-sendto
 gnome-extra/sushi
-gnome-extra/zeitgeist
-gnome-extra/zeitgeist-datahub
+~gnome-extra/zeitgeist-0.9.5
+~gnome-extra/zeitgeist-datahub-0.9.5
 gnome-extra/zenity
 media-gfx/shotwell
 media-libs/clutter
