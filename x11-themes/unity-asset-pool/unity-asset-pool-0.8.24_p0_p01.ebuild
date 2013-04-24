@@ -4,7 +4,7 @@ inherit eutils gnome2 ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
-UVER_PREFIX="daily13.03.29"
+UVER_PREFIX="daily13.04.24"
 
 DESCRIPTION="Unity desktop icon theme"
 HOMEPAGE="https://launchpad.net/unity-asset-pool"
@@ -47,9 +47,6 @@ src_install() {
 
 	insinto /usr/share/icons/hicolor/32x32/apps
 	doins account-plugins-icons/*
-
-	# Avoid file collisions with net-im/skype #
-	rm ${ED}usr/share/icons/hicolor/32x32/apps/skype.png
 
 	dodoc COPYRIGHT
 }
