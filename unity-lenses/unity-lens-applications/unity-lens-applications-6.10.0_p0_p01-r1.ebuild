@@ -19,27 +19,12 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
 	dev-libs/libunity"
-DEPEND="${RDEPEND}"
-
-# gnome-extra/zeitgeist has circular dependencies when 'passiv' USE flag is enabled
-# * Error: circular dependencies:
-#
-# (gnome-extra/zeitgeist-datahub-0.9.5::gentoo, ebuild scheduled for merge) depends on
-#  (dev-libs/libzeitgeist-0.3.18::gentoo, ebuild scheduled for merge) (buildtime)
-#   (gnome-extra/zeitgeist-0.9.5::gentoo, ebuild scheduled for merge) (runtime)
-#    (gnome-extra/zeitgeist-datahub-0.9.5::gentoo, ebuild scheduled for merge) (buildtime)
-
-# 'passiv' USE flag does nothing but pull in gnome-extra/zeitgeist-datahub as an RDEPEND
-#       so to workaround, add gnome-extra/zeitgeist-datahub to DEPEND list and specify
-#               gnome-extra/zeitgeist[-passiv]
-
 DEPEND="${RDEPEND}
 	dev-libs/libcolumbus
 	dev-lang/vala:0.18[vapigen]
 	dev-libs/libzeitgeist
 	>=gnome-base/gnome-menus-3.0.1-r1:0
-	gnome-extra/zeitgeist[dbus,fts,-passiv]
-	gnome-extra/zeitgeist-datahub
+	>=gnome-extra/zeitgeist-0.9.12[datahub,dbus,fts]
 	sys-libs/db:5.1
 	unity-base/unity"
 
