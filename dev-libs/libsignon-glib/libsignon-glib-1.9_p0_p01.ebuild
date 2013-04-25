@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
 
 inherit base eutils python ubuntu-versionator
@@ -12,7 +12,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="LGPL-3"
-SLOT="0"
+SLOT="0/1.0.0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 RESTRICT="mirror"

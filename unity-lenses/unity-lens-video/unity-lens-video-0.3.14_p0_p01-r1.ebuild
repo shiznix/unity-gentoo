@@ -19,7 +19,8 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="!unity-lenses/unity-scope-video-remote
-	dev-libs/dee:="
+	dev-libs/dee:=
+	dev-libs/libunity:="
 DEPEND="dev-lang/vala:0.18[vapigen]
 	dev-libs/dee
 	dev-libs/glib:2

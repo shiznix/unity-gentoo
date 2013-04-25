@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit eutils mono ubuntu-versionator
 

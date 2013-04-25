@@ -14,14 +14,14 @@ HOMEPAGE="https://launchpad.net/libappindicator"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-2.1 LGPL-3"
-SLOT="3/1.0"
+SLOT="3/1.0.0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=[gtk]"
+RDEPEND="dev-libs/libdbusmenu:=[gtk]
+	dev-libs/libindicator:3="
 DEPEND="${RDEPEND}
-	dev-libs/libindicator:3
 	dev-lang/vala:0.14[vapigen]
 	dev-dotnet/gtk-sharp:2
 	dev-libs/dbus-glib

@@ -18,9 +18,9 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/libaccounts-glib:=
+	dev-libs/libsignon-glib:=
 	unity-base/signon-ui"
 DEPEND="${RDEPEND}
-	dev-libs/libsignon-glib
 	gnome-base/gnome-control-center
 	x11-proto/xproto
         x11-proto/xf86miscproto

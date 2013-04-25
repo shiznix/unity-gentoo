@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
@@ -12,7 +12,7 @@ HOMEPAGE="https://launchpad.net/libtimezonemap"
 SRC_URI="${UURL}/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
-SLOT="0"
+SLOT="0/1.0.0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"

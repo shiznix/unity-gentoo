@@ -18,9 +18,9 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
-	dev-libs/libunity"
+	dev-libs/libcolumbus:=
+	dev-libs/libunity:="
 DEPEND="${RDEPEND}
-	dev-libs/libcolumbus
 	dev-lang/vala:0.18[vapigen]
 	dev-libs/libzeitgeist
 	>=gnome-base/gnome-menus-3.0.1-r1:0

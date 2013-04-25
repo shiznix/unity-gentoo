@@ -17,11 +17,11 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/dee:="
+RDEPEND="dev-libs/dee:=
+	dev-libs/libunity:="
 DEPEND="${RDEPEND}
 	dev-lang/vala:0.16[vapigen]
 	dev-libs/libgee
-	dev-libs/libunity
 	dev-libs/libzeitgeist
 	>=gnome-extra/zeitgeist-0.9.12[datahub,dbus,fts]
 	unity-base/unity

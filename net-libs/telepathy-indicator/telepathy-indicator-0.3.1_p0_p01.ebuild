@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
@@ -17,11 +17,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-lang/vala:0.14[vapigen]
+RDEPEND="dev-libs/libunity:="
+DEPEND="${RDEPEND}
+	dev-lang/vala:0.14[vapigen]
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt
-	dev-libs/libunity
 	net-libs/telepathy-glib
 	unity-indicators/indicator-messages"
 

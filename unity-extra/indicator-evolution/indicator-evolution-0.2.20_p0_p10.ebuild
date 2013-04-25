@@ -19,12 +19,12 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
-	dev-libs/libdbusmenu:=[gtk]"
+	dev-libs/libdbusmenu:=[gtk]
+	dev-libs/libunity:="
 DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.31.8
 	dev-libs/libappindicator
 	dev-libs/libindicate
-	dev-libs/libunity
 	gnome-base/gconf
 	>=gnome-extra/evolution-data-server-3.6
 	>=mail-client/evolution-3.6

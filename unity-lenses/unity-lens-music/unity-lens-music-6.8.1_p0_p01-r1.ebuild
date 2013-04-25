@@ -17,6 +17,7 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
+	dev-libs/libunity:=
 	unity-base/rhythmbox-ubuntuone"
 DEPEND="dev-db/sqlite:3
 	dev-lang/vala:0.18[vapigen]

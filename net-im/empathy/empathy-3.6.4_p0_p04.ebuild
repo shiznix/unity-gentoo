@@ -63,6 +63,8 @@ COMMON_DEPEND="
 # >=empathy-3.4 is incompatible with telepathy-rakia-0.6, bug #403861
 RDEPEND="${COMMON_DEPEND}
 	dev-libs/libaccounts-glib:=
+	dev-libs/libsignon-glib:=
+	dev-libs/libunity:=
 	media-libs/gst-plugins-base:1.0
 	net-im/pidgin[-eds]
 	net-im/telepathy-connection-managers
@@ -77,8 +79,6 @@ RDEPEND="${COMMON_DEPEND}
 	gnome? ( gnome-extra/gnome-contacts )"
 DEPEND="${COMMON_DEPEND}
 	${PYTHON_DEPENDS}
-	dev-libs/libaccounts-glib
-	dev-libs/libsignon-glib
 	dev-lang/vala:0.16[vapigen]
 	dev-libs/libxml2:2
 	dev-libs/libxslt

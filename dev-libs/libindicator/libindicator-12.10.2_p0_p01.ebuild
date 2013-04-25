@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit autotools eutils ubuntu-versionator
 
@@ -14,7 +14,7 @@ HOMEPAGE="https://launchpad.net/libindicator"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
-SLOT="3"
+SLOT="3/7.0.0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"

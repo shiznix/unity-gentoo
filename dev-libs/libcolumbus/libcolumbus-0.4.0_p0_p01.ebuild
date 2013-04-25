@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
 
@@ -13,7 +13,7 @@ HOMEPAGE="https://launchpad.net/libcolombus"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2"
-SLOT="0"
+SLOT="0/0.4.0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"

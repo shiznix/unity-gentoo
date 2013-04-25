@@ -19,6 +19,7 @@ RESTRICT="test"
 COMMON_DEPEND="
 	app-crypt/libsecret[vala]
 	dev-libs/libdbusmenu:=
+	dev-libs/libunity:=
 	dev-libs/glib:2
 	dev-libs/libpeas
 	gnome-base/gnome-control-center
