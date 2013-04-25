@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit autotools eutils ubuntu-versionator
 
@@ -11,7 +11,7 @@ HOMEPAGE="https://launchpad.net/libunity-misc"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
-SLOT="0"
+SLOT="0/4.1.0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 RESTRICT="mirror"

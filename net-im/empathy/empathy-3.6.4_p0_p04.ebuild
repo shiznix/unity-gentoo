@@ -75,6 +75,7 @@ RDEPEND="${COMMON_DEPEND}
 	net-voip/telepathy-rakia
 	>=net-voip/telepathy-salut-0.8.1
 	!<net-voip/telepathy-rakia-0.7
+	unity-indicators/ido:=
 	x11-themes/gnome-icon-theme-symbolic
 	gnome? ( gnome-extra/gnome-contacts )"
 DEPEND="${COMMON_DEPEND}
@@ -84,7 +85,6 @@ DEPEND="${COMMON_DEPEND}
 	dev-libs/libxslt
 	>=dev-util/intltool-0.50.0
 	unity-base/gnome-control-center-signon
-	unity-indicators/ido
 	virtual/pkgconfig
 	test? (
 		sys-apps/grep

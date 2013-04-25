@@ -18,14 +18,14 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/libdbusmenu:=[gtk]
-	unity-base/bamf:="
+	unity-base/bamf:=
+	unity-indicators/ido:="
 DEPEND="${RDEPEND}
 	dev-lang/vala:0.14[vapigen]
 	dev-libs/libappindicator
 	dev-libs/libgee:0
 	dev-libs/libindicate-qt
-	media-sound/pulseaudio
-	unity-indicators/ido"
+	media-sound/pulseaudio"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"

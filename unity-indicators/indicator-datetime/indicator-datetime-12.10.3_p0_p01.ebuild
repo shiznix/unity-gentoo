@@ -19,7 +19,8 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libdbusmenu:=[gtk]
 	dev-libs/libtimezonemap:=
-	unity-base/unity-language-pack"
+	unity-base/unity-language-pack
+	unity-indicators/ido:="
 DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt

@@ -17,7 +17,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=[gtk]"
+RDEPEND="dev-libs/libdbusmenu:=[gtk]
+	unity-indicators/ido:="
 DEPEND="${RDEPEND}
 	dev-lang/vala:0.16[vapigen]
 	dev-libs/glib
@@ -25,7 +26,6 @@ DEPEND="${RDEPEND}
 	dev-libs/libindicator
 	gnome-base/dconf
 	net-wireless/gnome-bluetooth
-	unity-indicators/ido
 	x11-libs/gtk+:3"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

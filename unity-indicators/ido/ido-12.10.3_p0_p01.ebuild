@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
@@ -12,7 +12,7 @@ HOMEPAGE="https://launchpad.net/ido"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-2.1 LGPL-3"
-SLOT="0"
+SLOT="0/0.0.0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"

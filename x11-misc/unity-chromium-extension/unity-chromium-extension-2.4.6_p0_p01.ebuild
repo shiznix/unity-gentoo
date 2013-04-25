@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit autotools eutils multilib ubuntu-versionator
 
@@ -16,7 +16,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-libs/libunity-webapps
+RDEPEND="dev-libs/libunity-webapps:="
+DEPEND="${RDEPEND}
 	www-client/chromium"
 # Webapp integration doesn't work for www-client/google-chrome #
 

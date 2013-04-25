@@ -24,6 +24,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 RDEPEND="dev-libs/dee:=
 	dev-libs/libdbusmenu:=
+	dev-libs/libunity-misc:=
 	>=unity-base/bamf-0.4.0:=
 	>=unity-base/compiz-0.9.9:=
 	>=unity-base/nux-4.0.0:=
