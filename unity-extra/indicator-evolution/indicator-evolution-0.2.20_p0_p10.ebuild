@@ -18,11 +18,11 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/dee:="
+RDEPEND="dev-libs/dee:=
+	dev-libs/libdbusmenu:=[gtk]"
 DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.31.8
 	dev-libs/libappindicator
-	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate
 	dev-libs/libunity
 	gnome-base/gconf

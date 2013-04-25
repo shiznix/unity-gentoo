@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
@@ -17,7 +17,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="unity-base/unity-language-pack"
+RDEPEND="dev-libs/libdbusmenu:=[gtk]
+	unity-base/unity-language-pack"
 DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt

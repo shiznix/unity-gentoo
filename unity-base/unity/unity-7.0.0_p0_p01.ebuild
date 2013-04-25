@@ -23,6 +23,7 @@ RESTRICT="mirror"
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 RDEPEND="dev-libs/dee:=
+	dev-libs/libdbusmenu:=
 	>=unity-base/bamf-0.4.0:=
 	>=unity-base/compiz-0.9.9:=
 	>=unity-base/nux-4.0.0:=
@@ -33,6 +34,7 @@ DEPEND="dev-libs/boost
 	dev-libs/dee
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
+	dev-libs/libdbusmenu
 	dev-libs/libindicate[gtk]
 	dev-libs/libindicate-qt
 	>=dev-libs/libindicator-12.10.2

@@ -17,13 +17,13 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="unity-base/bamf:="
-DEPEND="dev-db/sqlite:3
+RDEPEND="dev-libs/libdbusmenu:=
+	unity-base/bamf:="
+DEPEND="${RDEPEND}
+	dev-db/sqlite:3
 	>=dev-libs/glib-2.35.4
-	dev-libs/libdbusmenu
 	dev-perl/XML-Parser
 	gnome-base/dconf
-	unity-base/bamf
 	x11-libs/gtk+:3"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

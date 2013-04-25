@@ -17,12 +17,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="unity-base/bamf:="
-DEPEND="dev-lang/vala:0.16[vapigen]
+RDEPEND="dev-libs/libdbusmenu:=[gtk]
+	unity-base/bamf:="
+DEPEND="${RDEPEND}
+	dev-lang/vala:0.16[vapigen]
 	dev-libs/libappindicator
-	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt
-	unity-base/bamf
 	>=x11-libs/gtk+-3.5.12:3
 	x11-libs/libwnck:1
 	x11-libs/libwnck:3"

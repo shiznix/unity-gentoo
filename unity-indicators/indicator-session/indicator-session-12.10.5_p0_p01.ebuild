@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
@@ -17,7 +17,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+help"
 RESTRICT="mirror"
 
-RDEPEND="unity-base/unity-language-pack"
+RDEPEND="dev-libs/libdbusmenu:=[gtk]
+	unity-base/unity-language-pack"
 DEPEND="app-admin/packagekit[gtk,qt4]
 	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]
 	app-admin/system-config-printer-gnome

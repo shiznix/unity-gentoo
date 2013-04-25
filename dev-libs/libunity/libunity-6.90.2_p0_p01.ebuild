@@ -19,9 +19,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/dee:="
+RDEPEND="dev-libs/dee:=
+	dev-libs/libdbusmenu:=[gtk]"
 DEPEND="${RDEPEND}
-	dev-libs/libdbusmenu[gtk]
 	dev-libs/libgee:0
 	dev-lang/vala:0.16
 	x11-libs/gtk+:3"

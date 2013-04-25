@@ -29,6 +29,7 @@ RESTRICT="mirror test"
 # and 2.30.0
 COMMON_DEPEND="
 	>=dev-libs/glib-2.35.9:2
+	dev-libs/libdbusmenu:=
 	dev-libs/libunity
 	dev-libs/libzeitgeist
 	>=x11-libs/pango-1.28.3

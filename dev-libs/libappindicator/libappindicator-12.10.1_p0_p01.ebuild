@@ -19,8 +19,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-libs/libindicator:3
-	dev-libs/libdbusmenu
+RDEPEND="dev-libs/libdbusmenu:=[gtk]"
+DEPEND="${RDEPEND}
+	dev-libs/libindicator:3
 	dev-lang/vala:0.14[vapigen]
 	dev-dotnet/gtk-sharp:2
 	dev-libs/dbus-glib

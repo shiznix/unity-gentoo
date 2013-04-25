@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit versionator ubuntu-versionator
 
@@ -20,7 +20,9 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="|| ( =www-client/firefox-$(get_version_component_range 1-2)* =www-client/firefox-bin-$(get_version_component_range 1-2)* )
+RDEPEND="dev-libs/libdbusmenu:="
+DEPEND="${RDEPEND}
+	|| ( =www-client/firefox-$(get_version_component_range 1-2)* =www-client/firefox-bin-$(get_version_component_range 1-2)* )
 		x11-misc/appmenu-gtk
 		app-text/gnome-doc-utils"
 RDEPEND="${DEPEND}"

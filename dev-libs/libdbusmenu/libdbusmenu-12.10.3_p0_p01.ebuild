@@ -1,4 +1,4 @@
-EAPI=3
+EAPI=5
 
 inherit base autotools eutils virtualx ubuntu-versionator
 
@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="LGPL-3"
-SLOT="3"
+SLOT="3/4.0.12"
 KEYWORDS="~amd64 ~x86"
 IUSE="+introspection +gtk"
 RESTRICT="mirror"

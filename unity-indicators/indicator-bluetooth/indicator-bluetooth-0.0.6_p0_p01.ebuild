@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools base eutils gnome2 ubuntu-versionator
@@ -17,10 +17,11 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-lang/vala:0.16[vapigen]
+RDEPEND="dev-libs/libdbusmenu:=[gtk]"
+DEPEND="${RDEPEND}
+	dev-lang/vala:0.16[vapigen]
 	dev-libs/glib
 	dev-libs/libappindicator
-	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicator
 	gnome-base/dconf
 	net-wireless/gnome-bluetooth

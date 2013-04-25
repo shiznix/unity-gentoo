@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 
 inherit autotools eutils ubuntu-versionator
 
@@ -16,7 +16,9 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="unity-indicators/indicator-appmenu
+RDEPEND="dev-libs/libdbusmenu:=[gtk]"
+DEPEND="${RDEPEND}
+	unity-indicators/indicator-appmenu
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3"
 

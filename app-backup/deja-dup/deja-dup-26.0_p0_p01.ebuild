@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit eutils gnome2 ubuntu-versionator
@@ -18,6 +18,7 @@ RESTRICT="test"
 
 COMMON_DEPEND="
 	app-crypt/libsecret[vala]
+	dev-libs/libdbusmenu:=
 	dev-libs/glib:2
 	dev-libs/libpeas
 	gnome-base/gnome-control-center

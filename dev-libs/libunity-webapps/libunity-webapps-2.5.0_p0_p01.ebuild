@@ -1,4 +1,4 @@
-EAPI=4
+EAPI=5
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 
@@ -18,12 +18,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 RESTRICT="mirror"
 
+RDEPEND="dev-libs/libdbusmenu:="
 DEPEND="app-admin/packagekit-gtk
 	app-misc/geoclue
 	dev-db/sqlite:3
 	>=dev-libs/glib-2.32.3:2
 	dev-libs/gobject-introspection
-	dev-libs/libdbusmenu
 	dev-libs/json-glib
 	dev-libs/libindicate[gtk]
 	dev-libs/libunity
