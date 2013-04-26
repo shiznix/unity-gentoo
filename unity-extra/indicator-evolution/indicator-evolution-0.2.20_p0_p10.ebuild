@@ -24,7 +24,7 @@ RDEPEND="dev-libs/dee:=
 DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.31.8
 	dev-libs/libappindicator
-	dev-libs/libindicate
+	dev-libs/libindicate[gtk,introspection]
 	gnome-base/gconf
 	>=gnome-extra/evolution-data-server-3.6
 	>=mail-client/evolution-3.6

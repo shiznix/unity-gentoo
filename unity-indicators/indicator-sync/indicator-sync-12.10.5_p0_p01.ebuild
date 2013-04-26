@@ -22,7 +22,7 @@ RDEPEND="dev-libs/libdbusmenu:=
 DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.35.4
 	dev-libs/libappindicator
-	dev-libs/libindicate
+	dev-libs/libindicate[gtk,introspection]
 	dev-libs/libindicator
 	x11-libs/gtk+:3
 	x11-libs/pango"

@@ -20,7 +20,7 @@ RDEPEND="dev-libs/libappindicator:="
 DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.28.0
 	dev-libs/libdbusmenu
-	dev-libs/libindicate
+	dev-libs/libindicate[gtk,introspection]
 	gnome-base/dconf
 	gnome-base/libgtop
 	x11-libs/cairo

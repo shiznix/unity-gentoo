@@ -27,7 +27,7 @@ DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.32.3:2
 	dev-libs/gobject-introspection
 	dev-libs/json-glib
-	dev-libs/libindicate[gtk]
+	dev-libs/libindicate[gtk,introspection]
 	dev-util/intltool
 	net-libs/libsoup
 	net-libs/telepathy-glib

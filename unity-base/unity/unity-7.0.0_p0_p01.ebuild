@@ -36,7 +36,7 @@ DEPEND="dev-libs/boost
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
-	dev-libs/libindicate[gtk]
+	dev-libs/libindicate[gtk,introspection]
 	dev-libs/libindicate-qt
 	>=dev-libs/libindicator-12.10.2
 	dev-libs/libunity
