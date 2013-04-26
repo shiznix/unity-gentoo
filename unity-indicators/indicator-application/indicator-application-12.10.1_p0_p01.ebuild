@@ -18,7 +18,7 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libappindicator:="
 DEPEND="${RDEPEND}
-	dev-libs/libdbusmenu[gtk]
+	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

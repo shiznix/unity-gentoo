@@ -18,16 +18,13 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="!net-im/indicator-messages
-	dev-lang/vala:0.14[vapigen]
 	dev-libs/libappindicator
-	dev-libs/libdbusmenu[gtk]
+	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	eautoreconf
-        export VALAC=$(type -P valac-0.14)
-        export VALA_API_GEN=$(type -p vapigen-0.14)
 	append-cflags -Wno-error
 }

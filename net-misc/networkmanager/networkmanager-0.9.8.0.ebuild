@@ -1,6 +1,6 @@
 EAPI="5"
 GNOME_ORG_MODULE="NetworkManager"
-VALA_MIN_API_VERSION="0.18"
+VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
 inherit eutils gnome.org linux-info systemd user toolchain-funcs vala virtualx udev

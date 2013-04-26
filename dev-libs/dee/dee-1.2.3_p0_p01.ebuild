@@ -1,10 +1,12 @@
 EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
 AUTOTOOLS_AUTORECONF=y
 
-inherit autotools-utils eutils python ubuntu-versionator
+inherit autotools-utils eutils python ubuntu-versionator vala
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -35,7 +37,7 @@ src_prepare() {
 	eautoreconf
 	sed \
 		-e '/GCC_FLAGS/s:-g::' \
-		-e 's:vapigen:vapigen-0.14:g' \
+		-e 's:vapigen:vapigen-${VALA_MIN_API_VERSION}:g' \
 		-i configure{,.ac} || die
 	autotools-utils_src_prepare
 }

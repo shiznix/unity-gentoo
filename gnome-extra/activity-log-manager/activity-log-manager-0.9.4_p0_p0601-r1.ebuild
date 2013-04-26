@@ -1,6 +1,8 @@
 EAPI=4
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools base eutils gnome2 ubuntu-versionator
+inherit autotools base eutils gnome2 ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
 URELEASE="raring"
@@ -16,8 +18,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-lang/vala:0.16[vapigen]
-	dev-libs/glib:2
+DEPEND="dev-libs/glib:2
 	dev-libs/libgee:0
 	dev-libs/libzeitgeist
 	gnome-extra/zeitgeist
@@ -32,8 +33,9 @@ src_prepare() {
 	epatch "${FILESDIR}/gtkapplication-fix.patch"
 
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		epatch -p1 "${WORKDIR}/debian/patches/${patch}"
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
+	base_src_prepare
 
 	# Fix gnome-control-center loop executing when activity-log-manager is selected #
 	sed -e "s:gnome-control-center activity-log-manager:activity-log-manager:" \
@@ -42,13 +44,12 @@ src_prepare() {
 	# Install docs in /usr/share/doc #
 	sed -e "s:\${prefix}/doc/alm:/usr/share/doc/${P}:g" \
 		-i Makefile{.am,.in} || die
-	eautoreconf
-}
+	DOCS="README NEWS INSTALL ChangeLog AUTHORS"
 
-src_configure() {
-	export VALAC=$(type -P valac-0.16)
-	export VALA_API_GEN=$(type -p vapigen-0.16)
-	econf
+	cp "${FILESDIR}"/config.vapi src/ || die
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
+	eautoreconf
 }
 
 src_install() {

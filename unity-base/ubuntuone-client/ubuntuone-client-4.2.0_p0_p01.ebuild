@@ -2,7 +2,6 @@ EAPI=4
 GNOME2_LA_PUNT="yes"
 
 PYTHON_DEPEND="2:2.7"
-#SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="3.*"
 
 inherit base eutils gnome2-utils python ubuntu-versionator
@@ -54,9 +53,6 @@ src_prepare() {
 }
 
 src_configure() {
-	export VALAC=$(type -P valac-0.14)
-	export VALA_API_GEN=$(type -p vapigen-0.14)
-
 	# Make docs optional #
 	! use doc && \
 		sed -e 's:po docs:po:' \

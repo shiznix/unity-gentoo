@@ -17,12 +17,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=[gtk]
+RDEPEND="dev-libs/libdbusmenu:=
 	dev-libs/libtimezonemap:=
 	unity-base/unity-language-pack
 	unity-indicators/ido:="
 DEPEND="dev-libs/libappindicator
-	dev-libs/libdbusmenu[gtk]
+	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
 	dev-libs/libtimezonemap
 	gnome-base/gnome-control-center

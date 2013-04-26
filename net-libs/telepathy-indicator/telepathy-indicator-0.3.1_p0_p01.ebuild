@@ -19,7 +19,6 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libunity:="
 DEPEND="${RDEPEND}
-	dev-lang/vala:0.14[vapigen]
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk]
 	dev-libs/libindicate-qt
@@ -29,7 +28,5 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-        export VALAC=$(type -P valac-0.14)
-        export VALA_API_GEN=$(type -p vapigen-0.14)
 	eautoreconf
 }

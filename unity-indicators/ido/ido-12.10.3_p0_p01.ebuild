@@ -1,7 +1,9 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="raring"
@@ -17,13 +19,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-lang/vala:0.18[vapigen]
-	x11-libs/gtk+:3"
+DEPEND="x11-libs/gtk+:3"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
-	export VALAC=$(type -P valac-0.18)
-	export VALA_API_GEN=$(type -p vapigen-0.18)
 }

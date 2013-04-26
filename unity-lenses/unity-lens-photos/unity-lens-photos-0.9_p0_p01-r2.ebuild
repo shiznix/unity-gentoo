@@ -21,7 +21,9 @@ RESTRICT="mirror"
 RDEPEND="dev-libs/dee
         dev-libs/libgee
         net-libs/liboauth
-        net-libs/libsoup
+	|| ( ( net-libs/libsoup
+		net-libs/libsoup-gnome )
+		>net-libs/libsoup-2.42 )
         dev-libs/libunity
 	dev-python/httplib2
 	dev-python/oauthlib

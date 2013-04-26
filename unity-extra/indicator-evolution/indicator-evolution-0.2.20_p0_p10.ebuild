@@ -19,7 +19,7 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
-	dev-libs/libdbusmenu:=[gtk]
+	dev-libs/libdbusmenu:=
 	dev-libs/libunity:="
 DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.31.8

@@ -1,7 +1,9 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools base eutils gnome2 ubuntu-versionator
+inherit autotools base eutils gnome2 ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
 URELEASE="raring"
@@ -17,10 +19,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=[gtk]
+RDEPEND="dev-libs/libdbusmenu:=
 	unity-indicators/ido:="
 DEPEND="${RDEPEND}
-	dev-lang/vala:0.16[vapigen]
 	dev-libs/glib
 	dev-libs/libappindicator
 	dev-libs/libindicator
@@ -31,8 +32,8 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-        export VALAC=$(type -P valac-0.16)
-        export VALA_API_GEN=$(type -p vapigen-0.16)
+	vala_src_prepare
+        export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
 

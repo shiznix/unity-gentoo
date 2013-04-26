@@ -2,8 +2,10 @@ EAPI=5
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2:2.7"
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools base gnome2 python virtualx ubuntu-versionator
+inherit autotools base gnome2 python virtualx ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/e/${PN}"
 URELEASE="raring"
@@ -80,7 +82,6 @@ RDEPEND="${COMMON_DEPEND}
 	gnome? ( gnome-extra/gnome-contacts )"
 DEPEND="${COMMON_DEPEND}
 	${PYTHON_DEPENDS}
-	dev-lang/vala:0.16[vapigen]
 	dev-libs/libxml2:2
 	dev-libs/libxslt
 	>=dev-util/intltool-0.50.0
@@ -100,14 +101,13 @@ pkg_setup() {
 }
 
 src_prepare() {
-	export VALAC=$(type -P valac-0.16)
-	export VALA_API_GEN=$(type -p vapigen-0.16)
-
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
 

@@ -1,6 +1,8 @@
 EAPI=5
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit base autotools eutils virtualx ubuntu-versionator
+inherit base autotools eutils virtualx ubuntu-versionator vala
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -17,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="LGPL-3"
 SLOT="3/4.0.12"
 KEYWORDS="~amd64 ~x86"
-IUSE="+introspection +gtk"
+IUSE=""
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
@@ -27,25 +29,23 @@ RDEPEND=">=dev-libs/glib-2.35.4:2
 	dev-libs/json-glib
 	dev-libs/libxml2:2
 	dev-util/gtk-doc
-	introspection? ( >=dev-libs/gobject-introspection-1 )
 	sys-apps/dbus
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}
-	introspection? ( >=dev-libs/gobject-introspection-0.6.7
-				dev-lang/vala:0.14 )
+	dev-libs/gobject-introspection
 	app-text/gnome-doc-utils
 	dev-util/intltool
 	dev-util/pkgconfig"
 
-PATCHES+=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	PATCHES+=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
 	base_src_prepare
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
-	use introspection && \
-		export VALA_API_GEN=$(type -P vapigen-0.14)
 }
 
 src_configure() {
@@ -53,7 +53,7 @@ src_configure() {
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
 	../configure --prefix=/usr \
-		$(use_enable introspection) \
+		--enable-introspection \
 		--disable-static \
 		--disable-scrollkeeper \
 		--with-gtk=2 || die
@@ -63,7 +63,7 @@ src_configure() {
 	[[ -d build-gtk3 ]] || mkdir build-gtk3
 	pushd build-gtk3
 	../configure --prefix=/usr \
-		$(use_enable introspection) \
+		--enable-introspection \
 		--disable-static \
 		--disable-scrollkeeper \
 		--with-gtk=3 || die

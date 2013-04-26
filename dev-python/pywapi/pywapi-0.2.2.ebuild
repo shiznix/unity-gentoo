@@ -20,7 +20,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-lang/vala:0.14[vapigen]
 	dev-libs/libappindicator
-	dev-libs/libdbusmenu[gtk]
+	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt"
 
 src_install() {

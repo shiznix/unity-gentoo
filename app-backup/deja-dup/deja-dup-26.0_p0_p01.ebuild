@@ -1,7 +1,9 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit eutils gnome2 ubuntu-versionator
+inherit eutils gnome2 ubuntu-versionator vala
 
 URELEASE="raring"
 
@@ -34,7 +36,6 @@ RDEPEND="${COMMON_DEPEND}
 	gnome-base/gvfs[fuse]"
 DEPEND="${COMMON_DEPEND}
 	app-text/yelp-tools
-	dev-lang/vala:0.16
 	dev-perl/Locale-gettext
 	virtual/pkgconfig
 	dev-util/intltool
@@ -48,7 +49,6 @@ src_prepare() {
 		--with-ccpanel
 		--with-unity
 		--disable-static"
-	export VALAC=$(type -p valac-0.16)
-
+	vala_src_prepare
 	gnome2_src_prepare
 }

@@ -17,14 +17,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+help"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=[gtk]
+RDEPEND="dev-libs/libdbusmenu:=
 	unity-base/unity-language-pack"
 DEPEND="app-admin/packagekit[gtk,qt4]
 	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]
 	app-admin/system-config-printer-gnome
 	>=dev-libs/glib-2.35.4
 	dev-libs/libappindicator
-	dev-libs/libdbusmenu[gtk]
+	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
 	>=gnome-extra/gnome-screensaver-3.6.0
 	help? ( gnome-extra/yelp

@@ -1,6 +1,8 @@
 EAPI=5
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils python ubuntu-versionator
+inherit autotools eutils python ubuntu-versionator vala
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -19,10 +21,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=[gtk]
+RDEPEND="dev-libs/libdbusmenu:=
 	dev-libs/libindicator:3="
 DEPEND="${RDEPEND}
-	dev-lang/vala:0.14[vapigen]
 	dev-dotnet/gtk-sharp:2
 	dev-libs/dbus-glib
 	dev-libs/xapian-bindings[python]
@@ -38,8 +39,8 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare () {
-	export VALAC=$(type -P valac-0.14) \
-	export VALA_API_GEN=$(type -p vapigen-0.14)
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
 

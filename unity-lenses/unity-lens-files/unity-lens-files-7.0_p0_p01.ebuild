@@ -1,7 +1,10 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
 
-inherit autotools eutils gnome2 ubuntu-versionator
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
+
+inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
@@ -20,7 +23,6 @@ RESTRICT="mirror"
 RDEPEND="dev-libs/dee:=
 	dev-libs/libunity:="
 DEPEND="${RDEPEND}
-	dev-lang/vala:0.16[vapigen]
 	dev-libs/libgee
 	dev-libs/libzeitgeist
 	>=gnome-extra/zeitgeist-0.9.12[datahub,dbus,fts]
@@ -30,11 +32,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
-}
-
-src_configure() {
-	export VALAC=$(type -P valac-0.16)
-	export VALA_API_GEN=$(type -p vapigen-0.16)
-	econf
 }

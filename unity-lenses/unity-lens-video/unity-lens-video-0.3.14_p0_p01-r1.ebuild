@@ -2,7 +2,10 @@ EAPI=5
 PYTHON_DEPEND="2:2.7"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit autotools eutils ubuntu-versionator
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
+
+inherit autotools eutils ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
@@ -28,14 +31,16 @@ DEPEND="dev-lang/vala:0.18[vapigen]
 	dev-libs/libgee
 	dev-libs/libunity
 	dev-libs/libzeitgeist
-	net-libs/libsoup
+	|| ( ( net-libs/libsoup
+		net-libs/libsoup-gnome )
+		>net-libs/libsoup-2.42 )
 	unity-base/unity
 	unity-lenses/unity-lens-music"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
-	export VALAC=$(type -P valac-0.18)
-	export VALA_API_GEN=$(type -p vapigen-0.18)
 }

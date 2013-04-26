@@ -1,6 +1,8 @@
 EAPI=5
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
@@ -20,7 +22,6 @@ RDEPEND="dev-libs/dee:=
 	dev-libs/libunity:=
 	unity-base/rhythmbox-ubuntuone"
 DEPEND="dev-db/sqlite:3
-	dev-lang/vala:0.18[vapigen]
 	dev-libs/dee
 	dev-libs/glib:2
 	dev-libs/json-glib
@@ -29,7 +30,9 @@ DEPEND="dev-db/sqlite:3
 	gnome-base/gnome-menus:3
 	media-libs/gstreamer:1.0
 	media-libs/gst-plugins-base:1.0
-	net-libs/libsoup
+	|| ( ( net-libs/libsoup
+		net-libs/libsoup-gnome )
+		>net-libs/libsoup-2.42 )
 	net-libs/liboauth
 	sys-libs/tdb
 	unity-base/unity"
@@ -37,7 +40,7 @@ DEPEND="dev-db/sqlite:3
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
-	export VALAC=$(type -P valac-0.18)
-	export VALA_API_GEN=$(type -p vapigen-0.18)
 }

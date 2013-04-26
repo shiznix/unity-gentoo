@@ -19,7 +19,7 @@ RESTRICT="mirror"
 RDEPEND="dev-libs/libappindicator:="
 DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.28.0
-	dev-libs/libdbusmenu[gtk]
+	dev-libs/libdbusmenu
 	dev-libs/libindicate
 	gnome-base/dconf
 	gnome-base/libgtop

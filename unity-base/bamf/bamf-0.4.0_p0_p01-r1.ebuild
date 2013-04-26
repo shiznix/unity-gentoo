@@ -1,6 +1,8 @@
 EAPI=5
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/b/${PN}"
 URELEASE="raring"
@@ -16,8 +18,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-lang/vala:0.14[vapigen]
-	dev-libs/gobject-introspection
+DEPEND="dev-libs/gobject-introspection
 	dev-libs/libunity
 	dev-libs/libunity-webapps
 	x11-libs/gtk+:2
@@ -29,8 +30,8 @@ DEPEND="dev-lang/vala:0.14[vapigen]
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	export VALAC=$(type -P valac-0.14) && \
-	export VALA_API_GEN=$(type -p vapigen-0.14)
+	vala_src_prepare
+	export VALA_API_GEN=$VAPIGEN
 	sed -e "s:-Werror::g" \
 		-i "configure.ac" || die
 	eautoreconf

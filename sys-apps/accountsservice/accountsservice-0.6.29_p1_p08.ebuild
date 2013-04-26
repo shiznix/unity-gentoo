@@ -1,7 +1,7 @@
 EAPI="4"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
-VALA_MIN_API_VERSION="0.16"
+VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
 inherit autotools eutils gnome2 systemd vala ubuntu-versionator base
@@ -40,9 +40,7 @@ DEPEND="${RDEPEND}
 	doc? (
 		app-text/docbook-xml-dtd:4.1.2
 		app-text/xmlto )
-	vala? (
-		>=dev-lang/vala-0.16.1-r1
-		$(vala_depend) )"
+	vala? ( $(vala_depend) )"
 
 pkg_pretend() {
         if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then

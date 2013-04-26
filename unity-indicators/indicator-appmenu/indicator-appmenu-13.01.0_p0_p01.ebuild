@@ -17,10 +17,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=[gtk]
+RDEPEND="dev-libs/libdbusmenu:=
 	unity-base/bamf:="
 DEPEND="${RDEPEND}
-	dev-lang/vala:0.16[vapigen]
 	dev-libs/libappindicator
 	dev-libs/libindicate-qt
 	>=x11-libs/gtk+-3.5.12:3
@@ -31,7 +30,5 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	eautoreconf
-	export VALAC=$(type -P valac-0.16)
-	export VALA_API_GEN=$(type -p vapigen-0.16)
 	append-cflags -Wno-error
 }

@@ -1,8 +1,10 @@
 EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
-#SUPPORT_PYTHON_ABIS="1"
+VALA_MIN_API_VERSION="0.16"
+VALA_MAX_API_VERSION="0.18"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools base eutils autotools python ubuntu-versionator
+inherit autotools base eutils autotools python ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
 URELEASE="raring"
@@ -20,23 +22,21 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
-	dev-libs/libdbusmenu:=[gtk]"
+	dev-libs/libdbusmenu:="
 DEPEND="${RDEPEND}
 	dev-libs/libgee:0
-	dev-lang/vala:0.16
 	x11-libs/gtk+:3"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	export VALAC=$(type -P valac-0.16) && \
-	export VALA_API_GEN=$(type -p vapigen-0.16)
-
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	for patch in $(cat "debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "debian/patches/${patch}" )
 	done
 	base_src_prepare
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
 
