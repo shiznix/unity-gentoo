@@ -27,6 +27,7 @@ gnome-base/nautilus
 gnome-extra/gnome-screensaver
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome
+media-sound/rhythmbox
 net-im/empathy
 net-wireless/gnome-bluetooth
 sys-apps/accountsservice

@@ -1,0 +1,91 @@
+diff -urN gnome-session-3.8.0/data/gnome.desktop.in gnome-session-3.8.0-patched/data/gnome.desktop.in
+--- gnome-session-3.8.0/data/gnome.desktop.in	2012-12-13 04:56:59.000000000 +1030
++++ gnome-session-3.8.0-patched/data/gnome.desktop.in	2013-04-27 07:52:58.948443953 +0930
+@@ -1,7 +1,7 @@
+ [Desktop Entry]
+ _Name=GNOME
+ _Comment=This session logs you into GNOME
+-Exec=gnome-session
+-TryExec=gnome-session
++Exec=gnome-session --session=gnome
++TryExec=gnome-shell
+ Icon=
+ Type=Application
+diff -urN gnome-session-3.8.0/data/gnome-fallback-compiz.desktop.in gnome-session-3.8.0-patched/data/gnome-fallback-compiz.desktop.in
+--- gnome-session-3.8.0/data/gnome-fallback-compiz.desktop.in	1970-01-01 09:30:00.000000000 +0930
++++ gnome-session-3.8.0-patched/data/gnome-fallback-compiz.desktop.in	2013-04-27 09:17:46.071690156 +0930
+@@ -0,0 +1,7 @@
++[Desktop Entry]
++_Name=GNOME Fallback
++_Comment=This session logs you into GNOME with the traditional panel
++Exec=gnome-session --session=gnome-fallback-compiz
++TryExec=gnome-session
++Icon=
++Type=Application
+diff -urN gnome-session-3.8.0/data/gnome-fallback-compiz.session.desktop.in.in gnome-session-3.8.0-patched/data/gnome-fallback-compiz.session.desktop.in.in
+--- gnome-session-3.8.0/data/gnome-fallback-compiz.session.desktop.in.in	1970-01-01 09:30:00.000000000 +0930
++++ gnome-session-3.8.0-patched/data/gnome-fallback-compiz.session.desktop.in.in	2013-04-27 09:18:10.770691351 +0930
+@@ -0,0 +1,5 @@
++[GNOME Session]
++_Name=GNOME Fallback
++RequiredComponents=gnome-panel;gnome-settings-daemon;gnome-wm;
++IsRunnableHelper=@LIBEXECDIR@/gnome-session-check-accelerated
++FallbackSession=gnome-fallback
+diff -urN gnome-session-3.8.0/data/gnome-fallback.desktop.in gnome-session-3.8.0-patched/data/gnome-fallback.desktop.in
+--- gnome-session-3.8.0/data/gnome-fallback.desktop.in	1970-01-01 09:30:00.000000000 +0930
++++ gnome-session-3.8.0-patched/data/gnome-fallback.desktop.in	2013-04-27 09:20:32.271698199 +0930
+@@ -0,0 +1,7 @@
++[Desktop Entry]
++Name=GNOME Fallback (No effects)
++Comment=This session logs you into GNOME with the traditional panel without any graphical effect.
++Exec=gnome-session --session=gnome-fallback
++TryExec=gnome-session
++Icon=
++Type=Application
+diff -urN gnome-session-3.8.0/data/gnome-fallback.session.desktop.in.in gnome-session-3.8.0-patched/data/gnome-fallback.session.desktop.in.in
+--- gnome-session-3.8.0/data/gnome-fallback.session.desktop.in.in	2013-04-27 07:29:05.369374572 +0930
++++ gnome-session-3.8.0-patched/data/gnome-fallback.session.desktop.in.in	2013-04-27 09:16:08.662685442 +0930
+@@ -1,3 +1,3 @@
+ [GNOME Session]
+ _Name=GNOME fallback
+-RequiredComponents=gnome-panel;gnome-settings-daemon;gnome-screensaver;gnome-wm;
++RequiredComponents=gnome-panel;gnome-settings-daemon;gnome-screensaver;metacity;
+diff -urN gnome-session-3.8.0/data/Makefile.am gnome-session-3.8.0-patched/data/Makefile.am
+--- gnome-session-3.8.0/data/Makefile.am	2013-04-27 07:29:05.422374575 +0930
++++ gnome-session-3.8.0-patched/data/Makefile.am	2013-04-27 09:08:52.636664339 +0930
+@@ -13,7 +13,7 @@
+ hwcompat_DATA = hardware-compatibility
+ 
+ xsessiondir = $(datadir)/xsessions
+-xsession_in_files = gnome.desktop.in gnome-fallback.desktop.in
++xsession_in_files = gnome.desktop.in gnome-fallback.desktop.in gnome-fallback-compiz.desktop.in ubuntu.desktop.in
+ 
+ if BUILD_SESSION_SELECTOR
+ xsession_in_files += gnome-custom-session.desktop.in
+@@ -26,7 +26,7 @@
+ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+ 
+ sessiondir = $(datadir)/gnome-session/sessions
+-session_in_in_files = gnome.session.desktop.in.in gnome-dummy.session.desktop.in.in gnome-fallback.session.desktop.in.in
++session_in_in_files = gnome.session.desktop.in.in gnome-dummy.session.desktop.in.in gnome-fallback.session.desktop.in.in gnome-fallback-compiz.session.desktop.in.in ubuntu.session.desktop.in.in
+ session_in_files = $(session_in_in_files:.session.desktop.in.in=.session.desktop.in)
+ session_DATA = $(session_in_files:.session.desktop.in=.session)
+ 
+diff -urN gnome-session-3.8.0/data/ubuntu.desktop.in gnome-session-3.8.0-patched/data/ubuntu.desktop.in
+--- gnome-session-3.8.0/data/ubuntu.desktop.in	1970-01-01 09:30:00.000000000 +0930
++++ gnome-session-3.8.0-patched/data/ubuntu.desktop.in	2013-04-27 09:21:30.076700997 +0930
+@@ -0,0 +1,7 @@
++[Desktop Entry]
++_Name=Ubuntu
++_Comment=This session logs you into Ubuntu
++Exec=gnome-session --session=ubuntu
++TryExec=unity
++Icon=
++Type=Application
+diff -urN gnome-session-3.8.0/data/ubuntu.session.desktop.in.in gnome-session-3.8.0-patched/data/ubuntu.session.desktop.in.in
+--- gnome-session-3.8.0/data/ubuntu.session.desktop.in.in	1970-01-01 09:30:00.000000000 +0930
++++ gnome-session-3.8.0-patched/data/ubuntu.session.desktop.in.in	2013-04-27 09:20:58.904699488 +0930
+@@ -0,0 +1,3 @@
++[GNOME Session]
++_Name=Ubuntu
++RequiredComponents=gnome-settings-daemon;compiz;

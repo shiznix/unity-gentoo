@@ -34,12 +34,12 @@
 >=dev-util/gnome-devel-docs-3.8::gentoo
 >=gnome-base/dconf-0.16::gentoo
 >=gnome-base/gdm-3.8::gentoo
->=gnome-base/gnome-control-center-3.8::unity-gentoo
+>=gnome-base/gnome-control-center-3.8::unity-gentoo **
 >=gnome-base/gnome-desktop-3.8::gentoo
 >=gnome-base/gnome-keyring-3.8::gentoo
 >=gnome-base/gnome-menus-3.8::unity-gentoo **
 >=gnome-base/gnome-session-3.8::unity-gentoo **
->=gnome-base/gnome-settings-daemon-3.8::unity-gentoo
+>=gnome-base/gnome-settings-daemon-3.8::unity-gentoo **
 >=gnome-base/gnome-shell-3.8::gentoo
 >=gnome-base/gnome-3.8::gentoo
 >=gnome-base/gsettings-desktop-schemas-3.8::unity-gentoo **
@@ -128,3 +128,7 @@
 >=dev-cpp/glibmm-2.36::gentoo
 >=dev-cpp/atkmm-2.22.7::gentoo
 >=gnome-extra/gnome-getting-started-docs-3.8::gentoo
+sys-auth/consolekit
+net-libs/libqmi
+net-misc/modemmanager **
+sys-apps/accountsservice::unity-gentoo **
