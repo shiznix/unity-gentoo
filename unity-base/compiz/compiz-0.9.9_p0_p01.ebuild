@@ -70,15 +70,11 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Apply Ubuntu patchset #
+	# Ubuntu patchset #
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${S}/debian/patches/${patch}" )
 	done
-
-	# Set compiz Window Decorations to !state=maxvert so top appmenu bar behaviour functions correctly #
-	PATCHES+=( "${FILESDIR}/${PN}-0.9.8_decor-setting.diff" )
-
 	base_src_prepare
 
 	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
