@@ -28,7 +28,6 @@ RESTRICT="mirror"
 
 DEPEND=">=dev-python/python-distutils-extra-2.37
 	dev-python/pywapi
-	dev-lang/vala:0.14[vapigen]
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt"
