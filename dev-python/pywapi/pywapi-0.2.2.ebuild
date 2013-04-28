@@ -18,8 +18,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-lang/vala:0.14[vapigen]
-	dev-libs/libappindicator
+DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt"
 
