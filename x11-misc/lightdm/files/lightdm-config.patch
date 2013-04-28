@@ -7,7 +7,8 @@ Index: lightdm-1.0.6/data/lightdm.conf
  #allow-guest=true
  #guest-session=UNIMPLEMENTED
 -#session-wrapper=lightdm-session
+-#display-setup-script=
 +session-wrapper=/etc/lightdm/Xsession
- #display-setup-script=
++display-setup-script=/etc/lightdm/lightdm-greeter-display-setup
  #greeter-setup-script=
  #session-setup-script=

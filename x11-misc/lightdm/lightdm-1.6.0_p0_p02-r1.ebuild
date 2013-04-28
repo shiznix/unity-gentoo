@@ -35,13 +35,16 @@ COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
 		dev-qt/qtgui:4
 		)"
 RDEPEND="${COMMON_DEPEND}
-	>=sys-auth/pambase-20101024-r2"
+	>=sys-auth/pambase-20101024-r2
+	x11-apps/xrandr"
+
 DEPEND="${COMMON_DEPEND}
 	dev-util/gtk-doc-am
 	dev-util/intltool
 	gnome-base/gnome-common
 	sys-devel/gettext
 	virtual/pkgconfig"
+
 PDEPEND="gtk? ( x11-misc/lightdm-gtk-greeter )
 	kde? ( x11-misc/lightdm-kde )
 	razor? ( razorqt-base/razorqt-lightdm-greeter )
@@ -61,7 +64,7 @@ src_prepare() {
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
-	epatch "${FILESDIR}"/session-wrapper-${PN}.patch
+	epatch "${FILESDIR}"/${PN}-config.patch
 	epatch "${FILESDIR}"/03_launch_dbus.patch
 
 	# use own *lauch_dbus* patch
@@ -123,6 +126,15 @@ src_install() {
 	# setting icon themes in Unity desktop
 	doins "${FILESDIR}"/lightdm-greeter-session
 	fperms +x /etc/${PN}/lightdm-greeter-session
+
+	# script makes lightdm multi monitor sessions aware
+	# and enable first display as primary output
+	# all other monitors are aranged right of it
+	#
+	# on 'unity-greeter' the login prompt will follow the mouse cursor
+	#
+	doins "${FILESDIR}"/lightdm-greeter-display-setup
+	fperms +x /etc/${PN}/lightdm-greeter-display-setup
 
 	prune_libtool_files --all
 	rm -rf "${ED}"/etc/init

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#
+# Iterates through connected monitors in xrander and sets first monitor as primary 
+# and all other in a row right to the last one.
+#
+
+# get info from xrandr
+xStatus=`xrandr`
+connectedOutputs=$(echo "$xStatus" | grep " connected" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/")
+activeOutput=$(echo "$xStatus" | grep -e " connected [^(]" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/") 
+connected=$(echo $connectedOutputs | wc -w)
+
+# initialize variables
+execute="xrandr "
+default="xrandr "
+i=1
+old_display=0
+
+for display in $connectedOutputs
+do
+
+	# build default configuration
+	if [ $i -eq 1 ]
+	then
+		default=$default"--output $display --auto --pos 0x0 --primary "
+	else
+		default=$default"--output $display --auto --right-of $old_display "
+#		break
+	fi
+	
+	old_display=$display
+	i=$(( $i + 1 ))
+
+done
+
+echo "Resulting Configuration:"
+echo "Command: $default"
+
+`$default`
+
+echo -e "\n$(xrandr)"
+
