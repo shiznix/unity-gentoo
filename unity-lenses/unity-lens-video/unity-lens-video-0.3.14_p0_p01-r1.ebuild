@@ -35,7 +35,8 @@ DEPEND="dev-lang/vala:0.18[vapigen]
 		net-libs/libsoup-gnome )
 		>net-libs/libsoup-2.42 )
 	unity-base/unity
-	unity-lenses/unity-lens-music"
+	unity-lenses/unity-lens-music
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

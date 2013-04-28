@@ -104,6 +104,7 @@ DEPEND="${COMMON_DEPEND}
 	cups? ( sys-apps/sed )
 
 	gnome-base/gnome-common
+	$(vala_depend)
 "
 # Needed for autoreconf
 #	gnome-base/gnome-common

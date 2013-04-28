@@ -25,7 +25,8 @@ DEPEND="dev-libs/gobject-introspection
 	x11-libs/gtk+:3
 	x11-libs/libwnck:1
 	x11-libs/libwnck:3
-	x11-libs/libXfixes"
+	x11-libs/libXfixes
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

@@ -26,7 +26,8 @@ DEPEND="${RDEPEND}
 	dev-libs/libappindicator
 	dev-libs/libgee:0
 	dev-libs/libindicate-qt
-	media-sound/pulseaudio"
+	media-sound/pulseaudio
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"

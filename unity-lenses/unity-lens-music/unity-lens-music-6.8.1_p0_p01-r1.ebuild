@@ -35,7 +35,8 @@ DEPEND="dev-db/sqlite:3
 		>net-libs/libsoup-2.42 )
 	net-libs/liboauth
 	sys-libs/tdb
-	unity-base/unity"
+	unity-base/unity
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

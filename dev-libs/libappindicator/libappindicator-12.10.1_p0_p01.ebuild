@@ -33,7 +33,8 @@ DEPEND="${RDEPEND}
 	dev-python/pygtk
 	dev-python/pyxdg
 	x11-libs/gtk+:2
-	x11-libs/gtk+:3"
+	x11-libs/gtk+:3
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"

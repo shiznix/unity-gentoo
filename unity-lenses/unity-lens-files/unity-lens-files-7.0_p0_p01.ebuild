@@ -27,7 +27,8 @@ DEPEND="${RDEPEND}
 	dev-libs/libzeitgeist
 	>=gnome-extra/zeitgeist-0.9.12[datahub,dbus,fts]
 	unity-base/unity
-	unity-lenses/unity-lens-applications"
+	unity-lenses/unity-lens-applications
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

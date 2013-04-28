@@ -27,7 +27,8 @@ DEPEND="${RDEPEND}
 	dev-libs/libindicator
 	gnome-base/dconf
 	net-wireless/gnome-bluetooth
-	x11-libs/gtk+:3"
+	x11-libs/gtk+:3
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

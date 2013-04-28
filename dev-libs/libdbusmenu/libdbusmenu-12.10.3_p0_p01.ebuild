@@ -36,7 +36,8 @@ DEPEND="${RDEPEND}
 	dev-libs/gobject-introspection
 	app-text/gnome-doc-utils
 	dev-util/intltool
-	dev-util/pkgconfig"
+	dev-util/pkgconfig
+	$(vala_depend)"
 
 MAKEOPTS="${MAKEOPTS} -j1"
 

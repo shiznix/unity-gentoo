@@ -29,7 +29,8 @@ RDEPEND="dev-libs/glib:2
 	dev-libs/icu"
 DEPEND="${RDEPEND}
 	dev-util/gtk-doc
-	test? ( dev-util/dbus-test-runner )"
+	test? ( dev-util/dbus-test-runner )
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

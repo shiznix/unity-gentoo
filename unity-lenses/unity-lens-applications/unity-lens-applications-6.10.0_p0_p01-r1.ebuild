@@ -1,7 +1,9 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
@@ -21,19 +23,19 @@ RDEPEND="dev-libs/dee:=
 	dev-libs/libcolumbus:=
 	dev-libs/libunity:="
 DEPEND="${RDEPEND}
-	dev-lang/vala:0.18[vapigen]
 	dev-libs/libzeitgeist
 	>=gnome-base/gnome-menus-3.0.1-r1:0
 	>=gnome-extra/zeitgeist-0.9.12[datahub,dbus,fts]
 	sys-libs/db:5.1
-	unity-base/unity"
+	unity-base/unity
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
-	export VALAC=$(type -P valac-0.18)
-	export VALA_API_GEN=$(type -p vapigen-0.18)
 	# Alter source to work with Gentoo's sys-libs/db slots #
 	sed -e 's:"db.h":"db5.1/db.h":g' \
 		-i configure || die

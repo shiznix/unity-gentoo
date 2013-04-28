@@ -65,6 +65,7 @@ DEPEND="${COMMON_DEPEND}
 		dev-lang/python:2.7
 		dev-python/dbus-python[python_targets_python2_7]
 		dev-python/pygobject:2[python_targets_python2_7] )
+	$(vala_depend)
 "
 
 sysfs_deprecated_check() {

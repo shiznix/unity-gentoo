@@ -25,7 +25,8 @@ RDEPEND="dev-libs/dee:=
 	dev-libs/libdbusmenu:="
 DEPEND="${RDEPEND}
 	dev-libs/libgee:0
-	x11-libs/gtk+:3"
+	x11-libs/gtk+:3
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

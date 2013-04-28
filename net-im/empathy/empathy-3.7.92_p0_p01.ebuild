@@ -101,6 +101,7 @@ DEPEND="${COMMON_DEPEND}
 	test? (
 		sys-apps/grep
 		>=dev-libs/check-0.9.4 )
+	$(vala_depend)
 "
 PDEPEND=">=net-im/telepathy-mission-control-5.14"
 

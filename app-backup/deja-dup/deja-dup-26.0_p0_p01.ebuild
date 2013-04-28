@@ -39,7 +39,8 @@ DEPEND="${COMMON_DEPEND}
 	dev-perl/Locale-gettext
 	virtual/pkgconfig
 	dev-util/intltool
-	sys-devel/gettext"
+	sys-devel/gettext
+	$(vala_depend)"
 
 
 src_prepare() {
