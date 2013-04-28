@@ -61,7 +61,7 @@
 >=gnome-extra/gnome-user-share-3.8::gentoo
 >=gnome-extra/gucharmap-3.8::gentoo
 >=gnome-extra/mousetweaks-3.8::gentoo
->=gnome-extra/nautilus-sendto-3.8::gentoo
+#>=gnome-extra/nautilus-sendto-3.8::gentoo	# Empathy fails to configure because >=nautilus-sendto-3.8 doesn't install a pkgconfig file #
 >=gnome-extra/nautilus-tracker-tags-0.16::gentoo
 >=gnome-extra/nm-applet-0.9.8::gentoo
 >=gnome-extra/office-runner-1.0.1::gentoo
@@ -81,7 +81,7 @@
 >=media-libs/fontconfig-2.10.91::gentoo
 >=media-video/cheese-3.8::gentoo
 >=media-video/totem-3.8::gentoo
->=net-im/empathy-3.8::unity-gentoo
+>=net-im/empathy-3.7.92::unity-gentoo
 >=net-im/telepathy-logger-0.8::gentoo
 >=net-libs/glib-networking-2.36::gentoo
 >=net-libs/gnome-online-accounts-3.8::gentoo
