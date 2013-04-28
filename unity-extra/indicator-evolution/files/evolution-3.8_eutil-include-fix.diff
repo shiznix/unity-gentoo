@@ -1,0 +1,12 @@
+diff -ruN evolution-indicator-0.2.20/src/evolution-indicator.c evolution-indicator-0.2.20-patched/src/evolution-indicator.c
+--- evolution-indicator-0.2.20/src/evolution-indicator.c	2013-04-28 19:21:56.580232429 +0930
++++ evolution-indicator-0.2.20-patched/src/evolution-indicator.c	2013-04-28 19:28:21.119251039 +0930
+@@ -36,7 +36,7 @@
+ #include <time.h>
+ #include <string.h>
+ 
+-#include <e-util/e-config.h>
++#include <e-util/e-util.h>
+ #include <mail/em-utils.h>
+ #include <mail/em-event.h>
+ #include <mail/em-folder-tree-model.h>

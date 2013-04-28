@@ -84,3 +84,15 @@ x11-wm/metacity				# Patched to support compiz window decoration
 		Restart xsession
 	- Check ~/.xsession-errors
 	- gsettings get org.compiz.core:/org/compiz/profiles/unity/plugins/core/ active-plugins
+
+* Gnome 3.8 integration
+	- >=net-libs/libsoup-2.42 now blocks net-libs/libsoup-gnome
+		- unity-indicators/indicator-datetime requires libedataserverui-3.0.pc from evolution-data-server-3.6
+			- mail-client/evolution-3.6 requires net-libs/libsoup-gnome
+	- >=gnome-base/gvfs-1.16.0 has http? ( || ( >=net-libs/libsoup-2.42:2.4 >=net-libs/libsoup-gnome-2.34.0[gnome] ) )
+		but no net-libs/libsoup-gnome ebuild has 'gnome' in IUSE
+	- >=gnome-base/gnome-control-center-3.8
+		- gnome-control-center-{signon,unity} require libgnome-control-center.pc which doesn't exist in gnome-control-center-3.8
+	- >=gnome-extra/nautilus-sendto-3.8
+		- Empathy requires nautilus-sendto.pc which doesn't exist in nautilus-sendto-3.8
+

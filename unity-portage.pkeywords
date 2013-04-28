@@ -55,6 +55,7 @@ gnome-base/libgnomekbd
 gnome-base/libgnome-keyring
 gnome-extra/evolution-data-server
 gnome-extra/gnome-color-manager
+gnome-extra/gnome-tweak-tool
 gnome-extra/nautilus-sendto
 gnome-extra/sushi
 gnome-extra/zeitgeist
