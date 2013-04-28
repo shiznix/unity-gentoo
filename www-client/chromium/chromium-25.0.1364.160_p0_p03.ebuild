@@ -46,7 +46,7 @@ RDEPEND="app-accessibility/speech-dispatcher
 	gnome-keyring? ( >=gnome-base/gnome-keyring-2.28.2 )
 	>=media-libs/alsa-lib-1.0.19
 	media-libs/flac
-	media-libs/harfbuzz
+	<media-libs/harfbuzz-0.9.16
 	>=media-libs/libjpeg-turbo-1.2.0-r1
 	media-libs/libpng
 	media-libs/libvpx
