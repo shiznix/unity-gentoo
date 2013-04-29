@@ -50,6 +50,7 @@ COMMON_DEPEND="
 	gnome-base/libgtop:2
 	media-libs/fontconfig
 
+	>=media-libs/clutter-1.14.2
 	>=media-libs/libcanberra-0.13[gtk3]
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
@@ -126,7 +127,7 @@ src_prepare() {
 		`# Don't patch out Gnome's Region and Language settings, Ubuntu's Language setting requires apt/dpkg` \
 			-e 's:10_keyboard_layout_on_unity.patch:#10_keyboard_layout_on_unity.patch:g' \
 		`# Don't use Ubuntu specific language selector settings` \
-			-e 's:52_region_language.patch:^#52_region_language.patch:g' \
+			-e 's:52_region_language.patch:#52_region_language.patch:g' \
 		`# Disable Ubuntu branding` \
 			-e 's:56_use_ubuntu_info_branding:#56_use_ubuntu_info_branding:g' \
 				-i "${WORKDIR}/debian/patches/series"
