@@ -1,10 +1,14 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
 inherit autotools base eutils gnome2 ubuntu-versionator vala
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
+UURL="mirror://ubuntu/pool/main/a/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Blacklist configuration user interface for Zeitgeist"
@@ -57,12 +61,12 @@ src_install() {
 	gnome2_src_install
 
 	# Remove whoopsie crash database error tracking submission daemon #
-	rm -rf ${ED}etc \
-		${ED}usr/share/dbus-1 \
-		${ED}usr/share/polkit-1 \
-		${ED}usr/share/gnome-control-center
+	rm -rf "${ED}etc" \
+		"${ED}usr/share/dbus-1" \
+		"${ED}usr/share/polkit-1" \
+		"${ED}usr/share/gnome-control-center"
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf ${ED}usr/share/locale
+	rm -rf "${ED}usr/share/locale"
 }

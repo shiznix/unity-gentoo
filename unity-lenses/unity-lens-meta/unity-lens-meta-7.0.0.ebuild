@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity packages"
@@ -7,6 +11,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+applications +files +music +photos +video"
+RESTRICT="mirror"
 
 DEPEND="applications? ( unity-lenses/unity-lens-applications )
 	files? ( unity-lenses/unity-lens-files )

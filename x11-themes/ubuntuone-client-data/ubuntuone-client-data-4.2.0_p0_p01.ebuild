@@ -1,9 +1,13 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Data files used by the Ubuntu One suite"

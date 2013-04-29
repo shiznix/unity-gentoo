@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 PYTHON_DEPEND="2:2.7 3:3.2"
@@ -5,7 +9,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 
 inherit ubuntu-versionator distutils eutils
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/t/${PN}"
+UURL="mirror://ubuntu/pool/main/t/${PN}"
 URELEASE="raring"
 GNOME2_LA_PUNT="1"
 UVER=
@@ -24,15 +28,14 @@ DEPEND="dev-python/pyflakes
 	dev-python/pycurl"
 
 pkg_setup() {
-        python_set_active_version 2
-        python_pkg_setup
+	python_set_active_version 2
+	python_pkg_setup
 }
 
 src_compile() {
-        distutils_src_compile
+	distutils_src_compile
 }
 
 src_install() {
-        distutils_src_install
+	distutils_src_install
 }
-

@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="5"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
@@ -9,7 +13,7 @@ inherit autotools base eutils gnome2 systemd ubuntu-versionator vala
 URELEASE=
 UVER_PREFIX="+logind~raring2"
 
-DESCRIPTION="D-Bus interfaces for querying and manipulating user account information patched for the Unity desktop"
+DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
 SRC_URI="https://launchpad.net/~gnome3-team/+archive/gnome3-staging/+files/${MY_P}.orig.tar.gz
 	https://launchpad.net/~gnome3-team/+archive/gnome3-staging/+files/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.gz"

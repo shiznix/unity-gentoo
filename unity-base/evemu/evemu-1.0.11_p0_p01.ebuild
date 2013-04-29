@@ -1,9 +1,13 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 PYTHON_DEPEND="2:2.7"
 
 inherit autotools eutils python ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/e/${PN}"
+UURL="mirror://ubuntu/pool/universe/e/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.02.20"
 

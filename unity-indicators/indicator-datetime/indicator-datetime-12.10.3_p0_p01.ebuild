@@ -1,9 +1,13 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
+UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.03.26"
 
@@ -47,5 +51,5 @@ src_install() {
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf ${ED}usr/share/locale
+	rm -rf "${ED}usr/share/locale"
 }

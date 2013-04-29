@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
@@ -11,7 +15,7 @@ inherit autotools eutils gnome2 python ubuntu-versionator
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
+UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="raring"
 MY_P="${MY_P/menus-/menus_}"
 
@@ -68,7 +72,7 @@ src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
 	done
-        eautoreconf
+	eautoreconf
 	gnome2_src_prepare
 
 	# Don't show KDE standalone settings desktop files in GNOME others menu

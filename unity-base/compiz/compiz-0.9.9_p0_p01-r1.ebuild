@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 
 inherit base gnome2 cmake-utils eutils python ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/c/${PN}"
+UURL="mirror://ubuntu/pool/main/c/${PN}"
 URELEASE="raring"
 UVER_PREFIX="~daily13.04.18.1~13.04"
 
@@ -91,9 +95,9 @@ src_prepare() {
 }
 
 src_configure() {
-        use kde && \
-                mycmakeargs="${mycmakeargs} -DUSE_KDE4=ON" || \
-                mycmakeargs="${mycmakeargs} -DUSE_KDE4=OFF"
+	use kde && \
+		mycmakeargs="${mycmakeargs} -DUSE_KDE4=ON" || \
+		mycmakeargs="${mycmakeargs} -DUSE_KDE4=OFF"
 
 	mycmakeargs="${mycmakeargs}
 		-DCMAKE_INSTALL_PREFIX="/usr"
@@ -182,7 +186,7 @@ src_install() {
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf ${ED}usr/share/locale
+	rm -rf "${ED}usr/share/locale"
 
 	# Setup gconf defaults #
 	dodir /etc/gconf/2

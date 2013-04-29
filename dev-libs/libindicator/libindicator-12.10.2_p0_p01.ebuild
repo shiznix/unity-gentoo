@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 
 inherit autotools eutils ubuntu-versionator
@@ -5,7 +9,7 @@ inherit autotools eutils ubuntu-versionator
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/libi/${PN}"
+UURL="mirror://ubuntu/pool/main/libi/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.04.10"
 
@@ -23,8 +27,8 @@ RDEPEND=">=x11-libs/gtk+-2.18:2
 	>=x11-libs/gtk+-3.2:3
 	x11-libs/libXfixes"
 DEPEND="${RDEPEND}
-        virtual/pkgconfig
-        !<${CATEGORY}/${PN}-0.4.1-r201"
+	virtual/pkgconfig
+	!<${CATEGORY}/${PN}-0.4.1-r201"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"

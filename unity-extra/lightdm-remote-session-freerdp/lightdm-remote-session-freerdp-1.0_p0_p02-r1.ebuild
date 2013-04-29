@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 inherit ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${PN}"
+UURL="mirror://ubuntu/pool/main/l/${PN}"
 URELEASE="raring"
 GNOME2_LA_PUNT="1"
 

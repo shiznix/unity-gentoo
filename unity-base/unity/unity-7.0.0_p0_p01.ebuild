@@ -1,10 +1,14 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2:2.7"
 
 inherit base gnome2 cmake-utils eutils python toolchain-funcs ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.04.18~13.04"
 
@@ -129,7 +133,7 @@ src_install() {
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf ${ED}usr/share/locale
+	rm -rf "${ED}usr/share/locale"
 
 	# Make searchingthedashlegalnotice.html available to gnome-control-center's Details > Legal Notice #
 	dosym /usr/share/unity/6/searchingthedashlegalnotice.html \

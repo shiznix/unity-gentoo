@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 inherit ubuntu-versionator
@@ -11,8 +15,7 @@ URELEASE="quantal"
 DESCRIPTION="Unity appmenu integration for Libreoffice office suite"
 HOMEPAGE="https://launchpad.net/lo-menubar"
 SRC_URI="( x86? ( ${UURL}/${MY_P}-${UVER}_i386.deb )
-                 amd64? ( ${UURL}/${MY_P}-${UVER}_amd64.deb )
-                 )"
+		amd64? ( ${UURL}/${MY_P}-${UVER}_amd64.deb ) )"
 
 LICENSE="LGPL-3"
 SLOT="0"

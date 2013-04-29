@@ -1,10 +1,14 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools base gnome2 ubuntu-versionator
 
 MY_PN="evolution-indicator"
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/e/${MY_PN}"
+UURL="mirror://ubuntu/pool/main/e/${MY_PN}"
 URELEASE="raring"
 
 DESCRIPTION="Indicator for the Evolution mail client used by the Unity desktop"

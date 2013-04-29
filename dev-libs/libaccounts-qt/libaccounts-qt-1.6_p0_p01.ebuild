@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 
 inherit qt4-r2 ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
+UURL="mirror://ubuntu/pool/main/liba/${PN}"
 URELEASE="raring"
 UVER_PREFIX="bzr13.02.27"
 

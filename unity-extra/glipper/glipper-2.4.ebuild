@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
@@ -7,7 +11,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 
 inherit distutils gnome2-utils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/g/${PN}"
+UURL="mirror://ubuntu/pool/universe/g/${PN}"
 UVER="3"
 URELEASE="raring"
 

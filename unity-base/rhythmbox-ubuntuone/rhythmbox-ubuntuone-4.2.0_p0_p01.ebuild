@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 PYTHON_DEPEND="2:2.7"
 #SUPPORT_PYTHON_ABIS="1"
@@ -8,7 +12,7 @@ VALA_USE_DEPEND="vapigen"
 
 inherit distutils python ubuntu-versionator vala
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/r/${PN}"
+UURL="mirror://ubuntu/pool/main/r/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Ubuntu One rhythmbox plugin for the Unity desktop"

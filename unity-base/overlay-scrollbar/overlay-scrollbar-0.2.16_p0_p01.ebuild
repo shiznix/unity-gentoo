@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 inherit autotools base eutils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/o/${PN}"
+UURL="mirror://ubuntu/pool/main/o/${PN}"
 URELEASE="raring"
 UVER_PREFIX="+r359daily13.02.06"
 
@@ -69,7 +73,7 @@ src_install() {
 	emake DESTDIR="${D}" install || die
 	popd
 
-	rm -rf ${D}usr/etc &> /dev/null
+	rm -rf "${D}usr/etc" &> /dev/null
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe data/81overlay-scrollbar
 

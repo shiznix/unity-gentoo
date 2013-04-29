@@ -1,9 +1,13 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 GCONF_DEBUG="yes"
 
 inherit autotools base eutils gnome2 ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
+UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="raring"
 MY_P="${MY_P/screensaver-/screensaver_}"
 

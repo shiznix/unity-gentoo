@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="5"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
@@ -21,7 +25,6 @@ SLOT="0"
 # sendto: support from building nautilus sendto plugins from it was dropped in 3.7
 #IUSE="debug +geocode +geoloc gnome gnome-online-accounts +map sendto spell test +v4l"
 IUSE="debug +geoloc gnome gnome-online-accounts +map spell test +v4l"
-
 #KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-linux"
 RESTRICT="mirror"
 

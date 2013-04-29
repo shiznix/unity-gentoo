@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="4"
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="python? 2:2.5"
@@ -6,7 +10,7 @@ PYTHON_USE_WITH_OPT="python"
 
 inherit autotools base eutils gnome2 python multilib ubuntu-versionator virtualx
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/r/${PN}"
+UURL="mirror://ubuntu/pool/main/r/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Music management and playback software for GNOME patched for the Unity desktop"

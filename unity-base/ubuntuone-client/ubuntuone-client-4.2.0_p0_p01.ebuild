@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
@@ -6,7 +10,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 
 inherit base eutils gnome2-utils python ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Ubuntu One client for the Unity desktop"

@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
+UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.01.25"
 

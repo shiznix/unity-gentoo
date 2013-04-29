@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="4"
 
 inherit ubuntu-versionator
@@ -5,7 +9,7 @@ inherit ubuntu-versionator
 DESCRIPTION="Language translations pack for Unity desktop"
 HOMEPAGE="https://translations.launchpad.net/ubuntu"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/l"
+UURL="mirror://ubuntu/pool/main/l"
 UVER="+20130321"
 URELEASE="raring"
 
@@ -51,6 +55,7 @@ sco-base_8.04+20080527 zh-base_10.04+20091212"
 for MY_LINGUA in ${IUSE_LINGUAS}; do
 	IUSE+=" linguas_${MY_LINGUA}"
 done
+RESTRICT="mirror"
 
 ## CAUTION: Be sure to enable *all* LINGUAS in /etc/make.conf when creating Manifest ##
 for TARBALL_LANG in ${TARBALL_LANGS}; do
@@ -60,9 +65,9 @@ for TARBALL_LANG in ${TARBALL_LANGS}; do
 done
 for TARBALL_LANG in ${TARBALL_LANGS_OLD}; do
 	LANG=${TARBALL_LANG%%-*}
-        if has ${LANG} ${LINGUAS}; then
+	if has ${LANG} ${LINGUAS}; then
 		SRC_URI_array+=( linguas_${LANG}? \( ${UURL}/language-pack-gnome-${LANG}-base/language-pack-gnome-${TARBALL_LANG}.tar.gz \) )
-        fi
+	fi
 done
 
 SRC_URI="${SRC_URI_array[@]}"

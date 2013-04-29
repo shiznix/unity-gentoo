@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
@@ -8,7 +12,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 inherit distutils ubuntu-versionator
 
 MY_PN="lazr.restfulclient"
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${MY_PN}"
+UURL="mirror://ubuntu/pool/main/l/${MY_PN}"
 UVER="1"
 URELEASE="raring"
 MY_P="${MY_PN}_${PV}"

@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="5"
 PYTHON_DEPEND="2:2.6"
 
@@ -12,7 +16,7 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 S="${WORKDIR}/${MY_PN}-${PV}/src"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${MY_PN}"
+UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
 URELEASE="raring"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"

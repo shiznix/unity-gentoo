@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
@@ -7,7 +11,7 @@ inherit base autotools eutils virtualx ubuntu-versionator vala
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/libd/${PN}"
+UURL="mirror://ubuntu/pool/main/libd/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.02.01"
 

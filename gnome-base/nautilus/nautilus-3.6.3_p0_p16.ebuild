@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="5"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
@@ -5,7 +9,7 @@ GNOME2_LA_PUNT="yes"
 inherit autotools base eutils gnome2 virtualx ubuntu-versionator
 
 MY_P="${PN}_${PV}"
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${PN}"
+UURL="mirror://ubuntu/pool/main/n/${PN}"
 URELEASE="raring"
 MY_P="${MY_P/-/_}"
 
@@ -19,6 +23,7 @@ SLOT="0"
 # profiling?
 IUSE="debug exif gnome +introspection packagekit +previewer +sendto tracker xmp"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sh ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux"
+RESTRICT="mirror"
 
 # FIXME: tests fails under Xvfb, but pass when building manually
 # "FAIL: check failed in nautilus-file.c, line 8307"

@@ -1,16 +1,20 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 XORG_DOC=doc
 inherit base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/x/${PN}"
+UURL="mirror://ubuntu/pool/main/x/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-        ${UURL}/${MY_P}-${UVER}.diff.gz"
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 IUSE_SERVERS="kdrive xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} +dmx ipv6 minimal nptl selinux +suid tslib +udev"

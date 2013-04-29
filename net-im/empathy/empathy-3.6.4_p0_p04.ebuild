@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
@@ -7,7 +11,7 @@ VALA_USE_DEPEND="vapigen"
 
 inherit autotools base gnome2 python virtualx ubuntu-versionator vala
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/e/${PN}"
+UURL="mirror://ubuntu/pool/main/e/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Telepathy instant messaging and video/audio call client for GNOME patched for the Unity desktop"

@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 inherit eutils autotools ubuntu-versionator base
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/r/${PN}"
+UURL="mirror://ubuntu/pool/main/r/${PN}"
 URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
@@ -25,20 +29,14 @@ RDEPEND=">=net-misc/networkmanager-0.9.7
 	>=net-libs/libsoup-2.40
 	unity-extra/thin-client-config-agent"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
+src_prepare() {
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 
 	# remove 'dbustest1-dev' dependency
 	sed -i -e '/^PKG_CHECK_MODULES(TEST, dbustest-1)/d' configure.ac
 
 	eautoreconf
-}
-
-src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-        	PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-
 	base_src_prepare
 }

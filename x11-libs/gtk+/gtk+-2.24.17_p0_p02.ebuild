@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 inherit base eutils flag-o-matic gnome.org virtualx autotools ubuntu-versionator
@@ -6,7 +10,7 @@ MY_PN="gtk+2.0"
 MY_P="${MY_PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
+UURL="mirror://ubuntu/pool/main/g/${MY_PN}"
 URELEASE="raring"
 
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"

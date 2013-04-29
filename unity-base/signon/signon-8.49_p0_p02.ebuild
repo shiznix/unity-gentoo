@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 inherit base qt4-r2 ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/s/${PN}"
+UURL="mirror://ubuntu/pool/main/s/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"

@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="5"
 GNOME_ORG_MODULE="NetworkManager"
 VALA_MIN_API_VERSION="0.20"
@@ -14,6 +18,7 @@ IUSE="avahi bluetooth connection-sharing +consolekit dhclient +dhcpcd doc gnutls
 +introspection kernel_linux +nss modemmanager +ppp resolvconf systemd test vala
 +wext" # wimax
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+RESTRICT="mirror"
 
 REQUIRED_USE="
 	modemmanager? ( ppp )

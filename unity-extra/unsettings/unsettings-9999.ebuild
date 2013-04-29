@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 PYTHON_DEPEND="2:2.7"
 RESTRICT_PYTHON_ABIS="3.*"
@@ -34,7 +38,7 @@ src_install() {
 
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe xsession/85unsettings
-	rm -rf ${ED}etc/X11/Xsession.d/
+	rm -rf "${ED}etc/X11/Xsession.d/"
 }
 
 pkg_preinst() {

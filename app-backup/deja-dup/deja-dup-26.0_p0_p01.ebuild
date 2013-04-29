@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GNOME2_LA_PUNT="yes"
 VALA_MIN_API_VERSION="0.20"
@@ -15,6 +19,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+nautilus"
+RESTRICT="mirror"
 
 RESTRICT="test"
 
@@ -41,7 +46,6 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/intltool
 	sys-devel/gettext
 	$(vala_depend)"
-
 
 src_prepare() {
 	DOCS="NEWS AUTHORS"

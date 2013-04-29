@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="4"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
@@ -9,19 +13,18 @@ inherit autotools eutils gnome2 systemd vala ubuntu-versionator base
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
+UURL="mirror://ubuntu/pool/main/a/${PN}"
 URELEASE="raring"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
-
-RESTRICT="mirror"
 
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="doc +introspection systemd vala"
 REQUIRED_USE="vala? ( introspection )"
+RESTRICT="mirror"
 
 # Want glib-2.30 for gdbus
 RDEPEND=">=dev-libs/glib-2.30:2
@@ -43,20 +46,20 @@ DEPEND="${RDEPEND}
 	vala? ( $(vala_depend) )"
 
 pkg_pretend() {
-        if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
-                die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
-        fi
+	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
+		die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
+	fi
 }
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-0.6.21-gentoo-system-users.patch"
 
-        sed -i '/0002-create-and-manage-groups-like-on-a-ubuntu-system.patch/d' "${WORKDIR}/debian/patches/series" || die
-        sed -i '/0006-adduser_instead_of_useradd.patch/d' "${WORKDIR}/debian/patches/series" || die
+	sed -i '/0002-create-and-manage-groups-like-on-a-ubuntu-system.patch/d' "${WORKDIR}/debian/patches/series" || die
+	sed -i '/0006-adduser_instead_of_useradd.patch/d' "${WORKDIR}/debian/patches/series" || die
 
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+	PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 
 	base_src_prepare
 

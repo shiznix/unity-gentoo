@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 inherit gnome2 ubuntu-versionator base
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
 GNOME2_LA_PUNT="1"
 
@@ -14,13 +18,12 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-RESTRICT="mirror"
 
 IUSE="battery networkmanager"
-
+RESTRICT="mirror"
 
 DEPEND="x11-libs/gtk+:3
-        dev-libs/libindicator
+	dev-libs/libindicator
 	>=x11-misc/lightdm-1.5.3
 	media-libs/freetype:2
 	x11-libs/cairo
@@ -38,9 +41,9 @@ RDEPEND="unity-base/unity-language-pack
 	>=gnome-base/gsettings-desktop-schemas-3.6.1"
 
 pkg_pretend() {
-        if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
-                die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
-        fi
+	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
+		die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
+	fi
 }
 
 src_prepare() {
@@ -57,17 +60,17 @@ src_prepare() {
 }
 
 src_install() {
-        gnome2_src_install
+	gnome2_src_install
 
-        # Remove all installed language files as they can be incomplete #
-        # due to being provided by Ubuntu's language-pack packages #
-        rm -rf ${ED}usr/share/locale
+	# Remove all installed language files as they can be incomplete #
+	# due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
 
 	# Remove Ubuntu logo -> would be nice, if we can replace it with a gentoo logo
-	rm -rf ${ED}usr/share/unity-greeter/logo.png
+	rm -rf "${ED}usr/share/unity-greeter/logo.png"
 
 	insinto /usr/share/polkit-1/rules.d/
-    	newins "${FILESDIR}/50-unity-greeter.rules" 50-unity-greeter.rules || die
+	newins "${FILESDIR}/50-unity-greeter.rules" 50-unity-greeter.rules || die
 }
 
 pkg_preinst() {
@@ -76,14 +79,13 @@ pkg_preinst() {
 
 pkg_postinst() {
 	gnome2_schemas_update
-        elog
-        elog "Set ${PN} as default greeter of LightDM."
+
+	elog
+	elog "Set ${PN} as default greeter of LightDM."
 	/usr/libexec/lightdm/lightdm-set-defaults --keep-old --greeter=${PN}
 
 	elog "Set 'unity' as default user session."
 	/usr/libexec/lightdm/lightdm-set-defaults --keep-old --session=unity
-
-
 }
 
 pkg_postrm() {

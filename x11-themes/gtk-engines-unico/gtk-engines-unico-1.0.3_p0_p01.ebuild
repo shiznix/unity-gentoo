@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 inherit base autotools ubuntu-versionator
@@ -5,7 +9,7 @@ inherit base autotools ubuntu-versionator
 MY_PN="unico"
 MY_P="${MY_PN}_${PV}"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${MY_PN}"
+UURL="mirror://ubuntu/pool/main/u/${MY_PN}"
 URELEASE="raring"
 UVER_PREFIX="daily12.12.12"
 

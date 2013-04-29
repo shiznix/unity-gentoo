@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="5"
 GCONF_DEBUG="yes"
 
@@ -133,8 +137,8 @@ src_install() {
 	newexe "${FILESDIR}/15-xdg-data-unity" 15-xdg-data-unity
 
 	# Set ubuntu naming to unity (this is important for XSESSION to DESKTOP_SESSION mapping when using 'startx') #
-	mv ${D}usr/share/gnome-session/sessions/ubuntu.session ${D}usr/share/gnome-session/sessions/unity.session
-	mv ${D}usr/share/xsessions/ubuntu.desktop ${D}usr/share/xsessions/unity.desktop
+	mv "${ED}usr/share/gnome-session/sessions/ubuntu.session" "${ED}usr/share/gnome-session/sessions/unity.session"
+	mv "${ED}usr/share/xsessions/ubuntu.desktop" "${ED}usr/share/xsessions/unity.desktop"
 
 	# Enables and fills $DESKTOP_SESSION variable for sessions started using 'startx'
 	exeinto /etc/X11/xinit/xinitrc.d/

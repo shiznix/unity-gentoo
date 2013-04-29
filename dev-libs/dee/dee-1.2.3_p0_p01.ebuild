@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
@@ -11,7 +15,7 @@ inherit autotools-utils eutils python ubuntu-versionator vala
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/d/${PN}"
+UURL="mirror://ubuntu/pool/main/d/${PN}"
 URELEASE="raring"
 UVER_PREFIX="~daily13.03.13.1"
 
@@ -68,31 +72,31 @@ src_configure() {
 }
 
 src_compile() {
-        # Build PYTHON2 support #
-        pushd build-python2
-        	emake || die
-        popd
+	# Build PYTHON2 support #
+	pushd build-python2
+		emake || die
+	popd
 
-        # Build PYTHON3 support #
-        pushd build-python3
-        	emake || die
-        popd
+	# Build PYTHON3 support #
+	pushd build-python3
+		emake || die
+	popd
 }
 
 src_install() {
-        # Install PYTHON2 support #
-        pushd build-python2
-        	emake DESTDIR="${D}" install || die
-        popd
+	# Install PYTHON2 support #
+	pushd build-python2
+		emake DESTDIR="${D}" install || die
+	popd
 
-        # Install PYTHON3 support #
-        pushd build-python3
-	        emake DESTDIR="${D}" install || die
-        popd
+	# Install PYTHON3 support #
+	pushd build-python3
+		emake DESTDIR="${D}" install || die
+	popd
 
 	if use examples; then
 		insinto /usr/share/doc/${PN}/
-		doins -r examples
+	doins -r examples
 	fi
 
 	prune_libtool_files --modules

@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GCONF_DEBUG="yes"
 GNOME_ORG_MODULE="GConf"
@@ -8,7 +12,7 @@ inherit base eutils gnome2 ubuntu-versionator
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/GConf-${PV}"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
+UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Gnome Configuration System and Daemon patched for the Unity desktop"
@@ -38,7 +42,7 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 pkg_setup() {
-        kill_gconf
+	kill_gconf
 }
 
 src_prepare() {
@@ -83,8 +87,8 @@ src_install() {
 	dodir /root/.gconfd
 
 	# Install Ubuntu's gconf update tool #
-        exeinto /usr/bin
-        doexe "${FILESDIR}/update-gconf-defaults"
+	exeinto /usr/bin
+	doexe "${FILESDIR}/update-gconf-defaults"
 }
 
 pkg_preinst() {

@@ -1,9 +1,13 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
+UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="raring"
 UVER_PREFIX="bzr13.04.05"
 
@@ -23,14 +27,14 @@ RDEPEND="dev-libs/libaccounts-glib:=
 DEPEND="${RDEPEND}
 	gnome-base/gnome-control-center
 	x11-proto/xproto
-        x11-proto/xf86miscproto
-        x11-proto/kbproto
+	x11-proto/xf86miscproto
+	x11-proto/kbproto
 
-        dev-libs/libxml2:2
-        dev-libs/libxslt
-        >=dev-util/intltool-0.40.1
-        >=sys-devel/gettext-0.17
-        virtual/pkgconfig
+	dev-libs/libxml2:2
+	dev-libs/libxslt
+	>=dev-util/intltool-0.40.1
+	>=sys-devel/gettext-0.17
+	virtual/pkgconfig
 	x11-libs/gtk+:3"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

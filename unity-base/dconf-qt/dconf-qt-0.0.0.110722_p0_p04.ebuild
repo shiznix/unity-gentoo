@@ -1,15 +1,19 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
 inherit base gnome2 cmake-utils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/d/${PN}"
+UURL="mirror://ubuntu/pool/main/d/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Dconf Qt bindings for the Unity desktop"
 HOMEPAGE="https://launchpad.net/dconf-qt"
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"

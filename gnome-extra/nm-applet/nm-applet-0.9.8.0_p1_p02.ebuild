@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
@@ -8,7 +12,7 @@ MY_PN="network-manager-applet"
 MY_P="${MY_PN}_${PV}"
 S="${WORKDIR}/${MY_PN}-${PV}"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/n/${MY_PN}"
+UURL="mirror://ubuntu/pool/main/n/${MY_PN}"
 URELEASE="raring"
 MY_P="${MY_P/applet-/applet_}"
 

@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 
 XORG_DOC=doc
@@ -6,7 +10,7 @@ inherit autotools base xorg-2 ubuntu-versionator
 
 MY_PN="libxi"
 MY_P="${MY_PN}_${PV}"
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/libx/${MY_PN}"
+UURL="mirror://ubuntu/pool/main/libx/${MY_PN}"
 URELEASE="raring"
 
 DESCRIPTION="X.Org Xi library patched for the Unity desktop"

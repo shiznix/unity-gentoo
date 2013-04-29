@@ -1,10 +1,14 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
+UURL="mirror://ubuntu/pool/main/libu/${PN}"
 URELEASE="raring"
 UVER_PREFIX="~daily13.03.18"
 
@@ -53,7 +57,7 @@ src_install() {
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf ${ED}usr/share/locale	
+	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_postinst() {

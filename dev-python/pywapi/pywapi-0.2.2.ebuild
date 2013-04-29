@@ -1,9 +1,13 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/p/${PN}"
+UURL="mirror://ubuntu/pool/universe/p/${PN}"
 UVER="1"
 URELEASE="raring"
 MY_P="${P/-/_}"

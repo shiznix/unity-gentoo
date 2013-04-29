@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 
 inherit autotools eutils multilib ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/w/${PN}"
+UURL="mirror://ubuntu/pool/main/w/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Ubuntu Online Accounts browser extension"
@@ -22,7 +26,7 @@ DEPEND="${RDEPEND}
 	dev-util/xxd
 	gnome-base/dconf
 	unity-base/gnome-control-center-signon
-	firefox? ( || ( www-client/firefox www-client/firefox-bin ) 
+	firefox? ( || ( www-client/firefox www-client/firefox-bin )
 		x11-misc/unity-firefox-extension )
 	chromium? ( www-client/chromium
 			x11-misc/unity-chromium-extension )"
@@ -64,7 +68,7 @@ src_install() {
 			firefox-extension/install.rdf | head -1)
 		dodir usr/lib/firefox/extensions/${emid}/
 		unzip firefox-extension/webaccounts-firefox-extension.xpi -d \
-			${D}usr/lib/firefox/extensions/${emid}/ || die
+			"${D}usr/lib/firefox/extensions/${emid}/" || die
 		dosym /usr/lib/firefox/extensions/${emid} /opt/firefox/extensions/${emid}
 	fi
 

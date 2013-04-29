@@ -1,5 +1,9 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="5"
-inherit eutils flag-o-matic gnome.org gnome2-utils multilib ubuntu-versionator virtualx
+inherit autotools eutils flag-o-matic gnome.org gnome2-utils multilib ubuntu-versionator virtualx
 
 MY_PN="gtk+3.0"
 MY_P="${MY_PN}_${PV}"

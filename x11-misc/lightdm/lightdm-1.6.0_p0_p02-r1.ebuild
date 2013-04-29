@@ -3,17 +3,16 @@
 # $Header: /var/cvsroot/gentoo-x86/x11-misc/lightdm/lightdm-1.4.0-r1.ebuild,v 1.3 2013/03/02 23:49:52 hwoarang Exp $
 
 EAPI=5
-inherit autotools eutils pam readme.gentoo ubuntu-versionator base
+inherit base eutils pam readme.gentoo ubuntu-versionator user
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/l/${PN}"
+UURL="mirror://ubuntu/pool/main/l/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="A lightweight display manager"
 
 HOMEPAGE="https://launchpad.net/lightdm"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
-
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -53,11 +52,11 @@ PDEPEND="gtk? ( x11-misc/lightdm-gtk-greeter )
 DOCS=( NEWS )
 
 pkg_pretend() {
-        if [[ $(gcc-major-version) -lt 4 ]] || \
-                ( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
-                        ( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
-                                die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
-        fi
+	if [[ $(gcc-major-version) -lt 4 ]] || \
+		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
+			( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
+				die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
+	fi
 }
 
 src_prepare() {
@@ -72,9 +71,9 @@ src_prepare() {
 
 	sed -i '/04_language_options.patch/d' "${WORKDIR}/debian/patches/series" || die
 
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 	base_src_prepare
 
 #	if has_version dev-libs/gobject-introspection; then
@@ -141,6 +140,6 @@ src_install() {
 
 	pamd_mimic system-local-login ${PN} auth account session #372229
 	dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
-	
+
 	readme.gentoo_create_doc
 }

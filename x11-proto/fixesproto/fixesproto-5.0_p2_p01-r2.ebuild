@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 
 XORG_MULTILIB=yes
@@ -5,7 +9,7 @@ inherit base eutils xorg-2 ubuntu-versionator
 
 MY_PN="x11proto-fixes"
 MY_P="${MY_PN}_${PV}"
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/x/x11proto-fixes"
+UURL="mirror://ubuntu/pool/main/x/x11proto-fixes"
 URELEASE="raring"
 
 DESCRIPTION="Ubuntu patched version of X.Org Fixes protocol headers needed for Unity desktop"

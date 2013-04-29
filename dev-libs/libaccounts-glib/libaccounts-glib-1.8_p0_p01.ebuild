@@ -1,9 +1,13 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
 
 inherit autotools flag-o-matic python ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/liba/${PN}"
+UURL="mirror://ubuntu/pool/main/liba/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Library for single signon for the Unity desktop"
@@ -77,6 +81,6 @@ src_install() {
 		emake DESTDIR="${D}" install || die
 	popd
 
-	rm -rf ${D}usr/doc
+	rm -rf "${D}usr/doc"
 	prune_libtool_files --modules
 }

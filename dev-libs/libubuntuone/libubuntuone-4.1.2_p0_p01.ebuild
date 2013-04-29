@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 
 inherit eutils mono ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
+UURL="mirror://ubuntu/pool/main/libu/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="GTK widgets for integration of Ubuntu One functionalities into GTK applications."

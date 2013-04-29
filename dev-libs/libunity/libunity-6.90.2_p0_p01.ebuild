@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 PYTHON_DEPEND="2:2.7 3:3.2"
 VALA_MIN_API_VERSION="0.16"
@@ -6,7 +10,7 @@ VALA_USE_DEPEND="vapigen"
 
 inherit autotools base eutils autotools python ubuntu-versionator vala
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/libu/${PN}"
+UURL="mirror://ubuntu/pool/main/libu/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.04.05"
 
@@ -42,7 +46,7 @@ src_prepare() {
 }
 
 src_configure() {
-        # Build PYTHON2 support #
+	# Build PYTHON2 support #
 	export EPYTHON="$(PYTHON -2)"
 	cd "${WORKDIR}"
 	cp -rf "${S}" "${S}"-build_python2

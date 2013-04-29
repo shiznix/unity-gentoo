@@ -1,9 +1,13 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI="5"
 GNOME2_LA_PUNT="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/a/${PN}"
+UURL="mirror://ubuntu/pool/main/a/${PN}"
 URELEASE="raring"
 UVER_PREFIX="bzr13.03.26"
 

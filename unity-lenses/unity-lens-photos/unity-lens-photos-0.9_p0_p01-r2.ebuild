@@ -1,10 +1,14 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 PYTHON_DEPEND="3:3.2"
 SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils eutils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily12.12.05"
 
@@ -19,12 +23,12 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee
-        dev-libs/libgee
-        net-libs/liboauth
+	dev-libs/libgee
+	net-libs/liboauth
 	|| ( ( net-libs/libsoup
 		net-libs/libsoup-gnome )
 		>net-libs/libsoup-2.42 )
-        dev-libs/libunity
+	dev-libs/libunity
 	dev-python/httplib2
 	dev-python/oauthlib
 	media-gfx/shotwell
@@ -44,5 +48,5 @@ src_install() {
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf ${ED}usr/share/locale
+	rm -rf "${ED}usr/share/locale"
 }

@@ -1,3 +1,7 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
@@ -13,7 +17,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 
 inherit distutils eutils gnome2-utils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
+UURL="mirror://ubuntu/pool/universe/i/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Weather indicator used by the Unity desktop"
@@ -61,13 +65,13 @@ src_install() {
 }
 
 pkg_preinst() {
-                gnome2_schemas_savelist
+	gnome2_schemas_savelist
 }
 
 pkg_postinst() {
-                gnome2_schemas_update
+	gnome2_schemas_update
 }
 
 pkg_postrm() {
-                gnome2_schemas_update
+	gnome2_schemas_update
 }

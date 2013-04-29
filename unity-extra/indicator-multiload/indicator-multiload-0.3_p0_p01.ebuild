@@ -1,9 +1,13 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=5
 GNOME2_LA_PUNT="yes"
 
 inherit gnome2 ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
+UURL="mirror://ubuntu/pool/universe/i/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="Graphical system load indicator for CPU, ram, etc. used by the Unity desktop"

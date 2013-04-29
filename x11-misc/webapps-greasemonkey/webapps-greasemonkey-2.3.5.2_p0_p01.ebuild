@@ -1,8 +1,12 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 EAPI=4
 
 inherit ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/w/${PN}"
+UURL="mirror://ubuntu/pool/main/w/${PN}"
 URELEASE="raring"
 
 DESCRIPTION="WebApps: Websites integration Firefox plug-in for Unity desktop"
