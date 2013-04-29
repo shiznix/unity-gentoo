@@ -1,4 +1,6 @@
-EAPI=3
+EAPI=5
+PYTHON_DEPEND="2:2.7 3:3.2"
+SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils ubuntu-versionator
 
@@ -11,6 +13,3 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
-
-DEPEND=""
-RDEPEND="${DEPEND}"
