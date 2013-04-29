@@ -13,7 +13,7 @@ SRC_URI="${UURL}/${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="ubuntuonemusic-old-store"
 RESTRICT="mirror"
 
 DEPEND="app-admin/packagekit-gtk
@@ -27,6 +27,11 @@ DEPEND="app-admin/packagekit-gtk
 
 src_prepare() {
 	python_convert_shebangs 2 scripts/install-default-webapps-in-launcher.py
+
+	# Allow the use of the more featureful old music store as presented in the old Quantal version of the rhythmbox-ubuntuone plugin #
+	use ubuntuonemusic-old-store && \
+		sed -e 's:one.ubuntu.com/music-store/:one.ubuntu.com/music/store-no-token:' \
+			-i default-apps/UbuntuOneMusiconeubuntucom.desktop.in
 }
 
 src_configure() {
