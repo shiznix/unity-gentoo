@@ -19,7 +19,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-IUSE="battery networkmanager"
+IUSE="battery networkmanager +branding"
 RESTRICT="mirror"
 
 DEPEND="x11-libs/gtk+:3
@@ -68,6 +68,12 @@ src_install() {
 
 	# Remove Ubuntu logo -> would be nice, if we can replace it with a gentoo logo
 	rm -rf "${ED}usr/share/unity-greeter/logo.png"
+
+	# Gentoo logo for multi monitor usage #
+        if use branding; then
+                insinto /usr/share/unity-greeter/
+                newins "${FILESDIR}/gentoo_cof.png" cof.png
+        fi
 
 	insinto /usr/share/polkit-1/rules.d/
 	newins "${FILESDIR}/50-unity-greeter.rules" 50-unity-greeter.rules || die
