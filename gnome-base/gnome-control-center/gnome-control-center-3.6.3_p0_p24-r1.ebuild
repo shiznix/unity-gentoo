@@ -50,7 +50,6 @@ COMMON_DEPEND="
 	gnome-base/libgtop:2
 	media-libs/fontconfig
 
-	>=media-libs/clutter-1.14.2
 	>=media-libs/libcanberra-0.13[gtk3]
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
@@ -156,9 +155,11 @@ src_prepare() {
 }
 
 src_configure() {
+	# cheese is disabled as it causes gnome-control-center to segfault #
 	G2CONF="${G2CONF}
 		--disable-update-mimedb
 		--disable-static
+		--without-cheese
 		--enable-documentation
 		$(use_enable bluetooth)
 		$(use_enable colord color)
@@ -166,8 +167,8 @@ src_configure() {
 		$(use_enable gnome-online-accounts goa)
 		$(use_with socialweb libsocialweb)
 		$(use_enable systemd)
-		$(use_with v4l cheese)
 		$(use_enable wacom)"
+# $(use_with v4l cheese)
 	# XXX: $(use_with kerberos) # for 3.7.x
 	if ! use kerberos; then
 		G2CONF+=" KRB5_CONFIG=$(type -P true)"

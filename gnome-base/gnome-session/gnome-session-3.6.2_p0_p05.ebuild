@@ -92,11 +92,7 @@ src_prepare() {
 	sed \
 		`# Totally breaks gnome-session #` \
 			-e 's:^96_no_catch_sigsegv:#96_no_catch_sigsegv:g' \
-		`# Remove session-migration for now #` \
-			-e 's:^53_add_sessionmigration:#53_add_sessionmigration:g' \
-		`# Don't disable fail whale, we need this so desktop doesn't hang on failure #` \
-			-e 's:^103_kill_the_fail_whale:#103_kill_the_fail_whale:g' \
-		-i "${WORKDIR}/debian/patches/series"
+				-i "${WORKDIR}/debian/patches/series"
 
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
