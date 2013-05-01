@@ -52,9 +52,17 @@ src_prepare() {
 #		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 #	done
 
-	#patch 'at-spi-bus-launcher' path
+	# patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
-                   "${S}"/src/unity-greeter.vala || die
+                  "${S}"/src/unity-greeter.vala || die
+
+	# replace 'Ubuntu*' session with 'Unity' session to get right badge
+	sed -i -e "s:case \"ubuntu:case \"unity:" "${S}"/src/session-list.vala || die
+
+	# set gentoo badge
+	if use branding; then
+		sed -i -e "s:ubuntu_badge.png:gentoo_badge.png:" "${S}"/src/session-list.vala || die
+	fi
 
 	base_src_prepare
 }
@@ -74,6 +82,9 @@ src_install() {
                 insinto /usr/share/unity-greeter/
                 newins "${FILESDIR}/gentoo_cof.png" cof.png
         fi
+
+	insinto /usr/share/unity-greeter/
+	newins "${FILESDIR}/gentoo_badge.png" gentoo_badge.png
 
 	insinto /usr/share/polkit-1/rules.d/
 	newins "${FILESDIR}/50-unity-greeter.rules" 50-unity-greeter.rules || die
