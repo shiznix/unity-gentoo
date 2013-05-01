@@ -10,7 +10,7 @@ DESCRIPTION="Language translations pack for Unity desktop"
 HOMEPAGE="https://translations.launchpad.net/ubuntu"
 
 UURL="mirror://ubuntu/pool/main/l"
-UVER="+20130321"
+UVER="+20130418"
 URELEASE="raring"
 
 LICENSE="GPL-3"
@@ -47,10 +47,10 @@ sr st sv sw ta te tg th ti tk tl tr ts tt ug uk ur uz ve vi
 wa wae wo xh yi yo zu"
 
 ## Track older tarball packs that upstream haven't updated ##
-TARBALL_LANGS_OLD="ak-base_8.04+20080527 jv-base_8.04+20080527
-kok-base_8.04+20080527 la-base_12.04+20130128
-no-base_8.04+20080527 rm-base_8.04+20080527
-sco-base_8.04+20080527 zh-base_10.04+20091212"
+TARBALL_LANGS_OLD="ak-base_8.04+20080527 dz-base_12.10+20121009 jv-base_8.04+20080527
+kok-base_8.04+20080527 la-base_12.04+20130128 li-base_12.10+20121009 no-base_8.04+20080527
+rm-base_8.04+20080527 sco-base_8.04+20080527 sk-base_12.10+20121009 sr-base_12.10+20121009
+wo-base_12.10+20121009 zh-base_10.04+20091212"
 
 for MY_LINGUA in ${IUSE_LINGUAS}; do
 	IUSE+=" linguas_${MY_LINGUA}"
