@@ -2,12 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-PYTHON_DEPEND="2:2.7 3:3.2"
-RESTRICT_PYTHON_ABIS="3.*"
+PYTHON_COMPAT=( python{3_1,3_2,3_3} )
 
-inherit ubuntu-versionator distutils eutils
+inherit ubuntu-versionator distutils-r1
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"
 URELEASE="raring"
@@ -20,22 +19,17 @@ SRC_URI="${UURL}/${PN}_${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-python/pyflakes
-	dev-python/pycurl"
+	>=dev-python/pycurl-7.19.0-r3
+	dev-python/http-parser"
 
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
-
-src_compile() {
-	distutils_src_compile
-}
-
-src_install() {
+python_install_all() {
 	distutils_src_install
+	
+	exeinto /usr/bin
+	doexe ${S}/thin-client-config-agent
 }
