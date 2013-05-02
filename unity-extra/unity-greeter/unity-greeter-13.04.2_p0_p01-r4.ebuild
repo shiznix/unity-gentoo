@@ -19,7 +19,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-IUSE="battery networkmanager +branding"
+IUSE="battery networkmanager +branding remote"
 RESTRICT="mirror"
 
 DEPEND="x11-libs/gtk+:3
@@ -36,6 +36,8 @@ RDEPEND="unity-base/unity-language-pack
 	unity-indicators/indicator-application
 	battery? ( unity-indicators/indicator-power )
 	networkmanager? ( >=gnome-extra/nm-applet-0.9.8.0 )
+	remote? ( 	unity-extra/lightdm-remote-session-uccsconfigure 
+			unity-extra/lightdm-remote-session-freerdp )
 	media-fonts/ubuntu-font-family
 	x11-themes/ubuntu-wallpapers
 	>=gnome-base/gsettings-desktop-schemas-3.6.1"
