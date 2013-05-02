@@ -1,0 +1,17 @@
+Chromium is installed by Unity anyway.
+diff -Nru lightdm-remote-session-uccsconfigure-1.1.orig/firefox-uccsconfigure.sh lightdm-remote-session-uccsconfigure-1.1/firefox-uccsconfigure.sh
+--- lightdm-remote-session-uccsconfigure-1.1.orig/firefox-uccsconfigure.sh	2013-01-11 15:52:11.745242000 -0500
++++ lightdm-remote-session-uccsconfigure-1.1/firefox-uccsconfigure.sh	2013-01-11 15:57:23.258259000 -0500
+@@ -1,4 +1,11 @@
+ #!/bin/sh
+ 
+-firefox -no-remote https://uccs.landscape.canonical.com/
++#firefox -no-remote https://uccs.landscape.canonical.com/
++if [ -x /usr/bin/google-chrome ]; then
++  google-chrome --incognito https://uccs.landscape.canonical.com/
++elif [ -x /usr/bin/chromium ]; then
++  chromium --incognito https://uccs.landscape.canonical.com/
++else
++  zenity --warning --text "Please install Chromium or Google Chrome to configure the LightDM remote sessions.\n\nClick OK to log out."
++fi
+ gnome-session-quit --logout --no-prompt

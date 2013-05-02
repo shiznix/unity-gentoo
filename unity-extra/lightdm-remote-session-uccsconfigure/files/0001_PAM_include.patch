@@ -1,0 +1,10 @@
+diff -Nru lightdm-remote-session-uccsconfigure-1.1.orig/lightdm-remote-uccsconfigure lightdm-remote-session-uccsconfigure-1.1/lightdm-remote-uccsconfigure
+--- lightdm-remote-session-uccsconfigure-1.1.orig/lightdm-remote-uccsconfigure	2013-01-08 08:50:07.099104619 -0500
++++ lightdm-remote-session-uccsconfigure-1.1/lightdm-remote-uccsconfigure	2013-01-08 08:51:03.645475336 -0500
+@@ -1,2 +1,5 @@
+ #%PAM-1.0
+-@include lightdm-autologin
++auth		include	lightdm-autologin
++account		include	lightdm-autologin
++password	include	lightdm-autologin
++session		include	lightdm-autologin
