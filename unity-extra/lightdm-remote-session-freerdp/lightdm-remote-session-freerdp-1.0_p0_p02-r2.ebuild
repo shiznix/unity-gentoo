@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit ubuntu-versionator
+inherit ubuntu-versionator eutils
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
 URELEASE="raring"
@@ -23,3 +23,8 @@ RESTRICT="mirror"
 RDEPEND="net-misc/freerdp
 	 >=gnome-extra/zenity-3.6.0
 	 sys-apps/remote-login-service"
+
+src_prepare() {
+        epatch "${FILESDIR}"/0001_Fix_locale_file.patch
+}
+

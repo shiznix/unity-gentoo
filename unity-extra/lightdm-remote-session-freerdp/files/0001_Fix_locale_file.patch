@@ -1,0 +1,12 @@
+diff -Nru lightdm-remote-session-freerdp-1.0.orig/lightdm-remote-freerdp lightdm-remote-session-freerdp-1.0/lightdm-remote-freerdp
+--- lightdm-remote-session-freerdp-1.0.orig/lightdm-remote-freerdp	2012-09-27 16:05:23.735096735 -0400
++++ lightdm-remote-session-freerdp-1.0/lightdm-remote-freerdp	2012-09-27 16:20:06.090316606 -0400
+@@ -1,7 +1,7 @@
+ #%PAM-1.0
+ auth    requisite       pam_nologin.so
+ auth    required        pam_env.so readenv=1
+-auth    required        pam_env.so readenv=1 envfile=/etc/default/locale
++auth    required        pam_env.so readenv=1 envfile=/etc/profile.env
+ auth    required        pam_freerdp.so
+ session required        pam_limits.so
+ session required        pam_freerdp.so
