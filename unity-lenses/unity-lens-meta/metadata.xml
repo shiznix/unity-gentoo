@@ -6,7 +6,14 @@
 		<name>unity-gentoo overlay</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="sourceforge">shiznix</remote-id>
+		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="applications">Applications lens for the Dash</flag>
+		<flag name="files">Files/folders lens for the Dash</flag>
+		<flag name="music">Music collection lens for the Dash</flag>
+		<flag name="photos">Photo collection lens for the Dash</flag>
+		<flag name="videos">Videos collection and online lens for the Dash</flag>
+	</use>
 </pkgmetadata>

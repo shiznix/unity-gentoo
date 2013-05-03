@@ -6,7 +6,12 @@
 		<name>unity-gentoo overlay</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="sourceforge">shiznix</remote-id>
+		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="chat">Instant messaging desktop integration via the messages indicator and empathy</flag>
+		<flag name="webapps">Desktop webapp integration. Where common webpages such as Facebook
+			and YouTube are seen as applications in the Dash, Launcher and indicators</flag>
+	</use>
 </pkgmetadata>
