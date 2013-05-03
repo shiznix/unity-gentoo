@@ -6,7 +6,7 @@
 		<name>unity-gentoo overlay</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="sourceforge">shiznix</remote-id>
+		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
 </pkgmetadata>

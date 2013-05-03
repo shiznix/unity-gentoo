@@ -6,7 +6,15 @@
 		<name>unity-gentoo overlay</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="sourceforge">shiznix</remote-id>
+		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="battery">Battery power indicator</flag>
+		<flag name="bluetooth">Bluetooth settings and transfers indicator</flag>
+		<flag name="datetime">Date, time and calendar indicator</flag>
+		<flag name="session">Session management indicator</flag>
+		<flag name="sound">Audio control and application launching indicator</flag>
+		<flag name="sync">Multiple cloud based services indicator</flag>
+	</use>
 </pkgmetadata>
