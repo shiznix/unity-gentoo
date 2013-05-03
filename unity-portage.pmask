@@ -15,6 +15,7 @@ gnome-base/nautilus::gentoo
 gnome-extra/gnome-screensaver::gentoo
 gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
+media-libs/glew::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
 net-misc/networkmanager::gentoo
