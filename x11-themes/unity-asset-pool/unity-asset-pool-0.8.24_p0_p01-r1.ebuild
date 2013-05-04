@@ -48,6 +48,11 @@ src_install() {
 
 	insinto /usr/share/icons
 	doins -r unity-icon-theme
+	doins -r unity-webapps-applications
+	dosym /usr/share/icons/unity-webapps-applications/apps/128/amazon-store.png \
+		/usr/share/icons/hicolor/128x128/apps/amazon-store.png
+	dosym /usr/share/icons/unity-webapps-applications/apps/128/ubuntuone-music.png \
+		/usr/share/icons/hicolor/128x128/apps/ubuntuone-music.png
 
 	insinto /usr/share/icons/hicolor/32x32/apps
 	doins account-plugins-icons/*
