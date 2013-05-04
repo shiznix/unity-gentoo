@@ -8,7 +8,6 @@ inherit autotools eutils gnome2-utils python ubuntu-versionator
 
 MY_PN="webapps-applications"
 URELEASE="raring"
-UVER=""
 UURL="mirror://ubuntu/pool/main/w/${MY_PN}"
 S="${WORKDIR}/${MY_PN}-${PV}"
 
