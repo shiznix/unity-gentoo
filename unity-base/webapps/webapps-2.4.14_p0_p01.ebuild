@@ -4,15 +4,16 @@
 
 EAPI=4
 
-inherit eutils gnome2-utils python versionator ubuntu-versionator
+inherit autotools eutils gnome2-utils python ubuntu-versionator
 
+MY_PN="webapps-applications"
 URELEASE="raring"
-UVER=""
-UURL="https://launchpad.net/webapps-applications/$(get_version_component_range 1-2)/${PV}/+download"
+UURL="mirror://ubuntu/pool/main/w/${MY_PN}"
+S="${WORKDIR}/${MY_PN}-${PV}"
 
 DESCRIPTION="WebApps: Initial set of Apps for the Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-applications"
-SRC_URI="${UURL}/${P}.tar.gz"
+SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -30,12 +31,14 @@ DEPEND="app-admin/packagekit-gtk
 	x11-libs/gtk+:3"
 
 src_prepare() {
-	python_convert_shebangs 2 scripts/install-default-webapps-in-launcher.py
+#	python_convert_shebangs 2 scripts/install-default-webapps-in-launcher.py
+	python_convert_shebangs -r 2 .
 
 	# Allow the use of the more featureful old music store as presented in the old Quantal version of the rhythmbox-ubuntuone plugin #
 	use ubuntuonemusic-old-store && \
 		sed -e 's:one.ubuntu.com/music-store/:one.ubuntu.com/music/store-no-token:' \
 			-i default-apps/UbuntuOneMusiconeubuntucom.desktop.in
+	eautoreconf
 }
 
 src_configure() {
