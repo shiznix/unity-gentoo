@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="+colord +cups debug +i18n packagekit policykit +short-touchpad-timeout smartcard systemd +udev wacom"
+IUSE="+colord +cups debug +i18n input_devices_wacom packagekit policykit +short-touchpad-timeout smartcard systemd +udev"
 KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 REQUIRED_USE="
 	packagekit? ( udev )
@@ -55,13 +55,13 @@ COMMON_DEPEND="
 	colord? ( >=x11-misc/colord-0.1.13 )
 	cups? ( >=net-print/cups-1.4[dbus] )
 	i18n? ( >=app-i18n/ibus-1.4.99 )
+	input_devices_wacom? (
+		>=dev-libs/libwacom-0.6
+		x11-drivers/xf86-input-wacom )
 	packagekit? ( >=app-admin/packagekit-base-0.7.4 )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
 	systemd? ( >=sys-apps/systemd-31 )
 	udev? ( virtual/udev[gudev] )
-	wacom? (
-		>=dev-libs/libwacom-0.6
-		x11-drivers/xf86-input-wacom )
 "
 # Themes needed by g-s-d, gnome-shell, gtk+:3 apps to work properly
 # <gnome-color-manager-3.1.1 has file collisions with g-s-d-3.1.x
@@ -114,9 +114,9 @@ src_prepare() {
 src_configure() {
 	# README is empty
 	DOCS="AUTHORS NEWS ChangeLog MAINTAINERS"
-	G2CONF="${G2CONF}
-		--disable-static
-		--enable-man
+	gnome2_src_configure \
+		--disable-static \
+		--enable-man \
 		$(use_enable colord color)
 		$(use_enable cups)
 		$(use_enable debug)
@@ -126,8 +126,7 @@ src_configure() {
 		$(use_enable smartcard smartcard-support)
 		$(use_enable systemd)
 		$(use_enable udev gudev)
-		$(use_enable wacom)"
-	gnome2_src_configure
+		$(use_enable input_devices_wacom wacom)
 }
 
 src_test() {

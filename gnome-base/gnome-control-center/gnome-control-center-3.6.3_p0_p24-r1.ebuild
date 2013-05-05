@@ -22,7 +22,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+"
 SLOT="2"
-IUSE="+bluetooth +colord +cups +gnome-online-accounts +i18n kerberos +networkmanager +socialweb systemd v4l wacom"
+IUSE="+bluetooth +colord +cups +gnome-online-accounts +i18n input_devices_wacom kerberos +networkmanager +socialweb systemd"
 if [[ ${PV} = 9999 ]]; then
 	KEYWORDS=""
 else
@@ -40,7 +40,7 @@ COMMON_DEPEND="
 	>=x11-libs/gtk+-3.5.13:3
 	>=gnome-base/gsettings-desktop-schemas-3.5.91
 	>=gnome-base/gnome-desktop-3.5.91:3=
-	>=gnome-base/gnome-settings-daemon-3.6[colord?,policykit]
+	>=gnome-base/gnome-settings-daemon-3.6[colord?,input_devices_wacom?,policykit]
 	>=gnome-base/libgnomekbd-2.91.91
 
 	app-text/iso-codes
@@ -67,19 +67,15 @@ COMMON_DEPEND="
 	cups? ( >=net-print/cups-1.4[dbus] )
 	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.5.90 )
 	i18n? ( >=app-i18n/ibus-1.4.99 )
+	input_devices_wacom? (
+		>=dev-libs/libwacom-0.6
+		>=x11-libs/libXi-1.2 )
 	kerberos? ( virtual/krb5 )
 	networkmanager? (
 		>=gnome-extra/nm-applet-0.9.1.90
 		>=net-misc/networkmanager-0.8.997 )
 	socialweb? ( net-libs/libsocialweb )
 	systemd? ( >=sys-apps/systemd-31 )
-	v4l? (
-		media-libs/gstreamer:1.0
-		media-libs/clutter-gtk:1.0
-		>=media-video/cheese-3.5.91 )
-	wacom? (
-		>=dev-libs/libwacom-0.6
-		>=x11-libs/libXi-1.2 )
 "
 # <gnome-color-manager-3.1.2 has file collisions with g-c-c-3.1.x
 RDEPEND="${COMMON_DEPEND}
@@ -92,7 +88,6 @@ RDEPEND="${COMMON_DEPEND}
 	!systemd? (
 		app-admin/openrc-settingsd
 		sys-auth/consolekit )
-	wacom? ( gnome-base/gnome-settings-daemon[wacom] )
 
 	!<gnome-base/gdm-2.91.94
 	!<gnome-extra/gnome-color-manager-3.1.2
@@ -157,24 +152,23 @@ src_prepare() {
 }
 
 src_configure() {
-	# cheese is disabled as it causes gnome-control-center to segfault #
-	G2CONF="${G2CONF}
-		--disable-update-mimedb
-		--disable-static
-		--without-cheese
-		--enable-documentation
-		$(use_enable bluetooth)
-		$(use_enable colord color)
-		$(use_enable cups)
-		$(use_enable gnome-online-accounts goa)
-		$(use_with socialweb libsocialweb)
+	# cheese is disabled as it can cause gnome-control-center to segfault (and Ubuntu disable it anyway) #
+	# gnome-online-accounts is disabled as we use Ubuntu's online accounts method #
+	gnome2_src_configure \
+		--disable-update-mimedb \
+		--disable-static \
+		--enable-documentation \
+		--disable-goa \
+		--without-cheese \
+		$(use_enable bluetooth) \
+		$(use_enable colord color) \
+		$(use_enable cups) \
+		$(use_enable input_devices_wacom wacom) \
+		$(use_with socialweb libsocialweb) \
 		$(use_enable systemd)
-		$(use_enable wacom)"
-# $(use_with v4l cheese)
 	# XXX: $(use_with kerberos) # for 3.7.x
 	if ! use kerberos; then
 		G2CONF+=" KRB5_CONFIG=$(type -P true)"
 	fi
 	DOCS="AUTHORS ChangeLog NEWS README TODO"
-	gnome2_src_configure
 }
