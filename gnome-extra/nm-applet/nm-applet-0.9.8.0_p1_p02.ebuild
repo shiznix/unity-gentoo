@@ -23,7 +23,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="bluetooth gconf"
+IUSE="bluetooth gconf modemmanager"
 KEYWORDS="~amd64 ~ppc ~x86"
 RESTRICT="mirror"
 
@@ -48,17 +48,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	>=dev-util/intltool-0.40"
 
-pkg_setup() {
-	DOCS="AUTHORS ChangeLog NEWS README"
-	G2CONF="${G2CONF}
-		--with-gtkver=3
-		--disable-more-warnings
-		--disable-static
-		--localstatedir=/var
-		$(use_with bluetooth)
-		$(use_enable gconf migration)"
-}
-
 src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
@@ -72,8 +61,15 @@ src_prepare() {
 }
 
 src_configure() {
-	econf \
-		--enable-indicator
+	gnome2_src_configure \
+		--enable-indicator \
+		--with-gtkver=3 \
+		--disable-more-warnings \
+		--disable-static \
+		--localstatedir=/var \
+		$(use_with bluetooth) \
+		$(use_enable gconf migration) \
+		$(use_with modemmanager modem-manager-1)
 }
 
 src_install() {
