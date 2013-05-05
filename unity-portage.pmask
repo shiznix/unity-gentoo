@@ -7,6 +7,7 @@ dev-libs/libdbusmenu::gentoo
 dev-libs/libindicator::gentoo
 gnome-base/gconf::gentoo
 gnome-base/gnome-control-center::gentoo
+gnome-base/gnome-fallback::gentoo
 gnome-base/gnome-menus:3::gentoo
 gnome-base/gnome-session::gentoo
 gnome-base/gnome-settings-daemon::gentoo

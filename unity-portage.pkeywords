@@ -4,6 +4,7 @@
 app-accessibility/at-spi2-atk
 app-accessibility/at-spi2-core
 app-accessibility/caribou
+app-accessibility/orca
 app-admin/openrc-settingsd
 app-admin/packagekit
 app-admin/packagekit-base
@@ -45,7 +46,10 @@ dev-util/gdbus-codegen
 gnome-base/dconf
 gnome-base/gdm
 gnome-base/gnome-common
+gnome-base/gnome-core-apps
 gnome-base/gnome-desktop
+gnome-base/gnome-extra-apps
+gnome-base/gnome-fallback
 gnome-base/gnome-keyring
 gnome-base/gnome-menus
 gnome-base/gnome-panel
@@ -56,6 +60,7 @@ gnome-base/libgnome-keyring
 gnome-extra/evolution-data-server
 gnome-extra/gnome-color-manager
 gnome-extra/gnome-tweak-tool
+gnome-extra/mousetweaks
 gnome-extra/nautilus-sendto
 gnome-extra/sushi
 gnome-extra/zeitgeist
@@ -84,8 +89,10 @@ sys-apps/shadow
 sys-auth/pambase
 sys-libs/db
 x11-misc/appmenu-qt
+x11-misc/notify-osd
 x11-themes/gnome-backgrounds
 x11-themes/gnome-icon-theme
 x11-themes/gnome-themes-standard
 x11-themes/light-themes
+x11-themes/notify-osd-icons
 x11-wm/mutter

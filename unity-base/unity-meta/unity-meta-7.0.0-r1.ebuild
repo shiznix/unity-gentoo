@@ -7,10 +7,10 @@ EAPI=4
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity packages"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-LICENSE="GPL-3"
+LICENSE="metapackage"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+chat gnome +webapps"
+IUSE="accessibility +chat gnome gnome-extras +webapps"
 RESTRICT="mirror"
 
 DEPEND="app-backup/deja-dup[nautilus]
@@ -26,8 +26,15 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-indicators/unity-indicators-meta
 	unity-lenses/unity-lens-meta
 	x11-themes/ubuntu-wallpapers
+	accessibility? (
+		>=app-accessibility/at-spi2-atk-2.6.2
+		>=app-accessibility/at-spi2-core-2.6.2
+		>=app-accessibility/caribou-0.4.4.2
+		>=app-accessibility/orca-3.6
+		>=gnome-extra/mousetweaks-3.6.0 )
 	chat? ( net-im/empathy )
 	gnome? ( gnome-base/gnome-core-apps )
+	gnome-extras? ( gnome-base/gnome-extra-apps )
 	webapps? ( unity-base/webapps
 			unity-extra/unsettings
 			x11-misc/webaccounts-browser-extension

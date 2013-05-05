@@ -19,6 +19,7 @@ dev-libs/libdbusmenu
 dev-libs/libindicator
 gnome-base/gconf
 gnome-base/gnome-control-center
+gnome-base/gnome-fallback
 gnome-base/gnome-menus
 gnome-base/gnome-session
 gnome-base/gnome-settings-daemon
