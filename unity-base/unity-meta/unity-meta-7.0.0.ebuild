@@ -10,10 +10,11 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+chat +webapps"
+IUSE="+chat gnome +webapps"
 RESTRICT="mirror"
 
 DEPEND="app-backup/deja-dup[nautilus]
+	gnome-base/gnome-core-libs
 	gnome-base/nautilus
 	gnome-extra/activity-log-manager
 	gnome-extra/nm-applet
@@ -26,6 +27,7 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-lenses/unity-lens-meta
 	x11-themes/ubuntu-wallpapers
 	chat? ( net-im/empathy )
+	gnome? ( gnome-base/gnome-core-apps )
 	webapps? ( unity-base/webapps
 			unity-extra/unsettings
 			x11-misc/webaccounts-browser-extension
