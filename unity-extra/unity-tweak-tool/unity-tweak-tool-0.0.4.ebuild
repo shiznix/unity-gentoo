@@ -32,6 +32,11 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${PN}"
 
+pkg_setup() {
+	python_set_active_version 3
+	python_pkg_setup
+}
+
 pkg_preinst() {
 	gnome2_icon_savelist
 }
