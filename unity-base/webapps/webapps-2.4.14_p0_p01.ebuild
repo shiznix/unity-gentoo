@@ -28,10 +28,10 @@ DEPEND="app-admin/packagekit-gtk
 	dev-libs/libunity
 	dev-libs/libunity-webapps
 	dev-python/polib
-	x11-libs/gtk+:3"
+	x11-libs/gtk+:3
+	x11-themes/unity-asset-pool"
 
 src_prepare() {
-#	python_convert_shebangs 2 scripts/install-default-webapps-in-launcher.py
 	python_convert_shebangs -r 2 .
 
 	# Allow the use of the more featureful old music store as presented in the old Quantal version of the rhythmbox-ubuntuone plugin #
