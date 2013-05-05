@@ -10,7 +10,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="metapackage"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="accessibility +chat gnome gnome-extras +webapps"
+IUSE="accessibility +chat gnome gnome-extras +xdm +webapps"
 RESTRICT="mirror"
 
 DEPEND="app-backup/deja-dup[nautilus]
@@ -38,5 +38,6 @@ DEPEND="app-backup/deja-dup[nautilus]
 	webapps? ( unity-base/webapps
 			unity-extra/unsettings
 			x11-misc/webaccounts-browser-extension
-			x11-misc/webapps-greasemonkey )"
+			x11-misc/webapps-greasemonkey )
+	xdm? ( || ( unity-extra/unity-greeter gnome-base/gdm ) )"
 RDEPEND="${DEPEND}"
