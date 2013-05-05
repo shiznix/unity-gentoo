@@ -154,21 +154,22 @@ src_prepare() {
 src_configure() {
 	# cheese is disabled as it can cause gnome-control-center to segfault (and Ubuntu disable it anyway) #
 	# gnome-online-accounts is disabled as we use Ubuntu's online accounts method #
-	gnome2_src_configure \
-		--disable-update-mimedb \
-		--disable-static \
-		--enable-documentation \
-		--disable-goa \
-		--without-cheese \
-		$(use_enable bluetooth) \
-		$(use_enable colord color) \
-		$(use_enable cups) \
-		$(use_enable input_devices_wacom wacom) \
-		$(use_with socialweb libsocialweb) \
-		$(use_enable systemd)
+	G2CONF="${G2CONF}
+		--disable-update-mimedb
+		--disable-static
+		--enable-documentation
+		--disable-goa
+		--without-cheese
+		$(use_enable bluetooth)
+		$(use_enable colord color)
+		$(use_enable cups)
+		$(use_enable input_devices_wacom wacom)
+		$(use_with socialweb libsocialweb)
+		$(use_enable systemd)"
 	# XXX: $(use_with kerberos) # for 3.7.x
 	if ! use kerberos; then
 		G2CONF+=" KRB5_CONFIG=$(type -P true)"
 	fi
 	DOCS="AUTHORS ChangeLog NEWS README TODO"
+	gnome2_src_configure
 }
