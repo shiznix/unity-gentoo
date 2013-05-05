@@ -8,6 +8,7 @@ RESTRICT_PYTHON_ABIS="2.*"
 
 inherit distutils gnome2-utils python ubuntu-versionator
 
+UVER=
 URELEASE="raring"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 

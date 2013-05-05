@@ -27,7 +27,6 @@ version_check() {
 	elif [ -n "`echo "${packbasename}" | grep '^webapps-[0-9]'`" ]; then treepackname="${packname}"; packname="unity-webapps-common"
 	elif [ -n "`echo "${packbasename}"`" ]; then treepackname="${packname}"
 	fi
-echo "Packbasename is: ${packbasename}"
 
 	if [ -z "`grep UVER= ${pack}`" ];then
 		uver
