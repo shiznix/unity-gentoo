@@ -23,6 +23,7 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-base/hud
 	unity-base/ubuntuone-control-panel
 	unity-base/unity
+	unity-extra/unity-tweak-tool
 	unity-indicators/unity-indicators-meta
 	unity-lenses/unity-lens-meta
 	x11-themes/ubuntu-wallpapers
@@ -36,7 +37,6 @@ DEPEND="app-backup/deja-dup[nautilus]
 	gnome? ( gnome-base/gnome-core-apps )
 	gnome-extras? ( gnome-base/gnome-extra-apps )
 	webapps? ( unity-base/webapps
-			unity-extra/unsettings
 			x11-misc/webaccounts-browser-extension
 			x11-misc/webapps-greasemonkey )
 	xdm? ( || ( unity-extra/unity-greeter gnome-base/gdm ) )"
