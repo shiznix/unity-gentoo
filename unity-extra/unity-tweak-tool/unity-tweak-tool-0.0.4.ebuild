@@ -12,7 +12,7 @@ URELEASE="raring"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"
-HOMEPAGE="https://github.com/freyja-dev/unity-tweak-tool"
+HOMEPAGE="https://launchpad.net/unity-tweak-tool"
 SRC_URI="${UURL}/${MY_P}.tar.gz"
 
 LICENSE="GPL-3"
