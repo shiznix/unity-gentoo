@@ -6,7 +6,7 @@ EAPI=5
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-inherit base autotools eutils virtualx ubuntu-versionator vala
+inherit base autotools eutils flag-o-matic ubuntu-versionator vala virtualx
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -48,12 +48,18 @@ MAKEOPTS="${MAKEOPTS} -j1"
 src_prepare() {
 	PATCHES+=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
 	base_src_prepare
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
+
+	# fix for automake-1.13
+	sed -i -e 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/' configure.ac || die
+
 	eautoreconf
 }
 
 src_configure() {
+	append-flags -Wno-error #414323
 	# Build GTK2 support #
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
@@ -74,6 +80,8 @@ src_configure() {
 		--with-gtk=3 || die
 	popd
 }
+
+src_test() { :; } #440192
 
 src_compile() {
 	# Build GTK2 support #
