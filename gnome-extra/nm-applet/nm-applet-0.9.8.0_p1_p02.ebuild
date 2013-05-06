@@ -49,9 +49,11 @@ DEPEND="${RDEPEND}
 	>=dev-util/intltool-0.40"
 
 src_prepare() {
+	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
+	PATCHES+=( "${FILESDIR}/modemmanager_build-fix.diff" )
 	base_src_prepare
 
 	eautoreconf
