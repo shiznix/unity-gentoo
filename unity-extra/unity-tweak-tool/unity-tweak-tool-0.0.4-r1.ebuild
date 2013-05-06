@@ -37,6 +37,14 @@ pkg_setup() {
 	python_pkg_setup
 }
 
+src_prepare() {
+	# Make Unity Tweak Tool appear in gnome-control-center #
+	sed -e 's:Categories=.*:Categories=Settings;X-GNOME-Settings-Panel;X-GNOME-PersonalSettings;:' \
+		-e 's:Exec=.*:Exec=unity-tweak-tool:' \
+		-e '/Actions=/{:a;n;/^$/!ba;i\X-GNOME-Settings-Panel=unitytweak' -e '}' \
+			-i unity-tweak-tool.desktop.in || die
+}
+
 pkg_preinst() {
 	gnome2_icon_savelist
 }
