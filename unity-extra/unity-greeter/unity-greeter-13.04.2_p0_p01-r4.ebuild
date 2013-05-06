@@ -24,7 +24,7 @@ RESTRICT="mirror"
 
 DEPEND="x11-libs/gtk+:3
 	dev-libs/libindicator
-	>=x11-misc/lightdm-1.5.3
+	>=x11-misc/lightdm-1.4.0
 	media-libs/freetype:2
 	x11-libs/cairo
 	media-libs/libcanberra"

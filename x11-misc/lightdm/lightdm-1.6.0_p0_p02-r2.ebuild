@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/x11-misc/lightdm/lightdm-1.4.0-r1.ebuild,v 1.3 2013/03/02 23:49:52 hwoarang Exp $
 
 EAPI=5
-inherit base eutils pam readme.gentoo ubuntu-versionator user
+inherit base eutils pam readme.gentoo ubuntu-versionator user autotools
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
 URELEASE="raring"
@@ -66,21 +66,25 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PN}-config.patch
 	epatch "${FILESDIR}"/03_launch_dbus.patch
 
+	# sets language setting of user session
+	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-fix-language-setting.patch
+
 	# use own *lauch_dbus* patch
 	sed -i '/03_launch_dbus.patch/d' "${WORKDIR}/debian/patches/series" || die
 
 	sed -i '/04_language_options.patch/d' "${WORKDIR}/debian/patches/series" || die
+	sed -i '/05_add_xserver_core_option.patch/d' "${WORKDIR}/debian/patches/series" || die
 
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
 
-#	if has_version dev-libs/gobject-introspection; then
-#		eautoreconf
-#	else
-#		AT_M4DIR=${WORKDIR} eautoreconf
-#	fi
+	if has_version dev-libs/gobject-introspection; then
+		eautoreconf
+	else
+		AT_M4DIR=${WORKDIR} eautoreconf
+	fi
 }
 
 src_configure() {
