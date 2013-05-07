@@ -59,7 +59,7 @@ version_check() {
 		else
 			echo "  Upstream version: ${upstream}"
 		fi
-		for release in raring; do
+		for release in {raring,raring-updates}; do
 			if [ "${release}" != "${URELEASE}" ]; then
 				avail_release=`wget -q "http://packages.ubuntu.com/${release}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
 				if [ -z "${avail_release}" ]; then
