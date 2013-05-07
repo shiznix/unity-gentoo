@@ -143,7 +143,6 @@ src_install() {
 	rm -rf "${ED}"/etc/init
 
 	pamd_mimic system-local-login ${PN} auth account session #372229
-	dopamd "${FILESDIR}"/${PN}
 	dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
 
 	readme.gentoo_create_doc
