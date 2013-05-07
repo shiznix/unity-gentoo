@@ -6,7 +6,7 @@ EAPI=5
 inherit base eutils pam readme.gentoo ubuntu-versionator user autotools
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
-URELEASE="raring"
+URELEASE="raring-updates"
 
 DESCRIPTION="A lightweight display manager"
 
@@ -64,21 +64,21 @@ src_prepare() {
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
 	epatch "${FILESDIR}"/${PN}-config.patch
+
+	# use startup script to stop dbus of lightdm when user session starts
 	epatch "${FILESDIR}"/03_launch_dbus.patch
 
 	# sets language setting of user session
 	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-fix-language-setting.patch
 
-	# use own *lauch_dbus* patch
-	sed -i '/03_launch_dbus.patch/d' "${WORKDIR}/debian/patches/series" || die
+	# use system default language in greeter
+	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-make-sessions-inherit-system-default-locale.patch
 
-	sed -i '/04_language_options.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/05_add_xserver_core_option.patch/d' "${WORKDIR}/debian/patches/series" || die
+#	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+#		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+#	done
 
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	epatch_user
 
 	if has_version dev-libs/gobject-introspection; then
 		eautoreconf
@@ -143,6 +143,7 @@ src_install() {
 	rm -rf "${ED}"/etc/init
 
 	pamd_mimic system-local-login ${PN} auth account session #372229
+	dopamd "${FILESDIR}"/${PN}
 	dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
 
 	readme.gentoo_create_doc
