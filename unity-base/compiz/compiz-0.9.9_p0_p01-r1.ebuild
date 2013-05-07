@@ -92,6 +92,10 @@ src_prepare() {
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	#	resulting in compiz window placement not working #
 	export CMAKE_BUILD_TYPE=none
+
+	# Disable -Werror #
+	sed -e 's:-Werror::g' \
+		-i cmake/CompizCommon.cmake || die
 }
 
 src_configure() {
