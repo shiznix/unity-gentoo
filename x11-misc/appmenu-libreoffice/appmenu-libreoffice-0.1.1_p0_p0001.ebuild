@@ -9,6 +9,8 @@ inherit ubuntu-versionator
 MY_PN="lo-menubar"
 MY_P="${MY_PN}_${PV}"
 
+# Frozen at Quantal version as later versions may require patching and building Libreoffice #
+# Later versions also don't work yet (see lp#1015362, lp#1064962 and lp#1123492) #
 UURL="mirror://ubuntu/pool/universe/l/${MY_PN}"
 URELEASE="quantal"
 
