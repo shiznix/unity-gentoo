@@ -23,22 +23,35 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libaccounts-glib:=
 	dev-libs/libsignon-glib:=
+	net-irc/telepathy-idle
+	net-voip/telepathy-gabble
+	net-voip/telepathy-haze
+	net-im/telepathy-logger
+	net-voip/telepathy-rakia
+	>=net-voip/telepathy-salut-0.8.1
 	unity-base/signon-ui"
-DEPEND="${RDEPEND}
-	gnome-base/gnome-control-center
-	x11-proto/xproto
-	x11-proto/xf86miscproto
-	x11-proto/kbproto
-
+DEPEND="dev-libs/libaccounts-glib
+	dev-libs/libsignon-glib
 	dev-libs/libxml2:2
 	dev-libs/libxslt
 	>=dev-util/intltool-0.40.1
+	gnome-base/gnome-control-center
 	>=sys-devel/gettext-0.17
 	virtual/pkgconfig
-	x11-libs/gtk+:3"
+	x11-libs/gtk+:3
+	x11-proto/xproto
+	x11-proto/xf86miscproto
+	x11-proto/kbproto"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	eautoreconf
+}
+
+pkg_postinst() {
+	elog
+	elog "To reset all Online Accounts do the following as your desktop user:"
+	elog "rm -rfv ~/.cache/telepathy ~/.local/share/telepathy ~/.config/libaccounts-glib"
+	elog
 }
