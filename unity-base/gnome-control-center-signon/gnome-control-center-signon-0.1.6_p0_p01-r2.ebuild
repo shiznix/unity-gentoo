@@ -23,10 +23,11 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libaccounts-glib:=
 	dev-libs/libsignon-glib:=
+	net-im/pidgin[-eds,dbus,gadu,groupwise,gstreamer,idn,meanwhile,networkmanager,sasl,silc,zephyr]
+	net-im/telepathy-logger
 	net-irc/telepathy-idle
 	net-voip/telepathy-gabble
 	net-voip/telepathy-haze
-	net-im/telepathy-logger
 	net-voip/telepathy-rakia
 	>=net-voip/telepathy-salut-0.8.1
 	unity-base/signon-ui"
