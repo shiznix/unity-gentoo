@@ -1,0 +1,6 @@
+# This file contains guidelines on ebuild masking and Ubuntu releases #
+
+* Current Ubuntu release versions of ebuilds are always masked by package.keywords
+* Development Ubuntu release versions of ebuilds are always masked by missing keywords
+* Development Ubuntu release packages list is maintained in unity-gentoo.dev.pkeywords,
+	this way the packages may be tracked and easily tested by symlinking into /etc/portage/package.keywords/
