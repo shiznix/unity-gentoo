@@ -40,7 +40,7 @@ version_check() {
 		if [ -n "${UVER}" ]; then
 			current=`echo "${packbasename}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}"`
 		else
-			current=`echo "${packbasename}"`
+			current=`echo "${packbasename}" | sed 's:-r[0-9].*$::g'`
 		fi
 		upstream=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/[0-9]://g'`
 		if [ -z "${upstream}" ]; then
@@ -59,15 +59,17 @@ version_check() {
 		else
 			echo "  Upstream version: ${upstream}"
 		fi
-		for release in {raring,raring-updates}; do
+		for release in {raring,raring-updates,saucy}; do
 			if [ "${release}" != "${URELEASE}" ]; then
 				avail_release=`wget -q "http://packages.ubuntu.com/${release}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
 				if [ -z "${avail_release}" ]; then
 					avail_release=`wget -q "http://packages.ubuntu.com/${release}/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
 				fi
 				if [ -n "${avail_release}" ]; then
-					echo "    Other available versions:"
-					echo -e "      ${avail_release}  ::  ${release}"
+					if [ "${packname}-${current_version}" != "${avail_release}" ];then
+						echo "    Other available versions:"
+						echo -e "      ${avail_release}  ::  ${release}"
+					fi
 				fi
 			fi
 		done
