@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+debug doc"
+IUSE="+debug doc qt5"
 RESTRICT="mirror"
 
 DEPEND="dev-qt/qtcore:4
@@ -25,7 +25,12 @@ DEPEND="dev-qt/qtcore:4
 	dev-qt/qtgui:4
 	dev-qt/qtsql:4
 	dev-qt/qtxmlpatterns:4
-	doc? ( app-doc/doxygen )"
+	doc? ( app-doc/doxygen )
+	qt5? ( dev-qt/qtcore:5
+		dev-qt/qtdbus:5
+		dev-qt/qtgui:5
+		dev-qt/qtsql:5
+		dev-qt/qtxml:5 )"
 
 src_prepare() {
 	# Fix remotepluginprocess.cpp missing QDebug include on some systems #
@@ -47,4 +52,50 @@ src_prepare() {
 		for file in $(grep -r doc/doc.pri * | grep \\.pro | awk -F: '{print $1}'); do
 			sed -e '/doc\/doc.pri/d' -i "${file}"
 		done
+}
+
+src_configure() {
+	# Build QT5 support #
+	if use qt5; then
+		cd "${WORKDIR}"
+		cp -rf "${S}" "${S}"-build_qt5
+		pushd "${S}"-build_qt5
+			/usr/$(get_libdir)/qt5/bin/qmake PREFIX=/usr
+		popd
+	fi
+
+	# Build QT4 support #
+	cd "${WORKDIR}"
+	cp -rf "${S}" "${S}"-build_qt4
+	pushd "${S}"-build_qt4
+		qmake PREFIX=/usr
+	popd
+}
+
+src_compile() {
+	# Build QT5 support #
+	if use qt5; then
+		pushd "${S}"-build_qt5
+			emake
+		popd
+	fi
+
+	# Build QT4 support #
+	pushd "${S}"-build_qt4
+		emake
+	popd
+}
+
+src_install() {
+	# Install QT5 support #
+	if use qt5; then
+		pushd "${S}"-build_qt5
+			qt4-r2_src_install
+		popd
+	fi
+
+	# Install QT4 support #
+	pushd "${S}"-build_qt4
+		qt4-r2_src_install
+	popd
 }

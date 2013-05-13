@@ -19,7 +19,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libaccounts-qt:="
+RDEPEND="x11-libs/libaccounts-qt:="
 DEPEND="${RDEPEND}
 	dev-qt/qtcore:4
 	dev-qt/qtdbus:4

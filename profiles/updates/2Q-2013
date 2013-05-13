@@ -21,3 +21,5 @@ move unity-base/unity-lens-video unity-lenses/unity-lens-video
 
 move x11-misc/lightdm-remote-session-freerdp unity-extra/lightdm-remote-session-freerdp
 move x11-misc/lightdm-remote-session-uccsconfigure unity-extra/lightdm-remote-session-uccsconfigure
+
+move dev-libs/libaccounts-qt x11-libs/libaccounts-qt
