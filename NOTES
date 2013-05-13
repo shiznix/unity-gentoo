@@ -92,8 +92,6 @@ x11-wm/metacity				# Patched to support compiz window decoration
 			- mail-client/evolution-3.6 requires net-libs/libsoup-gnome
 	- >=gnome-base/gnome-control-center-3.8
 		- gnome-control-center-{signon,unity} require libgnome-control-center.pc which doesn't exist in gnome-control-center-3.8
-		- gnome-control-center printer settings require smbclient.pc but <samba-4 doesn't install it's pkgconfig files (refer b.g.o 464818)
-			>net-fs/samba-4 is also hard masked and breaks many ebuilds that expect samba[smbclient] as it doesn't have 'smbclient' in IUSE
 	- >=gnome-extra/nautilus-sendto-3.8
 		- Empathy requires nautilus-sendto.pc which doesn't exist in nautilus-sendto-3.8
 
