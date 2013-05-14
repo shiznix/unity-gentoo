@@ -3,9 +3,9 @@
 # $Header: $
 
 EAPI=5
-PYTHON_DEPEND="2:2.7 3:3.2"
+PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2,3_3} )
 
-inherit autotools flag-o-matic python ubuntu-versionator
+inherit autotools flag-o-matic python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/liba/${PN}"
 URELEASE="raring"
@@ -37,49 +37,25 @@ src_prepare() {
 }
 
 src_configure() {
-	# Build PYTHON2 support #
-	export EPYTHON="$(PYTHON -2)"
-	[[ -d build-python2 ]] || mkdir build-python2
-	pushd build-python2
-		../configure --prefix=/usr ${myconf} \
-			$(use_enable debug)
-	popd
-
-	# Build PYTHON3 support #
-	export EPYTHON="$(PYTHON -3)"
-	[[ -d build-python3 ]] || mkdir build-python3
-	pushd build-python3
-		../configure --prefix=/usr ${myconf} \
-			$(use_enable debug)
-	popd
+	python_copy_sources
+	configuration() {
+		econf $(use_enable debug) || die
+	}
+	python_foreach_impl run_in_build_dir configuration
 }
 
 src_compile() {
-	# Build PYTHON2 support #
-	export EPYTHON="$(PYTHON -2)"
-	pushd build-python2
+	compilation() {
 		emake || die
-	popd
-
-	# Build PYTHON3 support #
-	export EPYTHON="$(PYTHON -3)"
-	pushd build-python3
-		emake || die
-	popd
+	}
+	python_foreach_impl run_in_build_dir compilation
 }
 
 src_install() {
-	# Install PYTHON2 support #
-	export EPYTHON="$(PYTHON -2)"
-	pushd build-python2
-		emake DESTDIR="${D}" install || die
-	popd
-
-	# Install PYTHON3 support #
-	export EPYTHON="$(PYTHON -3)"
-	pushd build-python3
-		emake DESTDIR="${D}" install || die
-	popd
+	installation() {
+		emake DESTDIR="${D}" install
+	}
+	python_foreach_impl run_in_build_dir installation
 
 	rm -rf "${D}usr/doc"
 	prune_libtool_files --modules
