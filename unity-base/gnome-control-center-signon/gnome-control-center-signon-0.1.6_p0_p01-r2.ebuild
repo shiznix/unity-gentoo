@@ -45,6 +45,7 @@ DEPEND="dev-libs/libaccounts-glib
 	x11-proto/kbproto"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	eautoreconf
