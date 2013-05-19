@@ -23,7 +23,7 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libaccounts-glib:=
 	dev-libs/libsignon-glib:=
-	net-im/pidgin[-eds,dbus,gadu,groupwise,gstreamer,idn,meanwhile,networkmanager,sasl,silc,zephyr]
+	net-im/pidgin[-eds,dbus,gadu,groupwise,idn,meanwhile,networkmanager,sasl,silc,zephyr]
 	net-im/telepathy-logger
 	net-irc/telepathy-idle
 	net-voip/telepathy-gabble
