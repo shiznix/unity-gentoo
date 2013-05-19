@@ -17,8 +17,16 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+introspection gtk +unity kde qt4 razor"
-REQUIRED_USE="|| ( unity gtk kde razor )"
+
+LIGHTDM_GREETER="gtk unity kde razor"
+
+for greeter in ${LIGHTDM_GREETER}; do
+        IUSE_LIGHTDM_GREETER+=" lightdm_greeter_${greeter}"
+done
+
+IUSE="${IUSE_LIGHTDM_GREETER} +introspection qt4"
+
+REQUIRED_USE="|| ( lightdm_greeter_unity lightdm_greeter_gtk lightdm_greeter_kde lightdm_greeter_razor )"
 RESTRICT="mirror"
 
 COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
@@ -44,10 +52,10 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig"
 
-PDEPEND="gtk? ( x11-misc/lightdm-gtk-greeter )
-	kde? ( x11-misc/lightdm-kde )
-	razor? ( razorqt-base/razorqt-lightdm-greeter )
-	unity? ( unity-extra/unity-greeter )"
+PDEPEND="lightdm_greeter_gtk? ( x11-misc/lightdm-gtk-greeter )
+	lightdm_greeter_kde? ( x11-misc/lightdm-kde )
+	lightdm_greeter_razor? ( razorqt-base/razorqt-lightdm-greeter )
+	lightdm_greeter_unity? ( unity-extra/unity-greeter )"
 
 DOCS=( NEWS )
 
@@ -90,14 +98,14 @@ src_prepare() {
 src_configure() {
 	# Set default values if global vars unset
 	local _greeter _session _user
-	_greeter=${LIGHTDM_GREETER:=lightdm-gtk-greeter}
-	_session=${LIGHTDM_SESSION:=gnome}
-	_user=${LIGHTDM_USER:=lightdm}
+	_greeter=lightdm-gtk-greeter
+	_session=gnome
+	_user=lightdm
 	# Let user know how lightdm is configured
-	einfo "Gentoo configuration"
-	einfo "Default greeter: ${_greeter}"
-	einfo "Default session: ${_session}"
-	einfo "Greeter user: ${_user}"
+#	einfo "Gentoo configuration"
+#	einfo "Default greeter: ${_greeter}"
+#	einfo "Default session: ${_session}"
+#	einfo "Greeter user: ${_user}"
 
 	econf \
 		--localstatedir=/var \
