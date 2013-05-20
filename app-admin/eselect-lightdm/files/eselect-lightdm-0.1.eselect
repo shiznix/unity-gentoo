@@ -30,7 +30,7 @@ set_greeter() {
 	fi
 
 	exec_=$(grep -v '^#' "${EROOT}"/usr/share/xgreeters/${greeter}.desktop | grep "Exec" )
-        exec_=${exec_##*=}
+	exec_=${exec_##*=}
 
 	if [[ -z ${exec_} ]]; then
 		die -q "Could not evaluate executable for greeter \"$1\"!"
