@@ -38,7 +38,8 @@ RDEPEND="unity-base/unity-language-pack
 	networkmanager? ( >=gnome-extra/nm-applet-0.9.8.0 )
 	media-fonts/ubuntu-font-family
 	x11-themes/ubuntu-wallpapers
-	>=gnome-base/gsettings-desktop-schemas-3.6.1"
+	>=gnome-base/gsettings-desktop-schemas-3.6.1
+	>=app-admin/eselect-lightdm-0.1"
 
 pkg_pretend() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
@@ -99,10 +100,8 @@ pkg_postinst() {
 
 	elog
 	elog "Set ${PN} as default greeter of LightDM."
-	/usr/libexec/lightdm/lightdm-set-defaults --keep-old --greeter=${PN}
+	"${ROOT}"/usr/bin/eselect lightdm set unity-greeter
 
-	elog "Set 'unity' as default user session."
-	/usr/libexec/lightdm/lightdm-set-defaults --keep-old --session=unity
 }
 
 pkg_postrm() {

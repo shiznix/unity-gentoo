@@ -6,6 +6,4 @@
  * command: lightdm --test-mode -c /etc/lightdm/lightdm.conf. This
  * requires xorg-server to be built with the 'kdrive' useflag.
  *
- * You can also set your own default values for LIGHTDM_GREETER,
- * LIGHTDM_SESSION, and LIGHTDM_USER in /etc/portage/make.conf
-
+ * For further information have a look into /etc/lightdm/lightdm.conf_example

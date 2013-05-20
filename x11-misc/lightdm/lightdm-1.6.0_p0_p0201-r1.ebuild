@@ -42,7 +42,8 @@ COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
 		)"
 RDEPEND="${COMMON_DEPEND}
 	>=sys-auth/pambase-20101024-r2
-	x11-apps/xrandr"
+	x11-apps/xrandr
+	app-admin/eselect-lightdm"
 
 DEPEND="${COMMON_DEPEND}
 	dev-util/gtk-doc-am
@@ -77,8 +78,6 @@ pkg_setup() {
 src_prepare() {
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
-
-	epatch "${FILESDIR}"/${PN}-config.patch
 
 	# use startup script to stop dbus of lightdm when user session starts
 	epatch "${FILESDIR}"/03_launch_dbus.patch
@@ -121,7 +120,9 @@ src_install() {
 	default
 
 	insinto /etc/${PN}
-	doins data/{${PN},keys}.conf
+	doins data/keys.conf
+	newins data/${PN}.conf ${PN}.conf_example
+	doins "${FILESDIR}"/${PN}.conf
 	doins "${FILESDIR}"/Xsession
 	fperms +x /etc/${PN}/Xsession
 
