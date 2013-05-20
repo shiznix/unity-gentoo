@@ -1,0 +1,12 @@
+ Copyright 1999-2013 Gentoo Foundation.
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+# This file contains descriptions of LIGHTDM_GREETERS USE_EXPAND flags.
+
+# Keep it sorted.
+
+gtk - Gtk Greeter
+kde - KDE Greeter
+razor - Razor Greeter
+unity - Unity Greeter

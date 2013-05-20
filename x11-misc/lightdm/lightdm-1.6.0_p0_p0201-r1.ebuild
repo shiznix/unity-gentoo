@@ -18,15 +18,14 @@ LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-LIGHTDM_GREETER="gtk unity kde razor"
 
-for greeter in ${LIGHTDM_GREETER}; do
-        IUSE_LIGHTDM_GREETER+=" lightdm_greeter_${greeter}"
+IUSE_LIGHTDM_GREETERS="gtk unity kde razor"
+for greeters in ${IUSE_LIGHTDM_GREETERS}; do
+        IUSE+=" lightdm_greeter_${greeters}"
 done
 
-IUSE="${IUSE_LIGHTDM_GREETER} +introspection qt4"
+IUSE+=" +introspection qt4"
 
-REQUIRED_USE="|| ( lightdm_greeter_unity lightdm_greeter_gtk lightdm_greeter_kde lightdm_greeter_razor )"
 RESTRICT="mirror"
 
 COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
@@ -67,6 +66,14 @@ pkg_pretend() {
 	fi
 }
 
+pkg_setup() {
+        if [ -z "${LIGHTDM_GREETERS}" ]; then
+		ewarn " "
+                ewarn "At least one GREETER should be set in /etc/make.conf"
+		ewarn " "
+        fi
+}
+
 src_prepare() {
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
@@ -96,25 +103,11 @@ src_prepare() {
 }
 
 src_configure() {
-	# Set default values if global vars unset
-	local _greeter _session _user
-	_greeter=lightdm-gtk-greeter
-	_session=gnome
-	_user=lightdm
-	# Let user know how lightdm is configured
-#	einfo "Gentoo configuration"
-#	einfo "Default greeter: ${_greeter}"
-#	einfo "Default session: ${_session}"
-#	einfo "Greeter user: ${_user}"
-
 	econf \
 		--localstatedir=/var \
 		--disable-static \
 		$(use_enable introspection) \
 		$(use_enable qt4 liblightdm-qt) \
-		--with-user-session=${_session} \
-		--with-greeter-session=${_greeter} \
-		--with-greeter-user=${_user} \
 		--with-html-dir="${EPREFIX}"/usr/share/doc/${PF}/html
 }
 
@@ -140,7 +133,7 @@ src_install() {
 
 	# script makes lightdm multi monitor sessions aware
 	# and enable first display as primary output
-	# all other monitors are aranged right of it
+	# all other monitors are aranged right of it in a row
 	#
 	# on 'unity-greeter' the login prompt will follow the mouse cursor
 	#
