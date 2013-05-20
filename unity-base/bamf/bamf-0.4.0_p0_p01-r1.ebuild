@@ -6,7 +6,7 @@ EAPI=5
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils ubuntu-versionator vala
+inherit autotools eutils ubuntu-versionator vala xdummy
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
 URELEASE="raring"
@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0/1.0.0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="test"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/gobject-introspection
@@ -46,6 +46,11 @@ src_configure() {
 	econf \
 		--enable-introspection=yes \
 		--disable-static || die
+}
+
+src_test() {
+	local XDUMMY_COMMAND="make check"
+	xdummymake
 }
 
 src_install() {

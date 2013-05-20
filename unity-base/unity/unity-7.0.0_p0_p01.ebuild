@@ -6,7 +6,9 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2:2.7"
 
-inherit base gnome2 cmake-utils eutils python toolchain-funcs ubuntu-versionator
+GTESTVER="1.6.0"
+
+inherit base gnome2 cmake-utils distutils eutils python toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
@@ -16,12 +18,13 @@ DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
 
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz
+	test? ( http://googletest.googlecode.com/files/gtest-${GTESTVER}.zip )"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+branding"
+IUSE="doc +branding test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
@@ -67,7 +70,12 @@ DEPEND="dev-libs/boost
 	x11-base/xorg-server[dmx]
 	x11-libs/libXfixes
 	x11-misc/appmenu-gtk
-	x11-misc/appmenu-qt"
+	x11-misc/appmenu-qt
+	doc? ( app-doc/doxygen )
+	test? ( dev-cpp/gmock
+		dev-cpp/gtest
+		dev-python/autopilot
+		dev-util/dbus-test-runner )"
 
 pkg_pretend() {
 	if [[ $(gcc-major-version) -lt 4 ]] || \
@@ -83,10 +91,12 @@ pkg_setup() {
 }
 
 src_prepare() {
+	! use test && \
+		PATCHES+=( "${FILESDIR}/remove-gtest-dep.diff" )
+
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
-			"${FILESDIR}/systray-enabled-by-default.diff"
-			"${FILESDIR}/remove-gtest-dep.diff" )
+			"${FILESDIR}/systray-enabled-by-default.diff" )
 	base_src_prepare
 
 	python_convert_shebangs -r 2 .
@@ -97,9 +107,9 @@ src_prepare() {
 	sed -e "s:Ubuntu Desktop:Unity Gentoo Desktop:g" \
 		-i "panel/PanelMenuView.cpp" || die
 
-	# Remove autopilot test suite files #
+	# Remove testsuite cmake installation #
 	sed -e '/python setup.py install/d' \
-		-i tests/CMakeLists.txt || die
+			-i tests/CMakeLists.txt
 
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	#       resulting in build failure with 'fatal error: unitycore_pch.hh: No such file or directory' #
@@ -110,12 +120,40 @@ src_prepare() {
 }
 
 src_configure() {
-	local mycmakeargs="${mycmakeargs}
+	if use test; then
+		mycmakeargs="${mycmakeargs}
+			-DGTEST_ROOT_DIR="${WORKDIR}/gtest-${GTESTVER}"
+			-DGTEST_SRC_DIR="${WORKDIR}/gtest-${GTESTVER}/src/"
+			"
+	fi
+
+	mycmakeargs="${mycmakeargs}
+		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_PLUGIN_INSTALL_TYPE=package
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
-		-DCMAKE_INSTALL_PREFIX=/usr"
-	cmake-utils_src_configure
+		-DUSE_GSETTINGS=TRUE
+		-DCMAKE_INSTALL_PREFIX=/usr
+		"
+	cmake-utils_src_configure || die
+}
+
+src_compile() {
+	use test && \
+		pushd tests/autopilot
+			distutils_src_compile
+		popd
+	cmake-utils_src_compile || die
+}
+
+src_test() {
+	pushd ${CMAKE_BUILD_DIR}
+		# FIXME #
+		# 'make check' doesn't work due to broken linktime -rpath for tests/test-unit so use 'make check-headless' only for now #
+		# ./test-unit: error while loading shared libraries: libunity-protocol-private.so.0: cannot open shared object file: No such file or directory #
+		local XDUMMY_COMMAND="make check-headless"
+		xdummymake
+	popd
 }
 
 src_install() {
@@ -123,7 +161,13 @@ src_install() {
 		addpredict /root/.gconf		 	# FIXME
 		addpredict /usr/share/glib-2.0/schemas/	# FIXME
 		emake DESTDIR="${D}" install
-	popd ${CMAKE_BUILD_DIR}
+	popd
+
+	if use test; then
+		pushd tests/autopilot
+			distutils_src_install
+		popd
+	fi
 
 	# Gentoo dash launcher icon #
 	if use branding; then
@@ -141,14 +185,21 @@ src_install() {
 }
 
 pkg_postinst() {
-	einfo
-	einfo "It is recommended to enable the 'ayatana' USE flag"
-	einfo "for portage packages so they can use the Unity"
-	einfo "libindicate or libappindicator notification plugins"
-	einfo
-	einfo "If you would like to use Unity's icons and themes"
-	einfo "select the Ambiance theme in 'System Settings > Appearance'"
-	einfo
+	elog
+	elog "It is recommended to enable the 'ayatana' USE flag"
+	elog "for portage packages so they can use the Unity"
+	elog "libindicate or libappindicator notification plugins"
+	elog
+	elog "If you would like to use Unity's icons and themes"
+	elog "select the Ambiance theme in 'System Settings > Appearance'"
+	elog
+
+	if use test; then
+		elog "To run autopilot tests, do the following:"
+		elog "cd $(python_get_libdir)/site-packages/unity/tests"
+		elog "and run 'autopilot run unity'"
+		elog
+	fi
 
 	gnome2_pkg_postinst
 }

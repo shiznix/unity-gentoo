@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit base gnome2 cmake-utils eutils python ubuntu-versionator
+inherit base gnome2 cmake-utils eutils python ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 URELEASE="raring"
@@ -18,13 +18,12 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0/${PV}"
 KEYWORDS="~amd64 ~x86"
-IUSE="+debug kde"
+IUSE="+debug kde test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-COMMONDEPEND="kde? ( kde-base/kwin )
-	!!x11-wm/compiz
+COMMONDEPEND="!!x11-wm/compiz
 	!!x11-libs/compiz-bcop
 	!!x11-libs/libcompizconfig
 	!!x11-plugins/compiz-plugins-main
@@ -57,7 +56,11 @@ COMMONDEPEND="kde? ( kde-base/kwin )
 	x11-libs/libICE
 	x11-libs/libSM
 	>=x11-libs/startup-notification-0.7
-	x11-wm/metacity"
+	x11-wm/metacity
+	kde? ( kde-base/kwin )
+	test? ( dev-cpp/gtest
+		dev-cpp/gmock 
+		sys-apps/xorg-gtest )"
 
 DEPEND="${COMMONDEPEND}
 	dev-util/pkgconfig
@@ -103,6 +106,14 @@ src_configure() {
 		mycmakeargs="${mycmakeargs} -DUSE_KDE4=ON" || \
 		mycmakeargs="${mycmakeargs} -DUSE_KDE4=OFF"
 
+	# Current test results: #
+	# 99% tests passed, 1 tests failed out of 1362 #
+	# The following tests FAILED: #
+	#	15 - GWDMockSettingsTest.TestMock (Failed) #
+	use test && \
+		mycmakeargs="${mycmakeargs} -DCOMPIZ_BUILD_TESTING=ON" || \
+		mycmakeargs="${mycmakeargs} -DCOMPIZ_BUILD_TESTING=OFF"
+
 	mycmakeargs="${mycmakeargs}
 		-DCMAKE_INSTALL_PREFIX="/usr"
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="/etc/gconf/schemas"
@@ -111,10 +122,19 @@ src_configure() {
 		-DUSE_GCONF=OFF
 		-DUSE_GSETTINGS=ON
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF
-		-DCOMPIZ_BUILD_TESTING=OFF
 		-DCOMPIZ_DEFAULT_PLUGINS="ccp"
 		"
 	cmake-utils_src_configure
+}
+
+src_test() {
+	# Current test results: #
+	# 99% tests passed, 1 tests failed out of 1362 #
+	# The following tests FAILED: #
+	#       15 - GWDMockSettingsTest.TestMock (Failed) #
+
+	local XDUMMY_COMMAND="cmake-utils_src_test"
+	xdummymake
 }
 
 src_compile() {

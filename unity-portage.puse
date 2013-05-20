@@ -20,3 +20,4 @@ sys-auth/pambase consolekit
 sys-libs/zlib minizip
 x11-libs/libdrm libkms
 x11-themes/light-themes gtk3
+x11-misc/x11vnc dummy

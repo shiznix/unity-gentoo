@@ -42,6 +42,7 @@ dev-python/twisted
 dev-python/twisted-names
 dev-python/twisted-web
 dev-util/fix-la-relink-command
+dev-util/dbus-test-runner
 dev-util/gdbus-codegen
 gnome-base/dconf
 gnome-base/gdm

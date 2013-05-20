@@ -4,22 +4,25 @@
 
 EAPI=5
 
-inherit base eutils ubuntu-versionator
+inherit autotools base eutils ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/n/${PN}"
 URELEASE="raring"
 UVER_PREFIX="daily13.04.17~13.04"
 
+GTESTVER="1.6.0"
+
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
 HOMEPAGE="http://launchpad.net/nux"
 
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz
+	test? ( http://googletest.googlecode.com/files/gtest-${GTESTVER}.zip )"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0/4"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug examples tests"
+IUSE="debug doc examples test"
 RESTRICT="mirror"
 
 RDEPEND="!unity-base/utouch-geis"
@@ -37,7 +40,9 @@ DEPEND="app-i18n/ibus
 	x11-libs/libXxf86vm
 	x11-libs/pango
 	x11-proto/dri2proto
-	x11-proto/glproto"
+	x11-proto/glproto
+	doc? ( app-doc/doxygen )
+	test? ( dev-cpp/gtest )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
@@ -51,7 +56,7 @@ src_prepare() {
 		PATCHES+=( "debian/patches/${patch}" )
 	done
 	base_src_prepare
-	./autogen.sh ${myconf}
+	./autogen.sh ${myconf}	# eautoreconf fails
 
 	# Fix building with libgeis #
 	sed -e "s:libutouch-geis:libgeis:g" \
@@ -63,14 +68,28 @@ src_configure() {
 	use debug && \
 		myconf="${myconf}
 			--enable-debug=yes"
+	use doc && \
+		myconf="${myconf}
+			--enable-documentation=yes"
+
 	! use examples && \
 		myconf="${myconf}
 			--enable-examples=no"
-	! use tests && \
+	if use test; then
+		myconf="${myconf}
+			--with-gtest-source-path="${WORKDIR}/gtest-${GTESTVER}""
+	else
 		myconf="${myconf}
 			--enable-tests=no
 			--enable-gputests=no"
+	fi
+
 	econf ${myconf}
+}
+
+src_test() {
+	local XDUMMY_COMMAND="make check"
+	xdummymake
 }
 
 src_install() {
