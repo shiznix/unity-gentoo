@@ -21,7 +21,7 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE_LIGHTDM_GREETERS="gtk unity kde razor"
 for greeters in ${IUSE_LIGHTDM_GREETERS}; do
-        IUSE+=" lightdm_greeter_${greeters}"
+        IUSE+=" lightdm_greeters_${greeters}"
 done
 
 IUSE+=" +introspection qt4"
@@ -51,10 +51,10 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig"
 
-PDEPEND="lightdm_greeter_gtk? ( x11-misc/lightdm-gtk-greeter )
-	lightdm_greeter_kde? ( x11-misc/lightdm-kde )
-	lightdm_greeter_razor? ( razorqt-base/razorqt-lightdm-greeter )
-	lightdm_greeter_unity? ( unity-extra/unity-greeter )"
+PDEPEND="lightdm_greeters_gtk? ( x11-misc/lightdm-gtk-greeter )
+	lightdm_greeters_kde? ( x11-misc/lightdm-kde )
+	lightdm_greeters_razor? ( razorqt-base/razorqt-lightdm-greeter )
+	lightdm_greeters_unity? ( unity-extra/unity-greeter )"
 
 DOCS=( NEWS )
 
