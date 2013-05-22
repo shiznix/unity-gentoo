@@ -24,7 +24,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc +branding test"
+IUSE="doc +branding pch test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
@@ -75,7 +75,8 @@ DEPEND="dev-libs/boost
 	test? ( dev-cpp/gmock
 		dev-cpp/gtest
 		dev-python/autopilot
-		dev-util/dbus-test-runner )"
+		dev-util/dbus-test-runner
+		sys-apps/xorg-gtest )"
 
 pkg_pretend() {
 	if [[ $(gcc-major-version) -lt 4 ]] || \
@@ -96,7 +97,8 @@ src_prepare() {
 
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
-			"${FILESDIR}/systray-enabled-by-default.diff" )
+			"${FILESDIR}/systray-enabled-by-default.diff"
+			"${FILESDIR}/nopch_fix.diff" )
 	base_src_prepare
 
 	python_convert_shebangs -r 2 .
@@ -122,9 +124,21 @@ src_prepare() {
 src_configure() {
 	if use test; then
 		mycmakeargs="${mycmakeargs}
+			-DBUILD_XORG_GTEST=ON
+			-DCOMPIZ_BUILD_TESTING=ON
 			-DGTEST_ROOT_DIR="${WORKDIR}/gtest-${GTESTVER}"
 			-DGTEST_SRC_DIR="${WORKDIR}/gtest-${GTESTVER}/src/"
 			"
+	else
+		mycmakeargs="${mycmakeargs}
+			-DBUILD_XORG_GTEST=OFF
+			-DCOMPIZ_BUILD_TESTING=OFF"
+	fi
+
+	if use pch; then
+		mycmakeargs="${mycmakeargs} -Duse_pch=ON"
+	else
+		mycmakeargs="${mycmakeargs} -Duse_pch=OFF"
 	fi
 
 	mycmakeargs="${mycmakeargs}
@@ -133,8 +147,7 @@ src_configure() {
 		-DCOMPIZ_PLUGIN_INSTALL_TYPE=package
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
 		-DUSE_GSETTINGS=TRUE
-		-DCMAKE_INSTALL_PREFIX=/usr
-		"
+		-DCMAKE_INSTALL_PREFIX=/usr"
 	cmake-utils_src_configure || die
 }
 
