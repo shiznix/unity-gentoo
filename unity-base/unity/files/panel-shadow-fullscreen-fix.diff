@@ -1,0 +1,22 @@
+=== modified file 'plugins/unityshell/src/unityshell.cpp'
+--- plugins/unityshell/src/unityshell.cpp	2013-04-16 22:11:24 +0000
++++ plugins/unityshell/src/unityshell.cpp	2013-04-23 17:14:50 +0000
+@@ -2302,8 +2302,6 @@
+ 
+   if (p)
+   {
+-    MultiActionList expoActions;
+-
+     for (CompOption& option : p->vTable->getOptions())
+     {
+       if (option.name() == "close_window_key")
+@@ -2624,7 +2622,9 @@
+       {
+         draw_panel_shadow = DrawPanelShadow::BELOW_WINDOW;
+ 
+-        if (!(window->state() & MAXIMIZE_STATE))
++        if (!(window->state() & CompWindowStateMaximizedVertMask) &&
++            !(window->state() & CompWindowStateFullscreenMask) &&
++            !(window->type() & CompWindowTypeFullscreenMask))
+         {
+           auto const& output = uScreen->screen->currentOutputDev();

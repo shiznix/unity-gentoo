@@ -98,7 +98,8 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
 			"${FILESDIR}/systray-enabled-by-default.diff"
-			"${FILESDIR}/nopch_fix.diff" )
+			"${FILESDIR}/nopch_fix.diff"
+			"${FILESDIR}/panel-shadow-fullscreen-fix.diff" )
 	base_src_prepare
 
 	python_convert_shebangs -r 2 .
