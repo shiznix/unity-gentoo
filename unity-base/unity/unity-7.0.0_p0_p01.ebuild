@@ -8,7 +8,7 @@ PYTHON_DEPEND="2:2.7"
 
 GTESTVER="1.6.0"
 
-inherit base gnome2 cmake-utils distutils eutils python toolchain-funcs ubuntu-versionator xdummy
+inherit base cmake-utils distutils eutils gnome2 python toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
@@ -139,10 +139,11 @@ src_configure() {
 }
 
 src_compile() {
-	use test && \
+	if use test; then
 		pushd tests/autopilot
 			distutils_src_compile
 		popd
+	fi
 	cmake-utils_src_compile || die
 }
 

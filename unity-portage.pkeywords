@@ -87,6 +87,7 @@ net-voip/telepathy-rakia
 net-voip/telepathy-salut
 net-wireless/gnome-bluetooth
 sys-apps/shadow
+sys-auth/consolekit
 sys-auth/pambase
 sys-libs/db
 x11-misc/appmenu-qt
