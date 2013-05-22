@@ -10,7 +10,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+battery +bluetooth +datetime +session +sound +sync"
+IUSE="+battery +bluetooth +datetime paste sensors +session +sound +sync weather"
 RESTRICT="mirror"
 
 DEPEND="unity-indicators/indicator-applet
@@ -19,7 +19,10 @@ DEPEND="unity-indicators/indicator-applet
 	battery? ( unity-indicators/indicator-power )
 	bluetooth? ( unity-indicators/indicator-bluetooth )
 	datetime? ( unity-indicators/indicator-datetime )
+	paste? ( unity-extra/glipper )
+	sensors? ( unity-extra/indicator-psensor )
 	session? ( unity-indicators/indicator-session )
 	sound? ( unity-indicators/indicator-sound )
-	sync? ( unity-indicators/indicator-sync )"
+	sync? ( unity-indicators/indicator-sync )
+	weather? ( unity-extra/indicator-weather )"
 RDEPEND="${DEPEND}"
