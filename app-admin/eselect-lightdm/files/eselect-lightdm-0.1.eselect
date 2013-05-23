@@ -1,0 +1,109 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Id: $
+
+DESCRIPTION="Manage the LightDM greeters"
+MAINTAINER="renegart@gmx.de"
+EBUILD_VERSION="0.0.1"
+
+# read lightdm config
+if [ -f "${EROOT}"/etc/lightdm/lightdm.conf ]; then
+	current=$(grep -v '^#' "${EROOT}"/etc/lightdm/lightdm.conf | grep "greeter-session" )
+	current=${current##*=}
+fi
+
+# set the greeter
+set_greeter() {
+        local greeter=$1
+
+        if is_number "${greeter}"; then
+                local greeters=( $(find_greeters) )
+                greeter=${greeters[greeter-1]}
+        fi
+
+        if [[ -z ${greeter} ]]; then
+                die -q "Greeter \"$1\" doesn't appear to be valid!"
+	fi
+
+	if [[ ! -e "${EROOT}"/usr/share/xgreeters/${greeter}.desktop ]]; then
+		die -q "Greeter \"$1\" doesn't appear to be valid!"
+	fi
+
+	exec_=$(grep -v '^#' "${EROOT}"/usr/share/xgreeters/${greeter}.desktop | grep "Exec" )
+	exec_=${exec_##*=}
+
+	if [[ -z ${exec_} ]]; then
+		die -q "Could not evaluate executable for greeter \"$1\"!"
+        fi
+
+	if [[ -e "${EROOT}"/usr/libexec/lightdm/lightdm-set-defaults ]]; then
+		"${EROOT}"/usr/libexec/lightdm/lightdm-set-defaults --greeter=${exec_}
+        else
+                die -q "Greeter \"$1\" could not be set!"
+        fi
+}
+
+# find a list of greeters
+find_greeters() {
+	local f
+	for f in "${EROOT}"/usr/share/xgreeters/*; do
+		[[ -f ${f} ]] && basename "${f}" .desktop
+	done
+}
+
+### show action ###
+
+describe_show() {
+	echo "Show the current set greeter"
+}
+
+do_show() {
+	write_list_start "Current greeter:"
+	
+	if [ "${current}" ]; then
+		write_kv_list_entry "${current}" ""
+	else
+		write_kv_list_entry "(unset)" ""
+	fi
+}
+
+## list action ###
+
+describe_list() {
+	echo "List available greeters"
+}
+
+do_list() {
+	local i greeters=( $(find_greeters) )
+	write_list_start "Available greeters:"
+
+	if [ "${current}" ]; then
+		for (( i = 0; i < ${#greeters[@]}; i++ )); do
+			# highlight the current set greeter
+			[[ ${greeters[i]} = ${current} ]] && greeters[i]=$(highlight_marker "${greeters[i]}")
+		done
+	fi
+	write_numbered_list -m "(none found)" "${greeters[@]}"
+}
+
+
+### set action ###
+
+describe_set() {
+    echo "Set a new LightDM greeter"
+}
+
+describe_set_parameters() {
+    echo "<greeter>"
+}
+
+describe_set_options() {
+    echo "greeter : Greeter name or number (from 'list' action)"
+}
+
+do_set() {
+	[[ -z $1 ]] && die -q "You didn't tell me what greeter to set"
+	[[ $# -gt 1 ]] && die -q "Too many parameters"
+
+	set_greeter "$1" || die -q "Couldn't set a new greeter"
+}
