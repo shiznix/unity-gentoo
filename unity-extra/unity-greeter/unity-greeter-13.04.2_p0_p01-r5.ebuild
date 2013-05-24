@@ -105,9 +105,11 @@ pkg_postinst() {
 }
 
 pkg_postrm() {
-	elog
-	elog "Remove ${PN} as default greeter of LightDM"
-	/usr/libexec/lightdm/lightdm-set-defaults --remove --greeter=${PN}
+	if [ -e /usr/libexec/lightdm/lightdm-set-defaults ]; then
+		elog
+		elog "Remove ${PN} as default greeter of LightDM"
+		/usr/libexec/lightdm/lightdm-set-defaults --remove --greeter=${PN}
+	fi
 
 	gnome2_schemas_update
 }
