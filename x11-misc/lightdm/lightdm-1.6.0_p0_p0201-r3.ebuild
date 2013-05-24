@@ -107,6 +107,7 @@ src_configure() {
 		--disable-static \
 		$(use_enable introspection) \
 		$(use_enable qt4 liblightdm-qt) \
+		--enable-liblightdm-qt5=no \
 		--with-html-dir="${EPREFIX}"/usr/share/doc/${PF}/html
 }
 
