@@ -25,6 +25,7 @@ RDEPEND="dev-libs/libaccounts-glib:=
 	dev-qt/qtxmlpatterns:4
 	doc? ( app-doc/doxygen )
 	qt5? ( dev-qt/qtcore:5
+		dev-qt/qttest:5
 		dev-qt/qtxml:5 )"
 DEPEND="${RDEPEND}"
 
