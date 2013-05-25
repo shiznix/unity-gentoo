@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/x11-misc/lightdm/lightdm-1.4.0-r1.ebuild,v 1.3 2013/03/02 23:49:52 hwoarang Exp $
 
 EAPI=5
-inherit base eutils pam readme.gentoo ubuntu-versionator user autotools
+inherit base eutils pam readme.gentoo ubuntu-versionator user autotools systemd
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
 URELEASE="saucy"
@@ -151,4 +151,6 @@ src_install() {
 	dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
 
 	readme.gentoo_create_doc
+
+	systemd_dounit "${FILESDIR}/${PN}.service"
 }
