@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3 CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~sparc-solaris ~x64-solaris ~x86-solaris"
-IUSE=""
+IUSE="phone"
 RESTRICT="mirror"
 
 RDEPEND=">=x11-themes/hicolor-icon-theme-0.10"
@@ -51,4 +51,7 @@ src_install() {
 	dodir /usr/share/icons/
 	insinto /usr/share/icons
 	doins -r LoginIcons ubuntu-mono-dark ubuntu-mono-light
+
+	use phone && \
+		doins -r ubuntu-mobile
 }

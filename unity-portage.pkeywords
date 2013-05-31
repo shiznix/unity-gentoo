@@ -29,7 +29,9 @@ dev-libs/libindicate-qt
 dev-libs/libpeas
 dev-libs/libpwquality
 dev-libs/libzeitgeist
+dev-libs/nettle
 dev-python/dbus-python
+dev-python/html5lib
 dev-python/isodate
 dev-python/oauthlib
 dev-python/pyatspi
