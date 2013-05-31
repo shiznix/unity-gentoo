@@ -23,7 +23,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="LGPL-3"
 SLOT="3/4.0.12"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug gtk +introspection test"	# We force 'gtk' and 'introspection', but keep these in IUSE for main portage tree ebuilds
+IUSE="debug gtk +introspection"	# We force 'gtk' and 'introspection', but keep these in IUSE for main portage tree ebuilds
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
@@ -63,7 +63,7 @@ src_configure() {
 	# Build GTK2 support #
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
-	../configure $(use_enable test tests) \
+	../configure --enable-tests \
 		--prefix=/usr \
 		--enable-introspection \
 		--disable-static \
@@ -74,7 +74,7 @@ src_configure() {
 	# Build GTK3 support #
 	[[ -d build-gtk3 ]] || mkdir build-gtk3
 	pushd build-gtk3
-	../configure $(use_enable test tests) \
+	../configure --enable-tests \
 		--prefix=/usr \
 		--enable-introspection \
 		--disable-static \
@@ -105,16 +105,14 @@ src_install() {
 		make -C tools DESTDIR="${D}" install || die
 		make -C docs/libdbusmenu-glib DESTDIR="${D}" install || die
 		make -C po DESTDIR="${D}" install || die
-		use test && \
-			make -C tests DESTDIR="${D}" install || die
+		make -C tests DESTDIR="${D}" install || die
 	popd
 
 	# Install GTK2 support #
 	pushd build-gtk2
 		make -C libdbusmenu-gtk DESTDIR="${D}" install || die
 		make -C docs/libdbusmenu-gtk DESTDIR="${D}" install || die
-		use test && \
-			make -C tests DESTDIR="${D}" install || die
+		make -C tests DESTDIR="${D}" install || die
 	popd
 
 	prune_libtool_files --modules
