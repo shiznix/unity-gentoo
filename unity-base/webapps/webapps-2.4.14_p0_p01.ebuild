@@ -21,8 +21,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="ubuntuonemusic-old-store"
 RESTRICT="mirror"
 
-DEPEND="app-admin/packagekit-gtk
-	>=dev-libs/glib-2.32.3
+DEPEND=">=dev-libs/glib-2.32.3
 	dev-libs/json-glib
 	dev-libs/libindicate[gtk,introspection]
 	dev-libs/libunity
