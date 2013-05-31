@@ -23,9 +23,7 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libdbusmenu:=
 	unity-base/unity-language-pack"
-DEPEND="app-admin/packagekit[gtk,qt4]
-	app-admin/packagekit-base[networkmanager,-nsplugin,policykit,udev]
-	app-admin/system-config-printer-gnome
+DEPEND="app-admin/system-config-printer-gnome
 	>=dev-libs/glib-2.35.4
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
