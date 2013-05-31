@@ -6,7 +6,7 @@ EAPI=5
 inherit base eutils pam readme.gentoo ubuntu-versionator user autotools systemd
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
-URELEASE="raring-updates"
+URELEASE="saucy"
 
 DESCRIPTION="A lightweight display manager"
 
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 
 
 IUSE_LIGHTDM_GREETERS="gtk unity kde razor"
@@ -24,7 +24,7 @@ for greeters in ${IUSE_LIGHTDM_GREETERS}; do
         IUSE+=" lightdm_greeters_${greeters}"
 done
 
-IUSE+=" +introspection qt4"
+IUSE+=" +introspection qt4 qt5"
 
 RESTRICT="mirror"
 
@@ -39,7 +39,13 @@ COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
 		dev-qt/qtcore:4
 		dev-qt/qtdbus:4
 		dev-qt/qtgui:4
+		)
+	qt5? (
+		dev-qt/qtcore:5
+		dev-qt/qtdbus:5
+		dev-qt/qtgui:5
 		)"
+
 RDEPEND="${COMMON_DEPEND}
 	>=sys-auth/pambase-20101024-r2
 	x11-apps/xrandr
@@ -82,12 +88,6 @@ src_prepare() {
 	# use startup script to stop dbus of lightdm when user session starts
 	epatch "${FILESDIR}"/03_launch_dbus.patch
 
-	# sets language setting of user session
-	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-fix-language-setting.patch
-
-	# use system default language in greeter
-	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-make-sessions-inherit-system-default-locale.patch
-
 #	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 #		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 #	done
@@ -102,12 +102,14 @@ src_prepare() {
 }
 
 src_configure() {
+	# hack setting moc-5 version as long as 'qtchooser' not available
+	MOC5=/usr/$(get_libdir)/qt5/bin/moc \
 	econf \
 		--localstatedir=/var \
 		--disable-static \
 		$(use_enable introspection) \
 		$(use_enable qt4 liblightdm-qt) \
-		--enable-liblightdm-qt5=no \
+		$(use_enable qt5 liblightdm-qt5) \
 		--with-html-dir="${EPREFIX}"/usr/share/doc/${PF}/html
 }
 
