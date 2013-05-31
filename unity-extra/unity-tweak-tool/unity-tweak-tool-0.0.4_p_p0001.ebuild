@@ -8,8 +8,8 @@ RESTRICT_PYTHON_ABIS="2.*"
 
 inherit distutils gnome2-utils python ubuntu-versionator
 
-UVER=
-URELEASE="raring"
+#UVER=
+URELEASE="raring-updates"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"

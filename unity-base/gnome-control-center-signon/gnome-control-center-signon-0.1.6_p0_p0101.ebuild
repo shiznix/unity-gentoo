@@ -5,10 +5,12 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
 
-inherit autotools eutils gnome2 ubuntu-versionator
+VALA_MIN_API_VERSION=0.16
+
+inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="raring"
+URELEASE="raring-updates"
 UVER_PREFIX="bzr13.04.05"
 
 DESCRIPTION="Online account plugin for gnome-control-center used by the Unity desktop"
@@ -30,6 +32,7 @@ RDEPEND="dev-libs/libaccounts-glib:=
 	net-voip/telepathy-haze
 	net-voip/telepathy-rakia
 	>=net-voip/telepathy-salut-0.8.1
+	dev-lang/vala:0.16
 	unity-base/signon-ui"
 DEPEND="dev-libs/libaccounts-glib
 	dev-libs/libsignon-glib
@@ -48,6 +51,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	vala_src_prepare
 	eautoreconf
 }
 
