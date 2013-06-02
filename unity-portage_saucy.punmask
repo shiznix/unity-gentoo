@@ -1,0 +1,5 @@
+## gnome 3.8
+x11-libs/gtk+:2
+x11-libs/gtk+:3
+~dev-libs/glib-2.36.2
+~dev-libs/atk-2.8.0

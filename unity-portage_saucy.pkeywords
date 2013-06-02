@@ -1,0 +1,7 @@
+x11-libs/gtk+ **
+
+~sys-devel/automake-wrapper-8
+~sys-devel/automake-1.13.1
+~x11-libs/pango-1.32.5
+~x11-libs/gdk-pixbuf-2.28.1
+
