@@ -7,12 +7,15 @@ net-im/empathy **
 
 net-libs/telepathy-indicator **
 
+media-sound/rhythmbox **
+
 unity-base/bamf **
 unity-base/gnome-control-center-signon **
 unity-base/gnome-control-center-unity **
 unity-base/signon-ui **
 unity-base/overlay-scrollbar **
 unity-indicators/indicator-messages **
+
 x11-libs/gtk+ **
 
 ## gnome 3.8
