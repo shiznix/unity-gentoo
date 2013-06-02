@@ -1,5 +1,15 @@
 ## gnome 3.8
-x11-libs/gtk+:2
-x11-libs/gtk+:3
 ~dev-libs/glib-2.36.2
 ~dev-libs/atk-2.8.0
+~dev-libs/folks-0.9.1
+
+gnome-base/gnome-common:3
+>=gnome-extra/nm-applet-0.9.8.0
+>=gnome-extra/evolution-data-server-3.8.2
+>=net-im/empathy-3.8.3
+~net-im/telepathy-logger-0.8.0
+~net-libs/libsoup-2.42.2
+~net-libs/gnome-online-accounts-3.8.2
+~net-misc/networkmanager-0.9.8.0
+x11-libs/gtk+:2
+x11-libs/gtk+:3

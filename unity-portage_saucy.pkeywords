@@ -1,11 +1,24 @@
 dev-libs/libappindicator **
 dev-libs/libdbusmenu **
+dev-libs/libunity-webapps **
+
+#net-im/empathy ** # <-- not all gnome 3.8 packages are ready
+
 net-libs/telepathy-indicator **
+unity-base/bamf **
+unity-base/gnome-control-center-signon **
 unity-indicators/indicator-messages **
 x11-libs/gtk+ **
 
 dev-lang/vala:0.20
 ~dev-libs/vala-common-0.20.1
+~dev-libs/json-c-0.11
+gnome-base/gnome-core-libs:3.0
+media-libs/gst-plugins-good:1.0
+~media-libs/sbc-1.1
+~media-sound/pulseaudio-3.0
+~net-libs/webkit-gtk-1.10.2
+~net-im/telepathy-logger-0.8.0
 ~sys-devel/automake-wrapper-8
 ~sys-devel/automake-1.13.1
 ~x11-libs/pango-1.32.5
