@@ -1,0 +1,5 @@
+>=gnome-extra/evolution-data-server-3.8.2 vala
+
+>=dev-libs/libgdata-0.13.3 gnome
+>=dev-libs/folks-0.9.1 vala
+
