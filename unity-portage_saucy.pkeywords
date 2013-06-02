@@ -1,5 +1,11 @@
+dev-libs/libappindicator **
+dev-libs/libdbusmenu **
+net-libs/telepathy-indicator **
+unity-indicators/indicator-messages **
 x11-libs/gtk+ **
 
+dev-lang/vala:0.20
+~dev-libs/vala-common-0.20.1
 ~sys-devel/automake-wrapper-8
 ~sys-devel/automake-1.13.1
 ~x11-libs/pango-1.32.5
