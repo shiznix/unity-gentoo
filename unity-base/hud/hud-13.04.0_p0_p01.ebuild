@@ -4,8 +4,10 @@
 
 EAPI=5
 GNOME2_LA_PUNT="yes"
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
+inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
 URELEASE="raring"
@@ -28,11 +30,14 @@ DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.35.4
 	dev-perl/XML-Parser
 	gnome-base/dconf
-	x11-libs/gtk+:3"
+	x11-libs/gtk+:3
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}_strlen-fix.diff"
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
