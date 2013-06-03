@@ -4,6 +4,7 @@ dev-libs/libdbusmenu **
 dev-libs/libunity-webapps **
 
 net-im/empathy **
+net-im/friends **
 
 net-libs/telepathy-indicator **
 
@@ -14,9 +15,19 @@ unity-base/gnome-control-center-signon **
 unity-base/gnome-control-center-unity **
 unity-base/signon-ui **
 unity-base/overlay-scrollbar **
+
+unity-extra/indicator-psensor **
+unity-extra/unity-tweak-tool **
+
 unity-indicators/indicator-messages **
 
+x11-base/xorg-server **
+
 x11-libs/gtk+ **
+x11-libs/libXi **
+x11-libs/qml-friends **
+
+x11-misc/lightdm **
 
 ## gnome 3.8
 app-admin/gnome-system-log
