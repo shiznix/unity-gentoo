@@ -22,6 +22,7 @@ RESTRICT="mirror"
 
 DEPEND="x11-libs/gtk+:3
 	x11-libs/libXfixes
+	dev-util/gtk-doc-am
 	dev-util/gtk-doc"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
