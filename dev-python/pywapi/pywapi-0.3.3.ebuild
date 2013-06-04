@@ -9,12 +9,13 @@ inherit distutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="~svn147"
+UVER_PREFIX="~svn147.orig"
 MY_P="${P/-/_}"
 
 DESCRIPTION="Python wrapper around different weather APIs"
 HOMEPAGE="https://code.google.com/p/python-weather-api/"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.tar.gz"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 LICENSE="MIT"
 SLOT="0"
@@ -25,12 +26,6 @@ RESTRICT="mirror"
 DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt"
-
-src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-        	PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-}
 
 src_install() {
 	# Delete some files that are only useful on Ubuntu

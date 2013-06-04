@@ -1,5 +1,5 @@
-# we need a pached accountsservice-0.6.30 version from ubuntu or have to patch it ourself -> user background not available in untiy-greeter
-~sys-apps/accountsservice-0.6.30::gentoo 
+## we need a pached accountsservice-0.6.30 version from ubuntu or have to patch it ourself -> user background not available in untiy-greeter
+#~sys-apps/accountsservice-0.6.30::gentoo 
 
 
 

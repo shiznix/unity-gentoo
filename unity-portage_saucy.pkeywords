@@ -1,7 +1,19 @@
 ## unity (saucy)
+dev-libs/libcolumbus **
+dev-libs/libfriends **
 dev-libs/libappindicator **
 dev-libs/libdbusmenu **
 dev-libs/libunity-webapps **
+
+dev-python/dirspec **
+
+gnome-base/gnome-control-center **
+gnome-base/gnome-settings-daemon **
+gnome-base/gnome-session **
+gnome-base/gsettings-desktop-schemas **
+gnome-base/nautilus **
+
+gnome-extra/gnome-screensaver **
 
 net-im/empathy **
 net-im/friends **
@@ -9,6 +21,8 @@ net-im/friends **
 net-libs/telepathy-indicator **
 
 media-sound/rhythmbox **
+
+sys-apps/accountsservice **
 
 unity-base/bamf **
 unity-base/gnome-control-center-signon **
@@ -19,7 +33,11 @@ unity-base/overlay-scrollbar **
 unity-extra/indicator-psensor **
 unity-extra/unity-tweak-tool **
 
+unity-indicators/indicator-appmenu **
+unity-indicators/indicator-datetime **
 unity-indicators/indicator-messages **
+unity-indicators/indicator-session **
+unity-indicators/indicator-sound **
 
 x11-base/xorg-server **
 
@@ -28,6 +46,11 @@ x11-libs/libXi **
 x11-libs/qml-friends **
 
 x11-misc/lightdm **
+
+x11-themes/ubuntu-themes **
+x11-themes/ubuntuone-client-data **
+
+x11-wm/metacity **
 
 ## gnome 3.8
 app-admin/gnome-system-log
