@@ -9,12 +9,15 @@ inherit base eutils xorg-2 ubuntu-versionator
 
 MY_PN="libxfixes"
 MY_P="${MY_PN}_${PV}"
+MY_PV="${PV}"
+
 UURL="mirror://ubuntu/pool/main/libx/${MY_PN}"
-URELEASE="raring"
+URELEASE="raring-updates"
+UVER_SUFFIX=".13.04.1"
 
 DESCRIPTION="Ubuntu patched version of X.Org Xfixes library needed for Unity desktop"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -29,10 +32,9 @@ RDEPEND="x11-libs/libX11[${MULTILIB_USEDEP}]
 DEPEND="${RDEPEND}"
 
 src_prepare() {
-	PV="${PV%%_p*}"
-	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"
-	for patch in $(cat "${WORKDIR}/${PN}-${PV}/${MY_PN}-${PV}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/${PN}-${PV}/${MY_PN}-${PV}/debian/patches/${patch}" )
+	epatch "${WORKDIR}/${MY_P}-${UVER}${UVER_SUFFIX}.diff"
+	for patch in $(cat "${WORKDIR}/${PN}-${MY_PV}/${MY_PN}-${MY_PV}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/${PN}-${MY_PV}/${MY_PN}-${MY_PV}/debian/patches/${patch}" )
 	done
 	base_src_prepare
 }
