@@ -11,10 +11,17 @@
 # 0ubuntu3.2		= package-3.6.0_p0_p0302
 # 1ubuntu5		= package-3.6.0_p1_p05
 # 0ubuntu6		= package-3.6.0_p0_p06
+#
+## When upgrading <revision> from a floating point to a whole number, portage will see the upgrade as a downgrade ##
+# Example: package-3.6.0_p0_p0101 (0ubuntu1.1) to package-3.6.0_p0_p02 (0ubuntu2)
+# If this occurs, the ebuild should be named package-3.6.0a_p0_p02
+
 
 EXPORT_FUNCTIONS pkg_pretend
 
+PV="${PV%%[a-z]_p*}"
 PV="${PV%%_p*}"		# Strips off _p0_p0302 from ${PV}
+
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
