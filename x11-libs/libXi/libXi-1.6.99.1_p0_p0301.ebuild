@@ -11,7 +11,7 @@ inherit autotools base xorg-2 ubuntu-versionator
 MY_PN="libxi"
 MY_P="${MY_PN}_${PV}"
 UURL="mirror://ubuntu/pool/main/libx/${MY_PN}"
-URELEASE="raring"
+URELEASE="raring-updates"
 
 DESCRIPTION="X.Org Xi library patched for the Unity desktop"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
