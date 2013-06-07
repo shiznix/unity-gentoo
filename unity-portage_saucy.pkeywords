@@ -1,11 +1,15 @@
 ## unity (saucy)
+dev-libs/dee **
 dev-libs/libcolumbus **
 dev-libs/libfriends **
 dev-libs/libappindicator **
 dev-libs/libdbusmenu **
+dev-libs/libunity-misc **
 dev-libs/libunity-webapps **
 
 dev-python/dirspec **
+
+dev-util/dbus-test-runner **
 
 gnome-base/gnome-control-center **
 gnome-base/gnome-settings-daemon **
@@ -15,9 +19,10 @@ gnome-base/nautilus **
 
 gnome-extra/gnome-screensaver **
 
-net-im/empathy **
+#net-im/empathy ** # disabled as long as this package is the only one which needs gnome 3.8
 net-im/friends **
 
+net-libs/account-plugins **
 net-libs/telepathy-indicator **
 
 media-sound/rhythmbox **
@@ -27,8 +32,11 @@ sys-apps/accountsservice **
 unity-base/bamf **
 unity-base/gnome-control-center-signon **
 unity-base/gnome-control-center-unity **
-unity-base/signon-ui **
+unity-base/hud **
+unity-base/nux **
 unity-base/overlay-scrollbar **
+unity-base/signon-ui **
+unity-base/ubuntu-sso-client **
 
 unity-extra/indicator-psensor **
 unity-extra/unity-tweak-tool **
@@ -66,7 +74,6 @@ app-editors/gedit
 ~app-misc/tracker-0.16.1
 
 dev-lang/vala:0.20
-
 ~dev-libs/vala-common-0.20.1
 ~dev-libs/json-c-0.11
 dev-libs/libgweather
@@ -128,8 +135,8 @@ net-misc/vino
 ~sys-apps/accountsservice-0.6.30
 sys-apps/baobab
 
-~sys-devel/automake-wrapper-8
-~sys-devel/automake-1.13.1
+#~sys-devel/automake-wrapper-8
+#~sys-devel/automake-1.13.1
 
 ~sys-libs/libosinfo-0.2.6
 
