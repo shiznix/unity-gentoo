@@ -8,7 +8,6 @@ RESTRICT_PYTHON_ABIS="2.*"
 
 inherit distutils gnome2-utils python ubuntu-versionator
 
-#UVER=
 URELEASE="raring-updates"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 
@@ -19,6 +18,7 @@ SRC_URI="${UURL}/${MY_P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
 	dev-python/pycairo

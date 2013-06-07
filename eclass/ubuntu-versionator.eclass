@@ -19,8 +19,9 @@
 
 EXPORT_FUNCTIONS pkg_pretend
 
-PV="${PV%%[a-z]_p*}"
-PV="${PV%%_p*}"		# Strips off _p0_p0302 from ${PV}
+PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
+PV="${PV%%_p*}"		# For package-3.6.0_p0_p02
+PV="${PV%%_*}"		# For package-3.6.0_p_p02
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
