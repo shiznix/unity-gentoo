@@ -4,7 +4,6 @@
 
 EAPI=5
 GNOME2_LA_PUNT="yes"
-
 VALA_MIN_API_VERSION=0.16
 
 inherit autotools eutils gnome2 ubuntu-versionator vala
@@ -32,7 +31,6 @@ RDEPEND="dev-libs/libaccounts-glib:=
 	net-voip/telepathy-haze
 	net-voip/telepathy-rakia
 	>=net-voip/telepathy-salut-0.8.1
-	dev-lang/vala:0.16
 	unity-base/signon-ui"
 DEPEND="dev-libs/libaccounts-glib
 	dev-libs/libsignon-glib
@@ -45,7 +43,8 @@ DEPEND="dev-libs/libaccounts-glib
 	x11-libs/gtk+:3
 	x11-proto/xproto
 	x11-proto/xf86miscproto
-	x11-proto/kbproto"
+	x11-proto/kbproto
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"

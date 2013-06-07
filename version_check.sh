@@ -82,6 +82,7 @@ version_check() {
 uver() {
 	PVR=`echo "${packbasename}" | awk -F_p '{print "_p"$(NF-1)"_p"$NF }'`
 	packbasename=`echo "${packbasename}" | sed "s/${PVR}//"`
+	packbasename=`echo "${packbasename}" | sed "s/[a-z]$//"`
 	PVR_PL_MAJOR="${PVR#*_p}"
 	PVR_PL_MAJOR="${PVR_PL_MAJOR%_p*}"
 	PVR_PL="${PVR##*_p}"

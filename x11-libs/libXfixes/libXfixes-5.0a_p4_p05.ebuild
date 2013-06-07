@@ -25,7 +25,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="x11-libs/libX11[${MULTILIB_USEDEP}]
+RDEPEND="<x11-libs/libX11-1.6.0[${MULTILIB_USEDEP}]
 	>=x11-proto/fixesproto-5[${MULTILIB_USEDEP}]
 	x11-proto/xproto[${MULTILIB_USEDEP}]
 	x11-proto/xextproto[${MULTILIB_USEDEP}]"
