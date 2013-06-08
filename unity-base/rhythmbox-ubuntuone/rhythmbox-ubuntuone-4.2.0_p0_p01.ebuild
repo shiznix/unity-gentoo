@@ -25,12 +25,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/libpeas-1.8.0
+DEPEND="dev-libs/libpeas
 	dev-libs/libubuntuone
 	dev-libs/libzeitgeist
 	dev-python/dirspec
 	dev-python/pygobject:2
-	>=dev-python/pygobject-3.8.0:3
+	dev-python/pygobject:3
 	>=dev-python/twisted-13.0.0
 	gnome-base/gnome-menus:3
 	>=media-sound/rhythmbox-2.98[dbus,python,zeitgeist]
