@@ -1,0 +1,21 @@
+diff -Naur bamf-0.4.0daily13.06.07.orig/lib/libbamf/bamf-application.c bamf-0.4.0daily13.06.07/lib/libbamf/bamf-application.c
+--- bamf-0.4.0daily13.06.07.orig/lib/libbamf/bamf-application.c	2013-06-07 09:37:11.000000000 +0200
++++ bamf-0.4.0daily13.06.07/lib/libbamf/bamf-application.c	2013-06-08 10:27:52.018515581 +0200
+@@ -641,6 +641,7 @@
+ 
+   name = g_strdup (g_app_info_get_name (G_APP_INFO (desktop_info)));
+ 
++#if 0
+   /* Grab the better name if its available */
+   fullname = g_key_file_get_locale_string (keyfile, G_KEY_FILE_DESKTOP_GROUP,
+                                            G_KEY_FILE_DESKTOP_KEY_FULLNAME, NULL, NULL);
+@@ -656,6 +657,9 @@
+       g_free (name);
+       name = fullname;
+     }
++#else
++  fullname = NULL;
++#endif
+ 
+   _bamf_view_set_name (BAMF_VIEW (self), name);
+ 

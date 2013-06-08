@@ -86,6 +86,8 @@ gnome-extra/nm-applet
 
 #~sys-apps/baobab-3.8.2
 
+~sys-libs/db-5.1.29
+
 #~www-client/epiphany-3.8.1
 
 #x11-libs/gtk+:2

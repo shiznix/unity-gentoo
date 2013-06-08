@@ -14,6 +14,7 @@ gnome-base/gvfs fuse
 media-libs/mesa xorg
 media-libs/gst-plugins-base theora
 media-plugins/alsa-plugins pulseaudio
+media-sound/rhythmbox zeitgeist
 net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
 net-libs/libgadu gnutls
 sys-auth/pambase consolekit

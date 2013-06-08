@@ -1,9 +1,10 @@
 ## unity (saucy)
 dev-libs/dee **
-dev-libs/libcolumbus **
-dev-libs/libfriends **
+dev-libs/libaccounts-glib **
 dev-libs/libappindicator **
+dev-libs/libcolumbus **
 dev-libs/libdbusmenu **
+dev-libs/libfriends **
 dev-libs/libunity-misc **
 dev-libs/libunity-webapps **
 
@@ -60,8 +61,12 @@ x11-themes/ubuntuone-client-data **
 
 x11-wm/metacity **
 
-## gnome 3.8
+## 
 app-admin/gnome-system-log
+
+~app-accessibility/speech-dispatcher-0.7.1
+~app-accessibility/sphinxbase-0.8
+~app-accessibility/pocketsphinx-0.8
 
 app-arch/file-roller
 
@@ -72,12 +77,15 @@ app-dicts/gnome-dictionary
 app-editors/gedit
 
 ~app-misc/tracker-0.16.1
+~app-misc/tracker-0.14.5
 
 dev-lang/vala:0.20
 ~dev-libs/vala-common-0.20.1
 ~dev-libs/json-c-0.11
 dev-libs/libgweather
 dev-libs/totem-pl-parser
+
+~dev-python/python-prctl-1.5.0
 
 ~games-board/aisleriot-3.2.3.2
 
@@ -88,12 +96,14 @@ gnome-base/gnome-settings-daemon
 gnome-base/gsettings-desktop-schemas
 gnome-base/nautilus
 
+gnome-extra/gcalctool
 gnome-extra/gconf-editor
 gnome-extra/gnome-calculator
 gnome-extra/gnome-color-manager
 gnome-extra/gnome-contacts
 gnome-extra/gnome-documents
 gnome-extra/gnome-games
+gnome-extra/gnome-power-manager
 gnome-extra/gnome-search-tool
 gnome-extra/gnome-system-monitor
 gnome-extra/gnome-user-docs

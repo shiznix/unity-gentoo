@@ -35,6 +35,9 @@ DEPEND="dev-libs/gobject-introspection
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	# workaround lunchpad bug #1186915
+	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-remove-desktop-fullname.patch
+
 	vala_src_prepare
 	export VALA_API_GEN=$VAPIGEN
 	sed -e "s:-Werror::g" \
