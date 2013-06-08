@@ -17,7 +17,8 @@ DEPEND="unity-indicators/indicator-applet
 	unity-indicators/indicator-application
 	unity-indicators/indicator-appmenu
 	battery? ( unity-indicators/indicator-power )
-	bluetooth? ( unity-indicators/indicator-bluetooth )
+	bluetooth? ( !unity-indicators/indicator-bluetooth
+			net-wireless/blueman )
 	datetime? ( unity-indicators/indicator-datetime )
 	paste? ( unity-extra/glipper )
 	sensors? ( unity-extra/indicator-psensor )
