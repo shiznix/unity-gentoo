@@ -5,6 +5,7 @@ dev-libs/libappindicator **
 dev-libs/libcolumbus **
 dev-libs/libdbusmenu **
 dev-libs/libfriends **
+dev-libs/libunity **
 dev-libs/libunity-misc **
 dev-libs/libunity-webapps **
 
@@ -31,16 +32,33 @@ media-sound/rhythmbox **
 sys-apps/accountsservice **
 
 unity-base/bamf **
+unity-base/frame **
+unity-base/geis **
 unity-base/gnome-control-center-signon **
 unity-base/gnome-control-center-unity **
+unity-base/grail **
 unity-base/hud **
 unity-base/nux **
 unity-base/overlay-scrollbar **
+unity-base/rhythmbox-ubuntuone **
+unity-base/signon **
+unity-base/signon-keyring-extension **
 unity-base/signon-ui **
+unity-base/ubuntuone-client **
+unity-base/ubuntuone-control-panel **
+unity-base/ubuntuone-storage-protocol **
 unity-base/ubuntu-sso-client **
+unity-base/unity **
 
 unity-extra/indicator-psensor **
 unity-extra/unity-tweak-tool **
+
+unity-lenses/unity-lens-applications **
+unity-lenses/unity-lens-files **
+unity-lenses/unity-lens-friends **
+unity-lenses/unity-lens-music **
+unity-lenses/unity-lens-photos **
+unity-lenses/unity-lens-video **
 
 unity-indicators/indicator-appmenu **
 unity-indicators/indicator-datetime **
@@ -51,6 +69,7 @@ unity-indicators/indicator-sound **
 x11-base/xorg-server **
 
 x11-libs/gtk+ **
+x11-libs/libaccounts-qt **
 x11-libs/libXi **
 x11-libs/qml-friends **
 
@@ -141,6 +160,8 @@ net-libs/gssdp:0/3
 
 net-misc/vinagre
 net-misc/vino
+
+~net-wireless/blueman-1.23
 
 ~sys-apps/accountsservice-0.6.30
 sys-apps/baobab
