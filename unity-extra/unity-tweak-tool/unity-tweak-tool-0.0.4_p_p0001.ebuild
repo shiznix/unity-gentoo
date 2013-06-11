@@ -13,7 +13,7 @@ UURL="mirror://ubuntu/pool/universe/u/${PN}"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/unity-tweak-tool"
-SRC_URI="${UURL}/${MY_P}.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -30,7 +30,7 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	sys-devel/gettext"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}/${PN}-${PV}${UVER}"
 
 pkg_setup() {
 	python_set_active_version 3
