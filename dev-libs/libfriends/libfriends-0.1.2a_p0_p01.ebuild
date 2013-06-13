@@ -25,15 +25,15 @@ RESTRICT="mirror"
 DEPEND="dev-libs/glib:2
 	dev-libs/json-glib
 	net-im/friends
-	spell? ( app-text/gtkspell:2 )
+	spell? ( app-text/gtkspell:3 )
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	vala_src_prepare
-	sed -e 's:gtkspell-3.0):gtkspell-2.0):' \
-		-i configure.ac || die
+#	sed -e 's:gtkspell-3.0):gtkspell-2.0):' \
+#		-i configure.ac || die
 	eautoreconf
 }
 
