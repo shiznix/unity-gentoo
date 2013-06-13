@@ -88,11 +88,21 @@ src_prepare() {
 	# use startup script to stop dbus of lightdm when user session starts
 	epatch "${FILESDIR}"/03_launch_dbus.patch
 
-#	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-#		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-#	done
+	# remove not needed patches
+	sed -i '/01_transition_ubuntu2d_ubuntu_desktop.patch/d' "${WORKDIR}/debian/patches/series" || die
+	sed -i '/03_launch_dbus.patch/d' "${WORKDIR}/debian/patches/series" || die
+	sed -i '/04_language_handling.patch/d' "${WORKDIR}/debian/patches/series" || die
+	sed -i '/05_add_xserver_core_option.patch/d' "${WORKDIR}/debian/patches/series" || die
+#	sed -i '/07_lp1189948.patch/d' "${WORKDIR}/debian/patches/series" || die
+
+	# apply remaining patches
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 
 	epatch_user
+
+	base_src_prepare
 
 	if has_version dev-libs/gobject-introspection; then
 		eautoreconf

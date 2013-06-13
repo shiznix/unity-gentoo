@@ -1,0 +1,3 @@
+## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
+
+x11-misc/lightdm-kde::gentoo
