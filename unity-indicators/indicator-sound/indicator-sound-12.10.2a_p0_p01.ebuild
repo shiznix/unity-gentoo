@@ -11,7 +11,7 @@ inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.05.02"
+UVER_PREFIX="daily13.06.07"
 
 DESCRIPTION="System sound indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-sound"

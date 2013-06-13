@@ -7,6 +7,7 @@ SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils ubuntu-versionator
 
+UVER=
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
 URELEASE="saucy"
 UVER_PREFIX="~svn147.orig"

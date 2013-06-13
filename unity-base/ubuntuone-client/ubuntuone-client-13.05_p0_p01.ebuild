@@ -8,7 +8,7 @@ GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2:2.7"
 RESTRICT_PYTHON_ABIS="3.*"
 
-inherit base eutils gnome2-utils python ubuntu-versionator
+inherit autotools base eutils gnome2-utils python ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -54,6 +54,10 @@ src_prepare() {
 	sed -e "s:\[ -d \"\$HOME\/Ubuntu One\" \] \&\& ubuntuone-launch:\[ ! -d \"\$HOME\/Ubuntu One\" \] \&\& mkdir \"\$HOME/Ubuntu One\" \&\& ubuntuone-launch || ubuntuone-launch:" \
 		-i "${S}/data/ubuntuone-launch.desktop.in" || die
 	python_convert_shebangs -r 2 .
+
+	sed -e "s:-Werror::g" \
+		-i "configure.ac" || die
+	eautoreconf
 }
 
 src_configure() {

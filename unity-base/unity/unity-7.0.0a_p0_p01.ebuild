@@ -48,6 +48,7 @@ DEPEND="dev-libs/boost
 	>=dev-libs/libindicator-12.10.2
 	dev-libs/libunity
 	dev-libs/libunity-misc
+	dev-libs/xpathselect
 	dev-python/gconf-python
 	>=gnome-base/gconf-3.2.5
 	gnome-base/gnome-desktop:3
@@ -98,8 +99,7 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
 			"${FILESDIR}/systray-enabled-by-default.diff"
-			"${FILESDIR}/nopch_fix.diff"
-			"${FILESDIR}/panel-shadow-fullscreen-fix.diff" )
+			"${FILESDIR}/nopch_fix.diff" )
 	base_src_prepare
 
 	python_convert_shebangs -r 2 .

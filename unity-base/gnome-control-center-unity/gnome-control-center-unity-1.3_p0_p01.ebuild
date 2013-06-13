@@ -10,7 +10,7 @@ inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.05.30"
+UVER_PREFIX="daily13.06.13"
 
 DESCRIPTION="GNOME control center module to change the settings of the Unity desktop"
 HOMEPAGE="https://launchpad.net/gnome-control-center-unity"

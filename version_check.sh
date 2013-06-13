@@ -1,8 +1,9 @@
 #!/bin/sh
 
-## Basic script to compare upstream versions of packages with versions in overlay tree ##
+## Script to compare upstream versions of packages with versions in overlay tree ##
 # If run without any arguments it recurses through the overlay tree and compares versions for all packages #
-# Or can be run on individual packages as 'version_check.sh category/package-version.ebuild'
+# Or can be run on individual packages as 'version_check.sh category/package-version.ebuild' #
+# If the '--other' option is specified, it will check for versions available in other Ubuntu release streams #
 
 version_check() {
 	packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
@@ -60,20 +61,24 @@ version_check() {
 		else
 			echo "  Upstream version: ${upstream}"
 		fi
-		for release in {raring,raring-updates,saucy}; do
-			if [ "${release}" != "${URELEASE}" ]; then
-				avail_release=`wget -q "http://packages.ubuntu.com/${release}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
-				if [ -z "${avail_release}" ]; then
-					avail_release=`wget -q "http://packages.ubuntu.com/${release}/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
-				fi
-				if [ -n "${avail_release}" ]; then
-					if [ "${packname}-${current_version}" != "${avail_release}" ];then
-						echo "    Other available versions:"
-						echo -e "      ${avail_release}  ::  ${release}"
+
+		## Check for other available versions if '--other' option is specified ##
+		if [ -n "${vcheck_other}" ]; then
+			for release in {raring,raring-updates,saucy}; do
+				if [ "${release}" != "${URELEASE}" ]; then
+					avail_release=`wget -q "http://packages.ubuntu.com/${release}/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+					if [ -z "${avail_release}" ]; then
+						avail_release=`wget -q "http://packages.ubuntu.com/${release}/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+					fi
+					if [ -n "${avail_release}" ]; then
+						if [ "${packname}-${current_version}" != "${avail_release}" ];then
+							echo "    Other available versions:"
+							echo -e "      ${avail_release}  ::  ${release}"
+						fi
 					fi
 				fi
-			fi
-		done
+			done
+		fi
 	fi
 	UVER=
 	upstream=
@@ -100,8 +105,22 @@ uver() {
 	unset strarray[@]
 }
 
-if [ -n "$1" ]; then
-        pack="$1"
+
+while (( "$#" )); do
+	case $1 in
+		--other)
+			shift && vcheck_other="1"
+			;;
+		--help|-h)
+			shift && echo -e "$0 (--other) (category/package/package-version.ebuild)"; exit 0;;
+		*)
+			pack="$1"
+			;;
+	esac
+	shift
+done
+
+if [ -n "${pack}" ]; then
         version_check
 else
 	for pack in `find $(pwd) -name "*.ebuild"`; do

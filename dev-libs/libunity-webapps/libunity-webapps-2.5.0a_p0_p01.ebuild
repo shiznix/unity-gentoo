@@ -10,7 +10,7 @@ inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="~daily13.05.15.2"
+UVER_PREFIX="~daily13.06.04"
 
 DESCRIPTION="Webapps integration with the Unity desktop"
 HOMEPAGE="https://launchpad.net/libunity-webapps"
