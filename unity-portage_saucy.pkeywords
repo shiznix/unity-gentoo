@@ -1,0 +1,189 @@
+## unity (saucy)
+dev-libs/dee **
+dev-libs/libaccounts-glib **
+dev-libs/libappindicator **
+dev-libs/libcolumbus **
+dev-libs/libdbusmenu **
+dev-libs/libfriends **
+dev-libs/libunity **
+dev-libs/libunity-misc **
+dev-libs/libunity-webapps **
+
+dev-python/dirspec **
+
+dev-util/dbus-test-runner **
+
+gnome-base/gnome-control-center **
+gnome-base/gnome-settings-daemon **
+gnome-base/gnome-session **
+gnome-base/gsettings-desktop-schemas **
+gnome-base/nautilus **
+
+gnome-extra/gnome-screensaver **
+
+#net-im/empathy ** # disabled as long as this package is the only one which needs gnome 3.8
+net-im/friends **
+
+net-libs/account-plugins **
+net-libs/telepathy-indicator **
+
+media-sound/rhythmbox **
+
+sys-apps/accountsservice **
+
+unity-base/bamf **
+unity-base/frame **
+unity-base/geis **
+unity-base/gnome-control-center-signon **
+unity-base/gnome-control-center-unity **
+unity-base/grail **
+unity-base/hud **
+unity-base/nux **
+unity-base/overlay-scrollbar **
+unity-base/rhythmbox-ubuntuone **
+unity-base/signon **
+unity-base/signon-keyring-extension **
+unity-base/signon-ui **
+unity-base/ubuntuone-client **
+unity-base/ubuntuone-control-panel **
+unity-base/ubuntuone-storage-protocol **
+unity-base/ubuntu-sso-client **
+unity-base/unity **
+
+unity-extra/indicator-psensor **
+unity-extra/unity-tweak-tool **
+
+unity-lenses/unity-lens-applications **
+unity-lenses/unity-lens-files **
+unity-lenses/unity-lens-friends **
+unity-lenses/unity-lens-music **
+unity-lenses/unity-lens-photos **
+unity-lenses/unity-lens-video **
+
+unity-indicators/indicator-appmenu **
+unity-indicators/indicator-datetime **
+unity-indicators/indicator-messages **
+unity-indicators/indicator-session **
+unity-indicators/indicator-sound **
+
+x11-base/xorg-server **
+
+x11-libs/gtk+ **
+x11-libs/libaccounts-qt **
+x11-libs/libXi **
+x11-libs/qml-friends **
+
+x11-misc/lightdm **
+
+x11-themes/ubuntu-themes **
+x11-themes/ubuntuone-client-data **
+
+x11-wm/metacity **
+
+## 
+app-admin/gnome-system-log
+
+~app-accessibility/speech-dispatcher-0.7.1
+~app-accessibility/sphinxbase-0.8
+~app-accessibility/pocketsphinx-0.8
+
+app-arch/file-roller
+
+app-crypt/seahorse
+
+app-dicts/gnome-dictionary
+
+app-editors/gedit
+
+~app-misc/tracker-0.16.1
+~app-misc/tracker-0.14.5
+
+dev-lang/vala:0.20
+~dev-libs/vala-common-0.20.1
+~dev-libs/json-c-0.11
+dev-libs/libgweather
+dev-libs/totem-pl-parser
+
+~dev-python/python-prctl-1.5.0
+
+~games-board/aisleriot-3.2.3.2
+
+gnome-base/gnome-core-libs
+gnome-base/gnome-control-center
+gnome-base/gnome-session
+gnome-base/gnome-settings-daemon
+gnome-base/gsettings-desktop-schemas
+gnome-base/nautilus
+
+gnome-extra/gcalctool
+gnome-extra/gconf-editor
+gnome-extra/gnome-calculator
+gnome-extra/gnome-color-manager
+gnome-extra/gnome-contacts
+gnome-extra/gnome-documents
+gnome-extra/gnome-games
+gnome-extra/gnome-power-manager
+gnome-extra/gnome-search-tool
+gnome-extra/gnome-system-monitor
+gnome-extra/gnome-user-docs
+gnome-extra/gucharmap
+gnome-extra/nautilus-tracker-tags
+gnome-extra/yelp
+
+mail-client/evolution
+
+media-gfx/eog
+media-gfx/gnome-font-viewer
+media-gfx/gnome-screenshot
+
+~media-libs/gexiv2-0.6.0
+media-libs/gst-plugins-good:1.0
+~media-libs/fontconfig-2.10.92
+~media-libs/sbc-1.1
+
+~media-sound/sound-juicer-3.5.1_pre20121231
+~media-sound/pulseaudio-3.0
+
+media-video/totem
+
+~net-analyzer/gnome-nettool-3.2.0
+
+~net-fs/samba-3.6.14
+
+~net-libs/libzapojit-0.0.2
+~net-libs/webkit-gtk-1.10.2
+~net-libs/webkit-gtk-2.0.2
+
+net-libs/gssdp:0/3
+
+~net-im/telepathy-logger-0.8.0
+
+net-misc/vinagre
+net-misc/vino
+
+~net-wireless/blueman-1.23
+
+~sys-apps/accountsservice-0.6.30
+sys-apps/baobab
+
+#~sys-devel/automake-wrapper-8
+#~sys-devel/automake-1.13.1
+
+~sys-libs/libosinfo-0.2.6
+
+www-client/epiphany
+
+~x11-libs/cairo-1.12.14
+~x11-libs/gdk-pixbuf-2.28.1
+x11-libs/gnome-pty-helper
+~x11-libs/mx-1.4.7
+~x11-libs/pango-1.32.5
+~x11-libs/pango-1.34.1
+~x11-libs/vte-0.34.5
+
+~x11-misc/colord-0.1.31
+
+x11-terms/gnome-terminal
+
+x11-themes/gnome-icon-theme-symbolic
+

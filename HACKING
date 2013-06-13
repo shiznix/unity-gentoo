@@ -2,5 +2,9 @@
 
 * Current Ubuntu release versions of ebuilds are always masked by ~arch package.keywords
 * Development Ubuntu release versions of ebuilds are always masked by missing keywords
+<<<<<<< HEAD
 * Development Ubuntu release packages list is maintained in unity-gentoo_<dev_release>.pkeywords,
+=======
+* Development Ubuntu release packages list is maintained in unity-gentoo_<dev-release>.pkeywords,
+>>>>>>> renegart/master
 	this way the packages may be tracked and easily tested by symlinking into /etc/portage/package.keywords/

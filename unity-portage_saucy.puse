@@ -1,0 +1,8 @@
+>=dev-libs/libgdata-0.13.3 gnome
+>=dev-libs/folks-0.8.0 vala
+>=dev-libs/keybinder-0.3.0-r200:0 python
+
+gnome-extra/evolution-data-server vala
+
+>=media-plugins/gst-plugins-meta-0.10-r8:0.10 ffmpeg
+

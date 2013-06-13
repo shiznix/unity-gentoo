@@ -9,13 +9,13 @@ PYTHON_REQ_USE="xml"
 
 inherit autotools base eutils gnome2 python-single-r1 multilib ubuntu-versionator virtualx
 
-URELEASE=
-UVER_PREFIX="~raring1"
+UURL="mirror://ubuntu/pool/main/r/${PN}"
+URELEASE="saucy"
 
 DESCRIPTION="Music management and playback software for GNOME patched for the Unity desktop"
-HOMEPAGE="http://projects.gnome.org/rhythmbox/"
-SRC_URI="https://launchpad.net/~gnome3-team/+archive/gnome3/+files/${MY_P}.orig.tar.xz
-	https://launchpad.net/~gnome3-team/+archive/gnome3/+files/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.gz"
+HOMEPAGE="http://www.rhythmbox.org/"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
