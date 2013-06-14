@@ -1,0 +1,7 @@
+dev-libs/libpeas
+dev-libs/glib
+gnome-extra/nm-applet::unity-gentoo
+<net-misc/modemmanager-9999
+<net-misc/networkmanager-9999
+dev-python/pygobject
+sys-libs/db

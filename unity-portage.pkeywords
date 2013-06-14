@@ -5,6 +5,8 @@ app-accessibility/at-spi2-atk
 app-accessibility/at-spi2-core
 app-accessibility/caribou
 app-accessibility/orca
+app-accessibility/pocketsphinx
+app-accessibility/sphinxbase
 app-admin/openrc-settingsd
 app-admin/packagekit
 app-admin/packagekit-base
@@ -15,6 +17,7 @@ app-crypt/gcr
 app-crypt/libsecret
 app-i18n/ibus
 app-text/evince
+dev-lang/vala
 dev-libs/atk
 dev-libs/folks
 dev-libs/gjs
@@ -30,6 +33,7 @@ dev-libs/libpeas
 dev-libs/libpwquality
 dev-libs/libzeitgeist
 dev-libs/nettle
+dev-libs/vala-common
 dev-python/dbus-python
 dev-python/html5lib
 dev-python/isodate
@@ -50,6 +54,7 @@ gnome-base/dconf
 gnome-base/gdm
 gnome-base/gnome-common
 gnome-base/gnome-core-apps
+gnome-base/gnome-core-libs
 gnome-base/gnome-desktop
 gnome-base/gnome-extra-apps
 gnome-base/gnome-fallback
@@ -65,6 +70,7 @@ gnome-extra/gnome-color-manager
 gnome-extra/gnome-tweak-tool
 gnome-extra/mousetweaks
 gnome-extra/nautilus-sendto
+gnome-extra/nm-applet
 gnome-extra/sushi
 gnome-extra/zeitgeist
 gnome-extra/zenity
@@ -84,13 +90,16 @@ net-libs/libsoup
 net-libs/libsoup-gnome
 net-libs/telepathy-farstream
 net-libs/telepathy-glib
+net-misc/modemmanager
 net-misc/networkmanager
 net-voip/telepathy-rakia
 net-voip/telepathy-salut
+net-wireless/blueman
 net-wireless/gnome-bluetooth
 sys-apps/shadow
 sys-auth/consolekit
 sys-auth/pambase
+sys-devel/gcc:4.7
 sys-libs/db
 x11-misc/appmenu-qt
 x11-misc/notify-osd
