@@ -23,7 +23,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-DEPEND="test? ( dev-cpp/gtest )"
+DEPEND="test? ( dev-cpp/gtest )
+	dev-libs/boost"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
