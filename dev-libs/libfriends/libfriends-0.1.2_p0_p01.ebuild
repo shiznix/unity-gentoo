@@ -32,6 +32,9 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	vala_src_prepare
+
+	# Package actually uses gtkspell-2.0, but looks for gtkspell-3.0 due to a bug #
+	#  in the way Ubuntu package gtkspell (gtkspell-3 libs with gtkspell-2 includes) #
 	sed -e 's:gtkspell-3.0):gtkspell-2.0):' \
 		-i configure.ac || die
 	eautoreconf
