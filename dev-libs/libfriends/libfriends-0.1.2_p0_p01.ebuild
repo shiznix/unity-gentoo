@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-VALA_MAX_API_VERSION="0.18"
+VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
 inherit autotools eutils ubuntu-versionator vala
@@ -25,18 +25,13 @@ RESTRICT="mirror"
 DEPEND="dev-libs/glib:2
 	dev-libs/json-glib
 	net-im/friends
-	spell? ( app-text/gtkspell:2 )
+	spell? ( >=app-text/gtkspell-3.0.2[vala] )
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	vala_src_prepare
-
-	# Package actually uses gtkspell-2.0, but looks for gtkspell-3.0 due to a bug #
-	#  in the way Ubuntu package gtkspell (gtkspell-3 libs with gtkspell-2 includes) #
-	sed -e 's:gtkspell-3.0):gtkspell-2.0):' \
-		-i configure.ac || die
 	eautoreconf
 }
 
