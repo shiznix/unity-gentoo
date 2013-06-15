@@ -5,6 +5,7 @@
 EAPI=4
 GCONF_DEBUG="yes"
 
+WANT_AUTOMAKE=1.12
 inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
