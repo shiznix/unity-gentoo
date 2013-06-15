@@ -186,7 +186,7 @@ src_install() {
 
 	# Gentoo dash launcher icon #
 	if use branding; then
-		insinto /usr/share/unity/6
+		insinto /usr/share/unity/icons
 		doins "${FILESDIR}/launcher_bfb.png"
 	fi
 
@@ -195,7 +195,7 @@ src_install() {
 	rm -rf "${ED}usr/share/locale"
 
 	# Make searchingthedashlegalnotice.html available to gnome-control-center's Details > Legal Notice #
-	dosym /usr/share/unity/6/searchingthedashlegalnotice.html \
+	dosym /usr/share/unity/icons/searchingthedashlegalnotice.html \
 		/usr/share/gnome-control-center/searchingthedashlegalnotice.html
 }
 
