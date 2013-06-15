@@ -70,7 +70,7 @@ DEPEND="dev-libs/boost
 	unity-base/overlay-scrollbar
 	x11-base/xorg-server[dmx]
 	x11-libs/libXfixes
-	x11-misc/appmenu-gtk
+	unity-base/unity-gtk-module
 	x11-misc/appmenu-qt
 	doc? ( app-doc/doxygen )
 	test? ( dev-cpp/gmock
