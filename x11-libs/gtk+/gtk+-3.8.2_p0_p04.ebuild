@@ -109,6 +109,9 @@ strip_builddir() {
 }
 
 src_prepare() {
+	# remove patch because our glib is to old (glib 2.38 needed)
+	sed -i '/git-gtkmodelmenuitem-icon-support.patch/d' "${WORKDIR}/debian/patches/series" || die
+
         for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
                 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
         done
