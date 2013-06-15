@@ -4,6 +4,7 @@ app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
 app-crypt/libsecret vala
 app-i18n/ibus dconf
+app-text/gtkspell vala
 dev-lang/python sqlite
 dev-libs/protobuf python
 dev-libs/xapian-bindings python

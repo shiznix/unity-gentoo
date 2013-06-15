@@ -17,6 +17,7 @@ app-crypt/gcr
 app-crypt/libsecret
 app-i18n/ibus
 app-text/evince
+app-text/gtkspell
 dev-lang/vala
 dev-libs/atk
 dev-libs/folks
@@ -33,6 +34,7 @@ dev-libs/libpeas
 dev-libs/libpwquality
 dev-libs/libzeitgeist
 dev-libs/nettle
+dev-libs/totem-pl-parser
 dev-libs/vala-common
 dev-python/dbus-python
 dev-python/html5lib
@@ -70,6 +72,7 @@ gnome-extra/gnome-color-manager
 gnome-extra/gnome-tweak-tool
 gnome-extra/mousetweaks
 gnome-extra/nautilus-sendto
+gnome-extra/nautilus-tracker-tags
 gnome-extra/sushi
 gnome-extra/zeitgeist
 gnome-extra/zenity
@@ -79,7 +82,9 @@ media-libs/clutter-gst
 media-libs/clutter-gtk
 media-libs/cogl
 media-libs/libvpx
+media-libs/gst-plugins-good
 media-plugins/gst-plugins-vpx
+media-sound/pulseaudio
 media-video/cheese
 net-im/telepathy-mission-control
 net-libs/farstream
@@ -89,6 +94,7 @@ net-libs/libsoup
 net-libs/libsoup-gnome
 net-libs/telepathy-farstream
 net-libs/telepathy-glib
+net-libs/webkit-gtk
 net-misc/modemmanager
 net-misc/networkmanager
 net-voip/telepathy-rakia
@@ -99,7 +105,10 @@ sys-apps/shadow
 sys-auth/consolekit
 sys-auth/pambase
 sys-devel/gcc:4.7
-sys-libs/db
+sys-libs/db:5.1
+x11-libs/cairo
+x11-libs/gdk-pixbuf
+x11-libs/pango
 x11-misc/appmenu-qt
 x11-misc/notify-osd
 x11-themes/gnome-backgrounds
