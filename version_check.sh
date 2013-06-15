@@ -38,7 +38,14 @@ version_check() {
 	UVER_PREFIX=`grep UVER_PREFIX= ${pack} | awk -F\" '{print $2}'`
 	UVER_SUFFIX=`grep UVER_SUFFIX= ${pack} | awk -F\" '{print $2}'`
 	URELEASE=`grep URELEASE= ${pack} | awk -F\" '{print $2}'`
+
 	if [ -n "${URELEASE}" ]; then
+		if [ -n "${stream_release}" ]; then
+			if [ "${stream_release}" != "${URELEASE}" ]; then
+				return
+			fi
+		fi
+
 		if [ -n "${UVER}" ]; then
 			current=`echo "${packbasename}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}"`
 		else
@@ -111,8 +118,11 @@ while (( "$#" )); do
 		--other)
 			shift && vcheck_other="1"
 			;;
+		--release=*)
+			stream_release=`echo "$1" | sed 's/--release=/ /' | sed 's/^[ \t]*//'` && shift
+			;;
 		--help|-h)
-			shift && echo -e "$0 (--other) (category/package/package-version.ebuild)"; exit 0;;
+			shift && echo -e "$0 (--release=<release>) (--other) (category/package/package-version.ebuild)"; exit 0;;
 		*)
 			pack="$1"
 			;;
