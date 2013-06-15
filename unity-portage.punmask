@@ -1,4 +1,4 @@
-<dev-libs/glib-2.36.3
+<dev-libs/glib-2.36.3	## dev-libs/glib-2.36.3 blocks <dev-libs/gobject-introspection-1.36 blocks <dev-lang/vala:0.20 ##
 gnome-extra/nm-applet::unity-gentoo
 <net-misc/modemmanager-9999
 <net-misc/networkmanager-9999
