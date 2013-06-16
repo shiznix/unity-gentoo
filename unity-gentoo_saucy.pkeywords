@@ -5,7 +5,9 @@ net-libs/gssdp:0/3
 
 app-backup/deja-dup **
 dev-libs/dee **
-dev-libs/glib **
+dev-libs/glib::unity-gentoo **
+dev-libs/gobject-introspection::unity-gentoo **
+dev-libs/gobject-introspection-common::unity-gentoo **
 dev-libs/libaccounts-glib **
 dev-libs/libappindicator **
 dev-libs/libcolumbus **

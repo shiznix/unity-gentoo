@@ -5,8 +5,7 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2,3_3} )
 
-VALA_MIN_API_VERSION="0.16"
-VALA_MAX_API_VERSION="0.20"
+VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
 inherit autotools base eutils autotools python-r1 ubuntu-versionator vala
