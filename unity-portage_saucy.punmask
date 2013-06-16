@@ -1,3 +1,4 @@
 gnome-base/gnome-menus:3
 dev-libs/atk
+>=dev-libs/glib-2.37
 x11-libs/gtk+:3

@@ -4,6 +4,7 @@ sys-devel/automake-wrapper
 
 app-backup/deja-dup **
 dev-libs/dee **
+dev-libs/glib **
 dev-libs/libaccounts-glib **
 dev-libs/libappindicator **
 dev-libs/libcolumbus **

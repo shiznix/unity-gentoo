@@ -58,7 +58,7 @@ COMMON_DEPEND="
 		media-libs/mesa[wayland]
 		>=x11-libs/libxkbcommon-0.2.0
 	)
-	>=dev-libs/glib-2.35.3:2
+	>=dev-libs/glib-2.37.0:2
 	>=x11-libs/pango-1.32.4[introspection?]
 	>=dev-libs/atk-2.7.5[introspection?]
 	>=x11-libs/cairo-1.10.0[aqua?,glib,svg,X?]
@@ -109,9 +109,6 @@ strip_builddir() {
 }
 
 src_prepare() {
-	# remove patch because our glib is to old (glib 2.38 needed)
-	sed -i '/git-gtkmodelmenuitem-icon-support.patch/d' "${WORKDIR}/debian/patches/series" || die
-
         for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
                 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
         done
