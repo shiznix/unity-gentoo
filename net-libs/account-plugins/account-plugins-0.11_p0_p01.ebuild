@@ -3,9 +3,12 @@
 # $Header: $
 
 EAPI="5"
+VALA_MIN_API_VERSION="0.20"
+#VALA_USE_DEPEND="vapigen"
+
 GNOME2_LA_PUNT="yes"
 
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 URELEASE="saucy"
@@ -34,11 +37,14 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	x11-proto/xproto
 	x11-proto/xf86miscproto
-	x11-proto/kbproto"
+	x11-proto/kbproto
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	vala_src_prepare
+#	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
 
