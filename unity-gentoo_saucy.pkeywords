@@ -1,6 +1,7 @@
 ## A base set of packages that require keyword unmasking for Unity (Saucy Salamander) installation ##
 
 sys-devel/automake-wrapper
+net-libs/gssdp:0/3
 
 app-backup/deja-dup **
 dev-libs/dee **
