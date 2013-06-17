@@ -8,9 +8,12 @@ GTESTVER="1.6.0"
 
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/x/${PN}"
+
 URELEASE="saucy"
 UVER_PREFIX="daily13.06.05.1"
+
+#UURL="mirror://ubuntu/pool/universe/x/${PN}"
+UURL="https://launchpad.net/ubuntu/saucy/+source/${PN}/${PV}${UVER_PREFIX}-${UVER}/+files"
 
 DESCRIPTION="Select objects in an object tree using XPath queries"
 HOMEPAGE="https://launchpad.net/xpathselect"
