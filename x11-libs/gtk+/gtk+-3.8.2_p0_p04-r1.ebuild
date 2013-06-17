@@ -112,6 +112,8 @@ src_prepare() {
         for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
                 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
         done
+
+	eaclocal
         base_src_prepare
 
 	# -O3 and company cause random crashes in applications. Bug #133469
