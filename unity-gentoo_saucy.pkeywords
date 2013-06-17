@@ -18,6 +18,7 @@ dev-libs/libsignon-glib **
 dev-libs/libunity **
 dev-libs/libunity-misc **
 dev-libs/libunity-webapps **
+dev-libs/xpathselect **
 dev-python/autopilot **
 dev-python/dirspec **
 dev-python/pyjunitxml **
