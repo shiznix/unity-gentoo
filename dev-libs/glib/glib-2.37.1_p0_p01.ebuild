@@ -16,8 +16,7 @@ URELEASE="saucy"
 
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/glib"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
 
 LICENSE="LGPL-2+"
 SLOT="2"
@@ -76,11 +75,7 @@ pkg_setup() {
 src_prepare() {
 	# Fix gmodule issues on fbsd; bug #184301, upstream bug #107626
 	epatch "${FILESDIR}"/${PN}-2.12.12-fbsd.patch
-
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
-	done
-
+	
 	if use test; then
 		# Do not try to remove files on live filesystem, upstream bug #619274
 		sed 's:^\(.*"/desktop-app-info/delete".*\):/*\1*/:' \
