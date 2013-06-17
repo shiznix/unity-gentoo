@@ -4,7 +4,7 @@
 
 EAPI="5"
 
-WANT_AUTOMAKE=1.12
+WANT_AUTOMAKE=1.13
 inherit autotools base eutils flag-o-matic gnome.org gnome2-utils multilib virtualx ubuntu-versionator
 
 MY_PN="gtk+3.0"
