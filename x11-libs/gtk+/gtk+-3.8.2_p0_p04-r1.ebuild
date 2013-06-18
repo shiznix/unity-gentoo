@@ -113,8 +113,8 @@ src_prepare() {
                 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
         done
 
-	eaclocal
         base_src_prepare
+	eautoreconf
 
 	# -O3 and company cause random crashes in applications. Bug #133469
 	replace-flags -O3 -O2
