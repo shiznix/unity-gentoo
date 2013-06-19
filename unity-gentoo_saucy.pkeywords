@@ -1,6 +1,8 @@
 ## A base set of packages that require keyword unmasking for Unity (Saucy Salamander) installation ##
 
 app-crypt/gcr
+dev-cpp/gtkmm
+dev-cpp/glibmm
 sys-devel/automake-wrapper
 ~sys-devel/automake-1.13.2
 net-libs/gssdp:0/3

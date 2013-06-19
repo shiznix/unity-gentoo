@@ -1,7 +1,9 @@
 app-crypt/gcr
-gnome-base/gnome-menus:3
+dev-cpp/gtkmm:3.0
+dev-cpp/glibmm
 dev-libs/atk
 >=dev-libs/glib-2.37::unity-gentoo
 dev-libs/gobject-introspection::unity-gentoo
 dev-libs/gobject-introspection-common::unity-gentoo
+gnome-base/gnome-menus:3
 x11-libs/gtk+:3
