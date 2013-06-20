@@ -8,16 +8,19 @@ inherit qt4-r2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
 URELEASE="saucy"
+UVER_PREFIX="daily13.06.12"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-ui"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
+
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 RDEPEND="x11-libs/libaccounts-qt:="
 DEPEND="${RDEPEND}

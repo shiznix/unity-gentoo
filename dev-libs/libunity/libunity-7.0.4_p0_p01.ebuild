@@ -12,7 +12,7 @@ inherit autotools base eutils autotools python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.06.1"
+UVER_PREFIX="daily13.06.19"
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"

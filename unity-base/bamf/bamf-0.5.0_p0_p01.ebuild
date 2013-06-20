@@ -10,7 +10,7 @@ inherit autotools eutils ubuntu-versionator vala xdummy
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.07"
+UVER_PREFIX="daily13.06.19"
 
 DESCRIPTION="BAMF Application Matching Framework"
 HOMEPAGE="https://launchpad.net/bamf"

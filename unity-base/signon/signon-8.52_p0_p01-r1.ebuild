@@ -8,7 +8,7 @@ inherit base qt4-r2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.14"
+UVER_PREFIX="daily13.06.18"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon"
@@ -34,7 +34,7 @@ DEPEND="dev-qt/qtcore:4
 		dev-qt/qtsql:5
 		dev-qt/qtxml:5 )"
 
-S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	# Fix remotepluginprocess.cpp missing QDebug include on some systems #
