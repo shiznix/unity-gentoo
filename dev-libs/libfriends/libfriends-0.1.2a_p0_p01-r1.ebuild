@@ -33,6 +33,10 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 src_prepare() {
 	vala_src_prepare
 
+	# patch dependency of vala-0.16/0.18 to vala-0.20
+	sed -e "s:libvala-0.18:libvala-0.20:g" \
+                -i "configure.ac" || die
+
 	eautoreconf
 }
 
