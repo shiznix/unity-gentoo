@@ -4,7 +4,11 @@
 
 EAPI=4
 
-inherit gnome2 ubuntu-versionator base
+VALA_MIN_API_VERSION="0.16"
+VALA_MAX_API_VERSION="0.18"
+VALA_USE_DEPEND="vapigen"
+
+inherit gnome2 ubuntu-versionator base vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="raring"
@@ -27,7 +31,8 @@ DEPEND="x11-libs/gtk+:3
 	>=x11-misc/lightdm-1.4.0
 	media-libs/freetype:2
 	x11-libs/cairo
-	media-libs/libcanberra"
+	media-libs/libcanberra
+	$(vala_depend)"
 
 RDEPEND="unity-base/unity-language-pack
 	unity-indicators/indicator-session
@@ -39,7 +44,8 @@ RDEPEND="unity-base/unity-language-pack
 	media-fonts/ubuntu-font-family
 	x11-themes/ubuntu-wallpapers
 	>=gnome-base/gsettings-desktop-schemas-3.6.1
-	>=app-admin/eselect-lightdm-0.1"
+	>=app-admin/eselect-lightdm-0.1
+	"
 
 pkg_pretend() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
@@ -65,6 +71,7 @@ src_prepare() {
 		sed -i -e "s:ubuntu_badge.png:gentoo_badge.png:" "${S}"/src/session-list.vala || die
 	fi
 
+	vala_src_prepare
 	base_src_prepare
 }
 
