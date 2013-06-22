@@ -52,12 +52,12 @@ DEPEND="dev-libs/boost
 	dev-python/gconf-python
 	>=gnome-base/gconf-3.2.5
 	gnome-base/gnome-desktop:3
-	>=gnome-base/gnome-menus-3.6.0:3
+	>=gnome-base/gnome-menus-3.8.0:3
 	>=gnome-base/gnome-control-center-3.6.3
 	>=gnome-base/gnome-settings-daemon-3.6.3
-	>=gnome-base/gnome-session-3.6.0
+	>=gnome-base/gnome-session-3.8.2
 	>=gnome-base/gsettings-desktop-schemas-3.6.0
-	gnome-base/gnome-shell
+	>=gnome-base/gnome-shel-3.8.3
 	gnome-base/libgdu
 	>=gnome-extra/polkit-gnome-0.105
 	media-libs/clutter-gtk:1.0

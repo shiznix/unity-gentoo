@@ -4,10 +4,31 @@ app-crypt/gcr
 dev-cpp/gtkmm
 dev-cpp/glibmm
 dev-python/bsddb3
+gnome-extra/gnome-contacts
+gnome-extra/gnome-user-docs
 gnome-extra/nautilus-sendto
+gnome-extra/yelp
 sys-devel/automake-wrapper
 ~sys-devel/automake-1.13.2
+~net-im/telepathy-logger-0.8.0
 net-libs/gssdp:0/3
+mail-client/evolution
+
+~dev-libs/json-c-0.11
+~net-fs/samba-3.6.16
+~sys-libs/tevent-0.9.18
+~x11-misc/colord-0.1.31
+
+app-crypt/seahorse
+app-editors/gedit
+media-gfx/eog
+media-libs/fontconfig
+media-video/totem
+x11-libs/gnome-pty-helper
+x11-libs/vte
+x11-terms/gnome-terminal
+x11-themes/gnome-icon-theme-symbolic
+www-client/epiphany
 
 app-backup/deja-dup **
 dev-libs/dee **

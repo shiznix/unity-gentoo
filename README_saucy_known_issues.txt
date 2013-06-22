@@ -5,3 +5,8 @@
 
 - unity-greeter-13.10.1
  * not able to compile with vala-0.20
+
+- non-existing 'saucy' packages
+  * gnome-base/gnome-control-center-3.8.x
+  * gnome-base/gnome-settings-daemon-3.8.x
+  * sys-apps/accountsservice-0.6.30

@@ -7,3 +7,5 @@ gnome-extra/evolution-data-server vala
 >=media-plugins/gst-plugins-meta-0.10-r8:0.10 ffmpeg
 
 >=app-text/gtkspell-3.0.2 vala
+
+>=sys-libs/talloc-2.0.8 python

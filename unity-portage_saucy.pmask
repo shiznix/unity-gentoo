@@ -4,3 +4,5 @@ dev-libs/glib::gentoo
 gnome-base/gnome-desktop::gentoo
 gnome-base/gnome-panel::gentoo
 x11-misc/lightdm-kde::gentoo
+
+net-libs/libsoup-gnome

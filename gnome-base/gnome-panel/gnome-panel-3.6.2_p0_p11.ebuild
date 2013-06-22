@@ -27,7 +27,7 @@ RESTRICT="mirror"
 
 RDEPEND="
 	>=dev-libs/glib-2.31.14:2
-	>=dev-libs/libgweather-3.5.1:2=
+	>=dev-libs/libgweather-3.8.2:2=
 	dev-libs/libxml2:2
 	>=gnome-base/dconf-0.13.4
 	>=gnome-base/gconf-2.6.1:2[introspection?]
