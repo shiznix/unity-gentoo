@@ -32,9 +32,11 @@ dev-python/pywapi **
 dev-python/python-testscenarios **
 dev-util/dbus-test-runner **
 gnome-base/gnome-control-center **
+gnome-base/gnome-desktop **
 gnome-base/gnome-menus **
 gnome-base/gnome-session **
 gnome-base/gnome-settings-daemon **
+gnome-base/gnome-panel **
 gnome-base/gsettings-desktop-schemas **
 gnome-base/nautilus **
 gnome-extra/gnome-screensaver **
