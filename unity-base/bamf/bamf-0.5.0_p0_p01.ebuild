@@ -6,7 +6,9 @@ EAPI=5
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils ubuntu-versionator vala xdummy
+PYTHON_DEPEND="2:2.7"
+
+inherit autotools eutils ubuntu-versionator vala xdummy python
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
 URELEASE="saucy"
@@ -25,6 +27,8 @@ RESTRICT="mirror"
 DEPEND="dev-libs/gobject-introspection
 	dev-libs/libunity
 	dev-libs/libunity-webapps
+	dev-libs/libxslt
+	dev-libs/libxml2
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
 	x11-libs/libwnck:1
@@ -34,9 +38,16 @@ DEPEND="dev-libs/gobject-introspection
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
+pkg_setup() {
+	python_set_active_version 2
+}
+
 src_prepare() {
 	# workaround lunchpad bug #1186915
 	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-remove-desktop-fullname.patch
+
+	# removed gtester2xunit-check
+	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-disable-gtester2xunit-check.patch
 
 	vala_src_prepare
 	export VALA_API_GEN=$VAPIGEN
@@ -61,7 +72,7 @@ src_install() {
 
 	# Install dbus interfaces #
 	insinto /usr/share/dbus-1/interfaces
-	doins src/org.ayatana.bamf.*xml
+	doins lib/libbamf-private/org.ayatana.bamf.*xml
 
 	# Create a fresh bamf.index from bamfdaemon.postinst #
 	perl -ne '/^(.*?)=(.*)/; $$d{$ARGV}{$1} = $2; END { for $f (keys %$d) { printf "%s\t%s%s\n", $f =~ m{.*/([^/]+)$}, $$d{$f}{'Exec'},$$d{$f}{'StartupWMClass'} ? "\tBAMF_WM_CLASS::$$d{$f}{'StartupWMClass'}" : "" } }' \
