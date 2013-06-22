@@ -4,6 +4,7 @@ app-crypt/gcr
 dev-cpp/gtkmm
 dev-cpp/glibmm
 dev-python/bsddb3
+gnome-extra/nautilus-sendto
 sys-devel/automake-wrapper
 ~sys-devel/automake-1.13.2
 net-libs/gssdp:0/3

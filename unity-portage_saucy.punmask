@@ -6,4 +6,7 @@ dev-libs/atk
 dev-libs/gobject-introspection::unity-gentoo
 dev-libs/gobject-introspection-common::unity-gentoo
 gnome-base/gnome-menus:3
+gnome-base/gsettings-desktop-schemas::unity-gentoo
+gnome-base/nautilus::unity-gentoo
+gnome-extra/nautilus-sendto
 x11-libs/gtk+:3

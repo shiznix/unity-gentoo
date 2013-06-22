@@ -2,27 +2,26 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI="5"
 GCONF_DEBUG="yes"
-GNOME2_LA_PUNT="yes"
 
-inherit autotools gnome2 ubuntu-versionator
+inherit eutils gnome2 ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="saucy"
+URELEASE="raring"
 MY_P="${MY_P/session-/session_}"
 
 DESCRIPTION="Gnome session manager patched for the Unity desktop"
-HOMEPAGE="http://www.gnome.org/"
+HOMEPAGE="https://git.gnome.org/browse/gnome-session"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2 LGPL-2 FDL-1.1"
 SLOT="0"
-#KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
+#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 IUSE="doc elibc_FreeBSD gconf ipv6 systemd"
 RESTRICT="mirror"
 
@@ -30,7 +29,8 @@ RESTRICT="mirror"
 # create .config/user-dirs.dirs which is read by glib to get G_USER_DIRECTORY_*
 # xdg-user-dirs-update is run during login (see 10-user-dirs-update-gnome below).
 # gdk-pixbuf used in the inhibit dialog
-COMMON_DEPEND=">=dev-libs/glib-2.33.4:2
+COMMON_DEPEND="
+	>=dev-libs/glib-2.35.0:2
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/gtk+-2.90.7:3
 	>=dev-libs/json-glib-0.10
@@ -51,63 +51,77 @@ COMMON_DEPEND=">=dev-libs/glib-2.33.4:2
 	x11-misc/xdg-user-dirs-gtk
 	x11-apps/xdpyinfo
 
-	gconf? ( >=gnome-base/gconf-2:2 )"
+	gconf? ( >=gnome-base/gconf-2:2 )
+"
 # Pure-runtime deps from the session files should *NOT* be added here
 # Otherwise, things like gdm pull in gnome-shell
 # gnome-themes-standard is needed for the failwhale dialog themeing
 # sys-apps/dbus[X] is needed for session management
 RDEPEND="${COMMON_DEPEND}
-	gnome-base/gnome-fallback
-	>=gnome-base/gnome-settings-daemon-3.6.0
-	>=gnome-base/gsettings-desktop-schemas-3.6.0
-	>=x11-themes/gnome-themes-standard-3.6.2
+	gnome-base/gnome-settings-daemon
+	>=gnome-base/gsettings-desktop-schemas-0.1.7
+	>=x11-themes/gnome-themes-standard-2.91.92
 	sys-apps/dbus[X]
+	>=gnome-base/gnome-desktop-3.7.90:3
 	systemd? ( >=sys-apps/systemd-183 )
-	!systemd? ( sys-auth/consolekit )"
+	!systemd? ( sys-auth/consolekit )
+"
 DEPEND="${COMMON_DEPEND}
 	>=dev-lang/perl-5
 	>=sys-devel/gettext-0.10.40
 	>=dev-util/intltool-0.40.6
+	x11-libs/pango[X]
 	virtual/pkgconfig
 	!<gnome-base/gdm-2.20.4
 	doc? (
 		app-text/xmlto
-		dev-libs/libxslt )"
+		dev-libs/libxslt )
+"
 # gnome-common needed for eautoreconf
 # gnome-base/gdm does not provide gnome.desktop anymore
 
-pkg_setup() {
-	G2CONF="${G2CONF}
-		--disable-deprecation-flags
-		--disable-schemas-compile
-		--docdir="${EPREFIX}/usr/share/doc/${PF}"
-		$(use_enable doc docbook-docs)
-		$(use_enable gconf)
-		$(use_enable ipv6)
-		$(use_enable systemd)"
-	DOCS="AUTHORS ChangeLog NEWS README"
+src_prepare() {
+# Disable selected patches #
+        sed \
+                `# Totally breaks gnome-session #` \
+                        -e 's:^96_no_catch_sigsegv:#96_no_catch_sigsegv:g' \
+                                -i "${WORKDIR}/debian/patches/series"
+
+        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+                epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
+        done
+
+        sed \
+                -e 's:Ubuntu:Unity:g' \
+                -e 's:session=ubuntu:session=unity:g' \
+                -i data/ubuntu.desktop.in || die
+        sed -e 's:Ubuntu:Unity:g' \
+                -i data/ubuntu.session.desktop.in.in || die
+
+
+	# Don't show desktop files with NoDisplay=true (from 'master')
+# unity patch '20_hide_nodisplay.patch'
+#	epatch "${FILESDIR}/${PN}-3.8.2.1-filter-nodisplay.patch"
+
+	# Silence errors due to weird checks for libX11
+	sed -e 's/\(PANGO_PACKAGES="\)pangox/\1/' -i configure.ac configure || die
+
+	# Allow people to configure startup apps, bug #464968, upstream bug #663767
+	sed -i -e '/NoDisplay/d' data/session-properties.desktop.in.in || die
+
+        eautoreconf
+	gnome2_src_prepare
 }
 
-src_prepare() {
-	# Disable selected patches #
-	sed \
-		`# Totally breaks gnome-session #` \
-			-e 's:^96_no_catch_sigsegv:#96_no_catch_sigsegv:g' \
-				-i "${WORKDIR}/debian/patches/series"
-
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
-	done
-
-	sed \
-		-e 's:Ubuntu:Unity:g' \
-		-e 's:session=ubuntu:session=unity:g' \
-		-i data/ubuntu.desktop.in || die
-	sed -e 's:Ubuntu:Unity:g' \
-		-i data/ubuntu.session.desktop.in.in || die
-
-	eautoreconf
-	gnome2_src_prepare
+src_configure() {
+	gnome2_src_configure \
+		--disable-deprecation-flags \
+		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
+		--enable-session-selector \
+		$(use_enable doc docbook-docs) \
+		$(use_enable gconf) \
+		$(use_enable ipv6) \
+		$(use_enable systemd)
 }
 
 src_install() {
@@ -119,7 +133,7 @@ src_install() {
 
 	dodir /usr/share/gnome/applications/
 	insinto /usr/share/gnome/applications/
-	doins "${FILESDIR}/defaults.list"
+	newins "${FILESDIR}/defaults.list-r1" defaults.list
 
 	dodir /etc/X11/xinit/xinitrc.d/
 	exeinto /etc/X11/xinit/xinitrc.d/
@@ -127,24 +141,6 @@ src_install() {
 
 	# This should be done here as discussed in bug #270852
 	newexe "${FILESDIR}/10-user-dirs-update-gnome-r1" 10-user-dirs-update-gnome
-
-#-----------------------------------------------------------------------------------#
-
-	# 'startx' visible via the XSESSION variable #
-	exeinto /etc/X11/Sessions
-	newexe "${FILESDIR}/unity.xsession" unity
-
-	# Set Unity XDG desktop session variables #
-	exeinto /etc/X11/xinit/xinitrc.d
-	newexe "${FILESDIR}/15-xdg-data-unity" 15-xdg-data-unity
-
-	# Set ubuntu naming to unity (this is important for XSESSION to DESKTOP_SESSION mapping when using 'startx') #
-	mv "${ED}usr/share/gnome-session/sessions/ubuntu.session" "${ED}usr/share/gnome-session/sessions/unity.session"
-	mv "${ED}usr/share/xsessions/ubuntu.desktop" "${ED}usr/share/xsessions/unity.desktop"
-
-	# Enables and fills $DESKTOP_SESSION variable for sessions started using 'startx'
-	exeinto /etc/X11/xinit/xinitrc.d/
-	newexe "${FILESDIR}/05-unity-desktop-session" 05-unity-desktop-session
 }
 
 pkg_postinst() {
