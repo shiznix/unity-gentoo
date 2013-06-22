@@ -43,6 +43,7 @@ gnome-extra/gnome-screensaver **
 media-sound/rhythmbox **
 net-im/empathy **
 net-im/friends **
+net-im/friends-app  **
 net-libs/account-plugins **
 net-libs/telepathy-indicator **
 sys-apps/accountsservice **
@@ -69,6 +70,7 @@ unity-base/unity-gtk-module **
 unity-base/unity-meta **
 unity-extra/indicator-evolution **
 unity-extra/indicator-psensor **
+unity-extra/unity-greeter **
 unity-extra/unity-lens-radios **
 unity-extra/unity-tweak-tool **
 unity-indicators/ido **
