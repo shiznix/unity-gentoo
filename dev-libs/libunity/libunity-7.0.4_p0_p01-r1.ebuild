@@ -5,14 +5,19 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2,3_3} )
 
-VALA_MIN_API_VERSION="0.20"
+VALA_MIN_API_VERSION="0.16"
+VALA_MAX_API_VERSION="0.18"
+
+# lauchpad bug #1189616
+#VALA_MIN_API_VERSION="0.20"
+
 VALA_USE_DEPEND="vapigen"
 
 inherit autotools base eutils autotools python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.19"
+UVER_PREFIX="daily13.06.21"
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"

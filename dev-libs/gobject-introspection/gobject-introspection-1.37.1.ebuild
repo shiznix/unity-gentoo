@@ -22,9 +22,12 @@ RDEPEND="
 	>=dev-libs/gobject-introspection-common-${PV}
 	>=dev-libs/glib-2.36:2
 	doctool? ( dev-python/mako )
-	virtual/libffi:=
-	!<dev-lang/vala-0.20.0
-"
+	virtual/libffi:="
+
+# launchpad bug #1189616 prevends us to build '>=libunity-7.0"
+#	!<dev-lang/vala-0.20.0
+#"
+
 # Wants real bison, not virtual/yacc
 DEPEND="${RDEPEND}
 	>=dev-util/gtk-doc-am-1.15
