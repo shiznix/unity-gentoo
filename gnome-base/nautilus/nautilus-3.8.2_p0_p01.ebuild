@@ -8,9 +8,8 @@ GNOME2_LA_PUNT="yes" # Needed with USE 'sendto'
 
 inherit autotools base eutils gnome2 readme.gentoo virtualx ubuntu-versionator
 
-MY_P="${PN}_${PV}"
 UURL="mirror://ubuntu/pool/main/n/${PN}"
-URELEASE="raring"
+URELEASE="saucy"
 MY_P="${MY_P/-/_}"
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
