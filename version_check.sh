@@ -7,7 +7,6 @@
 local_to_upstream_packnames() {
 	## Overlay package names to upstream package names mapping ##
 	if [ -n "`echo "${packbasename}" | grep 'appmenu-firefox'`" ]; then treepackname="${packname}"; packname="firefox-globalmenu"
-	elif [ -n "`echo "${packbasename}" | grep 'gnome-desktop'`" ]; then treepackname="${packname}"; packname="gnome-desktop3"
 	elif [ -n "`echo "${packbasename}" | grep 'appmenu-libreoffice'`" ]; then treepackname="${packname}"; packname="lo-menubar"
 	elif [ -n "`echo "${packbasename}" | grep 'appmenu-thunderbird'`" ]; then treepackname="${packname}"; packname="thunderbird-globalmenu"
 	elif [ -n "`echo "${packbasename}" | grep 'chromium-[0-9]'`" ]; then treepackname="${packname}"; packname="chromium-browser"
@@ -105,7 +104,7 @@ version_check_other_releases() {
 		if [ "${stream_release}" = all ]; then
 			echo "Checking ${catpack}"
 			echo "  Local versions:"
-			for ebuild in `ls -1 ${catpack}/*.ebuild`; do
+			for ebuild in `find $(pwd) -name "*.ebuild" | grep "${catpack}"`; do
 				pack="${ebuild}"
 				packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 				local_version_check
@@ -170,7 +169,7 @@ while (( "$#" )); do
 done
 
 if [ "${stream_release}" = "all" ]; then
-	for catpack in `dirname */*/* | sort -du | grep -Ev "eclass|metadata|profiles"`; do
+	for catpack in `find $(pwd) -name "*.ebuild" | awk -F/ '{print ( $(NF-2) )"/"( $(NF-1) )}' | sort -du | grep -Ev "eclass|metadata|profiles"`; do
 		packname=`echo ${catpack} | awk -F/ '{print $2}'`
 		version_check
 	done
