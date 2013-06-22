@@ -1,4 +1,6 @@
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
-x11-misc/lightdm-kde::gentoo
 dev-libs/glib::gentoo
+gnome-base/gnome-desktop::gentoo
+gnome-base/gnome-panel::gentoo
+x11-misc/lightdm-kde::gentoo

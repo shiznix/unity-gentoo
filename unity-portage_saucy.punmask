@@ -5,8 +5,9 @@ dev-libs/atk
 >=dev-libs/glib-2.37::unity-gentoo
 dev-libs/gobject-introspection::unity-gentoo
 dev-libs/gobject-introspection-common::unity-gentoo
-gnome-base/gnome-desktop
+gnome-base/gnome-desktop::unity-gentoo
 gnome-base/gnome-menus:3
+gnome-base/gnome-panel::unity-gentoo
 gnome-base/gnome-session::unity-gentoo
 gnome-base/gsettings-desktop-schemas::unity-gentoo
 gnome-base/nautilus::unity-gentoo
