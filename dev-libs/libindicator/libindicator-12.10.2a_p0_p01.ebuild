@@ -27,6 +27,7 @@ RDEPEND=">=x11-libs/gtk+-2.18:2
 	>=x11-libs/gtk+-3.2:3
 	x11-libs/libXfixes"
 DEPEND="${RDEPEND}
+	>=unity-indicators/ido-13.10.0
 	virtual/pkgconfig
 	!<${CATEGORY}/${PN}-0.4.1-r201"
 

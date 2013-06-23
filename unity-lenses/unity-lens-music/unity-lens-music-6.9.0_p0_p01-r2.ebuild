@@ -3,9 +3,6 @@
 # $Header: $
 
 EAPI=5
-PYTHON_DEPEND="2:2.7"
-SUPPORT_PYTHON_ABIS="1"
-
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
@@ -13,10 +10,10 @@ inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.05"
+UVER_PREFIX="daily13.06.21"
 
-DESCRIPTION="Video lens for the Unity desktop"
-HOMEPAGE="https://launchpad.net/unity-lens-video"
+DESCRIPTION="Music lens for the Unity desktop"
+HOMEPAGE="https://launchpad.net/unity-lens-music"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
@@ -25,20 +22,24 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="!unity-lenses/unity-scope-video-remote
-	dev-libs/dee:=
-	dev-libs/libunity:="
-DEPEND="dev-libs/dee
+RDEPEND="dev-libs/dee:=
+	dev-libs/libunity:=
+	unity-base/rhythmbox-ubuntuone"
+DEPEND="dev-db/sqlite:3
+	dev-libs/dee
 	dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libgee
-	>=dev-libs/libunity-6.91.11
-	dev-libs/libzeitgeist
+	>=dev-libs/libunity-7.0.0
+	gnome-base/gnome-menus:3
+	media-libs/gstreamer:1.0
+	media-libs/gst-plugins-base:1.0
 	|| ( ( net-libs/libsoup
 		net-libs/libsoup-gnome )
 		>net-libs/libsoup-2.42 )
+	net-libs/liboauth
+	sys-libs/tdb
 	>=unity-base/unity-7.0.0
-	unity-lenses/unity-lens-music
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

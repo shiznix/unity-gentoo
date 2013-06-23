@@ -57,7 +57,7 @@ DEPEND="dev-libs/boost
 	>=gnome-base/gnome-settings-daemon-3.6.3
 	>=gnome-base/gnome-session-3.8.2
 	>=gnome-base/gsettings-desktop-schemas-3.6.0
-	>=gnome-base/gnome-shel-3.8.3
+	>=gnome-base/gnome-shell-3.8.3
 	gnome-base/libgdu
 	>=gnome-extra/polkit-gnome-0.105
 	media-libs/clutter-gtk:1.0

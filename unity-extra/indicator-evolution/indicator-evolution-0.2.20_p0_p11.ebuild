@@ -44,10 +44,6 @@ src_prepare() {
 	done
 	base_src_prepare
 	eautoreconf
-
-	# Support mail-client/evolution-3.8.1 #
-	has_version ">=mail-client/evolution-3.8.1" && \
-		epatch "${FILESDIR}/evolution-3.8_eutil-include-fix.diff"
 }
 
 src_configure() {
