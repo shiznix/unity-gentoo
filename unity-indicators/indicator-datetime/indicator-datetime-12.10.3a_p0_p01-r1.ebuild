@@ -11,7 +11,7 @@ UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
 UVER_PREFIX="daily13.06.19"
 
-DESCRIPTION="Indicator for application menus used by the Unity desktop"
+DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
