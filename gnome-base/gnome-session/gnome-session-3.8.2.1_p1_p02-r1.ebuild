@@ -5,7 +5,7 @@
 EAPI="5"
 GCONF_DEBUG="yes"
 
-inherit eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -85,6 +85,8 @@ src_prepare() {
         sed \
                 `# Totally breaks gnome-session #` \
                         -e 's:^96_no_catch_sigsegv:#96_no_catch_sigsegv:g' \
+		`# Disable session migration for now #` \
+			-e 's:^53_add_sessionmigration.patch:#53_add_sessionmigration.patch:g' \
                                 -i "${WORKDIR}/debian/patches/series"
 
         for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
@@ -141,6 +143,24 @@ src_install() {
 
 	# This should be done here as discussed in bug #270852
 	newexe "${FILESDIR}/10-user-dirs-update-gnome-r1" 10-user-dirs-update-gnome
+
+#-----------------------------------------------------------------------------------#
+
+	# 'startx' visible via the XSESSION variable #
+	exeinto /etc/X11/Sessions
+	newexe "${FILESDIR}/unity.xsession" unity
+
+	# Set Unity XDG desktop session variables #
+	exeinto /etc/X11/xinit/xinitrc.d
+	newexe "${FILESDIR}/15-xdg-data-unity" 15-xdg-data-unity
+
+	# Set ubuntu naming to unity (this is important for XSESSION to DESKTOP_SESSION mapping when using 'startx') #
+	mv "${ED}usr/share/gnome-session/sessions/ubuntu.session" "${ED}usr/share/gnome-session/sessions/unity.session"
+	mv "${ED}usr/share/xsessions/ubuntu.desktop" "${ED}usr/share/xsessions/unity.desktop"
+
+	# Enables and fills $DESKTOP_SESSION variable for sessions started using 'startx'
+	exeinto /etc/X11/xinit/xinitrc.d/
+	newexe "${FILESDIR}/05-unity-desktop-session" 05-unity-desktop-session
 }
 
 pkg_postinst() {

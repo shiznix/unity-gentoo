@@ -35,7 +35,6 @@ gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 media-sound/rhythmbox			# Patched to work with gstreamer-1.0 and to have indicator-sound youtube webapp work
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
-net-wireless/gnome-bluetooth		# Shows bluetooth in indicator-panel
 www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 x11-base/xorg-server			# Needed for revealing side Dash launcher panel when it's set to autohide
 x11-libs/gtk+				# Needed for global appmenu
