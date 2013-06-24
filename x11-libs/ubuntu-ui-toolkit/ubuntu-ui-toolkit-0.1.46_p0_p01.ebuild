@@ -33,6 +33,13 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
+src_prepare() {
+	# Docs don't build - full of segfaults and incorrect paths #
+	sed -e '/documentation\/documentation.pri/d' \
+		-i ubuntu-sdk.pro
+	qt5-build_src_prepare
+}
+
 src_configure() {
 	bin/qmake PREFIX=/usr
 }

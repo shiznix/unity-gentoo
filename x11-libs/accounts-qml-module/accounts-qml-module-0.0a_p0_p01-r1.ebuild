@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="doc"
 RESTRICT="mirror"
 
 DEPEND="dev-qt/qtcore:5
@@ -27,6 +27,13 @@ DEPEND="dev-qt/qtcore:5
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
+
+src_prepare() {
+	use doc || \
+		sed -e '/doc\/doc.pri/d' \
+			-i accounts-qml-module.pro
+	qt5-build_src_prepare
+}
 
 src_configure() {
 	bin/qmake PREFIX=/usr
