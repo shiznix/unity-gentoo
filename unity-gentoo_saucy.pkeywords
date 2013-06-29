@@ -22,6 +22,7 @@ mail-client/evolution
 app-crypt/seahorse
 app-editors/gedit
 media-gfx/eog
+~media-libs/gexiv2-0.6.0
 media-libs/fontconfig
 media-video/totem
 x11-libs/gnome-pty-helper
