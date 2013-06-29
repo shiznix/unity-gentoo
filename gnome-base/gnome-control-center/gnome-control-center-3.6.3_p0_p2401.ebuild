@@ -12,7 +12,7 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="raring"
+URELEASE="raring-updates"
 MY_P="${MY_P/daemon-/daemon_}"
 
 DESCRIPTION="GNOME Desktop Configuration Tool patched for the Unity desktop"
