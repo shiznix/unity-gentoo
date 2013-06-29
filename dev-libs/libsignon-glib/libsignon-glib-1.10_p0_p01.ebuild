@@ -32,7 +32,9 @@ RDEPEND="dev-libs/check
 	>=dev-libs/gobject-introspection-1.37.0
 	dev-util/gdbus-codegen
 	unity-base/signon"
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	dev-util/gtk-doc
+	dev-util/gtk-doc-am"
 
 MAKEOPTS="${MAKEOPTS} -j1"
 
