@@ -92,8 +92,8 @@ version_compare() {
 		fi
 	else
 		if [ -n "${upstream_version}" ]; then
-			echo -e "  Local version: \033[5m\033[1m${current}\033[0m  ::  ${URELEASE}"
-			echo "  Upstream version: ${packname}-${upstream_version}  ::  ${URELEASE}"
+			echo "  Local version: ${current}  ::  ${URELEASE}"
+			echo -e "  Upstream version: \033[5m\033[1;31m${packname}-${upstream_version}\033[0m  ::  ${URELEASE}"
 		fi
 	fi
 }
