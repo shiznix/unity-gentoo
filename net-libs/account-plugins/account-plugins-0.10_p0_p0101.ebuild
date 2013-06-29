@@ -4,8 +4,10 @@
 
 EAPI="5"
 GNOME2_LA_PUNT="yes"
+VALA_MIN_API_VERSION="0.16"
+VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 URELEASE="raring-updates"
@@ -35,13 +37,15 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	x11-proto/xproto
 	x11-proto/xf86miscproto
-	x11-proto/kbproto"
+	x11-proto/kbproto
+	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 
+	vala_src_prepare
 	eautoreconf
 }
 
