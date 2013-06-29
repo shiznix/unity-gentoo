@@ -8,12 +8,13 @@ GNOME2_LA_PUNT="yes"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
-URELEASE="raring"
+URELEASE="raring-updates"
 UVER_PREFIX="bzr13.03.26"
 
 DESCRIPTION="Online account plugin for gnome-control-center used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/account-plugins"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	 ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -39,6 +40,8 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	epatch "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+
 	eautoreconf
 }
 
