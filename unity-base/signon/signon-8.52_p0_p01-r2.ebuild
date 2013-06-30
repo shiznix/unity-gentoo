@@ -41,7 +41,7 @@ src_prepare() {
 	epatch "${FILESDIR}/remotepluginprocess-QDebug-fix.patch"
 
 	# Let portage strip the files #
-	epatch "${FILESDIR}/${PN}-nostrip.patch"
+	sed -e 's:CONFIG         +=:CONFIG += nostrip:g' -i "${S}/common-project-config.pri" || die
 
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
