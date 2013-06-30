@@ -8,7 +8,7 @@ inherit base qt4-r2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.18"
+UVER_PREFIX="+13.10.20130629"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon"
@@ -39,6 +39,9 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 src_prepare() {
 	# Fix remotepluginprocess.cpp missing QDebug include on some systems #
 	epatch "${FILESDIR}/remotepluginprocess-QDebug-fix.patch"
+
+	# Let portage strip the files #
+	epatch "${FILESDIR}/${PN}-nostrip.patch"
 
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
