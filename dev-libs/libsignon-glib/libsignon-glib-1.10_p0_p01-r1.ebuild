@@ -13,11 +13,12 @@ inherit vala autotools base eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libs/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.05.1"
+UVER_PREFIX="daily13.06.25"
 
 DESCRIPTION="GObject introspection data for the Signon library for the Unity desktop"
 HOMEPAGE="https://launchpad.net/libsignon-glib"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	 ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="LGPL-3"
 SLOT="0/1.0.0"
@@ -39,6 +40,8 @@ DEPEND="${RDEPEND}
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
+
 	vala_src_prepare
 
 	eautoreconf

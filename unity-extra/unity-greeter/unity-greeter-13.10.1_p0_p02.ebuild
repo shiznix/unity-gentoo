@@ -16,7 +16,8 @@ GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The greeter (login screen) application for Unity. It is implemented as a LightDM greeter."
 HOMEPAGE="https://launchpad.net/unity-greeter"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	 ${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -53,6 +54,8 @@ pkg_pretend() {
 }
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"
+
 	# patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
                   "${S}"/src/unity-greeter.vala || die

@@ -11,11 +11,12 @@ S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/libi/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.19.1"
+UVER_PREFIX="+13.10.20130628"
 
 DESCRIPTION="A set of symbols and convenience functions that all indicators would like to use"
 HOMEPAGE="https://launchpad.net/libindicator"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	 ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="3/7.0.0"
@@ -35,6 +36,8 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
+
 	eautoreconf
 }
 

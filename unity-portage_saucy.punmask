@@ -1,7 +1,5 @@
 ## Packages commented out below to keep gnome-shell at 3.6 and so stop pulling in 3.8 versions of gnome-control-center and gnome-settings-daemon ##
 
-# ~sys-apps/accountsservice-0.6.30::gentoo # need as long as Ubuntu uses only 0.6.29, (required by 'gnome-base/gnome-control-center-3.8.3' and 'gnome-base/gnome-shell-3.8.3-r1')
-
 app-crypt/gcr
 app-crypt/seahorse
 app-cdr/brasero

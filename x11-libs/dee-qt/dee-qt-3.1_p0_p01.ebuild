@@ -4,7 +4,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/d/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.17"
+UVER_PREFIX="daily13.06.25"
 
 DESCRIPTION="Qt binding and QML plugin for Dee for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"

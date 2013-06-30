@@ -16,7 +16,7 @@ HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 URELEASE="saucy"
 
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3+"
@@ -27,7 +27,7 @@ REQUIRED_USE="vala? ( introspection )"
 RESTRICT="mirror"
 
 # Want glib-2.30 for gdbus
-RDEPEND=">=dev-libs/glib-2.30:2
+RDEPEND=">=dev-libs/glib-2.37.3:2
 	sys-auth/polkit
 	introspection? ( >=dev-libs/gobject-introspection-0.9.12 )
 	systemd? ( >=sys-apps/systemd-186 )
@@ -52,7 +52,7 @@ pkg_pretend() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/${PN}-0.6.21-gentoo-system-users.patch"
+	epatch "${FILESDIR}/${PN}-0.6.34-gentoo-system-users.patch"
 
 	sed -i '/0001-formats-locale-property.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0002-create-and-manage-groups-like-on-a-ubuntu-system.patch/d' "${WORKDIR}/debian/patches/series" || die

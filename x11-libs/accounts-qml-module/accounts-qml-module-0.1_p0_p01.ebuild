@@ -6,37 +6,35 @@ EAPI=5
 
 inherit base gnome2-utils qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/u/${PN}"
+UURL="mirror://ubuntu/pool/universe/a/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.20"
+UVER_PREFIX="+13.10.20130626"
 
-DESCRIPTION="Qt Components for the Unity desktop - QML plugin"
-HOMEPAGE="https://launchpad.net/ubuntu-ui-toolkit"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+DESCRIPTION="Expose Unity Online Accounts API to QML applications"
+HOMEPAGE="https://launchpad.net/accounts-qml-module"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	 ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="doc"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/glib:2
-	dev-qt/qtcore:5
-	dev-qt/qtdbus:5
+DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
-	dev-qt/qtgui:5
-	dev-qt/qtjsbackend:5
-	dev-qt/qtnetwork:5
-	dev-qt/qtsvg:5"
+	unity-base/signon[qt5]
+	x11-libs/libaccounts-qt[qt5]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
-MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	# Docs don't build - full of segfaults and incorrect paths #
-	sed -e '/documentation\/documentation.pri/d' \
-		-i ubuntu-sdk.pro
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+
+	use doc || \
+		sed -e '/doc\/doc.pri/d' \
+			-i accounts-qml-module.pro
 	qt5-build_src_prepare
 }
 

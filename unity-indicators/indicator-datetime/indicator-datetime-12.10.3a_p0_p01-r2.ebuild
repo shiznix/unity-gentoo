@@ -9,11 +9,12 @@ inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.19"
+UVER_PREFIX="+13.10.20130628"
 
 DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	 ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -36,6 +37,8 @@ DEPEND="dev-libs/libappindicator
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
+
 	append-cflags -Wno-error
 	eautoreconf
 }

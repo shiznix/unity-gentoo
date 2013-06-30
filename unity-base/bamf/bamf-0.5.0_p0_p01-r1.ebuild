@@ -12,11 +12,12 @@ inherit autotools eutils ubuntu-versionator vala xdummy python
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.19"
+UVER_PREFIX="+13.10.20130628"
 
 DESCRIPTION="BAMF Application Matching Framework"
 HOMEPAGE="https://launchpad.net/bamf"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="LGPL-3"
 SLOT="0/1.0.0"
@@ -43,6 +44,8 @@ pkg_setup() {
 }
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+
 	# workaround lunchpad bug #1186915
 	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-remove-desktop-fullname.patch
 
