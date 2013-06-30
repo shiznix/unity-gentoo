@@ -30,6 +30,7 @@ DEPEND="
 	x11-libs/libX11
 	dev-qt/qtdeclarative:4
 	>=x11-misc/lightdm-1.3.2[qt4]
+	kde-base/kdelibs:4
 "
 RDEPEND="${DEPEND}"
 
