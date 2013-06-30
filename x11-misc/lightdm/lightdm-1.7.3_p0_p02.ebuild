@@ -126,7 +126,8 @@ src_configure() {
 pkg_preinst() {
 	enewgroup lightdm || die "problem adding 'lightdm' group"
 	enewgroup video
-	enewuser lightdm -1 -1 /var/lib/lightdm lightdm,video || die "problem adding 'lightdm' user"
+	enewgroup vboxguest
+	enewuser lightdm -1 -1 /var/lib/lightdm "lightdm,video,vboxguest" || die "problem adding 'lightdm' user"
 }
 
 src_install() {
