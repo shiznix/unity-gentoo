@@ -6,7 +6,7 @@ EAPI="5"
 PYTHON_COMPAT=( python2_{5,6,7} )
 # Avoid runtime dependency on python when USE=test
 
-inherit autotools gnome.org libtool eutils flag-o-matic gnome2-utils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info ubuntu-versionator
+inherit autotools base gnome.org libtool eutils flag-o-matic gnome2-utils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info ubuntu-versionator
 
 MY_P="${PN}2.0_${PV}"
 #S="${WORKDIR}/${PN}-${PV}"
@@ -16,7 +16,8 @@ URELEASE="saucy"
 
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/glib"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+	 ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="LGPL-2+"
 SLOT="2"
@@ -73,6 +74,11 @@ pkg_setup() {
 }
 
 src_prepare() {
+#	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+#		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+#	done
+#	base_src_prepare
+
 	# Fix gmodule issues on fbsd; bug #184301, upstream bug #107626
 	epatch "${FILESDIR}"/${PN}-2.12.12-fbsd.patch
 	
@@ -128,7 +134,7 @@ src_prepare() {
 	fi
 
 	# gdbus-codegen is a separate package
-	epatch "${FILESDIR}/${PN}-2.35.x-external-gdbus-codegen.patch"
+	epatch "${FILESDIR}/${PN}-2.37.x-external-gdbus-codegen.patch"
 
 	# bashcomp goes in /usr/share/bash-completion
 	epatch "${FILESDIR}/${PN}-2.32.4-bashcomp.patch"
