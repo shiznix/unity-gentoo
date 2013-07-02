@@ -6,8 +6,7 @@
 
 local_to_upstream_packnames() {
 	## Overlay package names to upstream package names mapping ##
-	if [ -n "`echo "${packbasename}" | grep 'appmenu-firefox'`" ]; then treepackname="${packname}"; packname="firefox-globalmenu"
-	elif [ -n "`echo "${packbasename}" | grep 'appmenu-libreoffice'`" ]; then treepackname="${packname}"; packname="lo-menubar"
+	if [ -n "`echo "${packbasename}" | grep 'appmenu-libreoffice'`" ]; then treepackname="${packname}"; packname="lo-menubar"
 	elif [ -n "`echo "${packbasename}" | grep 'appmenu-thunderbird'`" ]; then treepackname="${packname}"; packname="thunderbird-globalmenu"
 	elif [ -n "`echo "${packbasename}" | grep 'chromium-[0-9]'`" ]; then treepackname="${packname}"; packname="chromium-browser"
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"
@@ -145,11 +144,15 @@ uver() {
 	PVR_PL="${PVR##*_p}"
 	PVR_PL="${PVR_PL%%-r*}"
 	char=2
+	index=1
 	while [ "${PVR_PL}" != "" ]; do
 		strtmp="${PVR_PL:0:$char}"
-		strtmp="${strtmp#0}"
+		if [ "${index}" != 2 ] && [ "${index}" != 3 ]; then # Don't strip zeros from 2nd and 3rd number fields, this is the Ubuntu OS release #
+			strtmp="${strtmp#0}"
+		fi
 		strarray+=( "${strtmp}" )
 		PVR_PL="${PVR_PL:$char}"
+		((index++))
 	done
 	PVR_PL_MINOR="${strarray[@]}"
 	PVR_PL_MINOR="${PVR_PL_MINOR// /.}"	# Convert spaces in array to decimal points

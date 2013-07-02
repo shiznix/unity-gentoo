@@ -109,6 +109,8 @@ unity-lenses/unity-lens-meta **
 unity-lenses/unity-lens-music **
 unity-lenses/unity-lens-photos **
 unity-lenses/unity-lens-video **
+www-client/chromium::unity-gentoo **
+www-client/firefox::unity-gentoo **
 x11-base/xorg-server::unity-gentoo **
 x11-libs/accounts-qml-module **
 x11-libs/dee-qt **

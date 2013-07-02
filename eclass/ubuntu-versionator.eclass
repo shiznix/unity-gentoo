@@ -8,6 +8,7 @@
 
 ## Naming convention examples ##
 # 0ubuntu0.12.10.3	= package-3.6.0_p0_p00121003
+# 0ubuntu0.13.04.3	= package-3.6.0_p0_p00130403
 # 0ubuntu3.2		= package-3.6.0_p0_p0302
 # 1ubuntu5		= package-3.6.0_p1_p05
 # 0ubuntu6		= package-3.6.0_p0_p06
@@ -32,11 +33,15 @@ PVR_PL="${PVR##*_p}"
 PVR_PL="${PVR_PL%%-r*}"
 
 char=2
+index=1
 while [ "${PVR_PL}" != "" ]; do
 	strtmp="${PVR_PL:0:$char}"
-	strtmp="${strtmp#0}"
+	if [ "${index}" != 2 ] && [ "${index}" != 3 ]; then # Don't strip zeros from 2nd and 3rd number fields, this is the Ubuntu OS release #
+		strtmp="${strtmp#0}"
+	fi
 	strarray+=( "${strtmp}" )
 	PVR_PL="${PVR_PL:$char}"
+	((index++))
 done
 
 PVR_PL_MINOR="${strarray[@]}"

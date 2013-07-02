@@ -29,12 +29,12 @@ src_compile() {
 
 src_install() {
 	local emid=$(sed -n 's/.*<em:id>\(.*\)<\/em:id>.*/\1/p' install.rdf | head -1)
-	dodir usr/lib/firefox/extensions/${emid}/
+	dodir usr/lib/firefox/browser/extensions/${emid}/
 	NEWDATE=$(date +%Y.%m.%d)
 	if [[ "${OLDDATE}" != "${NEWDATE}" ]]; then
 		die "Do not build at midnight :) Please rebuild"
 	fi
 	unzip webapps-${NEWDATE}.beta.xpi -d \
-		"${D}usr/lib/firefox/extensions/${emid}/" || die
-	dosym /usr/lib/firefox/extensions/${emid} /opt/firefox/extensions/${emid}
+		"${D}usr/lib/firefox/browser/extensions/${emid}/" || die
+	dosym /usr/lib/firefox/browser/extensions/${emid} /opt/firefox/browser/extensions/${emid}
 }

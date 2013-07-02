@@ -32,6 +32,7 @@ media-sound/rhythmbox
 net-im/empathy
 sys-apps/accountsservice
 www-client/chromium
+www-client/firefox
 x11-base/xorg-server
 x11-libs/gtk+
 x11-libs/libXfixes

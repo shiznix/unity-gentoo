@@ -66,10 +66,10 @@ src_install() {
 	if use firefox ; then
 		local emid=$(sed -n 's/.*<em:id>\(.*\)<\/em:id>.*/\1/p' \
 			firefox-extension/install.rdf | head -1)
-		dodir usr/lib/firefox/extensions/${emid}/
+		dodir usr/lib/firefox/browser/extensions/${emid}/
 		unzip firefox-extension/webaccounts-firefox-extension.xpi -d \
-			"${D}usr/lib/firefox/extensions/${emid}/" || die
-		dosym /usr/lib/firefox/extensions/${emid} /opt/firefox/extensions/${emid}
+			"${D}usr/lib/firefox/browser/extensions/${emid}/" || die
+		dosym /usr/lib/firefox/browser/extensions/${emid} /opt/firefox/browser/extensions/${emid}
 	fi
 
 	prune_libtool_files --modules

@@ -55,11 +55,11 @@ src_install() {
 
 	pushd unity-firefox-extension/
 		local emid=$(sed -n 's/.*<em:id>\(.*\)<\/em:id>.*/\1/p' install.rdf | head -1)
-		dodir usr/lib/firefox/extensions/${emid}/
+		dodir usr/lib/firefox/browser/extensions/${emid}/
 		unzip unity.xpi -d \
-			"${D}usr/lib/firefox/extensions/${emid}/" || die
+			"${D}usr/lib/firefox/browser/extensions/${emid}/" || die
 	popd
-	dosym /usr/lib/firefox/extensions/${emid} /opt/firefox/extensions/${emid}
+	dosym /usr/lib/firefox/browser/extensions/${emid} /opt/firefox/browser/extensions/${emid}
 
 	prune_libtool_files --modules
 }

@@ -18,6 +18,7 @@ app-crypt/libsecret
 app-i18n/ibus
 app-text/evince
 app-text/gtkspell
+dev-lang/v8
 dev-lang/vala
 dev-libs/atk
 dev-libs/folks
