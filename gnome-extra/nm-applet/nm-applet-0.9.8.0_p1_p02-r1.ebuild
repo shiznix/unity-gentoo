@@ -23,7 +23,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="bluetooth gconf modemmanager"
+IUSE="bluetooth gconf modemmanager systemd"
 KEYWORDS="~amd64 ~ppc ~x86"
 RESTRICT="mirror"
 
@@ -31,7 +31,7 @@ RDEPEND=">=dev-libs/glib-2.26:2
 	>=dev-libs/dbus-glib-0.88
 	dev-libs/libappindicator:=
 	>=gnome-base/gnome-keyring-2.20
-	>=sys-apps/dbus-1.4.1
+	>=sys-apps/dbus-1.6.12[systemd?]
 	>=sys-auth/polkit-0.96-r1
 	>=x11-libs/gtk+-2.91.4:3
 	>=x11-libs/libnotify-0.7.0
