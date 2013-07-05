@@ -145,9 +145,14 @@ uver() {
 	PVR_PL="${PVR_PL%%-r*}"
 	char=2
 	index=1
+	strlength="${#PVR_PL}"
 	while [ "${PVR_PL}" != "" ]; do
 		strtmp="${PVR_PL:0:$char}"
-		if [ "${index}" != 2 ] && [ "${index}" != 3 ]; then # Don't strip zeros from 2nd and 3rd number fields, this is the Ubuntu OS release #
+		if [ "${strlength}" -ge 6 ]; then       # Don't strip zeros from 3rd number field, this is the Ubuntu OS release #
+			if [ "${index}" != 3 ]; then
+				strtmp="${strtmp#0}"
+			fi
+		else
 			strtmp="${strtmp#0}"
 		fi
 		strarray+=( "${strtmp}" )
