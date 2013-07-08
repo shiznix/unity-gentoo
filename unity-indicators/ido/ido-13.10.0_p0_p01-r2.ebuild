@@ -11,7 +11,7 @@ inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130628"
+UVER_PREFIX="+13.10.20130703.1"
 
 DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"
 HOMEPAGE="https://launchpad.net/ido"

@@ -13,7 +13,7 @@ inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.21"
+UVER_PREFIX="+13.10.20130705"
 
 DESCRIPTION="Video lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-video"

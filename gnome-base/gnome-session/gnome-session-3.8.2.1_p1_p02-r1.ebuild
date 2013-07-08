@@ -11,7 +11,7 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="raring"
+URELEASE="saucy"
 MY_P="${MY_P/session-/session_}"
 
 DESCRIPTION="Gnome session manager patched for the Unity desktop"

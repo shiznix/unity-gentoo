@@ -12,7 +12,7 @@ inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.13"
+UVER_PREFIX="+13.10.20130628"
 
 DESCRIPTION="Online account plugin for gnome-control-center used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/account-plugins"

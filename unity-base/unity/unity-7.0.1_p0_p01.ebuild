@@ -12,7 +12,7 @@ inherit base cmake-utils distutils eutils gnome2 python toolchain-funcs ubuntu-v
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.24"
+UVER_PREFIX="+13.10.20130703"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
