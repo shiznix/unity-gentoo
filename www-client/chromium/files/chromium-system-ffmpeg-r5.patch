@@ -1,0 +1,75 @@
+diff --git a/media/filters/ffmpeg_glue.h b/media/filters/ffmpeg_glue.h
+index 17241b9..8a92312 100644
+--- a/media/filters/ffmpeg_glue.h
++++ b/media/filters/ffmpeg_glue.h
+@@ -28,9 +28,9 @@
+ #include "base/basictypes.h"
+ #include "base/memory/scoped_ptr.h"
+ #include "media/base/media_export.h"
++#include "media/ffmpeg/ffmpeg_common.h"
+ 
+ struct AVFormatContext;
+-struct AVIOContext;
+ 
+ namespace media {
+ 
+diff --git a/media/media.gyp b/media/media.gyp
+index df217d2..fde3830 100644
+--- a/media/media.gyp
++++ b/media/media.gyp
+@@ -363,6 +363,9 @@
+           'dependencies': [
+             '../third_party/ffmpeg/ffmpeg.gyp:ffmpeg',
+           ],
++          'export_dependent_settings': [
++            '../third_party/ffmpeg/ffmpeg.gyp:ffmpeg',
++          ],
+         }, {  # media_use_ffmpeg == 0
+           # Exclude the sources that depend on ffmpeg.
+           'sources!': [
+--- a/media/ffmpeg/ffmpeg_common.cc.orig	2013-01-17 00:07:51.635057013 +0000
++++ b/media/ffmpeg/ffmpeg_common.cc	2013-01-17 00:15:50.867406811 +0000
+@@ -10,6 +10,8 @@
+ #include "media/base/video_frame.h"
+ #include "media/base/video_util.h"
+ 
++#undef SampleFormat
++
+ namespace media {
+ 
+ // Why FF_INPUT_BUFFER_PADDING_SIZE? FFmpeg assumes all input buffers are
+--- a/media/media.gyp.orig	2013-05-09 18:02:50.958682676 +0000
++++ b/media/media.gyp	2013-05-09 18:03:45.009023680 +0000
+@@ -530,6 +530,12 @@
+             '<!(python <(DEPTH)/tools/compile_test/compile_test.py '
+                 '--code "#define __STDC_CONSTANT_MACROS\n'
+                 '#include <libavcodec/avcodec.h>\n'
++                'int test() { return AV_PKT_DATA_MATROSKA_BLOCKADDITIONAL; }" '
++                '--on-failure -DCHROMIUM_OMIT_AV_PKT_DATA_MATROSKA_BLOCKADDITIONAL=1)',
++
++            '<!(python <(DEPTH)/tools/compile_test/compile_test.py '
++                '--code "#define __STDC_CONSTANT_MACROS\n'
++                '#include <libavcodec/avcodec.h>\n'
+                 'int test() { struct AVFrame frame;\n'
+                 'return av_frame_get_channels(&frame); }" '
+                 '--on-failure -DCHROMIUM_NO_AVFRAME_CHANNELS=1)',
+--- a/media/filters/ffmpeg_demuxer.cc.orig	2013-05-09 18:04:25.089276403 +0000
++++ b/media/filters/ffmpeg_demuxer.cc	2013-05-09 18:05:16.289599070 +0000
+@@ -111,12 +111,15 @@
+   // Get side data if any. For now, the only type of side_data is VP8 Alpha. We
+   // keep this generic so that other side_data types in the future can be
+   // handled the same way as well.
+-  av_packet_split_side_data(packet.get());
+   int side_data_size = 0;
+-  uint8* side_data = av_packet_get_side_data(
++  uint8* side_data = NULL;
++#ifndef CHROMIUM_OMIT_AV_PKT_DATA_MATROSKA_BLOCKADDITIONAL
++  av_packet_split_side_data(packet.get());
++  side_data = av_packet_get_side_data(
+       packet.get(),
+       AV_PKT_DATA_MATROSKA_BLOCKADDITIONAL,
+       &side_data_size);
++#endif
+ 
+   // If a packet is returned by FFmpeg's av_parser_parse2() the packet will
+   // reference inner memory of FFmpeg.  As such we should transfer the packet
