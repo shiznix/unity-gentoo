@@ -93,6 +93,8 @@ src_prepare() {
 	sed \
 		`# Totally breaks gnome-session #` \
 			-e 's:^96_no_catch_sigsegv:#96_no_catch_sigsegv:g' \
+		`# Disable session migration for now #` \
+			-e 's:^53_add_sessionmigration.patch:#53_add_sessionmigration.patch:g' \
 				-i "${WORKDIR}/debian/patches/series"
 
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
