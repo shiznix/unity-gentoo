@@ -8,7 +8,7 @@ inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130708"
+UVER_PREFIX="+13.10.20130709"
 
 DESCRIPTION="GTK+ module for exporting old-style menus as GMenuModels"
 HOMEPAGE="https://launchpad.net/unity-gtk-module"
