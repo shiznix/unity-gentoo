@@ -10,7 +10,6 @@ SUPPORT_PYTHON_ABIS="1"
 inherit distutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-UVER="1"
 URELEASE="saucy"
 
 DESCRIPTION="Python User Folders Specification Library"

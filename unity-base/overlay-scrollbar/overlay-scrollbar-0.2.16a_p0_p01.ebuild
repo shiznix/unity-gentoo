@@ -8,7 +8,7 @@ inherit autotools base eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+r359daily13.05.30"
+UVER_PREFIX="+r359+13.10.20130712"
 
 DESCRIPTION="Ayatana Scrollbars use an overlay to ensure scrollbars take up no active screen real-estate"
 HOMEPAGE="http://launchpad.net/ayatana-scrollbar"
