@@ -12,7 +12,7 @@ dev-libs/libxml2 icu
 dev-qt/qtwebkit icu
 gnome-base/gdm -gnome-shell
 gnome-base/gvfs fuse
-media-libs/mesa xorg
+media-libs/mesa xorg gles2
 media-libs/gst-plugins-base theora
 media-plugins/alsa-plugins pulseaudio
 media-sound/rhythmbox zeitgeist
