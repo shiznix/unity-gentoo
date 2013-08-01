@@ -14,6 +14,8 @@ the affected packages need to be masked from being emerged from the main portage
 
 Packages affected are:
 dev-libs/dee
+dev-libs/glib
+dev-libs/gobject-introspection
 dev-libs/libappindicator
 dev-libs/libdbusmenu
 dev-libs/libindicator
@@ -26,6 +28,7 @@ gnome-base/gnome-settings-daemon
 gnome-base/gsettings-desktop-schemas
 gnome-base/nautilus
 gnome-extra/gnome-screensaver
+gnome-extra/activity-log-manager
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome
 media-sound/rhythmbox

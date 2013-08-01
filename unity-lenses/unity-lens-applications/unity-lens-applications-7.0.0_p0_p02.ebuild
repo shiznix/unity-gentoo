@@ -29,7 +29,7 @@ RDEPEND="dev-libs/dee:=
 DEPEND="${RDEPEND}
 	dev-libs/libzeitgeist
 	>=gnome-base/gnome-menus-3.8.0:3
-	>=gnome-extra/zeitgeist-0.9.12[datahub,dbus,fts]
+	>=gnome-extra/zeitgeist-0.9.14[datahub,fts]
 	sys-libs/db:5.1
 	>=unity-base/unity-7.0.0
 	$(vala_depend)"

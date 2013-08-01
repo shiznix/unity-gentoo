@@ -2,6 +2,8 @@
 
 app-backup/deja-dup::gentoo
 dev-libs/dee::gentoo
+dev-libs/glib::gentoo
+dev-libs/gobject-introspection::gentoo
 dev-libs/libappindicator::gentoo
 dev-libs/libdbusmenu::gentoo
 dev-libs/libindicator::gentoo
@@ -13,6 +15,7 @@ gnome-base/gnome-session::gentoo
 gnome-base/gnome-settings-daemon::gentoo
 gnome-base/gsettings-desktop-schemas::gentoo
 gnome-base/nautilus::gentoo
+gnome-extra/activity-log-manager::gentoo
 gnome-extra/gnome-screensaver::gentoo
 gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
