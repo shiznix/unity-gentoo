@@ -11,7 +11,7 @@ inherit cmake-utils flag-o-matic ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130719"
+UVER_PREFIX="+13.10.20130731"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"

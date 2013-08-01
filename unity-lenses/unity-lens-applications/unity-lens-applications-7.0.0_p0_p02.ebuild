@@ -11,7 +11,7 @@ inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130702"
+UVER_PREFIX="+13.10.20130729"
 
 DESCRIPTION="Application lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-applications"

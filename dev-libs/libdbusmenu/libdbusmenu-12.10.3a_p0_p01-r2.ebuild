@@ -13,7 +13,7 @@ S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130628"
+UVER_PREFIX="+13.10.20130731"
 
 DESCRIPTION="Library to pass menu structure across DBus"
 HOMEPAGE="https://launchpad.net/dbusmenu"

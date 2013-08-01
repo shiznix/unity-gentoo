@@ -12,7 +12,7 @@ inherit autotools eutils ubuntu-versionator vala xdummy python
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130717"
+UVER_PREFIX="+13.10.20130725"
 
 DESCRIPTION="BAMF Application Matching Framework"
 HOMEPAGE="https://launchpad.net/bamf"
