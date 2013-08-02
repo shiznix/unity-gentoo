@@ -122,7 +122,7 @@ net-misc/networkmanager
 net-voip/telepathy-rakia
 net-voip/telepathy-salut
 net-wireless/blueman
-net-wireless/gnome-bluetooth
+=net-wireless/gnome-bluetooth-3.6*
 <sys-apps/baobab-3.8
 sys-apps/shadow
 sys-auth/consolekit

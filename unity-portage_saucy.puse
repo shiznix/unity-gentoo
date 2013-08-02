@@ -1,12 +1,30 @@
->=app-text/gtkspell-3.0.2 vala
-
->=dev-libs/folks-0.8.0 vala
->=dev-libs/keybinder-0.3.0-r200:0 python
->=dev-libs/libgdata-0.13.3 gnome
-
+app-admin/packagekit-base networkmanager
+app-cdr/brasero nautilus
+app-crypt/libsecret vala
+app-i18n/ibus dconf
+app-text/gtkspell vala
+dev-lang/python sqlite
+dev-libs/folks vala
+dev-libs/keybinder python
+dev-libs/libgdata gnome
+dev-libs/libxml2 icu
+dev-libs/protobuf python
+dev-libs/xapian-bindings python
+dev-qt/qtwebkit icu
 gnome-base/gdm -gnome-shell
+gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
-
->=media-plugins/gst-plugins-meta-0.10-r8:0.10 ffmpeg
-
->=sys-libs/talloc-2.0.8 python
+media-libs/mesa xorg gles2
+media-libs/gst-plugins-base theora
+media-plugins/alsa-plugins pulseaudio
+media-plugins/gst-plugins-meta ffmpeg
+media-sound/rhythmbox zeitgeist
+media-video/ffmpeg opus
+net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
+net-libs/libgadu gnutls
+sys-auth/pambase consolekit
+sys-libs/talloc python
+sys-libs/zlib minizip
+x11-libs/libdrm libkms
+x11-themes/light-themes gtk3
+x11-misc/x11vnc dummy
