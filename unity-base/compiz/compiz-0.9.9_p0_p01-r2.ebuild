@@ -7,8 +7,8 @@ EAPI=5
 inherit base gnome2 cmake-utils eutils python ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
-URELEASE="raring"
-UVER_PREFIX="~daily13.04.18.1~13.04"
+URELEASE="raring-updates"
+UVER_PREFIX="~daily13.06.19~13.04"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/compiz"

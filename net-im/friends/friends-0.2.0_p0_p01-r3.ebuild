@@ -12,7 +12,7 @@ inherit autotools distutils gnome2-utils python ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130718"
+UVER_PREFIX="+13.10.20130730"
 
 DESCRIPTION="Social from the Start! The friends service is the hub for all things social on the Unity Desktop"
 HOMEPAGE="https://launchpad.net/friends"

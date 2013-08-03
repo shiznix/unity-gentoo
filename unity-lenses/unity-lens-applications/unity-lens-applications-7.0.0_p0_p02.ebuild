@@ -11,7 +11,7 @@ inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130702"
+UVER_PREFIX="+13.10.20130729"
 
 DESCRIPTION="Application lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-applications"
@@ -29,7 +29,7 @@ RDEPEND="dev-libs/dee:=
 DEPEND="${RDEPEND}
 	dev-libs/libzeitgeist
 	>=gnome-base/gnome-menus-3.8.0:3
-	>=gnome-extra/zeitgeist-0.9.12[datahub,dbus,fts]
+	>=gnome-extra/zeitgeist-0.9.14[datahub,fts]
 	sys-libs/db:5.1
 	>=unity-base/unity-7.0.0
 	$(vala_depend)"
