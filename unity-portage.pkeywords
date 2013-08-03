@@ -31,7 +31,7 @@ dev-libs/glib
 =dev-libs/gobject-introspection-common-1.36*
 =dev-libs/gobject-introspection-1.36*
 dev-libs/json-glib
-dev-libs/libgdata
+~dev-libs/libgdata-0.13.3
 dev-libs/libgee
 dev-libs/libgweather:2/3-1
 dev-libs/libindicate
