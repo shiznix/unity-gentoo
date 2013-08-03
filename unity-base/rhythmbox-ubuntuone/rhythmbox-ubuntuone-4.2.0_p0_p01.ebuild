@@ -31,7 +31,7 @@ DEPEND="dev-libs/libpeas
 	dev-python/dirspec
 	dev-python/pygobject:2
 	dev-python/pygobject:3
-	>=dev-python/twisted-13.0.0
+	>=dev-python/twisted-core-13.0.0
 	gnome-base/gnome-menus:3
 	>=media-sound/rhythmbox-2.98[dbus,python,zeitgeist]
 	unity-base/ubuntuone-client

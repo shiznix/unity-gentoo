@@ -29,5 +29,5 @@ RDEPEND="${DEPEND}
 	dev-python/dirspec
 	>=dev-python/oauth-1.0
 	dev-python/pyopenssl
-	>=dev-python/twisted-12.2.0
+	>=dev-python/twisted-core-12.2.0
 	dev-python/pyxdg"
