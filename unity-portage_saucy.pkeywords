@@ -22,14 +22,18 @@ dev-libs/libpeas
 dev-libs/totem-pl-parser
 =dev-libs/libgweather-3.8*
 gnome-base/dconf
+=gnome-base/gdm-3.8*
 =gnome-base/gnome-core-apps-3.8*
 =gnome-base/gnome-core-libs-3.8*
+=gnome-base/gnome-desktop-3.8*
 =gnome-base/gnome-keyring-3.8*
+gnome-base/gnome-menus:0
+=gnome-base/gnome-menus-3.8*:3::unity-gentoo
+=gnome-base/gsettings-desktop-schemas-3.8*::unity-gentoo
 # =gnome-base/gnome-shell-3.8*        # If this is unmasked to 3.8, it pulls in gnome-control-center-3.8 and gnome-settings-daemon-3.8
 gnome-base/gvfs
 =gnome-base/libgnomekbd-3.8*
 =gnome-base/libgnome-keyring-3.8*
-=gnome-base/gsettings-desktop-schemas-3.8*::unity-gentoo
 =gnome-base/nautilus-3.8*::unity-gentoo
 =gnome-extra/evolution-data-server-3.8*
 gnome-extra/gcalctool
@@ -60,7 +64,7 @@ media-libs/cogl
 =media-video/cheese-3.8*
 =media-video/totem-3.8*
 =net-libs/gnome-online-accounts-3.8*
->=net-libs/libsoup-2.42*
+=net-libs/libsoup-2.42*
 net-libs/libsoup-gnome
 net-libs/rest
 =net-wireless/gnome-bluetooth-3.8*
@@ -94,6 +98,7 @@ dev-cpp/gtkmm
 dev-cpp/glibmm
 dev-lang/vala
 dev-libs/atk
+=dev-libs/boost-1.52*
 ~dev-libs/json-c-0.11
 dev-libs/json-glib
 dev-libs/libindicate

@@ -12,6 +12,7 @@ dev-libs/protobuf python
 dev-libs/xapian-bindings python
 dev-qt/qtwebkit icu
 gnome-base/gdm -gnome-shell
+gnome-base/gnome-control-center systemd
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 media-libs/mesa xorg gles2
@@ -22,7 +23,8 @@ media-sound/rhythmbox zeitgeist
 media-video/ffmpeg opus
 net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
 net-libs/libgadu gnutls
-sys-auth/pambase consolekit
+sys-apps/systemd pam
+sys-auth/pambase consolekit systemd
 sys-libs/talloc python
 sys-libs/zlib minizip
 x11-libs/libdrm libkms

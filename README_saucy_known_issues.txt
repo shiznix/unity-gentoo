@@ -12,5 +12,14 @@
   * sys-apps/accountsservice-0.6.30
 
 - compile 'app-accessibility/sphinxbase' with WANT_AUTOMAKE="0.12"
+  e.g. 'WANT_AUTOMAKE="0.12" emerge -q1 app-accessibility/sphinxbase'
 
-e.g. 'WANT_AUTOMAKE="0.12" emerge -q1 app-accessibility/sphinxbase'
+- >=net-libs/libsoup-2.42 blocks net-libs/libsoup-gnome
+	- unity-indicators/indicator-datetime requires libedataserverui-3.0.pc from evolution-data-server-3.6
+		- mail-client/evolution-3.6 requires net-libs/libsoup-gnome
+
+- >=gnome-base/gnome-control-center-3.8
+	- gnome-control-center-{signon,unity} require libgnome-control-center.pc which doesn't exist in gnome-control-center-3.8
+
+- >=gnome-extra/nautilus-sendto-3.8
+	- Empathy requires nautilus-sendto.pc which doesn't exist in nautilus-sendto-3.8
