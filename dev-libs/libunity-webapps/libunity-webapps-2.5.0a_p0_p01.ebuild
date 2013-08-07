@@ -25,7 +25,6 @@ RESTRICT="mirror"
 RDEPEND="dev-libs/libdbusmenu:=
 	dev-libs/libunity:="
 DEPEND="${RDEPEND}
-	app-admin/packagekit-gtk
 	app-misc/geoclue
 	dev-db/sqlite:3
 	>=dev-libs/glib-2.32.3:2
