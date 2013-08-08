@@ -14,20 +14,19 @@ inherit base chromium eutils flag-o-matic multilib \
 
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
-S="${WORKDIR}/${MY_PN}-${PV}/src"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
-URELEASE="raring"
+URELEASE="saucy"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}-lite.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.gz
 	test? ( https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}-testdata.tar.xz )"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~x86"
+#KEYWORDS="~amd64 ~arm ~x86"
 IUSE="bindist cups gnome gnome-keyring gps kerberos pulseaudio selinux +system-ffmpeg system-sqlite tcmalloc"
 RESTRICT="mirror"
 
@@ -152,6 +151,8 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-system-harfbuzz-r0.patch"
 
 	epatch "${FILESDIR}/${PN}-nss-3.15.patch"
+
+	epatch "${FILESDIR}/chromium-bug471198.patch"
 
 	epatch_user
 
@@ -468,6 +469,7 @@ src_test() {
 		"HTTPSEVCRLSetTest.*" # see above
 		"HTTPSCRLSetTest.*" # see above
 		"*SpdyFramerTest.BasicCompression*" # bug #465444
+		"CertVerifyProcTest.EVVerification" #474642
 	)
 	runtest out/Release/net_unittests "${excluded_net_unittests[@]}"
 
