@@ -251,6 +251,7 @@ x11-libs/libXfixes::unity-gentoo **
 x11-libs/libXi::unity-gentoo **
 x11-libs/qml-friends **
 x11-libs/ubuntu-ui-toolkit **
+x11-misc/appmenu-thunderbird::unity-gentoo **
 x11-misc/lightdm::unity-gentoo **
 x11-misc/lightdm-kde::unity-gentoo **
 x11-misc/unity-chromium-extension **
