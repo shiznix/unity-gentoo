@@ -11,8 +11,8 @@ GTESTVER="1.6.0"
 inherit base cmake-utils distutils eutils gnome2 python toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="raring"
-UVER_PREFIX="daily13.04.18~13.04"
+URELEASE="raring-updates"
+UVER_PREFIX="daily13.06.19~13.04"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
@@ -98,8 +98,7 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
 			"${FILESDIR}/systray-enabled-by-default.diff"
-			"${FILESDIR}/nopch_fix.diff"
-			"${FILESDIR}/panel-shadow-fullscreen-fix.diff" )
+			"${FILESDIR}/nopch_fix.diff" )
 	base_src_prepare
 
 	python_convert_shebangs -r 2 .

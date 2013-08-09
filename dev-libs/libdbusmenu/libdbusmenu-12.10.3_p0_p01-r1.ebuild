@@ -12,8 +12,8 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
-URELEASE="raring"
-UVER_PREFIX="daily13.02.01"
+URELEASE="raring-updates"
+UVER_PREFIX="daily13.06.19~13.04"
 
 DESCRIPTION="Library to pass menu structure across DBus"
 HOMEPAGE="https://launchpad.net/dbusmenu"

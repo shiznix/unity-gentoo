@@ -10,8 +10,8 @@ VALA_USE_DEPEND="vapigen"
 inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="raring"
-UVER_PREFIX="daily13.04.18~13.04"
+URELEASE="raring-updates"
+UVER_PREFIX="daily13.06.19~13.04"
 
 DESCRIPTION="Application lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-applications"

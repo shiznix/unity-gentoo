@@ -12,8 +12,8 @@ VALA_USE_DEPEND="vapigen"
 inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="raring"
-UVER_PREFIX="daily13.04.15"
+URELEASE="raring-updates"
+UVER_PREFIX="daily13.06.19~13.04"
 
 DESCRIPTION="Video lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-video"
