@@ -1,0 +1,11 @@
+diff -urN unity-chromium-extension-2.4.6/npapi-plugin/src/npapi-headers/headers/npruntime.h unity-chromium-extension-2.4.6-patched/npapi-plugin/src/npapi-headers/headers/npruntime.h
+--- unity-chromium-extension-2.4.6/npapi-plugin/src/npapi-headers/headers/npruntime.h	2013-04-05 04:44:52.000000000 +1030
++++ unity-chromium-extension-2.4.6-patched/npapi-plugin/src/npapi-headers/headers/npruntime.h	2013-08-09 19:23:55.554629625 +0930
+@@ -37,6 +37,7 @@
+ extern "C" {
+ #endif
+ 
++#include <string.h>
+ #include "nptypes.h"
+ 
+ /*
