@@ -32,7 +32,7 @@ gnome-base/gnome-menus:0
 =gnome-base/gsettings-desktop-schemas-3.8*::unity-gentoo
 # =gnome-base/gnome-shell-3.8*        # If this is unmasked to 3.8, it pulls in gnome-control-center-3.8 and gnome-settings-daemon-3.8
 gnome-base/gvfs
-=gnome-base/libgnomekbd-3.8*
+=gnome-base/libgnomekbd-3.6*
 =gnome-base/libgnome-keyring-3.8*
 =gnome-base/nautilus-3.8*::unity-gentoo
 =gnome-extra/evolution-data-server-3.8*
@@ -117,7 +117,7 @@ dev-python/pycrypto
 dev-python/pygobject
 dev-python/python-distutils-extra
 dev-python/rdflib
-dev-python/twisted
+dev-python/twisted-core
 dev-python/twisted-names
 dev-python/twisted-web
 =dev-util/boost-build-1.52*
@@ -145,6 +145,8 @@ net-fs/samba
 net-voip/telepathy-rakia
 net-voip/telepathy-salut
 net-wireless/blueman
+net-zope/zope-fixers
+net-zope/zope-interface
 sys-apps/shadow
 sys-auth/consolekit
 sys-auth/pambase
