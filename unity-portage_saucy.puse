@@ -1,4 +1,4 @@
-*/* -consolekit -packagekit systemd
+*/* -consolekit -packagekit systemd zeitgeist
 
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
