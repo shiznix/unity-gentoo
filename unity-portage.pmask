@@ -22,6 +22,7 @@ gnome-extra/polkit-gnome::gentoo
 media-libs/glew::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
+sys-apps/accountsservice::gentoo
 www-client/chromium::gentoo
 x11-base/xorg-server::gentoo
 x11-libs/gtk+::gentoo
@@ -31,4 +32,3 @@ x11-proto/fixesproto::gentoo
 x11-themes/gtk-engines-unico::gentoo
 x11-wm/metacity::gentoo
 x11-misc/lightdm::gentoo
-sys-apps/accountsservice::gentoo
