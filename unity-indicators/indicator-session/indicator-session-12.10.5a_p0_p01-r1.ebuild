@@ -3,9 +3,8 @@
 # $Header: $
 
 EAPI=5
-GNOME2_LA_PUNT="yes"
 
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
@@ -36,20 +35,10 @@ DEPEND="app-admin/system-config-printer-gnome
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	if ! use help || has nodoc ${FEATURES}; then
-		epatch "${FILESDIR}/indicator-session_remove-help.patch"
-	else
-		sed -e 's:Ubuntu Help:Unity Help:g' \
-			-e 's:yelp:yelp help\:ubuntu-help:g' \
-			-i src/session-menu-mgr.c
-	fi
-	eautoreconf
-}
-
-src_install() {
-	gnome2_src_install
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
+	# Fix broken schemas and sandbox violations #
+	epatch "${FILESDIR}/sandbox_violations_fix.diff"
+	for file in `grep -r /apps/indicator-session/ * | awk -F: '{print $1}' | uniq`; do
+		sed -e "s:/apps/indicator-session/:/org/indicator-session/:g" \
+			-i "${file}"
+	done
 }

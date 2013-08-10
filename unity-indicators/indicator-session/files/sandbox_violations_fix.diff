@@ -1,0 +1,21 @@
+diff -urN indicator-session-12.10.5+13.10.20130717/data/CMakeLists.txt indicator-session-12.10.5+13.10.20130717-patched/data/CMakeLists.txt
+--- indicator-session-12.10.5+13.10.20130717/data/CMakeLists.txt	2013-08-11 08:28:13.599354228 +0930
++++ indicator-session-12.10.5+13.10.20130717-patched/data/CMakeLists.txt	2013-08-11 08:38:41.491358571 +0930
+@@ -13,7 +13,7 @@
+ execute_process (COMMAND intltool-merge -quiet --xml-style --utf8 --no-translations "${SCHEMA_FILE_IN}" "${SCHEMA_FILE}")
+ 
+ # let UseGSettings do the rest
+-add_schema (${SCHEMA_FILE})
++#add_schema (${SCHEMA_FILE})
+ 
+ 
+ ##
+@@ -69,6 +69,6 @@
+          DESTINATION "${ICON_DIR}"
+          FILES_MATCHING PATTERN "*.png" PATTERN "*.svg")
+ 
+-install(CODE "execute_process (COMMAND gtk-update-icon-cache -t -f ${ICON_DIR})"
+-        CODE "message (STATUS \"Updating icon cache\")")
++#install(CODE "execute_process (COMMAND gtk-update-icon-cache -t -f ${ICON_DIR})"
++#        CODE "message (STATUS \"Updating icon cache\")")
+ 
