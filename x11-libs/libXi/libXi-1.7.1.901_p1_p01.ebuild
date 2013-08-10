@@ -23,6 +23,7 @@ RESTRICT="mirror"
 
 RDEPEND=">=x11-libs/libX11-1.4.99.1[${MULTILIB_USEDEP}]
 	>=x11-libs/libXext-1.1[${MULTILIB_USEDEP}]
+	>=x11-libs/libXfixes-5.0.1[${MULTILIB_USEDEP}]
 	x11-misc/util-macros
 	>=x11-proto/inputproto-2.2.99.1[${MULTILIB_USEDEP}]
 	>=x11-proto/xproto-7.0.13[${MULTILIB_USEDEP}]
