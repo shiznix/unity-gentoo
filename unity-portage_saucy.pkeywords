@@ -156,6 +156,7 @@ sys-devel/gcc:4.7
 sys-libs/db:5.1
 sys-libs/tevent
 x11-base/xorg-drivers
+x11-drivers/xf86-video-dummy
 x11-misc/appmenu-qt
 x11-misc/colord
 x11-misc/notify-osd
