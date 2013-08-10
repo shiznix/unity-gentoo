@@ -38,7 +38,7 @@ src_install() {
 
 	rm -rf "${D}etc" &> /dev/null
 	exeinto /etc/X11/xinit/xinitrc.d/
-	doexe data/80unity-gtk-module
+	doexe "${FILESDIR}/80unity-gtk-module"
 
 	prune_libtool_files --modules
 } 
