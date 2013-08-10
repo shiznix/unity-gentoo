@@ -128,11 +128,11 @@ pkg_pretend() {
 		die "Sorry, but gcc earlier than 4.0 will not work for xorg-server."
 }
 
-src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
-	PATCHES+=( "${S}/debian/patches/500_pointer_barrier_thresholds.diff" )
-	base_src_prepare
-}
+#src_prepare() {
+#	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
+#	PATCHES+=( "${S}/debian/patches/500_pointer_barrier_thresholds.diff" )
+#	base_src_prepare
+#}
 
 src_configure() {
 	# localstatedir is used for the log location; we need to override the default
