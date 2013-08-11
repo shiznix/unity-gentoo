@@ -25,7 +25,7 @@ IUSE="eds +introspection networkmanager"
 #KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~x86-solaris"
 RESTRICT="mirror"
 
-RDEPEND="
+RDEPEND="!<gnome-base/gnome-session-3.8
 	>=dev-libs/glib-2.31.14:2
 	>=dev-libs/libgweather-3.8.2:2=
 	dev-libs/libxml2:2
