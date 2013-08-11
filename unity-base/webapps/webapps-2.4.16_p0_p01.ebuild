@@ -10,7 +10,7 @@ MY_PN="webapps-applications"
 URELEASE="saucy"
 UVER_PREFIX="+13.10.20130715"
 UURL="mirror://ubuntu/pool/main/w/${MY_PN}"
-S="${WORKDIR}/${MY_PN}-${PV}"
+S="${WORKDIR}/${MY_PN}-${PV}${UVER_PREFIX}"
 
 DESCRIPTION="WebApps: Initial set of Apps for the Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-applications"
