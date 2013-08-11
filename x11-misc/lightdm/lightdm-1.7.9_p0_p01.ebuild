@@ -85,15 +85,11 @@ src_prepare() {
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
-	# use startup script to stop dbus of lightdm when user session starts
-	epatch "${FILESDIR}"/03_launch_dbus.patch
-
 	# remove not needed patches
 	sed -i '/01_transition_ubuntu2d_ubuntu_desktop.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/03_launch_dbus.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/04_language_handling.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/05_add_xserver_core_option.patch/d' "${WORKDIR}/debian/patches/series" || die
-#	sed -i '/07_lp1189948.patch/d' "${WORKDIR}/debian/patches/series" || die
 
 	# apply remaining patches
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
