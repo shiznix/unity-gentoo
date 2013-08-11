@@ -35,7 +35,7 @@ DEPEND="dev-libs/glib:2
 
 src_prepare() {
 	# Fix segfault from LP Bug 1058037 #
-	epatch "${FILESDIR}/gtkapplication-fix.patch"
+#	epatch "${FILESDIR}/gtkapplication-fix.patch"
 
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
