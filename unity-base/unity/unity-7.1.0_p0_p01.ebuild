@@ -94,7 +94,7 @@ pkg_setup() {
 
 src_prepare() {
 	! use test && \
-		PATCHES+=( "${FILESDIR}/remove-gtest-dep.diff" )
+		PATCHES+=( "${FILESDIR}/unity-7.1.0_remove-gtest-dep.diff" )
 
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
