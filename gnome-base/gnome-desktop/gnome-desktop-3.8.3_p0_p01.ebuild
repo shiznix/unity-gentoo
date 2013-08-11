@@ -49,6 +49,7 @@ DEPEND="${COMMON_DEPEND}
 	x11-proto/xproto
 	>=x11-proto/randrproto-1.2
 	virtual/pkgconfig
+	gnome-extra/yelp
 "
 
 # Includes X11/Xatom.h in libgnome-desktop/gnome-bg.c which comes from xproto
