@@ -9,7 +9,6 @@
 - non-existing 'saucy' packages
   * gnome-base/gnome-control-center-3.8.x
   * gnome-base/gnome-settings-daemon-3.8.x
-  * sys-apps/accountsservice-0.6.30
 
 - compile 'app-accessibility/sphinxbase' with WANT_AUTOMAKE="0.12"
   e.g. 'WANT_AUTOMAKE="0.12" emerge -q1 app-accessibility/sphinxbase'
