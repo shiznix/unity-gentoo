@@ -37,7 +37,8 @@ DEPEND="${RDEPEND}
 	x11-libs/gtk+:3
 	unity-indicators/indicator-messages
 	x11-libs/libnotify
-	x11-libs/libwnck:3"
+	x11-libs/libwnck:3
+	app-admin/packagekit"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
