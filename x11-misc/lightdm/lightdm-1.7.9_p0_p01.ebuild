@@ -56,7 +56,8 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/intltool
 	gnome-base/gnome-common
 	sys-devel/gettext
-	virtual/pkgconfig"
+	virtual/pkgconfig
+	app-text/yelp-tools"
 
 PDEPEND="lightdm_greeters_gtk? ( x11-misc/lightdm-gtk-greeter )
 	lightdm_greeters_kde? ( x11-misc/lightdm-kde )
