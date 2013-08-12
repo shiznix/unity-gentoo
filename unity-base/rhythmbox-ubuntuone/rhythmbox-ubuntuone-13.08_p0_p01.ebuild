@@ -26,7 +26,6 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-libs/libpeas
-	dev-libs/libubuntuone
 	dev-libs/libzeitgeist
 	dev-python/dirspec
 	dev-python/pygobject:2

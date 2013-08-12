@@ -26,7 +26,10 @@ RESTRICT="mirror"
 DEPEND="dev-lang/python
 	dev-libs/dbus-glib
 	gnome-base/nautilus"
-RDEPEND="${DEPEND}
+
+# dev-libs/libubuntuone is dropped for Saucy as UbuntuOne project becomes a pure python only project (LP 1196684) #
+RDEPEND="!dev-libs/libubuntuone
+	${DEPEND}
 	dev-python/configglue
 	dev-python/dbus-python
 	dev-python/gnome-keyring-python
