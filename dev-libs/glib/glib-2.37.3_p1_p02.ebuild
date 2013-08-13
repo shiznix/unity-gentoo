@@ -6,7 +6,7 @@ EAPI="5"
 PYTHON_COMPAT=( python2_{5,6,7} )
 # Avoid runtime dependency on python when USE=test
 
-inherit autotools base gnome.org libtool eutils flag-o-matic gnome2-utils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info ubuntu-versionator
+inherit autotools base gnome.org libtool eutils flag-o-matic gnome2-utils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator
 
 MY_P="${PN}2.0_${PV}"
 #S="${WORKDIR}/${PN}-${PV}"
@@ -25,17 +25,21 @@ IUSE="debug fam kernel_linux selinux static-libs systemtap test utils xattr"
 #KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~sparc-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux"
 
 RDEPEND="
-	virtual/libiconv
-	virtual/libffi
-	sys-libs/zlib
+	virtual/libiconv[${MULTILIB_USEDEP}]
+	virtual/libffi[${MULTILIB_USEDEP}]
+	sys-libs/zlib[${MULTILIB_USEDEP}]
 	|| (
 		>=dev-libs/elfutils-0.142
 		>=dev-libs/libelf-0.8.12 )
-	xattr? ( sys-apps/attr )
-	fam? ( virtual/fam )
+	xattr? ( sys-apps/attr[${MULTILIB_USEDEP}] )
+	fam? ( virtual/fam[${MULTILIB_USEDEP}] )
 	utils? (
 		${PYTHON_DEPS}
 		>=dev-util/gdbus-codegen-${PV}[${PYTHON_USEDEP}] )
+	abi_x86_32? (
+		!<=app-emulation/emul-linux-x86-baselibs-20130224-r9
+		!app-emulation/emul-linux-x86-baselibs[-abi_x86_32(-)]
+	)
 "
 DEPEND="${RDEPEND}
 	app-text/docbook-xml-dtd:4.1.2
@@ -58,8 +62,6 @@ PDEPEND="x11-misc/shared-mime-info
 	!<gnome-base/gvfs-1.6.4-r990"
 # shared-mime-info needed for gio/xdgmime, bug #409481
 # Earlier versions of gvfs do not work with glib
-
-DOCS="AUTHORS ChangeLog* NEWS* README"
 
 pkg_setup() {
 	if use kernel_linux ; then
@@ -156,7 +158,7 @@ src_prepare() {
 	epunt_cxx
 }
 
-src_configure() {
+multilib_src_configure() {
 	# Avoid circular depend with dev-util/pkgconfig and
 	# native builds (cross-compiles won't need pkg-config
 	# in the target ROOT to work here)
@@ -176,8 +178,11 @@ src_configure() {
 	# convert this to the use_enable form, as it results in a broken build.
 	use debug && myconf="--enable-debug"
 
+	# Only used by the gresource bin
+	multilib_is_native_abi || myconf="${myconf} --disable-libelf"
+
 	# Always use internal libpcre, bug #254659
-	econf ${myconf} \
+	ECONF_SOURCE="${S}" econf ${myconf} \
 		$(use_enable xattr) \
 		$(use_enable fam) \
 		$(use_enable selinux) \
@@ -191,7 +196,7 @@ src_configure() {
 		--with-xml-catalog="${EPREFIX}/etc/xml/catalog"
 }
 
-src_install() {
+multilib_src_install() {
 	default
 
 	if use utils ; then
@@ -212,7 +217,7 @@ src_install() {
 	prune_libtool_files --modules
 }
 
-src_test() {
+multilib_src_test() {
 	gnome2_environment_reset
 
 	unset DBUS_SESSION_BUS_ADDRESS
@@ -237,29 +242,7 @@ src_test() {
 	Xemake check
 }
 
-#pkg_preinst() {
-	# Only give the introspection message if:
-	# * The user has gobject-introspection
-	# * Has glib already installed
-	# * Previous version was different from new version
-	# TODO: add a subslotted virtual to trigger this automatically
-	# * Replaced with the use of blockers to ensure people don't mix
-	#   different gobject-introspection and glib major versions
-#	if has_version "dev-libs/gobject-introspection" && ! has_version "=${CATEGORY}/${PF}"; then
-#		ewarn "You must rebuild gobject-introspection so that the installed"
-#		ewarn "typelibs and girs are regenerated for the new APIs in glib"
-#	fi
-#}
-
 pkg_postinst() {
-	# Inform users about possible breakage when updating glib and not dbus-glib, bug #297483
-	# TODO: add a subslotted virtual to trigger this automatically
-	# * Disabled for now as looks to not break for a long time
-	#if has_version dev-libs/dbus-glib; then
-	#	ewarn "If you experience a breakage after updating dev-libs/glib try"
-	#	ewarn "rebuilding dev-libs/dbus-glib"
-	#fi
-
 	if has_version '<x11-libs/gtk+-3.0.12:3'; then
 		# To have a clear upgrade path for gtk+-3.0.x users, have to resort to
 		# a warning instead of a blocker
