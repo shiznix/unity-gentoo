@@ -6,7 +6,7 @@ EAPI=5
 inherit base eutils pam readme.gentoo ubuntu-versionator user autotools systemd
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
-URELEASE="saucy"
+URELEASE="raring-updates"
 
 DESCRIPTION="A lightweight display manager"
 
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 
 IUSE_LIGHTDM_GREETERS="gtk unity kde razor"
@@ -24,7 +24,7 @@ for greeters in ${IUSE_LIGHTDM_GREETERS}; do
         IUSE+=" lightdm_greeters_${greeters}"
 done
 
-IUSE+=" +introspection qt4 qt5"
+IUSE+=" +introspection qt4"
 
 RESTRICT="mirror"
 
@@ -39,13 +39,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
 		dev-qt/qtcore:4
 		dev-qt/qtdbus:4
 		dev-qt/qtgui:4
-		)
-	qt5? (
-		dev-qt/qtcore:5
-		dev-qt/qtdbus:5
-		dev-qt/qtgui:5
 		)"
-
 RDEPEND="${COMMON_DEPEND}
 	>=sys-auth/pambase-20101024-r2
 	x11-apps/xrandr
@@ -56,8 +50,7 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/intltool
 	gnome-base/gnome-common
 	sys-devel/gettext
-	virtual/pkgconfig
-	app-text/yelp-tools"
+	virtual/pkgconfig"
 
 PDEPEND="lightdm_greeters_gtk? ( x11-misc/lightdm-gtk-greeter )
 	lightdm_greeters_kde? ( x11-misc/lightdm-kde )
@@ -86,20 +79,20 @@ src_prepare() {
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
-	# remove not needed patches
-	sed -i '/01_transition_ubuntu2d_ubuntu_desktop.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/03_launch_dbus.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/04_language_handling.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/05_add_xserver_core_option.patch/d' "${WORKDIR}/debian/patches/series" || die
+	# use startup script to stop dbus of lightdm when user session starts
+	epatch "${FILESDIR}"/03_launch_dbus.patch
 
-	# apply remaining patches
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	# sets language setting of user session
+	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-fix-language-setting.patch
+
+	# use system default language in greeter
+	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-make-sessions-inherit-system-default-locale.patch
+
+#	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+#		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+#	done
 
 	epatch_user
-
-	base_src_prepare
 
 	if has_version dev-libs/gobject-introspection; then
 		eautoreconf
@@ -109,14 +102,12 @@ src_prepare() {
 }
 
 src_configure() {
-	# hack setting moc-5 version as long as 'qtchooser' not available
-	MOC5=/usr/$(get_libdir)/qt5/bin/moc \
 	econf \
 		--localstatedir=/var \
 		--disable-static \
 		$(use_enable introspection) \
 		$(use_enable qt4 liblightdm-qt) \
-		$(use_enable qt5 liblightdm-qt5) \
+		--enable-liblightdm-qt5=no \
 		--with-html-dir="${EPREFIX}"/usr/share/doc/${PF}/html
 }
 
@@ -137,11 +128,11 @@ src_install() {
 	doins "${FILESDIR}"/Xsession
 	fperms +x /etc/${PN}/Xsession
 
-	# script for lauching greeter sessions itself
+	# wrapper to start greeter session
 	# fixes problems with additional (2nd) nm-applet and
 	# setting icon themes in Unity desktop
-	doins "${FILESDIR}"/lightdm-greeter-session
-	fperms +x /etc/${PN}/lightdm-greeter-session
+	doins "${FILESDIR}"/lightdm-greeter-wrapper
+	fperms +x /etc/${PN}/lightdm-greeter-wrapper
 
 	# script makes lightdm multi monitor sessions aware
 	# and enable first display as primary output
