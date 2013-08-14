@@ -38,7 +38,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	cp "${WORKDIR}/debian/webaccounts.pem" .
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	cp "debian/webaccounts.pem" .
 	eautoreconf
 }
 

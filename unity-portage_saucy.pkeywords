@@ -113,6 +113,7 @@ dev-python/isodate
 dev-python/oauthlib
 =dev-python/pyatspi-2.6*
 dev-python/pycairo
+dev-python/pycurl
 dev-python/pycrypto
 dev-python/pygobject
 dev-python/python-distutils-extra
