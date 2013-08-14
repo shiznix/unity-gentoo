@@ -13,6 +13,7 @@ To preserve the function of these integrated packages from being broken by main 
 the affected packages need to be masked from being emerged from the main portage tree
 
 Packages affected are:
+dev-cpp/gtest
 dev-libs/dee
 dev-libs/glib
 dev-libs/gobject-introspection
