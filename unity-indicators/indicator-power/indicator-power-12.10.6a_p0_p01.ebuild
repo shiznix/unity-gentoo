@@ -5,7 +5,7 @@
 EAPI=4
 GNOME2_LA_PUNT="yes"
 
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
@@ -21,7 +21,7 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/glib-2.34
+DEPEND=">=dev-libs/glib-2.35.4
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
@@ -31,5 +31,6 @@ DEPEND=">=dev-libs/glib-2.34
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	append-cflags -Wno-error
 	eautoreconf
 }
