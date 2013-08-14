@@ -154,6 +154,7 @@ sys-auth/pambase
 sys-devel/automake:1.13
 sys-devel/automake-wrapper
 sys-devel/gcc:4.7
+sys-devel/gcc:4.8
 sys-libs/db:5.1
 sys-libs/tevent
 x11-base/xorg-drivers
