@@ -8,7 +8,7 @@ VALA_MIN_API_VERSION="0.16"
 VALA_MAX_API_VERSION="0.18"
 VALA_USE_DEPEND="vapigen"
 
-inherit gnome2 ubuntu-versionator base vala
+inherit autotools flag-o-matic gnome2 ubuntu-versionator base vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -23,7 +23,7 @@ LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 
-IUSE="battery networkmanager +branding"
+IUSE="battery +branding networkmanager nls"
 RESTRICT="mirror"
 
 DEPEND="x11-libs/gtk+:3
@@ -70,6 +70,13 @@ src_prepare() {
 
 	vala_src_prepare
 	base_src_prepare
+	append-cflags -Wno-error
+	eautoreconf
+}
+
+src_configure() {
+	econf \
+		$(use_enable nls)
 }
 
 src_install() {
