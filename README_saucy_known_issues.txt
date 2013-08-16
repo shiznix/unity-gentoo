@@ -22,3 +22,7 @@
 
 - >=gnome-extra/nautilus-sendto-3.8
 	- Empathy requires nautilus-sendto.pc which doesn't exist in nautilus-sendto-3.8
+
+- launchpad bug #86184
+ * not possible to change mouse cursor theme
+ (cursor theme packages are missing in overlay too)
