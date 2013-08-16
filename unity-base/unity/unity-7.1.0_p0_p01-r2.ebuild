@@ -12,7 +12,7 @@ inherit base cmake-utils distutils eutils gnome2 python toolchain-funcs ubuntu-v
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130812.1"
+UVER_PREFIX="+13.10.20130813.1"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
@@ -192,6 +192,12 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+
+	# Remove upstart jobs as we use xsession based scripts in /etc/X11/xinit/xinitrc.d/ #
+	rm -rf "${ED}usr/share/upstart"
+
+	exeinto /etc/X11/xinit/xinitrc.d/
+	doexe "${FILESDIR}/82unity-panel-service"
 
 	# Make searchingthedashlegalnotice.html available to gnome-control-center's Details > Legal Notice #
 	dosym /usr/share/unity/icons/searchingthedashlegalnotice.html \
