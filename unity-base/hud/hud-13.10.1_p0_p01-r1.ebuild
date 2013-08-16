@@ -67,4 +67,8 @@ src_install() {
 	pushd tools/hudkeywords
 		distutils_src_install
 	popd
+
+	# Remove upstart jobs as we use xsession based scripts in /etc/X11/xinit/xinitrc.d/ #
+	# /usr/libexec/hud/hud-service is started by dbus anyway, so only needed for lack of dbus support in upstart #
+	rm -rf "${ED}usr/share/upstart"
 }
