@@ -44,6 +44,12 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare () {
+	# The /usr/lib/cli location for Mono bindings is specific to Ubuntu
+	sed -e 's|assemblydir = $(libdir)/cli/appindicator-sharp-0.1|assemblydir = $(libdir)/appindicator-sharp-0.1|' \
+		-i bindings/mono/Makefile.am
+	sed -e 's|assemblies_dir=${libdir}/cli/appindicator-sharp-0.1|assemblies_dir=${libdir}/appindicator-sharp-0.1|' \
+		-i bindings/mono/appindicator-sharp-0.1.pc.in
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
