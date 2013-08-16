@@ -4,11 +4,11 @@
 
 EAPI=5
 
-inherit cmake-utils ubuntu-versionator
+inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130717"
+UVER_PREFIX="+13.10.20130812"
 
 DESCRIPTION="Indicator showing session management, status and user switching used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-session"

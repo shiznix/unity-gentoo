@@ -11,32 +11,27 @@ inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130731"
+UVER_PREFIX="+13.10.20130814"
 
-DESCRIPTION="System sound indicator used by the Unity desktop"
-HOMEPAGE="https://launchpad.net/indicator-sound"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"
+HOMEPAGE="https://launchpad.net/ido"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	 ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
-LICENSE="GPL-3"
-SLOT="0"
+LICENSE="LGPL-2.1 LGPL-3"
+SLOT="0/0.0.0"
 #KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=
-	unity-base/bamf:=
-	unity-indicators/ido:="
-DEPEND="${RDEPEND}
-	dev-libs/libappindicator
-	dev-libs/libgee:0
-	dev-libs/libindicate-qt
-	media-sound/pulseaudio
+DEPEND="x11-libs/gtk+:3
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
