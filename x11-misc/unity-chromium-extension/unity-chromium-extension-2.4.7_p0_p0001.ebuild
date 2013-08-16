@@ -7,7 +7,7 @@ EAPI=5
 inherit autotools eutils multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-URELEASE="raring"
+URELEASE="raring-updates"
 
 DESCRIPTION="Chromium extension: Unity Integration"
 HOMEPAGE="https://launchpad.net/unity-chromium-extension"
