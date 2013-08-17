@@ -8,7 +8,7 @@ inherit autotools base eutils ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/n/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130802"
+UVER_PREFIX="+13.10.20130816.2"
 
 GTESTVER="1.6.0"
 

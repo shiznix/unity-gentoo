@@ -7,11 +7,11 @@ GNOME2_LA_PUNT="yes"
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-inherit cmake-utils flag-o-matic ubuntu-versionator vala
+inherit cmake-utils distutils flag-o-matic ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130812"
+UVER_PREFIX="+13.10.20130816.1"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"
@@ -51,7 +51,8 @@ src_configure() {
 	local mycmakeargs="${mycmakeargs}
 			$(cmake-utils_use_enable test TESTS)
 			-DVALA_COMPILER=$(type -P valac-0.20)
-			-DVAPI_GEN=$(type -P vapigen-0.20)"
+			-DVAPI_GEN=$(type -P vapigen-0.20)
+			-DCMAKE_INSTALL_DATADIR=/usr/share"
 	cmake-utils_src_configure
 }
 
