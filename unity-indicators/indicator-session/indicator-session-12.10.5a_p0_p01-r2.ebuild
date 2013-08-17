@@ -36,10 +36,21 @@ DEPEND="app-admin/system-config-printer-gnome
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	# Fix broken schemas and sandbox violations #
+	# Fix schema errors and sandbox violations #
 	epatch "${FILESDIR}/sandbox_violations_fix.diff"
-	for file in `grep -r /apps/indicator-session/ * | awk -F: '{print $1}' | uniq`; do
-		sed -e "s:/apps/indicator-session/:/org/indicator-session/:g" \
-			-i "${file}"
-	done
+}
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+	gnome2_icon_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
+	gnome2_icon_cache_update
 }
