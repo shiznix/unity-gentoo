@@ -22,7 +22,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 RDEPEND=">=gnome-base/gnome-core-libs-${PV}[cups?]
 	>=gnome-base/gnome-panel-${PV}
 	>=gnome-extra/polkit-gnome-0.105
-	|| ( x11-misc/notify-osd x11-misc/notification-daemon )
+	x11-misc/notify-osd
 	>=x11-wm/metacity-2.34.13"
 DEPEND=""
 

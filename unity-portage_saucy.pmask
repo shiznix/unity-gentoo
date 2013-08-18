@@ -36,9 +36,3 @@ x11-themes/gtk-engines-unico::gentoo
 x11-wm/metacity::gentoo
 x11-misc/lightdm::gentoo
 x11-misc/lightdm-kde::gentoo
-
-## These Gnome packages need to stay at 3.6 until 3.8 packages are made available in Saucy ##
->=gnome-base/gnome-control-center-3.8
->=gnome-base/gnome-settings-daemon-3.8
->=gnome-base/gnome-shell-3.8
->=x11-wm/mutter-3.8
