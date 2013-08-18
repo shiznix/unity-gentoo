@@ -109,6 +109,8 @@ pkg_postinst() {
 	elog "Set ${PN} as default greeter of LightDM."
 	"${ROOT}"/usr/bin/eselect lightdm set unity-greeter
 
+	elog "Set 'unity' as default user session."
+	/usr/libexec/lightdm/lightdm-set-defaults -k --session=unity
 }
 
 pkg_postrm() {
@@ -116,6 +118,7 @@ pkg_postrm() {
 		elog
 		elog "Remove ${PN} as default greeter of LightDM"
 		/usr/libexec/lightdm/lightdm-set-defaults --remove --greeter=${PN}
+		/usr/libexec/lightdm/lightdm-set-defaults --remove --session=unity
 	fi
 
 	gnome2_schemas_update
