@@ -88,6 +88,21 @@ src_prepare() {
 	# use system default language in greeter
 	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-make-sessions-inherit-system-default-locale.patch
 
+	cd "${WORKDIR}/debian"
+
+	# Do not depend on Debian/Ubuntu specific adduser package
+	epatch "${FILESDIR}"/guest-session-cross-distro.patch
+
+	# Add support for settings GSettings/dconf defaults in the guest session. Just
+	# put the files in /etc/guest-session/gsettings/. The file format is the same
+	# as the regular GSettings override files.
+	epatch "${FILESDIR}"/guest-session-add-default-gsettings-support.patch
+
+	cd "${S}"
+
+	# Patch from Fedora to lock the screen before switching users.
+	epatch "${FILESDIR}"/lightdm-lock-screen-before-switch.patch
+
 #	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 #		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 #	done
@@ -121,35 +136,61 @@ pkg_preinst() {
 src_install() {
 	default
 
-	insinto /etc/${PN}
-	doins data/keys.conf
-	newins data/${PN}.conf ${PN}.conf_example
-	doins "${FILESDIR}"/${PN}.conf
-	doins "${FILESDIR}"/Xsession
-	fperms +x /etc/${PN}/Xsession
+insinto /etc/${PN}
+        doins data/keys.conf
+        newins data/${PN}.conf ${PN}.conf_example
+        newins "${FILESDIR}"/${PN}-${PV%%_p*}.conf ${PN}.conf
 
-	# wrapper to start greeter session
-	# fixes problems with additional (2nd) nm-applet and
-	# setting icon themes in Unity desktop
+        insinto /usr/libexec/${PN}
+        doins "${FILESDIR}"/Xsession
+        fperms +x /usr/libexec/${PN}/Xsession
+
+        # wrapper to start greeter session
+        # fixes problems with additional (2nd) nm-applet and
+        # setting icon themes in Unity desktop
 	doins "${FILESDIR}"/lightdm-greeter-wrapper
-	fperms +x /etc/${PN}/lightdm-greeter-wrapper
+	fperms +x /usr/libexec/${PN}/lightdm-greeter-wrapper
 
-	# script makes lightdm multi monitor sessions aware
-	# and enable first display as primary output
-	# all other monitors are aranged right of it in a row
-	#
-	# on 'unity-greeter' the login prompt will follow the mouse cursor
-	#
-	doins "${FILESDIR}"/lightdm-greeter-display-setup
-	fperms +x /etc/${PN}/lightdm-greeter-display-setup
+        # script makes lightdm multi monitor sessions aware
+        # and enable first display as primary output
+        # all other monitors are aranged right of it in a row
+        # 
+        # on 'unity-greeter' the login prompt will follow the mouse cursor
+        #
+        doins "${FILESDIR}"/lightdm-greeter-display-setup
+        fperms +x /usr/libexec/${PN}/lightdm-greeter-display-setup
 
-	prune_libtool_files --all
-	rm -rf "${ED}"/etc/init
+        # install guest-account script
+        insinto /usr/bin
+        newins "${WORKDIR}/debian/guest-account" guest-account || die
+        fperms +x /usr/bin/guest-account
 
-	pamd_mimic system-local-login ${PN} auth account session #372229
-	dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
+        # Create GSettings defaults directory
+        insinto /etc/guest-session/gsettings/
 
-	readme.gentoo_create_doc
+        # Install systemd tmpfiles.d file
+        insinto /usr/lib/tmpfiles.d
+        newins "${FILESDIR}"/${PN}.tmpfiles.d ${PN}.conf || die
 
-	systemd_dounit "${FILESDIR}/${PN}.service"
+        # Install PolicyKit rules from Fedora which allow the lightdm user to access
+        # the systemd-logind, consolekit, and upower DBus interfaces
+        insinto /usr/share/polkit-1/rules.d
+        newins "${FILESDIR}"/${PN}.rules ${PN}.rules || die
+
+        prune_libtool_files --all
+        rm -rf "${ED}"/etc/init
+
+        pamd_mimic system-local-login ${PN} auth account session #372229
+        dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
+
+        readme.gentoo_create_doc
+
+        systemd_dounit "${FILESDIR}/${PN}.service"
+}
+
+pkg_postinst() {
+	elog
+        elog "'guest session' is disabled by default."
+	elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
+	elog "or run '/usr/libexec/lightdm/lightdm-set-defaults --allow-guest=true'"
 }

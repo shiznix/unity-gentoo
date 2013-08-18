@@ -97,6 +97,21 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 
+        cd "${WORKDIR}/debian"
+
+        # Do not depend on Debian/Ubuntu specific adduser package
+        epatch "${FILESDIR}"/guest-session-cross-distro.patch
+
+        # Add support for settings GSettings/dconf defaults in the guest session. Just
+        # put the files in /etc/guest-session/gsettings/. The file format is the same
+        # as the regular GSettings override files.
+        epatch "${FILESDIR}"/guest-session-add-default-gsettings-support.patch
+
+        cd "${S}"
+
+        # Patch from Fedora to lock the screen before switching users.
+        epatch "${FILESDIR}"/lightdm-lock-screen-before-switch.patch
+
 	epatch_user
 
 	base_src_prepare
@@ -134,14 +149,21 @@ src_install() {
 	doins data/keys.conf
 	newins data/${PN}.conf ${PN}.conf_example
 	doins "${FILESDIR}"/${PN}.conf
+	
+	insinto /etc/${PN}/${PN}.conf.d
+	doins "${FILESDIR}"/50-display-setup.conf
+	doins "${FILESDIR}"/50-greeter-wrapper.conf
+	doins "${FILESDIR}"/50-session-wrapper.conf
+
+	insinto /usr/libexec/${PN}
 	doins "${FILESDIR}"/Xsession
-	fperms +x /etc/${PN}/Xsession
+	fperms +x /usr/libexec/${PN}/Xsession
 
         # wrapper to start greeter session
         # fixes problems with additional (2nd) nm-applet and
         # setting icon themes in Unity desktop
         doins "${FILESDIR}"/lightdm-greeter-wrapper
-        fperms +x /etc/${PN}/lightdm-greeter-wrapper
+        fperms +x /usr/libexec/${PN}/lightdm-greeter-wrapper
 
         # script makes lightdm multi monitor sessions aware
         # and enable first display as primary output
@@ -150,7 +172,24 @@ src_install() {
         # on 'unity-greeter' the login prompt will follow the mouse cursor
         #
         doins "${FILESDIR}"/lightdm-greeter-display-setup
-        fperms +x /etc/${PN}/lightdm-greeter-display-setup
+        fperms +x /usr/libexec/${PN}/lightdm-greeter-display-setup
+
+	# install guest-account script
+        insinto /usr/bin
+        newins "${WORKDIR}/debian/guest-account" guest-account || die
+        fperms +x /usr/bin/guest-account
+
+	# Create GSettings defaults directory
+	insinto /etc/guest-session/gsettings/
+
+        # Install systemd tmpfiles.d file
+        insinto /usr/lib/tmpfiles.d
+        newins "${FILESDIR}"/${PN}.tmpfiles.d ${PN}.conf || die
+
+        # Install PolicyKit rules from Fedora which allow the lightdm user to access
+        # the systemd-logind, consolekit, and upower DBus interfaces
+        insinto /usr/share/polkit-1/rules.d
+        newins "${FILESDIR}"/${PN}.rules ${PN}.rules || die
 
 	prune_libtool_files --all
 	rm -rf "${ED}"/etc/init
@@ -162,3 +201,11 @@ src_install() {
 
 	systemd_dounit "${FILESDIR}/${PN}.service"
 }
+
+pkg_postinst() {
+        elog
+        elog "'guest session' is disabled by default."
+        elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
+        elog "or run '/usr/libexec/lightdm/lightdm-set-defaults --allow-guest=true'"
+}
+

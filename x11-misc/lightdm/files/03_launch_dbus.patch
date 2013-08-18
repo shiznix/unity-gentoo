@@ -16,7 +16,7 @@ Index: lightdm-1.5.1/src/display.c
      if (!argv)
          return TRUE;
  
-+    prepend_argv (&argv, "/etc/lightdm/lightdm-greeter-wrapper");
++    prepend_argv (&argv, "/usr/libexec/lightdm/lightdm-greeter-wrapper");
 +
      session_run (display->priv->session, argv);
  
