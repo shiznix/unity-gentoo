@@ -24,7 +24,7 @@ RDEPEND="dev-libs/libdbusmenu:=
 	unity-base/unity-language-pack"
 DEPEND="app-admin/system-config-printer-gnome
 	dev-cpp/gtest
-	>=dev-libs/glib-2.35.4
+	>=dev-libs/glib-2.37.5
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
@@ -38,6 +38,15 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 src_prepare() {
 	# Fix schema errors and sandbox violations #
 	epatch "${FILESDIR}/sandbox_violations_fix.diff"
+
+	if ! use help || has nodoc ${FEATURES}; then
+		epatch "${FILESDIR}/indicator-session_remove-help_saucy.patch"
+	else
+		sed -e 's:Ubuntu Help:Unity Help:g' \
+			-i src/service.c
+		sed -e 's:yelp:yelp help\:ubuntu-help:g' \
+			-i src/backend-dbus/actions.c
+	fi
 }
 
 pkg_preinst() {
