@@ -24,3 +24,7 @@ A Gentoo overlay to install the Unity desktop
 * A package unmask file is maintained at /var/lib/layman/unity-gentoo/unity-portage.punmask:
 
 	ln -s /var/lib/layman/unity-gentoo/unity-portage.punmask /etc/portage/package.unmask/unity-portage.punmask
+
+* A package USE file is maintained at /var/lib/layman/unity-gentoo/unity-portage.puse:
+
+	ln -s /var/lib/layman/unity-gentoo/unity-portage.puse /etc/portage/package.use/unity-portage.puse
