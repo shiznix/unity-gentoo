@@ -24,6 +24,7 @@ dev-libs/glib				# Critical underlying package to function of Unity, maintained 
 dev-libs/libappindicator		# See above
 dev-libs/libdbusmenu			# See above
 dev-libs/libindicator			# See above
+dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-control-center		# Patch out gnome-online-accounts and use ubuntu-online-accounts
 gnome-base/gnome-fallback		# Support x11-misc/notify-osd
