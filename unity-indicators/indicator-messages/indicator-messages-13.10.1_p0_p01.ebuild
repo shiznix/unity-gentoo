@@ -9,10 +9,10 @@ inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130808"
+UVER_PREFIX="+13.10.20130820.2"
 
-DESCRIPTION="Indicator showing power state used by the Unity desktop"
-HOMEPAGE="https://launchpad.net/indicator-power"
+DESCRIPTION="Indicator that collects messages that need a response used by the Unity desktop"
+HOMEPAGE="https://launchpad.net/indicator-messages"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
@@ -21,16 +21,14 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/glib-2.35.4
+DEPEND="!net-im/indicator-messages
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
-	dev-libs/libindicate-qt
-	>=gnome-base/gnome-settings-daemon-3.1.4
-	sys-power/upower"
+	dev-libs/libindicate-qt"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	append-cflags -Wno-error
 	eautoreconf
+	append-cflags -Wno-error
 }

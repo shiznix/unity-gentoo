@@ -8,7 +8,7 @@ inherit qt4-r2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.12"
+UVER_PREFIX="daily13.06.25"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-ui"

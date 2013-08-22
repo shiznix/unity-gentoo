@@ -62,6 +62,7 @@ src_prepare() {
 	sed -i '/0010-set-language.patch/d' "${WORKDIR}/debian/patches/series" || die
 #	sed -i '/0012-add-keyboard-layout-support.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0013-add-has-message-support.patch/d' "${WORKDIR}/debian/patches/series" || die
+	sed -i '/0016-add-input-sources-support.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/1001-buildsystem.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/2001-filtering_out_users.patch/d' "${WORKDIR}/debian/patches/series" || die
 

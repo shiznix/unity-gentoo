@@ -13,6 +13,7 @@ dev-libs/libxml2 icu
 dev-libs/protobuf python
 dev-libs/xapian-bindings python
 dev-qt/qtwebkit icu
+dev-qt/qt-mobility organizer
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 media-libs/mesa xorg gles2

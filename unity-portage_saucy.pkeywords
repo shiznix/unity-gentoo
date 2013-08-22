@@ -123,6 +123,7 @@ dev-python/rdflib
 dev-python/twisted-core
 dev-python/twisted-names
 dev-python/twisted-web
+dev-qt/qt-mobility
 =dev-util/boost-build-1.52*
 dev-util/fix-la-relink-command
 dev-util/dbus-test-runner

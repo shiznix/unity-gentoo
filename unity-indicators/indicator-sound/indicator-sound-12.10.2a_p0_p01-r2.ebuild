@@ -3,15 +3,14 @@
 # $Header: $
 
 EAPI=5
-GNOME2_LA_PUNT="yes"
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils gnome2 ubuntu-versionator vala
+inherit cmake-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130812.1"
+UVER_PREFIX="+13.10.20130820"
 
 DESCRIPTION="System sound indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-sound"
@@ -38,6 +37,11 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	vala_src_prepare
-	export VALA_API_GEN="$VAPIGEN"
-	eautoreconf
+}
+
+src_configure() {
+	local mycmakeargs="${mycmakeargs}
+		-DVALA_COMPILER=$(type -P valac-0.20)
+		-DVAPI_GEN=$(type -P vapigen-0.20)"
+	cmake-utils_src_configure
 }
