@@ -20,7 +20,7 @@ SCOPES="audacious_0.1${UVER_PREFIX}
 	colourlovers_0.1${UVER_PREFIX}
 	deviantart_0.1${UVER_PREFIX}
 	firefoxbookmarks_0.1+13.10.20130809.1
-	gallica_0.1${UVER_PREFIX}
+	gallica_0.1+13.10.20130816.2
 	gdrive_0.9${UVER_PREFIX}
 	github_0.1${UVER_PREFIX}
 	gmusicbrowser_0.1${UVER_PREFIX}
