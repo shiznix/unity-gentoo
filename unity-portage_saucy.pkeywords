@@ -127,7 +127,6 @@ dev-qt/qt-mobility
 =dev-util/boost-build-1.52*
 dev-util/fix-la-relink-command
 dev-util/dbus-test-runner
-dev-util/gdbus-codegen
 media-libs/fontconfig
 media-libs/gexiv2
 media-libs/libvpx
@@ -192,6 +191,7 @@ dev-python/pyjunitxml **
 dev-python/pywapi **
 dev-python/python-testscenarios **
 dev-util/dbus-test-runner **
+dev-util/gdbus-codegen::unity-gentoo **
 gnome-base/gnome-control-center::unity-gentoo **
 gnome-base/gnome-desktop::unity-gentoo **
 gnome-base/gnome-menus::unity-gentoo **
