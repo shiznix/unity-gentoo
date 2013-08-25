@@ -9,7 +9,7 @@ inherit autotools gnome2-utils ubuntu-versionator
 MY_PN="webapps-applications"
 URELEASE="saucy"
 UURL="mirror://ubuntu/pool/main/w/${MY_PN}"
-UVER_PREFIX="+13.10.20130715"
+UVER_PREFIX="+13.10.20130814"
 S="${WORKDIR}/${MY_PN}-${PV}${UVER_PREFIX}"
 
 DESCRIPTION="WebApps: Initial set of Apps for the Unity desktop"

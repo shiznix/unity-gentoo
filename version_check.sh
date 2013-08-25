@@ -21,10 +21,10 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'libXi'`" ]; then treepackname="${packname}"; packname="libxi"
 	elif [ -n "`echo "${packbasename}" | grep 'lazr-restfulclient'`" ]; then treepackname="${packname}"; packname="lazr.restfulclient"
 	elif [ -n "`echo "${packbasename}" | grep 'nm-applet'`" ]; then treepackname="${packname}"; packname="network-manager-applet"
+	elif [ -n "`echo "${packbasename}" | grep 'qtpim'`" ]; then treepackname="${packname}"; packname="libqt5organizer5"
 	elif [ -n "`echo "${packbasename}" | grep 'unity-language-pack'`" ]; then treepackname="${packname}"; packname="language-pack-gnome-en"
 	elif [ -n "`echo "${packbasename}" | grep 'unity-webapps'`" ]; then treepackname="${packname}"; packname="libunity-webapps"
 	elif [ -n "`echo "${packbasename}" | grep 'webapps-base'`" ]; then treepackname="${packname}"; packname="unity-webapps-common"
-	elif [ -n "`echo "${packbasename}" | grep '^webapps-[0-9]'`" ]; then treepackname="${packname}"; packname="unity-webapps-facebookmessenger"
 	elif [ -n "`echo "${packbasename}"`" ]; then treepackname="${packname}"
 	fi
 }

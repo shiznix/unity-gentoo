@@ -190,6 +190,7 @@ dev-python/dirspec **
 dev-python/pyjunitxml **
 dev-python/pywapi **
 dev-python/python-testscenarios **
+dev-qt/qtpim **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen::unity-gentoo **
 gnome-base/gnome-control-center::unity-gentoo **

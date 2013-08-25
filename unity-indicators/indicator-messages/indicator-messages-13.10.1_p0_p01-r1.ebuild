@@ -9,7 +9,7 @@ inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130820.2"
+UVER_PREFIX="+13.10.20130822.5"
 
 DESCRIPTION="Indicator that collects messages that need a response used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-messages"

@@ -12,7 +12,7 @@ inherit autotools eutils ubuntu-versionator vala xdummy python
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130812.1"
+UVER_PREFIX="+13.10.20130822.5"
 
 DESCRIPTION="BAMF Application Matching Framework"
 HOMEPAGE="https://launchpad.net/bamf"
@@ -33,7 +33,7 @@ DEPEND="dev-libs/gobject-introspection
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
 	x11-libs/libwnck:1
-	x11-libs/libwnck:3
+	>=x11-libs/libwnck-3.4.7:3
 	x11-libs/libXfixes
 	$(vala_depend)"
 

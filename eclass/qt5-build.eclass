@@ -420,6 +420,7 @@ qt5_base_configure() {
 		-system-zlib
 		-system-pcre
 		-system-xcb
+		-system-xkbcommon
 
 		# exclude examples and tests from default build
 		-nomake examples
@@ -452,6 +453,9 @@ qt5_base_configure() {
 		# disable gtkstyle because it adds qt4 include paths to the compiler
 		# command line if x11-libs/cairo is built with USE=qt4 (bug 433826)
 		-no-gtkstyle
+
+		# don't build with -Werror
+		-no-warnings-are-errors
 
 		# module-specific options
 		"${myconf[@]}"
