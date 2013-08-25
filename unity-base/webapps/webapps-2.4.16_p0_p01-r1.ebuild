@@ -51,7 +51,6 @@ setvar launchpad		2.4.16daily13.06.20	0ubuntu1
 setvar librefm			2.4.16daily13.06.20	0ubuntu1
 setvar linkedin			2.4.16daily13.06.20	0ubuntu1
 setvar livemail			2.4.16daily13.06.20	0ubuntu1
-setvar lordofultima		2.4.16daily13.06.20	0ubuntu1
 setvar mail-ru			2.4.16daily13.06.20	0ubuntu1
 setvar newsblur			2.4.16daily13.06.20	0ubuntu1
 setvar pandora			2.4.16daily13.06.20	0ubuntu1
@@ -59,7 +58,6 @@ setvar pandora-com		2.2ubuntu1
 ##setvar qml
 setvar qq-mail			2.4.16daily13.06.20	0ubuntu1
 setvar reddit			2.4.16daily13.06.20	0ubuntu1
-setvar tiberiumalliances	2.4.16daily13.06.20	0ubuntu1
 setvar tumblr			2.4.16daily13.06.20	0ubuntu1
 setvar twitter			2.4.16daily13.06.20	0ubuntu1
 setvar vkcom			2.4.16daily13.06.20	0ubuntu1

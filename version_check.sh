@@ -166,6 +166,10 @@ uver() {
 	unset strarray[@]
 }
 
+## Check versions in meta type ebuilds that install from multiple sources ##
+pushd $(pwd)/unity-base/webapps
+	./webapps_version_check.sh
+popd
 
 while (( "$#" )); do
 	case $1 in
