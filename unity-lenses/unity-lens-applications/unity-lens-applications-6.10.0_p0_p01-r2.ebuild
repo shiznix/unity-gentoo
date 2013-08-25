@@ -28,7 +28,7 @@ RDEPEND="dev-libs/dee:=
 	dev-libs/libunity:="
 DEPEND="${RDEPEND}
 	dev-libs/libzeitgeist
-	>=gnome-base/gnome-menus-3.0.1-r1:0
+	>=gnome-base/gnome-menus-3.6.0:3
 	>=gnome-extra/zeitgeist-0.9.14[datahub,fts]
 	sys-libs/db:5.1
 	unity-base/unity
