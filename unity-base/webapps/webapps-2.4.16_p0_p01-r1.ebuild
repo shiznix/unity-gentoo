@@ -20,7 +20,6 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="unity-base/webapps-base"
-S="${WORKDIR}"
 
 ## Neat and efficient way of bundling and tracking all available webapps into one ebuild ##
 ## Borrowed from chenxiaolong's Unity-for-Arch-Extra overlay at https://github.com/chenxiaolong/Unity-for-Arch-Extra ##
@@ -117,7 +116,7 @@ pkg_preinst() {
 pkg_postinst() {
 	gnome2_icon_cache_update
 	elog
-	elog "You my need to restart your browser for it to see these newly installed webapps"
+	elog "You may need to restart your browser for it to see these newly installed webapps"
 	elog
 }
 
