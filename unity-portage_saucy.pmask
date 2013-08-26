@@ -2,6 +2,7 @@
 
 app-backup/deja-dup::gentoo
 dev-cpp/gtest::gentoo
+>=dev-lang/v8-3.19::gentoo
 dev-libs/dee::gentoo
 dev-libs/glib::gentoo
 dev-libs/gobject-introspection::gentoo
