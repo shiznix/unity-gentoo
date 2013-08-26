@@ -170,6 +170,9 @@ uver() {
 pushd $(pwd)/unity-base/webapps
 	./webapps_version_check.sh
 popd
+pushd $(pwd)/unity-scopes/smart-scopes
+	./scopes_version_check.sh
+popd
 
 while (( "$#" )); do
 	case $1 in
