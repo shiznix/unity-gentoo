@@ -64,14 +64,28 @@ local_version_check() {
 
 
 upstream_version_check() {
-	upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
-	if [ -z "${upstream_version_scraped}" ]; then
-		[ "${stream_release}" != all ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
-		upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
-	else
-		[ "${stream_release}" != all ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
-	fi
-	upstream_version=`echo "${upstream_version_scraped}" | sed "s/^\${packname}-//"`
+		upstream_version=
+		## Try version lookup from the Sources.bz2 tarball first as this is faster, but fallback to web scrape request when it fails ##
+		if [ -n "$1" ]; then
+			if [ ! -f /tmp/Sources-$1 ]; then
+				echo
+				wget http://archive.ubuntu.com/ubuntu/dists/$1/main/source/Sources.bz2 -O /tmp/Sources-$1.bz2
+				bunzip2 /tmp/Sources-$1.bz2
+			fi
+			upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+			[ -n "${upstream_version}" ] && echo -e "\nChecking ${packname}  ::  $1"
+
+			if [ -z "${upstream_version}" ]; then
+				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+				if [ -z "${upstream_version_scraped}" ]; then
+					[ "${stream_release}" != all ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
+					upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+				else
+					[ "${stream_release}" != all ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
+				fi
+				upstream_version=`echo "${upstream_version_scraped}" | sed "s/^\${packname}-//" | sed 's/[0-9]://g'`
+			fi
+		fi
 }
 
 
@@ -201,3 +215,6 @@ else
 		version_check
 	done
 fi
+
+# Tidy up #
+rm /tmp/Sources-* 2> /dev/null

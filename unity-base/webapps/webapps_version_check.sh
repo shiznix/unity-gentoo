@@ -1,8 +1,18 @@
 #!/bin/sh
 
 version_check() {
-	upstream_version=unity-webapps-`wget -q "http://packages.ubuntu.com/${URELEASE}/source/unity-webapps-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/${_name}-\1/p" | sed 's/1://g'`
-	[ -z ${upstream_version} ] && upstream_version=unity-webapps-`wget -q "http://packages.ubuntu.com/${URELEASE}/unity-webapps-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/${_name} (\(.*\)).*/${_name}-\1/p" | sed 's/1://g'`
+	if [ ! -f /tmp/Sources-${URELEASE} ]; then
+		echo
+		wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/main/source/Sources.bz2 -O /tmp/Sources-${URELEASE}.bz2
+		bunzip2 /tmp/Sources-${URELEASE}.bz2
+	fi
+	upstream_version=`grep -A2 "Package: unity-webapps-${_name}$" /tmp/Sources-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+
+	if [ -z "${upstream_version}" ]; then
+		upstream_version=unity-webapps-`wget -q "http://packages.ubuntu.com/${URELEASE}/source/unity-webapps-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/${_name}-\1/p" | sed 's/1://g'`
+		[ -z ${upstream_version} ] && upstream_version=unity-webapps-`wget -q "http://packages.ubuntu.com/${URELEASE}/unity-webapps-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/${_name} (\(.*\)).*/${_name}-\1/p" | sed 's/1://g'`
+	fi
+
 	if [ "${local_version}" = "${upstream_version}" ]; then
 		echo
 		echo "  Local version: ${local_version}  ::  ${URELEASE}"
