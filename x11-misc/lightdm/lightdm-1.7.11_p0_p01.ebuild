@@ -11,8 +11,7 @@ URELEASE="saucy"
 DESCRIPTION="A lightweight display manager"
 
 HOMEPAGE="https://launchpad.net/lightdm"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}-${UVER}.tar.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -85,19 +84,6 @@ pkg_setup() {
 src_prepare() {
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
-
-	# remove not needed patches
-	sed -i '/01_transition_ubuntu2d_ubuntu_desktop.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/03_launch_dbus.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/04_language_handling.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/05_add_xserver_core_option.patch/d' "${WORKDIR}/debian/patches/series" || die
-
-	# apply remaining patches
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-
-        cd "${WORKDIR}/debian"
 
         # Do not depend on Debian/Ubuntu specific adduser package
         epatch "${FILESDIR}"/guest-session-cross-distro.patch
@@ -175,9 +161,9 @@ src_install() {
         fperms +x /usr/libexec/${PN}/lightdm-greeter-display-setup
 
 	# install guest-account script
-        insinto /usr/bin
-        newins "${WORKDIR}/debian/guest-account" guest-account || die
-        fperms +x /usr/bin/guest-account
+	insinto /usr/bin
+	newins debian/guest-account guest-account || die
+	fperms +x /usr/bin/guest-account
 
 	# Create GSettings defaults directory
 	insinto /etc/guest-session/gsettings/
