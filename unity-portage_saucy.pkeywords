@@ -114,11 +114,12 @@ dev-python/html5lib
 dev-python/isodate
 dev-python/oauthlib
 =dev-python/pyatspi-2.6*
-dev-python/pycairo
+dev-python/pycairo	# Latest version in portage tree is stable, but still needs to be keyword unmasked to support use.stable.mask for python-3.3
 dev-python/pycurl
 dev-python/pycrypto
 dev-python/pygobject
 dev-python/python-distutils-extra
+dev-python/pyxdg	# Latest version in portage tree is stable, but still needs to be keyword unmasked to support use.stable.mask for python-3.3
 dev-python/rdflib
 dev-python/twisted-core
 dev-python/twisted-names
