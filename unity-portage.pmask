@@ -8,6 +8,7 @@ dev-libs/gobject-introspection::gentoo
 dev-libs/libappindicator::gentoo
 dev-libs/libdbusmenu::gentoo
 dev-libs/libindicator::gentoo
+>=dev-libs/xapian-1.3::gentoo	# Development release which appends it's version to all includes/libs (see related b.g.o# 480470)
 gnome-base/gconf::gentoo
 gnome-base/gnome-control-center::gentoo
 gnome-base/gnome-fallback::gentoo
