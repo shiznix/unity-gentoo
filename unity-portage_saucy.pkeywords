@@ -100,8 +100,6 @@ dev-cpp/glibmm
 dev-lang/vala
 dev-libs/atk
 =dev-libs/boost-1.52*
-dev-libs/gobject-introspection
-dev-libs/gobject-introspection-common
 ~dev-libs/json-c-0.11
 dev-libs/json-glib
 dev-libs/libindicate
@@ -176,6 +174,8 @@ x11-themes/notify-osd-icons
 app-backup/deja-dup::unity-gentoo **
 dev-libs/dee::unity-gentoo **
 dev-libs/glib::unity-gentoo **
+dev-libs/gobject-introspection::unity-gentoo **
+dev-libs/gobject-introspection-common::unity-gentoo **
 dev-libs/libaccounts-glib **
 dev-libs/libappindicator::unity-gentoo **
 dev-libs/libcolumbus **
