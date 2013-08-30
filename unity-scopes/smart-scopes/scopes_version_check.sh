@@ -9,8 +9,8 @@ version_check() {
 	upstream_version=`grep -A2 "Package: unity-scope-${_name}$" /tmp/Sources-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
  
 	if [ -z "${upstream_version}" ]; then
-		upstream_version=unity-scope-`wget -q "http://packages.ubuntu.com/${URELEASE}/source/unity-scope-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/${_name}-\1/p" | sed 's/1://g'`
-		[ -z ${upstream_version} ] && upstream_version=unity-scope-`wget -q "http://packages.ubuntu.com/${URELEASE}/unity-scope-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/${_name} (\(.*\)).*/${_name}-\1/p" | sed 's/1://g'`
+		upstream_version=unity-scope-`wget -q "http://packages.ubuntu.com/${URELEASE}/source/unity-scope-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/${_name}-\1/p" | sed "s/).*//g" | sed 's/1://g'`
+		[ -z ${upstream_version} ] && upstream_version=unity-scope-`wget -q "http://packages.ubuntu.com/${URELEASE}/unity-scope-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/${_name} (\(.*\)).*/${_name}-\1/p" | sed "s/).*//g" | sed 's/1://g'`
 	fi
 
 	if [ "${local_version}" = "${upstream_version}" ]; then

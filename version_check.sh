@@ -79,10 +79,10 @@ upstream_version_check() {
 			fi
 
 			if [ -z "${upstream_version}" ]; then
-				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g'`
 				if [ -z "${upstream_version_scraped}" ]; then
 					[ "${stream_release}" != all ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
-					upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
+					upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g'`
 				else
 					[ "${stream_release}" != all ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
 				fi
