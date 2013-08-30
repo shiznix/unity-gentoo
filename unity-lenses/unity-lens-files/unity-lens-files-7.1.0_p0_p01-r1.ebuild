@@ -31,7 +31,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libgee
 	dev-libs/libzeitgeist
 	>=gnome-extra/zeitgeist-0.9.14[datahub,fts]
-	>=unity-base/unity-7.0.0
+	>=unity-base/unity-7.1.0
 	unity-lenses/unity-lens-applications
 	$(vala_depend)"
 

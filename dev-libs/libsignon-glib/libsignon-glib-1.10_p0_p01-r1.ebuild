@@ -29,8 +29,8 @@ RESTRICT="mirror"
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
 
 RDEPEND="dev-libs/check
-	>=dev-libs/glib-2.37
-	>=dev-libs/gobject-introspection-1.37.0
+	>=dev-libs/glib-2.35.1
+	>=dev-libs/gobject-introspection-1.36.0
 	dev-util/gdbus-codegen
 	unity-base/signon"
 DEPEND="${RDEPEND}
@@ -41,9 +41,7 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
-
 	vala_src_prepare
-
 	eautoreconf
 }
 

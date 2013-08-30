@@ -8,7 +8,7 @@ inherit base qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/q/${PN}-opensource-src"
 URELEASE="saucy"
-UVER_PREFIX="~git20130723"
+UVER_PREFIX="~git20130828"
 
 DESCRIPTION="Qt PIM module, Organizer library"
 SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
@@ -23,7 +23,7 @@ DEPEND=">=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtjsbackend-${PV}:5[debug=]
 	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]"
 
-S="${WORKDIR}/${PN}-opensource-src-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	# Ubuntu patchset #

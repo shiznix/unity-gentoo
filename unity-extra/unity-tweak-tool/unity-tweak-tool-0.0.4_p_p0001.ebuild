@@ -2,11 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-PYTHON_DEPEND="3:3.2"
-RESTRICT_PYTHON_ABIS="2.*"
+EAPI=5
 
-inherit distutils gnome2-utils python ubuntu-versionator
+PYTHON_COMPAT=( python3_2 )
+DISTUTILS_NO_PARALLEL_BUILD=1
+
+inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 URELEASE="raring-updates"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
@@ -21,9 +22,9 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
-	dev-python/pycairo
-	dev-python/pyxdg
-	dev-python/pygobject:3
+	dev-python/pycairo[${PYTHON_USEDEP}]
+	dev-python/pyxdg[${PYTHON_USEDEP}]
+	dev-python/pygobject:3[${PYTHON_USEDEP}]
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}
 	dev-util/intltool
@@ -31,11 +32,7 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext"
 
 S="${WORKDIR}/${PN}-${PV}${UVER}"
-
-pkg_setup() {
-	python_set_active_version 3
-	python_pkg_setup
-}
+USER_ID="$(id -u)"
 
 src_prepare() {
 	# Make Unity Tweak Tool appear in gnome-control-center #
@@ -43,6 +40,13 @@ src_prepare() {
 		-e 's:Exec=.*:Exec=unity-tweak-tool:' \
 		-e '/Actions=/{:a;n;/^$/!ba;i\X-GNOME-Settings-Panel=unitytweak' -e '}' \
 			-i unity-tweak-tool.desktop.in || die
+}
+
+src_compile() {
+	## Sandbox violations caused when dev-python/python-distutils-extra's build system tries to start an Xsession and fails but as part ##
+	##  of that also tries to start /usr/libexec/dconf-service if it's not already running which causes dconf sandbox violations ##
+		addpredict /run/user/$USER_ID/dconf
+		distutils-r1_src_compile
 }
 
 pkg_preinst() {

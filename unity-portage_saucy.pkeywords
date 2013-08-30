@@ -100,6 +100,8 @@ dev-cpp/glibmm
 dev-lang/vala
 dev-libs/atk
 =dev-libs/boost-1.52*
+dev-libs/gobject-introspection
+dev-libs/gobject-introspection-common
 ~dev-libs/json-c-0.11
 dev-libs/json-glib
 dev-libs/libindicate
@@ -114,11 +116,12 @@ dev-python/html5lib
 dev-python/isodate
 dev-python/oauthlib
 =dev-python/pyatspi-2.6*
-dev-python/pycairo
+dev-python/pycairo	# Latest version in portage tree is stable, but still needs to be keyword unmasked to support use.stable.mask for python-3.3
 dev-python/pycurl
 dev-python/pycrypto
 dev-python/pygobject
 dev-python/python-distutils-extra
+dev-python/pyxdg	# Latest version in portage tree is stable, but still needs to be keyword unmasked to support use.stable.mask for python-3.3
 dev-python/rdflib
 dev-python/twisted-core
 dev-python/twisted-names
@@ -162,7 +165,7 @@ sys-libs/tevent
 x11-base/xorg-drivers
 x11-drivers/xf86-video-dummy
 x11-misc/appmenu-qt
-x11-misc/colord
+=x11-misc/colord-0.1*
 x11-misc/notify-osd
 x11-themes/light-themes
 x11-themes/notify-osd-icons
@@ -171,8 +174,6 @@ x11-themes/notify-osd-icons
 app-backup/deja-dup::unity-gentoo **
 dev-libs/dee::unity-gentoo **
 dev-libs/glib::unity-gentoo **
-dev-libs/gobject-introspection::unity-gentoo **
-dev-libs/gobject-introspection-common::unity-gentoo **
 dev-libs/libaccounts-glib **
 dev-libs/libappindicator::unity-gentoo **
 dev-libs/libcolumbus **
