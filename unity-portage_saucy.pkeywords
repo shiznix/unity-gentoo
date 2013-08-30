@@ -113,7 +113,9 @@ dev-libs/vala-common
 dev-python/bsddb3
 dev-python/dbus-python
 dev-python/html5lib
+dev-python/httplib2
 dev-python/isodate
+dev-python/oauth
 dev-python/oauthlib
 =dev-python/pyatspi-2.6*
 dev-python/pycairo	# Latest version in portage tree is stable, but still needs to be keyword unmasked to support use.stable.mask for python-3.3
@@ -188,6 +190,7 @@ dev-libs/libunity-webapps **
 dev-libs/xpathselect **
 dev-python/autopilot **
 dev-python/dirspec **
+dev-python/lazr-restfulclient **
 dev-python/pyjunitxml **
 dev-python/pywapi **
 dev-python/python-testscenarios **
