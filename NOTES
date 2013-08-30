@@ -19,6 +19,7 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
 * Reasons for patching/maintaining packages:
 dev-cpp/gtest				# Customised ebuild to install /usr/src/gtest/* files lacking from main tree ebuild
+dev-cpp/gmock				# Customised ebuild to install /usr/src/gmock/* files lacking from main tree ebuild
 dev-libs/dee				# Mainline portage tree ebuild lacks support for multi-python ABI installation needed by Dash lenses
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/libappindicator		# See above
