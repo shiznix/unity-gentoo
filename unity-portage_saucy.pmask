@@ -5,7 +5,6 @@ dev-cpp/gtest::gentoo
 >=dev-lang/v8-3.19::gentoo
 dev-libs/dee::gentoo
 dev-libs/glib::gentoo
-dev-libs/gobject-introspection::gentoo
 dev-libs/libappindicator::gentoo
 dev-libs/libdbusmenu::gentoo
 dev-libs/libindicator::gentoo
