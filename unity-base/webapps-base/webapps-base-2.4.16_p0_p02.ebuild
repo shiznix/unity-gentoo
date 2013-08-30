@@ -22,7 +22,8 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="!<unity-base/webapps-2.4.16_p0_p01-r1"
+RDEPEND="!<unity-base/webapps-2.4.16_p0_p01-r2
+	!<x11-themes/unity-asset-pool-0.8.24a_p0_p01-r1"
 DEPEND=">=dev-libs/glib-2.32.3
 	dev-libs/json-glib
 	dev-libs/libindicate[gtk,introspection]

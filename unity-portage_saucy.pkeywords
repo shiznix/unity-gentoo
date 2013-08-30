@@ -116,7 +116,7 @@ dev-python/html5lib
 dev-python/httplib2
 dev-python/isodate
 dev-python/oauth
-dev-python/oauthlib
+<=dev-python/oauthlib-0.3.7	# unity-base/ubuntuone-control-panel
 =dev-python/pyatspi-2.6*
 dev-python/pycairo	# Latest version in portage tree is stable, but still needs to be keyword unmasked to support use.stable.mask for python-3.3
 dev-python/pycurl

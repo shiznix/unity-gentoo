@@ -28,7 +28,7 @@ setvar() {
 	eval "_rel_${1/-/_}=${3}"
 	packages+=(${1})
 }
-setvar amazon			2.4.16daily13.06.20	0ubuntu1
+##setvar amazon			2.4.16daily13.06.20	0ubuntu1	# Collides with files from unity-base/webapps-base
 setvar amazoncloudreader	2.4.16daily13.06.20	0ubuntu1
 setvar angrybirds		2.2
 setvar bbcnews			2.4.16daily13.06.20	0ubuntu1
