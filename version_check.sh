@@ -65,15 +65,18 @@ local_version_check() {
 
 upstream_version_check() {
 		upstream_version=
-		## Try version lookup from the Sources.bz2 tarball first as this is faster, but fallback to web scrape request when it fails ##
 		if [ -n "$1" ]; then
-			if [ ! -f /tmp/Sources-$1 ]; then
-				echo
-				wget http://archive.ubuntu.com/ubuntu/dists/$1/main/source/Sources.bz2 -O /tmp/Sources-$1.bz2
-				bunzip2 /tmp/Sources-$1.bz2
+			## Try version lookup from the Sources.bz2 tarball first as this is faster, but fallback to web scrape request when it fails ##
+			##  Don't use tarball method if script is run as ./version_check.sh <pathto>/something-1.2.ebuild ##
+			if [ -n "${nopack}" ]; then
+				if [ ! -f /tmp/Sources-$1 ]; then
+					echo
+					wget http://archive.ubuntu.com/ubuntu/dists/$1/main/source/Sources.bz2 -O /tmp/Sources-$1.bz2
+					bunzip2 /tmp/Sources-$1.bz2
+				fi
+				upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+				[ -n "${upstream_version}" ] && echo -e "\nChecking ${packname}  ::  $1"
 			fi
-			upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-			[ -n "${upstream_version}" ] && echo -e "\nChecking ${packname}  ::  $1"
 
 			if [ -z "${upstream_version}" ]; then
 				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed 's/1://g'`
@@ -180,14 +183,6 @@ uver() {
 	unset strarray[@]
 }
 
-## Check versions in meta type ebuilds that install from multiple sources ##
-pushd $(pwd)/unity-base/webapps
-	./webapps_version_check.sh
-popd
-pushd $(pwd)/unity-scopes/smart-scopes
-	./scopes_version_check.sh
-popd
-
 while (( "$#" )); do
 	case $1 in
 		--release=*)
@@ -209,6 +204,20 @@ elif [ -n "${pack}" ]; then
 	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
 	version_check
 else
+	if [ -z "${stream_release}" ]; then
+		## Check versions in meta type ebuilds that install from multiple sources ##
+		if [ -d "$(pwd)/unity-base/webapps" ]; then
+			pushd $(pwd)/unity-base/webapps
+				./webapps_version_check.sh
+			popd
+		fi
+		if [ -d "$(pwd)/unity-scopes/smart-scopes" ]; then
+			pushd $(pwd)/unity-scopes/smart-scopes
+				./scopes_version_check.sh
+			popd
+		fi
+	fi
+	nopack=1
 	for pack in `find $(pwd) -name "*.ebuild"`; do
 		packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 		packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
