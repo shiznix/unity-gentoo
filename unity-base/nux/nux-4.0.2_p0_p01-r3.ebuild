@@ -10,14 +10,11 @@ UURL="mirror://ubuntu/pool/main/n/${PN}"
 URELEASE="saucy"
 UVER_PREFIX="+13.10.20130829.1"
 
-GTESTVER="1.6.0"
-
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
 HOMEPAGE="http://launchpad.net/nux"
 
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz
-	test? ( http://googletest.googlecode.com/files/gtest-${GTESTVER}.zip )"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0/4"
@@ -25,15 +22,19 @@ SLOT="0/4"
 IUSE="debug doc examples test"
 RESTRICT="mirror"
 
-RDEPEND="!unity-base/utouch-geis"
 DEPEND="app-i18n/ibus
+	dev-cpp/gtest
 	dev-libs/boost
 	>=dev-libs/glib-2.32.3
+	dev-libs/libpcre
 	dev-libs/libsigc++:2
 	gnome-base/gnome-common
 	<media-libs/glew-1.8
+	media-libs/libpng:0
+	sys-apps/pciutils
 	>=sys-devel/gcc-4.6
 	unity-base/geis
+	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/libXcomposite
 	x11-libs/libXdamage
@@ -42,7 +43,8 @@ DEPEND="app-i18n/ibus
 	x11-proto/dri2proto
 	x11-proto/glproto
 	doc? ( app-doc/doxygen )
-	test? ( dev-cpp/gtest )"
+	test? ( dev-cpp/gmock
+		dev-cpp/gtest )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
@@ -56,12 +58,7 @@ src_prepare() {
 		PATCHES+=( "debian/patches/${patch}" )
 	done
 	base_src_prepare
-	./autogen.sh ${myconf}	# eautoreconf fails
-
-	# Fix building with libgeis #
-	sed -e "s:libutouch-geis:libgeis:g" \
-		-i configure \
-			NuxGraphics/nux-graphics.pc.in
+	eautoreconf
 }
 
 src_configure() {
@@ -71,19 +68,13 @@ src_configure() {
 	use doc && \
 		myconf="${myconf}
 			--enable-documentation=yes"
-
 	! use examples && \
 		myconf="${myconf}
 			--enable-examples=no"
-	if use test; then
-		myconf="${myconf}
-			--with-gtest-source-path="${WORKDIR}/gtest-${GTESTVER}""
-	else
+	! use test && \
 		myconf="${myconf}
 			--enable-tests=no
 			--enable-gputests=no"
-	fi
-
 	econf ${myconf}
 }
 

@@ -2,12 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-PYTHON_DEPEND="2:2.7"
-#SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
+EAPI=5
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_SINGLE_IMPL=1
 
-inherit distutils eutils python ubuntu-versionator
+inherit distutils-r1 eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -22,33 +21,25 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-lang/python
-	>=dev-libs/glib-2.32.3
-	dev-python/configglue
-	dev-python/dbus-python
+RDEPEND=">=dev-libs/glib-2.32.3
+	dev-python/configglue[${PYTHON_USEDEP}]
+	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/gnome-keyring-python
-	dev-python/httplib2
-	dev-python/imaging
-	dev-python/notify-python
-	>=dev-python/oauth-1.0
-	dev-python/PyQt4
-	>=dev-python/pygtk-2.10
-	dev-python/pyinotify
-	>=dev-python/python-distutils-extra-2.37
-	dev-python/pyxdg
-	dev-python/simplejson
-	>=dev-python/twisted-names-12.2.0
-	>=dev-python/twisted-web-12.2.0"
+	dev-python/httplib2[${PYTHON_USEDEP}]
+	dev-python/imaging[${PYTHON_USEDEP}]
+	dev-python/notify-python[${PYTHON_USEDEP}]
+	>=dev-python/oauth-1.0[${PYTHON_USEDEP}]
+	dev-python/PyQt4[${PYTHON_USEDEP}]
+	dev-python/pyinotify[${PYTHON_USEDEP}]
+	>=dev-python/python-distutils-extra-2.37[${PYTHON_USEDEP}]
+	dev-python/pyxdg[${PYTHON_USEDEP}]
+	dev-python/simplejson[${PYTHON_USEDEP}]
+	>=dev-python/twisted-names-12.2.0[${PYTHON_USEDEP}]
+	>=dev-python/twisted-web-12.2.0[${PYTHON_USEDEP}]
+	net-libs/libsoup"
+DEPEND="${RDEPEND}"
 
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
-
-src_prepare() {
-	python_convert_shebangs -r 2 .
-}
-
-pkg_postinst() {
-	python_disable_pyc
+src_install() {
+	distutils-r1_src_install
+	python_fix_shebang "${ED}"
 }

@@ -2,7 +2,7 @@ Title: Package versioning for the unity-gentoo overlay
 Author: shiznix <rickfharris@yahoo.com.au>
 Author: Mirko Guenther <renegart@gmx.de>
 Content-Type: text/plain
-Posted: 2013-04-21
+Posted: 2013-08-31
 Revision: 9
 News-Item-Format: 1.0
 Display-If-Installed: sys-apps/portage
@@ -17,6 +17,7 @@ dev-cpp/gtest
 dev-libs/dee
 dev-libs/glib
 dev-libs/gobject-introspection
+dev-libs/gobject-introspection-common
 dev-libs/libappindicator
 dev-libs/libdbusmenu
 dev-libs/libindicator

@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-PYTHON_DEPEND="2:2.7 3:3.2"
-SUPPORT_PYTHON_ABIS="1"
+EAPI=5
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_SINGLE_IMPL=1
 
-inherit distutils python
+inherit distutils-r1
 
 DESCRIPTION="Library that glues together python's optparse.OptionParser and ConfigParser.ConfigParser"
 HOMEPAGE="https://launchpad.net/configglue"
@@ -17,7 +17,3 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
-
-pkg_postinst() {
-	python_disable_pyc
-}

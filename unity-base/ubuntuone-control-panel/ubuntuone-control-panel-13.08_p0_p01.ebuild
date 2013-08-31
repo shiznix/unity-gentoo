@@ -2,14 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-GNOME2_LA_PUNT="yes"
+EAPI=5
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_SINGLE_IMPL=1
 
-PYTHON_DEPEND="2:2.7"
-SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
-
-inherit distutils ubuntu-versionator
+inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -24,32 +21,34 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-lang/python
-	dev-libs/dbus-glib"
-RDEPEND="${DEPEND}
-	dev-python/configglue
-	dev-python/dbus-python
+RDEPEND="dev-libs/dbus-glib
+	>=dev-libs/gobject-introspection-1.36
+	dev-python/configglue[${PYTHON_USEDEP}]
+	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/gnome-keyring-python
-	dev-python/httplib2
-	dev-python/notify-python
-	dev-python/oauth
-	<=dev-python/oauthlib-0.3.7
-	dev-python/pygtk
-	dev-python/dirspec
-	dev-python/lazr-restfulclient
-	dev-python/pyinotify
-	dev-python/pyxdg
-	dev-python/simplejson
-	>=dev-python/twisted-names-12.2.0
-	>=dev-python/twisted-web-12.2.0
+	dev-python/httplib2[${PYTHON_USEDEP}]
+	dev-python/notify-python[${PYTHON_USEDEP}]
+	dev-python/oauth[${PYTHON_USEDEP}]
+	<=dev-python/oauthlib-0.3.7[${PYTHON_USEDEP}]
+	dev-python/pygobject[${PYTHON_USEDEP}]
+	dev-python/dirspec[${PYTHON_USEDEP}]
+	dev-python/lazr-restfulclient[${PYTHON_USEDEP}]
+	dev-python/pyinotify[${PYTHON_USEDEP}]
+	dev-python/PyQt4[${PYTHON_USEDEP}]
+	dev-python/pyxdg[${PYTHON_USEDEP}]
+	dev-python/simplejson[${PYTHON_USEDEP}]
+	>=dev-python/twisted-names-12.2.0[${PYTHON_USEDEP}]
+	>=dev-python/twisted-web-12.2.0[${PYTHON_USEDEP}]
 	unity-base/ubuntu-sso-client
 	unity-base/ubuntuone-storage-protocol
 	x11-misc/lndir
 	x11-misc/xdg-utils"
+DEPEND="${RDEPEND}"
 
 src_install() {
 	# Delete some files that are only useful on Ubuntu
 	rm -rf "${D}"etc/apport "${D}"usr/share/apport
 
-	distutils_src_install
+	distutils-r1_src_install
+	python_fix_shebang "${ED}"
 }

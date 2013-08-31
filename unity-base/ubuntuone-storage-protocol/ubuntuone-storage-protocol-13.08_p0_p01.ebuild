@@ -2,14 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-GNOME2_LA_PUNT="yes"
+EAPI=5
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_SINGLE_IMPL=1
 
-PYTHON_DEPEND="2:2.7"
-SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
-
-inherit eutils distutils ubuntu-versionator
+inherit eutils distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -26,8 +23,8 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/protobuf[python]"
 RDEPEND="${DEPEND}
-	dev-python/dirspec
-	>=dev-python/oauth-1.0
-	dev-python/pyopenssl
-	>=dev-python/twisted-core-12.2.0
-	dev-python/pyxdg"
+	dev-python/dirspec[${PYTHON_USEDEP}]
+	>=dev-python/oauth-1.0[${PYTHON_USEDEP}]
+	dev-python/pyopenssl[${PYTHON_USEDEP}]
+	>=dev-python/twisted-core-12.2.0[${PYTHON_USEDEP}]
+	dev-python/pyxdg[${PYTHON_USEDEP}]"

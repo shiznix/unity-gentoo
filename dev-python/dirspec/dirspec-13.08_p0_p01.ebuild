@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
+PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
-PYTHON_DEPEND="2:2.7 3:3.2"
-SUPPORT_PYTHON_ABIS="1"
-
-inherit distutils ubuntu-versionator
+inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
 URELEASE="saucy"
