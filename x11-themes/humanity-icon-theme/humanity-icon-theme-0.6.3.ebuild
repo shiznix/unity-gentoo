@@ -25,6 +25,9 @@ src_install() {
 	insinto /usr/share/icons
 	doins -r Humanity
 	doins -r Humanity-Dark
+
+	## Remove broken symlinks ##
+	find -L "${ED}" -type l -exec rm {} +
 }
 
 pkg_preinst() { gnome2_icon_savelist; }
