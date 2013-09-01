@@ -41,8 +41,8 @@ COMMON_DEPEND=">=dev-libs/glib-2.28.0:2
 	>=dev-libs/gobject-introspection-0.10.0
 	>=dev-libs/libpeas-0.7.3[gtk,python?]
 	>=dev-libs/totem-pl-parser-3.4
-	>=net-libs/libsoup-2.26:2.4
-	>=net-libs/libsoup-gnome-2.26:2.4
+	net-libs/libsoup
+	net-libs/libsoup-gnome
 	media-libs/gst-plugins-base:1.0[introspection]
 	media-libs/gstreamer:1.0[introspection]
 	>=sys-libs/tdb-1.2.6

@@ -34,9 +34,8 @@ DEPEND="dev-libs/dee
 	dev-libs/libgee
 	dev-libs/libunity
 	dev-libs/libzeitgeist
-	|| ( ( net-libs/libsoup
-		net-libs/libsoup-gnome )
-		>net-libs/libsoup-2.42 )
+	net-libs/libsoup
+	net-libs/libsoup-gnome
 	unity-base/unity
 	unity-lenses/unity-lens-music
 	$(vala_depend)"

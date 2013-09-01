@@ -66,7 +66,8 @@ media-libs/cogl
 =media-video/cheese-3.8*
 =media-video/totem-3.8*
 =net-libs/gnome-online-accounts-3.8*
-=net-libs/libsoup-2.42*
+net-libs/libsoup
+net-libs/libsoup-gnome
 net-libs/rest
 =net-wireless/gnome-bluetooth-3.8*
 =sys-apps/baobab-3.8*

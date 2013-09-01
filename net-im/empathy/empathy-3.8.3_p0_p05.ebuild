@@ -63,7 +63,7 @@ COMMON_DEPEND="
 	dev-libs/libxml2:2
 	gnome-base/gsettings-desktop-schemas
 	media-sound/pulseaudio[glib]
-	net-libs/libsoup:2.4
+	net-libs/libsoup
 	x11-libs/libX11
 
 	geoloc? ( >=app-misc/geoclue-0.12 )

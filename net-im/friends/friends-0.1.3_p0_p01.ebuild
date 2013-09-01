@@ -30,9 +30,8 @@ RDEPEND="dev-libs/dee
 	dev-libs/libsignon-glib
 	dev-python/dbus-python
 	dev-python/pygobject
-	|| ( ( net-libs/libsoup
-		net-libs/libsoup-gnome )
-		>net-libs/libsoup-2.42 )
+	net-libs/libsoup
+	net-libs/libsoup-gnome
 	net-misc/networkmanager
 	unity-base/unity
 	x11-libs/gtk+:3

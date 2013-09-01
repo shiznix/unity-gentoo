@@ -111,7 +111,7 @@ net-libs/farstream
 =net-libs/glib-networking-2.34*
 =net-libs/gnome-online-accounts-3.6*
 net-libs/liboauth
-=net-libs/libsoup-2.40*
+net-libs/libsoup
 net-libs/libsoup-gnome
 net-libs/rest
 net-libs/telepathy-farstream
