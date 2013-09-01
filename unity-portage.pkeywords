@@ -16,11 +16,11 @@ app-admin/packagekit-qt4
 app-crypt/gcr
 app-crypt/libsecret
 app-crypt/p11-kit
-=app-crypt/seahorse-3.6*
+=app-crypt/seahorse-3.8*
 app-i18n/ibus
 =app-text/evince-3.6*
 app-text/gtkspell
-=app-editors/gedit-3.6*
+app-editors/gedit::unity-gentoo
 =dev-cpp/glibmm-2.34*
 =dev-cpp/gtkmm-3.6*
 dev-lang/vala
@@ -31,9 +31,9 @@ dev-libs/glib
 =dev-libs/gobject-introspection-common-1.36*
 =dev-libs/gobject-introspection-1.36*
 dev-libs/json-glib
-~dev-libs/libgdata-0.13.3
+dev-libs/libgdata:0/13
 dev-libs/libgee
-dev-libs/libgweather:2/3-1
+dev-libs/libgweather:2/3-3
 dev-libs/libindicate
 dev-libs/libindicate-qt
 dev-libs/libpeas
@@ -103,7 +103,7 @@ media-libs/libvpx
 media-libs/gst-plugins-good
 media-plugins/gst-plugins-vpx
 media-sound/pulseaudio
-=media-video/cheese-3.6*
+media-video/cheese:0/7
 =media-video/totem-3.6*
 net-im/telepathy-logger
 net-im/telepathy-mission-control
@@ -111,8 +111,8 @@ net-libs/farstream
 =net-libs/glib-networking-2.34*
 =net-libs/gnome-online-accounts-3.6*
 net-libs/liboauth
-net-libs/libsoup
-net-libs/libsoup-gnome
+net-libs/libsoup:2.4
+net-libs/libsoup-gnome:2.4
 net-libs/rest
 net-libs/telepathy-farstream
 net-libs/telepathy-glib
