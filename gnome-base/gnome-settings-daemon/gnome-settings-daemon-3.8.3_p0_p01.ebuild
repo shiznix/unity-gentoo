@@ -109,6 +109,7 @@ src_prepare() {
 			-e 's:revert_background_dropping.patch:#revert_background_dropping.patch:g' \
 			-e 's:52_sync_background_to_accountsservice.patch:#52_sync_background_to_accountsservice.patch:g' \
 			-e 's:git_revert_remove_automount_helper.patch:#git_revert_remove_automount_helper.patch:g' \
+				-i "${WORKDIR}/debian/patches/series"
 
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
