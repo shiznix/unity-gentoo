@@ -22,9 +22,11 @@ dev-cpp/gtest				# Customised ebuild to install /usr/src/gtest/* files lacking f
 dev-cpp/gmock				# Customised ebuild to install /usr/src/gmock/* files lacking from main tree ebuild
 dev-libs/dee				# Mainline portage tree ebuild lacks support for multi-python ABI installation needed by Dash lenses
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
-dev-libs/libappindicator		# See above
-dev-libs/libdbusmenu			# See above
-dev-libs/libindicator			# See above
+dev-libs/gobject-introspection		# See glib reason above
+dev-libs/gobject-introspection-common	# See glib reason above
+dev-libs/libappindicator		# See glib reason above
+dev-libs/libdbusmenu			# See glib reason above
+dev-libs/libindicator			# See glib reason above
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-control-center		# Patch out gnome-online-accounts and use ubuntu-online-accounts
@@ -87,6 +89,7 @@ x11-wm/metacity				# Patched to support compiz window decoration
 * Debugging Unity
 	- Emerge unity-base/nux with the 'debug' USE flag enabled, then:
 		echo 'export UNITY_LOG_SEVERITY="unity=DEBUG"' > /etc/X11/xinit/xinitrc.d/99-unity-debug
+		echo 'export UNITY_LOG_SEVERITY="nux=DEBUG"' >> /etc/X11/xinit/xinitrc.d/99-unity-debug
 		chmod +x /etc/X11/xinit/xinitrc.d/99-unity-debug
 		Restart xsession
 	- Check ~/.xsession-errors

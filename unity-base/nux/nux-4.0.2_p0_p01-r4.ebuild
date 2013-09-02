@@ -53,6 +53,10 @@ src_prepare() {
 		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
 
+	## Revert nux breaking keyboard input (from rev.812) ##
+	## FIXME: How can this possibly work in Ubuntu ? ##
+	epatch "${FILESDIR}/revert-ibus-keyboard-input-broken.diff"
+
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "debian/patches/${patch}" )
@@ -86,6 +90,12 @@ src_test() {
 src_install() {
 	emake DESTDIR="${D}" install || die
 	dosym /usr/libexec/nux/unity_support_test /usr/lib/nux/unity_support_test
+
+	## Install gfx hardware support test script ##
+	sed -e 's:xubuntu:xunity:g' \
+		-i debian/50_check_unity_support
+	exeinto /etc/X11/xinit/xinitrc.d/
+	doexe debian/50_check_unity_support
 
 	prune_libtool_files --modules
 }
