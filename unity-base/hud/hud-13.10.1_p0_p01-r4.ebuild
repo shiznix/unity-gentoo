@@ -3,11 +3,14 @@
 # $Header: $
 
 EAPI=5
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_SINGLE_IMPL=1
+
 GNOME2_LA_PUNT="yes"
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-inherit cmake-utils distutils flag-o-matic ubuntu-versionator vala
+inherit cmake-utils distutils-r1 flag-o-matic ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
 URELEASE="saucy"
@@ -59,14 +62,15 @@ src_configure() {
 src_compile() {
 	cmake-utils_src_compile
 	pushd tools/hudkeywords
-		distutils_src_compile
+		distutils-r1_src_compile
 	popd
 }
 
 src_install() {
 	cmake-utils_src_install
 	pushd tools/hudkeywords
-		distutils_src_install
+		distutils-r1_src_install
+		python_fix_shebang "${ED}"
 	popd
 
 	# Remove upstart jobs as we use xsession based scripts in /etc/X11/xinit/xinitrc.d/ #
