@@ -20,13 +20,13 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 * Reasons for patching/maintaining packages:
 dev-cpp/gtest				# Customised ebuild to install /usr/src/gtest/* files lacking from main tree ebuild
 dev-cpp/gmock				# Customised ebuild to install /usr/src/gmock/* files lacking from main tree ebuild
-dev-libs/dee				# Mainline portage tree ebuild lacks support for multi-python ABI installation needed by Dash lenses
+dev-libs/dee				# Portage tree lacks >=1.2 versions needed
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/gobject-introspection		# See glib reason above
 dev-libs/gobject-introspection-common	# See glib reason above
-dev-libs/libappindicator		# See glib reason above
-dev-libs/libdbusmenu			# See glib reason above
-dev-libs/libindicator			# See glib reason above
+dev-libs/libappindicator		# See "Using portage tree libindicate packages" item above
+dev-libs/libdbusmenu			# See "Using portage tree libindicate packages" item above
+dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-control-center		# Patch out gnome-online-accounts and use ubuntu-online-accounts
@@ -44,7 +44,6 @@ net-im/empathy				# Integrates with Unity online accounts, associated plugins an
 www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 x11-base/xorg-server			# Needed for revealing side Dash launcher panel when it's set to autohide
 x11-libs/gtk+				# Needed for global appmenu
-x11-libs/libwnck			# Portage tree lacks >=3.4.7 version needed for unity-base/bamf
 x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme for gtk+-3.6 (Unity fails to start otherwise)
 x11-wm/metacity				# Patched to support compiz window decoration
 
