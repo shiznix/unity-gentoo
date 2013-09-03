@@ -12,7 +12,7 @@ inherit autotools eutils ubuntu-versionator vala xdummy python
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130822.5"
+UVER_PREFIX="+13.10.20130830"
 
 DESCRIPTION="BAMF Application Matching Framework"
 HOMEPAGE="https://launchpad.net/bamf"
@@ -47,10 +47,10 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 
 	# workaround lunchpad bug #1186915
-	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-remove-desktop-fullname.patch
+	epatch "${FILESDIR}"/${PN}-0.5.0-remove-desktop-fullname.patch
 
 	# removed gtester2xunit-check
-	epatch "${FILESDIR}"/${PN}-${PV%%_p*}-disable-gtester2xunit-check.patch
+	epatch "${FILESDIR}"/${PN}-0.5.0-disable-gtester2xunit-check.patch
 
 	vala_src_prepare
 	export VALA_API_GEN=$VAPIGEN
