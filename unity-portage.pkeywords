@@ -50,6 +50,7 @@ dev-python/oauthlib
 dev-python/pycairo
 dev-python/pycrypto
 dev-python/pygobject
+dev-python/pyjunitxml
 dev-python/python-distutils-extra
 dev-python/rdflib
 dev-python/twisted-core

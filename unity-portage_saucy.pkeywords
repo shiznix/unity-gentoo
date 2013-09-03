@@ -121,6 +121,7 @@ dev-python/pycairo	# Latest version in portage tree is stable, but still needs t
 dev-python/pycurl
 dev-python/pycrypto
 dev-python/pygobject
+dev-python/pyjunitxml
 dev-python/python-distutils-extra
 dev-python/pyxdg	# Latest version in portage tree is stable, but still needs to be keyword unmasked to support use.stable.mask for python-3.3
 dev-python/rdflib
@@ -193,7 +194,6 @@ dev-libs/xpathselect **
 dev-python/autopilot **
 dev-python/dirspec **
 dev-python/lazr-restfulclient **
-dev-python/pyjunitxml **
 dev-python/pywapi **
 dev-python/python-testscenarios **
 dev-qt/qtpim **
