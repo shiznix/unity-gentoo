@@ -4,3 +4,5 @@
 - launchpad bug #86184
  * not possible to change mouse cursor theme
  (cursor theme packages are missing in overlay too)
+
+- Time & Date settings in System Settings segfaults gnome-control-center

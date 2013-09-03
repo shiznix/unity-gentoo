@@ -95,6 +95,22 @@ x11-wm/metacity				# Patched to support compiz window decoration
 	- Check ~/.xsession-errors
 	- gsettings get org.compiz.core:/org/compiz/profiles/unity/plugins/core/ active-plugins
 
-* Packages that fail to compile with gcc:4.8
-	net-wireless/gnome-bluetooth-3.6.1
-	net-fs/samba-4.0*
+* Customising gnome-control-center entries comes by way of Ubuntu's 'ubuntu_external_panels.patch' for gnome-control-center
+	- With this patch launchers are supposed to be added to gnome-control-center when their .desktop file is named in the following format
+		gnome-'panelname'-panel.desktop or 'panelname'-ccpanel.desktop
+
+	- There are also a list of launchers hardcoded into the patch that gnome-control-center needs to know about at compile time
+		in shell/cc-panel-loader.c as seen below:
+
+		/* This is a list of desktop file launchers that should be loaded
+			where they are available */
+		static struct {
+		  const char *name;
+		} all_launchers[] = {
+		  {"gufw"},
+		  {"landscape-client-settings"},
+		  {"language-selector"},
+		  {"software-properties-gtk"},
+		  {"system-config-printer"},
+		  {"ubuntuone-installer"},
+		};

@@ -34,17 +34,10 @@ DEPEND="dev-libs/glib:2
 	$(vala_depend)"
 
 src_prepare() {
-	# Fix segfault from LP Bug 1058037 #
-#	epatch "${FILESDIR}/gtkapplication-fix.patch"
-
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
-
-	# Fix gnome-control-center loop executing when activity-log-manager is selected #
-	sed -e "s:gnome-control-center activity-log-manager:activity-log-manager:" \
-		-i data/activity-log-manager-ccpanel.desktop.in
 
 	# Install docs in /usr/share/doc #
 	sed -e "s:\${prefix}/doc/alm:/usr/share/doc/${P}:g" \
@@ -69,4 +62,6 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+
+	prune_libtool_files --modules
 }

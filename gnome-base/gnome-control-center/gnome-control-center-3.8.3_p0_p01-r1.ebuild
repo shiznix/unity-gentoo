@@ -172,6 +172,11 @@ src_prepare() {
 		done
 	base_src_prepare
 
+	# 'ubuntu_external_panels.patch' allows customisation of g-c-c #
+	# The hardcoded launchers in the patch that are never used, give context for strip and replace #
+	sed -e 's:landscape-client-settings:unity-tweak-tool:' \
+		-i shell/cc-panel-loader.c
+
 	# Gentoo handles completions in a different directory, bug #465094
 	sed -i 's|^completiondir =.*|completiondir = $(datadir)/bash-completion|' \
 		shell/Makefile.am || die "sed completiondir failed"

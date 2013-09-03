@@ -7,7 +7,7 @@ EAPI=5
 PYTHON_COMPAT=( python3_{2,3} )
 DISTUTILS_NO_PARALLEL_BUILD=1
 
-inherit distutils-r1 gnome2-utils ubuntu-versionator
+inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 
 URELEASE="saucy"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
@@ -56,6 +56,7 @@ pkg_preinst() {
 
 pkg_postinst() {
 	gnome2_icon_cache_update
+	fdo-mime_desktop_database_update
 }
 
 pkg_postrm() {
