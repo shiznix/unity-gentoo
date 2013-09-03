@@ -25,6 +25,10 @@ IUSE="+introspection"
 RDEPEND="
 	>=dev-libs/glib-2.31:2
 	introspection? ( >=dev-libs/gobject-introspection-1.31.0 )
+	>=x11-themes/gnome-backgrounds-3.8.1
+	x11-themes/gtk-engines-unico
+	>=x11-themes/light-themes-0.1.93[gtk3]
+	x11-themes/ubuntu-themes
 "
 DEPEND="${RDEPEND}
 	sys-devel/gettext
