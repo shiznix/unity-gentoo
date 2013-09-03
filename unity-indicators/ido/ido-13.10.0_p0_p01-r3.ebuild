@@ -7,7 +7,7 @@ GNOME2_LA_PUNT="yes"
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-inherit autotools eutils gnome2 ubuntu-versionator vala
+inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
@@ -34,5 +34,7 @@ src_prepare() {
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
+
+	append-cflags -Wno-error
 	eautoreconf
 }
