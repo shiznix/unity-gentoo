@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python{3_2,3_3} )
+PYTHON_COMPAT=( python3_3 )
 
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
@@ -25,16 +25,20 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
-	dev-libs/glib:2[${PYTHON_USEDEP}]
+	dev-libs/glib:2
 	dev-libs/libaccounts-glib[${PYTHON_USEDEP}]
 	dev-libs/libsignon-glib[${PYTHON_USEDEP}]
 	dev-python/dbus-python[${PYTHON_USEDEP}]
+	dev-python/oauthlib[${PYTHON_USEDEP}]
 	dev-python/pygobject[${PYTHON_USEDEP}]
+	=gnome-extra/evolution-data-server-3.8*
 	net-libs/libsoup
 	net-libs/libsoup-gnome
 	net-misc/networkmanager
 	unity-base/unity
 	x11-libs/gtk+:3
+	>=x11-libs/gdk-pixbuf-2.28
+	x11-libs/libnotify
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

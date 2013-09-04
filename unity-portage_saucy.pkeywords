@@ -276,6 +276,7 @@ x11-libs/libXfixes::unity-gentoo **
 x11-libs/libXi::unity-gentoo **
 x11-libs/qml-friends **
 x11-libs/ubuntu-ui-toolkit **
+x11-libs/unity-action-api **
 x11-misc/appmenu-thunderbird **
 x11-misc/lightdm::unity-gentoo **
 x11-misc/lightdm-kde::unity-gentoo **
