@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-PYTHON_DEPEND="3:3.2"
-SUPPORT_PYTHON_ABIS="1"
+EAPI=5
+PYTHON_COMPAT=( python{3_2,3_3} )
+DISTUTILS_NO_PARALLEL_BUILD=1
 
-inherit distutils eutils ubuntu-versionator
+inherit distutils-r1 eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -22,14 +22,14 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/dee
+RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	dev-libs/libgee
 	net-libs/liboauth
 	net-libs/libsoup
 	net-libs/libsoup-gnome
-	dev-libs/libunity
-	dev-python/httplib2
-	dev-python/oauthlib
+	dev-libs/libunity[${PYTHON_USEDEP}]
+	dev-python/httplib2[${PYTHON_USEDEP}]
+	dev-python/oauthlib[${PYTHON_USEDEP}]
 	media-gfx/shotwell
 	net-libs/account-plugins
 	unity-base/unity
@@ -37,13 +37,8 @@ RDEPEND="dev-libs/dee
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-src_prepare() {
-	python_convert_shebangs -r 3 .
-	distutils_src_prepare
-}
-
 src_install() {
-	distutils_src_install
+	distutils-r1_src_install
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #

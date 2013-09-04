@@ -2,9 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
+PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
-inherit autotools gnome2-utils ubuntu-versionator
+inherit autotools gnome2-utils python-r1 ubuntu-versionator
 
 MY_PN="webapps-applications"
 URELEASE="saucy"
@@ -29,7 +30,7 @@ DEPEND=">=dev-libs/glib-2.32.3
 	dev-libs/libindicate[gtk,introspection]
 	dev-libs/libunity
 	dev-libs/libunity-webapps
-	dev-python/polib
+	dev-python/polib[${PYTHON_USEDEP}]
 	x11-libs/gtk+:3
 	x11-themes/unity-asset-pool"
 

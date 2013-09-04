@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-SUPPORT_PYTHON_ABIS="1"
+EAPI=5
+PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
-inherit distutils ubuntu-versionator
+inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -23,7 +23,7 @@ RESTRICT="mirror"
 DEPEND=">=dev-python/python-distutils-extra-2.37"
 
 src_install() {
-	distutils_src_install
+	distutils-r1_src_install
 
 	# Removed apport stuff #
 	rm -rf "${ED}etc" "${ED}usr/share/apport"

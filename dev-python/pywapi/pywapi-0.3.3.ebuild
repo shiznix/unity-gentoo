@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-SUPPORT_PYTHON_ABIS="1"
+EAPI=5
+PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
-inherit distutils ubuntu-versionator
+inherit distutils-r1 ubuntu-versionator
 
 UVER=
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
@@ -32,5 +32,5 @@ src_install() {
 	# Delete some files that are only useful on Ubuntu
 	rm -rf "${D}"etc/apport "${D}"usr/share/apport
 
-	distutils_src_install
+	distutils-r1_src_install
 }

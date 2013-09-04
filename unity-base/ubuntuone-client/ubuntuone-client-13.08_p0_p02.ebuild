@@ -2,13 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-GNOME2_LA_PUNT="yes"
+EAPI=5
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_SINGLE_IMPL=1
 
-PYTHON_DEPEND="2:2.7"
-RESTRICT_PYTHON_ABIS="3.*"
-
-inherit autotools base distutils gnome2-utils python ubuntu-versionator
+inherit autotools base distutils-r1 gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -23,40 +21,37 @@ SLOT="0"
 IUSE="doc"
 RESTRICT="mirror"
 
-DEPEND="dev-lang/python
-	dev-libs/dbus-glib
-	gnome-base/nautilus"
+DEPEND="${RDEPEND}"
 
 # dev-libs/libubuntuone is dropped for Saucy as UbuntuOne project becomes a pure python only project (LP 1196684) #
 RDEPEND="!dev-libs/libubuntuone
-	${DEPEND}
-	dev-python/configglue
-	dev-python/dbus-python
+	dev-python/configglue[${PYTHON_USEDEP}]
+	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/gnome-keyring-python
-	dev-python/httplib2
-	dev-python/notify-python
-	>=dev-python/oauth-1.0
-	dev-python/pygobject:2
-	>=dev-python/pygtk-2.10
-	dev-python/pyinotify
-	dev-python/pyxdg
-	dev-python/simplejson
-	>=dev-python/twisted-names-12.2.0
-	>=dev-python/twisted-web-12.2.0
-	unity-base/ubuntu-sso-client
-	unity-base/ubuntuone-storage-protocol
+	dev-python/httplib2[${PYTHON_USEDEP}]
+	dev-python/notify-python[${PYTHON_USEDEP}]
+	>=dev-python/oauth-1.0[${PYTHON_USEDEP}]
+	dev-python/pygobject:2[${PYTHON_USEDEP}]
+	>=dev-python/pygtk-2.10[${PYTHON_USEDEP}]
+	dev-python/pyinotify[${PYTHON_USEDEP}]
+	dev-python/pyxdg[${PYTHON_USEDEP}]
+	dev-python/simplejson[${PYTHON_USEDEP}]
+	>=dev-python/twisted-names-12.2.0[${PYTHON_USEDEP}]
+	>=dev-python/twisted-web-12.2.0[${PYTHON_USEDEP}]
+	unity-base/ubuntu-sso-client[${PYTHON_USEDEP}]
+	unity-base/ubuntuone-storage-protocol[${PYTHON_USEDEP}]
 	x11-misc/lndir
 	x11-misc/xdg-utils"
-
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
+DEPEND="${RDEPEND}"
 
 src_prepare() {
 	sed -e "s:\[ -d \"\$HOME\/Ubuntu One\" \] \&\& ubuntuone-launch:\[ ! -d \"\$HOME\/Ubuntu One\" \] \&\& mkdir \"\$HOME/Ubuntu One\" \&\& ubuntuone-launch || ubuntuone-launch:" \
 		-i "${S}/data/ubuntuone-launch.desktop.in" || die
-	python_convert_shebangs -r 2 .
+}
+
+src_install() {
+	distutils-r1_src_install
+	python_fix_shebang "${ED}"
 }
 
 pkg_preinst() {

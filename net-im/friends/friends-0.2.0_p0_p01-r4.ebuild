@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-PYTHON_DEPEND="3:3.2"
-RESTRICT_PYTHON_ABIS="2.*"
+EAPI=5
+PYTHON_COMPAT=( python{3_2,3_3} )
+
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-inherit autotools distutils gnome2-utils python ubuntu-versionator vala
+inherit autotools distutils-r1 gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 URELEASE="saucy"
@@ -24,12 +24,12 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/dee
-	dev-libs/glib:2
-	dev-libs/libaccounts-glib
-	dev-libs/libsignon-glib
-	dev-python/dbus-python
-	dev-python/pygobject
+RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
+	dev-libs/glib:2[${PYTHON_USEDEP}]
+	dev-libs/libaccounts-glib[${PYTHON_USEDEP}]
+	dev-libs/libsignon-glib[${PYTHON_USEDEP}]
+	dev-python/dbus-python[${PYTHON_USEDEP}]
+	dev-python/pygobject[${PYTHON_USEDEP}]
 	net-libs/libsoup
 	net-libs/libsoup-gnome
 	net-misc/networkmanager
@@ -39,14 +39,9 @@ RDEPEND="dev-libs/dee
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-pkg_setup() {
-	python_set_active_version 3
-	python_pkg_setup
-}
-
 src_prepare() {
 	vala_src_prepare
-	distutils_src_prepare
+	distutils-r1_src_prepare
 	cd service
 	eautoreconf
 }
@@ -57,13 +52,13 @@ src_configure() {
 }
 
 src_compile() {
-	distutils_src_compile
+	distutils-r1_src_compile
 	cd service
 	emake
 }
 
 src_install(){
-	distutils_src_install
+	distutils-r1_src_install
 	python3 setup.py install_service_files -d "${ED}usr"
 
 	cd service
