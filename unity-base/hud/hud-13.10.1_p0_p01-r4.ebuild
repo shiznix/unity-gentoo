@@ -30,13 +30,13 @@ RDEPEND="dev-libs/libdbusmenu:=
 	unity-base/bamf:="
 DEPEND="${RDEPEND}
 	dev-db/sqlite:3
-	dev-libs/dee
-	>=dev-libs/glib-2.35.4
+	dev-libs/dee[${PYTHON_USEDEP}]
+	>=dev-libs/glib-2.35.4[${PYTHON_USEDEP}]
 	dev-perl/XML-Parser
 	gnome-base/dconf
 	x11-libs/gtk+:3
 	x11-libs/pango
-	app-accessibility/pocketsphinx
+	app-accessibility/pocketsphinx[${PYTHON_USEDEP}]
 	$(vala_depend)
 	test? ( dev-util/dbus-test-runner )"
 
