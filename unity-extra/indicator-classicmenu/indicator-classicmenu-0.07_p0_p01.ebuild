@@ -2,19 +2,20 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-PYTHON_DEPEND="2:2.7"
-RESTRICT_PYTHON_ABIS="3.*"
-SUPPORT_PYTHON_ABIS="1"
+EAPI=5
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_SINGLE_IMPL=1
 
-inherit bzr distutils gnome2-utils python ubuntu-versionator
+inherit distutils-r1 gnome2-utils ubuntu-versionator
+
+MY_PN="classicmenu-indicator"
+UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${MY_PN}"
+URELEASE="raring"
 
 DESCRIPTION="Indicator to provide the main menu of Gnome2/Gnome Classic for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/classicmenu-indicator"
-EBZR_PROJECT="classicmenu-indicator"
-EBZR_BRANCH="trunk"
-EBZR_REPO_URI="lp:classicmenu-indicator"
-SRC_URI=""
+SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
+	${UURL}/${MY_PN}_${PV}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -22,8 +23,8 @@ KEYWORDS="~amd64 ~x86"
 
 RDEPEND="dev-libs/glib:2
 	dev-libs/libappindicator
-	dev-python/pygobject:3
-	dev-python/pygtk
+	dev-python/pygobject:3[${PYTHON_USEDEP}]
+	dev-python/pygtk[${PYTHON_USEDEP}]
 	gnome-base/gnome-menus:0[python]
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}
@@ -31,19 +32,17 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	sys-devel/gettext"
 
-src_prepare() {
-	export EPYTHON="$(PYTHON -2)"
-	python_convert_shebangs -r 2 .
-	python_src_prepare
-}
+S="${WORKDIR}/${MY_PN}-${PV}"
 
-#src_install() {
-#	distutils_src_install
-#
-#	exeinto /etc/X11/xinit/xinitrc.d/
-#	doexe xsession/85unsettings
-#	rm -rf ${ED}etc/X11/Xsession.d/
-#}
+src_install() {
+	distutils-r1_src_install
+
+	insinto /etc/xdg/autostart
+	doins "${WORKDIR}/debian/classicmenu-indicator.desktop"
+
+	insinto /etc/xdg/menus/
+	doins "${WORKDIR}/debian/classicmenuindicatorsystem.menu"
+}
 
 pkg_preinst() {
 	gnome2_icon_savelist
