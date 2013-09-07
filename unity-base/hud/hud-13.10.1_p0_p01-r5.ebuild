@@ -14,7 +14,7 @@ inherit cmake-utils distutils-r1 flag-o-matic ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130822.4"
+UVER_PREFIX="+13.10.20130904"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"
@@ -34,6 +34,7 @@ DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.35.4[${PYTHON_USEDEP}]
 	dev-perl/XML-Parser
 	gnome-base/dconf
+	sys-libs/libnih[dbus]
 	x11-libs/gtk+:3
 	x11-libs/pango
 	app-accessibility/pocketsphinx[${PYTHON_USEDEP}]

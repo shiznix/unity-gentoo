@@ -8,7 +8,7 @@ inherit eutils qt4-r2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/liba/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.18"
+UVER_PREFIX="+13.10.20130904"
 
 DESCRIPTION="QT library for Single Sign On framework for the Unity desktop"
 HOMEPAGE="http://code.google.com/p/accounts-sso/"

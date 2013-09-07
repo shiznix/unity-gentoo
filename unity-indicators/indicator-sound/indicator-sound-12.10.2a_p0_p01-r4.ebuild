@@ -6,7 +6,7 @@ EAPI=5
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-inherit cmake-utils ubuntu-versionator vala
+inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
@@ -44,4 +44,19 @@ src_configure() {
 		-DVALA_COMPILER=$(type -P valac-0.20)
 		-DVAPI_GEN=$(type -P vapigen-0.20)"
 	cmake-utils_src_configure
+}
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+	gnome2_icon_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
+	gnome2_icon_cache_update
 }

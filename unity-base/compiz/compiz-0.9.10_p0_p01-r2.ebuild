@@ -57,7 +57,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	x11-libs/libSM
 	>=x11-libs/startup-notification-0.7
 	x11-wm/metacity
-	kde? ( kde-base/kwin )
+	kde? ( >=kde-base/kwin-4.11.1 )
 	test? ( dev-cpp/gtest
 		dev-cpp/gmock 
 		sys-apps/xorg-gtest )"

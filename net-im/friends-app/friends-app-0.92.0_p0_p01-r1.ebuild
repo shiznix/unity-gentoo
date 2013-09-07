@@ -8,7 +8,7 @@ inherit base gnome2-utils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/f/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130829"
+UVER_PREFIX="+13.10.20130905"
 
 DESCRIPTION="Friends instant messaging client for the Unity desktop"
 HOMEPAGE="https://launchpad.net/friends-app"

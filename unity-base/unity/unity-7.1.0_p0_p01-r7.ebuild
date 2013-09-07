@@ -6,20 +6,17 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2:2.7"
 
-GTESTVER="1.6.0"
-
 inherit base cmake-utils distutils eutils gnome2 python toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130829.1"
+UVER_PREFIX="+13.10.20130903.1"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
 
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz
-	test? ( http://googletest.googlecode.com/files/gtest-${GTESTVER}.zip )"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -97,7 +94,8 @@ src_prepare() {
 
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
-		   "${FILESDIR}/systray-enabled-by-default.diff" )
+			"${FILESDIR}/systray-enabled-by-default.diff"
+			"${FILESDIR}/revert_hardcoded-upstart_rev3485.diff" )
 
 	base_src_prepare
 
@@ -125,10 +123,7 @@ src_configure() {
 	if use test; then
 		mycmakeargs="${mycmakeargs}
 			-DBUILD_XORG_GTEST=ON
-			-DCOMPIZ_BUILD_TESTING=ON
-			-DGTEST_ROOT_DIR="${WORKDIR}/gtest-${GTESTVER}"
-			-DGTEST_SRC_DIR="${WORKDIR}/gtest-${GTESTVER}/src/"
-			"
+			-DCOMPIZ_BUILD_TESTING=ON"
 	else
 		mycmakeargs="${mycmakeargs}
 			-DBUILD_XORG_GTEST=OFF
@@ -205,6 +200,16 @@ src_install() {
 }
 
 pkg_postinst() {
+	elog
+	elog "If you use a custom ~/.xinitrc to startx"
+	elog "then you should add the following to the top of your ~/.xinitrc file"
+	elog "to ensure all needed services are started:"
+	elog ' if [ -d /etc/X11/xinit/xinitrc.d ] ; then'
+	elog '   for f in /etc/X11/xinit/xinitrc.d/* ; do'
+	elog '     [ -x "$f" ] && . "$f"'
+	elog '   done'
+	elog ' unset f'
+	elog ' fi'
 	elog
 	elog "It is recommended to enable the 'ayatana' USE flag"
 	elog "for portage packages so they can use the Unity"

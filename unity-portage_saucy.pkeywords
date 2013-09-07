@@ -117,13 +117,11 @@ dev-python/isodate
 dev-python/oauth
 <=dev-python/oauthlib-0.3.7	# unity-base/ubuntuone-control-panel
 =dev-python/pyatspi-2.6*
-dev-python/pycairo	# Latest version in portage tree is stable, but still needs to be keyword unmasked to support use.stable.mask for python-3.3
 dev-python/pycurl
 dev-python/pycrypto
 dev-python/pygobject
 dev-python/pyjunitxml
 dev-python/python-distutils-extra
-dev-python/pyxdg	# Latest version in portage tree is stable, but still needs to be keyword unmasked to support use.stable.mask for python-3.3
 dev-python/rdflib
 dev-python/twisted-core
 dev-python/twisted-names
@@ -163,6 +161,7 @@ sys-devel/automake-wrapper
 sys-devel/gcc:4.7
 sys-devel/gcc:4.8
 sys-libs/db:5.1
+sys-libs/libnih
 sys-libs/tevent
 x11-base/xorg-drivers
 x11-drivers/xf86-video-dummy
