@@ -34,7 +34,7 @@ gnome-base/gnome-menus:0
 =gnome-base/gsettings-desktop-schemas-3.8*::unity-gentoo
 =gnome-base/gnome-shell-3.8*
 gnome-base/gvfs
-=gnome-base/libgnomekbd-3.8*
+=gnome-base/libgnomekbd-3.6*
 =gnome-base/libgnome-keyring-3.8*
 =gnome-base/nautilus-3.8*::unity-gentoo
 =gnome-extra/evolution-data-server-3.8*
