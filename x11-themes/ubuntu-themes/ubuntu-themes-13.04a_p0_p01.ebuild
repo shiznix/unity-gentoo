@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-PYTHON_DEPEND="2:2.7"
-RESTRICT_PYTHON_ABIS="3.*"
+EAPI=5
+PYTHON_COMPAT=( python2_7 )
 
-inherit eutils gnome2 python ubuntu-versionator
+inherit eutils gnome2 python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -31,12 +30,8 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-pkg_setup() {
-	python_set_active_version 2
-}
-
 src_prepare() {
-	:
+	python_export_best
 }
 
 src_configure() {
@@ -54,4 +49,7 @@ src_install() {
 
 	use phone && \
 		doins -r ubuntu-mobile
+
+	## Remove broken symlinks ##
+	find -L "${ED}" -type l -exec rm {} +
 }

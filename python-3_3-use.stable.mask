@@ -1,6 +1,7 @@
 ## This file is to track stable packages that still need to be inserted into package.keywords to enable use of python3_3 ##
 # See /usr/portage/profiles/eapi-5-files/use.stable.mask #
 
+app-accessibility/speech-dispatcher
 dev-libs/libxml2
 dev-python/beautifulsoup
 dev-python/feedparser
@@ -14,4 +15,6 @@ dev-python/setuptools
 dev-python/simplejson
 dev-python/testtools
 sys-process/iotop
+unity-base/bamf
 virtual/python-argparse
+x11-libs/xpyb

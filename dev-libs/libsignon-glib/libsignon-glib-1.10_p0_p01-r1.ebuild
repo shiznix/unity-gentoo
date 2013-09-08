@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2,3_3} )
+PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
 WANT_AUTOMAKE=1.12
 VALA_MIN_API_VERSION="0.20"

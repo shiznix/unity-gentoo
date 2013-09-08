@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{3_1,3_2,3_3} )
+PYTHON_COMPAT=( python{3_2,3_3} )
 
 inherit ubuntu-versionator distutils-r1
 

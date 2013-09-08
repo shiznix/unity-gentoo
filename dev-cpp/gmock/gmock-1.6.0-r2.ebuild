@@ -44,4 +44,7 @@ src_install() {
 
 	insinto /usr/src/gmock/src
 	doins -r src/*.cc
+
+	insinto /usr/src/gmock
+	doins -r gtest CMakeLists.txt
 }

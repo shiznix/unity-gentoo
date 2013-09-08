@@ -3,9 +3,9 @@
 # $Header: $
 
 EAPI=5
-PYTHON_DEPEND="2:2.7"
+PYTHON_COMPAT=( python2_7 )
 
-inherit autotools eutils python ubuntu-versionator
+inherit autotools eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -31,8 +31,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
+	python_export_best
 }
 
 src_prepare() {

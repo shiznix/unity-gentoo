@@ -4,9 +4,10 @@
 
 EAPI=5
 GNOME2_LA_PUNT="yes"
-PYTHON_DEPEND="2:2.7"
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_SINGLE_IMPL=1
 
-inherit base cmake-utils distutils eutils gnome2 python toolchain-funcs ubuntu-versionator xdummy
+inherit base cmake-utils distutils-r1 eutils gnome2 toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
@@ -83,23 +84,20 @@ pkg_pretend() {
 	fi
 }
 
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
-
 src_prepare() {
-	! use test && \
+	if use test; then
+		## Disable source trying to run it's own dummy-xorg-test-runner.sh script ##
+		sed -e 's:set (DUMMY_XORG_TEST_RUNNER.*:set (DUMMY_XORG_TEST_RUNNER /bin/true):g' \
+			-i tests/CMakeLists.txt
+	else
 		PATCHES+=( "${FILESDIR}/unity-7.1.0_remove-gtest-dep.diff" )
+	fi
 
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
 			"${FILESDIR}/systray-enabled-by-default.diff"
 			"${FILESDIR}/revert_hardcoded-upstart_rev3485.diff" )
-
 	base_src_prepare
-
-	python_convert_shebangs -r 2 .
 
 	sed -e "s:/desktop:/org/unity/desktop:g" \
 		-i "com.canonical.Unity.gschema.xml" || die
@@ -149,7 +147,7 @@ src_configure() {
 src_compile() {
 	if use test; then
 		pushd tests/autopilot
-			distutils_src_compile
+			distutils-r1_src_compile
 		popd
 	fi
 	cmake-utils_src_compile || die
@@ -157,9 +155,6 @@ src_compile() {
 
 src_test() {
 	pushd ${CMAKE_BUILD_DIR}
-		# FIXME #
-		# 'make check' doesn't work due to broken linktime -rpath for tests/test-unit so use 'make check-headless' only for now #
-		# ./test-unit: error while loading shared libraries: libunity-protocol-private.so.0: cannot open shared object file: No such file or directory #
 		local XDUMMY_COMMAND="make check-headless"
 		xdummymake
 	popd
@@ -174,9 +169,11 @@ src_install() {
 
 	if use test; then
 		pushd tests/autopilot
-			distutils_src_install
+			distutils-r1_src_install
 		popd
 	fi
+
+	python_fix_shebang "${ED}"
 
 	# Gentoo dash launcher icon #
 	if use branding; then
@@ -221,7 +218,7 @@ pkg_postinst() {
 
 	if use test; then
 		elog "To run autopilot tests, do the following:"
-		elog "cd $(python_get_libdir)/site-packages/unity/tests"
+		elog "cd /usr/$(get_libdir)/${EPYTHON}/site-packages/unity/tests"
 		elog "and run 'autopilot run unity'"
 		elog
 	fi

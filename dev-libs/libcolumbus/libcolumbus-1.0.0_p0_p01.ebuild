@@ -3,10 +3,9 @@
 # $Header: $
 
 EAPI=5
-PYTHON_DEPEND="2:2.7 3:3.2"
-SUPPORT_PYTHON_ABIS="1"
+PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
-inherit cmake-utils eutils python ubuntu-versionator
+inherit cmake-utils eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libc/${PN}"
 URELEASE="saucy"
@@ -23,7 +22,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-cpp/sparsehash
-	dev-libs/boost
+	dev-libs/boost[${PYTHON_USEDEP}]
 	>=dev-libs/icu-49.1.2"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

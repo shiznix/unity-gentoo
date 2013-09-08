@@ -3,12 +3,12 @@
 # $Header: $
 
 EAPI=5
+PYTHON_COMPAT=( python2_7 )
+
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
-PYTHON_DEPEND="2:2.7"
-
-inherit autotools eutils ubuntu-versionator vala xdummy python
+inherit autotools eutils ubuntu-versionator vala xdummy python-single-r1
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
 URELEASE="saucy"
@@ -26,10 +26,10 @@ IUSE="test"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/gobject-introspection
-	dev-libs/libunity
+	dev-libs/libunity[${PYTHON_USEDEP}]
 	dev-libs/libunity-webapps
-	dev-libs/libxslt
-	dev-libs/libxml2
+	dev-libs/libxslt[python,${PYTHON_USEDEP}]
+	dev-libs/libxml2[${PYTHON_USEDEP}]
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
 	x11-libs/libwnck:1
@@ -39,14 +39,10 @@ DEPEND="dev-libs/gobject-introspection
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-pkg_setup() {
-	python_set_active_version 2
-}
-
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 
-	# workaround lunchpad bug #1186915
+	# workaround launchpad bug #1186915
 	epatch "${FILESDIR}"/${PN}-0.5.0-remove-desktop-fullname.patch
 
 	# removed gtester2xunit-check
@@ -54,6 +50,8 @@ src_prepare() {
 
 	vala_src_prepare
 	export VALA_API_GEN=$VAPIGEN
+	python_fix_shebang .
+
 	sed -e "s:-Werror::g" \
 		-i "configure.ac" || die
 	eautoreconf

@@ -10,6 +10,7 @@ dev-libs/folks vala
 dev-libs/keybinder python
 dev-libs/libgdata gnome
 dev-libs/libxml2 icu
+dev-libs/libxslt python
 dev-libs/protobuf python
 dev-libs/xapian-bindings python
 dev-qt/qtwebkit icu
