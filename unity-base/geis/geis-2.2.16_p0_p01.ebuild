@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-PYTHON_DEPEND="3:3.2"
-SUPPORT_PYTHON_ABIS="1"
+EAPI=5
+PYTHON_COMPAT=( python{3_2,3_3} )
 
-inherit autotools eutils python ubuntu-versionator
+inherit autotools eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="saucy"
@@ -27,12 +26,11 @@ DEPEND="unity-base/grail"
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	sed -e "s:python3:python-3.2:" \
+	python_export_best
+	local python_best_ver=${EPYTHON/python}
+	sed -e "s:python3:python-${python_best_ver}:" \
 		-i configure.ac || die
 	eautoreconf
-	export EPYTHON="$(PYTHON -3)"
-	python_convert_shebangs -r 3 .
-	python_src_prepare
 }
 
 src_install() {
