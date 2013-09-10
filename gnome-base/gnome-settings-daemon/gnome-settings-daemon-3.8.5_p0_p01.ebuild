@@ -9,16 +9,14 @@ GNOME2_LA_PUNT="yes"
 inherit autotools base eutils gnome2 virtualx ubuntu-versionator
 
 MY_P="${PN}_${PV}"
-#UURL="mirror://ubuntu/pool/main/g/${PN}"
-UURL="http://ppa.launchpad.net/gnome3-team/gnome3-staging/ubuntu/pool/main/g/${PN}"
+UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="~raring2"
 MY_P="${MY_P/daemon-/daemon_}"
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -104,12 +102,12 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-3.7.90-optional-color-wacom.patch"
 
 	# Disable selected patches #
-	sed \
-		`# Fix desktop icons disappearing after a time and causing compiz freezing windows (see LP#1170483) ` \
-			-e 's:revert_background_dropping.patch:#revert_background_dropping.patch:g' \
-			-e 's:52_sync_background_to_accountsservice.patch:#52_sync_background_to_accountsservice.patch:g' \
-			-e 's:git_revert_remove_automount_helper.patch:#git_revert_remove_automount_helper.patch:g' \
-				-i "${WORKDIR}/debian/patches/series"
+#	sed \
+#		`# Fix desktop icons disappearing after a time and causing compiz freezing windows (see LP#1170483) ` \
+#			-e 's:revert_background_dropping.patch:#revert_background_dropping.patch:g' \
+#			-e 's:52_sync_background_to_accountsservice.patch:#52_sync_background_to_accountsservice.patch:g' \
+#			-e 's:git_revert_remove_automount_helper.patch:#git_revert_remove_automount_helper.patch:g' \
+#				-i "${WORKDIR}/debian/patches/series"
 
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
