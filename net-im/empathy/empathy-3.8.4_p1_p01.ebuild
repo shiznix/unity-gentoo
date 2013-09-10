@@ -17,7 +17,7 @@ URELEASE="saucy"
 DESCRIPTION="Telepathy instant messaging and video/audio call client for GNOME patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Empathy"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.bz2"
+        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2 CC-BY-SA-3.0 FDL-1.3 LGPL-2.1"
 SLOT="0"
@@ -124,7 +124,8 @@ src_configure() {
 		--disable-Werror \
 		--disable-coding-style-checks \
 		--disable-static \
-		--disable-ubuntu-online-accounts \
+		--enable-ubuntu-online-accounts=yes \
+		--enable-libunity=yes \
 		--enable-gst-1.0 \
 		$(use_enable debug) \
 		$(use_enable geoloc location) \
