@@ -9,7 +9,7 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
 	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt_BR pt_PT ro ru sk sl sr
 	sv sw ta te th tr uk vi zh_CN zh_TW"
 
-inherit base chromium eutils flag-o-matic multilib \
+inherit base chromium eutils flag-o-matic multilib multiprocessing \
 	pax-utils portability python-any-r1 toolchain-funcs ubuntu-versionator versionator virtualx
 
 MY_PN="chromium-browser"
@@ -27,13 +27,16 @@ SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN
 LICENSE="BSD"
 SLOT="0"
 #KEYWORDS="~amd64 ~arm ~x86"
-IUSE="bindist cups gnome gnome-keyring gps kerberos pulseaudio selinux +system-ffmpeg system-sqlite tcmalloc"
-RESTRICT="mirror"
+IUSE="bindist cups gnome gnome-keyring gps kerberos pulseaudio selinux system-sqlite tcmalloc"
 
 # Native Client binaries are compiled with different set of flags, bug #452066.
 QA_FLAGS_IGNORED=".*\.nexe"
 
-RDEPEND="app-accessibility/speech-dispatcher:=
+# Native Client binaries may be stripped by the build system, which uses the
+# right tools for it, bug #469144 .
+QA_PRESTRIPPED=".*\.nexe"
+
+RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	app-arch/bzip2:=
 	app-arch/snappy:=
 	system-sqlite? ( dev-db/sqlite:3 )
@@ -41,8 +44,7 @@ RDEPEND="app-accessibility/speech-dispatcher:=
 		dev-libs/libgcrypt:=
 		>=net-print/cups-1.3.11:=
 	)
-	>=dev-lang/v8-3.17.6:=
-	=dev-lang/v8-3.18*
+	=dev-lang/v8-3.19*:=
 	>=dev-libs/elfutils-0.149
 	dev-libs/expat:=
 	>=dev-libs/icu-49.1.1-r1:=
@@ -64,14 +66,9 @@ RDEPEND="app-accessibility/speech-dispatcher:=
 	media-libs/libpng:0=
 	media-libs/libvpx:=
 	>=media-libs/libwebp-0.2.0_rc1:=
-	!arm? ( !x86? ( >=media-libs/mesa-9.1:=[gles2] ) )
 	media-libs/opus:=
 	media-libs/speex:=
 	pulseaudio? ( media-sound/pulseaudio:= )
-	system-ffmpeg? ( || (
-		>=media-video/ffmpeg-1.0:=[opus]
-		>=media-video/libav-9.5:=[opus]
-	) )
 	sys-apps/dbus:=
 	sys-apps/pciutils:=
 	sys-libs/zlib:=[minizip]
@@ -90,6 +87,8 @@ DEPEND="${RDEPEND}
 		dev-lang/yasm
 	)
 	dev-lang/perl
+	dev-perl/JSON
+	dev-python/jinja
 	dev-python/ply
 	dev-python/simplejson
 	>=dev-util/gperf-3.0.3
@@ -121,10 +120,9 @@ pkg_setup() {
 
 	chromium_suid_sandbox_check_kernel_config
 
-	if use bindist && ! use system-ffmpeg; then
+	if use bindist; then
 		elog "bindist enabled: H.264 video support will be disabled."
-	fi
-	if ! use bindist; then
+	else
 		elog "bindist disabled: Resulting binaries may not be legal to re-distribute."
 	fi
 }
@@ -145,21 +143,13 @@ src_prepare() {
 	fi
 
 	epatch "${FILESDIR}/${PN}-gpsd-r0.patch"
-	epatch "${FILESDIR}/${PN}-system-ffmpeg-r5.patch"
-
-	# Fix build with harfbuzz-0.9.18, bug #472416 .
-	epatch "${FILESDIR}/${PN}-system-harfbuzz-r0.patch"
-
-	epatch "${FILESDIR}/${PN}-nss-3.15.patch"
-
-	epatch "${FILESDIR}/chromium-bug471198.patch"
 
 	epatch_user
 
 	# Remove most bundled libraries. Some are still needed.
 	find third_party -type f \! -iname '*.gyp*' \
 		\! -path 'third_party/WebKit/*' \
-		\! -path 'third_party/angle/*' \
+		\! -path 'third_party/angle_dx11/*' \
 		\! -path 'third_party/cacheinvalidation/*' \
 		\! -path 'third_party/cld/*' \
 		\! -path 'third_party/cros_system_api/*' \
@@ -178,6 +168,7 @@ src_prepare() {
 		\! -path 'third_party/libXNVCtrl/*' \
 		\! -path 'third_party/libyuv/*' \
 		\! -path 'third_party/lss/*' \
+		\! -path 'third_party/lzma_sdk/*' \
 		\! -path 'third_party/mesa/*' \
 		\! -path 'third_party/modp_b64/*' \
 		\! -path 'third_party/mongoose/*' \
@@ -195,6 +186,7 @@ src_prepare() {
 		\! -path 'third_party/tlslite/*' \
 		\! -path 'third_party/trace-viewer/*' \
 		\! -path 'third_party/undoview/*' \
+		\! -path 'third_party/usrsctp/*' \
 		\! -path 'third_party/v8-i18n/*' \
 		\! -path 'third_party/webdriver/*' \
 		\! -path 'third_party/webrtc/*' \
@@ -260,14 +252,7 @@ src_configure() {
 		-Duse_system_speex=1
 		-Duse_system_v8=1
 		-Duse_system_xdg_utils=1
-		-Duse_system_zlib=1
-		$(gyp_use system-ffmpeg use_system_ffmpeg)"
-
-	# TODO: Use system mesa on x86, bug #457130 .
-	if ! use x86 && ! use arm; then
-		myconf+="
-			-Duse_system_mesa=1"
-	fi
+		-Duse_system_zlib=1"
 
 	# TODO: patch gyp so that this arm conditional is not needed.
 	if ! use arm; then
@@ -305,13 +290,8 @@ src_configure() {
 	myconf+="
 		-Dlinux_link_gsettings=1
 		-Dlinux_link_libpci=1
-		-Dlinux_link_libspeechd=1"
-
-	if has_version '>=app-accessibility/speech-dispatcher-0.8'; then
-		myconf+=" -Dlibspeechd_h_prefix=speech-dispatcher/"
-	else
-		myconf+=" -Dlibspeechd_h_prefix="
-	fi
+		-Dlinux_link_libspeechd=1
+		-Dlibspeechd_h_prefix=speech-dispatcher/"
 
 	# TODO: use the file at run time instead of effectively compiling it in.
 	myconf+="
@@ -330,8 +310,8 @@ src_configure() {
 	# Always support proprietary codecs.
 	myconf+=" -Dproprietary_codecs=1"
 
-	if ! use bindist && ! use system-ffmpeg; then
-		# Enable H.624 support in bundled ffmpeg.
+	if ! use bindist; then
+		# Enable H.264 support in bundled ffmpeg.
 		myconf+=" -Dffmpeg_branding=Chrome"
 	fi
 
@@ -385,7 +365,7 @@ src_configure() {
 	export LD_host=${CXX_host}
 
 	build/linux/unbundle/replace_gyp_files.py ${myconf} || die
-	egyp_chromium ${myconf} || die
+	egyp_chromium -f make ${myconf} || die
 }
 
 src_compile() {
@@ -414,26 +394,42 @@ src_compile() {
 
 src_test() {
 	# For more info see bug #350349.
-	local mylocale='en_US.utf8'
-	if ! locale -a | grep -q "$mylocale"; then
-		eerror "${PN} requires ${mylocale} locale for tests"
+	local LC_ALL="en_US.utf8"
+
+	if ! locale -a | grep -q "${LC_ALL}"; then
+		eerror "${PN} requires ${LC_ALL} locale for tests"
 		eerror "Please read the following guides for more information:"
 		eerror "  http://www.gentoo.org/doc/en/guide-localization.xml"
 		eerror "  http://www.gentoo.org/doc/en/utf-8.xml"
-		die "locale ${mylocale} is not supported"
+		die "locale ${LC_ALL} is not supported"
 	fi
+
+	# If we have the right locale, export it to the environment
+	export LC_ALL
 
 	# For more info see bug #370957.
 	if [[ $UID -eq 0 ]]; then
 		die "Tests must be run as non-root. Please use FEATURES=userpriv."
 	fi
 
+	# virtualmake dies on failure, so we run our tests in a function
+	VIRTUALX_COMMAND="chromium_test" virtualmake
+}
+
+chromium_test() {
+	# Keep track of the cumulative exit status for all tests
+	local exitstatus=0
+
 	runtest() {
 		local cmd=$1
 		shift
-		local filter="--gtest_filter=$(IFS=:; echo "-${*}")"
-		einfo "${cmd}" "${filter}"
-		LC_ALL="${mylocale}" VIRTUALX_COMMAND="${cmd}" virtualmake "${filter}"
+		local IFS=:
+		set -- "${cmd}" "--gtest_filter=-$*"
+		einfo "$@"
+		"$@"
+		local st=$?
+		(( st )) && eerror "${cmd} failed"
+		(( exitstatus |= st ))
 	}
 
 	local excluded_base_unittests=(
@@ -469,7 +465,6 @@ src_test() {
 		"HTTPSEVCRLSetTest.*" # see above
 		"HTTPSCRLSetTest.*" # see above
 		"*SpdyFramerTest.BasicCompression*" # bug #465444
-		"CertVerifyProcTest.EVVerification" #474642
 	)
 	runtest out/Release/net_unittests "${excluded_net_unittests[@]}"
 
@@ -479,6 +474,8 @@ src_test() {
 		"SQLiteFeaturesTest.FTS2" # bug #461286
 	)
 	runtest out/Release/sql_unittests "${excluded_sql_unittests[@]}"
+
+	return ${exitstatus}
 }
 
 src_install() {
@@ -497,15 +494,16 @@ src_install() {
 		doins out/Release/libppGoogleNaClPluginChrome.so || die
 	fi
 
-	newexe "${FILESDIR}"/chromium-launcher-r3.sh chromium-launcher.sh || die
-	if [[ "${CHROMIUM_SUFFIX}" != "" ]]; then
-		sed "s:chromium-browser:chromium-browser${CHROMIUM_SUFFIX}:g" \
-			-i "${ED}"/"${CHROMIUM_HOME}"/chromium-launcher.sh || die
-		sed "s:chromium.desktop:chromium${CHROMIUM_SUFFIX}.desktop:g" \
-			-i "${ED}"/"${CHROMIUM_HOME}"/chromium-launcher.sh || die
-		sed "s:plugins:plugins --user-data-dir=\${HOME}/.config/chromium${CHROMIUM_SUFFIX}:" \
-			-i "${ED}"/"${CHROMIUM_HOME}"/chromium-launcher.sh || die
+	local sedargs=( -e "s:/usr/lib/:/usr/$(get_libdir)/:g" )
+	if [[ -n ${CHROMIUM_SUFFIX} ]]; then
+		sedargs+=(
+			-e "s:chromium-browser:chromium-browser${CHROMIUM_SUFFIX}:g"
+			-e "s:chromium.desktop:chromium${CHROMIUM_SUFFIX}.desktop:g"
+			-e "s:plugins:plugins --user-data-dir=\${HOME}/.config/chromium${CHROMIUM_SUFFIX}:"
+		)
 	fi
+	sed "${sedargs[@]}" "${FILESDIR}/chromium-launcher-r3.sh" > chromium-launcher.sh || die
+	doexe chromium-launcher.sh
 
 	# It is important that we name the target "chromium-browser",
 	# xdg-utils expect it; bug #355517.
@@ -531,9 +529,7 @@ src_install() {
 	newman out/Release/chrome.1 chromium${CHROMIUM_SUFFIX}.1 || die
 	newman out/Release/chrome.1 chromium-browser${CHROMIUM_SUFFIX}.1 || die
 
-	if ! use system-ffmpeg; then
-		doexe out/Release/libffmpegsumo.so || die
-	fi
+	doexe out/Release/libffmpegsumo.so || die
 
 	# Install icons and desktop entry.
 	local branding size
