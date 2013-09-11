@@ -15,7 +15,8 @@ lg lt lv mai mk ml mr nb-NO nl nn-NO nso or pa-IN pl pt-BR pt-PT rm ro
 ru si sk sl son sq sr sv-SE ta ta-LK te th tr uk vi zh-CN zh-TW zu )
 
 # Taken from ubuntu-versionator.eclass
-MY_PV="${PV%%_p*}"
+MY_PV="${PV%%[a-z]_p*}"
+MY_PV="${MY_PV%%_p*}"
 
 # Convert the ebuild version to the upstream mozilla version, used by mozlinguas
 MOZ_PV="${MY_PV/_alpha/a}" # Handle alpha for SRC_URI
@@ -28,7 +29,7 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-22.0-patches-0.2"
+PATCH="${PN}-23.0-patches-0.1"
 # Upstream ftp release URI that's used by mozlinguas.eclass
 # We don't use the http mirror because it deletes old tarballs.
 MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
