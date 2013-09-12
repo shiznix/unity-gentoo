@@ -28,6 +28,7 @@ LICENSE="BSD"
 SLOT="0"
 #KEYWORDS="~amd64 ~arm ~x86"
 IUSE="bindist cups gnome gnome-keyring gps kerberos pulseaudio selinux system-sqlite tcmalloc"
+RESTRICT="mirror"
 
 # Native Client binaries are compiled with different set of flags, bug #452066.
 QA_FLAGS_IGNORED=".*\.nexe"

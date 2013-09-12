@@ -142,6 +142,14 @@ src_configure() {
 		$(use_with udev gudev)
 }
 
+src_install() {
+	gnome2_src_install
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
+}
+
 src_test() {
 	unset SESSION_MANAGER
 	unset DBUS_SESSION_BUS_ADDRESS

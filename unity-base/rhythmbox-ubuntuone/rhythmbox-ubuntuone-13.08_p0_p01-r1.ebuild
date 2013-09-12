@@ -36,3 +36,11 @@ DEPEND="dev-libs/libpeas[${PYTHON_USEDEP}]
 	unity-base/unity
 	x11-themes/ubuntuone-client-data[${PYTHON_USEDEP}]
 	$(vala_depend)"
+
+src_install() {
+	distutils-r1_src_install
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
+}
