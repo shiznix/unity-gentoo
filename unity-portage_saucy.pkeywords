@@ -18,6 +18,7 @@ app-crypt/libsecret
 dev-libs/folks
 dev-libs/gjs
 dev-libs/libgdata
+dev-libs/libgee
 dev-libs/libpeas
 dev-libs/totem-pl-parser
 =dev-libs/libgweather-3.8*
