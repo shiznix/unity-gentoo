@@ -23,7 +23,6 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'lazr-restfulclient'`" ]; then treepackname="${packname}"; packname="lazr.restfulclient"
 	elif [ -n "`echo "${packbasename}" | grep 'nm-applet'`" ]; then treepackname="${packname}"; packname="network-manager-applet"
 	elif [ -n "`echo "${packbasename}" | grep 'qtpim'`" ]; then treepackname="${packname}"; packname="libqt5organizer5"
-	elif [ -n "`echo "${packbasename}" | grep 'unity-language-pack'`" ]; then treepackname="${packname}"; packname="language-pack-gnome-en"
 	elif [ -n "`echo "${packbasename}" | grep 'unity-webapps'`" ]; then treepackname="${packname}"; packname="libunity-webapps"
 	elif [ -n "`echo "${packbasename}" | grep 'webapps-base'`" ]; then treepackname="${packname}"; packname="unity-webapps-common"
 	elif [ -n "`echo "${packbasename}"`" ]; then treepackname="${packname}"
@@ -207,6 +206,11 @@ elif [ -n "${pack}" ]; then
 else
 	if [ -z "${stream_release}" ]; then
 		## Check versions in meta type ebuilds that install from multiple sources ##
+		if [ -d "$(pwd)/unity-base/unity-language-pack" ]; then
+			pushd $(pwd)/unity-base/unity-language-pack
+				./lang_version_check.sh
+			popd
+		fi
 		if [ -d "$(pwd)/unity-base/webapps" ]; then
 			pushd $(pwd)/unity-base/webapps
 				./webapps_version_check.sh

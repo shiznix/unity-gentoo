@@ -11,7 +11,7 @@ S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/libi/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130823"
+UVER_PREFIX="+13.10.20130913"
 
 DESCRIPTION="A set of symbols and convenience functions that all indicators would like to use"
 HOMEPAGE="https://launchpad.net/libindicator"
