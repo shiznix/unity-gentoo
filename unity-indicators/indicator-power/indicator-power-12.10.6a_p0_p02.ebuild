@@ -9,7 +9,7 @@ inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130830.2"
+UVER_PREFIX="+13.10.20130913"
 
 DESCRIPTION="Indicator showing power state used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-power"
@@ -26,6 +26,7 @@ DEPEND=">=dev-libs/glib-2.35.4
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
 	>=gnome-base/gnome-settings-daemon-3.1.4
+	net-misc/url-dispatcher
 	sys-power/upower"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

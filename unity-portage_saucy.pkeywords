@@ -216,6 +216,7 @@ net-im/friends **
 net-im/friends-app  **
 net-libs/account-plugins **
 net-libs/telepathy-indicator **
+net-misc/url-dispatcher **
 sys-apps/accountsservice::unity-gentoo **
 unity-base/bamf **
 unity-base/compiz **
