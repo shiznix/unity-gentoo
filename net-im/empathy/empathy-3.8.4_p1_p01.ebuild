@@ -96,6 +96,7 @@ DEPEND="${COMMON_DEPEND}
 	dev-libs/libxslt
 	>=dev-util/intltool-0.50.0
 	virtual/pkgconfig
+	net-libs/account-plugins
 	test? (
 		sys-apps/grep
 		>=dev-libs/check-0.9.4 )
