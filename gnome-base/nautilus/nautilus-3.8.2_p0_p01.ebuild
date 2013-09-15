@@ -58,6 +58,7 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig
 	x11-proto/xproto
+	dev-libs/libzeitgeist
 "
 RDEPEND="${COMMON_DEPEND}
 	packagekit? ( app-admin/packagekit-base )
