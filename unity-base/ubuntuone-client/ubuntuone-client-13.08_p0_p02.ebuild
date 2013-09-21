@@ -52,6 +52,9 @@ src_prepare() {
 src_install() {
 	distutils-r1_src_install
 	python_fix_shebang "${ED}"
+
+	# Delete some files that are only useful on Ubuntu
+	rm -rf "${ED}"etc/apport "${ED}"usr/share/apport
 }
 
 pkg_preinst() {

@@ -8,11 +8,12 @@ inherit autotools eutils multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 URELEASE="saucy"
+UVER_PREFIX="+13.10.20130920.1"
 
 DESCRIPTION="Chromium extension: Unity Integration"
 HOMEPAGE="https://launchpad.net/unity-chromium-extension"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -25,9 +26,11 @@ DEPEND="${RDEPEND}
 	www-client/chromium"
 # Webapp integration doesn't work for www-client/google-chrome #
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 src_prepare() {
 	epatch "${FILESDIR}/strlen_fix.diff"
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	cp debian/unity-webapps.pem .
 	eautoreconf
 }

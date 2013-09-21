@@ -32,6 +32,7 @@ DEPEND="x11-libs/gtk+:3
 	media-libs/freetype:2
 	x11-libs/cairo
 	media-libs/libcanberra
+	unity-indicators/ido
 	$(vala_depend)"
 
 RDEPEND="unity-base/unity-language-pack

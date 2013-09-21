@@ -9,7 +9,7 @@ VALA_USE_DEPEND="vapigen"
 inherit autotools eutils ubuntu-versionator vala
 
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130903.1"
+UVER_PREFIX="+13.10.20130920"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 
 DESCRIPTION="Home scope that aggregates results from multiple scopes for the Unity desktop"

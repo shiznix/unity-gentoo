@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit autotools eutils ubuntu-versionator
+inherit autotools eutils flag-o-matic ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="3/7.0.0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="test"
 RESTRICT="mirror"
 
 RDEPEND=">=x11-libs/gtk+-2.18:2
@@ -35,25 +35,28 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	eautoreconf
+	append-cflags -Wno-error
 }
 
 src_configure() {
 	# Build GTK2 support #
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
-	../configure --prefix=/usr \
+	CFLAGS=${CFLAGS} ../configure --prefix=/usr \
 		--enable-debug \
 		--disable-static \
-		--with-gtk=2 || die
+		--with-gtk=2 \
+		$(use_enable test tests) || die
 	popd
 
 	# Build GTK3 support #
 	[[ -d build-gtk3 ]] || mkdir build-gtk3
 	pushd build-gtk3
-	../configure --prefix=/usr \
+	CFLAGS=${CFLAGS} ../configure --prefix=/usr \
 		--enable-debug \
 		--disable-static \
-		--with-gtk=3 || die
+		--with-gtk=3 \
+		$(use_enable test tests) || die
 	popd
 }
 

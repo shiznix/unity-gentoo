@@ -12,8 +12,7 @@ URELEASE="saucy"
 
 DESCRIPTION="Python unittest extension for running tests in different scenarios"
 HOMEPAGE="https://launchpad.net/testscenarios"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="Apache-2.0 BSD"
 SLOT="0"
@@ -21,8 +20,4 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-}
+S="${WORKDIR}/testscenarios-${PV}"

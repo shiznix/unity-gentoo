@@ -10,13 +10,10 @@ inherit distutils-r1 ubuntu-versionator
 UVER=
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="~svn147.orig"
-MY_P="${P/-/_}"
 
 DESCRIPTION="Python wrapper around different weather APIs"
 HOMEPAGE="https://code.google.com/p/python-weather-api/"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.tar.gz"
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"

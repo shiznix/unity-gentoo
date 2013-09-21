@@ -4,6 +4,7 @@
 
 EAPI=5
 GNOME2_LA_PUNT="yes"
+
 VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
@@ -11,11 +12,12 @@ inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130903.1"
+UVER_PREFIX="+13.10.20130920"
 
-DESCRIPTION="Application lens for the Unity desktop"
-HOMEPAGE="https://launchpad.net/unity-lens-applications"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+DESCRIPTION="File lens for the Unity desktop"
+HOMEPAGE="https://launchpad.net/unity-lens-files"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	 ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -24,27 +26,21 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
-	dev-libs/libcolumbus:=
 	dev-libs/libunity:="
 DEPEND="${RDEPEND}
+	dev-libs/libgee
 	dev-libs/libzeitgeist
-	>=gnome-base/gnome-menus-3.8.0:3
 	>=gnome-extra/zeitgeist-0.9.14[datahub,fts]
-	sys-libs/db:5.1
 	>=unity-base/unity-7.1.0
+	unity-lenses/unity-lens-applications
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
-	# Alter source to work with Gentoo's sys-libs/db slots #
-	sed -e 's:"db.h":"db5.1/db.h":g' \
-		-i configure || die
-	sed -e 's:-ldb$:-ldb-5.1:g' \
-		-i src/* || die
-	sed -e 's:<db.h>:<db5.1/db.h>:g' \
-		-i src/* || die
 }

@@ -11,7 +11,7 @@ inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130814"
+UVER_PREFIX="+13.10.20130920"
 
 DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"
 HOMEPAGE="https://launchpad.net/ido"
@@ -24,7 +24,8 @@ SLOT="0/0.0.0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="x11-libs/gtk+:3
+DEPEND=">=dev-libs/glib-2.37
+	x11-libs/gtk+:3
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

@@ -24,7 +24,7 @@ RDEPEND="dev-libs/libdbusmenu:=
 	unity-base/unity-language-pack"
 DEPEND="app-admin/system-config-printer-gnome
 	dev-cpp/gtest
-	>=dev-libs/glib-2.37.5
+	>=dev-libs/glib-2.36
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt

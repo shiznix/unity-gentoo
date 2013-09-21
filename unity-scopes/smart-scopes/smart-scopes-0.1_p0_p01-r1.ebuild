@@ -33,8 +33,8 @@ DEPEND="${RDEPEND}
 ## Neat and efficient way of bundling and tracking all available scopes into one ebuild ##
 ## Borrowed from chenxiaolong's Unity-for-Arch overlay at https://github.com/chenxiaolong/Unity-for-Arch ##
 setvar() {
-	eval "_ver_${1/-/_}=${2}"
-	eval "_rel_${1/-/_}=${3}"
+	eval "_ver_${1//-/_}=${2}"
+	eval "_rel_${1//-/_}=${3}"
 	packages+=(${1})
 }
 setvar audacious		0.1+13.10.20130723	0ubuntu1
@@ -66,7 +66,7 @@ setvar zotero			0.1+13.10.20130723	0ubuntu1
 
 for i in ${packages[@]}; do
 	unset _rel
-	eval "_name=${i}; _ver=\${_ver_${i/-/_}}; _rel=\${_rel_${i/-/_}}"
+	eval "_name=${i}; _ver=\${_ver_${i//-/_}}; _rel=\${_rel_${i//-/_}}"
 	SRC_URI_array+=("${UURL}/unity-scope-${_name}/unity-scope-${_name}_${_ver}.orig.tar.gz"
 	"${UURL}/unity-scope-${_name}/unity-scope-${_name}_${_ver}-${_rel}.diff.gz")
 done
@@ -75,7 +75,7 @@ S="${WORKDIR}"
 
 src_prepare() {
 	for i in ${packages[@]}; do
-		eval "_name=${i}; _ver=\${_ver_${i/-/_}}; _rel=\${_rel_${i/-/_}}"
+		eval "_name=${i}; _ver=\${_ver_${i//-/_}}; _rel=\${_rel_${i//-/_}}"
 		pushd "${S}/unity-scope-${_name}-${_ver}"
 			epatch -p1 "${S}/unity-scope-${_name}_${_ver}-${_rel}.diff"
 			distutils-r1_src_prepare

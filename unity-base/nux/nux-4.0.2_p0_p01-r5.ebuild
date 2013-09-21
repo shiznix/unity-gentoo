@@ -8,7 +8,7 @@ inherit autotools base eutils ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/n/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130829.1"
+UVER_PREFIX="+13.10.20130920"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
 HOMEPAGE="http://launchpad.net/nux"
@@ -52,10 +52,6 @@ src_prepare() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
 		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
 	fi
-
-	## Revert nux breaking keyboard input (from rev.812) ##
-	## FIXME: How can this possibly work in Ubuntu ? ##
-	epatch "${FILESDIR}/revert-ibus-keyboard-input-broken.diff"
 
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "debian/patches/series" | grep -v '#'); do

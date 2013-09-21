@@ -13,7 +13,7 @@ S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/liba/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="daily13.06.19"
+UVER_PREFIX="+13.10.20130920"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libappindicator"
@@ -22,7 +22,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="LGPL-2.1 LGPL-3"
 SLOT="3/1.0.0"
 #KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="test"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/libdbusmenu:=
@@ -30,6 +30,7 @@ RDEPEND="dev-libs/libdbusmenu:=
 DEPEND="${RDEPEND}
 	dev-dotnet/gtk-sharp:2
 	dev-libs/dbus-glib
+	dev-libs/glib:2
 	dev-libs/xapian-bindings[python]
 	dev-perl/XML-LibXML
 	dev-python/dbus-python
@@ -61,7 +62,9 @@ src_configure() {
 	pushd build-gtk2
 		PYTHON="$(PYTHON -2)" ../configure --prefix=/usr \
 			--disable-static \
-			--with-gtk=2 || die
+			--with-gtk=2 \
+			$(use_enable test tests ) \
+			$(use_enable test mono-test ) || die
 	popd
 
 	# Build GTK3 support #
@@ -69,7 +72,9 @@ src_configure() {
 	pushd build-gtk3
 		PYTHON="$(PYTHON -2)" ../configure --prefix=/usr \
 			--disable-static \
-			--with-gtk=3 || die
+			--with-gtk=3 \
+			$(use_enable test tests ) \
+			$(use_enable test mono-test ) || die
 	popd
 }
 
