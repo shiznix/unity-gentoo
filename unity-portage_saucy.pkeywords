@@ -191,6 +191,8 @@ dev-libs/libtimezonemap **
 dev-libs/libunity **
 dev-libs/libunity-misc **
 dev-libs/libunity-webapps **
+dev-libs/libupstart **
+dev-libs/libupstart-app-launch **
 dev-libs/xpathselect **
 dev-python/autopilot **
 dev-python/dirspec **

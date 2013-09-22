@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130823"
+UVER_PREFIX="+13.10.20130919.3"
 
 DESCRIPTION="Service to allow sending of URLs and get handlers started, used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/url-dispatcher"
@@ -23,10 +23,12 @@ RESTRICT="mirror"
 RDEPEND="dev-libs/libdbusmenu:="
 DEPEND="${RDEPEND}
 	dev-libs/glib:2
+	dev-libs/libupstart-app-launch
 	sys-apps/dbus
 	test? ( dev-util/dbus-test-runner )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 
 src_install() {
 	cmake-utils_src_install
