@@ -4,6 +4,7 @@
 
 EAPI=5
 PYTHON_COMPAT=( python{3_2,3_3} )
+DISTUTILS_NO_PARALLEL_BUILD=1
 
 inherit distutils-r1 eutils ubuntu-versionator
 
