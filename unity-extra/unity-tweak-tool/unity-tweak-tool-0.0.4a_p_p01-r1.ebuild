@@ -5,7 +5,6 @@
 EAPI=5
 
 PYTHON_COMPAT=( python3_{2,3} )
-DISTUTILS_NO_PARALLEL_BUILD=1
 
 inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 

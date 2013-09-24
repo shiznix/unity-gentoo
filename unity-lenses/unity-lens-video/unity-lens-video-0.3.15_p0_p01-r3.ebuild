@@ -35,7 +35,6 @@ DEPEND="dev-libs/dee
 	net-libs/libsoup
 	net-libs/libsoup-gnome
 	>=unity-base/unity-7.1.0
-	unity-lenses/unity-lens-music
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
