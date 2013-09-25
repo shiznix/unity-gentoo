@@ -46,6 +46,7 @@ DEPEND="dev-libs/boost
 	>=dev-libs/libindicator-12.10.2
 	dev-libs/libunity
 	dev-libs/libunity-misc
+	dev-libs/libupstart
 	dev-libs/xpathselect
 	dev-python/gconf-python
 	>=gnome-base/gconf-3.2.5
@@ -68,6 +69,7 @@ DEPEND="dev-libs/boost
 	unity-base/overlay-scrollbar
 	x11-base/xorg-server[dmx]
 	x11-libs/libXfixes
+	x11-libs/startup-notification
 	unity-base/unity-gtk-module
 	x11-misc/appmenu-qt
 	doc? ( app-doc/doxygen )
@@ -96,7 +98,7 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
 			"${FILESDIR}/systray-enabled-by-default.diff"
-			"${FILESDIR}/revert_hardcoded-upstart_rev3485.diff" )
+			"${FILESDIR}/fix-broken-decors-regression.diff" )
 	base_src_prepare
 
 	sed -e "s:/desktop:/org/unity/desktop:g" \

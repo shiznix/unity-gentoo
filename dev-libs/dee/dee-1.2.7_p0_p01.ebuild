@@ -17,7 +17,7 @@ S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130904"
+UVER_PREFIX="+13.10.20130924.1"
 
 DESCRIPTION="Provide objects allowing to create Model-View-Controller type programs across DBus"
 HOMEPAGE="https://launchpad.net/dee/"

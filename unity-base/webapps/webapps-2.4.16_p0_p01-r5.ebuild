@@ -29,46 +29,46 @@ setvar() {
 	packages+=(${1})
 }
 ##setvar amazon			2.4.16daily13.06.20	0ubuntu1	# Collides with files from unity-base/webapps-base
-setvar amazoncloudreader	2.4.16+13.10.20130917.1	0ubuntu1
+setvar amazoncloudreader	2.4.16+13.10.20130924.1	0ubuntu1
 setvar angrybirds		2.2
-setvar bbcnews			2.4.16+13.10.20130917.1	0ubuntu1
-setvar cnn-news			2.4.16+13.10.20130917.1	0ubuntu1
+setvar bbcnews			2.4.16+13.10.20130924.2	0ubuntu1
+setvar cnn-news			2.4.16+13.10.20130924.2	0ubuntu1
 setvar cuttherope		2.2
-setvar deezer			2.4.16+13.10.20130917.1	0ubuntu1
-setvar deviantart		2.4.16+13.10.20130917.1	0ubuntu1
-setvar facebookmessenger	2.4.16+13.10.20130917.1	0ubuntu1
-setvar gmail			2.4.16+13.10.20130917.1	0ubuntu1
-setvar googlecalendar		2.4.16+13.10.20130917.1	0ubuntu1
-setvar googledocs		2.4.16+13.10.20130917.1	0ubuntu1
-setvar googlenews		2.4.16+13.10.20130917.1	0ubuntu1
-setvar googleplus		2.4.17+13.10.20130917.1	0ubuntu1
-setvar googleplusgames		2.4.16+13.10.20130917.1	0ubuntu1
-setvar grooveshark		2.4.16+13.10.20130917.1	0ubuntu1
+setvar deezer			2.4.16+13.10.20130924.2	0ubuntu1
+setvar deviantart		2.4.16+13.10.20130924.2	0ubuntu1
+setvar facebookmessenger	2.4.16+13.10.20130924.2	0ubuntu1
+setvar gmail			2.4.16+13.10.20130924.2	0ubuntu1
+setvar googlecalendar		2.4.16+13.10.20130924.2	0ubuntu1
+setvar googledocs		2.4.16+13.10.20130924.2	0ubuntu1
+setvar googlenews		2.4.16+13.10.20130924.2	0ubuntu1
+setvar googleplus		2.4.17+13.10.20130924.2	0ubuntu1
+setvar googleplusgames		2.4.16+13.10.20130924.2	0ubuntu1
+setvar grooveshark		2.4.16+13.10.20130924.2	0ubuntu1
 ##setvar hulu-player		2.4.16daily13.06.20	0ubuntu1	# Corrupt tarball authored by upstream
-setvar lastfm-radio		2.4.16+13.10.20130917.1	0ubuntu1
-setvar launchpad		2.4.16+13.10.20130917.1	0ubuntu1
-setvar librefm			2.4.16+13.10.20130917.1	0ubuntu1
-setvar linkedin			2.4.16+13.10.20130917.1	0ubuntu1
-setvar livemail			2.4.16+13.10.20130917.1	0ubuntu1
-setvar mail-ru			2.4.16+13.10.20130917.1	0ubuntu1
-setvar newsblur			2.4.16+13.10.20130917.1	0ubuntu1
-setvar pandora			2.4.16+13.10.20130917.1	0ubuntu1
+setvar lastfm-radio		2.4.16+13.10.20130924.2	0ubuntu1
+setvar launchpad		2.4.16+13.10.20130924.2	0ubuntu1
+setvar librefm			2.4.16+13.10.20130924.2	0ubuntu1
+setvar linkedin			2.4.16+13.10.20130924.2	0ubuntu1
+setvar livemail			2.4.16+13.10.20130924.2	0ubuntu1
+setvar mail-ru			2.4.16+13.10.20130924.2	0ubuntu1
+setvar newsblur			2.4.16+13.10.20130924.2	0ubuntu1
+setvar pandora			2.4.16+13.10.20130924.2	0ubuntu1
 setvar pandora-com		2.2ubuntu1
 ##setvar qml
-setvar qq-mail			2.4.16+13.10.20130917.1	0ubuntu1
-setvar reddit			2.4.16+13.10.20130917.1	0ubuntu1
-setvar tumblr			2.4.16+13.10.20130917.1	0ubuntu1
-setvar twitter			2.4.16+13.10.20130917.1	0ubuntu1
-setvar vkcom			2.4.16+13.10.20130917.1	0ubuntu1
-setvar wordpress		2.4.16+13.10.20130917.1	0ubuntu1
+setvar qq-mail			2.4.16+13.10.20130924.2	0ubuntu1
+setvar reddit			2.4.16+13.10.20130924.2	0ubuntu1
+setvar tumblr			2.4.16+13.10.20130924.2	0ubuntu1
+setvar twitter			2.4.16+13.10.20130924.2	0ubuntu1
+setvar vkcom			2.4.16+13.10.20130924.2	0ubuntu1
+setvar wordpress		2.4.16+13.10.20130924.2	0ubuntu1
 setvar wordpress-com		2.2
-setvar yahoomail		2.4.16+13.10.20130917.1	0ubuntu1
-setvar yahoonews		2.4.16+13.10.20130917.1	0ubuntu1
+setvar yahoomail		2.4.16+13.10.20130924.2	0ubuntu1
+setvar yahoonews		2.4.16+13.10.20130924.2	0ubuntu1
 setvar yandex-music		2.3
-setvar yandexmail		2.4.16+13.10.20130917.1	0ubuntu1
-setvar yandexmusic		2.4.16+13.10.20130917.1	0ubuntu1
-setvar yandexnews		2.4.16+13.10.20130917.1	0ubuntu1
-setvar youtube			2.4.16+13.10.20130917.1	0ubuntu1
+setvar yandexmail		2.4.16+13.10.20130924.2	0ubuntu1
+setvar yandexmusic		2.4.16+13.10.20130924.2	0ubuntu1
+setvar yandexnews		2.4.16+13.10.20130924.2	0ubuntu1
+setvar youtube			2.4.16+13.10.20130924.2	0ubuntu1
 
 for i in ${packages[@]}; do
 	unset _rel
