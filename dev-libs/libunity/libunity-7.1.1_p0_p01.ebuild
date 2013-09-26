@@ -30,7 +30,6 @@ RDEPEND="dev-libs/dee:=
 DEPEND="${RDEPEND}
 	dev-libs/libgee:0
 	x11-libs/gtk+:3
-	x11-libs/libXfixes
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

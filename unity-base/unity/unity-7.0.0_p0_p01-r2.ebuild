@@ -68,7 +68,7 @@ DEPEND="dev-libs/boost
 	>=unity-base/nux-4.0.0
 	unity-base/overlay-scrollbar
 	x11-base/xorg-server[dmx]
-	x11-libs/libXfixes
+	<x11-libs/libXfixes-5.0.1
 	x11-misc/appmenu-gtk
 	x11-misc/appmenu-qt
 	doc? ( app-doc/doxygen )
