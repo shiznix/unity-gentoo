@@ -5,7 +5,7 @@
 EAPI=5
 
 XORG_MULTILIB=yes
-inherit base eutils xorg-2 ubuntu-versionator
+inherit base autotools eutils xorg-2 ubuntu-versionator
 
 MY_PN="libxfixes"
 MY_P="${MY_PN}_${PV}"
@@ -37,4 +37,5 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/${PN}-${MY_PV}/${MY_PN}-${MY_PV}/debian/patches/${patch}" )
 	done
 	base_src_prepare
+	eautoreconf
 }
