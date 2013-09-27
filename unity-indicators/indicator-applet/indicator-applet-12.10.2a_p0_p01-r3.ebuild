@@ -8,7 +8,7 @@ inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/i/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130913"
+UVER_PREFIX="+13.10.20130924.2"
 
 DESCRIPTION="Gnome panel indicator for the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-applet"

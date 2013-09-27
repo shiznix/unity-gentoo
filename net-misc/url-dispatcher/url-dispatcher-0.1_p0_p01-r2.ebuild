@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130919.3"
+UVER_PREFIX="+13.10.20130924.1"
 
 DESCRIPTION="Service to allow sending of URLs and get handlers started, used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/url-dispatcher"

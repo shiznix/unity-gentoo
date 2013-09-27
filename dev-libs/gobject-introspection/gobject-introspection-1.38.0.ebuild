@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/gobject-introspection/gobject-introspection-1.36.0.ebuild,v 1.4 2013/05/18 14:08:22 pacho Exp $
+# $Header: $
 
 EAPI="5"
 GCONF_DEBUG="no"

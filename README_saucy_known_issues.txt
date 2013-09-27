@@ -6,7 +6,11 @@
  (cursor theme packages are missing in overlay too)
 
 - Time & Date settings in System Settings segfaults gnome-control-center
+	(will maybe self fix once Saucy has a proper gnome-3.8 patchset for gnome-control-center)
 
-- unity-lenses/unity-lens-music fails to compile with the following error due to lagging behind dev-libs/libunity updates...
-	simple-scope.vala:134.33-134.59: error: The name `FLOW' does not exist in the context of `Unity.CategoryRenderer'
-		Unity.CategoryRenderer.FLOW);
+- launchpad bug #1210357
+	unity-lenses/unity-lens-music fails to compile with the following error due to lagging behind dev-libs/libunity updates...
+		simple-scope.vala:134.33-134.59: error: The name `FLOW' does not exist in the context of `Unity.CategoryRenderer'
+			Unity.CategoryRenderer.FLOW);
+
+- Application spread view (Compiz scale) doesn't work properly after using "Show Desktop" (see launchpad.net #1104632)

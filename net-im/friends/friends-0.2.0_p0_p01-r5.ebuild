@@ -31,7 +31,7 @@ RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/oauthlib[${PYTHON_USEDEP}]
 	dev-python/pygobject[${PYTHON_USEDEP}]
-	=gnome-extra/evolution-data-server-3.8*
+	>=gnome-extra/evolution-data-server-3.8
 	net-libs/libsoup
 	net-libs/libsoup-gnome
 	net-misc/networkmanager
