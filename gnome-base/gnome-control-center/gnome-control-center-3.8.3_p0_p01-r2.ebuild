@@ -146,6 +146,9 @@ src_prepare() {
 	# Make modemmanager optional, bug 463852, upstream bug #700145
 	epatch "${FILESDIR}/${PN}-3.8.1.5-optional-modemmanager.patch"
 
+	# Fix crash of 'Details' entry when running as guest in VirtualBox
+	epatch "${FILESDIR}/${PN}-3.8.3-fix-details-crash.patch"
+
 	# Disable selected patches #
 	sed \
 		`# Ubuntu have not yet ported to the latest version of IBus` \
