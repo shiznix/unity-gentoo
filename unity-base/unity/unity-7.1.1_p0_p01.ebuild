@@ -11,7 +11,7 @@ inherit base cmake-utils distutils-r1 eutils gnome2 toolchain-funcs ubuntu-versi
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130920"
+UVER_PREFIX="+13.10.20130927.1"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
@@ -62,6 +62,7 @@ DEPEND="dev-libs/boost
 	media-libs/clutter-gtk:1.0
 	sys-apps/dbus
 	>=sys-devel/gcc-4.8
+	sys-libs/libnih[dbus]
 	>=unity-base/bamf-0.4.0
 	>=unity-base/compiz-0.9.9
 	unity-base/dconf-qt
@@ -97,8 +98,7 @@ src_prepare() {
 
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
-			"${FILESDIR}/systray-enabled-by-default.diff"
-			"${FILESDIR}/fix-broken-decors-regression.diff" )
+			"${FILESDIR}/systray-enabled-by-default.diff" )
 	base_src_prepare
 
 	sed -e "s:/desktop:/org/unity/desktop:g" \

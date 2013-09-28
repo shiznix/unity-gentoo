@@ -26,6 +26,8 @@ version_check() {
 	if [ "${bump}" = "1" ]; then
 		if [ -n "${local_version}" ] && [ -n "${upstream_version}" ]; then
 			if [ "${local_version}" != "${upstream_version}" ]; then
+				local_release=`echo ${local_version} | sed 's/.*\([0-9]ubuntu[0-9]\)/\1/'`
+				local_version=`echo ${local_version} | sed 's/-[0-9]ubuntu[0-9]//'`
 				upstream_release=`echo ${upstream_version} | sed 's/.*\([0-9]ubuntu[0-9]\)/\1/'`
 				upstream_version=`echo ${upstream_version} | sed 's/-[0-9]ubuntu[0-9]//'`
 				sed -e "s/\(${_name}    .*\).*${local_version}/\1${upstream_version}/" \
@@ -49,8 +51,8 @@ done
 if [ "${bump}" = "1" ]; then
         source $(pwd)/${ebuild} 2> /dev/null
         for i in ${packages[@]}; do
-                eval "_name=${i}; _ver=\${_ver_${i//-/_}}"
-                local_version="${_ver}"
+                eval "_name=${i}; _ver=\${_ver_${i//-/_}}; _rel=\${_rel_${i//-/_}}"
+                local_version="${_ver}-${_rel}"
                 version_check
         done
 else
