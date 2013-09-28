@@ -9,6 +9,7 @@ EAPI=5
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
+UVER=
 URELEASE="saucy"
 
 DESCRIPTION="Tool to migrate in user session settings used by the Unity desktop"
