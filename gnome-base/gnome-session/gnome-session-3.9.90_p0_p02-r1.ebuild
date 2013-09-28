@@ -65,6 +65,7 @@ RDEPEND="${COMMON_DEPEND}
 	>=gnome-base/gnome-desktop-3.7.90:3
 	systemd? ( >=sys-apps/systemd-183 )
 	!systemd? ( sys-auth/consolekit )
+	unity-base/session-migration
 "
 DEPEND="${COMMON_DEPEND}
 	>=dev-lang/perl-5
@@ -81,29 +82,17 @@ DEPEND="${COMMON_DEPEND}
 # gnome-base/gdm does not provide gnome.desktop anymore
 
 src_prepare() {
-# Disable selected patches #
-        sed \
-                `# Totally breaks gnome-session #` \
-                        -e 's:^96_no_catch_sigsegv:#96_no_catch_sigsegv:g' \
-		`# Disable session migration for now #` \
-			-e 's:^53_add_sessionmigration.patch:#53_add_sessionmigration.patch:g' \
-                                -i "${WORKDIR}/debian/patches/series"
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
+	done
 
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
-        done
-
-        sed \
-                -e 's:Ubuntu:Unity:g' \
-                -e 's:session=ubuntu:session=unity:g' \
-                -i data/ubuntu.desktop.in || die
-        sed -e 's:Ubuntu:Unity:g' \
-                -i data/ubuntu.session.desktop.in.in || die
-
-
-	# Don't show desktop files with NoDisplay=true (from 'master')
-# unity patch '20_hide_nodisplay.patch'
-#	epatch "${FILESDIR}/${PN}-3.8.2.1-filter-nodisplay.patch"
+	# Desktop Session is named 'unity' #
+	sed -e 's:Ubuntu:Unity:g' \
+		-e 's:session=ubuntu:session=unity:g' \
+			-i data/ubuntu.desktop.in || die
+	sed -e 's:Ubuntu:Unity:g' \
+		-i data/ubuntu.session.desktop.in.in || die
 
 	# Silence errors due to weird checks for libX11
 	sed -e 's/\(PANGO_PACKAGES="\)pangox/\1/' -i configure.ac configure || die
