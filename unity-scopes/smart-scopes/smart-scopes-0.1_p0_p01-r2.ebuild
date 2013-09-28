@@ -85,7 +85,7 @@ src_prepare() {
 
 src_compile() {
 	for i in ${packages[@]}; do
-		eval "_name=${i}; _ver=\${_ver_${i/-/_}}; _rel=\${_rel_${i/-/_}}"
+		eval "_name=${i}; _ver=\${_ver_${i//-/_}}; _rel=\${_rel_${i//-/_}}"
 		pushd "${S}/unity-scope-${_name}-${_ver}"
 			distutils-r1_src_compile
 		popd
@@ -94,7 +94,7 @@ src_compile() {
 
 src_test() {
 	for i in ${packages[@]}; do
-		eval "_name=${i}; _ver=\${_ver_${i/-/_}}; _rel=\${_rel_${i/-/_}}"
+		eval "_name=${i}; _ver=\${_ver_${i//-/_}}; _rel=\${_rel_${i//-/_}}"
 		pushd "${S}/unity-scope-${_name}-${_ver}"
 			if grep -q python3-nose debian/control; then
 				nosetests || :
@@ -105,7 +105,7 @@ src_test() {
 
 src_install() {
 	for i in ${packages[@]}; do
-		eval "_name=${i}; _ver=\${_ver_${i/-/_}}; _rel=\${_rel_${i/-/_}}"
+		eval "_name=${i}; _ver=\${_ver_${i//-/_}}; _rel=\${_rel_${i//-/_}}"
 		pushd "${S}/unity-scope-${_name}-${_ver}"
 			distutils-r1_src_install
 		popd
