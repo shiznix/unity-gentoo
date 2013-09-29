@@ -30,8 +30,8 @@ version_check() {
 				local_version=`echo ${local_version} | sed 's/-[0-9]ubuntu[0-9]//'`
 				upstream_release=`echo ${upstream_version} | sed 's/.*\([0-9]ubuntu[0-9]\)/\1/'`
 				upstream_version=`echo ${upstream_version} | sed 's/-[0-9]ubuntu[0-9]//'`
-				sed -e "s/\(${_name}    .*\).*${local_version}/\1${upstream_version}/" \
-					-e "s/\(${_name}.*${local_version}      .*\).*${_rel}/\1${upstream_release}/" \
+				sed -e "s/\(${_name}	.*\).*${local_version}/\1${upstream_version}/" \
+					-e "s/\(${_name}.*${local_version}	.*\).*${_rel}/\1${upstream_release}/" \
 						-i "${ebuild}"
 				echo "  Bumped local version to ${upstream_version}"
 			fi
