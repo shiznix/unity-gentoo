@@ -5,6 +5,12 @@
  * not possible to change mouse cursor theme
  (cursor theme packages are missing in overlay too)
 
+- launchpad bug #1059374 
+ * Using Adwaita, many widgets are drawn with a solid black background
+ * work around:
+   -> run 'gsettings set com.canonical.desktop.interface scrollbar-mode normal'
+   -> OR use 'unity-tweak-tool' and set scrolling to 'backward compatibility'
+
 - Time & Date settings in System Settings segfaults gnome-control-center
 	(will maybe self fix once Saucy has a proper gnome-3.8 patchset for gnome-control-center)
 
