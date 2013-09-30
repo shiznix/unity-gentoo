@@ -134,8 +134,6 @@ dev-util/dbus-test-runner
 media-libs/fontconfig
 media-libs/gexiv2
 media-libs/libvpx
-media-libs/gst-plugins-good
-media-plugins/gst-plugins-vpx
 media-sound/pulseaudio
 net-im/telepathy-logger
 net-im/telepathy-mission-control
