@@ -1,0 +1,11 @@
+diff -urN mir-0.0.12+13.10.20130926.1/src/client/lttng/rpc_report_tp.h mir-0.0.12+13.10.20130926.1-patched/src/client/lttng/rpc_report_tp.h
+--- mir-0.0.12+13.10.20130926.1/src/client/lttng/rpc_report_tp.h	2013-09-26 18:09:16.000000000 +0930
++++ mir-0.0.12+13.10.20130926.1-patched/src/client/lttng/rpc_report_tp.h	2013-10-01 13:01:07.940383247 +0930
+@@ -25,6 +25,7 @@
+ #if !defined(MIR_CLIENT_LTTNG_RPC_REPORT_TP_H_) || defined(TRACEPOINT_HEADER_MULTI_READ)
+ #define MIR_CLIENT_LTTNG_RPC_REPORT_TP_H_
+ 
++#include <stdint.h>
+ #include <lttng/tracepoint.h>
+ 
+ TRACEPOINT_EVENT(

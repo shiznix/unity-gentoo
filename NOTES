@@ -39,6 +39,7 @@ gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/gnome-screensaver		# Patched to have gnome-screensaver xdg-autostart on Unity login
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
+media-libs/mesa				# Patched for mir display server support
 media-sound/rhythmbox			# Patched to work with gstreamer-1.0 and to have indicator-sound youtube webapp work
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
@@ -114,10 +115,11 @@ x11-wm/metacity				# Patched to support compiz window decoration
 		  {"ubuntuone-installer"},
 		};
 
-* Packages requiring glib-2.37
-        - sys-apps/accountsservice      (0014-pam-pin.patch, 0015-pam-pin-ubuntu.patch, git_custom_interfaces.patch)
-        - dev-libs/libindicator
-        - unity-indicators/ido
-        - unity-indicators/indicator-messages
-        - unity-indicators/indicator-power
-        - unity-indicators/indicator-session
+* Mir EGL Display Server
+	- Circular dependencies between mir-base/mir and media-libs/mesa
+		- Mesa requires mir support patch
+		- mir-base/mir requires libGL from media-libs/mesa to build
+		- media-libs/mesa with mir enabled requires mirclient from mir-base/mir
+			- SOLUTION:
+				- Introduce media-libs/mesa-mir ebuild that installs only the mesa EGL related files and DEPENDS on mir-base/mir
+				- Introduce 'mir' useflag to media-libs/mesa which when enabled removes all EGL related files and PDEPENDS on media-libs/mesa-mir

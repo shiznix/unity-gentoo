@@ -109,6 +109,7 @@ dev-libs/libindicate-qt
 dev-libs/libpwquality
 dev-libs/libzeitgeist
 dev-libs/nettle
+dev-libs/userspace-rcu
 dev-libs/vala-common
 dev-python/bsddb3
 dev-python/dbus-python
@@ -131,8 +132,10 @@ dev-qt/qt-mobility
 =dev-util/boost-build-1.52*
 dev-util/fix-la-relink-command
 dev-util/dbus-test-runner
+dev-util/umockdev
 media-libs/fontconfig
 media-libs/gexiv2
+media-libs/glm
 media-libs/libvpx
 media-libs/gst-plugins-good
 media-plugins/gst-plugins-vpx
@@ -165,6 +168,7 @@ sys-devel/gcc:4.8
 sys-libs/db:5.1
 sys-libs/libnih
 sys-libs/tevent
+virtual/udev
 x11-base/xorg-drivers
 x11-drivers/xf86-video-dummy
 x11-libs/libwnck
@@ -212,7 +216,10 @@ gnome-base/gsettings-desktop-schemas **
 gnome-base/nautilus::unity-gentoo **
 gnome-extra/activity-log-manager::unity-gentoo **
 gnome-extra/gnome-screensaver::unity-gentoo **
+media-libs/mesa::unity-gentoo **
+media-libs/mesa-mir **
 media-sound/rhythmbox::unity-gentoo **
+mir-base/mir **
 net-im/empathy::unity-gentoo **
 net-im/friends **
 net-im/friends-app  **

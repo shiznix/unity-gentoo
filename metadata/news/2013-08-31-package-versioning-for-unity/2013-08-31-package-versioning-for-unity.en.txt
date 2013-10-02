@@ -33,6 +33,7 @@ gnome-extra/gnome-screensaver
 gnome-extra/activity-log-manager
 gnome-extra/nm-applet
 gnome-extra/polkit-gnome
+media-libs/mesa
 media-sound/rhythmbox
 net-im/empathy
 sys-apps/accountsservice
