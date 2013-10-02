@@ -101,8 +101,6 @@ media-libs/clutter-gst
 =media-libs/cogl-1.12*
 media-libs/gexiv2
 media-libs/libvpx
-media-libs/gst-plugins-good
-media-plugins/gst-plugins-vpx
 media-sound/pulseaudio
 media-video/cheese:0/7
 =media-video/totem-3.6*
