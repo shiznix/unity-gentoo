@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 IUSE_SERVERS="kdrive xnest xorg xvfb"
-IUSE="${IUSE_SERVERS} +dmx ipv6 minimal nptl selinux +suid tslib +udev"
+IUSE="${IUSE_SERVERS} +dmx ipv6 minimal mir nptl selinux +suid tslib +udev"
 RESTRICT="mirror"
 
 RDEPEND=">=app-admin/eselect-opengl-1.0.8
@@ -99,6 +99,7 @@ DEPEND="${RDEPEND}
 			)
 		)
 	)
+	mir? ( mir-base/mir )
 	!minimal? (
 		>=x11-proto/xf86driproto-2.1.0
 		>=x11-proto/dri2proto-2.8
@@ -122,6 +123,14 @@ pkg_pretend() {
 	# older gcc is not supported
 	[[ "${MERGE_TYPE}" != "binary" && $(gcc-major-version) -lt 4 ]] && \
 		die "Sorry, but gcc earlier than 4.0 will not work for xorg-server."
+}
+
+src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
+	if use mir; then
+		PATCHES+=( "${S}/debian/patches/xmir.patch" )
+		base_src_prepare
+	fi
 }
 
 src_configure() {
