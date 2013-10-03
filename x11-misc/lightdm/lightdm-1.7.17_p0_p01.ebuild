@@ -23,7 +23,7 @@ for greeters in ${IUSE_LIGHTDM_GREETERS}; do
         IUSE+=" lightdm_greeters_${greeters}"
 done
 
-IUSE+=" +introspection qt4 qt5"
+IUSE+=" +introspection qt4 qt5 mir"
 
 RESTRICT="mirror"
 
@@ -34,6 +34,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
 	x11-libs/libX11
 	>=x11-libs/libxklavier-5
 	introspection? ( >=dev-libs/gobject-introspection-1 )
+	mir? ( mir-base/unity-system-compositor )
 	qt4? (
 		dev-qt/qtcore:4
 		dev-qt/qtdbus:4
@@ -93,13 +94,10 @@ src_prepare() {
         # as the regular GSettings override files.
         epatch "${FILESDIR}"/guest-session-add-default-gsettings-support.patch
 
-        cd "${S}"
-
         # Patch from Fedora to lock the screen before switching users.
         epatch "${FILESDIR}"/lightdm-lock-screen-before-switch.patch
 
 	epatch_user
-
 	base_src_prepare
 
 	if has_version dev-libs/gobject-introspection; then

@@ -219,6 +219,7 @@ media-libs/mesa::unity-gentoo **
 media-libs/mesa-mir **
 media-sound/rhythmbox::unity-gentoo **
 mir-base/mir **
+mir-base/unity-system-compositor **
 net-im/empathy::unity-gentoo **
 net-im/friends **
 net-im/friends-app  **
