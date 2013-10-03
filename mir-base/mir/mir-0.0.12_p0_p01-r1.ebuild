@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20130926.1"
+UVER_PREFIX="+13.10.20131001.1"
 
 DESCRIPTION="Mir is a display server technology"
 HOMEPAGE="https://launchpad.net/mir/"
@@ -65,7 +65,7 @@ src_configure() {
 
 src_install() {
 	cmake-utils_src_install
-	dodoc HACKING.md README.md COPYING.GPL COPYING.LGPL
+	dodoc HACKING.md README.md COPYING.GPL COPYING.LGPL doc/*.md
 }
 
 pkg_postinst() {

@@ -97,6 +97,7 @@ app-admin/packagekit-qt4
 app-crypt/p11-kit
 app-i18n/ibus
 app-text/gtkspell
+dev-lang/orc
 dev-cpp/gtkmm
 dev-cpp/glibmm
 dev-lang/vala
