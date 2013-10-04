@@ -150,7 +150,8 @@ version_check_other_releases() {
 				return
 			else
 				local_version_check
-				upstream_version_check ${stream_release}
+#				upstream_version_check ${stream_release}
+				upstream_version_check ${URELEASE}
 	                	version_compare
 			fi
 		fi
