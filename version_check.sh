@@ -126,7 +126,7 @@ version_check_other_releases() {
 		if [ "${stream_release}" = all ]; then
 			echo "Checking ${catpack}"
 			echo "  Local versions:"
-			for ebuild in `find $(pwd) -name "*.ebuild" | grep "${catpack}"`; do
+			for ebuild in `find $(pwd) -name "*.ebuild" | grep /"${catpack}"/`; do
 				pack="${ebuild}"
 				packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 				local_version_check
@@ -150,7 +150,6 @@ version_check_other_releases() {
 				return
 			else
 				local_version_check
-#				upstream_version_check ${stream_release}
 				upstream_version_check ${URELEASE}
 	                	version_compare
 			fi

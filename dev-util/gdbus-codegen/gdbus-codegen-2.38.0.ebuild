@@ -10,6 +10,7 @@ PYTHON_REQ_USE="xml"
 inherit eutils gnome.org distutils-r1
 
 URELEASE="saucy"
+UVER=
 
 DESCRIPTION="GDBus code and documentation generator"
 HOMEPAGE="http://www.gtk.org/"
