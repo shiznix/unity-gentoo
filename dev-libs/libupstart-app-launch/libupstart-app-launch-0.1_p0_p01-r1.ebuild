@@ -24,6 +24,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/glib:2
 	dev-libs/json-glib
+	dev-libs/libzeitgeist
 	dev-libs/libupstart
 	sys-libs/libnih[dbus]"
 
