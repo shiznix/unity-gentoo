@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20131001.1"
+UVER_PREFIX="+13.10.20131003"
 
 DESCRIPTION="Mir is a display server technology"
 HOMEPAGE="https://launchpad.net/mir/"
