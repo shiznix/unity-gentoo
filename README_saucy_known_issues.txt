@@ -11,12 +11,15 @@
    -> run 'gsettings set com.canonical.desktop.interface scrollbar-mode normal'
    -> OR use 'unity-tweak-tool' and set scrolling to 'backward compatibility'
 
-- Time & Date settings in System Settings segfaults gnome-control-center
-	(will maybe self fix once Saucy has a proper gnome-3.8 patchset for gnome-control-center)
-
 - launchpad bug #1210357
 	unity-lenses/unity-lens-music fails to compile with the following error due to lagging behind dev-libs/libunity updates...
 		simple-scope.vala:134.33-134.59: error: The name `FLOW' does not exist in the context of `Unity.CategoryRenderer'
 			Unity.CategoryRenderer.FLOW);
 
 - Application spread view (Compiz scale) doesn't work properly after using "Show Desktop" (see launchpad.net #1104632)
+
+- Nautilus may crash when changing desktop background with the following error... (see launchpad.net #1198658)
+	(nautilus:4182): Gdk-ERROR **: The program 'nautilus' received an X Window System error.
+	This probably reflects a bug in the program.
+	The error was 'BadDrawable (invalid Pixmap or Window parameter)'.
+	  (Details: serial 14085 error_code 9 request_code 53 minor_code 0)
