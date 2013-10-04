@@ -72,9 +72,14 @@ net-libs/libsoup-gnome
 net-libs/rest
 =net-wireless/gnome-bluetooth-3.8*
 =sys-apps/baobab-3.8*
+~sys-apps/kmod-15
+~sys-apps/hwids-20130915.1
+~sys-apps/gentoo-systemd-integration-2
+~sys-apps/systemd-207
 x11-libs/cairo
 x11-libs/gdk-pixbuf
 x11-libs/gnome-pty-helper
+~x11-libs/libdrm-2.4.46
 x11-libs/mx
 x11-libs/pango
 x11-libs/vte
@@ -164,10 +169,11 @@ sys-devel/automake:1.13
 sys-devel/automake-wrapper
 sys-devel/gcc:4.7
 sys-devel/gcc:4.8
+sys-devel/llvm:0/3.3
 sys-libs/db:5.1
 sys-libs/libnih
 sys-libs/tevent
-virtual/udev
+~virtual/udev-206
 x11-base/xorg-drivers
 x11-drivers/xf86-video-dummy
 x11-libs/libwnck
