@@ -63,7 +63,11 @@ media-libs/clutter
 media-libs/clutter-gst
 media-libs/clutter-gtk
 media-libs/cogl
+=media-libs/gstreamer-1.0*
+=media-libs/gst-plugins-base-1.0*
+=media-libs/gst-plugins-good-1.0*
 =media-gfx/eog-3.8*
+=media-plugins/gst-plugins-vpx-1.0*
 =media-video/cheese-3.8*
 =media-video/totem-3.8*
 =net-libs/gnome-online-accounts-3.8*
@@ -168,7 +172,7 @@ sys-auth/pambase
 sys-devel/automake:1.13
 sys-devel/automake-wrapper
 sys-devel/gcc:4.7
-sys-devel/gcc:4.8
+sys-devel/gcc:4.8 **
 sys-devel/llvm:0/3.3
 sys-libs/db:5.1
 sys-libs/libnih

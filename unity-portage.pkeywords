@@ -100,7 +100,11 @@ media-gfx/shotwell
 media-libs/clutter-gst
 =media-libs/cogl-1.12*
 media-libs/gexiv2
+=media-libs/gstreamer-1.0*
+=media-libs/gst-plugins-base-1.0*
+=media-libs/gst-plugins-good-1.0*
 media-libs/libvpx
+=media-plugins/gst-plugins-vpx-1.0*
 media-sound/pulseaudio
 media-video/cheese:0/7
 =media-video/totem-3.6*
