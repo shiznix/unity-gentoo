@@ -44,7 +44,9 @@ media-sound/rhythmbox			# Patched to work with gstreamer-1.0 and to have indicat
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 x11-base/xorg-server			# Provides Xmir patch
+x11-drivers/xf86-video-ati		# Provides Mir display server support with 'mir' useflag and patch
 x11-drivers/xf86-video-intel		# Provides Mir display server support with 'mir' useflag and patch
+x11-drivers/xf86-video-nouveau		# Provides Mir display server support with 'mir' useflag and patch
 x11-libs/gtk+				# Needed for global appmenu
 x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme for gtk+-3.6 (Unity fails to start otherwise)
 x11-wm/metacity				# Patched to support compiz window decoration

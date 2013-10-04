@@ -40,6 +40,9 @@ sys-apps/accountsservice
 www-client/chromium
 www-client/firefox
 x11-base/xorg-server
+x11-drivers/xf86-video-ati
+x11-drivers/xf86-video-intel
+x11-drivers/xf86-video-nouveau
 x11-libs/gtk+
 x11-libs/libXfixes
 x11-libs/libXi
