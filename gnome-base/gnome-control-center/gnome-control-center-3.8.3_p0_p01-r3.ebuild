@@ -49,6 +49,8 @@ COMMON_DEPEND="
 	>=gnome-base/gnome-settings-daemon-3.8.3[colord?,policykit]
 	>=gnome-base/libgnomekbd-2.91.91
 
+	dev-libs/libtimezonemap
+
 	app-text/iso-codes
 	dev-libs/libpwquality
 	dev-libs/libxml2:2
@@ -148,6 +150,9 @@ src_prepare() {
 
 	# Fix crash of 'Details' entry when running as guest in VirtualBox
 	epatch "${FILESDIR}/${PN}-3.8.3-fix-details-crash.patch"
+
+	# Use 'dev-libs/libtimezonemap' instead of built in timezonemap implementation
+	epatch "${FILESDIR}/${PN}-3.8.3-use-libtimezonemap.patch"
 
 	# Disable selected patches #
 	sed \
