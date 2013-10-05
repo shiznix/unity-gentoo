@@ -24,7 +24,8 @@ RDEPEND="dev-libs/libdbusmenu:=[gtk]"
 DEPEND="${RDEPEND}
 	unity-indicators/indicator-appmenu
 	x11-libs/gtk+:2
-	<x11-libs/gtk+-3.8.0"
+	<x11-libs/gtk+-3.8.0
+	!unity-base/unity-gtk-module"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

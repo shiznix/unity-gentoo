@@ -1,0 +1,32 @@
+--- a/comm-esr24/mozilla/configure.in	2013-09-26 09:41:27.220542321 -0400
++++ b/comm-esr24/mozilla/configure.in	2013-09-26 09:49:07.888550730 -0400
+@@ -1339,13 +1339,6 @@
+     AC_TRY_LINK(,,AC_MSG_RESULT([yes]),
+                   AC_MSG_RESULT([no])
+                   LDFLAGS=$_SAVE_LDFLAGS)
+-    AC_MSG_CHECKING([for --build-id option to ld])
+-    _SAVE_LDFLAGS=$LDFLAGS
+-    LDFLAGS="$LDFLAGS -Wl,--build-id"
+-    AC_TRY_LINK(,,AC_MSG_RESULT([yes])
+-                  [NSPR_LDFLAGS="$NSPR_LDFLAGS -Wl,--build-id"],
+-                  AC_MSG_RESULT([no])
+-                  LDFLAGS=$_SAVE_LDFLAGS)
+ 
+ 
+     # Check for -mssse3 on $CC
+--- a/comm-esr24/mozilla/js/src/configure.in	2013-09-26 09:41:27.222542321 -0400
++++ b/comm-esr24/mozilla/js/src/configure.in	2013-09-26 09:49:19.121550935 -0400
+@@ -1154,13 +1154,6 @@
+     DSO_PIC_CFLAGS='-fPIC'
+     ASFLAGS="$ASFLAGS -fPIC"
+ 
+-    AC_MSG_CHECKING([for --build-id option to ld])
+-    _SAVE_LDFLAGS=$LDFLAGS
+-    LDFLAGS="$LDFLAGS -Wl,--build-id"
+-    AC_TRY_LINK(,,AC_MSG_RESULT([yes]),
+-                  AC_MSG_RESULT([no])
+-                  LDFLAGS=$_SAVE_LDFLAGS)
+-
+     # Turn on GNU-specific warnings:
+     # -Wall - turn on a lot of warnings
+     # -Wpointer-arith - good to have
