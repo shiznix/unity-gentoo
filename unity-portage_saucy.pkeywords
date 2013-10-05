@@ -290,7 +290,9 @@ unity-scopes/unity-scope-home **
 www-client/chromium::unity-gentoo **
 www-client/firefox::unity-gentoo **
 x11-base/xorg-server::unity-gentoo **
+x11-drivers/xf86-video-ati::unity-gentoo **
 x11-drivers/xf86-video-intel::unity-gentoo **
+x11-drivers/xf86-video-nouveau::unity-gentoo **
 x11-libs/accounts-qml-module **
 x11-libs/dee-qt **
 x11-libs/gtk+::unity-gentoo **
