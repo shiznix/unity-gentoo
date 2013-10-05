@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 
 #KEYWORDS="amd64 ppc ~ppc64 ~x86"
 IUSE="mir"
-RESTRICT="mirror"
+RESTRICT="mirror strip"
 
 RDEPEND=">=x11-libs/libdrm-2.4.34[video_cards_nouveau]"
 DEPEND="${RDEPEND}"
