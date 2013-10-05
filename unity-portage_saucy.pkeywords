@@ -216,6 +216,7 @@ dev-util/dbus-test-runner **
 dev-util/gdbus-codegen::unity-gentoo **
 gnome-base/gnome-control-center::unity-gentoo **
 gnome-base/gnome-desktop::unity-gentoo **
+gnome-base/gnome-fallback::unity-gentoo **
 gnome-base/gnome-menus::unity-gentoo **
 gnome-base/gnome-session::unity-gentoo **
 gnome-base/gnome-settings-daemon::unity-gentoo **
