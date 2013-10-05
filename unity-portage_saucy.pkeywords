@@ -92,7 +92,6 @@ x11-libs/vte
 =x11-themes/gnome-icon-theme-3.8*
 =x11-themes/gnome-icon-theme-symbolic-3.8*
 =x11-themes/gnome-themes-standard-3.8*
-=x11-terms/gnome-terminal-3.8*
 =x11-wm/mutter-3.8*
 =www-client/epiphany-3.8*
 
@@ -290,9 +289,7 @@ unity-scopes/unity-scope-home **
 www-client/chromium::unity-gentoo **
 www-client/firefox::unity-gentoo **
 x11-base/xorg-server::unity-gentoo **
-x11-drivers/xf86-video-ati::unity-gentoo **
 x11-drivers/xf86-video-intel::unity-gentoo **
-x11-drivers/xf86-video-nouveau::unity-gentoo **
 x11-libs/accounts-qml-module **
 x11-libs/dee-qt **
 x11-libs/gtk+::unity-gentoo **
