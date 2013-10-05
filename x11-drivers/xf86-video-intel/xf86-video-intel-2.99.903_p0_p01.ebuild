@@ -5,7 +5,7 @@
 EAPI=5
 
 XORG_DRI=dri
-inherit base linux-info xorg-2 ubuntu-versionator
+inherit autotools base linux-info xorg-2 ubuntu-versionator
 
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-intel"
@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 
 #KEYWORDS="~amd64 ~x86 ~amd64-fbsd -x86-fbsd"
 IUSE="glamor mir +sna +udev uxa xvmc"
-RESTRICT="mirror"
+RESTRICT="mirror strip"
 
 REQUIRED_USE="|| ( glamor sna uxa )"
 
@@ -52,7 +52,8 @@ src_prepare() {
 			PATCHES+=( "${S}/debian/patches/${patch}" )
 		done
 		base_src_prepare
-        fi
+		eautoreconf
+	fi
 }
 
 src_configure() {
