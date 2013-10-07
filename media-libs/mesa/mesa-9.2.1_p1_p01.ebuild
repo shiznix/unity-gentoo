@@ -149,7 +149,7 @@ QA_WX_LOAD="usr/lib*/opengl/xorg-x11/lib/libGL.so*"
 
 # Think about: ggi, fbcon, no-X configs
 
-S="${WORKDIR}/Mesa-${PV}.0"
+S="${WORKDIR}/Mesa-${PV}"
 PATCHES+=( "${WORKDIR}/${MY_P}-${UVER}.diff" )	# This needs to be applied for the debian/ directory to be present #
 
 pkg_setup() {
