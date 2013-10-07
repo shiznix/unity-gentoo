@@ -22,8 +22,8 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libaccounts-glib:="
 DEPEND="${RDEPEND}
+	app-editors/vim-core
 	dev-libs/json-glib
-	dev-util/xxd
 	gnome-base/dconf
 	unity-base/gnome-control-center-signon
 	firefox? ( || ( www-client/firefox www-client/firefox-bin )
