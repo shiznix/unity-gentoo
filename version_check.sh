@@ -79,16 +79,16 @@ upstream_version_check() {
 					bunzip2 /tmp/Sources-$1.bz2
 				fi
 				upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-				[ -n "${upstream_version}" ] && echo -e "\nChecking ${packname}  ::  $1"
+				[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && echo -e "\nChecking ${packname}  ::  $1"
 			fi
 
 			if [ -z "${upstream_version}" ]; then
 				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g'`
 				if [ -z "${upstream_version_scraped}" ]; then
-					[ "${stream_release}" != all ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
+					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
 					upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g'`
 				else
-					[ "${stream_release}" != all ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
+					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
 				fi
 				upstream_version=`echo "${upstream_version_scraped}" | sed "s/^\${packname}-//" | sed 's/[0-9]://g'`
 			fi
@@ -99,6 +99,7 @@ upstream_version_check() {
 version_compare() {
 	current_version=`echo "${current}" | sed "s/^\${treepackname}-//"`
 	if [ "${current_version}" = "${upstream_version}" ]; then
+		[ -n "${CHANGES}" ] && return
 		if [ -n "${stream_release}" ]; then
 			if [ -n "`grep "${stream_release}-updates" ${pack}`" ]; then
 				echo "  Local version: ${current}  ::  ${stream_release}"
@@ -189,10 +190,12 @@ uver() {
 
 while (( "$#" )); do
 	case $1 in
+		--changes)
+			CHANGES=1 && shift;;
 		--release=*)
 			stream_release=`echo "$1" | sed 's/--release=/ /' | sed 's/^[ \t]*//'` && shift;;
 		--help|-h)
-			echo -e "$0 (--release=<release>|all) (category/package/package-version.ebuild)"; exit 0;;
+			echo -e "$0 (--release=<release>|all) (--changes) (category/package/package-version.ebuild)"; exit 0;;
 		*)
 			pack="$1" && shift;;
 	esac
@@ -212,17 +215,23 @@ else
 		## Check versions in meta type ebuilds that install from multiple sources ##
 		if [ -d "$(pwd)/unity-base/unity-language-pack" ]; then
 			pushd $(pwd)/unity-base/unity-language-pack
-				./lang_version_check.sh
+				[ -n "${CHANGES}" ] && \
+					./lang_version_check.sh --changes || \
+						./lang_version_check.sh
 			popd
 		fi
 		if [ -d "$(pwd)/unity-base/webapps" ]; then
 			pushd $(pwd)/unity-base/webapps
-				./webapps_version_check.sh
+				[ -n "${CHANGES}" ] && \
+					./webapps_version_check.sh --changes || \
+						./webapps_version_check.sh
 			popd
 		fi
 		if [ -d "$(pwd)/unity-scopes/smart-scopes" ]; then
 			pushd $(pwd)/unity-scopes/smart-scopes
-				./scopes_version_check.sh
+				[ -n "${CHANGES}" ] && \
+					./scopes_version_check.sh --changes || \
+						./scopes_version_check.sh
 			popd
 		fi
 	fi

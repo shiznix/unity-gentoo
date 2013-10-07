@@ -9,6 +9,7 @@ version_check() {
 	upstream_version=`grep -A2 "Package: ${_name}$" /tmp/Sources-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 
 	if [ "${local_version}" = "${upstream_version}" ]; then
+		[ -n "${CHANGES}" ] && return
 		echo
 		echo "  Local version: ${_name}-${local_version}  ::  ${URELEASE}"
 		echo "  Upstream version: ${_name}-${upstream_version}  ::  ${URELEASE}"
@@ -32,6 +33,8 @@ while (( "$#" )); do
 	case $1 in
 		--bump)
 			bump=1 && shift;;
+		--changes)
+			CHANGES=1 && shift;;
 		*)
 			ebuild="$1" && shift;;
 	esac

@@ -14,6 +14,7 @@ version_check() {
 	fi
 
 	if [ "${local_version}" = "${upstream_version}" ]; then
+		[ -n "${CHANGES}" ] && return
 		echo
 		echo "  Local version: unity-webapps-${_name}-${local_version}  ::  ${URELEASE}"
 		echo "  Upstream version: unity-webapps-${_name}-${upstream_version}  ::  ${URELEASE}"
@@ -42,6 +43,8 @@ while (( "$#" )); do
 	case $1 in
 		--bump)
 			bump=1 && shift;;
+		--changes)
+			CHANGES=1 && shift;;
 		*)
 			ebuild="$1" && shift;;
 	esac
