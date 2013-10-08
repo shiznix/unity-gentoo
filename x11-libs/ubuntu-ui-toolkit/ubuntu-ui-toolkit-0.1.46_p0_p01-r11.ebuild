@@ -31,7 +31,8 @@ DEPEND="${RDEPEND}
 	dev-qt/qtjsbackend:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtpim:5
-	dev-qt/qtsvg:5"
+	dev-qt/qtsvg:5
+	media-gfx/thumbnailer"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"

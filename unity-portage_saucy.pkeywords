@@ -173,6 +173,7 @@ sys-devel/automake-wrapper
 sys-devel/gcc:4.7
 sys-devel/gcc:4.8 **
 sys-devel/llvm:0/3.3
+~sys-fs/udev-208
 sys-libs/db:5.1
 sys-libs/libnih
 sys-libs/tevent
@@ -226,6 +227,7 @@ gnome-base/nautilus::unity-gentoo **
 gnome-extra/activity-log-manager::unity-gentoo **
 gnome-extra/gnome-screensaver::unity-gentoo **
 mail-client/thunderbird::unity-gentoo **
+media-gfx/thumbnailer **
 media-libs/mesa::unity-gentoo **
 media-libs/mesa-mir **
 media-sound/rhythmbox::unity-gentoo **
