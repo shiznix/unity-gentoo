@@ -33,7 +33,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	>=x11-libs/libXdmcp-1.0.2
 	>=x11-libs/libXfont-1.4.2
 	>=x11-libs/libxkbfile-1.0.4
-	>=x11-libs/pixman-0.21.8
+	>=x11-libs/pixman-0.27.2
 	>=x11-libs/xtrans-1.2.2
 	>=x11-misc/xbitmaps-1.0.1
 	>=x11-misc/xkeyboard-config-2.4.1-r3
@@ -66,14 +66,13 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 
 DEPEND="${RDEPEND}
 	sys-devel/flex
-	<=sys-devel/patch-2.6.1
 	>=x11-proto/bigreqsproto-1.1.0
 	>=x11-proto/compositeproto-0.4
 	>=x11-proto/damageproto-1.1
 	>=x11-proto/fixesproto-5.0
 	>=x11-proto/fontsproto-2.0.2
 	>=x11-proto/glproto-1.4.16
-	>=x11-proto/inputproto-2.1.99.3
+	>=x11-proto/inputproto-2.2.99.1
 	>=x11-proto/kbproto-1.0.3
 	>=x11-proto/randrproto-1.4.0
 	>=x11-proto/recordproto-1.13.99.1
@@ -199,7 +198,7 @@ src_install() {
 	fi
 
 	newinitd "${FILESDIR}"/xdm-setup.initd-1 xdm-setup
-	newinitd "${FILESDIR}"/xdm.initd-9 xdm
+	newinitd "${FILESDIR}"/xdm.initd-10 xdm
 	newconfd "${FILESDIR}"/xdm.confd-4 xdm
 
 	# install the @x11-module-rebuild set for Portage
