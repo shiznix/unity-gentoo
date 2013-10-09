@@ -10,15 +10,13 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+battery +bluetooth +datetime paste sensors +session +sound +sync weather"
+IUSE="+battery +datetime paste sensors +session +sound +sync weather"
 RESTRICT="mirror"
 
 DEPEND="unity-indicators/indicator-applet
 	unity-indicators/indicator-application
 	unity-indicators/indicator-appmenu
 	battery? ( unity-indicators/indicator-power )
-	bluetooth? ( !unity-indicators/indicator-bluetooth
-			net-wireless/blueman )
 	datetime? ( unity-indicators/indicator-datetime )
 	paste? ( unity-extra/glipper )
 	sensors? ( unity-extra/indicator-psensor )
