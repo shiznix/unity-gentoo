@@ -274,6 +274,7 @@ unity-extra/unity-tweak-tool **
 unity-indicators/ido **
 unity-indicators/indicator-applet **
 unity-indicators/indicator-appmenu **
+unity-indicators/indicator-bluetooth **
 unity-indicators/indicator-datetime **
 unity-indicators/indicator-messages **
 unity-indicators/indicator-power **
