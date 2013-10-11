@@ -22,6 +22,8 @@ dev-libs/libgee
 dev-libs/libpeas
 dev-libs/totem-pl-parser
 =dev-libs/libgweather-3.8*
+dev-qt/qtcore:5
+dev-qt/qtdbus:5
 gnome-base/dconf
 =gnome-base/gdm-3.8*
 =gnome-base/gnome-control-center-3.8*::unity-gentoo

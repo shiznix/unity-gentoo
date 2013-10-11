@@ -14,7 +14,7 @@ inherit cmake-utils distutils-r1 flag-o-matic ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
 URELEASE="saucy"
-UVER_PREFIX="+13.10.20131009"
+UVER_PREFIX="+13.10.20131010.1"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"
@@ -38,6 +38,8 @@ DEPEND="${RDEPEND}
 	x11-libs/gtk+:3
 	x11-libs/pango
 	app-accessibility/pocketsphinx[${PYTHON_USEDEP}]
+	dev-qt/qtcore:5
+	dev-qt/qtdbus:5
 	$(vala_depend)
 	test? ( dev-util/dbus-test-runner )"
 
