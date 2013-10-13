@@ -108,6 +108,7 @@ app-crypt/p11-kit
 app-i18n/ibus
 app-text/gtkspell
 dev-lang/orc
+~dev-lang/perl-5.16.1
 dev-cpp/gtkmm
 dev-cpp/glibmm
 dev-lang/vala
