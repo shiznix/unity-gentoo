@@ -13,7 +13,7 @@ app-admin/packagekit-base
 app-admin/packagekit-gtk
 app-admin/packagekit-qt4
 =app-cdr/brasero-3.6*
-app-crypt/gcr
+=app-crypt/gcr-3.6*
 app-crypt/libsecret
 app-crypt/p11-kit
 =app-crypt/seahorse-3.8*
@@ -23,6 +23,7 @@ app-text/gtkspell
 app-editors/gedit::unity-gentoo
 =dev-cpp/glibmm-2.34*
 =dev-cpp/gtkmm-3.6*
+dev-lang/orc
 dev-lang/vala
 dev-libs/boost:0/1.52
 =dev-libs/folks-0.8*
@@ -69,6 +70,7 @@ gnome-base/dconf
 =gnome-base/gnome-extra-apps-3.6*
 =gnome-base/gnome-fallback-3.6*
 =gnome-base/gnome-keyring-3.6*
+gnome-base/gnome-menus:0
 =gnome-base/gnome-menus-3.6*
 =gnome-base/gnome-panel-3.6*
 =gnome-base/gnome-shell-3.6*
@@ -94,6 +96,7 @@ gnome-extra/zeitgeist
 gnome-extra/zeitgeist-datasources
 gnome-extra/zeitgeist-extensions
 =gnome-extra/zenity-3.6*
+=mail-client/evolution-3.6*
 media-gfx/shotwell
 =media-gfx/eog-3.6*
 =media-libs/clutter-1.12*
@@ -106,7 +109,7 @@ media-libs/gexiv2
 media-libs/libvpx
 =media-plugins/gst-plugins-vpx-1.0*
 media-sound/pulseaudio
-media-video/cheese:0/7
+=media-video/cheese-3.6*
 =media-video/totem-3.6*
 net-im/telepathy-logger
 net-im/telepathy-mission-control
@@ -126,12 +129,15 @@ net-voip/telepathy-rakia
 net-voip/telepathy-salut
 net-wireless/blueman
 =net-wireless/gnome-bluetooth-3.6*
+net-zope/zope-fixers
+net-zope/zope-interface
 <sys-apps/baobab-3.8
 sys-apps/shadow
 sys-auth/consolekit
 sys-auth/pambase
 sys-devel/gcc:4.7
 sys-libs/db:5.1
+virtual/udev
 x11-libs/cairo
 x11-libs/gdk-pixbuf
 x11-libs/mx

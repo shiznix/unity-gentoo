@@ -106,6 +106,7 @@ strip_builddir() {
 }
 
 src_prepare() {
+	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
@@ -114,6 +115,9 @@ src_prepare() {
 	# -O3 and company cause random crashes in applications. Bug #133469
 	replace-flags -O3 -O2
 	strip-flags
+
+	# Symbolic icon loading with librsvg-2.36.4-r1 and 2.39.0, bug #487110; fixed in 3.8.3
+	epatch "${FILESDIR}/librsvg-2.39.patch"
 
 	# https://bugzilla.gnome.org/show_bug.cgi?id=654108
 	epatch "${FILESDIR}/${PN}-3.3.18-fallback-theme.patch"
