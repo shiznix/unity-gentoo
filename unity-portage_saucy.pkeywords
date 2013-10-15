@@ -111,6 +111,7 @@ dev-lang/orc
 ~dev-lang/perl-5.16.1
 dev-cpp/gtkmm
 dev-cpp/glibmm
+=dev-lang/v8-3.19*
 dev-lang/vala
 dev-libs/atk
 =dev-libs/boost-1.52*
