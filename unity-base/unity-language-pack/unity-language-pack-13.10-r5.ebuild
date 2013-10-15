@@ -19,6 +19,9 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
+# Soft block to resolve file collisions (remove on next version bump) #
+RDEPEND="!<media-sound/rhythmbox-2.99
+	!<unity-base/rhythmbox-ubuntuone-13.10"
 DEPEND="sys-devel/gettext"
 
 setvar() {
