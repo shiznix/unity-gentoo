@@ -30,6 +30,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libgee:0
 	dev-libs/libindicate-qt
 	media-sound/pulseaudio
+	net-misc/url-dispatcher
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
