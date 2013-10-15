@@ -170,6 +170,7 @@ net-zope/zope-fixers
 net-zope/zope-interface
 sys-apps/gentoo-systemd-integration
 sys-apps/shadow
+sys-apps/openrc
 sys-auth/consolekit
 sys-auth/pambase
 sys-devel/automake:1.13

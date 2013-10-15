@@ -124,6 +124,7 @@ net-libs/telepathy-farstream
 net-libs/telepathy-glib
 =net-libs/webkit-gtk-1.10*
 net-misc/modemmanager
+~net-misc/netifrc-0.1
 net-misc/networkmanager
 net-voip/telepathy-rakia
 net-voip/telepathy-salut
@@ -132,11 +133,15 @@ net-wireless/blueman
 net-zope/zope-fixers
 net-zope/zope-interface
 <sys-apps/baobab-3.8
+~sys-apps/hwids-20130915.1
+~sys-apps/kmod-15
 sys-apps/shadow
+sys-apps/openrc
 sys-auth/consolekit
 sys-auth/pambase
 sys-devel/gcc:4.7
 sys-libs/db:5.1
+~sys-fs/udev-208
 virtual/udev
 x11-libs/cairo
 x11-libs/gdk-pixbuf
