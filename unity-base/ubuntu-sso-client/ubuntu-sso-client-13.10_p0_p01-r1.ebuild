@@ -21,12 +21,12 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND=">=dev-libs/glib-2.32.3
+RDEPEND="!dev-python/imaging
+	>=dev-libs/glib-2.32.3
 	dev-python/configglue[${PYTHON_USEDEP}]
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/gnome-keyring-python
 	dev-python/httplib2[${PYTHON_USEDEP}]
-	dev-python/imaging[${PYTHON_USEDEP}]
 	dev-python/notify-python[${PYTHON_USEDEP}]
 	>=dev-python/oauth-1.0[${PYTHON_USEDEP}]
 	dev-python/PyQt4[${PYTHON_USEDEP}]
@@ -36,7 +36,8 @@ RDEPEND=">=dev-libs/glib-2.32.3
 	dev-python/simplejson[${PYTHON_USEDEP}]
 	>=dev-python/twisted-names-12.2.0[${PYTHON_USEDEP}]
 	>=dev-python/twisted-web-12.2.0[${PYTHON_USEDEP}]
-	net-libs/libsoup"
+	net-libs/libsoup
+	virtual/python-imaging[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
 src_install() {
