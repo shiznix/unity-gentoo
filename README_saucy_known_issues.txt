@@ -23,3 +23,6 @@
 	This probably reflects a bug in the program.
 	The error was 'BadDrawable (invalid Pixmap or Window parameter)'.
 	  (Details: serial 14085 error_code 9 request_code 53 minor_code 0)
+
+- launchpad bug #1203888
+	Glipper and blueman (and others?) menus are broken by libappindicator
