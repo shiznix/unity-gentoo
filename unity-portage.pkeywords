@@ -50,7 +50,7 @@ dev-python/oauthlib
 =dev-python/pyatspi-2.6*
 dev-python/pycairo
 dev-python/pycrypto
-dev-python/pygobject
+dev-python/pygobject:3
 dev-python/pyjunitxml
 dev-python/python-distutils-extra
 dev-python/rdflib
