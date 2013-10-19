@@ -1,6 +1,7 @@
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
 app-backup/deja-dup::gentoo
+>=dev-lang/v8-3.20::gentoo
 dev-cpp/gtest::gentoo
 dev-cpp/gmock::gentoo
 dev-libs/dee::gentoo
