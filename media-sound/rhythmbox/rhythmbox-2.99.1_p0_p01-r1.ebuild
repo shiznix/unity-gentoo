@@ -21,7 +21,7 @@ LICENSE="GPL-2"
 SLOT="0"
 IUSE="cdr clutter daap dbus html ipod libnotify libsecret lirc mtp nsplugin +python test +udev upnp-av webkit zeitgeist"
 # vala
-#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 RESTRICT="mirror"
 
 REQUIRED_USE="

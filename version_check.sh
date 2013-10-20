@@ -122,7 +122,7 @@ version_compare() {
 
 
 version_check_other_releases() {
-	ALL_RELEASES_TO_CHECK="raring raring-updates saucy"
+	ALL_RELEASES_TO_CHECK="saucy"
 	if [ -n "${stream_release}" ]; then
 		if [ "${stream_release}" = all ]; then
 			echo "Checking ${catpack}"

@@ -26,7 +26,7 @@ SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN
 
 LICENSE="BSD"
 SLOT="0"
-#KEYWORDS="~amd64 ~arm ~x86"
+KEYWORDS="~amd64 ~arm ~x86"
 IUSE="bindist cups gnome gnome-keyring gps kerberos pulseaudio selinux system-sqlite tcmalloc"
 RESTRICT="mirror"
 
