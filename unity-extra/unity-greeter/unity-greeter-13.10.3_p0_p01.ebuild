@@ -44,7 +44,7 @@ RDEPEND="unity-base/unity-language-pack
 	networkmanager? ( >=gnome-extra/nm-applet-0.9.8.0 )
 	media-fonts/ubuntu-font-family
 	x11-themes/ubuntu-wallpapers
-	>=gnome-base/gsettings-desktop-schemas-3.6.1
+	>=gnome-base/gsettings-desktop-schemas-3.8
 	>=app-admin/eselect-lightdm-0.1
 	"
 

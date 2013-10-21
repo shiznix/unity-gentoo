@@ -28,7 +28,7 @@ DEPEND="app-admin/system-config-printer-gnome
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
-	>=gnome-extra/gnome-screensaver-3.6.0
+	>=gnome-extra/gnome-screensaver-3.8
 	help? ( gnome-extra/yelp
 		gnome-extra/gnome-user-docs
 		unity-base/ubuntu-docs )"

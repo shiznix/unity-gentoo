@@ -30,8 +30,8 @@ DEPEND="${RDEPEND}
 	dev-libs/libappindicator
 	dev-libs/libindicate[gtk,introspection]
 	gnome-base/gconf
-	>=gnome-extra/evolution-data-server-3.6
-	>=mail-client/evolution-3.6
+	>=gnome-extra/evolution-data-server-3.8
+	>=mail-client/evolution-3.8
 	media-libs/libcanberra
 	unity-indicators/indicator-messages
 	x11-libs/libnotify"

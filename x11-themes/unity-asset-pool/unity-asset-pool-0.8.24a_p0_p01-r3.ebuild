@@ -20,7 +20,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND=">=x11-themes/gnome-icon-theme-3.6
+RDEPEND=">=x11-themes/gnome-icon-theme-3.8
 	x11-themes/hicolor-icon-theme"
 
 DEPEND="${RDEPEND}

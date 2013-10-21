@@ -28,11 +28,11 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-lenses/unity-lens-meta
 	x11-themes/ubuntu-wallpapers
 	accessibility? (
-		>=app-accessibility/at-spi2-atk-2.6.2
-		>=app-accessibility/at-spi2-core-2.6.2
-		>=app-accessibility/caribou-0.4.4.2
-		>=app-accessibility/orca-3.6
-		>=gnome-extra/mousetweaks-3.6.0 )
+		>=app-accessibility/at-spi2-atk-2.8
+		>=app-accessibility/at-spi2-core-2.8
+		>=app-accessibility/caribou-0.4.12
+		>=app-accessibility/orca-3.8
+		>=gnome-extra/mousetweaks-3.8 )
 	chat? ( net-im/empathy )
 	gnome? ( gnome-base/gnome-core-apps )
 	gnome-extras? ( gnome-base/gnome-extra-apps )

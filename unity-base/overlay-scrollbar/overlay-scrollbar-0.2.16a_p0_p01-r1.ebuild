@@ -22,7 +22,7 @@ RESTRICT="mirror"
 
 DEPEND="gnome-base/dconf
 	x11-libs/gtk+:2
-	>=x11-libs/gtk+-3.6.0:3"
+	>=x11-libs/gtk+-3.8:3"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

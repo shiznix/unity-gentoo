@@ -34,7 +34,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	dev-libs/libxslt
 	dev-python/pyrex
 	gnome-base/gconf
-	>=gnome-base/gsettings-desktop-schemas-3.6.0
+	>=gnome-base/gsettings-desktop-schemas-3.8
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/glew
 	media-libs/libpng
