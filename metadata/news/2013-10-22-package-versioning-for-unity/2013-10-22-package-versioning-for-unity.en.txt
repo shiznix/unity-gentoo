@@ -2,8 +2,8 @@ Title: Package versioning for the unity-gentoo overlay
 Author: shiznix <rickfharris@yahoo.com.au>
 Author: Mirko Guenther <renegart@gmx.de>
 Content-Type: text/plain
-Posted: 2013-08-31
-Revision: 9
+Posted: 2013-10-22
+Revision: 10
 News-Item-Format: 1.0
 Display-If-Installed: sys-apps/portage
 
@@ -51,16 +51,24 @@ x11-proto/fixesproto
 x11-themes/gtk-engines-unico
 x11-wm/metacity
 
-The overlay requires symlinking the file 'unity-portage.pmask' to '/etc/portage/package.mask/unity-portage.pmask'
-	'ln -s /var/lib/layman/unity-gentoo/unity-portage.pmask /etc/portage/package.mask/unity-portage.pmask'
+
+## Setup of overlay package masking and use flags ##
 
 package.unmask files override package.mask files, so be sure that none of the packages listed above already lie in your
 	/etc/portage/package.unmask file, or if they do that they unmask in a repo specific way
 		eg. www-client/chromium::unity-gentoo
 
-All packages are keyword masked and require keyword unmasking by adding '*/*::unity-gentoo' to your package.keywords file
+It is necessary to mask certain packages that would normally be emerged from the main portage tree:
+	'ln -s /var/lib/layman/unity-gentoo/unity-portage.pmask /etc/portage/package.mask/unity-portage.pmask'
 
-The overlay requires many packages from the main portage tree be keyword unmasked.
+All packages are keyword masked and can be unmasked by entering the following into your package.keywords file:
+	*/*::unity-gentoo
 
-This command can ease the pain of getting an initial list of packages that are needing to be keyword unmasked:
-emerge -p unity-meta 2>&1 | grep ^= | grep \~ | sed 's/^=//g;s/-[0-9].*//g' | sort > /etc/portage/package.keywords/unity
+A package keywords file containing a base set of packages for Unity installation is maintained for convenience at /var/lib/layman/unity-gentoo/unity-portage.pkeywords:
+	'ln -s /var/lib/layman/unity-gentoo/unity-portage.pkeywords /etc/portage/package.keywords/unity-portage.pkeywords'
+
+A package unmask file is maintained at /var/lib/layman/unity-gentoo/unity-portage.punmask:
+	'ln -s /var/lib/layman/unity-gentoo/unity-portage.punmask /etc/portage/package.unmask/unity-portage.punmask'
+
+A package USE file is maintained at /var/lib/layman/unity-gentoo/unity-portage.puse:
+	'ln -s /var/lib/layman/unity-gentoo/unity-portage.puse /etc/portage/package.use/unity-portage.puse'

@@ -1,0 +1,23 @@
+Title: Saucy release (needs systemd)
+Author: shiznix <rickfharris@yahoo.com.au>
+Author: Mirko Guenther <renegart@gmx.de>
+Content-Type: text/plain
+Posted: 2013-10-22
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: sys-apps/portage
+
+!!Saucy Release!!
+
+As of the Saucy release, Unity uses Gnome 3.8 and so this requires you enable systemd. 
+While systemd is not strictly needed for Gnome 3.8 to build, it is needed at runtime. 
+
+From http://wiki.gentoo.org/wiki/GNOME/3.8-upgrade-guide ... 
+  "GNOME 3.8 requires systemd to be running to get it working properly, otherwise,
+  you will get broken power management and multiseat handling, and also some more
+  problems because upstream has moved away from the obsolete consolekit to logind
+  (that needs systemd to be running to work)."
+
+It is highly recommended you get the system working with systemd before proceeding with the Unity desktop installation
+  (see http://wiki.gentoo.org/wiki/Systemd)
+
