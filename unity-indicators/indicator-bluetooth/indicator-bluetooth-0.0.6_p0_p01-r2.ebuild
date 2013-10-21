@@ -30,6 +30,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libappindicator
 	dev-libs/libindicator
 	gnome-base/dconf
+	net-misc/url-dispatcher
 	net-wireless/gnome-bluetooth
 	x11-libs/gtk+:3
 	$(vala_depend)"
