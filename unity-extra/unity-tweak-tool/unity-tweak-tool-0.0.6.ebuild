@@ -28,10 +28,25 @@ RDEPEND="dev-libs/glib:2
 	dev-python/pygobject:3[${PYTHON_USEDEP}]
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}
+	dev-libs/libunity-webapps
 	dev-util/intltool
 	dev-util/pkgconfig
+	gnome-base/gnome-settings-daemon
+	gnome-base/gsettings-desktop-schemas
+	gnome-base/nautilus
 	sys-devel/gettext
-	unity-indicators/indicator-bluetooth"
+	unity-base/compiz
+	unity-base/hud
+	unity-base/overlay-scrollbar
+	unity-base/unity
+	unity-indicators/indicator-bluetooth
+	unity-indicators/indicator-datetime
+	unity-indicators/indicator-power
+	unity-indicators/indicator-session
+	unity-indicators/indicator-sound
+	unity-lenses/unity-lens-applications
+	unity-lenses/unity-lens-files
+	x11-misc/notify-osd"
 
 S="${WORKDIR}/${PN}"
 USER_ID="$(id -u)"
