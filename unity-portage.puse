@@ -12,14 +12,15 @@ dev-libs/libgdata gnome
 dev-libs/libpcre pcre16
 dev-libs/libxml2 icu
 dev-libs/libxslt python
+dev-libs/openssl -bindist
 dev-libs/protobuf python
 dev-libs/xapian-bindings python
 dev-qt/qtwebkit icu
 dev-qt/qt-mobility organizer
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
-media-libs/mesa egl gbm gles2
-media-libs/mesa-mir egl gbm gles2
+media-libs/mesa egl gbm gles2 xorg
+media-libs/mesa-mir egl gbm gles2 xorg
 media-libs/gst-plugins-base theora
 media-plugins/alsa-plugins pulseaudio
 media-plugins/gst-plugins-meta ffmpeg

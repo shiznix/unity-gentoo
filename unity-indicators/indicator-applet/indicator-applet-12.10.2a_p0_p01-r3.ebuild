@@ -22,7 +22,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/libindicator:3
 	x11-libs/gtk+:3
-	>=gnome-base/gnome-panel-3.8"
+	>=gnome-base/gnome-panel-3.6"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
