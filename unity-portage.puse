@@ -7,6 +7,7 @@ app-i18n/ibus dconf
 app-text/gtkspell vala
 dev-lang/python sqlite
 dev-libs/folks vala
+dev-libs/glib utils
 dev-libs/keybinder python
 dev-libs/libgdata gnome
 dev-libs/libpcre pcre16
