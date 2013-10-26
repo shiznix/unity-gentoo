@@ -9,7 +9,7 @@ app-accessibility/at-spi2-core
 app-accessibility/caribou
 =app-accessibility/orca-3.8*
 =app-admin/gnome-system-log-3.8*
-app-crypt/gcr
+=app-crypt/gcr-3.8*
 app-crypt/libsecret
 =app-crypt/seahorse-3.8*
 =app-cdr/brasero-3.8*  
@@ -22,8 +22,6 @@ dev-libs/libgee
 dev-libs/libpeas
 dev-libs/totem-pl-parser
 =dev-libs/libgweather-3.8*
-dev-qt/qtcore:5
-dev-qt/qtdbus:5
 gnome-base/dconf
 =gnome-base/gdm-3.8*
 =gnome-base/gnome-control-center-3.8*::unity-gentoo
@@ -142,7 +140,9 @@ dev-python/rdflib
 dev-python/twisted-core
 dev-python/twisted-names
 dev-python/twisted-web
-dev-qt/qt-mobility
+dev-qt/qtcore:5
+dev-qt/qtdbus:5
+dev-qt/qt-mobility:5
 =dev-util/boost-build-1.52*
 dev-util/fix-la-relink-command
 dev-util/dbus-test-runner
@@ -220,7 +220,7 @@ dev-python/dirspec
 dev-python/lazr-restfulclient 
 dev-python/pywapi 
 dev-python/python-testscenarios 
-dev-qt/qtpim 
+dev-qt/qtpim:5
 dev-util/dbus-test-runner 
 dev-util/gdbus-codegen::unity-gentoo 
 gnome-extra/activity-log-manager::unity-gentoo 
