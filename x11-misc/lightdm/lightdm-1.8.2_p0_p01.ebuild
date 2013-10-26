@@ -18,10 +18,13 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 
-IUSE_LIGHTDM_GREETERS="gtk unity kde razor"
+IUSE_LIGHTDM_GREETERS="gtk kde razor"
 for greeters in ${IUSE_LIGHTDM_GREETERS}; do
         IUSE+=" lightdm_greeters_${greeters}"
 done
+
+# add and enable 'unity' greeter by default
+IUSE+=" +lightdm_greeters_unity"
 
 IUSE+=" +introspection qt4 qt5 mir"
 
