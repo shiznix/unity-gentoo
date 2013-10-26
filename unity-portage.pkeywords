@@ -171,7 +171,6 @@ net-voip/telepathy-salut
 net-wireless/blueman
 net-zope/zope-fixers
 net-zope/zope-interface
-sys-apps/gentoo-systemd-integration
 sys-apps/shadow
 sys-apps/openrc
 sys-auth/consolekit
