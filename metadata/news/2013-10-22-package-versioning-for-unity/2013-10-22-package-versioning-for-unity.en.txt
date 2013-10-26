@@ -36,6 +36,7 @@ gnome-extra/polkit-gnome
 media-libs/mesa
 media-sound/rhythmbox
 net-im/empathy
+net-im/telepathy-mission-control
 sys-apps/accountsservice
 www-client/chromium
 www-client/firefox

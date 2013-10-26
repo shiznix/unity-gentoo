@@ -37,6 +37,7 @@ media-libs/glew::gentoo
 media-libs/mesa::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
+net-im/telepathy-mission-control::gentoo
 sys-apps/accountsservice::gentoo
 www-client/chromium::gentoo
 x11-base/xorg-server::gentoo

@@ -42,6 +42,7 @@ gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 
 media-libs/mesa				# Patched for mir display server support
 media-sound/rhythmbox			# Patched to work with gstreamer-1.0 and to have indicator-sound youtube webapp work
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
+net-im/telepathy-mission-control	# Enables Ubuntu libaccounts-sso integration
 www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 x11-base/xorg-server			# Provides Xmir patch
 x11-drivers/xf86-video-ati		# Provides Mir display server support with 'mir' useflag and patch
