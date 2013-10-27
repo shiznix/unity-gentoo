@@ -33,6 +33,7 @@ gnome-extra/activity-log-manager::gentoo
 gnome-extra/gnome-screensaver::gentoo
 gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
+gnome-extra/zeitgeist::gentoo
 media-libs/glew::gentoo
 media-libs/mesa::gentoo
 media-sound/rhythmbox::gentoo

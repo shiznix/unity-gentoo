@@ -39,6 +39,7 @@ gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/gnome-screensaver		# Patched to have gnome-screensaver xdg-autostart on Unity login
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
+gnome-extra/zeitgeist			# Zeitgeist must be built with vala-0.20 due to the way unity-base/unity uses the vala generated zeitgeist-datamodel.h
 media-libs/mesa				# Patched for mir display server support
 media-sound/rhythmbox			# Patched to work with gstreamer-1.0 and to have indicator-sound youtube webapp work
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
