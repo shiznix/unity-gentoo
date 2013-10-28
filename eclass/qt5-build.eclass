@@ -56,14 +56,13 @@ case ${PV} in
 		;;
 esac
 
-if [[ ${QT5_BUILD_TYPE} == "live" ]]; then
-	EGIT_PROJECT=${QT5_MODULE}
-	EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
-		https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
-	inherit git-2
-fi
+EGIT_REPO_URI=(
+	"git://gitorious.org/qt/${QT5_MODULE}.git"
+	"https://git.gitorious.org/qt/${QT5_MODULE}.git"
+)
+[[ ${QT5_BUILD_TYPE} == "live" ]] && inherit git-r3
 
-IUSE="+c++11 debug test"
+IUSE="debug test"
 
 DEPEND="
 	>=dev-lang/perl-5.14
@@ -111,19 +110,19 @@ EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_
 : ${QT5_VERBOSE_BUILD:=true}
 
 # @ECLASS-VARIABLE: QCONFIG_ADD
+# @DEFAULT_UNSET
 # @DESCRIPTION:
-# List of options that need to be added to QT_CONFIG in qconfig.pri
-: ${QCONFIG_ADD:=}
+# Array of options that must be added to QT_CONFIG in qconfig.pri
 
 # @ECLASS-VARIABLE: QCONFIG_REMOVE
+# @DEFAULT_UNSET
 # @DESCRIPTION:
-# List of options that need to be removed from QT_CONFIG in qconfig.pri
-: ${QCONFIG_REMOVE:=}
+# Array of options that must be removed from QT_CONFIG in qconfig.pri
 
 # @ECLASS-VARIABLE: QCONFIG_DEFINE
+# @DEFAULT_UNSET
 # @DESCRIPTION:
-# List of variables that should be defined at the top of QtCore/qconfig.h
-: ${QCONFIG_DEFINE:=}
+# Array of macros that must be defined in QtCore/qconfig.h
 
 # @FUNCTION: qt5-build_pkg_setup
 # @DESCRIPTION:
@@ -143,25 +142,27 @@ qt5-build_pkg_setup() {
 # Unpacks the sources.
 qt5-build_src_unpack() {
 	if ! version_is_at_least 4.4 $(gcc-version); then
+		ewarn
 		ewarn "Using a GCC version lower than 4.4 is not supported."
+		ewarn
 	fi
 
 	if [[ ${PN} == "qtwebkit" ]]; then
 		eshopts_push -s extglob
 		if is-flagq '-g?(gdb)?([1-9])'; then
-			echo
+			ewarn
 			ewarn "You have enabled debug info (probably have -g or -ggdb in your CFLAGS/CXXFLAGS)."
 			ewarn "You may experience really long compilation times and/or increased memory usage."
 			ewarn "If compilation fails, please try removing -g/-ggdb before reporting a bug."
 			ewarn "For more info check out https://bugs.gentoo.org/307861"
-			echo
+			ewarn
 		fi
 		eshopts_pop
 	fi
 
 	case ${QT5_BUILD_TYPE} in
 		live)
-			git-2_src_unpack
+			git-r3_src_unpack
 			;;
 		release)
 			default
@@ -328,6 +329,29 @@ qt_use() {
 	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
 }
 
+# @FUNCTION: qt_use_disable_mod
+# @USAGE: <flag> <module> <files...>
+# @DESCRIPTION:
+# <flag> is the name of a flag in IUSE.
+# <module> is the (lowercase) name of a Qt5 module.
+# <files...> is a list of one or more qmake project files.
+#
+# This function patches <files> to treat <module> as not installed
+# when <flag> is disabled, otherwise it does nothing.
+# This can be useful to avoid an automagic dependency when the module
+# is present on the system but the corresponding USE flag is disabled.
+qt_use_disable_mod() {
+	[[ $# -ge 3 ]] || die "${FUNCNAME}() requires at least 3 arguments"
+
+	local flag=$1
+	local module=$2
+	shift 2
+
+	use "${flag}" && return
+
+	echo "$@" | xargs sed -i -e "s/qtHaveModule(${module})/false/g" || die
+}
+
 
 ######  Internal functions  ######
 
@@ -403,9 +427,6 @@ qt5_base_configure() {
 		# licensing stuff
 		-opensource -confirm-license
 
-		# C++11 support
-		$(qt_use c++11)
-
 		# build shared libraries
 		-shared
 
@@ -454,7 +475,7 @@ qt5_base_configure() {
 		# command line if x11-libs/cairo is built with USE=qt4 (bug 433826)
 		-no-gtkstyle
 
-		# don't build with -Werror
+		# do not build with -Werror
 		-no-warnings-are-errors
 
 		# module-specific options
@@ -510,7 +531,7 @@ qt5_install_module_qconfigs() {
 
 	# qconfig.h
 	: > "${T}"/${PN}-qconfig.h
-	for x in ${QCONFIG_DEFINE}; do
+	for x in "${QCONFIG_DEFINE[@]}"; do
 		echo "#define ${x}" >> "${T}"/${PN}-qconfig.h
 	done
 	[[ -s ${T}/${PN}-qconfig.h ]] && (
@@ -520,9 +541,10 @@ qt5_install_module_qconfigs() {
 
 	# qconfig.pri
 	: > "${T}"/${PN}-qconfig.pri
-	for x in QCONFIG_ADD QCONFIG_REMOVE; do
-		[[ -n ${!x} ]] && echo "${x}=${!x}" >> "${T}"/${PN}-qconfig.pri
-	done
+	[[ -n ${QCONFIG_ADD[@]} ]] && echo "QCONFIG_ADD=${QCONFIG_ADD[@]}" \
+		>> "${T}"/${PN}-qconfig.pri
+	[[ -n ${QCONFIG_REMOVE[@]} ]] && echo "QCONFIG_REMOVE=${QCONFIG_REMOVE[@]}" \
+		>> "${T}"/${PN}-qconfig.pri
 	[[ -s ${T}/${PN}-qconfig.pri ]] && (
 		insinto "${QT5_ARCHDATADIR#${EPREFIX}}"/mkspecs/gentoo
 		doins "${T}"/${PN}-qconfig.pri
