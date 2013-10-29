@@ -34,7 +34,6 @@ DEPEND="dev-libs/libpeas[${PYTHON_USEDEP}]
 	>=media-sound/rhythmbox-2.98[${PYTHON_USEDEP},dbus,python,zeitgeist]
 	unity-base/ubuntuone-client[${PYTHON_USEDEP}]
 	unity-base/unity
-	x11-themes/ubuntuone-client-data[${PYTHON_USEDEP}]
 	$(vala_depend)"
 
 src_install() {

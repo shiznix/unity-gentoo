@@ -39,8 +39,7 @@ RDEPEND="dev-libs/dbus-glib
 	dev-python/simplejson[${PYTHON_USEDEP}]
 	>=dev-python/twisted-names-12.2.0[${PYTHON_USEDEP}]
 	>=dev-python/twisted-web-12.2.0[${PYTHON_USEDEP}]
-	unity-base/ubuntu-sso-client
-	unity-base/ubuntuone-storage-protocol
+	unity-base/ubuntuone-client[${PYTHON_USEDEP}]
 	x11-misc/lndir
 	x11-misc/xdg-utils"
 DEPEND="${RDEPEND}"

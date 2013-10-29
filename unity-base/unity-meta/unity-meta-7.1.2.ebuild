@@ -10,7 +10,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="metapackage"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="accessibility +chat gnome gnome-extras +xdm +webapps"
+IUSE="accessibility +chat +cloud gnome gnome-extras +xdm +webapps"
 RESTRICT="mirror"
 
 DEPEND="app-backup/deja-dup[nautilus]
@@ -21,7 +21,6 @@ DEPEND="app-backup/deja-dup[nautilus]
 	net-libs/telepathy-indicator
 	unity-base/gnome-control-center-unity
 	unity-base/hud
-	unity-base/ubuntuone-control-panel
 	unity-base/unity
 	unity-extra/unity-tweak-tool
 	unity-indicators/unity-indicators-meta
@@ -34,6 +33,7 @@ DEPEND="app-backup/deja-dup[nautilus]
 		>=app-accessibility/orca-3.8
 		>=gnome-extra/mousetweaks-3.8 )
 	chat? ( net-im/empathy )
+	cloud? ( unity-base/ubuntuone-control-panel )
 	gnome? ( gnome-base/gnome-core-apps )
 	gnome-extras? ( gnome-base/gnome-extra-apps )
 	webapps? ( unity-base/webapps

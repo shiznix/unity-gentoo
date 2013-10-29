@@ -41,7 +41,8 @@ RDEPEND="!dev-libs/libubuntuone
 	unity-base/ubuntu-sso-client[${PYTHON_USEDEP}]
 	unity-base/ubuntuone-storage-protocol[${PYTHON_USEDEP}]
 	x11-misc/lndir
-	x11-misc/xdg-utils"
+	x11-misc/xdg-utils
+	x11-themes/ubuntuone-client-data[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
 src_prepare() {
