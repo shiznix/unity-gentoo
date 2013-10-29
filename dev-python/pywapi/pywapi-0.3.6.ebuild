@@ -7,9 +7,9 @@ PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
 inherit distutils-r1 ubuntu-versionator
 
-UVER=
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
 URELEASE="saucy"
+UVER="1"
 
 DESCRIPTION="Python wrapper around different weather APIs"
 HOMEPAGE="https://code.google.com/p/python-weather-api/"
