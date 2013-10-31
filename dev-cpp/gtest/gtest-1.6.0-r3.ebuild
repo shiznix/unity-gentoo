@@ -56,7 +56,7 @@ src_install() {
 	fi
 
 	insinto /usr/src/gtest
-	doins -r src
+	doins -r src cmake CMakeLists.txt
 }
 
 gtest_src_configure() {
