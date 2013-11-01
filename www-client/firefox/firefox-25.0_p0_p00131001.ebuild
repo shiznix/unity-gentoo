@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="5"
 VIRTUALX_REQUIRED="pgo"
 WANT_AUTOCONF="2.1"
 MOZ_ESR=""
@@ -29,7 +29,7 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-24.0-patches-0.3"
+PATCH="${PN}-25.0-patches-0.3"
 # Upstream ftp release URI that's used by mozlinguas.eclass
 # We don't use the http mirror because it deletes old tarballs.
 MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
@@ -38,7 +38,7 @@ MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-3 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
 
 URELEASE="saucy"
-UVER_PREFIX="+build1"
+UVER_PREFIX="+build3"
 UURL="https://launchpad.net/ubuntu/${URELEASE}/+source/${PN}/${PV}${UVER_PREFIX}-${UVER}/+files"
 
 DESCRIPTION="Firefox Web Browser"
@@ -47,7 +47,7 @@ HOMEPAGE="http://www.mozilla.com/firefox"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist gstreamer +jit +minimal pgo pulseaudio selinux system-cairo system-jpeg system-sqlite"
+IUSE="bindist gstreamer +jit +minimal pgo pulseaudio selinux system-cairo system-icu system-jpeg system-sqlite test"
 RESTRICT="mirror"
 
 # More URIs appended below...
@@ -61,19 +61,19 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 # Mesa 7.10 needed for WebGL + bugfixes
 RDEPEND="
 	>=sys-devel/binutils-2.16.1
-	>=dev-libs/nss-3.15
+	>=dev-libs/nss-3.15.1
 	>=dev-libs/nspr-4.10
 	>=dev-libs/glib-2.26:2
 	>=media-libs/mesa-7.10
-	>=media-libs/libpng-1.5.13[apng]
+	>=media-libs/libpng-1.5.17:0=[apng]
 	virtual/libffi
 	gstreamer? ( media-plugins/gst-plugins-meta:0.10[ffmpeg] )
+	pulseaudio? ( media-sound/pulseaudio )
+	system-cairo? ( >=x11-libs/cairo-1.12[X] )
+	system-icu? ( dev-libs/icu )
 	system-cairo? ( >=x11-libs/cairo-1.10[X] )
 	system-jpeg? ( >=media-libs/libjpeg-turbo-1.2.1 )
-	system-sqlite? ( || (
-		>=dev-db/sqlite-3.7.16:3[secure-delete,debug=]
-		~dev-db/sqlite-3.7.15.2[fts3,secure-delete,threadsafe,unlock-notify,debug=]
-	) )
+	system-sqlite? ( >=dev-db/sqlite-3.7.17:3[secure-delete,debug=] )
 	>=media-libs/libvpx-1.0.0
 	kernel_linux? ( media-libs/alsa-lib )
 	selinux? ( sec-policy/selinux-mozilla )"
@@ -168,6 +168,10 @@ src_prepare() {
 	EPATCH_FORCE="yes" \
 	epatch "${WORKDIR}/firefox"
 
+	# drop -Wl,--build-id from LDFLAGS, bug #465466
+	sed -e 's:-Wl,--build-id:-Wl:g' \
+		-i security/build/Makefile.in
+
 	# Allow user to apply any additional patches without modifing ebuild
 	epatch_user
 
@@ -177,11 +181,11 @@ src_prepare() {
 			"${S}"/build/unix/run-mozilla.sh || die "sed failed!"
 	fi
 
-	# Ensure that are plugins dir is enabled as default
+	# Ensure that our plugins dir is enabled as default
 	sed -i -e "s:/usr/lib/mozilla/plugins:/usr/lib/nsbrowser/plugins:" \
 		"${S}"/xpcom/io/nsAppFileLocationProvider.cpp || die "sed failed to replace plugin path for 32bit!"
 	sed -i -e "s:/usr/lib64/mozilla/plugins:/usr/lib64/nsbrowser/plugins:" \
-		"${S}"/xpcom/io/nsAppFileLocationProvider.cpp || die "sed failed to replace plugin path for 32bit!"
+		"${S}"/xpcom/io/nsAppFileLocationProvider.cpp || die "sed failed to replace plugin path for 64bit!"
 
 	# Fix sandbox violations during make clean, bug 372817
 	sed -e "s:\(/no-such-file\):${T}\1:g" \
@@ -200,6 +204,10 @@ src_prepare() {
 		-i "${S}"/toolkit/mozapps/installer/packager.mk || die
 
 	eautoreconf
+
+	# Must run autoconf in js/src
+	cd "${S}"/js/src
+	eautoconf
 }
 
 src_configure() {
@@ -238,8 +246,11 @@ src_configure() {
 
 	mozconfig_use_enable gstreamer
 	mozconfig_use_enable pulseaudio
+	mozconfig_use_enable system-cairo
 	mozconfig_use_enable system-sqlite
 	mozconfig_use_with system-jpeg
+	mozconfig_use_with system-icu
+	mozconfig_use_enable system-icu intl-api
 	# Feature is know to cause problems on hardened
 	mozconfig_use_enable jit methodjit
 	mozconfig_use_enable jit tracejit

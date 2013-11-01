@@ -37,7 +37,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	>=gnome-base/gsettings-desktop-schemas-3.8
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/glew
-	media-libs/libpng
+	media-libs/libpng:0=
 	media-libs/mesa[gallium,llvm,xorg]
 	x11-base/xorg-server[dmx]
 	>=x11-libs/cairo-1.0

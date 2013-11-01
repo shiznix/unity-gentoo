@@ -109,6 +109,7 @@ dev-lang/orc
 ~dev-lang/perl-5.16.1
 dev-cpp/gtkmm
 dev-cpp/glibmm
+dev-lang/python-exec
 =dev-lang/v8-3.19*
 dev-lang/vala
 dev-libs/atk
@@ -136,6 +137,7 @@ dev-python/pycrypto
 dev-python/pygobject:3
 dev-python/pyjunitxml
 dev-python/python-distutils-extra
+dev-python/python-exec
 dev-python/rdflib
 dev-python/twisted-core
 dev-python/twisted-names
@@ -150,6 +152,7 @@ dev-util/umockdev
 media-libs/fontconfig
 media-libs/gexiv2
 media-libs/glm
+media-libs/libpng:0
 media-libs/libvpx
 media-libs/sbc
 media-sound/pulseaudio
