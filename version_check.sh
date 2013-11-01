@@ -29,7 +29,9 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'telepathy-mission-control'`" ]; then treepackname="${packname}"; packname="telepathy-mission-control-5"
 	elif [ -n "`echo "${packbasename}" | grep 'unity-webapps'`" ]; then treepackname="${packname}"; packname="libunity-webapps"
 	elif [ -n "`echo "${packbasename}" | grep 'webapps-base'`" ]; then treepackname="${packname}"; packname="unity-webapps-common"
+	elif [ -n "`echo "${packbasename}" | grep 'xf86-video-ati'`" ]; then treepackname="${packname}"; packname="xserver-xorg-video-ati"
 	elif [ -n "`echo "${packbasename}" | grep 'xf86-video-intel'`" ]; then treepackname="${packname}"; packname="xserver-xorg-video-intel"
+	elif [ -n "`echo "${packbasename}" | grep 'xf86-video-nouveau'`" ]; then treepackname="${packname}"; packname="xserver-xorg-video-nouveau"
 	elif [ -n "`echo "${packbasename}"`" ]; then treepackname="${packname}"
 	fi
 }
