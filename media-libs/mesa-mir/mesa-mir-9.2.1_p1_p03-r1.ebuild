@@ -5,20 +5,20 @@
 EAPI=5
 
 PYTHON_COMPAT=( python{2_6,2_7} )
-MY_PV=${PV}
 
 inherit autotools base eutils multilib multilib-minimal flag-o-matic \
 	python-single-r1 toolchain-funcs ubuntu-versionator
 
 OPENGL_DIR="xorg-x11"
 
-UURL="mirror://ubuntu/pool/main/m/${PN}"
+MY_PN="mesa"
+UURL="mirror://ubuntu/pool/main/m/${MY_PN}"
 URELEASE="saucy"
 
 DESCRIPTION="OpenGL-like graphic library for Linux"
 HOMEPAGE="http://mesa3d.sourceforge.net/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
+	${UURL}/${MY_PN}_${PV}-${UVER}.diff.gz"
 
 # The code is MIT/X11.
 # GLES[2]/gl[2]{,ext,platform}.h are SGI-B-2.0
@@ -35,7 +35,7 @@ for card in ${VIDEO_CARDS}; do
 done
 
 IUSE="${IUSE_VIDEO_CARDS}
-	bindist +classic debug +egl +gallium gbm gles1 gles2 +llvm mir +nptl opencl
+	bindist +classic debug +egl +gallium gbm gles1 gles2 hybris +llvm mir +nptl opencl
 	openvg osmesa pax_kernel pic r600-llvm-compiler selinux vdpau
 	wayland xvmc xa xorg kernel_FreeBSD"
 
@@ -111,14 +111,12 @@ for card in ${RADEON_CARDS}; do
 	"
 done
 
-
 for mesa_use in ${IUSE}; do
 	MESA_USEDEPS+="${mesa_use}=,"
 done
 MESA_USEDEPS="${MESA_USEDEPS[@]/%,/}"
 MESA_USEDEPS="${MESA_USEDEPS//+/}"
 
-PDEPEND="mir? ( =media-libs/mesa-mir-${MY_PV}[${MESA_USEDEPS}] )"
 DEPEND="${RDEPEND}
 	llvm? (
 		~sys-devel/llvm-3.3[${MULTILIB_USEDEP}]
@@ -132,6 +130,8 @@ DEPEND="${RDEPEND}
 	)
 	${PYTHON_DEPS}
 	dev-libs/libxml2[python,${PYTHON_USEDEP}]
+	=media-libs/mesa-${PVR}[${MESA_USEDEPS}]
+	mir-base/mir
 	sys-devel/bison
 	sys-devel/flex
 	virtual/pkgconfig
@@ -150,7 +150,7 @@ QA_WX_LOAD="usr/lib*/opengl/xorg-x11/lib/libGL.so*"
 # Think about: ggi, fbcon, no-X configs
 
 S="${WORKDIR}/Mesa-${PV}"
-PATCHES+=( "${WORKDIR}/${MY_P}-${UVER}.diff" )	# This needs to be applied for the debian/ directory to be present #
+PATCHES+=( "${WORKDIR}/${MY_PN}_${PV}-${UVER}.diff" )	# This needs to be applied for the debian/ directory to be present #
 
 pkg_setup() {
 	# workaround toc-issue wrt #386545
@@ -175,7 +175,7 @@ src_prepare() {
                 -i src/gallium/auxiliary/Makefile.in || die
 
 	# relax the requirement that r300 must have llvm, bug 380303
-	epatch "${FILESDIR}"/${PN}-9.2-dont-require-llvm-for-r300.patch
+	epatch "${FILESDIR}"/${MY_PN}-9.2-dont-require-llvm-for-r300.patch
 
 	# fix for hardened pax_kernel, bug 240956
 	epatch "${FILESDIR}"/glx_ro_text_segm.patch
@@ -223,7 +223,7 @@ multilib_src_configure() {
 
 	if use egl; then
 		myconf+="
-			--with-egl-platforms=x11$(use wayland && echo ",wayland")$(use gbm && echo ",drm")
+			--with-egl-platforms=x11,mir$(use wayland && echo ",wayland")$(use gbm && echo ",drm")
 			$(use_enable gallium gallium-egl)
 		"
 	fi
@@ -304,11 +304,11 @@ multilib_src_configure() {
 multilib_src_install() {
 	emake DESTDIR="${D}" install
 
-	if use mir; then
-		# Remove EGL implementations as they are provided by media-libs/mesa-mir #
-			rm -rfv "${ED}"usr/$(get_libdir)/libEGL* \
-				"${ED}"usr/include/EGL/eglplatform.h
-	fi
+	# Remove all files except those we need #
+	find "${ED}" \
+		\! -iname '*eglplatform.h*' \
+		\! -iname '*libEGL.so*' \
+			-delete 2> /dev/null
 
 	# Move libGL and others from /usr/lib to /usr/lib/opengl/blah/lib
 	# because user can eselect desired GL provider.
@@ -316,85 +316,23 @@ multilib_src_install() {
 		local x
 		local gl_dir="/usr/$(get_libdir)/opengl/${OPENGL_DIR}/"
 		dodir ${gl_dir}/{lib,extensions,include/GL}
-		for x in "${ED}"/usr/$(get_libdir)/lib{EGL,GL*,OpenVG}.{la,a,so*}; do
+		for x in "${ED}"/usr/$(get_libdir)/libEGL.{la,a,so*}; do
 			if [ -f ${x} -o -L ${x} ]; then
 				mv -f "${x}" "${ED}${gl_dir}"/lib \
 					|| die "Failed to move ${x}"
 			fi
 		done
-		for x in "${ED}"/usr/include/GL/{gl.h,glx.h,glext.h,glxext.h}; do
-			if [ -f ${x} -o -L ${x} ]; then
-				mv -f "${x}" "${ED}${gl_dir}"/include/GL \
-					|| die "Failed to move ${x}"
-			fi
-		done
-		for x in "${ED}"/usr/include/{EGL,GLES*,VG,KHR}; do
+		for x in "${ED}"/usr/include/EGL; do
 			if [ -d ${x} ]; then
 				mv -f "${x}" "${ED}${gl_dir}"/include \
 					|| die "Failed to move ${x}"
 			fi
 		done
 	eend $?
-
-	if use classic || use gallium; then
-			ebegin "Moving DRI/Gallium drivers for dynamic switching"
-			local gallium_drivers=( i915_dri.so i965_dri.so r300_dri.so r600_dri.so swrast_dri.so )
-			keepdir /usr/$(get_libdir)/dri
-			dodir /usr/$(get_libdir)/mesa
-			for x in ${gallium_drivers[@]}; do
-				if [ -f "$(get_libdir)/gallium/${x}" ]; then
-					mv -f "${ED}/usr/$(get_libdir)/dri/${x}" "${ED}/usr/$(get_libdir)/dri/${x/_dri.so/g_dri.so}" \
-						|| die "Failed to move ${x}"
-					insinto "/usr/$(get_libdir)/dri/"
-					if [ -f "$(get_libdir)/${x}" ]; then
-						insopts -m0755
-						doins "$(get_libdir)/${x}"
-					fi
-				fi
-			done
-			for x in "${ED}"/usr/$(get_libdir)/dri/*.so; do
-				if [ -f ${x} -o -L ${x} ]; then
-					mv -f "${x}" "${x/dri/mesa}" \
-						|| die "Failed to move ${x}"
-				fi
-			done
-			pushd "${ED}"/usr/$(get_libdir)/dri || die "pushd failed"
-			ln -s ../mesa/*.so . || die "Creating symlink failed"
-			# remove symlinks to drivers known to eselect
-			for x in ${gallium_drivers[@]}; do
-				if [ -f ${x} -o -L ${x} ]; then
-					rm "${x}" || die "Failed to remove ${x}"
-				fi
-			done
-			popd
-		eend $?
-	fi
-	if use opencl; then
-		ebegin "Moving Gallium/Clover OpenCL implementation for dynamic switching"
-		local cl_dir="/usr/$(get_libdir)/OpenCL/vendors/mesa"
-		dodir ${cl_dir}/{lib,include}
-		if [ -f "${ED}/usr/$(get_libdir)/libOpenCL.so" ]; then
-			mv -f "${ED}"/usr/$(get_libdir)/libOpenCL.so* \
-			"${ED}"${cl_dir}
-		fi
-		if [ -f "${ED}/usr/include/CL/opencl.h" ]; then
-			mv -f "${ED}"/usr/include/CL \
-			"${ED}"${cl_dir}/include
-		fi
-		eend $?
-	fi
 }
 
 multilib_src_install_all() {
 	find "${ED}" -name '*.la' -exec rm -f {} + || die
-
-	if use !bindist; then
-		dodoc docs/patents.txt
-	fi
-
-	# Install config file for eselect mesa
-	insinto /usr/share/mesa
-	newins "${FILESDIR}/eselect-mesa.conf.9.2" eselect-mesa.conf
 }
 
 pkg_postinst() {
