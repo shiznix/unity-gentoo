@@ -34,7 +34,7 @@ for card in ${VIDEO_CARDS}; do
 done
 
 IUSE="${IUSE_VIDEO_CARDS}
-	bindist +classic debug +egl +gallium gbm gles1 gles2 hybris +llvm mir +nptl opencl
+	bindist +classic debug +egl +gallium gbm gles1 gles2 +llvm mir +nptl opencl
 	openvg osmesa pax_kernel pic r600-llvm-compiler selinux vdpau
 	wayland xvmc xa xorg kernel_FreeBSD"
 
@@ -85,6 +85,7 @@ RDEPEND="
 	x11-libs/libXext[${MULTILIB_USEDEP}]
 	x11-libs/libXxf86vm[${MULTILIB_USEDEP}]
 	>=x11-libs/libxcb-1.8.1[${MULTILIB_USEDEP}]
+	!mir? ( !media-libs/mesa-mir )
 	opencl? (
 				app-admin/eselect-opencl
 				>=dev-libs/libclc-0.0.1_pre20130524-r1
@@ -307,12 +308,6 @@ multilib_src_install() {
 		# Remove EGL implementations provided by media-libs/mesa-mir #
 			rm -rfv "${ED}"usr/$(get_libdir)/libEGL* \
 				"${ED}"usr/include/EGL/eglplatform.h
-	fi
-
-	if use hybris; then
-		# Remove EGL implementations provided by dev-libs/libhybris #
-			rm -rfv "${ED}"usr/include/{EGL,KHR,GLES2} \
-				"${ED}"usr/$(get_libdir)/pkgconfig/{egl,glesv2}.pc
 	fi
 
 	# Move libGL and others from /usr/lib to /usr/lib/opengl/blah/lib
