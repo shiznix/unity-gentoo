@@ -32,6 +32,7 @@ DEPEND="dev-libs/libappindicator
 	dev-libs/libtimezonemap
 	gnome-base/gnome-control-center
 	>=gnome-extra/evolution-data-server-3.8
+	net-misc/url-dispatcher
 	unity-indicators/ido"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
