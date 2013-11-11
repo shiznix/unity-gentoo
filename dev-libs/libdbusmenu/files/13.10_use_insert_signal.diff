@@ -1,0 +1,52 @@
+#    Committer: Tarmac
+#    Author(s): Alistair Buxton
+#    Date: 2013-11-04 15:05:38 UTC
+#    mfrom: (461.1.1 libdbusmenu)
+#    Revision ID: tarmac-20131104150538-vr2f0ql2su1mh2yx
+#
+# Use "insert" signal instead of "child-added" (LP: #1203888)
+#  
+# In recent Gtk+2 versions, the "insert" signal has been backported from
+# Gtk+3. This replaces the "child-added" signal, which was carried in an
+# Ubuntu-specific patch and was dropped in Saucy.
+# . Fixes: https://bugs.launchpad.net/bugs/1203888.
+#
+# Approved by PS Jenkins bot, Ted Gould.
+
+
+=== modified file 'libdbusmenu-gtk/parser.c'
+--- libdbusmenu-gtk/parser.c	2013-06-18 19:59:44 +0000
++++ libdbusmenu-gtk/parser.c	2013-11-03 02:46:23 +0000
+@@ -97,9 +97,7 @@
+                                                 gpointer            data);
+ static void           item_inserted_cb         (GtkContainer *      menu,
+                                                 GtkWidget *         widget,
+-#ifdef HAVE_GTK3
+                                                 gint                position,
+-#endif
+                                                 gpointer            data);
+ static void           item_removed_cb          (GtkContainer *      menu,
+                                                 GtkWidget *         widget,
+@@ -431,11 +429,7 @@
+ 
+ 	pdata->shell = menu;
+ 	pdata->item_inserted_handler_id = g_signal_connect (G_OBJECT (menu),
+-#ifdef HAVE_GTK3
+                           "insert",
+-#else
+-                          "child-added",
+-#endif
+ 		          G_CALLBACK (item_inserted_cb),
+ 		          mi);
+ 	pdata->item_removed_handler_id = g_signal_connect (G_OBJECT (menu),
+@@ -1394,9 +1388,7 @@
+ static void
+ item_inserted_cb (GtkContainer *menu,
+                   GtkWidget    *widget,
+-#ifdef HAVE_GTK3
+                   gint          position,
+-#endif
+                   gpointer      data)
+ {
+ 	DbusmenuMenuitem *menuitem = (DbusmenuMenuitem *)data;
+
