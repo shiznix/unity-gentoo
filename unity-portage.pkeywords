@@ -138,6 +138,7 @@ dev-python/pygobject:3
 dev-python/pyjunitxml
 dev-python/python-distutils-extra
 dev-python/python-exec
+dev-python/python-prctl
 dev-python/rdflib
 dev-python/twisted-core
 dev-python/twisted-names
