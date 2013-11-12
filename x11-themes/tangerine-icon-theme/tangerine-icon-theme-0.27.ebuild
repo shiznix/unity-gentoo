@@ -6,7 +6,7 @@ EAPI=4
 inherit gnome2-utils ubuntu-versionator
 
 URELEASE="saucy"
-UVER=""
+UVER=
 
 DESCRIPTION="A derivative of the standard Tango theme, using a more orange approach"
 HOMEPAGE="http://packages.ubuntu.com/gutsy/x11/tangerine-icon-theme"

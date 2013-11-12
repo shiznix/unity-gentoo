@@ -8,7 +8,7 @@ GNOME2_LA_PUNT="yes"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libt/${PN}"
-UVER=""
+UVER=
 URELEASE="saucy"
 
 DESCRIPTION="GTK+3 timezone map widget used by the Unity desktop"

@@ -24,6 +24,7 @@ export DISTUTILS_NO_PARALLEL_BUILD=1	# Set this to catch future parallel build p
 					#	parallel builds give us no real benefit for the tiny python packages
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
+PV="${PV%%[a-z]*}"	# For package-3.6.0a
 PV="${PV%%_p*}"		# For package-3.6.0_p0_p02
 PV="${PV%%_*}"		# For package-3.6.0_p_p02
 

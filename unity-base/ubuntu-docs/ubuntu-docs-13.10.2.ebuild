@@ -8,7 +8,7 @@ GNOME2_LA_PUNT="yes"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-UVER=""
+UVER=
 URELEASE="saucy"
 
 DESCRIPTION="Help files for the Unity desktop"

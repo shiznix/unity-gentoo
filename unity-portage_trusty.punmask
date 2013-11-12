@@ -1,0 +1,4 @@
+sys-devel/gcc:4.8
+sys-libs/db:5.1
+x11-libs/libdrm
+x11-misc/lightdm::unity-gentoo

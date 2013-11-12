@@ -6,7 +6,7 @@ EAPI=4
 inherit gnome2-utils ubuntu-versionator
 
 URELEASE="saucy"
-UVER=""
+UVER=
 
 DESCRIPTION="A nice and well polished icon theme"
 HOMEPAGE="http://packages.ubuntu.com/raring/human-icon-theme"
