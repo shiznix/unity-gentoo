@@ -10,7 +10,7 @@ inherit base gnome2 ubuntu-versionator
 MY_P="${PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="saucy"
+URELEASE="trusty"
 
 DESCRIPTION="Collection of GSettings schemas for GNOME desktop"
 HOMEPAGE="http://www.gnome.org/"
@@ -20,14 +20,13 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="LGPL-2.1+"
 SLOT="0"
 IUSE="+introspection"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~arm-linux ~x86-linux ~x64-macos ~sparc-solaris ~x86-solaris"
+#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-interix ~amd64-linux ~arm-linux ~x86-linux ~x64-macos ~sparc-solaris ~x86-solaris"
 
 RDEPEND="
 	>=dev-libs/glib-2.31:2
 	introspection? ( >=dev-libs/gobject-introspection-1.31.0 )
 	>=x11-themes/gnome-backgrounds-3.8.1
 	x11-themes/gtk-engines-unico
-	>=x11-themes/light-themes-0.1.93[gtk3]
 	x11-themes/ubuntu-themes
 "
 DEPEND="${RDEPEND}

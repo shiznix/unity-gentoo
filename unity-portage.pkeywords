@@ -195,7 +195,6 @@ x11-libs/libwnck
 x11-misc/appmenu-qt
 =x11-misc/colord-0.1*
 x11-misc/notify-osd
-x11-themes/light-themes
 x11-themes/notify-osd-icons
 
 ## Overlay missing keyword unmasking ##
