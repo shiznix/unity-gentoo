@@ -10,7 +10,7 @@ inherit autotools base eutils gnome2 virtualx ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 MY_P="${MY_P/daemon-/daemon_}"
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"

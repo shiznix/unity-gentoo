@@ -9,7 +9,7 @@ PYTHON_REQ_USE="xml"
 
 inherit eutils gnome.org distutils-r1
 
-URELEASE="saucy"
+URELEASE="saucy-updates"
 UVER=
 
 DESCRIPTION="GDBus code and documentation generator"

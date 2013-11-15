@@ -100,6 +100,9 @@ x11-wm/metacity				# Patched to support compiz window decoration
 	- Check ~/.xsession-errors
 	- gsettings get org.compiz.core:/org/compiz/profiles/unity/plugins/core/ active-plugins
 
+* Ubuntu Single Signon (as used by UbuntuOne services)
+	- Check ~/.cache/sso/sso-client*.log
+
 * Customising gnome-control-center entries comes by way of Ubuntu's 'ubuntu_external_panels.patch' for gnome-control-center
 	- With this patch launchers are supposed to be added to gnome-control-center when their .desktop file is named in the following format
 		gnome-'panelname'-panel.desktop or 'panelname'-ccpanel.desktop

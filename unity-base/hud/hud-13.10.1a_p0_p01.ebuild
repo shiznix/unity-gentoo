@@ -13,8 +13,8 @@ VALA_USE_DEPEND="vapigen"
 inherit cmake-utils distutils-r1 flag-o-matic ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
-URELEASE="saucy"
-UVER_PREFIX="+13.10.20131014"
+URELEASE="trusty"
+UVER_PREFIX="+14.04.20131029.1"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"
@@ -22,7 +22,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 

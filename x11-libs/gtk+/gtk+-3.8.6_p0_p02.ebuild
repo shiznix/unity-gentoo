@@ -15,7 +15,7 @@ LICENSE="LGPL-2+"
 SLOT="3"
 
 UURL="mirror://ubuntu/pool/main/g/${MY_PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"

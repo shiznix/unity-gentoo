@@ -10,7 +10,7 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/libi/${PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 UVER_PREFIX="+13.10.20130913"
 
 DESCRIPTION="A set of symbols and convenience functions that all indicators would like to use"

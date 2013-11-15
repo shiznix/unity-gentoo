@@ -8,8 +8,8 @@ GNOME2_LA_PUNT="yes"
 inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="saucy"
-UVER_PREFIX="+13.10.20131016.2"
+URELEASE="saucy-updates"
+UVER_PREFIX="+13.10.20131023.2"
 
 DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"

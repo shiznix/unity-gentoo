@@ -32,7 +32,7 @@ RESTRICT="test"
 # Require {glib,gdbus-codegen}-2.30.0 due to GDBus API changes between 2.29.92
 # and 2.30.0
 COMMON_DEPEND="
-	>=dev-libs/glib-2.35.3:2
+	>=dev-libs/glib-2.35.3:2=
 	>=x11-libs/pango-1.28.3
 	>=x11-libs/gtk+-3.7.7:3[introspection?]
 	>=dev-libs/libxml2-2.7.8:2

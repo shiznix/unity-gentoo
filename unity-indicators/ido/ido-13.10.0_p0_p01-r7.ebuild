@@ -10,8 +10,8 @@ VALA_USE_DEPEND="vapigen"
 inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+13.10.20131011"
+URELEASE="saucy-updates"
+UVER_PREFIX="+13.10.20131031"
 
 DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"
 HOMEPAGE="https://launchpad.net/ido"
@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="LGPL-2.1 LGPL-3"
 SLOT="0/0.0.0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

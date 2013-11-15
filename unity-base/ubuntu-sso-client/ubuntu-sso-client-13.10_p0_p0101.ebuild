@@ -9,7 +9,7 @@ DISTUTILS_SINGLE_IMPL=1
 inherit distutils-r1 eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 
 DESCRIPTION="Ubuntu Single Sign-On client for the Unity desktop"
 HOMEPAGE="https://launchpad.net/ubuntu-sso-client"

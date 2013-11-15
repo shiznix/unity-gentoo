@@ -8,8 +8,8 @@ GNOME2_LA_PUNT="yes"
 inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="saucy"
-UVER_PREFIX="+13.10.20130930"
+URELEASE="saucy-updates"
+UVER_PREFIX="+13.10.20131031"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-appmenu"

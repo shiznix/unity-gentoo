@@ -11,7 +11,7 @@ VALA_USE_DEPEND="vapigen"
 inherit autotools base eutils autotools python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 UVER_PREFIX="+13.10.20131010"
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"

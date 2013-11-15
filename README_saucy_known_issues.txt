@@ -20,5 +20,6 @@
 - Launchpad bug #1104632
   * Application spread view (Compiz scale) doesn't work properly after using "Show Desktop"
 
-- launchpad bug #1203888
-  * Glipper and blueman (and others?) menus are broken by libappindicator
+- Qt applications do not appear in the systray
+
+- Qt applications do not appear as 'Recently used' in either the 'Home' or 'Applications' Dash lenses

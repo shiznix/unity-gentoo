@@ -12,7 +12,7 @@ VALA_USE_DEPEND="vapigen"
 inherit autotools base gnome2 python-any-r1 virtualx ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/e/${PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 
 DESCRIPTION="Telepathy instant messaging and video/audio call client for GNOME patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Empathy"
