@@ -35,4 +35,4 @@ A Gentoo overlay to install the Unity desktop
 	*layman -a qt*
 
 
-*For questions/support, join us on irc.freenode.net #unity-gentoo*
+* For questions/support, join us on irc.freenode.net #unity-gentoo
