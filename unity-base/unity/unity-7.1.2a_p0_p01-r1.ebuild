@@ -35,6 +35,7 @@ RDEPEND="dev-libs/dee:=
 	>=unity-base/nux-4.0.0:=
 	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
+	x11-themes/gtk-engines-murrine
 	x11-themes/unity-asset-pool"
 DEPEND="dev-libs/boost
 	dev-libs/dee
