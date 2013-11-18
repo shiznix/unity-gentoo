@@ -2,7 +2,7 @@
 
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
-app-crypt/libsecret vala
+app-crypt/libsecret crypt vala
 app-i18n/ibus dconf
 app-text/gtkspell vala
 dev-lang/python sqlite
