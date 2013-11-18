@@ -97,8 +97,10 @@ src_prepare() {
 	fi
 
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-	PATCHES+=( "${FILESDIR}/re-whitelist-raring.diff"
-			"${FILESDIR}/systray-enabled-by-default.diff" )
+
+	# Taken from http://ppa.launchpad.net/timekiller/unity-systrayfix/ubuntu/pool/main/u/unity/ #
+	epatch -p1 "${FILESDIR}/systray-fix_saucy.diff"
+
 	base_src_prepare
 
 	sed -e "s:/desktop:/org/unity/desktop:g" \
