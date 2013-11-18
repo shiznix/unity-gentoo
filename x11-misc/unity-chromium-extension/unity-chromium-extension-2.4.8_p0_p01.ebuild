@@ -23,6 +23,7 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libunity-webapps:="
 DEPEND="${RDEPEND}
+	app-editors/vim-core
 	www-client/chromium"
 # Webapp integration doesn't work for www-client/google-chrome #
 
