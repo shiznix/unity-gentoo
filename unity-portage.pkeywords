@@ -110,7 +110,6 @@ dev-lang/orc
 dev-cpp/gtkmm
 dev-cpp/glibmm
 dev-lang/python-exec
-=dev-lang/v8-3.19*
 dev-lang/vala
 dev-libs/atk
 =dev-libs/boost-1.52*

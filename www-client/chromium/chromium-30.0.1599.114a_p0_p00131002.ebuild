@@ -45,7 +45,6 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 		dev-libs/libgcrypt:=
 		>=net-print/cups-1.3.11:=
 	)
-	=dev-lang/v8-3.20*
 	>=dev-libs/elfutils-0.149
 	dev-libs/expat:=
 	>=dev-libs/icu-49.1.1-r1:=
@@ -141,6 +140,7 @@ src_prepare() {
 	# fi
 
 	epatch "${FILESDIR}/${PN}-gpsd-r0.patch"
+	epatch "${FILESDIR}/${PN}-system-icu-r0.patch"
 	epatch "${FILESDIR}/${PN}-system-ply-r0.patch"
 
 	epatch_user
@@ -193,9 +193,6 @@ src_prepare() {
 		\! -path 'third_party/x86inc/*' \
 		\! -path 'third_party/zlib/google/*' \
 		-delete || die
-
-	# Remove bundled v8.
-	find v8 -type f \! -iname '*.gyp*' -delete || die
 }
 
 src_configure() {
@@ -252,7 +249,6 @@ src_configure() {
 		-Duse_system_re2=1
 		-Duse_system_snappy=1
 		-Duse_system_speex=1
-		-Duse_system_v8=1
 		-Duse_system_xdg_utils=1
 		-Duse_system_zlib=1"
 
