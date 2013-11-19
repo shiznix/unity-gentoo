@@ -59,6 +59,7 @@ gnome-extra/zeitgeist-extensions
 =gnome-extra/zenity-3.8*
 =mail-client/evolution-3.8*
 =media-gfx/eog-3.8*
+=media-gfx/gnome-screenshot-3.8*
 media-gfx/shotwell
 media-libs/clutter
 media-libs/clutter-gst
