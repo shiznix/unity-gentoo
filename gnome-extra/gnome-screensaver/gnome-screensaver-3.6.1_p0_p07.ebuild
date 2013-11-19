@@ -9,7 +9,7 @@ WANT_AUTOMAKE=1.12
 inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 MY_P="${MY_P/screensaver-/screensaver_}"
 
 DESCRIPTION="Replaces xscreensaver, integrating with and patched for the Unity desktop"
