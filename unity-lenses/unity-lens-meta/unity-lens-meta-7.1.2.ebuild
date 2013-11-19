@@ -10,7 +10,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+applications +files friends music +photos radio +video"
+IUSE="+applications +files friends +music +photos radio +video"
 RESTRICT="mirror"
 
 DEPEND="applications? ( unity-lenses/unity-lens-applications )

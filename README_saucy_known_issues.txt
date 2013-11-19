@@ -12,14 +12,10 @@
    -> run 'gsettings set com.canonical.desktop.interface scrollbar-mode normal'
    -> OR use 'unity-tweak-tool' and set scrolling to 'backward compatibility'
 
-- Launchpad bug #1210357
-	unity-lenses/unity-lens-music fails to compile with the following error due to lagging behind dev-libs/libunity updates...
-		simple-scope.vala:134.33-134.59: error: The name `FLOW' does not exist in the context of `Unity.CategoryRenderer'
-			Unity.CategoryRenderer.FLOW);
-
 - Launchpad bug #1104632
   * Application spread view (Compiz scale) doesn't work properly after using "Show Desktop"
 
-- Qt applications do not appear in the systray
+- Launchpad bug #1251915
+  * KDE applications do not appear as 'Recently used' in either the 'Home' or 'Applications' Dash lenses
 
-- Qt applications do not appear as 'Recently used' in either the 'Home' or 'Applications' Dash lenses
+- Qt applications do not appear in the systray

@@ -4,6 +4,7 @@
 
 EAPI=5
 VALA_MIN_API_VERSION="0.20"
+VALA_MAX_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
 inherit autotools eutils ubuntu-versionator vala
@@ -44,6 +45,10 @@ DEPEND="dev-db/sqlite:3
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	# Fix icon path #
+	sed -e 's:/6:/icons:g' \
+		-i src/rhythmbox-collection.vala || die
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
