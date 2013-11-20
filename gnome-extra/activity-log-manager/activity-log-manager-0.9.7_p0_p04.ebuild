@@ -2,9 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-VALA_MIN_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
+EAPI=5
+GCONF_DEBUG="yes"
 
 inherit autotools base eutils gnome2 ubuntu-versionator vala
 

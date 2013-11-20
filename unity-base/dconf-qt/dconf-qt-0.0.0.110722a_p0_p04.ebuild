@@ -4,6 +4,7 @@
 
 EAPI=4
 GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="yes"
 
 inherit base gnome2 cmake-utils ubuntu-versionator
 

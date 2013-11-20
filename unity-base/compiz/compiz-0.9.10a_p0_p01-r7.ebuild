@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=5
+GCONF_DEBUG="no"
 
 inherit base gnome2 cmake-utils eutils python ubuntu-versionator xdummy
 

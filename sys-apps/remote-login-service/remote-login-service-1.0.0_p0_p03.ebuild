@@ -3,12 +3,12 @@
 # $Header: $
 
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit eutils autotools ubuntu-versionator base
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"
 URELEASE="saucy"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="A service that lists remote logins."
 HOMEPAGE="https://launchpad.net/remote-login-service"

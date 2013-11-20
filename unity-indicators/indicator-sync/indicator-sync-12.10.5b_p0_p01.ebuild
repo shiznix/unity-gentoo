@@ -2,19 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
-VALA_MIN_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
+GCONF_DEBUG="yes"
 
-inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator vala
+inherit autotools gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
 UVER_PREFIX="+13.10.20131011"
 
-DESCRIPTION="Indicator that collects messages that need a response used by the Unity desktop"
-HOMEPAGE="https://launchpad.net/indicator-messages"
+DESCRIPTION="Indicator for synchronisation processes status used by the Unity desktop"
+HOMEPAGE="http://launchpad.net/indicator-sync"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
@@ -23,19 +22,19 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="!net-im/indicator-messages
+RDEPEND="dev-libs/libdbusmenu:=
+	unity-indicators/ido:="
+DEPEND="${RDEPEND}
+	>=dev-libs/glib-2.35.4
 	dev-libs/libappindicator
-	dev-libs/libdbusmenu
-	dev-libs/libindicate-qt
-	$(vala_depend)"
+	dev-libs/libindicate[gtk,introspection]
+	dev-libs/libindicator
+	x11-libs/gtk+:3
+	x11-libs/pango"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	eautoreconf
-	append-cflags -Wno-error
-
-	vala_src_prepare
-	export VALA_API_GEN="$VAPIGEN"
 	gnome2_src_prepare
 }

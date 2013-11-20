@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=5
+GNOME2_LA_PUNT="yes"
 
 PYTHON_COMPAT=( python{3_2,3_3} )
 
@@ -10,7 +11,6 @@ inherit ubuntu-versionator distutils-r1
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"
 URELEASE="raring"
-GNOME2_LA_PUNT="1"
 UVER=
 
 DESCRIPTION="Retrieve the list of remote desktop servers for a user."

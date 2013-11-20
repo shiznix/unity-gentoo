@@ -3,11 +3,9 @@
 # $Header: $
 
 EAPI="5"
-GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="no"
 PYTHON_COMPAT=( python2_{5,6,7} )
-VALA_MIN_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
 
 inherit autotools base gnome2 python-any-r1 virtualx ubuntu-versionator vala
 

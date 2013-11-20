@@ -3,8 +3,8 @@
 # $Header: $
 
 EAPI="5"
+GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
-GNOME2_LA_PUNT="yes" # Needed with USE 'sendto'
 
 inherit autotools base eutils gnome2 readme.gentoo virtualx ubuntu-versionator
 

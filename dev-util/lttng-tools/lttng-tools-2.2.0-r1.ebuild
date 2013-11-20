@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit linux-info
+inherit eutils linux-info
 
 DESCRIPTION="Linux Trace Toolkit - next generation"
 HOMEPAGE="http://lttng.org"
@@ -32,4 +32,9 @@ pkg_pretend() {
 
 src_configure() {
 	econf $(use_enable ust lttng-ust)
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	prune_libtool_files --modules
 }

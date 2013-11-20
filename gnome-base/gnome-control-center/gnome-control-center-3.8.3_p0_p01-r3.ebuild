@@ -3,8 +3,8 @@
 # $Header: $
 
 EAPI="5"
+GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
-GNOME2_LA_PUNT="yes" # gmodule is used, which uses dlopen
 
 inherit autotools base eutils gnome2 ubuntu-versionator
 

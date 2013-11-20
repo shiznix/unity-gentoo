@@ -3,9 +3,6 @@
 # $Header: $
 
 EAPI=5
-VALA_MIN_API_VERSION="0.20"
-VALA_MAX_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
 
 inherit autotools eutils python ubuntu-versionator vala
 

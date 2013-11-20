@@ -4,9 +4,6 @@
 
 EAPI=5
 
-VALA_MIN_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
-
 inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"

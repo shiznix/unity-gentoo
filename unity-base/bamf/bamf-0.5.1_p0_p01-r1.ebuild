@@ -5,9 +5,6 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-VALA_MIN_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
-
 inherit autotools eutils ubuntu-versionator vala xdummy python-single-r1
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"

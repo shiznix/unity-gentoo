@@ -3,10 +3,10 @@
 # $Header: $
 
 EAPI="5"
-GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="no"
 
-inherit autotools base gnome2 eutils ubuntu-versionator
+inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="https://launchpad.net/ubuntu/+archive/primary/+files/"
 URELEASE="trusty"

@@ -3,8 +3,8 @@
 # $Header: $
 
 EAPI="5"
-GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="yes"
 
 inherit autotools base eutils gnome2 ubuntu-versionator
 

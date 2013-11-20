@@ -3,8 +3,8 @@
 # $Header: $
 
 EAPI="5"
-GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="no"
 PYTHON_COMPAT=( python2_{6,7} )
 
 inherit gnome2 python-any-r1 ubuntu-versionator

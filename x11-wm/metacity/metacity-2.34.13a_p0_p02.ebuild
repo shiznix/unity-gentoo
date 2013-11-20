@@ -3,9 +3,8 @@
 # $Header: $
 
 EAPI=4
-# debug only changes CFLAGS
-GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="yes"
 
 inherit base eutils gnome2 ubuntu-versionator
 

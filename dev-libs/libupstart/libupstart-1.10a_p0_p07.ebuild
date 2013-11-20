@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit ubuntu-versionator
+inherit eutils ubuntu-versionator
 
 MY_PN="upstart"
 MY_P="${MY_PN}_${PV}"
@@ -38,4 +38,6 @@ src_install() {
 
 	# Only install libraries and includes #
 	rm -rf "${ED}usr/share" "${ED}usr/sbin" "${ED}usr/bin" "${ED}etc"
+
+	prune_libtool_files --modules
 }

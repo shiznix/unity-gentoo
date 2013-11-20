@@ -3,9 +3,9 @@
 # $Header: $
 
 EAPI=5
+GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 GNOME_ORG_MODULE="GConf"
-GNOME2_LA_PUNT="yes"
 
 inherit base eutils gnome2 ubuntu-versionator
 

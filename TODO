@@ -3,4 +3,3 @@
 * Convert all ebuilds to EAPI=5 with subslot rebuilds where necessary
 * Convert ebuilds to use new python-r1.eclass for multi-abi installs (see dev-libs/dee)
 * Convert ebuilds to use new distutils-r1.eclass
-* Support python-3.3 for Saucy packages

@@ -4,8 +4,9 @@
 
 EAPI=5
 GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="yes"
 VALA_MIN_API_VERSION="0.22"
-VALA_USE_DEPEND="vapigen"
+VALA_MAX_API_VERSION="0.22"
 
 inherit autotools base eutils gnome2 ubuntu-versionator vala
 

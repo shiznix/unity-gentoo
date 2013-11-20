@@ -3,11 +3,12 @@
 # $Header: $
 
 EAPI="5"
-GCONF_DEBUG="no"
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="xml"
+GCONF_DEBUG="no"
 
-inherit eutils gnome2 python-single-r1 toolchain-funcs
+inherit eutils gnome2 python-single-r1 toolchain-funcs ubuntu-versionator
+UVER=
 
 DESCRIPTION="Introspection infrastructure for generating gobject library bindings for various languages"
 HOMEPAGE="http://live.gnome.org/GObjectIntrospection/"

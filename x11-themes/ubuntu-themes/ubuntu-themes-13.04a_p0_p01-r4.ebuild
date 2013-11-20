@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=5
+GCONF_DEBUG="yes"
 PYTHON_COMPAT=( python2_7 )
 
 inherit eutils gnome2 python-r1 ubuntu-versionator

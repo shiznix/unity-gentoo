@@ -3,12 +3,12 @@
 # $Header: $
 
 EAPI=4
+GNOME2_LA_PUNT="yes"
 
 inherit ubuntu-versionator eutils
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
 URELEASE="trusty"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="Configuration and a script to do a remote session using FreeRDP."
 HOMEPAGE="https://launchpad.net/lightdm-remote-session-freerdp"

@@ -4,6 +4,7 @@
 
 EAPI=5
 GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="yes"
 
 inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 

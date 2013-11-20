@@ -5,9 +5,6 @@
 EAPI=5
 PYTHON_COMPAT=( python3_3 )
 
-VALA_MIN_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
-
 inherit autotools distutils-r1 gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/f/${PN}"

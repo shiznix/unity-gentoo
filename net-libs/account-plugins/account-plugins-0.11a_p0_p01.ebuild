@@ -3,10 +3,8 @@
 # $Header: $
 
 EAPI="5"
-VALA_MIN_API_VERSION="0.20"
-#VALA_USE_DEPEND="vapigen"
-
 GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator vala
 
@@ -44,7 +42,6 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	vala_src_prepare
-#	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
 

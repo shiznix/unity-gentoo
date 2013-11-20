@@ -3,12 +3,9 @@
 # $Header: $
 
 EAPI=5
+GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
-
-GNOME2_LA_PUNT="yes"
-VALA_MIN_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
 
 inherit cmake-utils distutils-r1 flag-o-matic ubuntu-versionator vala
 

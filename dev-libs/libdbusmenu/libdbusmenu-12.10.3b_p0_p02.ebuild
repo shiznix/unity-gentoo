@@ -3,8 +3,6 @@
 # $Header: $
 
 EAPI=5
-VALA_MIN_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
 
 inherit base autotools eutils flag-o-matic ubuntu-versionator vala virtualx
 

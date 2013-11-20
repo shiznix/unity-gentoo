@@ -4,8 +4,7 @@
 
 EAPI=5
 GNOME2_LA_PUNT="yes"
-
-VALA_MIN_API_VERSION=0.20
+GCONF_DEBUG="yes"
 
 inherit autotools eutils gnome2 ubuntu-versionator vala
 

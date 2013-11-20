@@ -20,8 +20,19 @@
 
 EXPORT_FUNCTIONS pkg_pretend
 
-export DISTUTILS_NO_PARALLEL_BUILD=1	# Set this to catch future parallel build problems with distutils-r1.eclass
-					#	parallel builds give us no real benefit for the tiny python packages
+#---------------------------------------------------------------------------------------------------------------------------------#
+### GLOBAL ECLASS INHERIT DEFAULTS ##
+
+## distutils-r1.eclass ##
+# Set this to catch future parallel build problems, parallel builds give us no real benefit for our tiny python packages #
+export DISTUTILS_NO_PARALLEL_BUILD=1
+
+## vala.eclass ##
+# Set base sane vala version for all packages requiring vala, override in ebuild if or when specific higher versions are needed #
+export VALA_MIN_API_VERSION=${VALA_MIN_API_VERSION:=0.20}
+export VALA_MAX_API_VERSION=${VALA_MAX_API_VERSION:=0.20}
+export VALA_USE_DEPEND="vapigen"
+#---------------------------------------------------------------------------------------------------------------------------------#
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
 PV="${PV%%[a-z]*}"	# For package-3.6.0a

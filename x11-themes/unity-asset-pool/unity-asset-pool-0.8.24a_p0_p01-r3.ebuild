@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=4
+GCONF_DEBUG="yes"
 
 inherit eutils gnome2 ubuntu-versionator
 

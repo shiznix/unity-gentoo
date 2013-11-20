@@ -5,7 +5,7 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7"
 
-inherit autotools python
+inherit autotools eutils python
 
 DESCRIPTION="Linux Trace Toolkit - UST library"
 HOMEPAGE="http://lttng.org"
@@ -27,4 +27,9 @@ src_prepare() {
 		sed -i -e '/SUBDIRS/s:examples::' doc/Makefile.am || die
 	fi
 	eautoreconf
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	prune_libtool_files --modules
 }

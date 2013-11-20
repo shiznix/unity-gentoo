@@ -7,9 +7,6 @@ EAPI=5
 AUTOTOOLS_AUTORECONF=true
 PYTHON_COMPAT=( python{2_6,2_7} )
 
-VALA_MIN_API_VERSION=0.20
-VALA_MAX_API_VERSION=0.20
-
 inherit autotools-utils base bash-completion-r1 eutils python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/z/${PN}"

@@ -2,17 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-
-VALA_MIN_API_VERSION="0.20"
-VALA_MAX_API_VERSION="0.20"
-VALA_USE_DEPEND="vapigen"
+EAPI=5
+GNOME2_LA_PUNT="yes"
+GCONF_DEBUG="yes"
 
 inherit autotools flag-o-matic gnome2 ubuntu-versionator base vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="saucy"
-GNOME2_LA_PUNT="1"
 
 DESCRIPTION="The greeter (login screen) application for Unity. It is implemented as a LightDM greeter."
 HOMEPAGE="https://launchpad.net/unity-greeter"
