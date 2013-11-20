@@ -196,6 +196,9 @@ src_install() {
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe "${FILESDIR}/99unity-panel-service"
 
+	exeinto /etc/X11/xinit/xinitrc.d/
+	doexe "${FILESDIR}/99ibus-service"
+
 	# Make searchingthedashlegalnotice.html available to gnome-control-center's Details > Legal Notice #
 	dosym /usr/share/unity/icons/searchingthedashlegalnotice.html \
 		/usr/share/gnome-control-center/searchingthedashlegalnotice.html
