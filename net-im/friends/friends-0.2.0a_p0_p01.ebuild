@@ -70,9 +70,6 @@ src_install(){
 
 	cd service/data
 	emake DESTDIR="${ED}" install
-
-	exeinto /etc/X11/xinit/xinitrc.d/
-	doexe "${FILESDIR}/99friends-dispatcher-service"
 }
 
 pkg_preinst() {

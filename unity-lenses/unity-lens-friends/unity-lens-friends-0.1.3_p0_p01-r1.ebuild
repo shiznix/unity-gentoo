@@ -43,3 +43,10 @@ src_prepare() {
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
+
+src_install() {
+	gnome2_src_install
+
+	exeinto /etc/X11/xinit/xinitrc.d/
+	doexe "${FILESDIR}/99friends-scope-service"
+}
