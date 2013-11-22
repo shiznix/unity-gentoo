@@ -37,14 +37,14 @@ MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 
 inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-3 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
 
-URELEASE="trusty"
-UVER_PREFIX="+build3"
+URELEASE="saucy"
+UVER_PREFIX="+build1"
 UURL="https://launchpad.net/ubuntu/${URELEASE}/+source/${PN}/${PV}${UVER_PREFIX}-${UVER}/+files"
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
 
-#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
 IUSE="bindist gstreamer +jit +minimal pgo pulseaudio selinux system-cairo system-icu system-jpeg system-sqlite test"
@@ -62,7 +62,7 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 RDEPEND="
 	>=sys-devel/binutils-2.16.1
 	>=dev-libs/nss-3.15.1
-	>=dev-libs/nspr-4.10
+	>=dev-libs/nspr-4.10.2
 	>=dev-libs/glib-2.26:2
 	>=media-libs/mesa-7.10
 	>=media-libs/libpng-1.5.17:0=[apng]
