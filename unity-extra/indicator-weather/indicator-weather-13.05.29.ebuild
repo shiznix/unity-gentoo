@@ -69,6 +69,7 @@ pkg_preinst() {
 
 pkg_postinst() {
 	gnome2_schemas_update
+	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {

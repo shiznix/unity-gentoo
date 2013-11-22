@@ -114,6 +114,7 @@ pkg_postinst() {
 	elog "Set 'unity' as default user session."
 	/usr/libexec/lightdm/lightdm-set-defaults -k --session=unity
 
+	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {

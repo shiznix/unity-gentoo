@@ -398,6 +398,7 @@ pkg_postinst() {
 	# Update mimedb for the new .desktop file
 	fdo-mime_desktop_database_update
 	gnome2_icon_cache_update
+	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {

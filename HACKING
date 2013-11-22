@@ -4,3 +4,5 @@
 * Development Ubuntu release versions of ebuilds are always masked by missing keywords
 * Development Ubuntu release packages list is maintained in unity-gentoo_<dev_release>.pkeywords,
 	this way the packages may be tracked and easily tested by symlinking into /etc/portage/package.keywords/
+* Any ebuild that installs *.desktop file(s) AND specifies pkg_postinst(), must specify ubuntu-versionator_pkg_postinst
+	within pkg_postinst() {...} so that /usr/share/applications/bamf-2.index remains up-to-date

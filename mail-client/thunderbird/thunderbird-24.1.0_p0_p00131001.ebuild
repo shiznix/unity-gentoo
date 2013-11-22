@@ -361,4 +361,6 @@ pkg_postinst() {
 	elog "If you are experience problems with plugins please issue the"
 	elog "following command : rm \${HOME}/.thunderbird/*/extensions.sqlite ,"
 	elog "then restart thunderbird"
+
+	ubuntu-versionator_pkg_postinst
 }

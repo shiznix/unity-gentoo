@@ -63,6 +63,7 @@ src_compile() {
 	## Sandbox violations caused when dev-python/python-distutils-extra's build system tries to start an Xsession and fails but as part ##
 	##  of that also tries to start /usr/libexec/dconf-service if it's not already running which causes dconf sandbox violations ##
 		addpredict /run/user/$USER_ID/dconf
+		addpredict $XDG_RUNTIME_DIR/dconf
 		distutils-r1_src_compile
 }
 
@@ -73,6 +74,7 @@ pkg_preinst() {
 pkg_postinst() {
 	gnome2_icon_cache_update
 	fdo-mime_desktop_database_update
+	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {

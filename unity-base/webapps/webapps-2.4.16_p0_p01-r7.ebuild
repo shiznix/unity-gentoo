@@ -118,6 +118,7 @@ pkg_postinst() {
 	elog
 	elog "You may need to restart your browser for it to see these newly installed webapps"
 	elog
+	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {

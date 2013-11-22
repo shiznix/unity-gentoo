@@ -160,4 +160,6 @@ pkg_postinst() {
 		ewarn "If you use a custom .xinitrc for your X session,"
 		ewarn "make sure that the commands in the xinitrc.d scripts are run."
 	fi
+
+	ubuntu-versionator_pkg_postinst
 }

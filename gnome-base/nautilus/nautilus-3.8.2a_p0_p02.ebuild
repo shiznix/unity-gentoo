@@ -141,4 +141,6 @@ pkg_postinst() {
 	else
 		elog "To preview media files, emerge nautilus with USE=previewer"
 	fi
+
+	ubuntu-versionator_pkg_postinst
 }

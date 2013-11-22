@@ -18,7 +18,7 @@
 # If this occurs, the ebuild should be named package-3.6.0a_p0_p02
 
 
-EXPORT_FUNCTIONS pkg_pretend
+EXPORT_FUNCTIONS pkg_pretend pkg_postinst
 
 #---------------------------------------------------------------------------------------------------------------------------------#
 ### GLOBAL ECLASS INHERIT DEFAULTS ##
@@ -75,4 +75,12 @@ ubuntu-versionator_pkg_pretend() {
 
 	grep -R '\*/\*::unity-gentoo' /etc/portage/package.keywords* &> /dev/null || \
 		die "Please place '*/*::unity-gentoo' in your package.keywords file"
+}
+
+## Create a new bamf-2.index file at postinst stage of every package to capture all *.desktop files ##
+ubuntu-versionator_pkg_postinst() {
+	if [[ -x /usr/bin/bamf-index-create ]]; then
+		elog "Checking bamf-2.index"
+			/usr/bin/bamf-index-create triggered
+	fi
 }

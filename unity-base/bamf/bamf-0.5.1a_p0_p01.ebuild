@@ -27,6 +27,7 @@ DEPEND="dev-libs/gobject-introspection
 	dev-libs/libunity-webapps
 	dev-libs/libxslt[python,${PYTHON_USEDEP}]
 	dev-libs/libxml2[${PYTHON_USEDEP}]
+	dev-util/gdbus-codegen
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
 	x11-libs/libwnck:1
@@ -66,17 +67,18 @@ src_test() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die
+	emake DESTDIR="${ED}" install || die
 
 	# Install dbus interfaces #
 	insinto /usr/share/dbus-1/interfaces
 	doins lib/libbamf-private/org.ayatana.bamf.*xml
 
-	# Create a fresh bamf.index from bamfdaemon.postinst #
-	perl -ne '/^(.*?)=(.*)/; $$d{$ARGV}{$1} = $2; END { for $f (keys %$d) { printf "%s\t%s%s\n", $f =~ m{.*/([^/]+)$}, $$d{$f}{'Exec'},$$d{$f}{'StartupWMClass'} ? "\tBAMF_WM_CLASS::$$d{$f}{'StartupWMClass'}" : "" } }' \
-		/usr/share/applications/*.desktop > bamf.index
-	insinto /usr/share/applications
-	doins bamf.index
+	# Install bamf-2.index creation script #
+	#  Run at postinst of *.desktop files from ubuntu-versionator.eclass #
+	#  bamf-index-create only indexes *.desktop files in /usr/share/applications #
+	#    Why not also /usr/share/applications/kde4/ ?
+	exeinto /usr/bin
+	newexe debian/bamfdaemon.postinst bamf-index-create
 
 	prune_libtool_files --modules
 }

@@ -54,6 +54,7 @@ pkg_postinst() {
 	distutils_pkg_postinst
 	gnome2_gconf_install
 	gnome2_icon_cache_update
+	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {
