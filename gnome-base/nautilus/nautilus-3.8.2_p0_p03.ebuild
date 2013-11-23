@@ -9,7 +9,7 @@ GCONF_DEBUG="no"
 inherit autotools base eutils gnome2 readme.gentoo virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/n/${PN}"
-URELEASE="saucy"
+URELEASE="trusty"
 MY_P="${MY_P/-/_}"
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
@@ -21,7 +21,7 @@ LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"
 # profiling?
 IUSE="debug exif gnome +introspection packagekit +previewer sendto tracker xmp"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~arm-linux ~x86-linux"
+#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~arm-linux ~x86-linux"
 RESTRICT="mirror"
 
 # FIXME: tests fails under Xvfb, but pass when building manually
@@ -32,11 +32,13 @@ RESTRICT="test"
 # Require {glib,gdbus-codegen}-2.30.0 due to GDBus API changes between 2.29.92
 # and 2.30.0
 COMMON_DEPEND="
-	>=dev-libs/glib-2.35.3:2=
+	>=dev-libs/glib-2.35.3:2
 	>=x11-libs/pango-1.28.3
 	>=x11-libs/gtk+-3.7.7:3[introspection?]
 	>=dev-libs/libxml2-2.7.8:2
 	>=gnome-base/gnome-desktop-3:3=
+
+	dev-libs/libunity
 
 	gnome-base/dconf
 	>=gnome-base/gsettings-desktop-schemas-3.8.0
