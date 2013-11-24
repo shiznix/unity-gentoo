@@ -9,7 +9,7 @@ GCONF_DEBUG="yes"
 inherit gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/i/${PN}"
-URELEASE="raring"
+URELEASE="saucy"
 
 DESCRIPTION="Graphical system load indicator for CPU, ram, etc. used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-multiload"

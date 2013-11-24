@@ -9,7 +9,7 @@ inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/a/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20131003.1"
+UVER_PREFIX="+14.04.20131106.1"
 
 DESCRIPTION="Utility to write and run integration tests easily"
 HOMEPAGE="https://launchpad.net/autopilot"

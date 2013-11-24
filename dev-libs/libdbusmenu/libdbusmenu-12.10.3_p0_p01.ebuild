@@ -10,8 +10,8 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
-URELEASE="saucy"
-UVER_PREFIX="+13.10.20130913"
+URELEASE="saucy-updates"
+UVER_PREFIX="+13.10.20131104"
 
 DESCRIPTION="Library to pass menu structure across DBus"
 HOMEPAGE="https://launchpad.net/dbusmenu"
@@ -44,9 +44,6 @@ DEPEND="${RDEPEND}
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	# Fix lauchpad bug #1203888
-	epatch "${FILESDIR}/13.10_use_insert_signal.diff"
-
 	PATCHES+=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
 	base_src_prepare
 

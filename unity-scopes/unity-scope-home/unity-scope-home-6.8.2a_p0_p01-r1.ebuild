@@ -7,7 +7,7 @@ EAPI=5
 inherit autotools eutils ubuntu-versionator vala
 
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20131003"
+UVER_PREFIX="+14.04.20131029.1"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 
 DESCRIPTION="Home scope that aggregates results from multiple scopes for the Unity desktop"

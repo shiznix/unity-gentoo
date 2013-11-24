@@ -112,7 +112,7 @@ src_prepare() {
 #	epatch "${FILESDIR}/${PN}-2.21.3-multilib.patch"
 
 	# Don't break inclusion of gtkclist.h, upstream bug #536767
-	epatch "${FILESDIR}/${PN}-2.14.3-limit-gtksignal-includes.patch"
+#	epatch "${FILESDIR}/${PN}-2.14.3-limit-gtksignal-includes.patch"
 
 	# fix building with gir #372953, upstream bug #642085
 	epatch "${FILESDIR}"/${PN}-2.24.7-darwin-quartz-introspection.patch
