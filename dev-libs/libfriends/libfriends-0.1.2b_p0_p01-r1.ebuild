@@ -8,7 +8,7 @@ inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/libf/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="daily13.06.07"
+UVER_PREFIX="+14.04.20131108.1"
 
 DESCRIPTION="API for accessing social networks"
 HOMEPAGE="https://launchpad.net/friends"

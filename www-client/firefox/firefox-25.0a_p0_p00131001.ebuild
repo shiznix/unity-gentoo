@@ -38,7 +38,7 @@ MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-3 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
 
 URELEASE="trusty"
-UVER_PREFIX="+build1"
+UVER_PREFIX="+build3"
 UURL="https://launchpad.net/ubuntu/${URELEASE}/+source/${PN}/${PV}${UVER_PREFIX}-${UVER}/+files"
 
 DESCRIPTION="Firefox Web Browser"

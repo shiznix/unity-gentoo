@@ -10,10 +10,10 @@ inherit cmake-utils ubuntu-versionator
 
 
 URELEASE="trusty"
-UVER_PREFIX="daily13.06.05.1"
+UVER_PREFIX="+14.04.20131106.1"
 
 #UURL="mirror://ubuntu/pool/universe/x/${PN}"
-UURL="https://launchpad.net/ubuntu/saucy/+source/${PN}/${PV}${UVER_PREFIX}-${UVER}/+files"
+UURL="https://launchpad.net/ubuntu/${URELEASE}/+source/${PN}/${PV}${UVER_PREFIX}-${UVER}/+files"
 
 DESCRIPTION="Select objects in an object tree using XPath queries"
 HOMEPAGE="https://launchpad.net/xpathselect"

@@ -5,11 +5,16 @@
 EAPI="5"
 PYTHON_DEPEND="2"
 
-inherit eutils python autotools-multilib
+inherit eutils python autotools-multilib ubuntu-versionator
+
+UURL="mirror://ubuntu/pool/main/g/${PN}"
+URELEASE="saucy"
 
 DESCRIPTION="Google C++ Testing Framework"
 HOMEPAGE="http://code.google.com/p/googletest/"
-SRC_URI="http://googletest.googlecode.com/files/${P}.zip"
+#SRC_URI="http://googletest.googlecode.com/files/${P}.zip"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -31,6 +36,10 @@ pkg_setup() {
 }
 
 src_prepare() {
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+
 	sed -i -e "s|/tmp|${T}|g" test/gtest-filepath_test.cc || die
 	sed -i -r \
 		-e '/^install-(data|exec)-local:/s|^.*$|&\ndisabled-&|' \

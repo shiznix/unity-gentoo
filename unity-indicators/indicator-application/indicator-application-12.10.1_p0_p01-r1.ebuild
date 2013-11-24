@@ -7,8 +7,8 @@ EAPI=5
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="saucy"
-UVER_PREFIX="daily13.01.25"
+URELEASE="saucy-updates"
+UVER_PREFIX="+13.10.20131107"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-application"

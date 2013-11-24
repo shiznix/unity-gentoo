@@ -51,7 +51,7 @@ pkg_pretend() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/${PN}-0.6.34-gentoo-system-users.patch"
+#	epatch "${FILESDIR}/${PN}-0.6.34-gentoo-system-users.patch"
 
 #	sed -i '/0001-formats-locale-property.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0002-create-and-manage-groups-like-on-a-ubuntu-system.patch/d' "${WORKDIR}/debian/patches/series" || die
