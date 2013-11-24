@@ -133,6 +133,7 @@ version_check_other_releases() {
 			for ebuild in `find $(pwd) -name "*.ebuild" | grep /"${catpack}"/`; do
 				pack="${ebuild}"
 				packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
+				packname=`echo ${catpack} | awk -F/ '{print $2}'`
 				local_version_check
 				if [ -z "${current}" ]; then
 					echo "    ${packbasename}"
