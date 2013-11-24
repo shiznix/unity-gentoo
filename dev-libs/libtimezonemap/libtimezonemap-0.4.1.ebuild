@@ -10,7 +10,6 @@ inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libt/${PN}"
 UVER=
-#MY_PV="${PV%%[a-z]*}"
 URELEASE="trusty"
 
 DESCRIPTION="GTK+3 timezone map widget used by the Unity desktop"
