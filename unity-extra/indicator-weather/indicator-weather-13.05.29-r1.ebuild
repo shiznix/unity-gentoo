@@ -16,15 +16,15 @@ inherit distutils-r1 eutils gnome2-utils ubuntu-versionator
 
 #URELEASE="saucy"	# Was dropped from Raring for being buggy, uncomment when it rejoins to become part of Saucy #
 MY_PN="weather-indicator"
-MY_PV="${PV%%[a-z]*}"
+UVER=
 
 DESCRIPTION="Weather indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-weather"
-SRC_URI="https://launchpad.net/weather-indicator/2.0/${PV}/+download/${MY_PN}_${MY_PV}.tar.gz"
+SRC_URI="https://launchpad.net/weather-indicator/2.0/${PV}/+download/${MY_PN}_${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror nodoc"
 
@@ -33,13 +33,18 @@ DEPEND="dev-libs/libappindicator
 	dev-libs/libindicate-qt
 	>=dev-python/python-distutils-extra-2.37
 	dev-python/pytz[${PYTHON_USEDEP}]
-	>=dev-python/pywapi-0.3.3[${PYTHON_USEDEP}]"
+	>=dev-python/pywapi-0.3.3[${PYTHON_USEDEP}]
+	x11-themes/gnome-icon-theme"
 
 S="${WORKDIR}/${MY_PN}_${PV}"
 
 src_prepare() {
 	sed -e 's:share/common-licenses:portage/licenses:g' \
 		-i bin/indicator-weather
+
+	# Make desktop file compliant #
+	sed -e 's:\(False\):\L\1:g' \
+		-i indicator-weather.desktop.in
 }
 
 src_compile() {
@@ -62,17 +67,34 @@ src_install() {
 	rm -rf "${D}"etc/apport
 
 	python_fix_shebang "${ED}"
+
+	dosym /usr/share/icons/gnome/22x22/status/weather-few-clouds.png \
+		/usr/share/icons/gnome/22x22/status/weather-clouds.png
 }
 
 pkg_preinst() {
 	gnome2_schemas_savelist
+	gnome2_icon_savelist
 }
 
 pkg_postinst() {
+	xdg-icon-resource install --theme hicolor --novendor --size 22 \
+		"${EROOT}/usr/share/indicator-weather/media/icon.png" weather-indicator \
+			|| die "icon resource installation failed"
+	xdg-icon-resource install --theme hicolor --novendor --size 22 \
+		"${EROOT}/usr/share/indicator-weather/media/icon_unknown_condition.png" weather-indicator-unknown \
+			|| die "icon resource installation failed"
+	xdg-icon-resource install --theme hicolor --novendor --size 22 \
+		"${EROOT}/usr/share/indicator-weather/media/icon_connection_error.png" weather-indicator-error \
+			|| die "icon resource installation failed"
+	xdg-icon-resource forceupdate
+
 	gnome2_schemas_update
+	gnome2_icon_cache_update
 	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {
 	gnome2_schemas_update
+	gnome2_icon_cache_update
 }
