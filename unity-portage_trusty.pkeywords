@@ -99,10 +99,7 @@ x11-libs/vte
 
 ## Other packages keyword unmasking ##
 app-admin/openrc-settingsd
-app-admin/packagekit
 app-admin/packagekit-base
-app-admin/packagekit-gtk
-app-admin/packagekit-qt4
 app-crypt/p11-kit
 app-i18n/ibus
 app-text/gtkspell

@@ -25,6 +25,7 @@ RESTRICT="mirror"
 RDEPEND="dev-libs/libdbusmenu:=
 	dev-libs/libunity:="
 DEPEND="${RDEPEND}
+	app-admin/packagekit-base
 	app-misc/geoclue
 	dev-db/sqlite:3
 	>=dev-libs/glib-2.32.3:2
@@ -37,8 +38,7 @@ DEPEND="${RDEPEND}
 	x11-libs/gtk+:3
 	unity-indicators/indicator-messages
 	x11-libs/libnotify
-	x11-libs/libwnck:3
-	app-admin/packagekit"
+	x11-libs/libwnck:3"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
@@ -58,6 +58,12 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+
+	# Don't use ubuntu-webapps-update-index as we don't use apt package manager #
+	cat <<-EOF > "${ED}usr/bin/ubuntu-webapps-update-index"
+	#!/bin/sh
+	/bin/false
+	EOF
 }
 
 pkg_postinst() {
