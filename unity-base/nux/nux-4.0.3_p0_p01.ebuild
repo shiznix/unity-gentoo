@@ -29,7 +29,7 @@ DEPEND="app-i18n/ibus
 	dev-libs/libpcre
 	dev-libs/libsigc++:2
 	gnome-base/gnome-common
-	<media-libs/glew-1.8
+	media-libs/glew
 	media-libs/libpng:0
 	sys-apps/pciutils
 	>=sys-devel/gcc-4.6
