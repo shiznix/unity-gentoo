@@ -1,0 +1,1 @@
+export UNITY_LOG_SEVERITY="unity=DEBUG:nux=DEBUG"

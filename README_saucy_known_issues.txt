@@ -18,4 +18,9 @@
 - Launchpad bug #1251915
   * KDE applications do not appear as 'Recently used' in either the 'Home' or 'Applications' Dash lenses
 
-- Qt applications do not appear in the systray
+- Some Qt applications do not appear in the unity-panel-service systray (eg. ktorrent, quassel)
+    However some QT applications (eg. skype, qbittorrent, vlc) are not affected for some reason
+	sni-qt is a package that turns QT systray icons into appindicators on-the-fly,
+	but requires a patched dev-qt/qtgui to work
+    The same applications that do not appear in the unity-panel-service systray, also do not work with
+	sni-qt in Ubuntu

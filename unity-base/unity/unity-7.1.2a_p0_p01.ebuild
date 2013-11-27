@@ -33,7 +33,7 @@ RDEPEND="dev-libs/dee:=
 	dev-libs/libunity-misc:=
 	>=unity-base/bamf-0.4.0:=
 	>=unity-base/compiz-0.9.9:=
-	>=unity-base/nux-4.0.0:=
+	>=unity-base/nux-4.0.0:=[debug?]
 	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
 	x11-themes/gtk-engines-murrine
@@ -68,7 +68,7 @@ DEPEND="dev-libs/boost
 	>=unity-base/bamf-0.4.0
 	>=unity-base/compiz-0.9.9
 	unity-base/dconf-qt
-	>=unity-base/nux-4.0.0
+	>=unity-base/nux-4.0.0[debug?]
 	unity-base/overlay-scrollbar
 	x11-base/xorg-server[dmx]
 	x11-libs/libXfixes
@@ -172,6 +172,11 @@ src_install() {
 		addpredict /usr/share/glib-2.0/schemas/	# FIXME
 		emake DESTDIR="${D}" install
 	popd
+
+	if use debug; then
+		exeinto /etc/X11/xinit/xinitrc.d/
+		doexe "${FILESDIR}/99unity-debug"
+	fi
 
 	if use test; then
 		pushd tests/autopilot
