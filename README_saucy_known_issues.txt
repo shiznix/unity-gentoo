@@ -15,6 +15,8 @@
 - Launchpad bug #1104632
   * Application spread view (Compiz scale) doesn't work properly after using "Show Desktop"
 
+- Turning Compiz Window Spread feature on/off and then activating window spread (Super+w) can cause Compiz to segfault
+
 - Launchpad bug #1251915
   * KDE applications do not appear as 'Recently used' in either the 'Home' or 'Applications' Dash lenses
 
