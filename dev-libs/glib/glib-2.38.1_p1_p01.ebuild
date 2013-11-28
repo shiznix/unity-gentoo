@@ -3,10 +3,10 @@
 # $Header: $
 
 EAPI="5"
-PYTHON_COMPAT=( python2_{5,6,7} )
+PYTHON_COMPAT=( python2_{6,7} )
 # Avoid runtime dependency on python when USE=test
 
-inherit autotools base gnome.org libtool eutils flag-o-matic gnome2-utils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator versionator
+inherit autotools base bash-completion-r1 gnome.org libtool eutils flag-o-matic gnome2-utils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator versionator
 
 MY_P="${PN}2.0_${PV}"
 #S="${WORKDIR}/${PN}-${PV}"
@@ -16,13 +16,15 @@ URELEASE="trusty"
 
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/glib"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+	http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz" # pkg.m4 for eautoreconf
 
 LICENSE="LGPL-2+"
 SLOT="2/$(get_version_component_range 2-3)"
 IUSE="debug fam kernel_linux selinux static-libs systemtap test utils xattr"
 #KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~sparc-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux"
 
+# FIXME: want libselinux[${MULTILIB_USEDEP}] - bug #480960
 RDEPEND="
 	virtual/libiconv[${MULTILIB_USEDEP}]
 	virtual/libffi[${MULTILIB_USEDEP}]
@@ -62,6 +64,8 @@ PDEPEND="x11-misc/shared-mime-info
 # shared-mime-info needed for gio/xdgmime, bug #409481
 # Earlier versions of gvfs do not work with glib
 
+DOCS="AUTHORS ChangeLog* NEWS* README"
+
 pkg_setup() {
 	if use kernel_linux ; then
 		CONFIG_CHECK="~INOTIFY_USER"
@@ -75,6 +79,9 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# Prevent build failure in stage3 where pkgconfig is not available, bug #481056
+	mv -f "${WORKDIR}"/pkg-config-*/pkg.m4 "${S}"/m4macros/ || die
+
 	# Fix gmodule issues on fbsd; bug #184301, upstream bug #107626
 	epatch "${FILESDIR}"/${PN}-2.12.12-fbsd.patch
 	
@@ -132,12 +139,22 @@ src_prepare() {
 	# gdbus-codegen is a separate package
 	epatch "${FILESDIR}/${PN}-2.37.x-external-gdbus-codegen.patch"
 
+	# do not allow libgobject to unload; bug #405173, https://bugzilla.gnome.org/show_bug.cgi?id=707298
+	epatch "${FILESDIR}/${PN}-2.36.4-znodelete.patch"
+
 	# bashcomp goes in /usr/share/bash-completion
 	epatch "${FILESDIR}/${PN}-2.32.4-bashcomp.patch"
 
 	# leave python shebang alone
 	sed -e '/${PYTHON}/d' \
 		-i glib/Makefile.{am,in} || die
+
+	# Gentoo handles completions in a different directory
+	sed -i "s|^completiondir =.*|completiondir = $(get_bashcompdir)|" \
+		gio/Makefile.am || die
+
+	# Support compilation in clang until upstream solves this, upstream bug #691608
+	append-flags -Wno-format-nonliteral
 
 	epatch_user
 
@@ -167,6 +184,11 @@ multilib_src_configure() {
 
 	local myconf
 
+	case "${CHOST}" in
+		*-mingw*)       myconf="${myconf} --with-threads=win32" ;;
+		*)              myconf="${myconf} --with-threads=posix" ;;
+	esac
+
 	# Building with --disable-debug highly unrecommended.  It will build glib in
 	# an unusable form as it disables some commonly used API.  Please do not
 	# convert this to the use_enable form, as it results in a broken build.
@@ -174,6 +196,13 @@ multilib_src_configure() {
 
 	# Only used by the gresource bin
 	multilib_is_native_abi || myconf="${myconf} --disable-libelf"
+
+	# FIXME: change to "$(use_enable selinux)" when libselinux is multilibbed, bug #480960
+	if multilib_is_native_abi; then
+		myconf="${myconf} $(use_enable selinux)"
+	else
+		myconf="${myconf} --disable-selinux"
+	fi
 
 	# Always use internal libpcre, bug #254659
 	ECONF_SOURCE="${S}" econf ${myconf} \
@@ -183,15 +212,15 @@ multilib_src_configure() {
 		$(use_enable static-libs static) \
 		$(use_enable systemtap dtrace) \
 		$(use_enable systemtap systemtap) \
+		$(use_enable test modular-tests) \
+		--disable-compile-warnings \
 		--enable-man \
 		--with-pcre=internal \
-		--with-threads=posix \
 		--with-xml-catalog="${EPREFIX}/etc/xml/catalog"
 }
 
-multilib_src_install() {
-	default
-
+multilib_src_install_all() {
+	einstalldocs
 	if use utils ; then
 		python_replicate_script "${ED}"/usr/bin/gtester-report
 	else
@@ -227,7 +256,7 @@ multilib_src_test() {
 
 	# Hardened: gdb needs this, bug #338891
 	if host-is-pax ; then
-		pax-mark -mr "${S}"/tests/.libs/assert-msg-test \
+		pax-mark -mr "${BUILD_DIR}"/tests/.libs/assert-msg-test \
 			|| die "Hardened adjustment failed"
 	fi
 
