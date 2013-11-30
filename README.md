@@ -33,6 +33,7 @@ A Gentoo overlay to install the Unity desktop
 * QT5 packages are now included in the overlay due to Unity relying on stable QT versions which can disappear from the 'qt' overlay
 
 	*layman -d qt*
+
 	*emerge -av $(qlist -ISC dev-qt/ | grep \:5)*
 
 
