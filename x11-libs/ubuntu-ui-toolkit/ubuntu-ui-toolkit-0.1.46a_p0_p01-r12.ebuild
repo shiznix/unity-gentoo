@@ -21,7 +21,8 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="x11-libs/unity-action-api"
+RDEPEND="dev-qt/qtfeedback
+	x11-libs/unity-action-api"
 DEPEND="${RDEPEND}
 	dev-libs/glib:2
 	dev-qt/qtcore:5
