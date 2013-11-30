@@ -34,7 +34,9 @@ A Gentoo overlay to install the Unity desktop
 
 	*layman -d qt*
 
-	*emerge -av $(qlist -ISC dev-qt/ | grep \\:5)*
+	*emerge -1av $(qlist -ISC dev-qt/ | grep \\:5)*
+
+	*emerge -1av $(qdepends -CNQ dev-qt/qtcore:5 2> /dev/null)*
 
 
 * For questions/support, join us on irc.freenode.net #unity-gentoo
