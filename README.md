@@ -30,9 +30,10 @@ A Gentoo overlay to install the Unity desktop
 	*ln -s /var/lib/layman/unity-gentoo/unity-portage.puse /etc/portage/package.use/unity-portage.puse*
 
 
-* Some packages in the overlay require the installation of QT5. As this is not present in the main portage tree yet, it may be necessary to add QT5 overlay
+* QT5 packages are now included in the overlay due to Unity relying on stable QT versions which can disappear from the 'qt' overlay
 
-	*layman -a qt*
+	*layman -d qt*
+	*emerge -av $(qlist -ISC dev-qt/ | grep \:5)*
 
 
 * For questions/support, join us on irc.freenode.net #unity-gentoo
