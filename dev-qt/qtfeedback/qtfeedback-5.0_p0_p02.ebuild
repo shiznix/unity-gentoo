@@ -14,19 +14,15 @@ DESCRIPTION="Qt Feedback module"
 SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
-KEYWORDS="~amd64"
+#KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-RDEPEND="
-	>=dev-qt/qtcore-${PV}:5[debug=]
+DEPEND=">=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtdeclarative-${PV}:5[debug=]
 	>=dev-qt/qtjsbackend-${PV}:5[debug=]
 	>=dev-qt/qtmultimedia-${PV}:5[debug=]
 	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]
-"
-DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtgui-${PV}:5[debug=] )
-"
+	test? ( >=dev-qt/qtgui-${PV}:5[debug=] )"
 
 S="${WORKDIR}"
 

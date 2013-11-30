@@ -142,7 +142,19 @@ dev-python/twisted-names
 dev-python/twisted-web
 dev-qt/qtcore:5
 dev-qt/qtdbus:5
-dev-qt/qt-mobility:5
+dev-qt/qtdeclarative:5
+dev-qt/qtgraphicaleffects:5
+dev-qt/qtgui:5
+dev-qt/qtjsbackend:5
+dev-qt/qtmultimedia:5
+dev-qt/qtnetwork:5
+dev-qt/qtscript:5
+dev-qt/qtsql:5
+dev-qt/qtsvg:5
+dev-qt/qttest:5
+dev-qt/qtwidgets:5
+dev-qt/qtxml:5
+dev-qt/qtxmlpatterns:5
 =dev-util/boost-build-1.52*
 dev-util/fix-la-relink-command
 dev-util/dbus-test-runner
@@ -219,6 +231,7 @@ dev-python/dirspec **
 dev-python/lazr-restfulclient **
 dev-python/python-testscenarios **
 dev-python/pywapi **
+dev-qt/qtfeedback **
 dev-qt/qtpim **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen::unity-gentoo **
