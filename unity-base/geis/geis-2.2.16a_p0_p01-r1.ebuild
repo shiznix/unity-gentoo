@@ -21,7 +21,8 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="unity-base/grail"
+DEPEND="${PYTHON_DEPS}
+	unity-base/grail"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
