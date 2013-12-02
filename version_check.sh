@@ -63,7 +63,9 @@ local_version_check() {
 		if [ -n "${UVER}" ]; then
 			current=`echo "${packbasename}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}"`
 		else
-			current=`echo "${packbasename}" | sed 's:-r[0-9].*$::g'`
+			current=`echo "${packbasename}" | \
+				sed -e 's:-r[0-9].*$::g' \
+					-e 's:[a-z]$::'`
 		fi
 	fi
 	packbasename="${packbasename_saved}"
