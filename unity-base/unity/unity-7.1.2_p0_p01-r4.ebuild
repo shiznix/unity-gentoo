@@ -215,6 +215,7 @@ pkg_postinst() {
 	elog "If you use a custom ~/.xinitrc to startx"
 	elog "then you should add the following to the top of your ~/.xinitrc file"
 	elog "to ensure all needed services are started:"
+	elog ' XSESSION=unity'
 	elog ' if [ -d /etc/X11/xinit/xinitrc.d ] ; then'
 	elog '   for f in /etc/X11/xinit/xinitrc.d/* ; do'
 	elog '     [ -x "$f" ] && . "$f"'
