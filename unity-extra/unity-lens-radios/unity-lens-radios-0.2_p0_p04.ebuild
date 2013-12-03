@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python3_{2,3} )
+PYTHON_COMPAT=( python{3_2,3_3} )
 
 inherit distutils-r1 ubuntu-versionator
 
@@ -21,4 +21,5 @@ RESTRICT="mirror"
 
 RDEPEND="unity-base/unity"
 DEPEND="${RDEPEND}
-	>=dev-python/python-distutils-extra-2.37"
+	>=dev-python/python-distutils-extra-2.37
+	${PYTHON_DEPS}"

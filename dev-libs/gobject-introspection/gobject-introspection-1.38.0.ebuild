@@ -33,6 +33,7 @@ DEPEND="${RDEPEND}
 	sys-devel/bison
 	sys-devel/flex
 	virtual/pkgconfig
+	${PYTHON_DEPS}
 "
 # PDEPEND to avoid circular dependencies, bug #391213
 PDEPEND="cairo? ( x11-libs/cairo[glib] )"

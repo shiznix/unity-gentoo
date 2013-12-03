@@ -30,6 +30,7 @@ RDEPEND="dev-libs/glib:2
 DEPEND="${RDEPEND}
 	dev-util/gtk-doc
 	test? ( dev-util/dbus-test-runner )
+	${PYTHON_DEPS}
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

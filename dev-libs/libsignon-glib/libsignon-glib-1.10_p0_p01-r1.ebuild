@@ -32,7 +32,8 @@ RDEPEND="dev-libs/check
 	unity-base/signon"
 DEPEND="${RDEPEND}
 	dev-util/gtk-doc
-	dev-util/gtk-doc-am"
+	dev-util/gtk-doc-am
+	${PYTHON_DEPS}"
 
 MAKEOPTS="${MAKEOPTS} -j1"
 

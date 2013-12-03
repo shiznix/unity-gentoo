@@ -25,7 +25,8 @@ RESTRICT="mirror"
 
 DEPEND="dev-python/pyflakes
 	>=dev-python/pycurl-7.19.0-r3
-	dev-python/http-parser"
+	dev-python/http-parser
+	${PYTHON_DEPS}"
 
 python_install_all() {
 	distutils_src_install

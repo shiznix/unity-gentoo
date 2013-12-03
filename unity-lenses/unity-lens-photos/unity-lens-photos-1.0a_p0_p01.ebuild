@@ -32,7 +32,8 @@ RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	media-gfx/shotwell
 	net-libs/account-plugins
 	unity-base/unity
-	unity-base/unity-language-pack"
+	unity-base/unity-language-pack
+	${PYTHON_DEPS}"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

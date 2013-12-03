@@ -17,8 +17,9 @@ KEYWORDS="amd64 arm ~mips ppc ~ppc64 x86"
 IUSE="static-libs"
 
 RDEPEND="=dev-cpp/gtest-${PV}*"
-DEPEND="app-arch/unzip
-	${RDEPEND}"
+DEPEND="${RDEPEND}
+	app-arch/unzip
+	${PYTHON_DEPS}"
 
 src_unpack() {
 	default

@@ -20,7 +20,8 @@ KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-python/python-distutils-extra-2.37"
+DEPEND=">=dev-python/python-distutils-extra-2.37
+	${PYTHON_DEPS}"
 
 src_install() {
 	distutils-r1_src_install

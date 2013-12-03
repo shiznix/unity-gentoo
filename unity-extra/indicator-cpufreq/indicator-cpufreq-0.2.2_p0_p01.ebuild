@@ -28,7 +28,8 @@ RDEPEND="dev-libs/glib:2
 DEPEND="${RDEPEND}
 	dev-util/intltool
 	dev-util/pkgconfig
-	sys-devel/gettext"
+	sys-devel/gettext
+	${PYTHON_DEPS}"
 
 src_prepare() {
 	# Allow users to use the indicator #

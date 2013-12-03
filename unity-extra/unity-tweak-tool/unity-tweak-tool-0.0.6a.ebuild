@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python3_{2,3} )
+PYTHON_COMPAT=( python{3_2,3_3} )
 
 inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 
@@ -46,7 +46,8 @@ DEPEND="${RDEPEND}
 	unity-indicators/indicator-sound
 	unity-lenses/unity-lens-applications
 	unity-lenses/unity-lens-files
-	x11-misc/notify-osd"
+	x11-misc/notify-osd
+	${PYTHON_DEPS}"
 
 S="${WORKDIR}/${PN}"
 USER_ID="$(id -u)"

@@ -20,7 +20,8 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-python/python-distutils-extra-2.37"
+DEPEND=">=dev-python/python-distutils-extra-2.37
+	${PYTHON_DEPS}"
 
 src_install() {
 	distutils-r1_src_install

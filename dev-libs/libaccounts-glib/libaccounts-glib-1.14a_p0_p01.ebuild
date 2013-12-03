@@ -28,7 +28,8 @@ RDEPEND="dev-db/sqlite:3
 	>=dev-libs/gobject-introspection-1.34.2
 	dev-libs/libxml2
 	dev-util/gtk-doc"
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	${PYTHON_DEPS}"
 
 MAKEOPTS="${MAKEOPTS} -j1"
 

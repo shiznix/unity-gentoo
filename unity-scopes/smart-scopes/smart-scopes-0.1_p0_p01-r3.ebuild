@@ -28,7 +28,8 @@ RDEPEND="!unity-extra/unity-lens-cooking
 	dev-python/pygobject:3
 	unity-scopes/unity-scope-home"
 DEPEND="${RDEPEND}
-	test? ( dev-python/nose )"
+	test? ( dev-python/nose )
+	${PYTHON_DEPS}"
 
 ## Neat and efficient way of bundling and tracking all available scopes into one ebuild ##
 ## Borrowed from chenxiaolong's Unity-for-Arch overlay at https://github.com/chenxiaolong/Unity-for-Arch ##

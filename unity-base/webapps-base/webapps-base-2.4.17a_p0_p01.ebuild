@@ -31,7 +31,8 @@ DEPEND=">=dev-libs/glib-2.32.3
 	dev-libs/libunity-webapps
 	dev-python/polib[${PYTHON_USEDEP}]
 	x11-libs/gtk+:3
-	x11-themes/unity-asset-pool"
+	x11-themes/unity-asset-pool
+	${PYTHON_DEPS}"
 
 S="${WORKDIR}/${MY_PN}-${PV}${UVER_PREFIX}"
 
