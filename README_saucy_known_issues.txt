@@ -10,6 +10,10 @@
 - Launchpad bug #86184
  * not possible to change mouse cursor theme
  (cursor theme packages are missing in overlay too)
+ * workaround:
+   -> rm -rf /usr/share/cursors/xorg-x11/default
+   -> ln -s /usr/share/icons/YOUR_CURSOR_THEME /usr/share/cursors/xorg-x11/default
+   -> AND set YOUR_CURSOR_THEME in ccsm/ubuntu-tweak-tool 
 
 - Launchpad bug #1059374 
  * Using Adwaita, many widgets are drawn with a solid black background
