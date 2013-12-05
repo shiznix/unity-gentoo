@@ -1,0 +1,21 @@
+diff -urN unity-tweak-tool/UnityTweakTool/section/spaghetti/theme.py unity-tweak-tool-patched/UnityTweakTool/section/spaghetti/theme.py
+--- unity-tweak-tool/UnityTweakTool/section/spaghetti/theme.py	2013-10-06 11:13:22.000000000 +1030
++++ unity-tweak-tool-patched/UnityTweakTool/section/spaghetti/theme.py	2013-12-06 07:43:03.193199645 +1030
+@@ -72,6 +72,8 @@
+ 
+         sysithdir='/usr/share/icons'
+         systemiconthemes= [(theme.capitalize(),os.path.join(sysithdir,theme)) for theme in os.listdir(sysithdir) if os.path.isdir(os.path.join(sysithdir,theme))]
++        xorgithdir='/usr/share/cursors/xorg-x11'
++        xorgiconthemes= [(theme.capitalize(),os.path.join(xorgithdir,theme)) for theme in os.listdir(xorgithdir) if os.path.isdir(os.path.join(xorgithdir,theme))]
+         to_be_hidden=[('Loginicons','/usr/share/icons/LoginIcons'),('Unity-webapps-applications','/usr/share/icons/unity-webapps-applications')]
+         for item in to_be_hidden:
+             try:
+@@ -83,7 +85,7 @@
+             usericonthemes=[(theme.capitalize(),os.path.join(uithdir,theme)) for theme in os.listdir(uithdir) if os.path.isdir(os.path.join(uithdir,theme))]
+         except OSError as e:
+             usericonthemes=[]
+-        allithemes=systemiconthemes+usericonthemes
++        allithemes=systemiconthemes+usericonthemes+xorgiconthemes
+         allithemes.sort()
+         self.iconthemes={}
+         self.cursorthemes={}

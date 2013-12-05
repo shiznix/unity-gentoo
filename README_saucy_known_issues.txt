@@ -7,10 +7,6 @@
   compile 'app-accessibility/sphinxbase' with WANT_AUTOMAKE="0.12"
   e.g. 'WANT_AUTOMAKE="0.12" emerge -q1 app-accessibility/sphinxbase'
 
-- Launchpad bug #86184
- * not possible to change mouse cursor theme
- (cursor theme packages are missing in overlay too)
-
 - Launchpad bug #1059374 
  * Using Adwaita, many widgets are drawn with a solid black background
  * work around:

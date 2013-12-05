@@ -50,7 +50,6 @@ DEPEND="${RDEPEND}
 	${PYTHON_DEPS}"
 
 S="${WORKDIR}/${PN}"
-USER_ID="$(id -u)"
 
 src_prepare() {
 	# Make Unity Tweak Tool appear in gnome-control-center #
@@ -58,14 +57,24 @@ src_prepare() {
 		-e 's:Exec=.*:Exec=unity-tweak-tool:' \
 		-e '/Actions=/{:a;n;/^$/!ba;i\X-GNOME-Settings-Panel=unitytweak' -e '}' \
 			-i unity-tweak-tool.desktop.in || die
+
+	# Include /usr/share/cursors/xorg-x11/ in the paths to check for cursor themes as Gentoo #
+	#  installs cursor themes in both /usr/share/cursors/xorg-x11/ and /usr/share/icons/ #
+	epatch -p1 "${FILESDIR}/xorg-cursor-themes-path.diff"
 }
 
 src_compile() {
 	## Sandbox violations caused when dev-python/python-distutils-extra's build system tries to start an Xsession and fails but as part ##
 	##  of that also tries to start /usr/libexec/dconf-service if it's not already running which causes dconf sandbox violations ##
-		addpredict /run/user/$USER_ID/dconf
 		addpredict $XDG_RUNTIME_DIR/dconf
 		distutils-r1_src_compile
+}
+
+src_install() {
+	distutils-r1_src_install
+
+	exeinto /etc/X11/xinit/xinitrc.d
+	doexe "${FILESDIR}/99-xcursor-theme"
 }
 
 pkg_preinst() {
