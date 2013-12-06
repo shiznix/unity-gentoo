@@ -7,8 +7,8 @@ EAPI=5
 inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="saucy"
-UVER_PREFIX="+13.10.20131011"
+URELEASE="trusty"
+UVER_PREFIX="+14.04.20131029.1"
 
 DESCRIPTION="System sound indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-sound"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -36,6 +36,10 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	vala_src_prepare
+
+# Make "Sound Settings" open gnome-control-center sound settings #
+	sed -e 's:sound-nua:sound:g' \
+		-i src/service.vala
 }
 
 src_configure() {
