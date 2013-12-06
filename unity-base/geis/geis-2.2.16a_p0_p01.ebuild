@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{3_2,3_3} )
 inherit autotools eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="saucy"
+URELEASE="trusty"
 UVER_PREFIX="+13.10.20130919.4"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"
@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -27,14 +27,28 @@ DEPEND="unity-base/grail
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	python_export_best
-	local python_best_ver=${EPYTHON/python}
-	sed -e "s:python3:python-${python_best_ver}:" \
-		-i configure.ac || die
 	eautoreconf
 }
 
+src_configure() {
+	python_copy_sources
+	configuration() {
+		econf || die
+	}
+	python_foreach_impl run_in_build_dir configuration
+}
+
+src_compile() {
+	compilation() {
+		emake || die
+	}
+	python_foreach_impl run_in_build_dir compilation
+}
+
 src_install() {
-	emake DESTDIR="${D}" install
+	installation() {
+		emake DESTDIR="${D}" install
+	}
+	python_foreach_impl run_in_build_dir installation
 	prune_libtool_files --modules
 }

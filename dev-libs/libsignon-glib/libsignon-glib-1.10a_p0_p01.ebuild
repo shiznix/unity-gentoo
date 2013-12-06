@@ -42,18 +42,28 @@ src_prepare() {
 	vala_src_prepare
 	eautoreconf
 }
-
+ 
 src_configure() {
-	econf $(use_enable debug) || die
+	python_copy_sources
+	configuration() {
+		econf \
+			$(use_enable debug) || die
+	}
+	python_foreach_impl run_in_build_dir configuration
 }
-
+ 
 src_compile() {
-	emake || die
+	compilation() {
+		emake || die
+	}
+	python_foreach_impl run_in_build_dir compilation
 }
-
+ 
 src_install() {
-	rm -rf "${D}usr/doc"
-	
-	emake DESTDIR="${ED}" install
+	installation() {
+		rm -rf "${D}usr/doc"
+		emake DESTDIR="${ED}" install
+	}
+	python_foreach_impl run_in_build_dir installation
 	prune_libtool_files --modules
 }
