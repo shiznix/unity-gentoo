@@ -19,9 +19,7 @@ LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE="+nautilus"
-RESTRICT="mirror"
-
-RESTRICT="test"
+RESTRICT="mirror test"
 
 COMMON_DEPEND="
 	app-crypt/libsecret[vala]

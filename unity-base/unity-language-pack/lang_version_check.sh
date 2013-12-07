@@ -16,7 +16,7 @@ version_check() {
 	else
 		echo
 		echo "  Local version: ${_name}-${local_version}  ::  ${URELEASE}"
-		echo -e "  Upstream version: \033[5m\033[1;31m${_name}-${upstream_version}\033[0m  ::  ${URELEASE}"
+		echo -e "  Upstream version: \033[1;31m${_name}-${upstream_version}\033[0m  ::  ${URELEASE}"
 	fi
 
 	if [ "${bump}" = "1" ]; then

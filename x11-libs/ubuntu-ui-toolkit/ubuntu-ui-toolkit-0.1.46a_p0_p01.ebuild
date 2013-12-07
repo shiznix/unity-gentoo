@@ -6,9 +6,9 @@ EAPI=5
 
 inherit base gnome2-utils qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/u/${PN}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20131011.2"
+UVER_PREFIX="+14.04.20131129"
 
 DESCRIPTION="Qt Components for the Unity desktop - QML plugin"
 HOMEPAGE="https://launchpad.net/ubuntu-ui-toolkit"

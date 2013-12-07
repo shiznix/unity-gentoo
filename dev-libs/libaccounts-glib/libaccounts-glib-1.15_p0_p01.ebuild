@@ -9,7 +9,7 @@ inherit autotools flag-o-matic python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/liba/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20131016.2"
+UVER_PREFIX="+14.04.20131126.2"
 
 DESCRIPTION="Library for single signon for the Unity desktop"
 HOMEPAGE="http://code.google.com/p/accounts-sso/"

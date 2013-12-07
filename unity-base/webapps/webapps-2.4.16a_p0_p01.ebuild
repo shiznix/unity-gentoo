@@ -36,9 +36,9 @@ setvar cnn-news			2.4.16+13.10.20130924.2	0ubuntu1
 setvar cuttherope		2.2
 setvar deezer			2.4.16+13.10.20130924.2	0ubuntu1
 setvar deviantart		2.4.16+13.10.20130926.1	0ubuntu1
-setvar facebookmessenger	2.4.16+13.10.20130924.2	0ubuntu1
-setvar gmail			2.4.16+13.10.20131016.2	0ubuntu1
-setvar googlecalendar		2.4.16+13.10.20130924.2	0ubuntu1
+setvar facebookmessenger	2.4.16+14.04.20131108.1	0ubuntu1
+setvar gmail			2.4.16+14.04.20131108.2	0ubuntu1
+setvar googlecalendar		2.4.16+14.04.20131108.2	0ubuntu1
 setvar googledocs		2.4.16+13.10.20130924.2	0ubuntu1
 setvar googlenews		2.4.16+13.10.20130924.2	0ubuntu1
 setvar googleplus		2.4.17+13.10.20130924.2	0ubuntu1

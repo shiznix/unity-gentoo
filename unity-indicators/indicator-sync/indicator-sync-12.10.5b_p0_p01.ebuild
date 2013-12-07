@@ -10,7 +10,7 @@ inherit autotools gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20131011"
+UVER_PREFIX="+14.04.20131125"
 
 DESCRIPTION="Indicator for synchronisation processes status used by the Unity desktop"
 HOMEPAGE="http://launchpad.net/indicator-sync"

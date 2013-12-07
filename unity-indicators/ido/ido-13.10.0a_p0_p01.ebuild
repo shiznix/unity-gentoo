@@ -10,7 +10,7 @@ inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131106"
+UVER_PREFIX="+14.04.20131127"
 
 DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"
 HOMEPAGE="https://launchpad.net/ido"

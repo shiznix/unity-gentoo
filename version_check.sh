@@ -61,11 +61,12 @@ local_version_check() {
 	URELEASE=`grep URELEASE= ${pack} | awk -F\" '{print $2}'`
 	if [ -n "${URELEASE}" ]; then
 		if [ -n "${UVER}" ]; then
+			packbasename=`echo "${packbasename}" | sed -e 's:[a-z]$::'`	# Strip off trailing letter suffixes from ${PV}
 			current=`echo "${packbasename}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}"`
 		else
 			current=`echo "${packbasename}" | \
 				sed -e 's:-r[0-9].*$::g' \
-					-e 's:[a-z]$::'`
+					-e 's:[a-z]$::'`	# Strip off trailing letter and revision suffixes from ${PV}
 		fi
 	fi
 	packbasename="${packbasename_saved}"
@@ -88,10 +89,10 @@ upstream_version_check() {
 			fi
 
 			if [ -z "${upstream_version}" ]; then
-				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g'`
+				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
 				if [ -z "${upstream_version_scraped}" ]; then
 					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
-					upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g'`
+					upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
 				else
 					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
 				fi
@@ -120,7 +121,7 @@ version_compare() {
 	else
 		if [ -n "${upstream_version}" ]; then
 			echo "  Local version: ${current}  ::  ${URELEASE}"
-			echo -e "  Upstream version: \033[5m\033[1;31m${packname}-${upstream_version}\033[0m  ::  ${URELEASE}"
+			echo -e "  Upstream version: \033[1;31m${packname}-${upstream_version}\033[0m  ::  ${URELEASE}"
 		fi
 	fi
 }

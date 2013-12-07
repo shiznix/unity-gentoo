@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/gdbus-codegen/gdbus-codegen-2.36.4.ebuild,v 1.1 2013/08/16 10:42:57 tetromino Exp $
 
 EAPI="5"
 GNOME_ORG_MODULE="glib"
@@ -9,7 +9,7 @@ PYTHON_REQ_USE="xml"
 
 inherit eutils gnome.org distutils-r1
 
-URELEASE="saucy-updates"
+URELEASE="trusty"
 UVER=
 
 DESCRIPTION="GDBus code and documentation generator"

@@ -1,9 +1,8 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-misc/lightdm-kde/lightdm-kde-0.3.1.ebuild,v 1.6 2013/05/09 15:48:07 maekke Exp $
+# $Header: $
 
 EAPI=5
-
 
 KDE_MINIMAL="4.8"
 KDE_SCM="git"
@@ -11,7 +10,7 @@ EGIT_REPONAME="${PN/-kde/}"
 KDE_LINGUAS="cs da de el es et fi fr ga hu it ja km lt nds nl pl pt pt_BR ro sk sv uk"
 inherit kde4-base ubuntu-versionator
 
-UURL="https://launchpad.net/ubuntu/saucy/+source/${PN}/${PV}-${UVER}/+files"
+UURL="mirror://ubuntu/pool/universe/l/${PN}"
 URELEASE="trusty"
 
 DESCRIPTION="LightDM KDE greeter patched for unity desktop"
