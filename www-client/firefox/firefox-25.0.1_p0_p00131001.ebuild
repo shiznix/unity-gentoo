@@ -39,7 +39,7 @@ inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconf
 
 URELEASE="saucy-updates"
 UVER_PREFIX="+build1"
-UURL="https://launchpad.net/ubuntu/${URELEASE}/+source/${PN}/${PV}${UVER_PREFIX}-${UVER}/+files"
+UURL="mirror://ubuntu/pool/main/f/${PN}"
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
