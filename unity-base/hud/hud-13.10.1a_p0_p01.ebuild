@@ -7,7 +7,7 @@ GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
-inherit cmake-utils distutils-r1 flag-o-matic ubuntu-versionator vala
+inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
 URELEASE="trusty"
@@ -47,7 +47,14 @@ src_prepare() {
 
 	# Stop cmake doing the job of distutils #
 	sed -e '/add_subdirectory(hudkeywords)/d' \
-		-i tools/CMakeLists.txt	
+		-i tools/CMakeLists.txt
+
+	# Window-stack-bridge service must be running for hud-service to return search results #
+        # Window-stack-bridge service must be running for hud-service to return search results #
+	sed -e '/@pkglibexecdir@\/hud-service/i \
+			trap "kill 0" SIGINT SIGTERM EXIT \
+			@pkglibexecdir@\/window-stack-bridge &' \
+				-i data/dbus-activation-hack.sh.in || die
 }
 
 src_configure() {
@@ -77,3 +84,16 @@ src_install() {
 	# /usr/libexec/hud/hud-service is started by dbus anyway, so only needed for lack of dbus support in upstart #
 	rm -rf "${ED}usr/share/upstart"
 }
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
+}
+
