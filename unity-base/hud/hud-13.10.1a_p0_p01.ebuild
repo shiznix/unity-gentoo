@@ -50,11 +50,10 @@ src_prepare() {
 		-i tools/CMakeLists.txt
 
 	# Window-stack-bridge service must be running for hud-service to return search results #
-        # Window-stack-bridge service must be running for hud-service to return search results #
-	sed -e '/@pkglibexecdir@\/hud-service/i \
-			trap "kill 0" SIGINT SIGTERM EXIT \
-			@pkglibexecdir@\/window-stack-bridge &' \
-				-i data/dbus-activation-hack.sh.in || die
+	sed -e "/@pkglibexecdir@\/hud-service/i \
+		trap 'kill $\(jobs -pr\)' SIGINT SIGTERM EXIT\n \
+		@pkglibexecdir@\/window-stack-bridge &" \
+			-i data/dbus-activation-hack.sh.in || die
 }
 
 src_configure() {
