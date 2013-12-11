@@ -33,7 +33,7 @@ DEPEND="socialweb? ( net-libs/libsocialweb )
 	dev-libs/libxml2:2
 	dev-libs/libxslt
 	>=dev-util/intltool-0.40.1
-	<sys-devel/gettext-0.18.3
+	sys-devel/gettext
 	virtual/pkgconfig"
 
 PATCHES=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
