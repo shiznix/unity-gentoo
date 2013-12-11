@@ -21,7 +21,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-RDEPEND="x11-base/xorg-server[mir]"
+RDEPEND="dev-libs/boost:=
+	x11-base/xorg-server[mir]"
 DEPEND="${RDEPEND}
 	dev-libs/boost
 	dev-libs/protobuf

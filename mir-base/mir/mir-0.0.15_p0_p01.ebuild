@@ -21,6 +21,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
+RDEPEND="dev-libs/boost:="
 DEPEND="dev-cpp/gflags
 	dev-cpp/glog
 	dev-libs/boost
