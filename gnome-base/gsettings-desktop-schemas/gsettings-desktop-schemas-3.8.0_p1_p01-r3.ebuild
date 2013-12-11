@@ -28,6 +28,7 @@ RDEPEND="
 	>=x11-themes/gnome-backgrounds-3.8.1
 	x11-themes/gtk-engines-unico
 	x11-themes/ubuntu-themes
+	x11-themes/ubuntu-wallpapers
 "
 DEPEND="${RDEPEND}
 	sys-devel/gettext
@@ -51,6 +52,10 @@ src_prepare() {
 	# Set Ubuntu-mono-dark as the default icon theme #
 	sed -e "s:'gnome':'ubuntu-mono-dark':" \
 		-i schemas/org.gnome.desktop.interface.gschema.xml.in.in
+
+	# Set default Ubuntu release backgrounds #
+	sed -e "s:themes/Adwaita/backgrounds/adwaita-timed.xml:backgrounds/contest/saucy.xml:" \
+		-i schemas/org.gnome.desktop.background.gschema.xml.in.in
 
 }
 
