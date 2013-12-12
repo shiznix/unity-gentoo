@@ -16,7 +16,7 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
-URELEASE="saucy-updates"
+URELEASE="trusty"
 UVER_SUFFIX="~20131204.1"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
@@ -27,7 +27,7 @@ SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~x86"
+#KEYWORDS="~amd64 ~arm ~x86"
 IUSE="bindist cups gnome gnome-keyring gps kerberos neon pulseaudio selinux system-sqlite tcmalloc"
 RESTRICT="mirror"
 
