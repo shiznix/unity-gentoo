@@ -41,7 +41,6 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	PATCHES+=( "${FILESDIR}/nautilus_show_desktop_icons.diff" )
-
         base_src_prepare
 	gnome2_src_prepare
 
@@ -57,6 +56,9 @@ src_prepare() {
 	sed -e "s:themes/Adwaita/backgrounds/adwaita-timed.xml:backgrounds/contest/saucy.xml:" \
 		-i schemas/org.gnome.desktop.background.gschema.xml.in.in
 
+	# Set window controls buttons on the left side of the titlebar by default as in native Unity #
+	sed -s "s:\:minimize,maximize,close:close,minimize,maximize\::" \
+		-i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in
 }
 
 src_configure() {
