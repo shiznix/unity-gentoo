@@ -1,0 +1,13 @@
+--- third_party/WebKit/Source/core/core.gypi.orig	2013-09-27 18:25:24.634284363 +0000
++++ third_party/WebKit/Source/core/core.gypi	2013-09-27 18:25:48.614432099 +0000
+@@ -3863,10 +3863,6 @@
+             'tests/TreeTestHelpers.h',
+         ],
+         'scripts_for_in_files': [
+-            # jinja2/__init__.py contains version string, so sufficient as
+-            # dependency for whole jinja2 package
+-            '<(DEPTH)/third_party/jinja2/__init__.py',
+-            '<(DEPTH)/third_party/markupsafe/__init__.py',  # jinja2 dep
+             'scripts/in_file.py',
+             'scripts/in_generator.py',
+             'scripts/license.py',
