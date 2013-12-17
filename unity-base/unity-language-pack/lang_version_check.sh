@@ -1,12 +1,12 @@
 #!/bin/sh
 
 version_check() {
-	if [ ! -f /tmp/Sources-${URELEASE} ]; then
+	if [ ! -f /tmp/Sources-main-${URELEASE} ]; then
 		echo
-		wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/main/source/Sources.bz2 -O /tmp/Sources-${URELEASE}.bz2
-		bunzip2 /tmp/Sources-${URELEASE}.bz2
+		wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/main/source/Sources.bz2 -O /tmp/Sources-main-${URELEASE}.bz2
+		bunzip2 /tmp/Sources-main-${URELEASE}.bz2
 	fi
-	upstream_version=`grep -A2 "Package: ${_name}$" /tmp/Sources-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+	upstream_version=`grep -A2 "Package: ${_name}$" /tmp/Sources-main-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 
 	if [ "${local_version}" = "${upstream_version}" ]; then
 		[ -n "${CHANGES}" ] && return
@@ -47,12 +47,11 @@ if [ "${bump}" = "1" ]; then
 		local_version="${_ver}"
 		version_check
 	done
-	if [ "${bump}" = "1" ]; then
-		echo && echo " Versions bumped in ${ebuild}, don't forget to enable *all* LINGUAS in make.conf before creating Manifest digests"
-	fi
+	echo -e "\n Versions bumped in ${ebuild}, don't forget to enable *all* LINGUAS in make.conf before creating Manifest digests"
 else
 	for ebuild in *.ebuild; do
-		echo "Checking ${ebuild}"
+		echo -e "\nChecking ${ebuild}"
+		unset packages
 		source $(pwd)/${ebuild} 2> /dev/null
 		for i in ${packages[@]}; do
 			eval "_name=${i}; _ver=\${_ver_${i//-/_}}"

@@ -1,17 +1,12 @@
 #!/bin/sh
 
 version_check() {
-	if [ ! -f /tmp/Sources-${URELEASE} ]; then
+	if [ ! -f /tmp/Sources-universe-${URELEASE} ]; then
 		echo
-		wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/main/source/Sources.bz2 -O /tmp/Sources-${URELEASE}.bz2
-		bunzip2 /tmp/Sources-${URELEASE}.bz2
+		wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/universe/source/Sources.bz2 -O /tmp/Sources-universe-${URELEASE}.bz2
+		bunzip2 /tmp/Sources-universe-${URELEASE}.bz2
 	fi
-	upstream_version=`grep -A2 "Package: unity-webapps-${_name}$" /tmp/Sources-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-
-	if [ -z "${upstream_version}" ]; then
-		upstream_version=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/unity-webapps-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/\1/p" | sed "s/).*//g" | sed 's/1://g'`
-		[ -z ${upstream_version} ] && upstream_version=`wget -q "http://packages.ubuntu.com/${URELEASE}/unity-webapps-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/\1/p" | sed "s/).*//g" | sed 's/1://g'`
-	fi
+	upstream_version=`grep -A2 "Package: unity-webapps-${_name}$" /tmp/Sources-universe-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 
 	if [ "${local_version}" = "${upstream_version}" ]; then
 		[ -n "${CHANGES}" ] && return
@@ -59,7 +54,8 @@ if [ "${bump}" = "1" ]; then
 	done
 else
 	for ebuild in $(grep packages *.ebuild | awk -F: '{print $1}' | uniq); do
-		echo "Checking ${ebuild}"
+		echo -e "\nChecking ${ebuild}"
+		unset packages
 		source $(pwd)/${ebuild} 2> /dev/null
 		for i in ${packages[@]}; do
 			unset _rel
@@ -73,4 +69,3 @@ else
 		done
 	done
 fi
-

@@ -79,24 +79,17 @@ upstream_version_check() {
 			## Try version lookup from the Sources.bz2 tarball first as this is faster, but fallback to web scrape request when it fails ##
 			##  Don't use tarball method if script is run as ./version_check.sh <pathto>/something-1.2.ebuild ##
 			if [ -n "${nopack}" ]; then
-				if [ ! -f /tmp/Sources-$1 ]; then
-					echo
-					wget http://archive.ubuntu.com/ubuntu/dists/$1/main/source/Sources.bz2 -O /tmp/Sources-$1.bz2
-					bunzip2 /tmp/Sources-$1.bz2
-				fi
-				upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+				for source in {main,universe}; do
+					if [ ! -f /tmp/Sources-${source}-$1 ]; then
+						echo
+						wget http://archive.ubuntu.com/ubuntu/dists/$1/${source}/source/Sources.bz2 -O /tmp/Sources-${source}-$1.bz2
+						bunzip2 /tmp/Sources-${source}-$1.bz2
+					fi
+				done
+				upstream_version=
+				upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-main-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+				[[ -z "${upstream_version}" ]] && upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-universe-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 				[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && echo -e "\nChecking ${packname}  ::  $1"
-			fi
-
-			if [ -z "${upstream_version}" ]; then
-				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
-				if [ -z "${upstream_version_scraped}" ]; then
-					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
-					upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
-				else
-					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
-				fi
-				upstream_version=`echo "${upstream_version_scraped}" | sed "s/^\${packname}-//" | sed 's/[0-9]://g'`
 			fi
 		fi
 }

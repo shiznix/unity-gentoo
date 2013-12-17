@@ -1,17 +1,16 @@
 #!/bin/sh
 
 version_check() {
-	if [ ! -f /tmp/Sources-${URELEASE} ]; then
-		echo
-		wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/main/source/Sources.bz2 -O /tmp/Sources-${URELEASE}.bz2
-		bunzip2 /tmp/Sources-${URELEASE}.bz2
-	fi
-	upstream_version=`grep -A2 "Package: unity-scope-${_name}$" /tmp/Sources-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
- 
-	if [ -z "${upstream_version}" ]; then
-		upstream_version=`wget -q "http://packages.ubuntu.com/${URELEASE}/source/unity-scope-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/\1/p" | sed "s/).*//g" | sed 's/1://g'`
-		[ -z ${upstream_version} ] && upstream_version=`wget -q "http://packages.ubuntu.com/${URELEASE}/unity-scope-${_name}" -O - | sed -n "s/.*${_name} (\(.*\)).*/\1/p" | sed "s/).*//g" | sed 's/1://g'`
-	fi
+	for source in {main,universe}; do
+		if [ ! -f /tmp/Sources-${source}-${URELEASE} ]; then
+			echo
+			wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/${source}/source/Sources.bz2 -O /tmp/Sources-${source}-${URELEASE}.bz2
+			bunzip2 /tmp/Sources-${source}-${URELEASE}.bz2
+		fi
+	done
+	upstream_version=
+	upstream_version=`grep -A2 "Package: unity-scope-${_name}$" /tmp/Sources-main-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+	[[ -z "${upstream_version}" ]] && upstream_version=`grep -A2 "Package: unity-scope-${_name}$" /tmp/Sources-universe-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 
 	if [ "${local_version}" = "${upstream_version}" ]; then
 		[ -n "${CHANGES}" ] && return
@@ -21,7 +20,7 @@ version_check() {
 	else
 		echo
 		echo "  Local version: unity-scope-${_name}-${local_version}  ::  ${URELEASE}"
-		echo -e "  Upstream version: \033[5m\033[1;31munity-scope-${_name}-${upstream_version}\033[0m  ::  ${URELEASE}"
+		echo -e "  Upstream version: \033[1;31munity-scope-${_name}-${upstream_version}\033[0m  ::  ${URELEASE}"
 	fi
 
 	if [ "${bump}" = "1" ]; then
@@ -60,7 +59,8 @@ if [ "${bump}" = "1" ]; then
         done
 else
 	for ebuild in *.ebuild; do
-		echo "Checking ${ebuild}"
+		echo -e "\nChecking ${ebuild}"
+		unset packages
 		source $(pwd)/${ebuild} 2> /dev/null
 		for i in ${packages[@]}; do
 			unset _rel
