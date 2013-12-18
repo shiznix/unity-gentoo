@@ -76,9 +76,7 @@ local_version_check() {
 upstream_version_check() {
 		upstream_version=
 		if [ -n "$1" ]; then
-			## Try version lookup from the Sources.bz2 tarball first as this is faster, but fallback to web scrape request when it fails ##
-			##  Don't use tarball method if script is run as ./version_check.sh <pathto>/something-1.2.ebuild ##
-			if [ -n "${nopack}" ]; then
+			if [ -n "${nopack}" ] || [ -n "${stream_release}" ]; then
 				for source in {main,universe}; do
 					if [ ! -f /tmp/Sources-${source}-$1 ]; then
 						echo
@@ -89,7 +87,18 @@ upstream_version_check() {
 				upstream_version=
 				upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-main-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 				[[ -z "${upstream_version}" ]] && upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-universe-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-				[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && echo -e "\nChecking ${packname}  ::  $1"
+				[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && [ -z "${checkmsg_supress}" ] && \
+					echo -e "\nChecking ${packname}  ::  $1"
+			else
+				##  Use webscrape request when script is run as ./version_check.sh <pathto>/something-1.2.ebuild ##
+				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
+				if [ -z "${upstream_version_scraped}" ]; then
+					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
+					upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
+				else
+					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
+				fi
+				upstream_version=`echo "${upstream_version_scraped}" | sed "s/^\${packname}-//" | sed 's/[0-9]://g'`
 			fi
 		fi
 }
@@ -124,6 +133,15 @@ version_check_other_releases() {
 	ALL_RELEASES_TO_CHECK="saucy saucy-updates trusty"
 	if [ -n "${stream_release}" ]; then
 		if [ "${stream_release}" = all ]; then
+			for release in ${ALL_RELEASES_TO_CHECK}; do
+				for source in {main,universe}; do
+					if [ ! -f /tmp/Sources-${source}-${release} ]; then
+						echo
+						wget http://archive.ubuntu.com/ubuntu/dists/${release}/${source}/source/Sources.bz2 -O /tmp/Sources-${source}-${release}.bz2
+						bunzip2 /tmp/Sources-${source}-${release}.bz2
+					fi
+				done
+			done
 			echo "Checking ${catpack}"
 			echo "  Local versions:"
 			for ebuild in `find $(pwd) -name "*.ebuild" | grep /"${catpack}"/`; do
@@ -140,8 +158,14 @@ version_check_other_releases() {
 			echo "  Upstream versions:"
 			local_to_upstream_packnames
 			for release in ${ALL_RELEASES_TO_CHECK}; do
+				checkmsg_supress=1
 				upstream_version_check ${release}
-				echo "    ${upstream_version_scraped}  ::  ${release}"
+				checkmsg_supress=
+				if [ -n "${upstream_version}" ]; then
+					echo "    ${packname}-${upstream_version}  ::  ${release}"
+				else
+					echo "    	(none available)	::  ${release}"
+				fi
 			done
 			current=
 			upstream_version_scraped=
@@ -244,4 +268,4 @@ else
 fi
 
 # Tidy up #
-rm /tmp/Sources-* 2> /dev/null
+#rm /tmp/Sources-* 2> /dev/null
