@@ -36,6 +36,20 @@ local_to_upstream_packnames() {
 	fi
 }
 
+RELEASES="saucy saucy-updates trusty"
+SOURCES="main universe"
+
+sources_download() {
+	for get_release in ${RELEASES}; do
+		for source in ${SOURCES}; do
+			if [ ! -f /tmp/Sources-${source}-${get_release} ]; then
+				echo
+				wget http://archive.ubuntu.com/ubuntu/dists/${get_release}/${source}/source/Sources.bz2 -O /tmp/Sources-${source}-${get_release}.bz2
+				bunzip2 /tmp/Sources-${source}-${get_release}.bz2
+			fi
+		done
+	done
+}
 
 version_check() {
 	local_to_upstream_packnames
@@ -76,14 +90,8 @@ local_version_check() {
 upstream_version_check() {
 		upstream_version=
 		if [ -n "$1" ]; then
-			if [ -n "${nopack}" ] || [ -n "${stream_release}" ]; then
-				for source in {main,universe}; do
-					if [ ! -f /tmp/Sources-${source}-$1 ]; then
-						echo
-						wget http://archive.ubuntu.com/ubuntu/dists/$1/${source}/source/Sources.bz2 -O /tmp/Sources-${source}-$1.bz2
-						bunzip2 /tmp/Sources-${source}-$1.bz2
-					fi
-				done
+			if [ -z "${webscrape}" ]; then
+				sources_download
 				upstream_version=
 				upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-main-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 				[[ -z "${upstream_version}" ]] && upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-universe-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
@@ -130,18 +138,9 @@ version_compare() {
 
 
 version_check_other_releases() {
-	ALL_RELEASES_TO_CHECK="saucy saucy-updates trusty"
 	if [ -n "${stream_release}" ]; then
 		if [ "${stream_release}" = all ]; then
-			for release in ${ALL_RELEASES_TO_CHECK}; do
-				for source in {main,universe}; do
-					if [ ! -f /tmp/Sources-${source}-${release} ]; then
-						echo
-						wget http://archive.ubuntu.com/ubuntu/dists/${release}/${source}/source/Sources.bz2 -O /tmp/Sources-${source}-${release}.bz2
-						bunzip2 /tmp/Sources-${source}-${release}.bz2
-					fi
-				done
-			done
+			sources_download
 			echo "Checking ${catpack}"
 			echo "  Local versions:"
 			for ebuild in `find $(pwd) -name "*.ebuild" | grep /"${catpack}"/`; do
@@ -157,7 +156,7 @@ version_check_other_releases() {
 			done
 			echo "  Upstream versions:"
 			local_to_upstream_packnames
-			for release in ${ALL_RELEASES_TO_CHECK}; do
+			for release in ${RELEASES}; do
 				checkmsg_supress=1
 				upstream_version_check ${release}
 				checkmsg_supress=
@@ -225,16 +224,30 @@ while (( "$#" )); do
 	esac
 done
 
+# Look for /tmp/Sources-* files older than 24 hours #
+#  If found then delete them ready for fresh ones to be fetched #
+[[ -n $(find /tmp -type f -ctime 1 | grep Sources-) ]] && rm /tmp/Sources-* 2> /dev/null
+
+# Detect if we are running script from within an ebuild directory #
+#  If so then use webscrape method as is more efficient for small queries #
+[[ -z $(find . -name $(basename "$0")) ]] && webscrape=1
+
 if [ "${stream_release}" = "all" ]; then
 	for catpack in `find $(pwd) -name "*.ebuild" | awk -F/ '{print ( $(NF-2) )"/"( $(NF-1) )}' | sort -du | grep -Ev "eclass|metadata|profiles"`; do
 		packname=`echo ${catpack} | awk -F/ '{print $2}'`
 		version_check
 	done
-elif [ -n "${pack}" ]; then
+elif [ -n "${pack}" ]; then	# Use webscrape method when run against singular ebuild files
 	packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
+	webscrape=1
 	version_check
 else
+	for pack in `find $(pwd) -name "*.ebuild"`; do
+		packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
+		packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
+		version_check
+	done
 	if [ -z "${stream_release}" ]; then
 		## Check versions in meta type ebuilds that install from multiple sources ##
 		if [ -d "$(pwd)/unity-base/unity-language-pack" ]; then
@@ -259,13 +272,4 @@ else
 			popd
 		fi
 	fi
-	nopack=1
-	for pack in `find $(pwd) -name "*.ebuild"`; do
-		packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
-		packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
-		version_check
-	done
 fi
-
-# Tidy up #
-#rm /tmp/Sources-* 2> /dev/null
