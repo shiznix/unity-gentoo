@@ -13,7 +13,7 @@ MY_P="${MY_PN}_${PV}"
 S="${WORKDIR}/${MY_PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/n/${MY_PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 MY_P="${MY_P/applet-/applet_}"
 
 DESCRIPTION="GNOME applet for NetworkManager patched for the Unity desktop"
