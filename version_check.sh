@@ -88,27 +88,27 @@ local_version_check() {
 
 
 upstream_version_check() {
-		upstream_version=
-		if [ -n "$1" ]; then
-			if [ -z "${webscrape}" ]; then
-				sources_download
-				upstream_version=
-				upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-main-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-				[[ -z "${upstream_version}" ]] && upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-universe-$1 | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-				[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && [ -z "${checkmsg_supress}" ] && \
-					echo -e "\nChecking ${packname}  ::  $1"
+	upstream_version=
+	if [ -n "$1" ]; then
+		if [ -z "${webscrape}" ]; then
+			sources_download
+			upstream_version=
+			upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+			[[ -z "${upstream_version}" ]] && upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+			[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && [ -z "${checkmsg_supress}" ] && \
+				echo -e "\nChecking ${packname}  ::  $1"
+		else
+			##  Use webscrape request when script is run as ./version_check.sh <pathto>/something-1.2.ebuild ##
+			upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
+			if [ -z "${upstream_version_scraped}" ]; then
+				[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
+				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
 			else
-				##  Use webscrape request when script is run as ./version_check.sh <pathto>/something-1.2.ebuild ##
-				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
-				if [ -z "${upstream_version_scraped}" ]; then
-					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
-					upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
-				else
-					[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
-				fi
-				upstream_version=`echo "${upstream_version_scraped}" | sed "s/^\${packname}-//" | sed 's/[0-9]://g'`
+				[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
 			fi
+			upstream_version=`echo "${upstream_version_scraped}" | sed "s/^\${packname}-//" | sed 's/[0-9]://g'`
 		fi
+	fi
 }
 
 
@@ -143,29 +143,41 @@ version_check_other_releases() {
 			sources_download
 			echo "Checking ${catpack}"
 			echo "  Local versions:"
-			for ebuild in `find $(pwd) -name "*.ebuild" | grep /"${catpack}"/`; do
+			for ebuild in $(find $(pwd) -name "*.ebuild" | grep /"${catpack}"/); do
 				pack="${ebuild}"
-				packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
-				packname=`echo ${catpack} | awk -F/ '{print $2}'`
+				packbasename=$(basename ${pack} | awk -F.ebuild '{print $1}')
+				packname=$(echo ${catpack} | awk -F/ '{print $2}')
 				local_version_check
 				if [ -z "${current}" ]; then
 					echo "    ${packbasename}"
 				else
-					echo "    ${current}  :: ${URELEASE}"
+					local_versions+=( "	${current}  :: ${URELEASE}" )
 				fi
 			done
+			local_versions_output=$(IFS=$'\n'; echo "${local_versions[*]}" | sort -k3)
+			echo "${local_versions_output}"
+			unset local_versions
+
 			echo "  Upstream versions:"
-			local_to_upstream_packnames
 			for release in ${RELEASES}; do
-				checkmsg_supress=1
-				upstream_version_check ${release}
-				checkmsg_supress=
-				if [ -n "${upstream_version}" ]; then
-					echo "    ${packname}-${upstream_version}  ::  ${release}"
-				else
-					echo "    	(none available)	::  ${release}"
-				fi
+				for ebuild in $(find $(pwd) -name "*.ebuild" | grep /"${catpack}"/ | sort); do
+					pack="${ebuild}"
+					packbasename=$(basename ${pack} | awk -F.ebuild '{print $1}')
+					packname=$(echo ${catpack} | awk -F/ '{print $2}')
+					local_to_upstream_packnames
+					checkmsg_supress=1
+					upstream_version_check ${release}
+					checkmsg_supress=
+					if [ -n "${upstream_version}" ]; then
+						upstream_versions+=( "	${packname}-${upstream_version}  ::  ${release}" )
+					else
+						upstream_versions+=( "  		(none available)  ::  ${release}" )
+					fi
+				done
 			done
+			upstream_versions_output=$(IFS=$'\n'; echo "${upstream_versions[*]}" | sort -k3 | uniq)
+			echo "${upstream_versions_output}"
+			unset upstream_versions
 			current=
 			upstream_version_scraped=
 			echo
@@ -180,6 +192,7 @@ version_check_other_releases() {
 		fi
 	fi
 }
+
 
 uver() {
 	PVR=`echo "${packbasename}" | awk -F_p '{print "_p"$(NF-1)"_p"$NF }'`
@@ -227,10 +240,6 @@ done
 # Look for /tmp/Sources-* files older than 24 hours #
 #  If found then delete them ready for fresh ones to be fetched #
 [[ -n $(find /tmp -type f -ctime 1 | grep Sources-) ]] && rm /tmp/Sources-* 2> /dev/null
-
-# Detect if we are running script from within an ebuild directory #
-#  If so then use webscrape method as is more efficient for small queries #
-[[ -z $(find . -name $(basename "$0")) ]] && webscrape=1
 
 if [ "${stream_release}" = "all" ]; then
 	for catpack in `find $(pwd) -name "*.ebuild" | awk -F/ '{print ( $(NF-2) )"/"( $(NF-1) )}' | sort -du | grep -Ev "eclass|metadata|profiles"`; do
