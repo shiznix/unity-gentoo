@@ -40,6 +40,9 @@ RELEASES="saucy saucy-updates trusty"
 SOURCES="main universe"
 
 sources_download() {
+	# Look for /tmp/Sources-* files older than 24 hours #
+	#  If found then delete them ready for fresh ones to be fetched #
+	[[ -n $(find /tmp -type f -ctime 1 | grep Sources-) ]] && rm /tmp/Sources-* 2> /dev/null
 	for get_release in ${RELEASES}; do
 		for source in ${SOURCES}; do
 			if [ ! -f /tmp/Sources-${source}-${get_release} ]; then
@@ -90,24 +93,12 @@ local_version_check() {
 upstream_version_check() {
 	upstream_version=
 	if [ -n "$1" ]; then
-		if [ -z "${webscrape}" ]; then
-			sources_download
-			upstream_version=
-			upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-			[[ -z "${upstream_version}" ]] && upstream_version=`grep -A2 "Package: ${packname}$" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-			[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && [ -z "${checkmsg_supress}" ] && \
-				echo -e "\nChecking ${packname}  ::  $1"
-		else
-			##  Use webscrape request when script is run as ./version_check.sh <pathto>/something-1.2.ebuild ##
-			upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/source/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
-			if [ -z "${upstream_version_scraped}" ]; then
-				[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/${packname}"
-				upstream_version_scraped=`wget -q "http://packages.ubuntu.com/$1/${packname}" -O - | sed -n "s/.*${packname} (\(.*\)).*/${packname}-\1/p" | sed "s/).*//g" | sed 's/1://g' | head -n1`
-			else
-				[ "${stream_release}" != all ] && [ -z "${CHANGES}" ] && echo -e "\nChecking http://packages.ubuntu.com/$1/source/${packname}"
-			fi
-			upstream_version=`echo "${upstream_version_scraped}" | sed "s/^\${packname}-//" | sed 's/[0-9]://g'`
-		fi
+		sources_download
+		upstream_version=
+		upstream_version=`grep -A4 "Package: ${packname}$" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A4 "Package: ${packname}$" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+		[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && [ -z "${checkmsg_supress}" ] && \
+			echo -e "\nChecking ${packname}  ::  $1"
 	fi
 }
 
@@ -237,19 +228,14 @@ while (( "$#" )); do
 	esac
 done
 
-# Look for /tmp/Sources-* files older than 24 hours #
-#  If found then delete them ready for fresh ones to be fetched #
-[[ -n $(find /tmp -type f -ctime 1 | grep Sources-) ]] && rm /tmp/Sources-* 2> /dev/null
-
 if [ "${stream_release}" = "all" ]; then
 	for catpack in `find $(pwd) -name "*.ebuild" | awk -F/ '{print ( $(NF-2) )"/"( $(NF-1) )}' | sort -du | grep -Ev "eclass|metadata|profiles"`; do
 		packname=`echo ${catpack} | awk -F/ '{print $2}'`
 		version_check
 	done
-elif [ -n "${pack}" ]; then	# Use webscrape method when run against singular ebuild files
+elif [ -n "${pack}" ]; then
 	packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
-	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
-	webscrape=1
+	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}' | sed 's:-[0-9].*::g'`
 	version_check
 else
 	for pack in `find $(pwd) -name "*.ebuild"`; do
