@@ -566,17 +566,14 @@ src_install() {
 			chromium-browser${CHROMIUM_SUFFIX}.png
 	done
 
-	local mime_types="text/html;text/xml;application/xhtml+xml;"
-	mime_types+="x-scheme-handler/http;x-scheme-handler/https;" # bug #360797
-	mime_types+="x-scheme-handler/ftp;" # bug #412185
-	mime_types+="x-scheme-handler/mailto;x-scheme-handler/webcal;" # bug #416393
-	make_desktop_entry \
-		chromium-browser${CHROMIUM_SUFFIX} \
-		"Chromium${CHROMIUM_SUFFIX}" \
-		chromium-browser${CHROMIUM_SUFFIX} \
-		"Network;WebBrowser" \
-		"MimeType=${mime_types}\nStartupWMClass=chromium-browser"
-	sed -e "/^Exec/s/$/ %U/" -i "${ED}"/usr/share/applications/*.desktop || die
+	# Custom Ubuntu *.desktop file contains Quicklist menu #
+	insinto /usr/share/applications
+	newins "${WORKDIR}/debian/chromium-browser.desktop" \
+			chromium-browser-chromium.desktop
+	sed \
+		-e "/^Exec/s/$/ %U/" \
+		-e "/^MimeType/s/$/x-scheme-handler\/ftp;x-scheme-handler\/mailto;x-scheme-handler\/webcal;/" \
+			-i "${ED}"/usr/share/applications/chromium-browser-chromium.desktop || die
 
 	# Install GNOME default application entry (bug #303100).
 	if use gnome; then
