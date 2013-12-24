@@ -2,3 +2,9 @@ sys-devel/gcc:4.8
 sys-libs/db:5.1
 x11-libs/libdrm
 x11-misc/lightdm::unity-gentoo
+
+# unmask own packages, because gentoo tree masks all packages >=1.38.0
+dev-libs/glib::unity-gentoo
+dev-libs/gobject-introspection::unity-gentoo
+dev-libs/gobject-introspection-common::unity-gentoo
+dev-util/gdbus-codegen::unity-gentoo
