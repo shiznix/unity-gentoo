@@ -10,7 +10,7 @@ inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131125"
+UVER_PREFIX="+14.04.20131217"
 
 DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"

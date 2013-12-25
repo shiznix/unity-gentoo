@@ -10,7 +10,7 @@ MY_PN="upstart-app-launch"
 MY_P="${MY_PN}_${PV}"
 UURL="mirror://ubuntu/pool/main/u/${MY_PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131126"
+UVER_PREFIX="+14.04.20131218"
 
 DESCRIPTION="An Upstart Job that is used to launch applications in a controlled and predictable manner"
 HOMEPAGE="https://launchpad.net/upstart-app-launch"
