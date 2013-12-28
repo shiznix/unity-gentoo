@@ -5,15 +5,16 @@
 EAPI=4
 PYTHON_DEPEND="2:2.7"
 
-inherit autotools eutils python ubuntu-versionator
+inherit autotools base eutils python ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/e/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="daily13.02.20"
+#UVER_PREFIX="daily13.02.20"
 
 DESCRIPTION="Event Emulation for the uTouch Stack"
 HOMEPAGE="https://launchpad.net/evemu"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -30,6 +31,11 @@ pkg_setup() {
 }
 
 src_prepare() {
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
+                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+        done
+
+	base_src_prepare
 	eautoreconf
 }
 
