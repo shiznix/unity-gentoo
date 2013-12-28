@@ -13,6 +13,6 @@ diff -Naur a/gio/gdbus-2.0/codegen/gdbus-codegen.in b/gio/gdbus-2.0/codegen/gdbu
 -
 -sys.path.insert(0, os.path.abspath(path))
 -from codegen import codegen_main
-+    from codegen import codegen_main
++    from gdbus_codegen import codegen_main
  
  sys.exit(codegen_main.codegen_main())
