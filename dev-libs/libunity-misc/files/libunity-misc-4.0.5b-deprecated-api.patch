@@ -1,0 +1,12 @@
+diff -Naur libunity-misc-4.0.5daily13.06.05_orig/unity-misc/Makefile.am libunity-misc-4.0.5daily13.06.05/unity-misc/Makefile.am
+--- libunity-misc-4.0.5daily13.06.05_orig/unity-misc/Makefile.am	2013-06-05 08:19:53.000000000 +0200
++++ libunity-misc-4.0.5daily13.06.05/unity-misc/Makefile.am	2013-12-29 16:35:59.258402735 +0100
+@@ -45,7 +45,7 @@
+   -DG_DISABLE_DEPRECATED \
+ 	$(GCC_FLAGS) \
+   $(UNITY_MISC_CFLAGS) \
+-  $(MAINTAINER_CFLAGS)
++  $(MAINTAINER_CFLAGS) -Wno-error=deprecated-declarations
+ 
+ ##
+ # Signal Marshallers
