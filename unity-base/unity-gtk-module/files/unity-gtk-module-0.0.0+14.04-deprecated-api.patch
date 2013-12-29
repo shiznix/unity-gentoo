@@ -1,0 +1,9 @@
+diff -Naur unity-gtk-module-0.0.0+14.04.20131125_orig/lib/Makefile.am unity-gtk-module-0.0.0+14.04.20131125/lib/Makefile.am
+--- unity-gtk-module-0.0.0+14.04.20131125_orig/lib/Makefile.am	2013-11-25 04:54:53.000000000 +0100
++++ unity-gtk-module-0.0.0+14.04.20131125/lib/Makefile.am	2013-12-29 23:41:28.463576903 +0100
+@@ -1,4 +1,4 @@
+-AM_CFLAGS = -Wall
++AM_CFLAGS = -Wall -Wno-error=deprecated-declarations
+ 
+ SOURCES = \
+ 	unity-gtk-menu-shell.h			\
