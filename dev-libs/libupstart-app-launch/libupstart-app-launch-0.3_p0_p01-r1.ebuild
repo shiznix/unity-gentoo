@@ -26,6 +26,8 @@ DEPEND="dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libzeitgeist
 	dev-libs/libupstart
+	dev-util/lttng-tools
+	dev-util/dbus-test-runner
 	sys-libs/libnih[dbus]"
 
 S="${WORKDIR}/${MY_PN}-${PV}${UVER_PREFIX}"
