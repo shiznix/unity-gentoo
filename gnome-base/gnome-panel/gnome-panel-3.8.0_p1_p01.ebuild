@@ -80,7 +80,8 @@ src_prepare() {
 #	epatch "${FILESDIR}/${P}-gweather-include.patch"
 
 	# Apply style after realize
-	epatch "${FILESDIR}/gnome-panel-3.6.2-fix-black.patch"
+# fixed in gnome 3.8
+#	epatch "${FILESDIR}/gnome-panel-3.6.2-fix-black.patch"
 
 	# Drop support for commandline-based calendar/tasks applications
 # series: git-build-with-gnome-desktop38-part3.patch
@@ -95,7 +96,8 @@ src_prepare() {
 #	epatch "${FILESDIR}/${P}-rename-function.patch"
 
 	# Use the generic marshaller
-	epatch "${FILESDIR}/gnome-panel-3.6.2-generic-marshaller.patch"
+# gnome 3.8 some files are missing to aplly the patch. Is it still needed?
+#	epatch "${FILESDIR}/gnome-panel-3.6.2-generic-marshaller.patch"
 
 	eautoreconf
 	gnome2_src_prepare
