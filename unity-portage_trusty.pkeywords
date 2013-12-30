@@ -206,6 +206,7 @@ sys-libs/tevent
 x11-base/xorg-drivers
 x11-drivers/xf86-video-dummy
 x11-libs/libwnck
+~x11-libs/libnotify-0.7.6
 x11-misc/appmenu-qt
 =x11-misc/colord-0.1*
 x11-misc/notify-osd
