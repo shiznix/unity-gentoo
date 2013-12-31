@@ -42,7 +42,7 @@ SOURCES="main universe"
 sources_download() {
 	# Look for /tmp/Sources-* files older than 24 hours #
 	#  If found then delete them ready for fresh ones to be fetched #
-	[[ -n $(find /tmp -type f -ctime 1 | grep Sources-) ]] && rm /tmp/Sources-* 2> /dev/null
+	[[ -n $(find /tmp -type f -ctime 1 2> /dev/null | grep Sources-) ]] && rm /tmp/Sources-* 2> /dev/null
 	for get_release in ${RELEASES}; do
 		for source in ${SOURCES}; do
 			if [ ! -f /tmp/Sources-${source}-${get_release} ]; then
@@ -134,7 +134,7 @@ version_check_other_releases() {
 			sources_download
 			echo "Checking ${catpack}"
 			echo "  Local versions:"
-			for ebuild in $(find $(pwd) -name "*.ebuild" | grep /"${catpack}"/); do
+			for ebuild in $(find $(pwd) -name "*.ebuild" 2> /dev/null | grep /"${catpack}"/); do
 				pack="${ebuild}"
 				packbasename=$(basename ${pack} | awk -F.ebuild '{print $1}')
 				packname=$(echo ${catpack} | awk -F/ '{print $2}')
@@ -147,11 +147,10 @@ version_check_other_releases() {
 			done
 			local_versions_output=$(IFS=$'\n'; echo "${local_versions[*]}" | sort -k3)
 			echo "${local_versions_output}"
-			unset local_versions
 
 			echo "  Upstream versions:"
 			for release in ${RELEASES}; do
-				for ebuild in $(find $(pwd) -name "*.ebuild" | grep /"${catpack}"/ | sort); do
+				for ebuild in $(find $(pwd) -name "*.ebuild" 2> /dev/null | grep /"${catpack}"/ | sort); do
 					pack="${ebuild}"
 					packbasename=$(basename ${pack} | awk -F.ebuild '{print $1}')
 					packname=$(echo ${catpack} | awk -F/ '{print $2}')
@@ -160,17 +159,38 @@ version_check_other_releases() {
 					upstream_version_check ${release}
 					checkmsg_supress=
 					if [ -n "${upstream_version}" ]; then
-						upstream_versions+=( "	${packname}-${upstream_version}  ::  ${release}" )
+						if [ -z "$(echo "${upstream_versions[@]}" | grep "${packname}-${upstream_version}")" ]; then
+							# Only add new release element if not already present
+							upstream_versions+=( "	${packname}-${upstream_version}  ::  ${release}" )
+						fi
 					else
-						upstream_versions+=( "  		(none available)  ::  ${release}" )
+						if [ -z "$(echo "${upstream_versions[@]}" | grep "${release}"$)" ]; then
+							upstream_versions+=( "		(none available)  ::  ${release}" )
+						fi
 					fi
 				done
 			done
 			upstream_versions_output=$(IFS=$'\n'; echo "${upstream_versions[*]}" | sort -k3 | uniq)
-			echo "${upstream_versions_output}"
+			index=0
+			while [ "$index" -lt ${#upstream_versions[@]} ]; do
+				upstream_versions_namespace_stripped=$(echo ${upstream_versions[$index]} | sed 's/.*-\(.*[0-9]-[0-9].*\)/\1/p' | sed 's/[ 	]//g')
+				local_versions_whitespace_stripped=$(echo ${local_versions[@]} | sed 's/[ 	]//g')
+
+				# Comparison is done on <version>::<release> pattern #
+				compare_versions_stripped=$(echo ${local_versions_whitespace_stripped} | grep "${upstream_versions_namespace_stripped}")
+				if [ -n "${compare_versions_stripped}" ] || [ -n "$(echo ${upstream_versions[$index]} | grep "none available")" ]; then
+					echo -e "${upstream_versions[$index]}"
+				else
+					echo -e "\033[1;31m${upstream_versions[$index]}\033[0m"
+				fi
+				((index++))
+			done
+
+			unset local_versions
 			unset upstream_versions
+			index=
 			current=
-			upstream_version_scraped=
+			release=
 			echo
 		else
 			if [ -z "`grep ${stream_release} ${pack} | grep URELEASE`" ]; then	# Skip over packages that don't contain the queried release #
@@ -229,7 +249,7 @@ while (( "$#" )); do
 done
 
 if [ "${stream_release}" = "all" ]; then
-	for catpack in `find $(pwd) -name "*.ebuild" | awk -F/ '{print ( $(NF-2) )"/"( $(NF-1) )}' | sort -du | grep -Ev "eclass|metadata|profiles"`; do
+	for catpack in `find $(pwd) -name "*.ebuild" | awk -F/ '{print ( $(NF-2) )"/"( $(NF-1) )}' 2> /dev/null | sort -du | grep -Ev "eclass|metadata|profiles"`; do
 		packname=`echo ${catpack} | awk -F/ '{print $2}'`
 		version_check
 	done
@@ -238,7 +258,7 @@ elif [ -n "${pack}" ]; then
 	packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}' | sed 's:-[0-9].*::g'`
 	version_check
 else
-	for pack in `find $(pwd) -name "*.ebuild"`; do
+	for pack in `find $(pwd) -name "*.ebuild" 2> /dev/null`; do
 		packbasename=`basename ${pack} | awk -F.ebuild '{print $1}'`
 		packname=`echo ${pack} | awk -F/ '{print ( $(NF-1) )}'`
 		version_check
