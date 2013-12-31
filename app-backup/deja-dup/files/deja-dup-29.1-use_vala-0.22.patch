@@ -1,0 +1,12 @@
+diff -Naur deja-dup-29.1_orig/cmake/FindVala.cmake deja-dup-29.1/cmake/FindVala.cmake
+--- deja-dup-29.1_orig/cmake/FindVala.cmake	2013-10-01 04:06:59.000000000 +0200
++++ deja-dup-29.1/cmake/FindVala.cmake	2013-12-31 14:31:56.740349143 +0100
+@@ -46,7 +46,7 @@
+ 
+ # Search for the valac executable in the usual system paths
+ # Some distributions rename the valac to contain the major.minor in the binary name
+-find_program(VALA_EXECUTABLE NAMES valac valac-0.20 valac-0.18 valac-0.16 valac-0.14 valac-0.12 valac-0.10)
++find_program(VALA_EXECUTABLE NAMES valac valac-0.22 valac-0.20 valac-0.18 valac-0.16 valac-0.14 valac-0.12 valac-0.10)
+ mark_as_advanced(VALA_EXECUTABLE)
+ 
+ # Determine the valac version
