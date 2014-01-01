@@ -170,22 +170,20 @@ version_check_other_releases() {
 					fi
 				done
 			done
-			upstream_versions_output=$(IFS=$'\n'; echo "${upstream_versions[*]}" | sort -k3 | uniq)
 			index=0
 			while [ "$index" -lt ${#upstream_versions[@]} ]; do
 				upstream_versions_namespace_stripped=$(echo ${upstream_versions[$index]} | sed 's/.*-\(.*[0-9]-[0-9].*\)/\1/p' | sed 's/[ 	]//g')
 				local_versions_whitespace_stripped=$(echo ${local_versions[@]} | sed 's/[ 	]//g')
-
-				# Comparison is done on <version>::<release> pattern #
 				compare_versions_stripped=$(echo ${local_versions_whitespace_stripped} | grep "${upstream_versions_namespace_stripped}")
-				if [ -n "${compare_versions_stripped}" ] || [ -n "$(echo ${upstream_versions[$index]} | grep "none available")" ]; then
+				upstream_release=$(echo ${upstream_versions[$index]} | awk '{print $3}')
+				if [ -n "${compare_versions_stripped}" ] || [ -n "$(echo ${upstream_versions[$index]} | grep "none available")" ] || \
+					[ -n "$(echo ${local_versions[@]} | grep ${upstream_release}-updates)" ]; then
 					echo -e "${upstream_versions[$index]}"
 				else
 					echo -e "\033[1;31m${upstream_versions[$index]}\033[0m"
 				fi
 				((index++))
 			done
-
 			unset local_versions
 			unset upstream_versions
 			index=
