@@ -9,7 +9,6 @@ inherit autotools base eutils python ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/e/${PN}"
 URELEASE="trusty"
-#UVER_PREFIX="daily13.02.20"
 
 DESCRIPTION="Event Emulation for the uTouch Stack"
 HOMEPAGE="https://launchpad.net/evemu"
