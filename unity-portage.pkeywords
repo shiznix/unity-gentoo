@@ -167,9 +167,11 @@ dev-util/umockdev
 media-libs/fontconfig
 media-libs/gexiv2
 media-libs/glm
+media-libs/lcms:2
 media-libs/libpng:0
 media-libs/libvpx
 media-libs/sbc
+media-libs/tiff:0
 media-sound/pulseaudio
 net-im/telepathy-logger
 net-im/telepathy-mission-control
