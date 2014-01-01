@@ -52,7 +52,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
 RDEPEND="${COMMON_DEPEND}
 	>=sys-auth/pambase-20101024-r2
 	x11-apps/xrandr
-	app-admin/eselect-lightdm"
+	>=app-admin/eselect-lightdm-0.2"
 
 DEPEND="${COMMON_DEPEND}
 	dev-util/gtk-doc-am
