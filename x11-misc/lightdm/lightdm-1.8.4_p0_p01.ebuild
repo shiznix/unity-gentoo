@@ -6,7 +6,7 @@ EAPI=5
 inherit base eutils pam readme.gentoo ubuntu-versionator user autotools systemd
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 
 DESCRIPTION="A lightweight display manager"
 

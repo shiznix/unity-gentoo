@@ -9,7 +9,7 @@ GCONF_DEBUG="no"
 inherit autotools base eutils gnome2 readme.gentoo virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/n/${PN}"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 MY_P="${MY_P/-/_}"
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
