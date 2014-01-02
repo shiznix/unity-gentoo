@@ -8,7 +8,7 @@ GCONF_DEBUG="yes"
 inherit autotools base gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}3"
-URELEASE="saucy"
+URELEASE="saucy-updates"
 MY_P="${PN}3_${PV}"
 
 DESCRIPTION="Libraries for the gnome desktop that are not part of the UI patched for the Unity desktop"
