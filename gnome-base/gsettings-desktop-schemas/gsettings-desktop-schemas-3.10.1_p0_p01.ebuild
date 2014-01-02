@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnome-base/gsettings-desktop-schemas/gsettings-desktop-schemas-3.10.1.ebuild,v 1.1 2013/12/24 16:35:36 pacho Exp $
+# $Header: $
 
 EAPI="5"
 GCONF_DEBUG="no"
@@ -13,7 +13,7 @@ UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="trusty"
 
 DESCRIPTION="Collection of GSettings schemas for GNOME desktop"
-HOMEPAGE="https://git.gnome.org/browse/gsettings-desktop-schemas"
+HOMEPAGE="http://www.gnome.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
         ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
@@ -25,38 +25,40 @@ IUSE="+introspection"
 RDEPEND="
 	>=dev-libs/glib-2.31:2
 	introspection? ( >=dev-libs/gobject-introspection-1.31.0 )
-	!<gnome-base/gdm-3.8
+	>=x11-themes/gnome-backgrounds-3.8.1
+	x11-themes/gtk-engines-unico
+	x11-themes/ubuntu-themes
 "
 DEPEND="${RDEPEND}
-	>=dev-util/intltool-0.40
 	sys-devel/gettext
+	>=dev-util/intltool-0.40
 	virtual/pkgconfig
 "
 
 src_prepare() {
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-        PATCHES+=( "${FILESDIR}/nautilus_show_desktop_icons.diff" )
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	PATCHES+=( "${FILESDIR}/nautilus_show_desktop_icons.diff" )
 
         base_src_prepare
-        gnome2_src_prepare
+	gnome2_src_prepare
 
-        # Set Ambiance as the default window theme #
-        sed -e 's:Adwaita:Ambiance:' \
-                -i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in \
-                        schemas/org.gnome.desktop.interface.gschema.xml.in.in
-        # Set Ubuntu-mono-dark as the default icon theme #
-        sed -e "s:'gnome':'ubuntu-mono-dark':" \
-                -i schemas/org.gnome.desktop.interface.gschema.xml.in.in
+	# Set Ambiance as the default window theme #
+	sed -e 's:Adwaita:Ambiance:' \
+		-i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in \
+			schemas/org.gnome.desktop.interface.gschema.xml.in.in
+	# Set Ubuntu-mono-dark as the default icon theme #
+	sed -e "s:'gnome':'ubuntu-mono-dark':" \
+		-i schemas/org.gnome.desktop.interface.gschema.xml.in.in
 
-        # Set default Ubuntu release backgrounds #
-        sed -e "s:themes/Adwaita/backgrounds/adwaita-timed.xml:backgrounds/contest/saucy.xml:" \
-                -i schemas/org.gnome.desktop.background.gschema.xml.in.in
+	# Set default Ubuntu release backgrounds #
+	sed -e "s:themes/Adwaita/backgrounds/adwaita-timed.xml:backgrounds/contest/saucy.xml:" \
+		-i schemas/org.gnome.desktop.background.gschema.xml.in.in
 
-        # Set window controls buttons on the left side of the titlebar by default as in native $
-        sed -s "s:\:minimize,maximize,close:close,minimize,maximize\::" \
-                -i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in
+	# Set window controls buttons on the left side of the titlebar by default as in native Unity #
+	sed -s "s:\:minimize,maximize,close:close,minimize,maximize\::" \
+		-i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in
 }
 
 src_configure() {
