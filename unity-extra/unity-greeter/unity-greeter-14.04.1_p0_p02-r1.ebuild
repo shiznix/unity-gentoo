@@ -110,10 +110,13 @@ pkg_postinst() {
 	elog
 	elog "Set ${PN} as default greeter of LightDM."
 	"${ROOT}"/usr/bin/eselect lightdm set unity-greeter
-	
-	elog "Set 'unity' as default user session."
-	/usr/libexec/lightdm/lightdm-set-defaults -k --session=unity
 
+	elog "Set 'unity' as default user session."
+	if line=$(grep -s -m 1 -e "user-session" "/etc/lightdm/lightdm.conf"); then
+		sed -i -e "s/user-session=.*/user-session=unity/" "/etc/lightdm/lightdm.conf"
+	else
+		echo "user-session=unity" >> "${EROOT}/etc/lightdm/lightdm.conf"
+	fi
 	ubuntu-versionator_pkg_postinst
 }
 

@@ -5,7 +5,7 @@
 EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_3 )
 PYTHON_REQ_USE="xml"
 
 inherit autotools base eutils gnome2 python-single-r1 multilib ubuntu-versionator virtualx

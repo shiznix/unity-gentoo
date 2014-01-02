@@ -3,6 +3,8 @@
 # $Header: $
 
 EAPI=5
+VALA_MIN_API_VERSION="0.22"
+VALA_MAX_API_VERSION="0.22"
 
 inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
@@ -27,6 +29,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libappindicator
 	dev-libs/libgee:0
 	dev-libs/libindicate-qt
+	>=x11-libs/libnotify-0.7.6
 	media-sound/pulseaudio
 	net-misc/url-dispatcher
 	$(vala_depend)"
@@ -35,7 +38,11 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	# fix compile error 'Invalid assignment from owned expression to unowned variable' error similar to LP #1252491 
+	epatch "${FILESDIR}/indicator-sound-12.10.2+14.04-fix-unowned-variable.patch"
+
 	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 
 # Make "Sound Settings" open gnome-control-center sound settings #
 	sed -e 's:sound-nua:sound:g' \
@@ -44,8 +51,8 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs="${mycmakeargs}
-		-DVALA_COMPILER=$(type -P valac-0.20)
-		-DVAPI_GEN=$(type -P vapigen-0.20)"
+		-DVALA_COMPILER=$VALAC
+		-DVAPI_GEN=$VAPIGEN"
 	cmake-utils_src_configure
 }
 

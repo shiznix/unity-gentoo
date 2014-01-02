@@ -52,15 +52,14 @@ COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
 RDEPEND="${COMMON_DEPEND}
 	>=sys-auth/pambase-20101024-r2
 	x11-apps/xrandr
-	app-admin/eselect-lightdm"
+	>=app-admin/eselect-lightdm-0.2"
 
 DEPEND="${COMMON_DEPEND}
 	dev-util/gtk-doc-am
 	dev-util/intltool
 	gnome-base/gnome-common
 	sys-devel/gettext
-	virtual/pkgconfig
-	app-text/yelp-tools"
+	virtual/pkgconfig"
 
 PDEPEND="lightdm_greeters_gtk? ( x11-misc/lightdm-gtk-greeter )
 	lightdm_greeters_kde? ( x11-misc/lightdm-kde )
@@ -97,11 +96,11 @@ src_prepare() {
         # as the regular GSettings override files.
         epatch "${FILESDIR}"/guest-session-add-default-gsettings-support.patch
 
-        # Patch from Fedora to lock the screen before switching users.
-        epatch "${FILESDIR}"/lightdm-lock-screen-before-switch.patch
-
 	epatch_user
 	base_src_prepare
+
+	# Remove bogus Makefile statement. This needs to go upstream
+	sed -i /"@YELP_HELP_RULES@"/d help/Makefile.am || die
 
 	if has_version dev-libs/gobject-introspection; then
 		eautoreconf
@@ -132,11 +131,18 @@ pkg_preinst() {
 src_install() {
 	default
 
+	# Delete apparmor profiles because they only work with Ubuntu's
+	# apparmor package. Bug #494426
+	if [[ -d ${D}/etc/apparmor.d ]]; then
+		rm -r "${D}/etc/apparmor.d" || die \
+			"Failed to remove apparmor profiles"
+	fi
+
 	insinto /etc/${PN}
 	doins data/keys.conf
 	newins data/${PN}.conf ${PN}.conf_example
 	doins "${FILESDIR}"/${PN}.conf
-	
+
 	insinto /etc/${PN}/${PN}.conf.d
 	doins "${FILESDIR}"/50-display-setup.conf
 	doins "${FILESDIR}"/50-greeter-wrapper.conf
@@ -187,9 +193,6 @@ src_install() {
 	readme.gentoo_create_doc
 
 	systemd_dounit "${FILESDIR}/${PN}.service"
-
-	# Delete some files that are only useful on Ubuntu
-	rm -rf "${D}"etc/apparmor.d
 }
 
 pkg_postinst() {

@@ -44,9 +44,6 @@ DEPEND="${RDEPEND}
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	# Fix lauchpad bug #1203888
-	epatch "${FILESDIR}/13.10_use_insert_signal.diff"
-
 	PATCHES+=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
 	base_src_prepare
 

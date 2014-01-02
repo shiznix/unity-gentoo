@@ -49,6 +49,7 @@ src_prepare() {
 		-i CMakeLists.txt
 
 	epatch -p1 "${FILESDIR}/include_stdint.diff"
+	epatch -p1 "${FILESDIR}/mir-0.1.2-build_benchmarks_only_with_tests_enabled.patch"
 
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	export CMAKE_BUILD_TYPE=none

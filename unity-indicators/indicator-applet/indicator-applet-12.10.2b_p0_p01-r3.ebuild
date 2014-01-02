@@ -27,6 +27,9 @@ DEPEND="dev-libs/libindicator:3
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	# some API is declared as deprecated in gtk+ 3.10
+	epatch "${FILESDIR}/remove_GTK_DISABLE_DEPRECATED.patch"
+
 	# "Only <glib.h> can be included directly." #
 	sed -e "s:glib/gtypes.h:glib.h:g" \
 		-i src/tomboykeybinder.h

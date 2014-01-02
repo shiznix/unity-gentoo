@@ -35,6 +35,8 @@ pkg_setup() {
 }
 
 src_prepare() {
+	epatch "${FILESDIR}/unity-gtk-module-0.0.0+14.04-deprecated-api.patch"
+	epatch "${FILESDIR}/unity-gtk-module-0.0.0+14.04-remove_g_ptr_array_insert.patch"
 	eautoreconf
 }
 

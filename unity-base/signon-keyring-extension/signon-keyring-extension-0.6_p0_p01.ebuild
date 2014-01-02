@@ -23,6 +23,7 @@ RESTRICT="mirror"
 
 RDEPEND="gnome-base/libgnome-keyring
 	dev-qt/qtcore:4
+	app-crypt/libsecret
 	unity-base/signon"
 DEPEND="${RDEPEND}"
 
@@ -31,7 +32,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 
-	# Let portage strip files #	
+	# Let portage strip files #
 	sed -e 's:CONFIG         +=:CONFIG += nostrip:g' -i "${S}/common-project-config.pri" || die
 	
 	# fix 'QA Notice: The following files contain insecure RUNPATHs'

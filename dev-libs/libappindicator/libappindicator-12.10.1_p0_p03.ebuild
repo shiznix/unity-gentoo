@@ -15,7 +15,8 @@ UVER_PREFIX="+13.10.20130920"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libappindicator"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="LGPL-2.1 LGPL-3"
 SLOT="3/1.0.0"
@@ -43,11 +44,16 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare () {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
+
 	# The /usr/lib/cli location for Mono bindings is specific to Ubuntu
 	sed -e 's|assemblydir = $(libdir)/cli/appindicator-sharp-0.1|assemblydir = $(libdir)/appindicator-sharp-0.1|' \
 		-i bindings/mono/Makefile.am
 	sed -e 's|assemblies_dir=${libdir}/cli/appindicator-sharp-0.1|assemblies_dir=${libdir}/appindicator-sharp-0.1|' \
 		-i bindings/mono/appindicator-sharp-0.1.pc.in
+
+	# Disabled, vala error -> see launchpad
+	sed -i -e '/examples/d' "${S}"/bindings/vala/Makefile.am || die
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

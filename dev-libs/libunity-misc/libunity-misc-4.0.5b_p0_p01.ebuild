@@ -28,11 +28,14 @@ DEPEND="x11-libs/gtk+:3
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	epatch "${FILESDIR}/libunity-misc-4.0.5b-deprecated-api.patch"
+
 	# Make docs optional #
 	! use doc && \
 		sed -e 's:unity-misc doc:unity-misc:' \
 			-i Makefile.am
 	eautoreconf
+	append-cflags -Wno-error
 }
 
 src_install() {

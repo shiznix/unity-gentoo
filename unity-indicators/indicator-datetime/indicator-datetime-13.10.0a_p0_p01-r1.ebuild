@@ -3,14 +3,14 @@
 # $Header: $
 
 EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+VALA_MIN_API_VERSION="0.22"
+VALA_MAX_API_VERSION="0.22"
 
-inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
+inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131125"
+UVER_PREFIX="+14.04.20131217"
 
 DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"
@@ -34,27 +34,47 @@ DEPEND="dev-libs/libappindicator
 	gnome-base/gnome-control-center
 	>=gnome-extra/evolution-data-server-3.8
 	net-misc/url-dispatcher
-	unity-indicators/ido"
+	unity-indicators/ido
+	>=x11-libs/libnotify-0.7.6"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
 
-	append-cflags -Wno-error
-	eautoreconf
+	# Fix schema errors and sandbox violations #
+	epatch "${FILESDIR}/sandbox_violations_fix.diff"
+
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 }
 
 src_configure() {
-	econf \
-		--prefix=/usr \
-		--with-ccpanel
+	local mycmakeargs="${mycmakeargs}
+		-DVALA_COMPILER=$VALAC
+		-DVAPI_GEN=$VAPIGEN"
+	cmake-utils_src_configure
+}
+
+pkg_preinst() {
+        gnome2_schemas_savelist
+        gnome2_icon_savelist
 }
 
 src_install() {
-	gnome2_src_install
+	cmake-utils_src_install
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+}
+
+pkg_postinst() {
+        gnome2_schemas_update
+        gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+        gnome2_schemas_update
+        gnome2_icon_cache_update
 }

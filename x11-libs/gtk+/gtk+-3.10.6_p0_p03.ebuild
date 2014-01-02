@@ -139,6 +139,8 @@ src_prepare() {
 		rm -v tests/a11y/pickers.{ui,txt} || die "rm failed"
 	else
 		# don't waste time building tests
+		strip_builddir SRC_SUBDIRS testsuite Makefile.am
+		strip_builddir SRC_SUBDIRS testsuite Makefile.in
 		strip_builddir SRC_SUBDIRS tests Makefile.am
 		strip_builddir SRC_SUBDIRS tests Makefile.in
 	fi

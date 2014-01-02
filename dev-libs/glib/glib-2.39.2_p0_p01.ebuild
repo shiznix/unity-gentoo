@@ -84,7 +84,7 @@ src_prepare() {
 
 	# Fix gmodule issues on fbsd; bug #184301, upstream bug #107626
 	epatch "${FILESDIR}"/${PN}-2.12.12-fbsd.patch
-	
+
 	if use test; then
 		# Do not try to remove files on live filesystem, upstream bug #619274
 		sed 's:^\(.*"/desktop-app-info/delete".*\):/*\1*/:' \
@@ -137,7 +137,7 @@ src_prepare() {
 	fi
 
 	# gdbus-codegen is a separate package
-	epatch "${FILESDIR}/${PN}-2.37.x-external-gdbus-codegen.patch"
+	epatch "${FILESDIR}/${PN}-2.39.x-external-gdbus-codegen.patch"
 
 	# do not allow libgobject to unload; bug #405173, https://bugzilla.gnome.org/show_bug.cgi?id=707298
 	epatch "${FILESDIR}/${PN}-2.36.4-znodelete.patch"

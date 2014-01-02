@@ -3,17 +3,17 @@
 # $Header: $
 
 EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
-
-inherit eutils gnome2 ubuntu-versionator vala
+VALA_MIN_API_VERSION="0.22"
+VALA_MAX_API_VERSION="0.22"
+inherit cmake-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
 URELEASE="trusty"
 
 DESCRIPTION="Simple backup tool using duplicity back-end"
 HOMEPAGE="https://launchpad.net/deja-dup/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -46,12 +46,25 @@ DEPEND="${COMMON_DEPEND}
 	$(vala_depend)"
 
 src_prepare() {
-	DOCS="NEWS AUTHORS"
-	G2CONF="${G2CONF}
-		$(use_with nautilus)
-		--with-ccpanel
-		--with-unity
-		--disable-static"
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
+	done
+
+	# we need >=vala-0.22 because 'Gtk.HeaderBar' is not declared in older 'gtk+-3.0.vapi' files
+	epatch "${FILESDIR}/deja-dup-29.1-use_vala-0.22.patch"
+
+	# fix compile error 'Invalid assignment from owned expression to unowned variable' similar to LP #1252491
+	epatch "${FILESDIR}/deja-dup-29.1-fix-unowned-variable.patch"
+
 	vala_src_prepare
-	gnome2_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 }
+
+src_configure() {
+        local mycmakeargs="${mycmakeargs}
+                -DVALA_COMPILER=$VALAC
+                -DVAPI_GEN=$VAPIGEN"
+        cmake-utils_src_configure
+}
+
