@@ -34,7 +34,7 @@ gnome-base/gnome-menus:0
 =gnome-base/gnome-menus-3.8*:3::unity-gentoo
 =gnome-base/gnome-panel-3.6*::unity-gentoo
 =gnome-base/gnome-settings-daemon-3.8*::unity-gentoo
-=gnome-base/gsettings-desktop-schemas-3.8*::unity-gentoo
+=gnome-base/gsettings-desktop-schemas-3.10*::unity-gentoo
 =gnome-base/gnome-shell-3.8*
 gnome-base/gvfs
 =gnome-base/libgnomekbd-3.6*

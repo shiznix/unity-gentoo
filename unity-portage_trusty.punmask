@@ -4,6 +4,9 @@ x11-libs/libdrm
 x11-misc/lightdm::unity-gentoo
 media-libs/mesa::unity-gentoo
 
+# gnome-3.10 packages used by Unity
+=gnome-base/gsettings-desktop-schemas-3.10*
+
 # unmask own packages, because gentoo tree masks all packages >=1.38.0
 x11-libs/gtk+::unity-gentoo
 dev-libs/glib::unity-gentoo
