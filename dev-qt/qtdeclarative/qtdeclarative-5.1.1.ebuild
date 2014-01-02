@@ -16,9 +16,13 @@ fi
 
 IUSE="+localstorage +widgets +xml"
 
+# TODO: easingcurveeditor|qmlscene? ( qt-widgets )
+# TODO: xml? ( qt-xmlpatterns )
+
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=,opengl]
+	>=dev-qt/qtjsbackend-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
 	>=dev-qt/qttest-${PV}:5[debug=]
 	localstorage? ( >=dev-qt/qtsql-${PV}:5[debug=] )
