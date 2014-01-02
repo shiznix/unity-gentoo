@@ -91,9 +91,9 @@ RDEPEND="
 		mir-base/mir
 	)
 	opencl? (
-				app-admin/eselect-opencl
-				>=dev-libs/libclc-0.0.1_pre20130524-r1
-			)
+		app-admin/eselect-opencl
+		>=dev-libs/libclc-0.0.1_pre20130524-r1
+	)
 	vdpau? ( >=x11-libs/libvdpau-0.4.1[${MULTILIB_USEDEP}] )
 	wayland? ( >=dev-libs/wayland-1.0.3[${MULTILIB_USEDEP}] )
 	xorg? (
@@ -129,9 +129,9 @@ DEPEND="${RDEPEND}
 		video_cards_radeonsi? ( sys-devel/llvm[video_cards_radeon] )
 	)
 	opencl? (
-				~sys-devel/llvm-3.3[video_cards_radeon,${MULTILIB_USEDEP}]
-				~sys-devel/clang-3.3[${MULTILIB_USEDEP}]
-				>=sys-devel/gcc-4.6
+		~sys-devel/llvm-3.3[video_cards_radeon,${MULTILIB_USEDEP}]
+		~sys-devel/clang-3.3[${MULTILIB_USEDEP}]
+		>=sys-devel/gcc-4.6
 	)
 	${PYTHON_DEPS}
 	dev-libs/libxml2[python,${PYTHON_USEDEP}]
@@ -226,7 +226,7 @@ multilib_src_configure() {
 
 	if use egl; then
 		myconf+="
-			--with-egl-platforms=x11$(use wayland && echo ",wayland")$(use gbm && echo ",drm"),$(use mir && echo ",mir")
+			--with-egl-platforms=x11$(use wayland && echo ",wayland")$(use gbm && echo ",drm")$(use mir && echo ",mir")
 			$(use_enable gallium gallium-egl)
 		"
 	fi
