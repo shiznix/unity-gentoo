@@ -76,7 +76,7 @@ if [[ ${PN} != "qttest" ]]; then
 	fi
 fi
 
-EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
+EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
 
 # @ECLASS-VARIABLE: PATCHES
 # @DEFAULT_UNSET
@@ -123,6 +123,11 @@ EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install sr
 # @DEFAULT_UNSET
 # @DESCRIPTION:
 # Array of macros that must be defined in QtCore/qconfig.h
+
+# @FUNCTION: qt5-build_pkg_setup
+qt5-build_pkg_setup() {
+	:
+}
 
 # @FUNCTION: qt5-build_src_unpack
 # @DESCRIPTION:
