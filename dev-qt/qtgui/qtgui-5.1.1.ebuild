@@ -49,7 +49,7 @@ RDEPEND="
 		>=x11-libs/libX11-1.5
 		>=x11-libs/libXi-1.6
 		x11-libs/libXrender
-		>=x11-libs/libxcb-1.9.1[xkb]
+		=x11-libs/libxcb-1.9.1[xkb]
 		>=x11-libs/libxkbcommon-0.2.0
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
