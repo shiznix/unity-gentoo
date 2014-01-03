@@ -76,6 +76,7 @@ media-libs/cogl
 ~media-libs/libsndfile-1.0.25
 ~media-plugins/alsa-plugins-1.0.27
 =net-libs/gnome-online-accounts-3.8*
+~net-libs/gupnp-igd-0.2.2
 net-libs/libsoup
 net-libs/libsoup-gnome
 net-libs/rest
