@@ -34,7 +34,7 @@ gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
 gnome-extra/zeitgeist::gentoo
 mail-client/thunderbird::gentoo
-media-libs/glew::gentoo
+#media-libs/glew::gentoo
 media-libs/mesa::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
