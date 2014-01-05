@@ -204,6 +204,7 @@ sys-devel/llvm:0/3.3
 ~sys-fs/udev-208
 sys-libs/db:5.1
 sys-libs/libnih
+sys-libs/talloc
 sys-libs/tevent
 ~virtual/udev-206
 x11-base/xorg-drivers
