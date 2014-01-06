@@ -86,7 +86,6 @@ net-libs/rest
 ~sys-apps/kmod-15
 ~sys-apps/hwids-20130915.1
 ~sys-apps/gentoo-systemd-integration-2
-~sys-apps/systemd-207
 x11-libs/cairo
 x11-libs/gdk-pixbuf
 x11-libs/gnome-pty-helper
@@ -133,7 +132,6 @@ dev-python/httplib2
 dev-python/isodate
 dev-python/oauth
 <=dev-python/oauthlib-0.3.7     # unity-base/ubuntuone-control-panel
-=dev-python/pyatspi-2.6*
 dev-python/pycurl
 dev-python/pycrypto
 dev-python/pygobject:3
@@ -197,7 +195,6 @@ sys-auth/consolekit
 sys-auth/pambase
 sys-devel/automake:1.13
 sys-devel/automake-wrapper
-sys-devel/gcc:4.7
 sys-devel/gcc:4.8 
 sys-devel/llvm:0/3.3
 ~sys-fs/udev-208
@@ -205,7 +202,6 @@ sys-libs/db:5.1
 sys-libs/libnih
 sys-libs/talloc
 sys-libs/tevent
-~virtual/udev-206
 x11-base/xorg-drivers
 x11-drivers/xf86-video-dummy
 x11-libs/libwnck
