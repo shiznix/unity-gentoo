@@ -9,10 +9,10 @@ inherit base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 UURL="mirror://ubuntu/pool/main/x/${PN}"
-URELEASE="saucy"
+URELEASE="trusty"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
+#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
@@ -115,7 +115,8 @@ REQUIRED_USE="!minimal? (
 PATCHES=(
 	"${UPSTREAMED_PATCHES[@]}"
 	"${FILESDIR}"/${PN}-1.12-disable-acpi.patch
-	"${FILESDIR}"/${PN}-1.13-ia64-asm.patch
+	"${FILESDIR}"/${PN}-1.12-ia64-fix_inx_outx.patch
+	"${FILESDIR}"/${PN}-1.12-unloadsubmodule.patch
 )
 
 pkg_pretend() {

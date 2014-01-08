@@ -9,12 +9,13 @@ inherit base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 UURL="mirror://ubuntu/pool/main/x/${PN}"
-URELEASE="trusty"
+URELEASE="saucy-updates"
+UVER_SUFFIX="~saucy1"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
-#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.diff.gz"
 
 IUSE_SERVERS="kdrive xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} +dmx ipv6 minimal mir nptl selinux +suid tslib +udev"
@@ -115,7 +116,8 @@ REQUIRED_USE="!minimal? (
 PATCHES=(
 	"${UPSTREAMED_PATCHES[@]}"
 	"${FILESDIR}"/${PN}-1.12-disable-acpi.patch
-	"${FILESDIR}"/${PN}-1.13-ia64-asm.patch
+	"${FILESDIR}"/${PN}-1.12-ia64-fix_inx_outx.patch
+	"${FILESDIR}"/${PN}-1.12-unloadsubmodule.patch
 )
 
 pkg_pretend() {
@@ -216,10 +218,8 @@ pkg_postinst() {
 		ewarn "of module version mismatch errors, this is your problem."
 
 		echo
-		ewarn "You can generate a list of all installed packages in the x11-drivers"
+		ewarn "You can rebuild all installed packages in the x11-drivers"
 		ewarn "category using this command:"
-		ewarn "	emerge portage-utils; qlist -I -C x11-drivers/"
-		ewarn "or using sets from portage-2.2:"
 		ewarn "	emerge @x11-module-rebuild"
 	fi
 
