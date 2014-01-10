@@ -9,7 +9,7 @@ inherit cmake-utils eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libc/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20130814.1"
+UVER_PREFIX="+14.04.20140108"
 
 DESCRIPTION="Error tolerant matching engine used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libcolombus"
