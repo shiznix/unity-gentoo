@@ -75,6 +75,10 @@ pkg_setup() {
 
 src_prepare() {
 	PATCHES=( "${WORKDIR}/debian/patches/05_dbus_service.patch" )
+
+	# show (current) user background
+	PATCHES+=( "${FILESDIR}/gnome-screensaver-3.6.1-show-user-background.patch" )
+
 	base_src_prepare
 	eautoreconf
 
