@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_3 )
 DISTUTILS_SINGLE_IMPL=1
 
 inherit distutils-r1 ubuntu-versionator vala
@@ -24,12 +24,12 @@ RESTRICT="mirror"
 DEPEND="dev-libs/libpeas[${PYTHON_USEDEP}]
 	dev-libs/libzeitgeist
 	dev-python/dirspec[${PYTHON_USEDEP}]
-	dev-python/pygobject:2[${PYTHON_USEDEP}]
+	dev-python/pygobject:2
 	dev-python/pygobject:3[${PYTHON_USEDEP}]
-	>=dev-python/twisted-core-13.0.0[${PYTHON_USEDEP}]
+	>=dev-python/twisted-core-13.0.0
 	gnome-base/gnome-menus:3
 	>=media-sound/rhythmbox-2.98[${PYTHON_USEDEP},dbus,python,zeitgeist]
-	unity-base/ubuntuone-client[${PYTHON_USEDEP}]
+	unity-base/ubuntuone-client
 	unity-base/unity
 	$(vala_depend)"
 
