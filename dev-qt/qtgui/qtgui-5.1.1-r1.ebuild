@@ -49,7 +49,7 @@ RDEPEND="
 		>=x11-libs/libX11-1.5
 		>=x11-libs/libXi-1.6
 		x11-libs/libXrender
-		=x11-libs/libxcb-1.9.1[xkb]
+		>=x11-libs/libxcb-1.9.1[xkb]
 		>=x11-libs/libxkbcommon-0.2.0
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
@@ -92,6 +92,13 @@ pkg_setup() {
 	use opengl && QT5_TARGET_SUBDIRS+=(src/openglextensions)
 
 	qt5-build_pkg_setup
+}
+
+src_prepare() {
+	if has_version ">=x11-libs/libxcb-1.9.3"; then
+		epatch -p1 "${FILESDIR}/xcb-193.patch"
+	fi
+	qt5-build_src_prepare
 }
 
 src_configure() {
