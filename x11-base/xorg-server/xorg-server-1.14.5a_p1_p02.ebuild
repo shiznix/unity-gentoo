@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 XORG_DOC=doc
 inherit base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
@@ -59,6 +59,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 		>=x11-libs/libXext-1.0.5
 		>=media-libs/mesa-8[nptl=]
 	)
+	mir? ( mir-base/mir:= )
 	tslib? ( >=x11-libs/tslib-1.0 )
 	udev? ( >=virtual/udev-150 )
 	>=x11-apps/xinit-1.3

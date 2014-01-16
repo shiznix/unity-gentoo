@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3 MIT"
-SLOT="0"
+SLOT="0/4"
 #KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
@@ -27,7 +27,7 @@ DEPEND="dev-cpp/gflags
 	>=dev-util/lttng-tools-2.1.1[ust]
 	dev-util/umockdev
 	media-libs/glm
-	media-libs/mesa[egl,gbm,gles2]
+	media-libs/mesa[egl,gbm,gles2,mir]
 	>=sys-devel/gcc-4.7.3
 	x11-libs/libdrm
 	x11-libs/libxkbcommon

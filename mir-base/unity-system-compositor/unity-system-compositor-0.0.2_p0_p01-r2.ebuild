@@ -26,7 +26,8 @@ RDEPEND="dev-libs/boost:=
 DEPEND="${RDEPEND}
 	dev-libs/boost
 	dev-libs/protobuf
-	media-libs/mesa[gles2,mir]"
+	media-libs/mesa[gles2,mir]
+	media-libs/mesa-mir[gles2,mir]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

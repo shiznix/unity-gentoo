@@ -204,11 +204,18 @@ sys-libs/talloc
 sys-libs/tevent
 x11-base/xorg-drivers
 x11-drivers/xf86-video-dummy
-x11-libs/libwnck
+x11-libs/libdrm
 ~x11-libs/libnotify-0.7.6
+x11-libs/libwnck
+x11-libs/libxcb
+x11-libs/libxshmfence
+x11-libs/xpyb
 x11-misc/appmenu-qt
 =x11-misc/colord-0.1*
 x11-misc/notify-osd
+x11-proto/dri3proto
+x11-proto/presentproto
+x11-proto/xcb-proto
 x11-themes/notify-osd-icons
 
 ## Overlay missing keyword unmasking ##
