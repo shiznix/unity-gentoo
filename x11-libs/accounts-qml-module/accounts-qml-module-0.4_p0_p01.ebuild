@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit base gnome2-utils qt5-build ubuntu-versionator
+inherit base gnome2-utils qt5-build ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/universe/a/${PN}"
 URELEASE="trusty"
@@ -40,6 +40,12 @@ src_prepare() {
 
 src_configure() {
 	bin/qmake PREFIX=/usr
+}
+
+src_install() {
+	# Needs to be run in a virtual Xserver so that qmlplugindump's #
+	#	qmltypes generation can successfully spawn dbus #
+	Xemake INSTALL_ROOT="${ED}" install
 }
 
 pkg_preinst() {
