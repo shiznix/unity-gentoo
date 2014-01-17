@@ -1,6 +1,6 @@
-diff -Naur unity-gtk-module-0.0.0+14.04.20131125_orig/lib/unity-gtk-menu-shell.c unity-gtk-module-0.0.0+14.04.20131125/lib/unity-gtk-menu-shell.c
---- unity-gtk-module-0.0.0+14.04.20131125_orig/lib/unity-gtk-menu-shell.c	2013-11-25 04:54:53.000000000 +0100
-+++ unity-gtk-module-0.0.0+14.04.20131125/lib/unity-gtk-menu-shell.c	2013-12-29 23:50:51.913953530 +0100
+=== modified file 'lib/unity-gtk-menu-shell.c'
+--- lib/unity-gtk-menu-shell.c	2013-11-28 18:29:27 +0000
++++ lib/unity-gtk-menu-shell.c	2014-01-13 15:41:42 +0000
 @@ -93,27 +93,6 @@
    return !g_sequence_iter_is_end (iter) && g_sequence_get_uint (iter) <= i ? iter : NULL;
  }
@@ -38,3 +38,13 @@ diff -Naur unity-gtk-module-0.0.0+14.04.20131125_orig/lib/unity-gtk-menu-shell.c
  
                        for (i = section_index + 2; i < sections->len; i++)
                          UNITY_GTK_MENU_SECTION (g_ptr_array_index (sections, i))->section_index = i;
+@@ -640,7 +619,7 @@
+ 
+       menu_item = GTK_MENU_ITEM (child);
+       item = unity_gtk_menu_item_new (menu_item, shell, position);
+-      g_ptr_array_insert (items, item, position);
++      g_ptr_array_insert (items, position, item);
+ 
+       for (i = position + 1; i < items->len; i++)
+         UNITY_GTK_MENU_ITEM (g_ptr_array_index (items, i))->item_index = i;
+
