@@ -28,6 +28,7 @@ RDEPEND="
 	>=x11-themes/gnome-backgrounds-3.8.1
 	x11-themes/gtk-engines-unico
 	x11-themes/ubuntu-themes
+	x11-themes/ubuntu-wallpapers
 "
 DEPEND="${RDEPEND}
 	sys-devel/gettext
