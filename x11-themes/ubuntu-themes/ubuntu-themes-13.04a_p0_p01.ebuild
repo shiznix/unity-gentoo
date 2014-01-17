@@ -22,7 +22,8 @@ SLOT="0"
 IUSE="phone"
 RESTRICT="mirror"
 
-RDEPEND=">=x11-themes/hicolor-icon-theme-0.10"
+RDEPEND="!x11-themes/light-themes
+	>=x11-themes/hicolor-icon-theme-0.10"
 DEPEND="${RDEPEND}
 	>=x11-misc/icon-naming-utils-0.8.7
 	>=dev-util/intltool-0.40
@@ -47,6 +48,10 @@ src_install() {
 	dodir /usr/share/icons/
 	insinto /usr/share/icons
 	doins -r LoginIcons ubuntu-mono-dark ubuntu-mono-light
+
+	dodir /usr/share/themes/
+	insinto /usr/share/themes
+	doins -r Ambiance Radiance
 
 	use phone && \
 		doins -r ubuntu-mobile
