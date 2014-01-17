@@ -31,6 +31,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 RDEPEND="dev-libs/dee:=
 	dev-libs/libdbusmenu:=
 	dev-libs/libunity-misc:=
+	media-libs/glew:=
 	>=unity-base/bamf-0.4.0:=
 	>=unity-base/compiz-0.9.9:=
 	>=unity-base/nux-4.0.0:=[debug?]
@@ -62,6 +63,7 @@ DEPEND="dev-libs/boost
 	gnome-base/libgdu
 	>=gnome-extra/polkit-gnome-0.105
 	media-libs/clutter-gtk:1.0
+	media-libs/glew
 	sys-apps/dbus
 	>=sys-devel/gcc-4.8
 	sys-libs/libnih[dbus]
