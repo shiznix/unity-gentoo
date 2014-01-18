@@ -7,8 +7,8 @@ EAPI=5
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
-URELEASE="saucy"
-UVER_PREFIX="daily13.06.05"
+URELEASE="trusty"
+UVER_PREFIX="+14.04.20140115"
 
 DESCRIPTION="Miscellaneous modules for the Unity desktop"
 HOMEPAGE="https://launchpad.net/libunity-misc"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0/4.1.0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 RESTRICT="mirror"
 
@@ -28,11 +28,14 @@ DEPEND="x11-libs/gtk+:3
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	epatch "${FILESDIR}/libunity-misc-4.0.5b-deprecated-api.patch"
+
 	# Make docs optional #
 	! use doc && \
 		sed -e 's:unity-misc doc:unity-misc:' \
 			-i Makefile.am
 	eautoreconf
+	append-cflags -Wno-error
 }
 
 src_install() {
