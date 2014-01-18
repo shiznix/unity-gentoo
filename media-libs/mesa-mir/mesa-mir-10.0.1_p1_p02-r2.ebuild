@@ -216,17 +216,17 @@ multilib_src_configure() {
 	fi
 
 	if use egl; then
-		myconf+="
-			--with-egl-platforms=x11,mir$(use wayland && echo ",wayland")$(use gbm && echo ",drm")
-			$(use_enable gallium gallium-egl)"
+		myconf+="--with-egl-platforms=x11,mir$(use wayland && echo ",wayland")$(use gbm && echo ",drm") "
 	fi
 
 	if use gallium; then
 		myconf+="
 			$(use_enable llvm gallium-llvm)
 			$(use_enable openvg)
+			$(use_enable openvg gallium-egl)
 			$(use_enable r600-llvm-compiler)
 			$(use_enable vdpau)
+			$(use_enable xa)
 			$(use_enable xvmc)
 		"
 		gallium_enable swrast

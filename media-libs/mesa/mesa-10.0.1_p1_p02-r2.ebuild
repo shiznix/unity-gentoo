@@ -131,8 +131,8 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	>=x11-proto/dri2proto-2.6[${MULTILIB_USEDEP}]
 	>=x11-proto/dri3proto-1.0[${MULTILIB_USEDEP}]
-	>=x11-proto/glproto-1.4.15-r1[${MULTILIB_USEDEP}]
 	>=x11-proto/presentproto-1.0[${MULTILIB_USEDEP}]
+	>=x11-proto/glproto-1.4.15-r1[${MULTILIB_USEDEP}]
 	>=x11-proto/xextproto-7.0.99.1[${MULTILIB_USEDEP}]
 	x11-proto/xf86driproto[${MULTILIB_USEDEP}]
 	x11-proto/xf86vidmodeproto[${MULTILIB_USEDEP}]
@@ -215,9 +215,7 @@ multilib_src_configure() {
 	fi
 
 	if use egl; then
-		myconf+="
-			--with-egl-platforms=x11$(use wayland && echo ",wayland")$(use gbm && echo ",drm")
-			$(use_enable gallium gallium-egl)"
+		myconf+="--with-egl-platforms=x11$(use wayland && echo ",wayland")$(use gbm && echo ",drm") "
 	fi
 
 	if use gallium; then
