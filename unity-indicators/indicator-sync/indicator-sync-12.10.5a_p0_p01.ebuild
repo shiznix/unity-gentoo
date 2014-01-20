@@ -35,6 +35,21 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	# Install desktop file #
+	sed -e 's:xdg_autostart_DATA = indicator-sync.conf:xdg_autostart_DATA = indicator-sync.desktop:g' \
+		-i data/Makefile.am || die
+
+	# Make indicator start using XDG autostart #
+	sed -e '/NotShowIn=/d' \
+		-i data/indicator-sync.desktop.in
+
 	eautoreconf
 	gnome2_src_prepare
+}
+
+src_install() {
+	emake DESTDIR="${D}" install
+
+	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
+	rm -rf "${ED}usr/share/upstart"
 }

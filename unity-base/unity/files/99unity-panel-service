@@ -1,7 +1,6 @@
 # This file is sourced by Xsession(5), not executed.
-# Start 'unity-panel-service' if we are in a Unity desktop session
+# Tell 'unity-panel-service' not to start using upstart
 
 if [ "x$DESKTOP_SESSION" = "xunity" ]; then
 	export PANEL_USE_LOCAL_SERVICE=1
-	exec /usr/lib/unity/unity-panel-service &
 fi

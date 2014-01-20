@@ -44,9 +44,13 @@ src_prepare() {
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 
-# Make "Sound Settings" open gnome-control-center sound settings #
+	# Make "Sound Settings" open gnome-control-center sound settings #
 	sed -e 's:sound-nua:sound:g' \
 		-i src/service.vala
+
+	# Make indicator start using XDG autostart #
+	sed -e '/NotShowIn=/d' \
+		-i data/indicator-sound.desktop.in
 }
 
 src_configure() {
@@ -54,6 +58,13 @@ src_configure() {
 		-DVALA_COMPILER=$VALAC
 		-DVAPI_GEN=$VAPIGEN"
 	cmake-utils_src_configure
+}
+
+src_install() {
+	cmake-utils_src_install
+
+	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
+	rm -rf "${ED}usr/share/upstart"
 }
 
 pkg_preinst() {

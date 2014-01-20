@@ -1,5 +1,5 @@
 # This file is sourced by Xsession(5), not executed.
-# Start 'unity-panel-service' if we are in a Unity desktop session
+# Start 'ibus-daemon' if we are in a Unity desktop session
 
 if [ "x$DESKTOP_SESSION" = "xunity" ]; then
 	export XMODIFIERS="@im=ibus"

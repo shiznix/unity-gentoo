@@ -8,7 +8,7 @@ inherit autotools eutils flag-o-matic ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131125"
+UVER_PREFIX="+14.04.20140117"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-application"
@@ -30,9 +30,16 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 src_prepare() {
 	eautoreconf
 	append-cflags -Wno-error
+
+	# Make indicator start using XDG autostart #
+	sed -e '/NotShowIn=/d' \
+		-i data/indicator-application.desktop.in
 }
 
 src_install() {
 	emake DESTDIR="${D}" install
 	prune_libtool_files --modules
+
+	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
+	rm -rf "${ED}usr/share/upstart"
 }

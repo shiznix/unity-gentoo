@@ -35,4 +35,16 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 src_prepare() {
 	append-cflags -Wno-error
 	eautoreconf
+
+
+	# Make indicator start using XDG autostart #
+	sed -e '/NotShowIn=/d' \
+		-i data/indicator-power.desktop.in
+}
+
+src_install() {
+	emake DESTDIR="${D}" install
+
+	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
+	rm -rf "${ED}usr/share/upstart"
 }
