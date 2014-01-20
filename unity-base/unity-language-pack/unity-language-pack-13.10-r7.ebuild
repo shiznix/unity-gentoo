@@ -36,8 +36,6 @@ setvar language-pack-af			13.10+20131012
 setvar language-pack-af-base		13.10+20131012
 setvar language-pack-gnome-af		13.10+20131012
 setvar language-pack-gnome-af-base	13.10+20131012
-setvar language-pack-gnome-ak		8.04+20081006
-setvar language-pack-gnome-ak-base	8.04+20080527
 setvar language-pack-am			13.10+20131012
 setvar language-pack-am-base		13.10+20131012
 setvar language-pack-gnome-am		13.10+20131012
@@ -258,10 +256,6 @@ setvar language-pack-ja			13.10+20131012
 setvar language-pack-ja-base		13.10+20131012
 setvar language-pack-gnome-ja		13.10+20131012
 setvar language-pack-gnome-ja-base	13.10+20131012
-setvar language-pack-jv			8.04+20080527
-setvar language-pack-jv-base		8.04+20080527
-setvar language-pack-gnome-jv		8.04+20081006
-setvar language-pack-gnome-jv-base	8.04+20080527
 setvar language-pack-ka			13.10+20131012
 setvar language-pack-ka-base		13.10+20131012
 setvar language-pack-gnome-ka		13.10+20131012
@@ -286,8 +280,6 @@ setvar language-pack-ko			13.10+20131012
 setvar language-pack-ko-base		13.10+20131012
 setvar language-pack-gnome-ko		13.10+20131012
 setvar language-pack-gnome-ko-base	13.10+20131012
-setvar language-pack-gnome-kok		8.04+20080527
-setvar language-pack-gnome-kok-base	8.04+20080527
 setvar language-pack-ks			13.10+20131012
 setvar language-pack-ks-base		13.10+20131012
 setvar language-pack-gnome-ks		13.10+20131012
@@ -400,10 +392,6 @@ setvar language-pack-nn			13.10+20131012
 setvar language-pack-nn-base		13.10+20131012
 setvar language-pack-gnome-nn		13.10+20131012
 setvar language-pack-gnome-nn-base	13.10+20131012
-setvar language-pack-no			8.04+20080527
-setvar language-pack-no-base		8.04+20080527
-setvar language-pack-gnome-no		8.04+20081103
-setvar language-pack-gnome-no-base	8.04+20080527
 setvar language-pack-nso		13.10+20131012
 setvar language-pack-nso-base		13.10+20131012
 setvar language-pack-gnome-nso		13.10+20131012
@@ -444,10 +432,6 @@ setvar language-pack-pt			13.10+20131012
 setvar language-pack-pt-base		13.10+20131012
 setvar language-pack-gnome-pt		13.10+20131012
 setvar language-pack-gnome-pt-base	13.10+20131012
-setvar language-pack-rm			8.04+20080527
-setvar language-pack-rm-base		8.04+20080527
-setvar language-pack-gnome-rm		8.04+20080527
-setvar language-pack-gnome-rm-base	8.04+20080527
 setvar language-pack-ro			13.10+20131012
 setvar language-pack-ro-base		13.10+20131012
 setvar language-pack-gnome-ro		13.10+20131012
@@ -468,10 +452,6 @@ setvar language-pack-sc			13.10+20131012
 setvar language-pack-sc-base		13.10+20131012
 setvar language-pack-gnome-sc		13.10+20131012
 setvar language-pack-gnome-sc-base	13.10+20131012
-setvar language-pack-sco		8.04+20080527
-setvar language-pack-sco-base		8.04+20080527
-setvar language-pack-gnome-sco		8.04+20081006
-setvar language-pack-gnome-sco-base	8.04+20080527
 setvar language-pack-sd			13.10+20131012
 setvar language-pack-sd-base		13.10+20131012
 setvar language-pack-gnome-sd		13.10+20131012
@@ -619,24 +599,24 @@ setvar language-pack-gnome-zu-base	13.10+20131012
 
 
 ## Only languages that are listed in /usr/portage/profiles/desc/linguas.desc are supported ##
-IUSE_LINGUAS="aa af ak am an ar as ast az be be@latin bem ber
+IUSE_LINGUAS="aa af am an ar as ast az be be@latin bem ber
 bg bn bo br bs ca ca@valencia crh cs csb cv cy da de dv dz el
 en en_AU en_CA en_GB en@shaw en_US en_US@piglatin eo es et eu
 fa fi fil fo fr fur fy ga gd gl gu gv ha he hi hr ht hu hy ia
-id ig is it ja jv ka kk kl km kn ko kok ks ku kw ky la lb lg
+id ig is it ja ka kk kl km kn ko ks ku kw ky la lb lg
 li lo lt lv mai mg mhr mi mk ml mn mr ms mt my nan nb nds
-nds@NFE ne nl nn no nso oc om or os pa pap pl ps pt pt_BR rm
-ro ru rw sa sc sco sd se shs si sk sl sn so sq sr sr@ije
+nds@NFE ne nl nn nso oc om or os pa pap pl ps pt pt_BR
+ro ru rw sa sc sd se shs si sk sl sn so sq sr sr@ije
 sr@latin sr@Latn st sv sw ta te tg th ti tk tl tr ts tt ug uk
 ur uz uz@cyrillic uz@Latn ve vi wa wae wo xh yi yo zh zu"
 
 ## Only languages that are listed in /usr/portage/profiles/desc/linguas.desc are supported ##
-TARBALL_LANGS="aa af ak am an ar as ast az be bem ber bg bn bo
+TARBALL_LANGS="aa af am an ar as ast az be bem ber bg bn bo
 br bs ca crh cs csb cv cy da de dv dz el en eo es et eu fa fi
 fil fo fr fur fy ga gd gl gu gv ha he hi hr ht hu hy ia id ig
-is it ja jv ka kk kl km kn ko kok ks ku kw ky la lb lg li lo lt
-lv mai mg mhr mi mk ml mn mr ms mt my nan nb nds ne nl nn no
-nso oc om or os pa pap pl ps pt rm ro ru rw sa sc sco sd se shs
+is it ja ka kk kl km kn ko ks ku kw ky la lb lg li lo lt
+lv mai mg mhr mi mk ml mn mr ms mt my nan nb nds ne nl nn
+nso oc om or os pa pap pl ps pt ro ru rw sa sc sd se shs
 si sk sl so sq sr st sv sw ta te tg th ti tk tl tr ts tt ug uk
 ur uz ve vi wa wae wo xh yi yo zh zu"
 
