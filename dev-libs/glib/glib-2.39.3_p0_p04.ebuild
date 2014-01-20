@@ -23,6 +23,7 @@ LICENSE="LGPL-2+"
 SLOT="2/$(get_version_component_range 2-3)"
 IUSE="debug fam kernel_linux selinux static-libs systemtap test utils xattr"
 #KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~sparc-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux"
+RESTRICT="mirror"
 
 # FIXME: want libselinux[${MULTILIB_USEDEP}] - bug #480960
 RDEPEND="
