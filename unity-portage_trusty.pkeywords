@@ -140,9 +140,9 @@ dev-python/python-distutils-extra
 dev-python/python-exec
 dev-python/python-prctl
 dev-python/rdflib
-dev-python/twisted-core
-dev-python/twisted-names
-dev-python/twisted-web
+~dev-python/twisted-core-13.0.0
+~dev-python/twisted-names-13.0.0
+~dev-python/twisted-web-13.0.0
 dev-qt/qtcore:5
 dev-qt/qtdbus:5
 dev-qt/qtdeclarative:5
