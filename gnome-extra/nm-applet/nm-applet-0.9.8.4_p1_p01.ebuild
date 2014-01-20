@@ -64,7 +64,7 @@ src_prepare() {
         PATCHES+=( "${FILESDIR}/modemmanager_build-fix.diff" )
 
 	# Allow nm-applet to autostart in gnome-2 and gnome-3.6 fallback sessions
-	PATCHES+=( "${FILESDIR}/${PN}-0.9.8.4-autostart.patch" )
+#	PATCHES+=( "${FILESDIR}/${PN}-0.9.8.4-autostart.patch" )
 
         base_src_prepare
 
