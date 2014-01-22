@@ -20,7 +20,7 @@ LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 
-IUSE="battery +branding networkmanager nls"
+IUSE="accessibility battery +branding networkmanager nls"
 RESTRICT="mirror"
 
 DEPEND="x11-libs/gtk+:3
@@ -32,18 +32,19 @@ DEPEND="x11-libs/gtk+:3
 	unity-indicators/ido
 	$(vala_depend)"
 
-RDEPEND="unity-base/unity-language-pack
+RDEPEND="accessibility? ( app-accessibility/onboard
+			app-accessibility/orca )
+	battery? ( unity-indicators/indicator-power )
+	networkmanager? ( >=gnome-extra/nm-applet-0.9.8.0 )
+	media-fonts/ubuntu-font-family
+	unity-base/unity-language-pack
 	unity-indicators/indicator-session
 	unity-indicators/indicator-datetime
 	unity-indicators/indicator-sound
 	unity-indicators/indicator-application
-	battery? ( unity-indicators/indicator-power )
-	networkmanager? ( >=gnome-extra/nm-applet-0.9.8.0 )
-	media-fonts/ubuntu-font-family
 	x11-themes/ubuntu-wallpapers
 	>=gnome-base/gsettings-desktop-schemas-3.8
-	>=app-admin/eselect-lightdm-0.1
-	"
+	>=app-admin/eselect-lightdm-0.1"
 
 pkg_pretend() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
@@ -53,6 +54,7 @@ pkg_pretend() {
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"
+	epatch -p1 "${FILESDIR}/spawn_indicators.patch"
 
 	# patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
@@ -98,6 +100,9 @@ src_install() {
 
 	insinto /usr/share/polkit-1/rules.d/
 	newins "${FILESDIR}/50-unity-greeter.rules" 50-unity-greeter.rules || die
+
+	exeinto /usr/bin
+	doexe "${FILESDIR}/unity-greeter-indicators-start"
 }
 
 pkg_preinst() {

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Pulseaudio server needs to be started as 'lightdm' user for volume indicator to work on login screen #
+/usr/bin/start-pulseaudio-x11 &
+
+# Load each indicator in turn respecting unity-greeter's dconf setting #
+#  This is necessary since starting indicators via dbus has been deprecated in favour of using 'upstart' init system services #
+for indicator in $(gsettings get com.canonical.unity-greeter indicators | \
+				sed "s/,/\\n/g; s/[]\[']//g" | grep com.canonical | \
+					sed "s/com.canonical.//g; s/\./-/g"); do
+	if [ -x /usr/libexec/${indicator}/${indicator}-service ]; then
+		exec /usr/libexec/${indicator}/${indicator}-service &
+	fi
+done

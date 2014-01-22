@@ -219,6 +219,7 @@ x11-proto/xcb-proto
 x11-themes/notify-osd-icons
 
 ## Overlay missing keyword unmasking ##
+app-accessibility/onboard::unity-gentoo **
 app-backup/deja-dup::unity-gentoo **
 dev-libs/dee::unity-gentoo **
 dev-libs/glib::unity-gentoo **

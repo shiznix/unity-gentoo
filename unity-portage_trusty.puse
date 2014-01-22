@@ -1,5 +1,6 @@
 */* -consolekit -packagekit systemd zeitgeist
 
+app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
 app-crypt/libsecret crypt vala
