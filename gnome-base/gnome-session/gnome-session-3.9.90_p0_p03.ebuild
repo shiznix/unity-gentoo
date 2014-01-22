@@ -66,7 +66,6 @@ RDEPEND="${COMMON_DEPEND}
 	>=gnome-base/gnome-desktop-3.7.90:3
 	systemd? ( >=sys-apps/systemd-183 )
 	!systemd? ( sys-auth/consolekit )
-	unity-base/session-migration
 "
 DEPEND="${COMMON_DEPEND}
 	>=dev-lang/perl-5
