@@ -128,3 +128,9 @@ x11-wm/metacity				# Patched to support compiz window decoration
 			- SOLUTION:
 				- Introduce media-libs/mesa-mir ebuild that installs only the mesa EGL related files and DEPENDS on mir-base/mir
 				- Introduce 'mir' useflag to media-libs/mesa which when enabled removes all EGL related files and PDEPENDS on media-libs/mesa-mir
+
+* Ubuntu use the 'upstart' init system to start services
+	- Since Trusty, Ubuntu migrate to use their own 'upstart' init system to start desktop services instead of dbus
+		- Most upstart services traditionally found in /usr/share/upstart/sessions are ported by us to instead run via /etc/X11/xinit/xinitrc.d/ entries
+		- Unity-panel-service indicators are now started via their /etc/xdg/autostart/*.desktop entry
+		- Lightdm unity-greeter indicators is hardcoded to use upstart to start indicators so is now patched to instead start /usr/bin/unity-greeter-indicators-start

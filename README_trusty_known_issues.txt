@@ -1,3 +1,10 @@
-- Rhythmbox 3.0 depends on python3 with 'PYTHON_SINGLE_TARGET'
-  * 'unity-base/rhythmbox-ubuntuone' depends on python2
-    there exists a patch to get 'unity-base/rhythmbox-ubuntuone' itself python3 compatible, but not all of its dependencies. e.g. 'dev-python/twisted-core' -> 'dev-python/pygtk'
+- Redhat bug #806491
+  * systemd-logind not tracking startx sessions leading to user not having system suspend and drive mounting permissions
+  * workaround:
+    -> XSESSION=unity startx -- vt$(tty | sed 's:.*[a-z]::g')
+
+- Ubuntu for Trusty currently has left-click window spread on a side launcher bar icon that has two or more windows open,
+    either currently broken or disabled by design (refer launchpad bugs #1104632 and #1255711)
+
+- Launchpad bug #1251915
+  * KDE applications do not appear as 'Recently used' in either the 'Home' or 'Applications' Dash lenses
