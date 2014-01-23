@@ -89,7 +89,7 @@ src_prepare() {
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
         # Do not depend on Debian/Ubuntu specific adduser package
-        epatch "${FILESDIR}"/guest-session-cross-distro.patch
+        epatch "${FILESDIR}"/guest-session-cross-distro_1.9.6.patch
 
         # Add support for settings GSettings/dconf defaults in the guest session. Just
         # put the files in /etc/guest-session/gsettings/. The file format is the same
@@ -196,7 +196,6 @@ src_install() {
 }
 
 pkg_postinst() {
-        elog
         elog "'guest session' is disabled by default."
         elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
         elog "or run '/usr/libexec/lightdm/lightdm-set-defaults --allow-guest=true'"

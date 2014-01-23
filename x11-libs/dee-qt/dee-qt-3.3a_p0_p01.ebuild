@@ -6,9 +6,9 @@ EAPI=5
 
 inherit cmake-utils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/d/${PN}"
+UURL="mirror://ubuntu/pool/main/d/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20130924.2"
+UVER_PREFIX="+14.04.20140116"
 
 DESCRIPTION="Qt binding and QML plugin for Dee for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"

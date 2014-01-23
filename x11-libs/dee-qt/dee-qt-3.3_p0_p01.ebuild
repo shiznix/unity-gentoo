@@ -6,7 +6,7 @@ EAPI=5
 
 inherit cmake-utils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/d/${PN}"
+UURL="mirror://ubuntu/pool/main/d/${PN}"
 URELEASE="saucy"
 UVER_PREFIX="+13.10.20130924.2"
 
