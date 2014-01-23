@@ -21,9 +21,11 @@ SLOT="0/4"
 IUSE="test"
 RESTRICT="mirror"
 
+RDEPEND="dev-libs/protobuf:="
 DEPEND="dev-cpp/gflags
 	dev-cpp/glog
 	dev-libs/boost
+	dev-libs/protobuf
 	>=dev-util/lttng-tools-2.1.1[ust]
 	dev-util/umockdev
 	media-libs/glm

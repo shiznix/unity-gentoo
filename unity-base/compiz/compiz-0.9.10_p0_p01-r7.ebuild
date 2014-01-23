@@ -33,6 +33,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	dev-cpp/glibmm
 	dev-libs/libxml2
 	dev-libs/libxslt
+	dev-libs/protobuf
 	dev-python/pyrex
 	gnome-base/gconf
 	>=gnome-base/gsettings-desktop-schemas-3.8
@@ -69,6 +70,7 @@ DEPEND="${COMMONDEPEND}
 	x11-proto/xineramaproto"
 
 RDEPEND="${COMMONDEPEND}
+	dev-libs/protobuf:=
 	unity-base/unity-language-pack
 	x11-apps/mesa-progs
 	x11-apps/xvinfo"
