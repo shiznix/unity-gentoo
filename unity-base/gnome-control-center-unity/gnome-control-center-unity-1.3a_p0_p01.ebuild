@@ -43,3 +43,13 @@ src_prepare() {
 	base_src_prepare
 	eautoreconf
 }
+
+src_install() {
+	emake DESTDIR="${D}" install
+
+	# Remove as is provided by unity-base/unity-control-center #
+	rm -rf "${ED}usr/share/icons"
+
+	prune_libtool_files --modules
+}
+
