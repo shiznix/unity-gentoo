@@ -100,3 +100,15 @@ src_install() {
 	dosym nm-signal-100-secure.png \
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
 }
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
+}
