@@ -229,6 +229,7 @@ dev-libs/libaccounts-glib **
 dev-libs/libappindicator::unity-gentoo **
 dev-libs/libcolumbus **
 dev-libs/libdbusmenu **
+dev-libs/libdbusmenu-qt **
 dev-libs/libfriends **
 dev-libs/libindicator::unity-gentoo **
 dev-libs/libsignon-glib **
