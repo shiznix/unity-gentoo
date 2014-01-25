@@ -343,6 +343,7 @@ x11-drivers/xf86-video-nouveau::unity-gentoo **
 x11-libs/accounts-qml-module **
 x11-libs/dee-qt **
 x11-libs/gtk+::unity-gentoo **
+x11-libs/gsettings-qt **
 x11-libs/libaccounts-qt **
 x11-libs/libXfixes::unity-gentoo **
 x11-libs/libXi::unity-gentoo **
