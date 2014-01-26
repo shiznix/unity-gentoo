@@ -12,7 +12,7 @@ inherit autotools base eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131029.1"
+UVER_PREFIX="+14.04.20140124"
 
 DESCRIPTION="System bluetooth indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-bluetooth"
