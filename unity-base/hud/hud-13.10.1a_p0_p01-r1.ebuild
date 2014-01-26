@@ -11,7 +11,7 @@ inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator va
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140108.is.13.10.1+14.04.20131205"
+UVER_PREFIX="+14.04.20140120"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"
@@ -24,11 +24,15 @@ IUSE="test"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/libdbusmenu:=
-	unity-base/bamf:="
+	unity-base/bamf:=
+	unity-base/unity-voice:=
+"
 DEPEND="${RDEPEND}
+	dev-cpp/gmock
 	dev-db/sqlite:3
 	dev-libs/dee[${PYTHON_USEDEP}]
 	>=dev-libs/glib-2.35.4[${PYTHON_USEDEP}]
+	dev-libs/libqtdbusmock
 	dev-perl/XML-Parser
 	gnome-base/dconf
 	sys-libs/libnih[dbus]
@@ -37,6 +41,12 @@ DEPEND="${RDEPEND}
 	app-accessibility/pocketsphinx[${PYTHON_USEDEP}]
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
+	dev-qt/qtwidgets:5
+	dev-qt/qtsql:5
+	dev-qt/qttest:5
+	>=x11-libs/dee-qt-3.3[qt5]
+	x11-libs/gsettings-qt
+	dev-libs/libdbusmenu-qt[qt5]
 	$(vala_depend)
 	test? ( dev-util/dbus-test-runner )"
 
@@ -54,6 +64,9 @@ src_prepare() {
 		trap 'kill $\(jobs -pr\)' SIGINT SIGTERM EXIT\n \
 		@pkglibexecdir@\/window-stack-bridge &" \
 			-i data/dbus-activation-hack.sh.in || die
+
+	# disable build of tests
+	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
 }
 
 src_configure() {

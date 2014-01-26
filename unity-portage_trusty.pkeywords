@@ -239,6 +239,8 @@ dev-libs/libunity-misc **
 dev-libs/libunity-webapps **
 dev-libs/libupstart **
 dev-libs/libupstart-app-launch **
+dev-libs/libqtdbusmock **
+dev-libs/libqtdbustest **
 dev-libs/xpathselect **
 dev-python/autopilot **
 dev-python/dirspec **
@@ -307,6 +309,7 @@ unity-base/unity **
 unity-base/unity-control-center **
 unity-base/unity-gtk-module **
 unity-base/unity-language-pack **
+unity-base/unity-voice **
 unity-base/webapps **
 unity-base/webapps-base **
 unity-extra/glipper **
