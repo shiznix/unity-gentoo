@@ -38,9 +38,6 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	# fix compile error 'Invalid assignment from owned expression to unowned variable' error similar to LP #1252491 
-	epatch "${FILESDIR}/indicator-sound-12.10.2+14.04-fix-unowned-variable.patch"
-
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 
