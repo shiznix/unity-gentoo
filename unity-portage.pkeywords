@@ -15,13 +15,13 @@ app-crypt/libsecret
 =app-cdr/brasero-3.8*  
 =app-editors/gedit-3.8*
 =app-text/evince-3.8*
-dev-libs/folks
-dev-libs/gjs
+~dev-libs/folks-0.9.3
+~dev-libs/gjs-1.36.1
 dev-libs/libgdata
 dev-libs/libgee
 dev-libs/libpeas
 ~dev-libs/nspr-4.10.2
-dev-libs/totem-pl-parser
+~dev-libs/totem-pl-parser-3.4.5
 =dev-libs/libgweather-3.8*
 gnome-base/dconf
 =gnome-base/gdm-3.8*
@@ -110,7 +110,7 @@ app-i18n/ibus
 app-text/gtkspell
 dev-lang/orc
 ~dev-lang/perl-5.16.1
-dev-cpp/gtkmm
+~dev-cpp/gtkmm-3.8.1
 dev-cpp/glibmm
 dev-lang/python-exec
 dev-lang/vala
