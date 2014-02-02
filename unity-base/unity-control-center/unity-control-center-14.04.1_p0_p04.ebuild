@@ -16,7 +16,8 @@ URELEASE="trusty"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -126,6 +127,8 @@ DEPEND="${COMMON_DEPEND}
 #	gnome-base/gnome-common
 
 src_prepare() {
+	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"
+	epatch "${FILESDIR}/unity-control-center-optional-bt-colord-wacom.patch"
 	eautoreconf
 	gnome2_src_prepare
 
@@ -143,7 +146,6 @@ src_configure() {
 		--disable-update-mimedb \
 		--disable-static \
 		--enable-documentation \
-		--disable-goa \
 		--without-cheese \
 		$(use_enable bluetooth) \
 		$(use_enable colord color) \
