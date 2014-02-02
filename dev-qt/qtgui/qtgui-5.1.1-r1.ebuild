@@ -95,7 +95,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	if has_version ">=x11-libs/libxcb-1.9.3"; then
+	if has_version "=x11-libs/libxcb-1.9.3*"; then
 		epatch -p1 "${FILESDIR}/xcb-193.patch"
 	fi
 	qt5-build_src_prepare
