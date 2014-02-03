@@ -16,7 +16,8 @@ URELEASE="trusty"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -126,6 +127,7 @@ DEPEND="${COMMON_DEPEND}
 #	gnome-base/gnome-common
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	eautoreconf
 	gnome2_src_prepare
 
