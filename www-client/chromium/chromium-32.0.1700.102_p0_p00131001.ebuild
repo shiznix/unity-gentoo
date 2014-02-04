@@ -9,15 +9,15 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
 	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt_BR pt_PT ro ru sk sl sr
 	sv sw ta te th tr uk vi zh_CN zh_TW"
 
-inherit base chromium eutils flag-o-matic multilib multiprocessing \
-	pax-utils portability python-any-r1 toolchain-funcs ubuntu-versionator versionator virtualx
+inherit base chromium eutils flag-o-matic multilib multiprocessing pax-utils \
+	portability python-any-r1 readme.gentoo toolchain-funcs ubuntu-versionator versionator virtualx
 
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
-URELEASE="trusty"
-UVER_SUFFIX="~20131204.1"
+URELEASE="saucy-updates"
+UVER_SUFFIX="~20140128.970.1"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -27,8 +27,8 @@ SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN
 
 LICENSE="BSD"
 SLOT="0"
-#KEYWORDS="~amd64 ~arm ~x86"
-IUSE="bindist cups gnome gnome-keyring gps kerberos neon pulseaudio selinux system-sqlite tcmalloc"
+KEYWORDS="~amd64 ~arm ~x86"
+IUSE="bindist cups gnome gnome-keyring kerberos neon pulseaudio selinux +tcmalloc"
 RESTRICT="mirror"
 
 # Native Client binaries are compiled with different set of flags, bug #452066.
@@ -41,7 +41,6 @@ QA_PRESTRIPPED=".*\.nexe"
 RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	app-arch/bzip2:=
 	app-arch/snappy:=
-	system-sqlite? ( dev-db/sqlite:3 )
 	cups? (
 		dev-libs/libgcrypt:=
 		>=net-print/cups-1.3.11:=
@@ -55,11 +54,10 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	dev-libs/libxslt:=
 	dev-libs/nspr:=
 	>=dev-libs/nss-3.14.3:=
-	dev-libs/protobuf:=
+	>=dev-libs/protobuf-2.5.0:=
 	dev-libs/re2:=
 	gnome? ( >=gnome-base/gconf-2.24.0:= )
 	gnome-keyring? ( >=gnome-base/gnome-keyring-2.28.2:= )
-	gps? ( >=sci-geosciences/gpsd-3.7:=[shm] )
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/flac:=
 	media-libs/harfbuzz:=[icu(+)]
@@ -70,6 +68,7 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	pulseaudio? ( media-sound/pulseaudio:= )
 	sys-apps/dbus:=
 	sys-apps/pciutils:=
+	>=sys-libs/libcap-2.22:=
 	sys-libs/zlib:=[minizip]
 	virtual/udev
 	x11-libs/gtk+:2=
@@ -80,15 +79,11 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	kerberos? ( virtual/krb5 )
 	selinux? ( sec-policy/selinux-chromium )"
 DEPEND="${RDEPEND}
-	${PYTHON_DEPS}
 	!arm? (
 		dev-lang/yasm
 	)
 	dev-lang/perl
 	dev-perl/JSON
-	>=dev-python/jinja-2.7
-	dev-python/ply
-	dev-python/simplejson
 	>=dev-util/gperf-3.0.3
 	dev-util/ninja
 	sys-apps/hwids
@@ -97,16 +92,56 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	test? (
 		dev-libs/openssl:0
-		dev-python/pyftpdlib
 	)"
+# For nvidia-drivers blocker, see bug #413637 .
 RDEPEND+="
 	!=www-client/chromium-9999
 	x11-misc/xdg-utils
-	virtual/ttf-fonts"
+	virtual/ttf-fonts
+	tcmalloc? ( !<x11-drivers/nvidia-drivers-331.20 )"
+
+# Python dependencies. The DEPEND part needs to be kept in sync
+# with python_check_deps.
+DEPEND+=" $(python_gen_any_dep '
+	>=dev-python/jinja-2.7[${PYTHON_USEDEP}]
+	dev-python/ply[${PYTHON_USEDEP}]
+	dev-python/simplejson[${PYTHON_USEDEP}]
+	test? ( dev-python/pyftpdlib[${PYTHON_USEDEP}] )
+')"
+python_check_deps() {
+	has_version ">=dev-python/jinja-2.7[${PYTHON_USEDEP}]" && \
+		has_version "dev-python/ply[${PYTHON_USEDEP}]" && \
+		has_version "dev-python/simplejson[${PYTHON_USEDEP}]" && \
+		{ ! use test || has_version "dev-python/pyftpdlib[${PYTHON_USEDEP}]"; }
+}
 
 if ! has chromium_pkg_die ${EBUILD_DEATH_HOOKS}; then
 	EBUILD_DEATH_HOOKS+=" chromium_pkg_die";
 fi
+
+DISABLE_AUTOFORMATTING="yes"
+DOC_CONTENTS="
+Some web pages may require additional fonts to display properly.
+Try installing some of the following packages if some characters
+are not displayed properly:
+- media-fonts/arphicfonts
+- media-fonts/bitstream-cyberbit
+- media-fonts/droid
+- media-fonts/ipamonafont
+- media-fonts/ja-ipafonts
+- media-fonts/takao-fonts
+- media-fonts/wqy-microhei
+- media-fonts/wqy-zenhei
+
+Depending on your desktop environment, you may need
+to install additional packages to get icons on the Downloads page.
+
+For KDE, the required package is kde-base/oxygen-icons.
+
+For other desktop environments, try one of the following:
+- x11-themes/gnome-icon-theme
+- x11-themes/tango-icon-theme
+"
 
 pkg_setup() {
 	if [[ "${SLOT}" == "0" ]]; then
@@ -143,9 +178,8 @@ src_prepare() {
 	#	touch out/Release/gen/sdk/toolchain/linux_x86_newlib/stamp.untar || die
 	# fi
 
-	epatch "${FILESDIR}/${PN}-gpsd-r0.patch"
-	epatch "${FILESDIR}/${PN}-system-icu-r0.patch"
-	epatch "${FILESDIR}/${PN}-system-jinja-r0.patch"
+	epatch "${FILESDIR}/${PN}-system-jinja-r2.patch"
+	epatch "${FILESDIR}/${PN}-build_ffmpeg-r0.patch"
 
 	epatch_user
 
@@ -220,10 +254,6 @@ src_configure() {
 	# additions, bug #336871.
 	myconf+=" -Ddisable_sse2=1"
 
-	# Optional tcmalloc. Note it causes problems with e.g. NVIDIA
-	# drivers, bug #413637.
-	myconf+=" $(gyp_use tcmalloc linux_use_tcmalloc)"
-
 	# Disable nacl, we can't build without pnacl (http://crbug.com/269560).
 	myconf+=" -Ddisable_nacl=1"
 
@@ -284,19 +314,9 @@ src_configure() {
 		$(gyp_use gnome use_gconf)
 		$(gyp_use gnome-keyring use_gnome_keyring)
 		$(gyp_use gnome-keyring linux_link_gnome_keyring)
-		$(gyp_use gps linux_use_libgps)
-		$(gyp_use gps linux_link_libgps)
 		$(gyp_use kerberos)
-		$(gyp_use pulseaudio)"
-
-	if use system-sqlite; then
-		elog "Enabling system sqlite. WebSQL - http://www.w3.org/TR/webdatabase/"
-		elog "will not work. Please report sites broken by this"
-		elog "to https://bugs.gentoo.org"
-		myconf+="
-			-Duse_system_sqlite=1
-			-Denable_sql_database=0"
-	fi
+		$(gyp_use pulseaudio)
+		$(gyp_use tcmalloc linux_use_tcmalloc)"
 
 	# Use explicit library dependencies instead of dlopen.
 	# This makes breakages easier to detect by revdep-rebuild.
@@ -343,10 +363,14 @@ src_configure() {
 
 	local myarch="$(tc-arch)"
 	if [[ $myarch = amd64 ]] ; then
-		myconf+=" -Dtarget_arch=x64"
+		target_arch=x64
+		ffmpeg_target_arch=x64
 	elif [[ $myarch = x86 ]] ; then
-		myconf+=" -Dtarget_arch=ia32"
+		target_arch=ia32
+		ffmpeg_target_arch=ia32
 	elif [[ $myarch = arm ]] ; then
+		target_arch=arm
+		ffmpeg_target_arch=$(usex neon arm-neon arm)
 		# TODO: re-enable NaCl (NativeClient).
 		local CTARGET=${CTARGET:-${CHOST}}
 		if [[ $(tc-is-softfloat) == "no" ]]; then
@@ -361,19 +385,14 @@ src_configure() {
 		else
 			myconf+=" -Darmv7=0"
 		fi
-		myconf+=" -Dtarget_arch=arm
-			-Dsysroot=
+		myconf+=" -Dsysroot=
 			$(gyp_use neon arm_neon)
 			-Ddisable_nacl=1"
 	else
 		die "Failed to determine target arch, got '$myarch'."
 	fi
 
-	if host-is-pax; then
-		# Prevent the build from failing (bug #301880, bug #487144). The performance
-		# difference is very small.
-		myconf+=" -Dv8_use_snapshot=0"
-	fi
+	myconf+=" -Dtarget_arch=${target_arch}"
 
 	# Make sure that -Werror doesn't get added to CFLAGS by the build system.
 	# Depending on GCC version the warnings are different and we don't want
@@ -400,6 +419,18 @@ src_configure() {
 	export CXX_host=$(tc-getBUILD_CXX)
 	export LD_host=${CXX_host}
 
+	# Bug 491582.
+	export TMPDIR="${WORKDIR}/temp"
+	mkdir -m 755 "${TMPDIR}" || die
+
+	# Re-configure bundled ffmpeg. See bug #491378 for example reasons.
+	einfo "Configuring bundled ffmpeg..."
+	pushd third_party/ffmpeg > /dev/null || die
+	chromium/scripts/build_ffmpeg.sh linux ${ffmpeg_target_arch} "${PWD}" config-only || die
+	chromium/scripts/copy_config.sh || die
+	popd > /dev/null || die
+
+	einfo "Configuring Chromium..."
 	build/linux/unbundle/replace_gyp_files.py ${myconf} || die
 	egyp_chromium ${myconf} || die
 }
@@ -416,6 +447,10 @@ src_compile() {
 	if use test; then
 		ninja_targets+=" $test_targets"
 	fi
+
+	# Build mksnapshot and pax-mark it.
+	ninja -C out/Release -v -j $(makeopts_jobs) mksnapshot.${target_arch} || die
+	pax-mark m out/Release/mksnapshot.${target_arch}
 
 	# Even though ninja autodetects number of CPUs, we respect
 	# user's options, for debugging with -j 1 or any other reason.
@@ -566,17 +601,14 @@ src_install() {
 			chromium-browser${CHROMIUM_SUFFIX}.png
 	done
 
-	local mime_types="text/html;text/xml;application/xhtml+xml;"
-	mime_types+="x-scheme-handler/http;x-scheme-handler/https;" # bug #360797
-	mime_types+="x-scheme-handler/ftp;" # bug #412185
-	mime_types+="x-scheme-handler/mailto;x-scheme-handler/webcal;" # bug #416393
-	make_desktop_entry \
-		chromium-browser${CHROMIUM_SUFFIX} \
-		"Chromium${CHROMIUM_SUFFIX}" \
-		chromium-browser${CHROMIUM_SUFFIX} \
-		"Network;WebBrowser" \
-		"MimeType=${mime_types}\nStartupWMClass=chromium-browser"
-	sed -e "/^Exec/s/$/ %U/" -i "${ED}"/usr/share/applications/*.desktop || die
+	# Custom Ubuntu *.desktop file contains Quicklist menu #
+	insinto /usr/share/applications
+	newins "${WORKDIR}/debian/chromium-browser.desktop" \
+			chromium-browser-chromium.desktop
+	sed \
+		-e "/^Exec/s/$/ %U/" \
+		-e "/^MimeType/s/$/x-scheme-handler\/ftp;x-scheme-handler\/mailto;x-scheme-handler\/webcal;/" \
+			-i "${ED}"/usr/share/applications/chromium-browser-chromium.desktop || die
 
 	# Install GNOME default application entry (bug #303100).
 	if use gnome; then
@@ -588,4 +620,12 @@ src_install() {
 				"${ED}"/usr/share/gnome-control-center/default-apps/chromium-browser${CHROMIUM_SUFFIX}.xml
 		fi
 	fi
+
+	readme.gentoo_create_doc
+}
+
+pkg_postinst() {
+	fdo-mime_desktop_database_update
+	gnome2_icon_cache_update
+	readme.gentoo_print_elog
 }
