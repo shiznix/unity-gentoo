@@ -127,7 +127,7 @@ DEPEND="${COMMON_DEPEND}
 #	gnome-base/gnome-common
 
 src_prepare() {
-	epatch "${WORKDIR}/${MY_P}-${UVER}.diff"
+	epatch  -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	epatch "${FILESDIR}/unity-control-center-optional-bt-colord-wacom.patch"
 	eautoreconf
 	gnome2_src_prepare
@@ -146,6 +146,7 @@ src_configure() {
 		--disable-update-mimedb \
 		--disable-static \
 		--enable-documentation \
+		--disable-goa \
 		--without-cheese \
 		$(use_enable bluetooth) \
 		$(use_enable colord color) \
