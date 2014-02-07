@@ -17,7 +17,6 @@ app-crypt/libsecret
 =app-text/evince-3.8*
 ~dev-libs/folks-0.9.3
 ~dev-libs/gjs-1.36.1
-dev-libs/libgdata
 dev-libs/libgee
 dev-libs/libpeas
 ~dev-libs/nspr-4.10.2
@@ -62,10 +61,8 @@ gnome-extra/zeitgeist-extensions
 =media-gfx/eog-3.8*
 =media-gfx/gnome-screenshot-3.8*
 media-gfx/shotwell
-media-libs/clutter
-media-libs/clutter-gst
-media-libs/clutter-gtk
-media-libs/cogl
+~media-libs/clutter-1.16.2
+~media-libs/cogl-1.16.0
 =media-libs/gstreamer-1.0*
 =media-libs/gst-plugins-base-1.0*
 =media-libs/gst-plugins-good-1.0*
@@ -87,11 +84,11 @@ net-libs/rest
 ~sys-apps/hwids-20130915.1
 ~sys-apps/gentoo-systemd-integration-2
 x11-libs/cairo
-x11-libs/gdk-pixbuf
+~x11-libs/gdk-pixbuf-2.30.1
 x11-libs/gnome-pty-helper
 ~x11-libs/libdrm-2.4.46
 x11-libs/mx
-x11-libs/pango
+~x11-libs/pango-1.36.1
 x11-libs/vte
 =x11-terms/gnome-terminal-3.8*
 =x11-themes/gnome-backgrounds-3.8*
@@ -176,7 +173,6 @@ net-im/telepathy-logger
 net-im/telepathy-mission-control
 net-libs/farstream
 net-libs/glib-networking
-net-libs/gssdp:0/3
 net-libs/liboauth
 net-libs/telepathy-farstream
 net-libs/telepathy-glib
