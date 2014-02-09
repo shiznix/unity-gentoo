@@ -8,7 +8,7 @@ inherit autotools base eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140130.1"
+UVER_PREFIX="+14.04.20140205"
 
 DESCRIPTION="Firefox extension for Unity desktop integration"
 HOMEPAGE="https://launchpad.net/unity-firefox-extension"

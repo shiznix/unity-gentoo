@@ -33,7 +33,7 @@ RESTRICT="mirror test"
 COMMON_DEPEND="
 	>=dev-libs/glib-2.35.3:2
 	>=x11-libs/pango-1.28.3
-	>=x11-libs/gtk+-3.7.7:3[introspection?]
+	>=x11-libs/gtk+-3.9.11:3[introspection?]
 	>=dev-libs/libxml2-2.7.8:2
 	>=gnome-base/gnome-desktop-3:3=
 
@@ -82,9 +82,11 @@ PDEPEND="
 # Need gvfs[gtk] for recent:/// support
 
 src_prepare() {
-        `# Disable launchpad integration` \
-        sed -e 's:01_lpi:#01_lpi:g' \
-                -i "${WORKDIR}/debian/patches/series"
+	# Disable selected patches #
+        sed \
+		`# Disable launchpad integration` \
+			-e 's:01_lpi:#01_lpi:g' \
+		                -i "${WORKDIR}/debian/patches/series"
         for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
                 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
         done
@@ -108,7 +110,7 @@ src_prepare() {
 }
 
 src_configure() {
-	DOCS="AUTHORS HACKING MAINTAINERS NEWS README THANKS"
+	DOCS="AUTHORS HACKING MAINTAINERS NEWS README* THANKS"
 	gnome2_src_configure \
 		--disable-profiling \
 		--disable-update-mimedb \

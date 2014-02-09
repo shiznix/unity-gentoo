@@ -16,8 +16,8 @@ DESCRIPTION="X.Org X servers patched for the Unity desktop"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
-IUSE_SERVERS="kdrive xnest xorg xvfb"
-IUSE="${IUSE_SERVERS} +dmx ipv6 minimal mir nptl selinux +suid tslib +udev"
+IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
+IUSE="${IUSE_SERVERS} ipv6 minimal mir nptl selinux +suid tslib +udev"
 RESTRICT="mirror"
 
 RDEPEND=">=app-admin/eselect-opengl-1.0.8
@@ -33,8 +33,9 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	>=x11-libs/libXdmcp-1.0.2
 	>=x11-libs/libXfont-1.4.2
 	>=x11-libs/libxkbfile-1.0.4
+	>=x11-libs/libxshmfence-1.1
 	>=x11-libs/pixman-0.27.2
-	>=x11-libs/xtrans-1.2.2
+	>=x11-libs/xtrans-1.3.2
 	>=x11-misc/xbitmaps-1.0.1
 	>=x11-misc/xkeyboard-config-2.4.1-r3
 	dmx? (
@@ -57,7 +58,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	!minimal? (
 		>=x11-libs/libX11-1.1.5
 		>=x11-libs/libXext-1.0.5
-		>=media-libs/mesa-8[nptl=]
+		>=media-libs/mesa-9.2.0[nptl=]
 	)
 	mir? ( mir-base/mir:= )
 	tslib? ( >=x11-libs/tslib-1.0 )
@@ -72,7 +73,7 @@ DEPEND="${RDEPEND}
 	>=x11-proto/damageproto-1.1
 	>=x11-proto/fixesproto-5.0
 	>=x11-proto/fontsproto-2.0.2
-	>=x11-proto/glproto-1.4.16
+	>=x11-proto/glproto-1.4.17
 	>=x11-proto/inputproto-2.2.99.1
 	>=x11-proto/kbproto-1.0.3
 	>=x11-proto/randrproto-1.4.0
@@ -83,12 +84,14 @@ DEPEND="${RDEPEND}
 	>=x11-proto/trapproto-3.4.3
 	>=x11-proto/videoproto-2.2.2
 	>=x11-proto/xcmiscproto-1.2.0
-	>=x11-proto/xextproto-7.1.99
+	>=x11-proto/xextproto-7.2.99.901
 	>=x11-proto/xf86dgaproto-2.0.99.1
 	>=x11-proto/xf86rushproto-1.1.2
 	>=x11-proto/xf86vidmodeproto-2.2.99.1
 	>=x11-proto/xineramaproto-1.1.3
 	>=x11-proto/xproto-7.0.22
+	>=x11-proto/presentproto-1.0
+	>=x11-proto/dri3proto-1.0
 	dmx? (
 		>=x11-proto/dmxproto-2.2.99.1
 		doc? (
@@ -103,7 +106,6 @@ DEPEND="${RDEPEND}
 	!minimal? (
 		>=x11-proto/xf86driproto-2.1.0
 		>=x11-proto/dri2proto-2.8
-		>=x11-libs/libdrm-2.4.20
 	)"
 
 PDEPEND="
@@ -115,7 +117,6 @@ REQUIRED_USE="!minimal? (
 
 PATCHES=(
 	"${UPSTREAMED_PATCHES[@]}"
-	"${FILESDIR}"/${PN}-1.12-disable-acpi.patch
 	"${FILESDIR}"/${PN}-1.12-ia64-fix_inx_outx.patch
 	"${FILESDIR}"/${PN}-1.12-unloadsubmodule.patch
 )
@@ -168,6 +169,7 @@ src_configure() {
 		--with-fontrootdir="${EPREFIX}"/usr/share/fonts
 		--with-xkb-output="${EPREFIX}"/var/lib/xkb
 		--disable-config-hal
+		--disable-linux-acpi
 		--without-dtrace
 		--without-fop
 		--with-os-vendor=Gentoo
@@ -218,10 +220,8 @@ pkg_postinst() {
 		ewarn "of module version mismatch errors, this is your problem."
 
 		echo
-		ewarn "You can generate a list of all installed packages in the x11-drivers"
+		ewarn "You can rebuild all installed packages in the x11-drivers"
 		ewarn "category using this command:"
-		ewarn "	emerge portage-utils; qlist -I -C x11-drivers/"
-		ewarn "or using sets from portage-2.2:"
 		ewarn "	emerge @x11-module-rebuild"
 	fi
 

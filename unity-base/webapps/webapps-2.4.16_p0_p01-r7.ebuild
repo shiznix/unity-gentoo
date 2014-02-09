@@ -8,7 +8,7 @@ inherit eutils gnome2-utils ubuntu-versionator
 
 URELEASE="saucy"
 UVER_PREFIX="daily13.06.20"
-UURL="mirror://ubuntu/pool/universe/u"
+UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors are too unpredictable #
 
 DESCRIPTION="WebApps: Complete set of Apps for the Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-applications"

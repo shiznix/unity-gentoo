@@ -6,31 +6,29 @@ EAPI=5
 
 inherit base gnome2-utils qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/f/${PN}"
+UURL="mirror://ubuntu/pool/universe/q/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131211.3"
+UVER_PREFIX="+14.04.20140205"
 
-DESCRIPTION="Friends instant messaging client for the Unity desktop"
-HOMEPAGE="https://launchpad.net/friends-app"
+DESCRIPTION="QML Bindings for the Friends library"
+HOMEPAGE="https://launchpad.net/qml-friends"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="LGPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-qt/qtgraphicaleffects
-	net-im/friends
-	x11-libs/accounts-qml-module
-	x11-libs/qml-friends
-	x11-libs/ubuntu-ui-toolkit"
-DEPEND="dev-qt/qtcore:5
+DEPEND="dev-libs/glib:2
+	dev-libs/libfriends
+	dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
-	dev-qt/qtgui:5"
+	x11-libs/dee-qt[qt5]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
+#MAKEOPTS="${MAKEOPTS} -j1"
 
 src_configure() {
 	bin/qmake PREFIX=/usr
@@ -46,5 +44,4 @@ pkg_postinst() {
 
 pkg_postrm() {
 	gnome2_icon_cache_update
-	ubuntu-versionator_pkg_postinst
 }

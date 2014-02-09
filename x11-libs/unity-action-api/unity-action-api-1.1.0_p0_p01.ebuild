@@ -6,9 +6,9 @@ EAPI=5
 
 inherit cmake-utils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u/${PN}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20130716"
+UVER_PREFIX="+14.04.20140206"
 
 DESCRIPTION="Allow applications to export actions in various forms to the Unity Shell"
 HOMEPAGE="https://launchpad.net/unity-action-api"

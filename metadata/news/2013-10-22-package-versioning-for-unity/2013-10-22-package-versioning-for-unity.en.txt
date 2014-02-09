@@ -38,6 +38,7 @@ media-libs/mesa
 media-sound/rhythmbox
 net-im/empathy
 net-im/telepathy-mission-control
+net-libs/gnome-online-accounts
 sys-apps/accountsservice
 www-client/chromium
 www-client/firefox

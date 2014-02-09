@@ -44,6 +44,7 @@ media-libs/mesa				# Patched for mir display server support
 media-sound/rhythmbox			# Patched to work with gstreamer-1.0 and to have indicator-sound youtube webapp work
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 net-im/telepathy-mission-control	# Enables Ubuntu libaccounts-sso integration
+net-libs/gnome-online-accounts		# Allow access to Gnome Online Accounts (GOA) via Ubuntu Online Accounts (UOA)
 www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 www-client/firefox			# Requires patching for webapps browser plugin and global appmenu
 x11-base/xorg-server			# Provides Xmir patch
@@ -89,6 +90,9 @@ x11-wm/metacity				# Patched to support compiz window decoration
 	- To reset all installed webapps back to zero (and so get re-prompted to integrate each site), and remove indicator integration:
 		rm -rfv ~/.local/share/applications/<webapp_provider>.desktop
 		gsettings set com.canonical.unity.webapps allowed-domains ['']
+		Reset browser extension installed websites:
+			- Chromium:	Settings > Advanced Settings > Installed Websites > Exceptions
+			- Firefox:	Edit > Preferences > Desktop Integration > Exceptions
 	- Possible TODO:
 		- Package Ubuntu's version of app-misc/geoclue so that the Amazon webapp regional settings work when running 'unity-webapps-runner -a'
 

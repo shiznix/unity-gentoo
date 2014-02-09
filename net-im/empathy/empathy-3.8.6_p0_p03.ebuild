@@ -23,7 +23,7 @@ SLOT="0"
 # geocode needs an unreleased version
 # sendto: support from building nautilus sendto plugins from it was dropped in 3.7
 #IUSE="debug +geocode +geoloc gnome gnome-online-accounts +map sendto spell test +v4l"
-IUSE="debug +geoloc gnome gnome-online-accounts +map spell test +v4l"
+IUSE="debug +geoloc gnome +gnome-online-accounts +map spell test +v4l"
 
 #KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-linux"
 RESTRICT="mirror"
@@ -65,7 +65,7 @@ COMMON_DEPEND="
 	x11-libs/libX11
 
 	geoloc? ( >=app-misc/geoclue-0.12 )
-	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.5.1 )
+	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.5.1[uoa] )
 	map? (
 		>=media-libs/clutter-1.7.14:1.0
 		>=media-libs/clutter-gtk-0.90.3:1.0

@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140108"
+UVER_PREFIX="+14.04.20140204"
 
 DESCRIPTION="Mir is a display server technology"
 HOMEPAGE="https://launchpad.net/mir/"
@@ -28,7 +28,7 @@ DEPEND="dev-cpp/gflags
 	dev-libs/protobuf
 	>=dev-util/lttng-tools-2.1.1[ust]
 	dev-util/umockdev
-	media-libs/glm
+	<media-libs/glm-0.9.5.1
 	media-libs/mesa[egl,gbm,gles2,mir]
 	>=sys-devel/gcc-4.7.3
 	x11-libs/libdrm

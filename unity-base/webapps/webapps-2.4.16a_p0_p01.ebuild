@@ -8,7 +8,7 @@ inherit eutils gnome2-utils ubuntu-versionator
 
 URELEASE="trusty"
 UVER_PREFIX="daily13.06.20"
-UURL="mirror://ubuntu/pool/universe/u"
+UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors are too unpredictable #
 
 DESCRIPTION="WebApps: Complete set of Apps for the Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-applications"
@@ -37,7 +37,7 @@ setvar cuttherope		2.2
 setvar deezer			2.4.16+13.10.20130924.2	0ubuntu1
 setvar deviantart		2.4.16+13.10.20130926.1	0ubuntu1
 setvar facebookmessenger	2.4.16+14.04.20131108.1	0ubuntu1
-setvar gmail			2.4.16+14.04.20131108.2	0ubuntu1
+setvar gmail			2.4.16+14.04.20140130.3	0ubuntu1
 setvar googlecalendar		2.4.16+14.04.20131108.2	0ubuntu1
 setvar googledocs		2.4.16+13.10.20130924.2	0ubuntu1
 setvar googlenews		2.4.16+13.10.20130924.2	0ubuntu1

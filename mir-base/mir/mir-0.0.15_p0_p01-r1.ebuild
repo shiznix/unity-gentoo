@@ -29,7 +29,7 @@ DEPEND="dev-cpp/gflags
 	dev-libs/protobuf
 	>=dev-util/lttng-tools-2.1.1[ust]
 	dev-util/umockdev
-	media-libs/glm
+	<media-libs/glm-0.9.5.1
 	media-libs/mesa[egl,gbm,gles2]
 	>=sys-devel/gcc-4.7.3
 	x11-libs/libdrm
