@@ -39,6 +39,7 @@ DEPEND="dev-libs/libappindicator
 	>=x11-libs/libnotify-0.7.6"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
