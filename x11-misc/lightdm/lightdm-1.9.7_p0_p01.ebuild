@@ -9,14 +9,13 @@ UURL="mirror://ubuntu/pool/main/l/${PN}"
 URELEASE="trusty"
 
 DESCRIPTION="A lightweight display manager"
-
 HOMEPAGE="https://launchpad.net/lightdm"
-SRC_URI="${UURL}/${MY_P}-${UVER}.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-
 
 IUSE_LIGHTDM_GREETERS="gtk kde razor"
 for greeters in ${IUSE_LIGHTDM_GREETERS}; do
@@ -24,10 +23,7 @@ for greeters in ${IUSE_LIGHTDM_GREETERS}; do
 done
 
 # add and enable 'unity' greeter by default
-IUSE+=" +lightdm_greeters_unity"
-
-IUSE+=" +introspection qt4 qt5 mir"
-
+IUSE+=" +lightdm_greeters_unity +introspection qt4 qt5 mir test"
 RESTRICT="mirror"
 
 COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
@@ -48,24 +44,20 @@ COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
 		dev-qt/qtdbus:5
 		dev-qt/qtgui:5
 		)"
-
 RDEPEND="${COMMON_DEPEND}
 	>=sys-auth/pambase-20101024-r2
 	x11-apps/xrandr
 	>=app-admin/eselect-lightdm-0.2"
-
 DEPEND="${COMMON_DEPEND}
 	dev-util/gtk-doc-am
 	dev-util/intltool
 	gnome-base/gnome-common
 	sys-devel/gettext
 	virtual/pkgconfig"
-
 PDEPEND="lightdm_greeters_gtk? ( x11-misc/lightdm-gtk-greeter )
 	lightdm_greeters_kde? ( x11-misc/lightdm-kde )
 	lightdm_greeters_razor? ( razorqt-base/razorqt-lightdm-greeter )
 	lightdm_greeters_unity? ( unity-extra/unity-greeter )"
-
 DOCS=( NEWS )
 
 pkg_pretend() {
@@ -85,16 +77,18 @@ pkg_setup() {
 }
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"
+
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
-        # Do not depend on Debian/Ubuntu specific adduser package
-        epatch "${FILESDIR}"/guest-session-cross-distro_1.9.6.patch
+	# Do not depend on Debian/Ubuntu specific adduser package
+	epatch "${FILESDIR}"/guest-session-cross-distro_1.9.6.patch
 
-        # Add support for settings GSettings/dconf defaults in the guest session. Just
-        # put the files in /etc/guest-session/gsettings/. The file format is the same
-        # as the regular GSettings override files.
-        epatch "${FILESDIR}"/guest-session-add-default-gsettings-support.patch
+	# Add support for settings GSettings/dconf defaults in the guest session. Just
+	# put the files in /etc/guest-session/gsettings/. The file format is the same
+	# as the regular GSettings override files.
+	epatch "${FILESDIR}"/guest-session-add-default-gsettings-support.patch
 
 	epatch_user
 	base_src_prepare
@@ -118,6 +112,7 @@ src_configure() {
 		$(use_enable introspection) \
 		$(use_enable qt4 liblightdm-qt) \
 		$(use_enable qt5 liblightdm-qt5) \
+		$(use_enable test tests) \
 		--with-html-dir="${EPREFIX}"/usr/share/doc/${PF}/html
 }
 
@@ -200,4 +195,3 @@ pkg_postinst() {
         elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
         elog "or run '/usr/libexec/lightdm/lightdm-set-defaults --allow-guest=true'"
 }
-
