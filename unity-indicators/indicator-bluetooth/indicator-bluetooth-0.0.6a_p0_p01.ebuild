@@ -12,7 +12,7 @@ inherit autotools base eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140124"
+UVER_PREFIX="+14.04.20140207"
 
 DESCRIPTION="System bluetooth indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-bluetooth"
@@ -50,4 +50,7 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+
+	# Remove upstart jobs as we use /etc/xdg/autostart/*.desktop files #
+	rm -rf "${ED}usr/share/upstart"
 }
