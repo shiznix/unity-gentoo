@@ -1,0 +1,11 @@
+diff -urN mir-0.1.4+14.04.20140204/src/platform/graphics/mesa/real_kms_output.cpp mir-0.1.4+14.04.20140204-patched/src/platform/graphics/mesa/real_kms_output.cpp
+--- mir-0.1.4+14.04.20140204/src/platform/graphics/mesa/real_kms_output.cpp	2014-02-05 01:17:59.000000000 +1030
++++ mir-0.1.4+14.04.20140204-patched/src/platform/graphics/mesa/real_kms_output.cpp	2014-02-10 15:15:55.711857316 +1030
+@@ -16,6 +16,7 @@
+  * Authored by: Alexandros Frantzis <alexandros.frantzis@canonical.com>
+  */
+ 
++#include <string.h>
+ #include "real_kms_output.h"
+ #include "page_flipper.h"
+ 
