@@ -23,6 +23,7 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libdbusmenu:=[gtk]"
 DEPEND="${RDEPEND}
+	>=dev-libs/glib-2.38
 	x11-libs/libX11
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
