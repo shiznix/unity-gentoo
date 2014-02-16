@@ -22,12 +22,14 @@ IUSE="test"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/boost:=
+	mir-base/mir:=
 	x11-base/xorg-server[mir]"
 DEPEND="${RDEPEND}
 	dev-libs/boost
 	dev-libs/protobuf
 	media-libs/mesa[gles2,mir]
-	media-libs/mesa-mir[gles2,mir]"
+	media-libs/mesa-mir[gles2,mir]
+	mir-base/mir"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

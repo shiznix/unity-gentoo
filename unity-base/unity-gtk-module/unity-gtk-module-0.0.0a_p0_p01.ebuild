@@ -9,7 +9,7 @@ inherit autotools eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131125"
+UVER_PREFIX="+14.04.20140213.2"
 
 DESCRIPTION="GTK+ module for exporting old-style menus as GMenuModels"
 HOMEPAGE="https://launchpad.net/unity-gtk-module"
@@ -37,7 +37,6 @@ pkg_setup() {
 
 src_prepare() {
 	epatch "${FILESDIR}/unity-gtk-module-0.0.0+14.04-deprecated-api.patch"
-	epatch "${FILESDIR}/unity-gtk-module-0.0.0+14.04-remove_g_ptr_array_insert.patch"
 	eautoreconf
 }
 

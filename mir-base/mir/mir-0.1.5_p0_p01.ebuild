@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140204"
+UVER_PREFIX="+14.04.20140212"
 
 DESCRIPTION="Mir is a display server technology"
 HOMEPAGE="https://launchpad.net/mir/"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3 MIT"
-SLOT="0/4"
+SLOT="0/5"
 #KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"

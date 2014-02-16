@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140204"
+UVER_PREFIX="+14.04.20140212.1"
 
 DESCRIPTION="Compositor for Mir display server that switches graphics and input between running sessions"
 HOMEPAGE="https://launchpad.net/unity-system-compositor"
@@ -22,12 +22,14 @@ IUSE="test"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/boost:=
+	mir-base/mir:=
 	x11-base/xorg-server[mir]"
 DEPEND="${RDEPEND}
 	dev-libs/boost
 	dev-libs/protobuf
 	media-libs/mesa[gles2,mir]
-	media-libs/mesa-mir[gles2,mir]"
+	media-libs/mesa-mir[gles2,mir]
+	mir-base/mir"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
