@@ -32,12 +32,14 @@ media-sound/rhythmbox zeitgeist
 media-video/ffmpeg opus
 net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
 net-libs/libgadu gnutls
+net-libs/gnome-online-accounts uoa
 net-misc/openssh -bindist
 sys-apps/systemd pam
 sys-libs/talloc python
 sys-libs/zlib minizip
 x11-libs/dee-qt qt5
 virtual/notification-daemon -gnome # needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
+x11-base/xorg-server dmx
 x11-libs/libdrm libkms
 x11-libs/libxcb xkb
 x11-misc/x11vnc dummy

@@ -109,6 +109,7 @@ app-i18n/ibus
 app-text/gtkspell
 dev-lang/orc
 ~dev-lang/perl-5.16.1
+~dev-lang/spidermonkey-17.0.0
 =dev-cpp/gtkmm-3.10*
 dev-cpp/glibmm
 dev-lang/python-exec
@@ -192,6 +193,7 @@ net-fs/samba
 net-voip/telepathy-rakia
 net-voip/telepathy-salut
 net-wireless/blueman
+~net-wireless/bluez-5.12
 net-zope/zope-fixers
 net-zope/zope-interface
 sys-apps/shadow
