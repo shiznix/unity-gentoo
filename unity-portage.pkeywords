@@ -102,7 +102,7 @@ x11-libs/vte
 ## Other packages keyword unmasking ##
 app-admin/openrc-settingsd
 app-admin/packagekit-base
-app-crypt/p11-kit
+=app-crypt/p11-kit-0.20.2
 app-i18n/ibus
 app-text/gtkspell
 dev-lang/orc
@@ -120,7 +120,7 @@ dev-libs/libindicate
 dev-libs/libindicate-qt
 dev-libs/libpwquality
 dev-libs/libzeitgeist
-dev-libs/nettle
+=dev-libs/nettle-2.7.1
 dev-libs/userspace-rcu
 dev-libs/vala-common
 dev-python/bsddb3
