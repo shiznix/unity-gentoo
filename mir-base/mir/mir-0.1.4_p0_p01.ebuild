@@ -21,7 +21,8 @@ SLOT="0/4"
 IUSE="test"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/protobuf:="
+RDEPEND="dev-libs/boost:=
+	dev-libs/protobuf:="
 DEPEND="dev-cpp/gflags
 	dev-cpp/glog
 	dev-libs/boost
@@ -47,11 +48,13 @@ pkg_pretend() {
 
 src_prepare() {
 	# Disable '-Werror' #
-	sed -e 's/-Werror//g' \
-		-i CMakeLists.txt
+#	sed -e 's/-Werror//g' \
+#		-i CMakeLists.txt
 
 	epatch -p1 "${FILESDIR}/include_stdint.diff"
+	epatch -p1 "${FILESDIR}/strcmp_fix.patch"
 	epatch -p1 "${FILESDIR}/mir-0.1.2-build_benchmarks_only_with_tests_enabled.patch"
+epatch "${FILESDIR}/invalid_pixel_format-fix.diff"
 
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	export CMAKE_BUILD_TYPE=none
