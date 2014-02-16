@@ -1,0 +1,14 @@
+[Unit]
+Description=Load required files in advance
+ConditionPathExists=/var/lib/ureadahead/pack
+After=local-fs.target
+
+[Service]
+ExecStart=-/sbin/ureadahead --quiet --daemon
+RemainAfterExit=yes
+StandardOutput=journal+console
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
+Also=ureadahead-collect.service

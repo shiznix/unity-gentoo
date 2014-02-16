@@ -196,6 +196,7 @@ net-zope/zope-fixers
 net-zope/zope-interface
 sys-apps/shadow
 sys-apps/openrc
+sys-apps/ureadahead
 sys-auth/consolekit
 sys-auth/pambase
 sys-devel/automake:1.13
@@ -203,6 +204,7 @@ sys-devel/automake-wrapper
 sys-devel/gcc:4.8 
 sys-devel/llvm:0/3.3
 ~sys-fs/udev-208
+sys-kernel/ubuntu-sources
 sys-libs/db:5.1
 sys-libs/libnih
 sys-libs/talloc

@@ -1,0 +1,75 @@
+#!/sbin/runscript
+# Copyright 1999-2011 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+description="Read files in advance during boot"
+
+# ureadahead doesn't act like others daemons:
+# it must run in background only with SSD or when it traces the system.
+# On HDD il will run in foreground.
+# When tracing, it must be stopped a the end of the boot,
+# either by passing --timeout or by sending INT or TERM signal.
+# So it is not OK to launch it with start-stop-deamon since it
+# termination will be interpreted as a crash.
+
+: ${ureadahead_binary:=/sbin/ureadahead}
+: ${tracing_timeout:=60}
+
+depend() {
+	if is_early ; then
+		# when tracing, debugfs is used
+		need sysfs
+		before '*'
+	else
+                need localmount
+                # this should start as early as possible
+                # we can't do 'before *' as that breaks it
+                before bootmisc consolefont keymaps rmnologin serial urandom
+	fi
+}
+
+is_early() {
+	# short check to see if we have the needed partitions for early start
+	[ "${SVCNAME#*.}" = "early"  ] && \
+		[ -e ${ureadahead_binary} ] && [ -e /var/lib/ureadahead ]
+}
+
+force_tracing() {
+	get_bootparam "force-tracing"
+}
+
+start() {
+	local myopts="--timeout=${tracing_timeout}"
+
+	### Read root pack / Start tracing ###
+	# don't run ureadahead twice on /
+	if ! service_started ureadahead.early ; then
+
+		if force_tracing ; then
+			ewarn "Force boot tracing as requested in kernel cmdline"
+			myopts="$myopts --force-trace"
+		fi
+		ebegin "Starting ${SVCNAME}"
+		${ureadahead_binary} --daemon --quiet ${myopts}
+		eend $?
+	fi
+	is_early || force_tracing && return 0;
+
+	### Read mountpoint packs ###
+	# ureadahead doesn't start when outdated pack is given as argument
+	# so following should never occur when tracing is caused by outdated
+	# packs
+	packs=$(ls /var/lib/ureadahead/*.pack 2>/dev/null)
+	if [ -n "$packs" ] ; then
+		einfo "Starting ${SVCNAME} for other mountpoints:"
+		for p in $packs ; do
+			eindent
+			ebegin "${p##*/}"
+			${ureadahead_binary} --daemon --quiet $p
+			eend $?
+			eoutdent
+		done
+	fi
+}
+
