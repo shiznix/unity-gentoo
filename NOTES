@@ -30,6 +30,7 @@ dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-control-center		# Patch out gnome-online-accounts and use ubuntu-online-accounts
+gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
 gnome-base/gnome-fallback		# Support x11-misc/notify-osd
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
