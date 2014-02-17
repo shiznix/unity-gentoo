@@ -1,14 +1,16 @@
 [Unit]
 Description=Record required files to be later loaded by ureadahead-replay.service
 ConditionPathExists=!/var/lib/ureadahead/pack
-After=local-fs.target
+DefaultDependencies=no
+Before=shutdown.target
+Conflicts=shutdown.target
 
 [Service]
-ExecStart=-/sbin/ureadahead --quiet --timeout=180
+ExecStart=-/sbin/ureadahead --quiet --daemon --timeout=180
 RemainAfterExit=yes
-StandardOutput=journal+console
+StandardOutput=syslog
 Type=forking
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 Also=ureadahead-replay.service
