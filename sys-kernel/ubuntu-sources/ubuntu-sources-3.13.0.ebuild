@@ -10,7 +10,7 @@ MY_PN="linux"
 MY_PV="${PV%%[a-z]_p*}"
 UURL="mirror://ubuntu/pool/main/l/${MY_PN}"
 URELEASE="trusty"
-UVER="${UVER##*[a-z]}"
+UVER="8.28"
 
 DESCRIPTION="Ubuntu patched kernel sources"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/linux"

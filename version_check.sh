@@ -27,6 +27,7 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'nm-applet'`" ]; then treepackname="${packname}"; packname="network-manager-applet"
 	elif [ -n "`echo "${packbasename}" | grep 'qtpim'`" ]; then treepackname="${packname}"; packname="libqt5organizer5"
 	elif [ -n "`echo "${packbasename}" | grep 'telepathy-mission-control'`" ]; then treepackname="${packname}"; packname="telepathy-mission-control-5"
+	elif [ -n "`echo "${packbasename}" | grep 'ubuntu-sources'`" ]; then treepackname="${packname}"; packname="linux"
 	elif [ -n "`echo "${packbasename}" | grep 'unity-webapps'`" ]; then treepackname="${packname}"; packname="libunity-webapps"
 	elif [ -n "`echo "${packbasename}" | grep 'webapps-base'`" ]; then treepackname="${packname}"; packname="unity-webapps-common"
 	elif [ -n "`echo "${packbasename}" | grep 'xf86-video-ati'`" ]; then treepackname="${packname}"; packname="xserver-xorg-video-ati"
@@ -95,7 +96,7 @@ upstream_version_check() {
 	if [ -n "$1" ]; then
 		sources_download
 		upstream_version=
-		upstream_version=`grep -A4 "Package: ${packname}$" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+		upstream_version=`grep -A6 "Package: ${packname}$" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A4 "Package: ${packname}$" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 		[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && [ -z "${checkmsg_supress}" ] && \
 			echo -e "\nChecking ${packname}  ::  $1"
