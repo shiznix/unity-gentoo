@@ -369,6 +369,8 @@ x11-libs/libXi::unity-gentoo **
 x11-libs/qml-friends **
 x11-libs/ubuntu-ui-toolkit **
 x11-libs/unity-action-api **
+x11-libs/unity-webapps-qml **
+x11-libs/webbrowser-app **
 x11-misc/lightdm::unity-gentoo **
 x11-misc/lightdm-kde::unity-gentoo **
 x11-misc/unity-chromium-extension **
