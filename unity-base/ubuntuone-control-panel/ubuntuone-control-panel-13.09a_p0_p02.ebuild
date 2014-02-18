@@ -29,7 +29,7 @@ RDEPEND="dev-libs/dbus-glib
 	dev-python/httplib2[${PYTHON_USEDEP}]
 	dev-python/notify-python[${PYTHON_USEDEP}]
 	dev-python/oauth[${PYTHON_USEDEP}]
-	<=dev-python/oauthlib-0.3.7[${PYTHON_USEDEP}]
+	dev-python/oauthlib[${PYTHON_USEDEP}]
 	dev-python/pygobject[${PYTHON_USEDEP}]
 	dev-python/dirspec[${PYTHON_USEDEP}]
 	dev-python/lazr-restfulclient[${PYTHON_USEDEP}]

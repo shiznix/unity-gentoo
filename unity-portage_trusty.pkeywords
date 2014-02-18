@@ -135,7 +135,7 @@ dev-python/html5lib
 dev-python/httplib2
 dev-python/isodate
 dev-python/oauth
-<=dev-python/oauthlib-0.3.7     # unity-base/ubuntuone-control-panel
+dev-python/oauthlib
 dev-python/pycurl
 dev-python/pycrypto
 dev-python/pygobject:3
