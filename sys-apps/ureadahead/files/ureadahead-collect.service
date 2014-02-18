@@ -6,7 +6,7 @@ Before=shutdown.target
 Conflicts=shutdown.target
 
 [Service]
-ExecStart=-/sbin/ureadahead --quiet --daemon --timeout=180
+ExecStart=-/sbin/ureadahead --quiet --daemon --timeout=120
 RemainAfterExit=yes
 StandardOutput=syslog
 Type=forking

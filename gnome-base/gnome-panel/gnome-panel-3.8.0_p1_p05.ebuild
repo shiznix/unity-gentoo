@@ -8,15 +8,13 @@ GCONF_DEBUG="no"
 
 inherit autotools base eutils gnome2 ubuntu-versionator
 
-UURL="https://launchpad.net/ubuntu/+archive/primary/+files/"
+UURL="mirror://ubuntu/pool/universe/g/${PN}"
 URELEASE="trusty"
-#MY_P="${MY_P/-/_}"
 
 DESCRIPTION="The GNOME panel patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
-
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="0"

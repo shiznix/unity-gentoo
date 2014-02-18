@@ -77,10 +77,17 @@ ubuntu-versionator_pkg_pretend() {
 		die "Please place '*/*::unity-gentoo' in your package.keywords file"
 }
 
-## Create a new bamf-2.index file at postinst stage of every package to capture all *.desktop files ##
 ubuntu-versionator_pkg_postinst() {
+	## Create a new bamf-2.index file at postinst stage of every package to capture all *.desktop files ##
 	if [[ -x /usr/bin/bamf-index-create ]]; then
 		elog "Checking bamf-2.index"
 			/usr/bin/bamf-index-create triggered
+	fi
+
+	## If sys-apps/ureadahead is installed, force re-profiling of ureadahead's database at next boot ##
+	if [[ -w /var/lib/ureadahead/pack ]] && \
+		[[ -d "${ED}etc" ]]; then
+			elog "Ureadahead will be reprofiled on next reboot"
+				rm -f /var/lib/ureadahead/pack /var/lib/ureadahead/*.pack 2> /dev/null
 	fi
 }
