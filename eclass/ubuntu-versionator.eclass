@@ -85,9 +85,12 @@ ubuntu-versionator_pkg_postinst() {
 	fi
 
 	## If sys-apps/ureadahead is installed, force re-profiling of ureadahead's database at next boot ##
-	if [[ -w /var/lib/ureadahead/pack ]] && \
-		[[ -d "${ED}etc" ]]; then
-			elog "Ureadahead will be reprofiled on next reboot"
-				rm -f /var/lib/ureadahead/pack /var/lib/ureadahead/*.pack 2> /dev/null
+	if [[ -n "$(systemctl list-unit-files --no-pager | grep ureadahead)" ]] && \
+		[[ "$(systemctl is-enabled ureadahead-collect.service)" = "enabled" ]]; then
+			if [[ -w /var/lib/ureadahead/pack ]] && \
+				[[ -d "${ED}etc" ]]; then
+					elog "Ureadahead will be reprofiled on next reboot"
+						rm -f /var/lib/ureadahead/pack /var/lib/ureadahead/*.pack 2> /dev/null
+			fi
 	fi
 }

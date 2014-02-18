@@ -48,3 +48,14 @@ src_install() {
 	systemd_dounit "${FILESDIR}/${PN}-collect.service" "${FILESDIR}/${PN}-replay.service"
 	keepdir /var/lib/ureadahead
 }
+
+pkg_postinst() {
+	ubuntu-versionator_pkg_postinst
+	elog "To enable ureadahead, as root do:"
+	elog "systemctl enable ureadahead-collect.service"
+	elog
+	elog "If systemd-readahead is enabled, it is recommended it be disabled when using ureadahead"
+	elog
+	elog "To disable systemd-readahead, as root do:"
+	elog "systemctl disable systemd-readahead-collect.service systemd-readahead-replay.service"
+}
