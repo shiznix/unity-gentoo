@@ -83,15 +83,18 @@ PDEPEND="
 
 src_prepare() {
 	# Disable selected patches #
-        sed \
-		`# Disable launchpad integration` \
-			-e 's:01_lpi:#01_lpi:g' \
-		                -i "${WORKDIR}/debian/patches/series"
+	sed -i '/15_use-ubuntu-help.patch/d' "${WORKDIR}/debian/patches/series" || die
+
         for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
                 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
         done
         base_src_prepare
         eautoreconf
+
+	# comment out call of 'gnome_bg_set_draw_background' because property is not available any more.
+	#  see https://bugzilla.gnome.org/show_bug.cgi?id=690378
+	sed -e 's:gnome_bg_set_draw_background://gnome_bg_set_draw_background:g' \
+	 -i libnautilus-private/nautilus-desktop-background.c || die
 
 	if use previewer; then
 		DOC_CONTENTS="nautilus uses gnome-extra/sushi to preview media files.

@@ -34,6 +34,7 @@ net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl si
 net-libs/libgadu gnutls
 net-libs/gnome-online-accounts uoa
 net-misc/openssh -bindist
+net-misc/networkmanager modemmanager ppp
 sys-apps/systemd pam
 sys-libs/talloc python
 sys-libs/zlib minizip

@@ -14,6 +14,7 @@ app-crypt/libsecret
 =app-crypt/seahorse-3.10*
 =app-cdr/brasero-3.10*  
 =app-editors/gedit-3.10*
+~app-misc/geoclue-2.0.0
 =app-text/evince-3.10*
 dev-libs/folks
 =dev-libs/gjs-1.38*
@@ -25,26 +26,28 @@ dev-libs/libpeas
 =dev-libs/libgweather-3.10*
 gnome-base/dconf
 =gnome-base/gdm-3.10*
-=gnome-base/gnome-control-center-3.10*::unity-gentoo
+=gnome-base/gnome-control-center-3.10*
 =gnome-base/gnome-core-apps-3.10*
-=gnome-base/gnome-core-libs-3.8*		# Leave at 3.8 until Trusty migrates gnome-desktop to 3.10
-=gnome-base/gnome-desktop-3.8*::unity-gentoo	# Leave at 3.8 until Trusty migrates as nautilus-3.10 contains 'gnome_bg_set_draw_background' reversion patches
+=gnome-base/gnome-core-libs-3.10*
+=gnome-base/gnome-desktop-3.10*
 =gnome-base/gnome-keyring-3.10*
 gnome-base/gnome-menus:0
 =gnome-base/gnome-menus-3.10*:3::unity-gentoo
 =gnome-base/gnome-panel-3.6*::unity-gentoo
-=gnome-base/gnome-settings-daemon-3.10*::unity-gentoo
+=gnome-base/gnome-session-3.10*
+=gnome-base/gnome-settings-daemon-3.10*
 =gnome-base/gsettings-desktop-schemas-3.10*::unity-gentoo
 =gnome-base/gnome-shell-3.10*
 gnome-base/gvfs
 =gnome-base/libgnomekbd-3.6*
 =gnome-base/libgnome-keyring-3.10*
+~gnome-base/librsvg-2.40.1
 =gnome-base/nautilus-3.10*::unity-gentoo
 =gnome-extra/evolution-data-server-3.10*
 gnome-extra/gcalctool
 gnome-extra/gtkhtml
 =gnome-extra/gnome-color-manager-3.10*
-=gnome-extra/gnome-contacts-3.8*		# Leave at 3.8 until Trusty migrates gnome-desktop to 3.10
+=gnome-extra/gnome-contacts-3.10*
 =gnome-extra/gnome-power-manager-3.10*
 =gnome-extra/gnome-system-monitor-3.10*
 =gnome-extra/gnome-tweak-tool-3.10*
@@ -66,9 +69,10 @@ media-libs/clutter
 media-libs/clutter-gst
 media-libs/clutter-gtk
 media-libs/cogl
-=media-libs/gstreamer-1.0*
-=media-libs/gst-plugins-base-1.0*
-=media-libs/gst-plugins-good-1.0*
+=media-libs/gstreamer-1.2*
+=media-libs/gst-plugins-base-1.2*
+=media-libs/gst-plugins-good-1.2*
+=media-libs/gst-plugins-bad-1.2*
 ~media-libs/libsndfile-1.0.25
 ~media-libs/libogg-1.3.1
 =media-plugins/gst-plugins-vpx-1.0*
@@ -81,6 +85,7 @@ net-libs/libsoup
 net-libs/libsoup-gnome
 net-libs/rest
 =net-wireless/gnome-bluetooth-3.10*
+=sci-geosciences/geocode-glib-3.10*
 =sys-apps/baobab-3.10*
 ~sys-apps/dbus-1.6.18
 ~sys-apps/kmod-15
@@ -271,7 +276,7 @@ gnome-base/gnome-desktop::unity-gentoo **
 gnome-base/gnome-fallback::unity-gentoo **
 gnome-base/gnome-menus::unity-gentoo **
 gnome-base/gnome-panel::unity-gentoo **
-gnome-base/gnome-session::unity-gentoo **
+#gnome-base/gnome-session::unity-gentoo **
 gnome-base/gnome-settings-daemon::unity-gentoo **
 gnome-base/gsettings-desktop-schemas::unity-gentoo **
 gnome-base/nautilus::unity-gentoo **
@@ -324,6 +329,7 @@ unity-base/unity **
 unity-base/unity-control-center **
 unity-base/unity-gtk-module **
 unity-base/unity-language-pack **
+unity-base/unity-meta **
 unity-base/unity-voice **
 unity-base/webapps **
 unity-base/webapps-base **
