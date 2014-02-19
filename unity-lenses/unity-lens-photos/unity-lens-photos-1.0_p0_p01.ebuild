@@ -28,7 +28,7 @@ RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	net-libs/libsoup-gnome
 	dev-libs/libunity[${PYTHON_USEDEP}]
 	dev-python/httplib2[${PYTHON_USEDEP}]
-	dev-python/oauthlib[${PYTHON_USEDEP}]
+	dev-python/oauthlib
 	media-gfx/shotwell
 	net-libs/account-plugins
 	unity-base/unity

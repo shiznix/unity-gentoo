@@ -26,7 +26,7 @@ RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	dev-libs/libaccounts-glib[${PYTHON_USEDEP}]
 	dev-libs/libsignon-glib[${PYTHON_USEDEP}]
 	dev-python/dbus-python[${PYTHON_USEDEP}]
-	dev-python/oauthlib[${PYTHON_USEDEP}]
+	dev-python/oauthlib
 	dev-python/pygobject[${PYTHON_USEDEP}]
 	>=gnome-extra/evolution-data-server-3.8
 	net-libs/libsoup
