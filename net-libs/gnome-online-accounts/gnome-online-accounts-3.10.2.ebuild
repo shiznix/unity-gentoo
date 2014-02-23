@@ -41,8 +41,11 @@ RDEPEND="
 	kerberos? (
 		app-crypt/gcr:0=
 		app-crypt/mit-krb5 )
-	uoa? ( dev-libs/libaccounts-glib
-		dev-libs/libsignon-glib )
+	uoa? (
+		dev-libs/libaccounts-glib
+		dev-libs/libsignon-glib
+		net-im/telepathy-mission-control
+		unity-base/gnome-control-center-signon )
 "
 # goa-daemon can launch gnome-control-center
 PDEPEND="gnome? ( >=gnome-base/gnome-control-center-3.2[gnome-online-accounts(+)] )"
