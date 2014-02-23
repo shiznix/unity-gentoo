@@ -8,7 +8,7 @@ KDE_MINIMAL="4.8"
 KDE_SCM="git"
 EGIT_REPONAME="${PN/-kde/}"
 KDE_LINGUAS="cs da de el es et fi fr ga hu it ja km lt nds nl pl pt pt_BR ro sk sv uk"
-inherit kde4-base ubuntu-versionator
+inherit base kde4-base ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/l/${PN}"
 URELEASE="saucy"
@@ -44,9 +44,9 @@ pkg_pretend() {
 }
 
 src_prepare() {
+	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
-
 	base_src_prepare
 }
