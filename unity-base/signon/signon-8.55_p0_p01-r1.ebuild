@@ -25,6 +25,7 @@ DEPEND="dev-qt/qtcore:4
 	dev-qt/qtdbus:4
 	dev-qt/qtgui:4
 	dev-qt/qtsql:4
+	dev-qt/qttest:4
 	dev-qt/qtxmlpatterns:4
 	doc? ( app-doc/doxygen )
 	qt5? ( dev-qt/qtcore:5
@@ -32,6 +33,7 @@ DEPEND="dev-qt/qtcore:4
 		dev-qt/qtgui:5
 		dev-qt/qtnetwork:5
 		dev-qt/qtsql:5
+		dev-qt/qttest:5
 		dev-qt/qtxml:5 )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
