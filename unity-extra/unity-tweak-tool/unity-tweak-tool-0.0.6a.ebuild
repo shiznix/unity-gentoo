@@ -10,7 +10,7 @@ inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 
 URELEASE="trusty"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-UVER=
+UVER="ubuntu1"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/unity-tweak-tool"

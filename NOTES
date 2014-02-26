@@ -30,6 +30,8 @@ dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-control-center		# Patch out gnome-online-accounts and use ubuntu-online-accounts
+gnome-base/gnome-core-apps		# Included so that Gnome package's minor versions may differ to overall gnome version (eg. gnome-desktop-3.8 alongside gnome-3.10)
+gnome-base/gnome-core-libs		# Included so that Gnome package's minor versions may differ to overall gnome version (eg. gnome-desktop-3.8 alongside gnome-3.10)
 gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
 gnome-base/gnome-fallback		# Support x11-misc/notify-osd
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
@@ -73,8 +75,9 @@ x11-wm/metacity				# Patched to support compiz window decoration
 
 * Webapps integration
 	- Requires the following packages:
-		- dev-libs/libunity-webapps
-		- unity-base/webapps
+		- dev-libs/libunity-webapps			(Integrates browser plugins with the desktop via libunity)
+		- unity-base/webapps				(Contains site specific webapps)
+		- unity-base/webapps-base			(Contains site specific webapps)
 		- x11-misc/webapps-greasemonkey			(Unity Websites Integration browser plugin)
 		- x11-misc/webaccounts-browser-extension	(Ubuntu Online Accounts browser plugin)
 		- x11-misc/unity-firefox-extension		(Unity Desktop Integration browser plugin)
