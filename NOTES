@@ -36,7 +36,7 @@ gnome-base/gnome-desktop		# Patched to sync user selected background to accounts
 gnome-base/gnome-fallback		# Support x11-misc/notify-osd
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
-gnome-base/gnome-settings-daemon	# Patched to have gnome-settings-daemon xdg-autostart on Unity login
+gnome-base/gnome-settings-daemon	# [Saucy] Patched to have gnome-settings-daemon xdg-autostart on Unity login, [Trusty] New unity-settings-daemon relies on files created from patchset
 gnome-base/gsettings-desktop-schemas	# Includes Unity desktop settings patches
 gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/gnome-screensaver		# Patched to have gnome-screensaver xdg-autostart on Unity login

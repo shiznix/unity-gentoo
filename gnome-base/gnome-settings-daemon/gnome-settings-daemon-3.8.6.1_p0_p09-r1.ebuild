@@ -103,20 +103,15 @@ src_prepare() {
 
 	# Disable selected patches #
 	sed \
-		`# Fix desktop icons disappearing after a time and causing compiz freezing windows (see LP#1170483) ` \
-			-e 's:revert_background_dropping.patch:#revert_background_dropping.patch:g' \
-			-e 's:52_sync_background_to_accountsservice.patch:#52_sync_background_to_accountsservice.patch:g' \
-			-e 's:git_revert_remove_automount_helper.patch:#git_revert_remove_automount_helper.patch:g' \
+		`# Don't make gnome-settings-daemon start in Unity session, it uses unity-settings-daemon now `\
+			-e 's:ubuntu-fix-desktop-file.patch:#ubuntu-fix-desktop-file.patch:g' \
 				-i "${WORKDIR}/debian/patches/series"
-
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
-
 	eautoreconf
-
 	gnome2_src_prepare
 }
 
