@@ -10,7 +10,7 @@ inherit distutils-r1 ubuntu-versionator
 
 MY_PN="lazr.restfulclient"
 UURL="mirror://ubuntu/pool/main/l/${MY_PN}"
-UVER="1"
+UVER="1build1"
 URELEASE="trusty"
 MY_P="${MY_PN}_${PV}"
 

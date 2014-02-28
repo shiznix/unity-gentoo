@@ -39,7 +39,7 @@ sys-apps/systemd pam
 sys-libs/talloc python
 sys-libs/zlib minizip
 x11-libs/dee-qt qt5
-virtual/notification-daemon -gnome # needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
+virtual/notification-daemon -gnome	# Needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
 x11-base/xorg-server dmx
 x11-libs/libdrm libkms
 x11-libs/libxcb xkb

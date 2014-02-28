@@ -26,16 +26,15 @@ dev-libs/libpeas
 =dev-libs/libgweather-3.10*
 gnome-base/dconf
 =gnome-base/gdm-3.10*
-=gnome-base/gnome-control-center-3.10*
-=gnome-base/gnome-core-apps-3.10*
-=gnome-base/gnome-core-libs-3.10*
-=gnome-base/gnome-desktop-3.10*
+=gnome-base/gnome-control-center-3.10*::unity-gentoo
+=gnome-base/gnome-core-apps-3.10*::unity-gentoo
+=gnome-base/gnome-core-libs-3.10*::unity-gentoo
+=gnome-base/gnome-desktop-3.8*::unity-gentoo
 =gnome-base/gnome-keyring-3.10*
 gnome-base/gnome-menus:0
 =gnome-base/gnome-menus-3.10*:3::unity-gentoo
 =gnome-base/gnome-panel-3.6*::unity-gentoo
-=gnome-base/gnome-session-3.10*
-=gnome-base/gnome-settings-daemon-3.10*
+=gnome-base/gnome-settings-daemon-3.8*::unity-gentoo
 =gnome-base/gsettings-desktop-schemas-3.10*::unity-gentoo
 =gnome-base/gnome-shell-3.10*
 gnome-base/gvfs
@@ -83,7 +82,6 @@ media-libs/cogl
 net-libs/gupnp-igd
 net-libs/libsoup
 net-libs/libsoup-gnome
-net-libs/rest
 =net-wireless/gnome-bluetooth-3.10*
 =sci-geosciences/geocode-glib-3.10*
 =sys-apps/baobab-3.10*
@@ -91,13 +89,8 @@ net-libs/rest
 ~sys-apps/kmod-15
 ~sys-apps/hwids-20130915.1
 ~sys-apps/gentoo-systemd-integration-2
-x11-libs/cairo
-x11-libs/gdk-pixbuf
-x11-libs/gnome-pty-helper
 ~x11-libs/libdrm-2.4.46
-x11-libs/mx
 x11-libs/pango
-x11-libs/vte
 =x11-terms/gnome-terminal-3.10*
 =x11-themes/gnome-backgrounds-3.10*
 =x11-themes/gnome-icon-theme-3.10*
@@ -183,7 +176,6 @@ media-libs/libquvi-scripts
 media-libs/libvpx
 media-libs/sbc
 media-libs/tiff:0
-media-sound/pulseaudio
 net-im/telepathy-logger
 net-im/telepathy-mission-control
 net-libs/farstream
@@ -221,6 +213,7 @@ sys-libs/tevent
 x11-base/xorg-drivers
 x11-drivers/xf86-input-synaptics
 x11-drivers/xf86-video-dummy
+=x11-libs/gtksourceview-3.10*
 x11-libs/libdrm
 ~x11-libs/libnotify-0.7.6
 x11-libs/libwnck
@@ -278,7 +271,7 @@ gnome-base/gnome-desktop::unity-gentoo **
 gnome-base/gnome-fallback::unity-gentoo **
 gnome-base/gnome-menus::unity-gentoo **
 gnome-base/gnome-panel::unity-gentoo **
-#gnome-base/gnome-session::unity-gentoo **
+gnome-base/gnome-session::unity-gentoo **
 gnome-base/gnome-settings-daemon::unity-gentoo **
 gnome-base/gsettings-desktop-schemas::unity-gentoo **
 gnome-base/nautilus::unity-gentoo **
@@ -332,6 +325,7 @@ unity-base/unity-control-center **
 unity-base/unity-gtk-module **
 unity-base/unity-language-pack **
 unity-base/unity-meta **
+unity-base/unity-settings-daemon **
 unity-base/unity-voice **
 unity-base/webapps **
 unity-base/webapps-base **
@@ -363,6 +357,7 @@ unity-scopes/smart-scopes **
 unity-scopes/unity-scope-home **
 www-client/chromium::unity-gentoo **
 www-client/firefox::unity-gentoo **
+www-client/webbrowser-app **
 x11-base/xorg-server::unity-gentoo **
 x11-drivers/xf86-video-ati::unity-gentoo **
 x11-drivers/xf86-video-intel::unity-gentoo **
@@ -378,7 +373,6 @@ x11-libs/qml-friends **
 x11-libs/ubuntu-ui-toolkit **
 x11-libs/unity-action-api **
 x11-libs/unity-webapps-qml **
-x11-libs/webbrowser-app **
 x11-misc/lightdm::unity-gentoo **
 x11-misc/lightdm-kde::unity-gentoo **
 x11-misc/unity-chromium-extension **
