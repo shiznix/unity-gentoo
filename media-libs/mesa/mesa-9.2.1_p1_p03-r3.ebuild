@@ -185,6 +185,9 @@ src_prepare() {
 		sed -i -e "s/-DSVR4/-D_POSIX_C_SOURCE=200112L/" configure.ac || die
 	fi
 
+	# Xdamage DamageUnregister fix (bugs.freedesktop.org #71110) #
+	epatch "${FILESDIR}"/xdamage-DamageUnregister_fix.diff
+
 	eautoreconf
 
 	# Ensure linker can find llvm libs #
