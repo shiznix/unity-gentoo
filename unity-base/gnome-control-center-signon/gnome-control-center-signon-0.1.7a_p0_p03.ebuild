@@ -37,7 +37,6 @@ DEPEND=">=dev-libs/libaccounts-glib-1.10
 	dev-libs/libxml2:2
 	dev-libs/libxslt
 	>=dev-util/intltool-0.40.1
-	gnome-base/gnome-control-center
 	>=sys-devel/gettext-0.17
 	virtual/pkgconfig
 	x11-libs/gtk+:3

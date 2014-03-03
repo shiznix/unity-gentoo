@@ -28,6 +28,7 @@ SLOT="0"
 IUSE="debug doc qt5"
 
 RDEPEND="
+	dev-libs/qjson
 	>=dev-qt/qtcore-${QT_DEPEND}:4
 	>=dev-qt/qtdbus-${QT_DEPEND}:4
 	>=dev-qt/qtgui-${QT_DEPEND}:4

@@ -163,6 +163,8 @@ dev-qt/qtxmlpatterns:5
 =dev-util/boost-build-1.53*
 dev-util/fix-la-relink-command
 dev-util/dbus-test-runner
+~dev-util/gtk-doc-1.20
+~dev-util/gtk-doc-am-1.20
 dev-util/umockdev
 media-libs/fontconfig
 media-libs/gexiv2
@@ -190,7 +192,7 @@ net-fs/samba
 net-voip/telepathy-rakia
 net-voip/telepathy-salut
 net-wireless/blueman
-net-wireless/bluez
+~net-wireless/bluez-5.14
 net-zope/zope-fixers
 net-zope/zope-interface
 sys-apps/shadow
