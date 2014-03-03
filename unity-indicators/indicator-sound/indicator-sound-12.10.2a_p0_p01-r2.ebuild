@@ -24,6 +24,7 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/libdbusmenu:=
 	unity-base/bamf:=
+	unity-base/gsettings-ubuntu-touch-schemas
 	unity-indicators/ido:="
 DEPEND="${RDEPEND}
 	dev-libs/libappindicator

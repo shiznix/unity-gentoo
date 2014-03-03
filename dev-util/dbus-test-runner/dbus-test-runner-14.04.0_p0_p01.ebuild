@@ -8,7 +8,7 @@ inherit autotools flag-o-matic ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131126"
+UVER_PREFIX="+14.04.20140226"
 
 DESCRIPTION="Run executables under a new DBus session for testing"
 HOMEPAGE="https://launchpad.net/dbus-test-runner"

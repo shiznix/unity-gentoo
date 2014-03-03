@@ -304,6 +304,7 @@ unity-base/geis **
 unity-base/gnome-control-center-signon **
 unity-base/gnome-control-center-unity **
 unity-base/grail **
+unity-base/gsettings-ubuntu-touch-schemas **
 unity-base/hud **
 unity-base/nux **
 unity-base/overlay-scrollbar **
