@@ -79,6 +79,16 @@ DEPEND="${COMMON_DEPEND}
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
 
 src_prepare() {
+	# https://bugzilla.gnome.org/show_bug.cgi?id=621836
+	# Apparently this change severely affects touchpad usability for some
+	# people, so revert it if USE=short-touchpad-timeout.
+	# Revisit if/when upstream adds a setting for customizing the timeout.
+	use short-touchpad-timeout &&
+		epatch "${FILESDIR}/${PN}-3.7.90-short-touchpad-timeout.patch"
+
+	# Make colord and wacom optional; requires eautoreconf
+	epatch "${FILESDIR}/${PN}-optional-color-wacom.patch"
+
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	eautoreconf
 	gnome2_src_prepare
@@ -87,22 +97,23 @@ src_prepare() {
 src_configure() {
 	append-ldflags -Wl,--warn-unresolved-symbols
 
-	gnome2_src_configure \
+gnome2_src_configure \
 		--disable-static \
-		--disable-packagekit \
 		--enable-man \
-		--enable-systemd \
+		$(use_enable colord color) \
 		$(use_enable cups) \
 		$(use_enable debug) \
 		$(use_enable debug more-warnings) \
 		$(use_enable i18n ibus) \
 		$(use_enable nls) \
+		$(use_enable packagekit) \
 		$(use_enable smartcard smartcard-support) \
-		$(use_enable udev gudev)
+		$(use_enable udev gudev) \
+		$(use_enable input_devices_wacom wacom)
 }
 
 src_compile() {
-	gmome2_src_compile
+	gnome2_src_compile
 	gcc -o gnome-settings-daemon/gnome-update-wallpaper-cache \
 		debian/gnome-update-wallpaper-cache.c \
 			$(pkg-config --cflags --libs glib-2.0 gdk-3.0 gdk-x11-3.0 gio-2.0 gnome-desktop-3.0) || die
