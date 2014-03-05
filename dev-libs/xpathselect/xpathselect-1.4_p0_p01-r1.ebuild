@@ -3,17 +3,13 @@
 # $Header: $
 
 EAPI=5
-
 GTESTVER="1.6.0"
 
 inherit cmake-utils ubuntu-versionator
 
-
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140108"
-
-#UURL="mirror://ubuntu/pool/universe/x/${PN}"
-UURL="https://launchpad.net/ubuntu/${URELEASE}/+source/${PN}/${PV}${UVER_PREFIX}-${UVER}/+files"
+UVER_PREFIX="+14.04.20140303"
+UURL="mirror://ubuntu/pool/main/x/${PN}"
 
 DESCRIPTION="Select objects in an object tree using XPath queries"
 HOMEPAGE="https://launchpad.net/xpathselect"

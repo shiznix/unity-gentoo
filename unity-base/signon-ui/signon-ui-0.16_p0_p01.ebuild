@@ -4,11 +4,11 @@
 
 EAPI=5
 
-inherit qt4-r2 ubuntu-versionator
+inherit qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131024.2"
+UVER_PREFIX="+14.04.20140304"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-ui"
@@ -24,12 +24,14 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 RDEPEND="x11-libs/libaccounts-qt:="
 DEPEND="${RDEPEND}
-	dev-qt/qtcore:4
-	dev-qt/qtdbus:4
-	dev-qt/qtgui:4
-	dev-qt/qtsql:4
-	dev-qt/qtxmlpatterns:4
-	dev-qt/qtwebkit:4
+	dev-qt/qtcore:5
+	dev-qt/qtdbus:5
+	dev-qt/qtgui:5
+	dev-qt/qtsql:5
+	dev-qt/qtxmlpatterns:5
+	dev-qt/qtwebkit:5
 	net-libs/libproxy
-	unity-base/signon
+	unity-base/signon[qt5]
 	x11-libs/libnotify"
+
+QT5_BUILD_DIR=${S}

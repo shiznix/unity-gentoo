@@ -12,7 +12,7 @@ inherit base cmake-utils distutils-r1 eutils gnome2 toolchain-funcs ubuntu-versi
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140228"
+UVER_PREFIX="+14.04.20140303"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
@@ -74,6 +74,7 @@ DEPEND="dev-libs/boost
 	>=unity-base/nux-4.0.0[debug?]
 	unity-base/overlay-scrollbar
 	x11-base/xorg-server[dmx]
+	>=x11-libs/cairo-1.13.1
 	x11-libs/libXfixes
 	x11-libs/startup-notification
 	unity-base/unity-gtk-module

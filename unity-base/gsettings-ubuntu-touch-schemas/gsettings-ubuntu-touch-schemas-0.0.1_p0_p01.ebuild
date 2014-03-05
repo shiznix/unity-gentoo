@@ -7,8 +7,6 @@ GCONF_DEBUG="no"
 
 inherit autotools gnome2 ubuntu-versionator
 
-MY_P="${PN}_${PV}"
-
 UURL="mirror://ubuntu/pool/universe/g/${PN}"
 URELEASE="trusty"
 UVER_PREFIX="+14.04.20140224"

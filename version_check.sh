@@ -229,7 +229,11 @@ uver() {
 	done
 	PVR_PL_MINOR="${strarray[@]}"
 	PVR_PL_MINOR="${PVR_PL_MINOR// /.}"	# Convert spaces in array to decimal points
-	UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
+	if [ "${packname}" = "linux" ]; then
+		UVER="${PVR_PL_MAJOR}.${PVR_PL_MINOR}"
+	else
+		UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
+	fi
 	unset strarray[@]
 }
 

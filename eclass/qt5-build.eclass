@@ -369,8 +369,12 @@ qt5_prepare_env() {
 	QT5_TESTSDIR=${QT5_DATADIR}/tests
 	QT5_SYSCONFDIR=${EPREFIX}/etc/qt5
 
-	# see mkspecs/features/qt_config.prf
-	export QMAKEMODULES="${QT5_BUILD_DIR}/mkspecs/modules:${S}/mkspecs/modules:${QT5_ARCHDATADIR}/mkspecs/modules"
+	if [[ ${QT5_MODULE} == "qtbase" ]]; then
+		# see mkspecs/features/qt_config.prf
+		# note: this could be the cause of bug 451456, so do it
+		#       only when really needed, i.e. for qtbase modules
+		export QMAKEMODULES="${QT5_BUILD_DIR}/mkspecs/modules:${S}/mkspecs/modules:${QT5_ARCHDATADIR}/mkspecs/modules"
+	fi
 }
 
 # @FUNCTION: qt5_symlink_tools_to_buildtree
