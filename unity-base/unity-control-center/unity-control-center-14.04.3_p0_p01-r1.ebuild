@@ -155,3 +155,11 @@ src_configure() {
 		$(use_enable input_devices_wacom wacom) \
 		$(use_with socialweb libsocialweb)
 }
+
+src_install() {
+	gnome2_src_install
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
+}

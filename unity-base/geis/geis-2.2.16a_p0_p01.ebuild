@@ -9,7 +9,7 @@ inherit autotools eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20130919.4"
+UVER_PREFIX="+14.04.20140303"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"
 HOMEPAGE="https://launchpad.net/geis"

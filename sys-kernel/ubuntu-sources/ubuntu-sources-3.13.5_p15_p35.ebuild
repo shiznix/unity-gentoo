@@ -4,19 +4,18 @@
 
 EAPI=5
 ETYPE="sources"
-
 inherit mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
-MY_PV="${PV%%[a-z]_p*}"
+MY_PV="${PV}"
+BASE_PV="3.13.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
 UURL="mirror://ubuntu/pool/main/l/${MY_PN}"
 URELEASE="trusty"
-UVER="12.32"
 
 DESCRIPTION="Ubuntu patched kernel sources"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/linux"
-SRC_URI="${UURL}/${MY_PN}_${MY_PV}.orig.tar.gz
-	${UURL}/${MY_PN}_${MY_PV}-${UVER}.diff.gz
+SRC_URI="${UURL}/${MY_PN}_${BASE_PV}.orig.tar.gz
+	${UURL}/${MY_PN}_${BASE_PV}-${UVER}.diff.gz
 	amd64? ( http://kernel.ubuntu.com/~kernel-ppa/configs/saucy/amd64-config.flavour.generic )
 	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/saucy/i386-config.flavour.generic )"
 LICENSE="GPL-2"
@@ -51,7 +50,7 @@ src_unpack() {
 
 src_prepare() {
 	# Ubuntu patchset (don't use epatch so we can easily see what files get patched) #
-	cat "${WORKDIR}/${MY_PN}_${MY_PV}-${UVER}.diff" | patch -p1 || die
+	cat "${WORKDIR}/${MY_PN}_${BASE_PV}-${UVER}.diff" | patch -p1 || die
 
 	sed -i -e "s:^\(EXTRAVERSION =\).*:\1 ${EXTRAVERSION}:" Makefile || die
 	sed	-i -e 's:#export\tINSTALL_PATH:export\tINSTALL_PATH:' Makefile || die
@@ -91,23 +90,18 @@ src_compile() {
 src_install() {
 	# copy sources into place #
 	dodir /usr/src
-	cp -a ${S} ${D}/usr/src/linux-${PN}-${MY_PV}-${UVER} || die
-	cd ${D}/usr/src/linux-${PN}-${MY_PV}-${UVER}
+	cp -a ${S} ${D}/usr/src/${PN}-${MY_PV}-${UVER} || die
+	cd ${D}/usr/src/${PN}-${MY_PV}-${UVER}
 
 	# prepare for real-world use and 3rd-party module building #
 	make mrproper || die
 	cp $defconfig_src .config || die
 	yes "" | make oldconfig || die
 
-	# if we didn't use genkernel, we're done. The kernel source tree is left in
-	#  an unconfigured state - you can't compile 3rd-party modules against it yet
 	use binary || return
+	cp -a ${WORKDIR}/out/* ${D}/ || die "couldn't copy output files into place"
 	make prepare || die
 	make scripts || die
-
-	# Now the source tree is configured to allow 3rd-party modules to be built
-	# against it, since we want that to work since we have a binary kernel built
-	cp -a ${WORKDIR}/out/* ${D}/ || die "couldn't copy output files into place"
 
 	# module symlink fixup #
 	rm -f ${D}/lib/modules/*/source || die
@@ -119,11 +113,11 @@ src_install() {
 
 	# back to the symlink fixup #
 	local moddir="$(ls -d 2*)"
-	ln -s /usr/src/linux-${PN}-${MY_PV}-${UVER} ${D}/lib/modules/${moddir}/source || die
-	ln -s /usr/src/linux-${PN}-${MY_PV}-${UVER} ${D}/lib/modules/${moddir}/build || die
+	ln -s /usr/src/${PN}-${MY_PV}-${UVER} ${D}/lib/modules/${moddir}/source || die
+	ln -s /usr/src/${PN}-${MY_PV}-${UVER} ${D}/lib/modules/${moddir}/build || die
 }
 
 pkg_postinst() {
 	[ ! -e ${ROOT}usr/src/linux ] && \
-		ln -s linux-${PN}-${MY_PV}-${UVER} ${ROOT}usr/src/linux
+		ln -s ${PN}-${MY_PV}-${UVER} ${ROOT}usr/src/linux
 }

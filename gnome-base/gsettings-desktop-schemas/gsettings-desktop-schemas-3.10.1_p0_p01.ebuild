@@ -7,8 +7,6 @@ GCONF_DEBUG="no"
 
 inherit base gnome2 ubuntu-versionator
 
-MY_P="${PN}_${PV}"
-
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="trusty"
 

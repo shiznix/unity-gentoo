@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140218"
+UVER_PREFIX="+14.04.20140304"
 
 DESCRIPTION="Library that produces and stores thumbnails of image, audio and video files according to the Freedesktop thumbnail specification"
 HOMEPAGE="https://launchpad.net/thumbnailer"

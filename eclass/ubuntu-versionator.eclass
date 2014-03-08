@@ -66,7 +66,12 @@ done
 
 PVR_PL_MINOR="${strarray[@]}"
 PVR_PL_MINOR="${PVR_PL_MINOR// /.}"
-UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
+
+if [ "${PN}" = "ubuntu-sources" ]; then
+	UVER="${PVR_PL_MAJOR}.${PVR_PL_MINOR}"
+else
+	UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
+fi
 
 ## Check we have the correct masking in place for the overlay to work ##
 ubuntu-versionator_pkg_pretend() {
