@@ -22,6 +22,9 @@
 >=dev-libs/totem-pl-parser-3.10.0::gentoo
 >=app-arch/file-roller-3.10.2::gentoo
 >=media-libs/clutter-1.16.4::gentoo
+>=mail-client/evolution-3.10.0::gentoo
+>=app-admin/gnome-system-log-3.9.90::gentoo
+>=sys-apps/baobab-3.10.0::gentoo
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
