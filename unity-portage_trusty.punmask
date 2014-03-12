@@ -1,3 +1,4 @@
+~dev-libs/lzo-2.06
 sys-libs/db:5.1
 x11-misc/lightdm::unity-gentoo
 media-libs/mesa::unity-gentoo
