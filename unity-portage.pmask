@@ -9,9 +9,6 @@
 >=dev-cpp/gtkmm-3.10.0::gentoo 
 >=dev-libs/folks-0.9.6::gentoo
 >=dev-libs/libgweather-3.10.0::gentoo
->=app-crypt/gcr-3.10.0::gentoo
->=app-crypt/seahorse-3.10.0::gentoo
->=media-video/totem-3.10.0::gentoo
 >=media-gfx/eog-3.10.0::gentoo
 >=app-editors/gedit-3.10.0::gentoo
 >=app-cdr/brasero-3.10.0::gentoo
@@ -19,7 +16,6 @@
 >=app-text/evince-3.10.0::gentoo
 >=x11-libs/gtksourceview-3.10.0::gentoo
 >=gnome-base/librsvg-2.40.1::gentoo
->=dev-libs/totem-pl-parser-3.10.0::gentoo
 >=app-arch/file-roller-3.10.2::gentoo
 >=media-libs/clutter-1.16.4::gentoo
 >=mail-client/evolution-3.10.0::gentoo
