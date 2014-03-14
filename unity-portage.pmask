@@ -25,6 +25,9 @@
 >=mail-client/evolution-3.10.0::gentoo
 >=app-admin/gnome-system-log-3.9.90::gentoo
 >=sys-apps/baobab-3.10.0::gentoo
+>=x11-wm/mutter-3.10.4::gentoo
+>=www-client/epiphany-3.10.3::gentoo
+
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
