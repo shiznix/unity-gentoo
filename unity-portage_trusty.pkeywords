@@ -110,7 +110,6 @@ dev-lang/orc
 ~dev-lang/spidermonkey-17.0.0
 =dev-cpp/gtkmm-3.10*
 dev-cpp/glibmm
-dev-lang/python-exec
 dev-lang/vala
 dev-libs/atk
 =dev-libs/boost-1.53*
@@ -139,12 +138,12 @@ dev-python/pycrypto
 dev-python/pygobject:3
 dev-python/pyjunitxml
 dev-python/python-distutils-extra
-dev-python/python-exec
 dev-python/python-prctl
 dev-python/rdflib
 ~dev-python/twisted-core-13.0.0
 ~dev-python/twisted-names-13.0.0
 ~dev-python/twisted-web-13.0.0
+dev-qt/qtconcurrent:5
 dev-qt/qtcore:5
 dev-qt/qtdbus:5
 dev-qt/qtdeclarative:5
