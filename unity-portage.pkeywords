@@ -108,7 +108,6 @@ dev-lang/orc
 ~dev-lang/perl-5.16.1
 ~dev-cpp/gtkmm-3.8.1
 dev-cpp/glibmm
-dev-lang/python-exec
 dev-lang/vala
 dev-libs/atk
 =dev-libs/boost-1.53*
@@ -133,7 +132,6 @@ dev-python/pycrypto
 dev-python/pygobject:3
 dev-python/pyjunitxml
 dev-python/python-distutils-extra
-dev-python/python-exec
 dev-python/python-prctl
 dev-python/rdflib
 ~dev-python/twisted-core-13.0.0

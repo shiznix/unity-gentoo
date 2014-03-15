@@ -18,7 +18,7 @@ dev-libs/libxslt python
 dev-libs/openssl -bindist
 dev-libs/protobuf python
 dev-libs/xapian-bindings python
-dev-qt/qtwebkit icu qml
+dev-qt/qtwebkit icu qml multimedia webp widgets
 dev-qt/qt-mobility organizer
 dev-qt/qtcore icu
 gnome-base/gvfs fuse
