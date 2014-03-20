@@ -16,13 +16,9 @@ fi
 
 IUSE="+localstorage +widgets +xml"
 
-# TODO: easingcurveeditor|qmlscene? ( qt-widgets )
-# TODO: xml? ( qt-xmlpatterns )
-
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=,opengl]
-	>=dev-qt/qtjsbackend-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
 	>=dev-qt/qttest-${PV}:5[debug=]
 	localstorage? ( >=dev-qt/qtsql-${PV}:5[debug=] )
@@ -32,6 +28,9 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
+	sed -e 's:core-private:core-private quick-private:' \
+		-i tools/qml/qml.pro || die
+
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
 

@@ -6,9 +6,9 @@ EAPI=5
 
 inherit base qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/q/${PN}-opensource-src"
+UURL="mirror://ubuntu/pool/main/q/${PN}-opensource-src"
 URELEASE="trusty"
-UVER_PREFIX="~git20130828"
+UVER_PREFIX="~git20140203~e0c5eebe"
 
 DESCRIPTION="Qt PIM module, Organizer library"
 SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
