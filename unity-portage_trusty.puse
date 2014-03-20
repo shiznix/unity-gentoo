@@ -1,4 +1,5 @@
 */* -consolekit -packagekit systemd zeitgeist
+*/*::unity-gentoo qt5
 
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
@@ -7,7 +8,6 @@ app-crypt/libsecret crypt vala
 app-i18n/ibus dconf python -gconf
 app-text/gtkspell vala
 dev-lang/python sqlite
-dev-libs/libdbusmenu-qt qt5
 dev-libs/folks vala
 dev-libs/glib utils
 dev-libs/keybinder python
@@ -21,6 +21,7 @@ dev-libs/xapian-bindings python
 dev-qt/qtquick1 webkit
 dev-qt/qtwebkit icu qml libxml2 multimedia webp widgets xslt
 dev-qt/qt-mobility organizer
+dev-qt/qtcore icu
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 media-libs/gst-plugins-base theora
@@ -39,7 +40,6 @@ net-misc/networkmanager modemmanager ppp
 sys-apps/systemd pam
 sys-libs/talloc python
 sys-libs/zlib minizip
-x11-libs/dee-qt qt5
 virtual/notification-daemon -gnome	# Needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
 x11-base/xorg-server dmx
 x11-libs/libdrm libkms

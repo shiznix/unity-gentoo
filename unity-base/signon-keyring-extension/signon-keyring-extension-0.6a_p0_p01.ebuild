@@ -8,7 +8,7 @@ inherit base qt4-r2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+13.10.20130626"
+UVER_PREFIX="+14.04.20140307"
 
 DESCRIPTION="GNOME keyring extension for signond used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-keyring-extension"
