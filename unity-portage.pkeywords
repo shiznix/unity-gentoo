@@ -312,12 +312,14 @@ x11-libs/libXi::unity-gentoo
 x11-libs/qml-friends 
 x11-libs/ubuntu-ui-toolkit 
 x11-libs/unity-action-api 
+~x11-libs/libxcb-1.10
 x11-misc/lightdm::unity-gentoo 
 x11-misc/lightdm-kde::unity-gentoo 
 x11-misc/unity-chromium-extension 
 x11-misc/unity-firefox-extension 
 x11-misc/webaccounts-browser-extension 
 x11-proto/fixesproto 
+~x11-proto/xcb-proto-1.10
 x11-themes/gtk-engines-unico 
 x11-themes/humanity-icon-theme 
 x11-themes/ubuntu-themes 
