@@ -15,6 +15,7 @@ dev-libs/libindicate-qt
 ~dev-python/httplib2-0.8
 ~dev-python/oauth-1.0.1
 ~dev-python/oauthlib-0.6.1
+~dev-python/python-prctl-1.5.0
 ~dev-python/twisted-core-13.0.0
 ~dev-python/twisted-names-13.0.0
 ~dev-python/twisted-web-13.0.0
