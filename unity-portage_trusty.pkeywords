@@ -94,7 +94,6 @@ dev-qt/qtpim **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen::unity-gentoo **
 gnome-base/gconf::unity-gentoo **
-gnome-base/gnome-control-center::unity-gentoo **
 gnome-base/gnome-core-apps::unity-gentoo **
 gnome-base/gnome-core-libs::unity-gentoo **
 gnome-base/gnome-desktop::unity-gentoo **
@@ -134,7 +133,6 @@ unity-base/evemu **
 unity-base/frame **
 unity-base/geis **
 unity-base/gnome-control-center-signon **
-unity-base/gnome-control-center-unity **
 unity-base/grail **
 unity-base/gsettings-ubuntu-touch-schemas **
 unity-base/hud **
