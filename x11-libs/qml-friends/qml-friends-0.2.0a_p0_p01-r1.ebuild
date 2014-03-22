@@ -8,7 +8,7 @@ inherit base gnome2-utils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/q/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140306"
+UVER_PREFIX="+14.04.20140317"
 
 DESCRIPTION="QML Bindings for the Friends library"
 HOMEPAGE="https://launchpad.net/qml-friends"

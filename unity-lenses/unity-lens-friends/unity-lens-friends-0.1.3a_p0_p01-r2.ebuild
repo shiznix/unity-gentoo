@@ -10,7 +10,7 @@ inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20131102.2"
+UVER_PREFIX="+14.04.20140317"
 
 DESCRIPTION="Friends lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-friends"

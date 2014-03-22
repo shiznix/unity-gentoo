@@ -12,7 +12,7 @@ inherit cmake-utils virtualx ${BZR_ECLASS} ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140305"
+UVER_PREFIX="+14.04.20140314"
 
 DESCRIPTION="A library providing Qt implementation of DBusMenu specification"
 HOMEPAGE="https://launchpad.net/libdbusmenu-qt/"

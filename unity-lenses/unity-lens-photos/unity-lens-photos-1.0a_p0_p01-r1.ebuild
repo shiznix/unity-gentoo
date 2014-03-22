@@ -9,7 +9,7 @@ inherit distutils-r1 eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="daily13.06.05"
+UVER_PREFIX="+14.04.20140318"
 
 DESCRIPTION="Photo lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-photos"

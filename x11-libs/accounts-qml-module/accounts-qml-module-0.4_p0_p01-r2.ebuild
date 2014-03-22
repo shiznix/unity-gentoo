@@ -8,7 +8,7 @@ inherit base gnome2-utils qt5-build ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/universe/a/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140305"
+UVER_PREFIX="+14.04.20140317"
 
 DESCRIPTION="Expose Unity Online Accounts API to QML applications"
 HOMEPAGE="https://launchpad.net/accounts-qml-module"

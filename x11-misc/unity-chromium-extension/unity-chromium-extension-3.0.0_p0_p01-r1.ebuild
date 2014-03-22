@@ -8,7 +8,7 @@ inherit autotools eutils multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140220"
+UVER_PREFIX="+14.04.20140318"
 
 DESCRIPTION="Chromium extension: Unity Integration"
 HOMEPAGE="https://launchpad.net/unity-chromium-extension"
