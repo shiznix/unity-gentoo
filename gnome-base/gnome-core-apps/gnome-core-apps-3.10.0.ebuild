@@ -23,7 +23,7 @@ RDEPEND="
 	>=gnome-base/gnome-session-3.8
 	>=gnome-base/gnome-menus-${PV}:3
 	>=gnome-base/gnome-settings-daemon-3.8[cups?]
-	>=gnome-base/gnome-control-center-3.8[cups?]
+	>=unity-base/unity-control-center-14.04.3[cups?]
 
 	>=app-crypt/gcr-${PV}
 	>=gnome-base/nautilus-${PV}

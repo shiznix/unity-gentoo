@@ -32,10 +32,10 @@ DEPEND="dev-libs/libappindicator
 	dev-libs/libindicate-qt
 	dev-libs/libtimezonemap
 	dev-libs/properties-cpp
-	gnome-base/gnome-control-center
 	>=gnome-extra/evolution-data-server-3.8
 	net-misc/url-dispatcher
 	unity-indicators/ido
+	unity-base/unity-control-center
 	>=x11-libs/libnotify-0.7.6"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

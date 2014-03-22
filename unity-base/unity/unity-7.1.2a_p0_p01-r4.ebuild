@@ -57,7 +57,6 @@ DEPEND="dev-libs/boost
 	app-text/yelp-tools
 	gnome-base/gnome-desktop:3
 	>=gnome-base/gnome-menus-3.8:3
-	>=gnome-base/gnome-control-center-3.8
 	>=gnome-base/gnome-settings-daemon-3.8
 	>=gnome-base/gnome-session-3.8
 	>=gnome-base/gsettings-desktop-schemas-3.8
@@ -73,6 +72,7 @@ DEPEND="dev-libs/boost
 	unity-base/dconf-qt
 	>=unity-base/nux-4.0.0[debug?]
 	unity-base/overlay-scrollbar
+	unity-base/unity-control-center
 	x11-base/xorg-server[dmx]
 	>=x11-libs/cairo-1.13.1
 	x11-libs/libXfixes
@@ -209,9 +209,6 @@ src_install() {
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe "${FILESDIR}/99ibus-service"
 
-	# Make searchingthedashlegalnotice.html available to gnome-control-center's Details > Legal Notice #
-	dosym /usr/share/unity/icons/searchingthedashlegalnotice.html \
-		/usr/share/gnome-control-center/searchingthedashlegalnotice.html
 }
 
 pkg_postinst() {
