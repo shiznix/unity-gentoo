@@ -1,0 +1,24 @@
+diff -Nur a/panels/info/cc-info-panel.c b/panels/info/cc-info-panel.c
+--- a/panels/info/cc-info-panel.c	2014-03-13 11:12:55.000000000 +0100
++++ b/panels/info/cc-info-panel.c	2014-03-23 10:28:02.427709274 +0100
+@@ -1631,8 +1631,6 @@
+       g_free (text);
+     }
+ 
+-  gtk_widget_hide (WID ("version_label"));
+-
+   glibtop_get_mem (&mem);
+   text = g_format_size_full (mem.total, G_FORMAT_SIZE_IEC_UNITS);
+   widget = WID ("memory_label");
+diff -Nur a/panels/info/info.ui b/panels/info/info.ui
+--- a/panels/info/info.ui	2014-03-13 11:13:08.000000000 +0100
++++ b/panels/info/info.ui	2014-03-23 10:28:45.253244315 +0100
+@@ -239,7 +239,7 @@
+                               <object class="GtkImage" id="system_image">
+                                 <property name="visible">True</property>
+                                 <property name="can_focus">False</property>
+-                                <property name="pixbuf">UbuntuLogo.png</property>
++                                <property name="pixbuf">GnomeLogoVerticalMedium.svg</property>
+                               </object>
+                               <packing>
+                                 <property name="expand">False</property>
