@@ -48,7 +48,7 @@ RDEPEND="
 		unity-base/gnome-control-center-signon )
 "
 # goa-daemon can launch gnome-control-center
-PDEPEND="gnome? ( >=gnome-base/gnome-control-center-3.2[gnome-online-accounts(+)] )"
+PDEPEND="gnome? ( >=unity-base/unity-control-center-14.04.3[gnome-online-accounts(+)] )"
 
 DEPEND="${RDEPEND}
 	dev-libs/libxslt

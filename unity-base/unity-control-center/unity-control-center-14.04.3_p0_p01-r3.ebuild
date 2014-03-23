@@ -6,30 +6,21 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-inherit autotools base eutils gnome2 ubuntu-versionator
+inherit autotools base eutils gnome2 ubuntu-versionator vala
 
-MY_P="${PN}_${PV}"
-S="${WORKDIR}/${PN}-${PV}"
-
-#UURL="mirror://ubuntu/pool/main/g/${PN}"
-UURL="http://ppa.launchpad.net/gnome3-team/gnome3-staging/ubuntu/pool/main/g/${PN}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="~raring2"
-MY_P="${MY_P/daemon-/daemon_}"
+UVER_PREFIX="+14.04.20140319"
 
-DESCRIPTION="GNOME Desktop Configuration Tool patched for the Unity desktop"
+DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2+"
-SLOT="2"
+SLOT="0"
 IUSE="+bluetooth +colord +cups +gnome-online-accounts +i18n input_devices_wacom kerberos modemmanager +socialweb v4l"
-#if [[ ${PV} = 9999 ]]; then
-#	KEYWORDS=""
-#else
-#	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
-#fi
+#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 RESTRICT="mirror"
 
 # False positives caused by nested configure scripts
@@ -49,10 +40,10 @@ COMMON_DEPEND="
 	>=gnome-base/gnome-settings-daemon-3.8.3[colord?,policykit]
 	>=gnome-base/libgnomekbd-2.91.91
 
-	dev-libs/libtimezonemap
-
+	app-admin/apg
 	app-text/iso-codes
 	dev-libs/libpwquality
+	dev-libs/libtimezonemap
 	dev-libs/libxml2:2
 	gnome-base/gnome-menus:3
 	gnome-base/libgtop:2
@@ -91,8 +82,7 @@ COMMON_DEPEND="
 	input_devices_wacom? (
 		>=dev-libs/libwacom-0.7
 		>=x11-libs/libXi-1.2 )
-"
-# <gnome-color-manager-3.1.2 has file collisions with g-c-c-3.1.x
+	$(vala_depend)"
 RDEPEND="${COMMON_DEPEND}
 	|| ( ( app-admin/openrc-settingsd sys-auth/consolekit ) >=sys-apps/systemd-31 )
 	>=sys-apps/accountsservice-0.6.30
@@ -128,69 +118,18 @@ DEPEND="${COMMON_DEPEND}
 
 	cups? ( sys-apps/sed )
 
-	gnome-base/gnome-common
-"
+	gnome-base/gnome-common"
 # Needed for autoreconf
 #	gnome-base/gnome-common
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 src_prepare() {
-	# Make some panels optional; requires eautoreconf
-	# https://bugzilla.gnome.org/697478
-	epatch "${FILESDIR}/${PN}-3.8.0-optional-r1.patch"
-
-	# https://bugzilla.gnome.org/686840
-	epatch "${FILESDIR}/${PN}-3.7.4-optional-kerberos.patch"
-
-	# Fix some absolute paths to be appropriate for Gentoo
-	epatch "${FILESDIR}/${PN}-3.8.0-paths-makefiles.patch"
-	epatch "${FILESDIR}/${PN}-3.8.0-paths.patch"
-
-	# Make modemmanager optional, bug 463852, upstream bug #700145
-	epatch "${FILESDIR}/${PN}-3.8.1.5-optional-modemmanager.patch"
-
-	# Fix crash of 'Details' entry when running as guest in VirtualBox
-	epatch "${FILESDIR}/${PN}-3.8.3-fix-details-crash.patch"
-
-	# Use 'dev-libs/libtimezonemap' instead of built in timezonemap implementation
-	epatch "${FILESDIR}/${PN}-3.8.3-use-libtimezonemap.patch"
-
-	# Disable selected patches #
-	sed \
-		`# Ubuntu have not yet ported to the latest version of IBus` \
-			-e 's:revert_new_ibus_keyboard_use.patch:#revert_new_ibus_keyboard_use.patch:g' \
-		`# Avoid Ubuntu's package management` \
-			-e 's:05_run_update_manager.patch:#05_run_update_manager.patch:g' \
-		`# Don't patch out Gnome's Region and Language settings, Ubuntu's Language setting requires apt/dpkg` \
-			-e 's:10_keyboard_layout_on_unity.patch:#10_keyboard_layout_on_unity.patch:g' \
-		`# Don't use Ubuntu specific region and language selector settings` \
-			-e 's:52_region_language.patch:#52_region_language.patch:g' \
-		`# Disable Ubuntu branding` \
-			-e 's:56_use_ubuntu_info_branding:#56_use_ubuntu_info_branding:g' \
-		`# Don't patch out Gnome's printer settings panel (indicator-printers doesn't work)` \
-			-e 's:91_unity_no_printing_panel:#91_unity_no_printing_panel:g' \
-		`# Other Ubuntu specific patches to disable` \
-			-e 's:62_update_translations_template.patch:#62_update_translations_template.patch:g' \
-			-e 's:92_ubuntu_system_proxy.patch:#92_ubuntu_system_proxy.patch:g' \
-			-e 's:revert_git_info_packagekit_api.patch:#revert_git_info_packagekit_api.patch:g' \
-			-e 's:ubuntu_region_packagekit.patch:#ubuntu_region_packagekit.patch:g' \
-			-e 's:ubuntu_region_install_dialog.patch:#ubuntu_region_install_dialog.patch:g' \
-				-i "${WORKDIR}/debian/patches/series"
-		for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-			PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-		done
-	base_src_prepare
-
-	# 'ubuntu_external_panels.patch' allows customisation of g-c-c #
-	# The hardcoded launchers in the patch that are never used, give context for strip and replace #
-	sed -e 's:landscape-client-settings:unity-tweak-tool:' \
-		-i shell/cc-panel-loader.c
-
-	# Gentoo handles completions in a different directory, bug #465094
-	sed -i 's|^completiondir =.*|completiondir = $(datadir)/bash-completion|' \
-		shell/Makefile.am || die "sed completiondir failed"
-
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	epatch "${FILESDIR}/unity-control-center-optional-bt-colord-wacom.patch"
 	eautoreconf
 	gnome2_src_prepare
+	vala_src_prepare
 
 	# panels/datetime/Makefile.am gets touched as a result of something in our
 	# src_prepare(). We need to touch timedated{c,h} to prevent them from being
@@ -202,9 +141,6 @@ src_prepare() {
 src_configure() {
 	# cheese is disabled as it can cause gnome-control-center to segfault (and Ubuntu disable it anyway) #
 	# gnome-online-accounts is disabled as we use Ubuntu's online accounts method #
-	# FIXME: add $(use_with kerberos) support?
-	! use kerberos && G2CONF+=" KRB5_CONFIG=$(type -P true)"
-
 	gnome2_src_configure \
 		--disable-update-mimedb \
 		--disable-static \
@@ -219,4 +155,12 @@ src_configure() {
 		$(use_with socialweb libsocialweb) \
 		$(use_enable input_devices_wacom wacom) \
 		$(use_with socialweb libsocialweb)
+}
+
+src_install() {
+	gnome2_src_install
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
 }

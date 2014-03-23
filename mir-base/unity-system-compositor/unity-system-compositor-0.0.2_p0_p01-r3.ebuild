@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140311.2"
+UVER_PREFIX="+14.04.20140317.2"
 
 DESCRIPTION="Compositor for Mir display server that switches graphics and input between running sessions"
 HOMEPAGE="https://launchpad.net/unity-system-compositor"

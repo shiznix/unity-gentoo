@@ -10,7 +10,7 @@ inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140311.1"
+UVER_PREFIX="+14.04.20140321"
 
 DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"
@@ -32,10 +32,10 @@ DEPEND="dev-libs/libappindicator
 	dev-libs/libindicate-qt
 	dev-libs/libtimezonemap
 	dev-libs/properties-cpp
-	gnome-base/gnome-control-center
 	>=gnome-extra/evolution-data-server-3.8
 	net-misc/url-dispatcher
 	unity-indicators/ido
+	unity-base/unity-control-center
 	>=x11-libs/libnotify-0.7.6"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

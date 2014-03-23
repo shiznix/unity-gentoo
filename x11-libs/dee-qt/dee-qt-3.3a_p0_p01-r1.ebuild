@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140116"
+UVER_PREFIX="+14.04.20140317"
 
 DESCRIPTION="Qt binding and QML plugin for Dee for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"

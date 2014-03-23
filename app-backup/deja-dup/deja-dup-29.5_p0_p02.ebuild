@@ -26,7 +26,7 @@ COMMON_DEPEND="
 	dev-libs/libunity:=
 	dev-libs/glib:2
 	dev-libs/libpeas
-	gnome-base/gnome-control-center
+	unity-base/unity-control-center
 	x11-libs/gtk+:3
 	x11-libs/libnotify
 

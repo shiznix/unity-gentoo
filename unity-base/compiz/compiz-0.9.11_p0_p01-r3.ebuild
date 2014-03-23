@@ -9,7 +9,7 @@ inherit base gnome2 cmake-utils eutils python ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140310"
+UVER_PREFIX="+14.04.20140320.1"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/compiz"

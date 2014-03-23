@@ -6,14 +6,14 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator vala
+inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140207"
+UVER_PREFIX="+14.04.20140320"
 
-DESCRIPTION="Indicator that collects messages that need a response used by the Unity desktop"
-HOMEPAGE="https://launchpad.net/indicator-messages"
+DESCRIPTION="Indicator for application menus used by the Unity desktop"
+HOMEPAGE="https://launchpad.net/indicator-appmenu"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
@@ -22,19 +22,18 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="!net-im/indicator-messages
+RDEPEND="dev-libs/libdbusmenu:=
+	unity-base/bamf:="
+DEPEND="${RDEPEND}
 	dev-libs/libappindicator
-	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
-	$(vala_depend)"
+	>=x11-libs/gtk+-3.5.12:3
+	x11-libs/libwnck:1
+	x11-libs/libwnck:3"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	eautoreconf
 	append-cflags -Wno-error
-
-	vala_src_prepare
-	export VALA_API_GEN="$VAPIGEN"
-	gnome2_src_prepare
 }
