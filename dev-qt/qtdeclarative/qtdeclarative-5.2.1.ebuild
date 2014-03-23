@@ -28,6 +28,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
+	# Hack to fix include paths for Qml (see b.g.o #498894) #
 	sed -e 's:core-private:core-private quick-private:' \
 		-i tools/qml/qml.pro || die
 

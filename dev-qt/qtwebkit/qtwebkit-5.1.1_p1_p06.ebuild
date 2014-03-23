@@ -81,7 +81,7 @@ src_prepare() {
 src_configure() {
 	qt5-build_src_configure
 
-	# Hack to fix linktime paths for geolocation #
+	# Hack to fix linktime paths for geolocation (see b.g.o #451456) #
 	#  NB - This is caused by library paths being present #
 	#	for QMAKE_PRL_LIBS variable in /usr/lib64/libQt5*.prl files #
 	pushd Source
