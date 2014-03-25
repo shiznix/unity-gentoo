@@ -102,7 +102,8 @@ EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_
 # @ECLASS-VARIABLE: QT5_BUILD_DIR
 # @DESCRIPTION:
 # Build directory for out-of-source builds.
-: ${QT5_BUILD_DIR:=${S}_build}
+#: ${QT5_BUILD_DIR:=${S}_build}
+: ${QT5_BUILD_DIR:=${S}}
 
 # @ECLASS-VARIABLE: QT5_VERBOSE_BUILD
 # @DESCRIPTION:
@@ -223,16 +224,11 @@ qt5-build_src_configure() {
 	# qmake-generated Makefiles use LD/LINK for linking
 	export LD="$(tc-getCXX)"
 
-	mkdir -p "${QT5_BUILD_DIR}" || die
-	pushd "${QT5_BUILD_DIR}" > /dev/null || die
-
 	if [[ ${QT5_MODULE} == "qtbase" ]]; then
 		qt5_base_configure
 	fi
 
 	qt5_foreach_target_subdir qt5_qmake
-
-	popd > /dev/null || die
 }
 
 # @FUNCTION: qt5-build_src_compile
@@ -272,10 +268,8 @@ qt5-build_src_install() {
 	qt5_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
 	if [[ ${PN} == "qtcore" ]]; then
-		pushd "${QT5_BUILD_DIR}" > /dev/null || die
 		einfo "Running emake INSTALL_ROOT=${D} install_{mkspecs,qmake,syncqt}"
 		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
-		popd > /dev/null || die
 
 		# create an empty Gentoo/gentoo-qconfig.h
 		dodir "${QT5_HEADERDIR#${EPREFIX}}"/Gentoo
@@ -508,13 +502,8 @@ qt5_foreach_target_subdir() {
 			[[ -d ${S}/${subdir} ]] || continue
 		fi
 
-		mkdir -p "${QT5_BUILD_DIR}/${subdir}" || die
-		pushd "${QT5_BUILD_DIR}/${subdir}" > /dev/null || die
-
 		einfo "Running $* ${subdir:+in ${subdir}}"
 		"$@"
-
-		popd > /dev/null || die
 	done
 }
 

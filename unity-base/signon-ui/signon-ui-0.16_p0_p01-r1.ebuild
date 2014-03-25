@@ -33,5 +33,3 @@ DEPEND="${RDEPEND}
 	net-libs/libproxy
 	unity-base/signon[qt5]
 	x11-libs/libnotify"
-
-QT5_BUILD_DIR=${S}

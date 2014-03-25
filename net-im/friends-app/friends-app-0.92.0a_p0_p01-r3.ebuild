@@ -30,10 +30,9 @@ DEPEND="dev-qt/qtcore:5
 	dev-qt/qtgui:5"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-QT5_BUILD_DIR="${S}"
 
 src_configure() {
-	bin/qmake PREFIX=/usr
+	/usr/$(get_libdir)/qt5/bin/qmake PREFIX=/usr
 }
 
 pkg_preinst() {

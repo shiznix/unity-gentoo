@@ -19,6 +19,7 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
+RDEPEND="www-client/webbrowser-app"
 DEPEND="unity-base/webapps-base"
 
 ## Neat and efficient way of bundling and tracking all available webapps into one ebuild ##

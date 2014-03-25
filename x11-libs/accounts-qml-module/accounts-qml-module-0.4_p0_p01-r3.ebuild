@@ -6,7 +6,7 @@ EAPI=5
 
 inherit base gnome2-utils qt5-build ubuntu-versionator virtualx
 
-UURL="mirror://ubuntu/pool/universe/a/${PN}"
+UURL="mirror://ubuntu/pool/main/a/${PN}"
 URELEASE="trusty"
 UVER_PREFIX="+14.04.20140317"
 
@@ -27,7 +27,6 @@ DEPEND="dev-qt/qtcore:5
 	x11-libs/libaccounts-qt[qt5]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-QT5_BUILD_DIR="${S}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
@@ -39,7 +38,7 @@ src_prepare() {
 }
 
 src_configure() {
-	bin/qmake PREFIX=/usr
+	/usr/$(get_libdir)/qt5/bin/qmake PREFIX=/usr
 }
 
 src_install() {

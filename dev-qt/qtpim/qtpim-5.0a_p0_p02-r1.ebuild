@@ -31,5 +31,5 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	qt5-build_src_prepare
-	perl -w /usr/$(get_libdir)/qt5/bin/syncqt.pl -version 5.0.0 -outdir ${S} ${S}
+	perl -w /usr/$(get_libdir)/qt5/bin/syncqt.pl -version 5.0.0
 }
