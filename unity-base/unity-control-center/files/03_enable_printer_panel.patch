@@ -1,0 +1,28 @@
+diff -Nur a/panels/printers/Makefile.am b/panels/printers/Makefile.am
+--- a/panels/printers/Makefile.am	2014-03-13 11:12:55.000000000 +0100
++++ b/panels/printers/Makefile.am	2014-03-23 15:53:13.733917290 +0100
+@@ -52,9 +52,9 @@
+ 
+ @INTLTOOL_DESKTOP_RULE@
+ 
+-#desktopdir = $(datadir)/applications
+-#desktop_in_files = unity-printers-panel.desktop.in
+-#desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++desktopdir = $(datadir)/applications
++desktop_in_files = unity-printers-panel.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+ 
+ CLEANFILES = $(desktop_in_files) $(desktop_DATA)
+ 
+diff -Nur a/panels/printers/unity-printers-panel.desktop.in.in b/panels/printers/unity-printers-panel.desktop.in.in
+--- a/panels/printers/unity-printers-panel.desktop.in.in	2014-03-13 11:12:55.000000000 +0100
++++ b/panels/printers/unity-printers-panel.desktop.in.in	2014-03-23 15:47:50.800710187 +0100
+@@ -8,7 +8,7 @@
+ StartupNotify=true
+ # The X-Unity-Settings-Panel is necessary to show in the main shell UI
+ Categories=GNOME;GTK;Settings;HardwareSettings;X-Unity-Settings-Panel;
+-OnlyShowIn=GNOME;
++OnlyShowIn=GNOME;Unity;
+ X-Unity-Settings-Panel=printers
+ # Translators: those are keywords for the printing control-center panel
+ _Keywords=Printer;Queue;Print;Paper;Ink;Toner;

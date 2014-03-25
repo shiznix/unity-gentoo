@@ -126,7 +126,9 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-	epatch "${FILESDIR}/unity-control-center-optional-bt-colord-wacom.patch"
+	epatch "${FILESDIR}/01_unity-control-center-optional-bt-colord-wacom.patch"
+	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
+	epatch "${FILESDIR}/03_enable_printer_panel.patch"
 	eautoreconf
 	gnome2_src_prepare
 	vala_src_prepare

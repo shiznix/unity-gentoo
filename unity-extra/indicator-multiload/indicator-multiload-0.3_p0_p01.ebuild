@@ -21,7 +21,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libappindicator:="
+RDEPEND="dev-libs/libappindicator:=
+	gnome-extra/gnome-system-monitor"
+
 DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.28.0
 	dev-libs/libdbusmenu
