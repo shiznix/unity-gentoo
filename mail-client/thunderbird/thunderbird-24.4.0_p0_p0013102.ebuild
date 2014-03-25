@@ -35,7 +35,7 @@ MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 inherit base flag-o-matic toolchain-funcs mozconfig-3 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
 URELEASE="saucy-updates"
-UVER_PREFIX="+build2"
+UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/t/${PN}"
 
 DESCRIPTION="Thunderbird Mail Client"

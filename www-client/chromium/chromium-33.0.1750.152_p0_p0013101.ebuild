@@ -17,7 +17,7 @@ MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
 URELEASE="saucy-updates"
-UVER_SUFFIX="~20140204.977.1"
+UVER_SUFFIX="~pkg984.1"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
