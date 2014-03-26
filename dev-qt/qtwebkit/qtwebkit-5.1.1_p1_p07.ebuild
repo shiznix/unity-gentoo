@@ -60,6 +60,7 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 
+
 pkg_setup() {
 	python-any-r1_pkg_setup
 	qt5-build_pkg_setup
@@ -83,10 +84,5 @@ src_configure() {
 	# Hack to fix linktime paths for geolocation (see b.g.o #451456) #
 	#  NB - This is caused by library paths being present #
 	#	for QMAKE_PRL_LIBS variable in /usr/lib64/libQt5*.prl files #
-	pushd Source
-		/usr/$(get_libdir)/qt5/bin/qmake \
-			widgetsapi.pri -o Makefile.widgetsapi
-		sed -e "s:-L/usr/lib64 :-L${S}/lib :g" \
-			-i Makefile.widgetsapi || die
-	popd
+	echo "LIBS+=-L${S}/lib" >> Source/widgetsapi.pri
 }
