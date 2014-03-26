@@ -10,7 +10,7 @@ MY_PN="upstart-app-launch"
 MY_P="${MY_PN}_${PV}"
 UURL="mirror://ubuntu/pool/main/u/${MY_PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140320"
+UVER_PREFIX="+14.04.20140321"
 
 DESCRIPTION="An Upstart Job that is used to launch applications in a controlled and predictable manner"
 HOMEPAGE="https://launchpad.net/upstart-app-launch"
@@ -28,6 +28,7 @@ DEPEND="dev-libs/glib:2
 	dev-libs/libupstart
 	dev-util/lttng-tools
 	dev-util/dbus-test-runner
+	sys-apps/click
 	sys-libs/libnih[dbus]"
 
 S="${WORKDIR}/${MY_PN}-${PV}${UVER_PREFIX}"

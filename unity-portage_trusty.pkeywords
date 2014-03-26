@@ -125,6 +125,7 @@ net-libs/gnome-online-accounts::unity-gentoo **
 net-libs/telepathy-indicator **
 net-misc/url-dispatcher **
 sys-apps/accountsservice::unity-gentoo **
+sys-apps/click **
 sys-apps/remote-login-service **
 sys-apps/xorg-gtest **
 unity-base/bamf **
