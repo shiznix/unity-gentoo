@@ -37,6 +37,7 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
+QT5_BUILD_DIR="${S}"
 
 src_prepare() {
 #	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
@@ -45,10 +46,6 @@ src_prepare() {
 	sed -e '/documentation\/documentation.pri/d' \
 		-i ubuntu-sdk.pro
 	qt5-build_src_prepare
-}
-
-src_configure() {
-	/usr/$(get_libdir)/qt5/bin/qmake PREFIX=/usr
 }
 
 pkg_preinst() {

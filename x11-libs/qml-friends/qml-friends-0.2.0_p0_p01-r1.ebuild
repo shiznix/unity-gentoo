@@ -27,10 +27,7 @@ DEPEND="dev-libs/glib:2
 	x11-libs/dee-qt[qt5]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
-src_configure() {
-	/usr/$(get_libdir)/qt5/bin/qmake PREFIX=/usr
-}
+QT5_BUILD_DIR="${S}"
 
 pkg_preinst() {
 	gnome2_icon_savelist

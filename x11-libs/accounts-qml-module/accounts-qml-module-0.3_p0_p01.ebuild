@@ -37,14 +37,12 @@ src_prepare() {
 	qt5-build_src_prepare
 }
 
-src_configure() {
-	/usr/$(get_libdir)/qt5/bin/qmake PREFIX=/usr
-}
-
 src_install() {
 	# Needs to be run in a virtual Xserver so that qmlplugindump's #
 	#       qmltypes generation can successfully spawn dbus #
-	Xemake INSTALL_ROOT="${ED}" install
+	pushd ${QT5_BUILD_DIR}
+		Xemake INSTALL_ROOT="${ED}" install
+	popd
 }
 
 pkg_preinst() {
