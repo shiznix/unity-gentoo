@@ -28,7 +28,7 @@ SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
-IUSE="bindist cups gnome gnome-keyring kerberos neon pulseaudio selinux +tcmalloc"
+IUSE="aura bindist cups gnome gnome-keyring kerberos neon pulseaudio selinux +tcmalloc"
 RESTRICT="mirror"
 
 # Native Client binaries are compiled with different set of flags, bug #452066.
@@ -42,7 +42,7 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	app-arch/bzip2:=
 	app-arch/snappy:=
 	cups? (
-		dev-libs/libgcrypt:=
+		dev-libs/libgcrypt:0=
 		>=net-print/cups-1.3.11:=
 	)
 	>=dev-libs/elfutils-0.149
@@ -63,6 +63,8 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	media-libs/harfbuzz:=[icu(+)]
 	>=media-libs/libjpeg-turbo-1.2.0-r1:=
 	media-libs/libpng:0=
+	>=media-libs/libvpx-1.3.0:=
+	>=media-libs/libwebp-0.4.0:=
 	media-libs/opus:=
 	media-libs/speex:=
 	pulseaudio? ( media-sound/pulseaudio:= )
@@ -180,6 +182,7 @@ src_prepare() {
 
 	epatch "${FILESDIR}/${PN}-system-jinja-r2.patch"
 	epatch "${FILESDIR}/${PN}-build_ffmpeg-r0.patch"
+	epatch "${FILESDIR}/${PN}-gn-r0.patch"
 
 	epatch_user
 
@@ -199,7 +202,7 @@ src_prepare() {
 		'net/third_party/mozilla_security_manager' \
 		'net/third_party/nss' \
 		'third_party/WebKit' \
-		'third_party/angle_dx11' \
+		'third_party/angle' \
 		'third_party/cacheinvalidation' \
 		'third_party/cld' \
 		'third_party/cros_system_api' \
@@ -210,12 +213,11 @@ src_prepare() {
 		'third_party/jstemplate' \
 		'third_party/khronos' \
 		'third_party/leveldatabase' \
+		'third_party/libaddressinput' \
 		'third_party/libjingle' \
 		'third_party/libphonenumber' \
 		'third_party/libsrtp' \
 		'third_party/libusb' \
-		'third_party/libvpx' \
-		'third_party/libwebp' \
 		'third_party/libxml/chromium' \
 		'third_party/libXNVCtrl' \
 		'third_party/libyuv' \
@@ -226,8 +228,10 @@ src_prepare() {
 		'third_party/mt19937ar' \
 		'third_party/npapi' \
 		'third_party/ots' \
+		'third_party/polymer' \
 		'third_party/pywebsocket' \
 		'third_party/qcms' \
+		'third_party/readability' \
 		'third_party/sfntly' \
 		'third_party/skia' \
 		'third_party/smhasher' \
@@ -275,10 +279,8 @@ src_configure() {
 	# TODO: use_system_hunspell (upstream changes needed).
 	# TODO: use_system_libsrtp (bug #459932).
 	# TODO: use_system_libusb (http://crbug.com/266149).
-	# TODO: use_system_libvpx (bug #487926).
 	# TODO: use_system_ssl (http://crbug.com/58087).
 	# TODO: use_system_sqlite (http://crbug.com/22208).
-	# TODO: use_system_libwebp (http://crbug.com/288019).
 	myconf+="
 		-Duse_system_bzip2=1
 		-Duse_system_flac=1
@@ -288,6 +290,8 @@ src_configure() {
 		-Duse_system_libevent=1
 		-Duse_system_libjpeg=1
 		-Duse_system_libpng=1
+		-Duse_system_libvpx=1
+		-Duse_system_libwebp=1
 		-Duse_system_libxml=1
 		-Duse_system_libxslt=1
 		-Duse_system_minizip=1
@@ -310,6 +314,7 @@ src_configure() {
 	# Optional dependencies.
 	# TODO: linux_link_kerberos, bug #381289.
 	myconf+="
+		$(gyp_use aura)
 		$(gyp_use cups)
 		$(gyp_use gnome use_gconf)
 		$(gyp_use gnome-keyring use_gnome_keyring)
@@ -435,6 +440,23 @@ src_configure() {
 	egyp_chromium ${myconf} || die
 }
 
+eninja() {
+	if [[ -z ${NINJAOPTS+set} ]]; then
+		local jobs=$(makeopts_jobs)
+		local loadavg=$(makeopts_loadavg)
+
+		if [[ ${MAKEOPTS} == *-j* && ${jobs} != 999 ]]; then
+			NINJAOPTS+=" -j ${jobs}"
+		fi
+		if [[ ${MAKEOPTS} == *-l* && ${loadavg} != 999 ]]; then
+			NINJAOPTS+=" -l ${loadavg}"
+		fi
+	fi
+	set -- ninja -v ${NINJAOPTS} "$@"
+	echo "$@"
+	"$@"
+}
+
 src_compile() {
 	# TODO: add media_unittests after fixing compile (bug #462546).
 	local test_targets=""
@@ -449,12 +471,12 @@ src_compile() {
 	fi
 
 	# Build mksnapshot and pax-mark it.
-	ninja -C out/Release -v -j $(makeopts_jobs) mksnapshot.${target_arch} || die
+	eninja -C out/Release mksnapshot.${target_arch} || die
 	pax-mark m out/Release/mksnapshot.${target_arch}
 
 	# Even though ninja autodetects number of CPUs, we respect
 	# user's options, for debugging with -j 1 or any other reason.
-	ninja -C out/Release -v -j $(makeopts_jobs) ${ninja_targets} || die
+	eninja -C out/Release ${ninja_targets} || die
 
 	pax-mark m out/Release/chrome
 	if use test; then
@@ -504,7 +526,10 @@ chromium_test() {
 		(( exitstatus |= st ))
 	}
 
-	runtest out/Release/base_unittests
+	local excluded_base_unittests=(
+		"OutOfMemoryDeathTest.ViaSharedLibraries" # bug #497512
+	)
+	runtest out/Release/base_unittests "${excluded_base_unittests[@]}"
 	runtest out/Release/cacheinvalidation_unittests
 
 	local excluded_content_unittests=(
@@ -600,6 +625,18 @@ src_install() {
 		newicon -s ${size} "${branding}/product_logo_${size}.png" \
 			chromium-browser${CHROMIUM_SUFFIX}.png
 	done
+
+	local mime_types="text/html;text/xml;application/xhtml+xml;"
+	mime_types+="x-scheme-handler/http;x-scheme-handler/https;" # bug #360797
+	mime_types+="x-scheme-handler/ftp;" # bug #412185
+	mime_types+="x-scheme-handler/mailto;x-scheme-handler/webcal;" # bug #416393
+	make_desktop_entry \
+		chromium-browser${CHROMIUM_SUFFIX} \
+		"Chromium${CHROMIUM_SUFFIX}" \
+		chromium-browser${CHROMIUM_SUFFIX} \
+		"Network;WebBrowser" \
+		"MimeType=${mime_types}\nStartupWMClass=chromium-browser"
+	sed -e "/^Exec/s/$/ %U/" -i "${ED}"/usr/share/applications/*.desktop || die
 
 	# Custom Ubuntu *.desktop file contains Quicklist menu #
 	insinto /usr/share/applications
