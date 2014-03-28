@@ -60,19 +60,19 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 # Mesa 7.10 needed for WebGL + bugfixes
 RDEPEND="
-	>=dev-libs/nss-3.15.3
-	>=dev-libs/nspr-4.10.2
+	>=dev-libs/nss-3.16
+	>=dev-libs/nspr-4.10.4
 	>=dev-libs/glib-2.26:2
 	>=media-libs/mesa-7.10
-	>=media-libs/libpng-1.5.17[apng]
+	>=media-libs/libpng-1.6.7[apng]
 	virtual/libffi
 	gstreamer? ( media-plugins/gst-plugins-meta:0.10[ffmpeg] )
 	pulseaudio? ( media-sound/pulseaudio )
-	system-icu? ( >=dev-libs/icu-0.51.1 )
-	system-cairo? ( >=x11-libs/cairo-1.10[X] )
+	system-cairo? ( >=x11-libs/cairo-1.12[X] )
+	system-icu? ( >=dev-libs/icu-51.1 )
 	system-jpeg? ( >=media-libs/libjpeg-turbo-1.2.1 )
-	system-sqlite? ( >=dev-db/sqlite-3.7.17:3[secure-delete,debug=] )
-	>=media-libs/libvpx-1.0.0
+	system-sqlite? ( >=dev-db/sqlite-3.8.1.3:3[secure-delete,debug=] )
+	>=media-libs/libvpx-1.3.0
 	kernel_linux? ( media-libs/alsa-lib )
 	selinux? ( sec-policy/selinux-mozilla )"
 
@@ -135,7 +135,9 @@ pkg_setup() {
 		ewarn "You will do a double build for profile guided optimization."
 		ewarn "This will result in your build taking at least twice as long as before."
 	fi
+}
 
+pkg_pretend() {
 	# Ensure we have enough disk space to compile
 	if use pgo || use debug || use test ; then
 		CHECKREQS_DISK_BUILD="8G"
@@ -163,6 +165,7 @@ src_prepare() {
 	fi
 
 	# Apply our patches
+	EPATCH_EXCLUDE="7007_fix_missing_strings.patch" \
 	EPATCH_SUFFIX="patch" \
 	EPATCH_FORCE="yes" \
 	epatch "${WORKDIR}/firefox"
@@ -201,7 +204,7 @@ src_prepare() {
 	eautoreconf
 
 	# Must run autoconf in js/src
-	cd "${S}"/js/src
+	cd "${S}"/js/src || die
 	eautoconf
 }
 
@@ -222,7 +225,7 @@ src_configure() {
 	use alpha && append-ldflags "-Wl,--no-relax"
 
 	# We must force enable jemalloc 3 threw .mozconfig
-	echo "export MOZ_JEMALLOC=1" >> ${S}/.mozconfig
+	echo "export MOZ_JEMALLOC=1" >> ${S}/.mozconfig || die
 
 	mozconfig_annotate '' --enable-jemalloc
 	mozconfig_annotate '' --enable-replace-malloc
@@ -294,7 +297,7 @@ src_compile() {
 	else
 		CC="$(tc-getCC)" CXX="$(tc-getCXX)" LD="$(tc-getLD)" \
 		MOZ_MAKE_FLAGS="${MAKEOPTS}" SHELL="${SHELL}" \
-		emake -f client.mk || die "emake failed"
+		emake -f client.mk
 	fi
 
 }
@@ -306,29 +309,33 @@ src_install() {
 	# MOZ_BUILD_ROOT, and hence OBJ_DIR change depending on arch, compiler, pgo, etc.
 	local obj_dir="$(echo */config.log)"
 	obj_dir="${obj_dir%/*}"
-	cd "${S}/${obj_dir}"
+	cd "${S}/${obj_dir}" || die
 
 	# Pax mark xpcshell for hardened support, only used for startupcache creation.
 	pax-mark m "${S}/${obj_dir}"/dist/bin/xpcshell
 
 	# Add our default prefs for firefox
 	cp "${FILESDIR}"/gentoo-default-prefs.js-1 \
-		"${S}/${obj_dir}/dist/bin/browser/defaults/preferences/all-gentoo.js" || die
+		"${S}/${obj_dir}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
+		|| die
 
 	# Set default path to search for dictionaries.
 	echo "pref(\"spellchecker.dictionary_path\", ${DICTPATH});" \
-		>> "${S}/${obj_dir}/dist/bin/browser/defaults/preferences/all-gentoo.js" || die
+		>> "${S}/${obj_dir}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
+		|| die
 
 	if ! use libnotify; then
 		echo "pref(\"browser.download.manager.showAlertOnComplete\", false);" \
-			>> "${S}/${obj_dir}/dist/bin/browser/defaults/preferences/all-gentoo.js" || die
+			>> "${S}/${obj_dir}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
+		|| die
 	fi
 
 	echo "pref(\"extensions.autoDisableScopes\", 3);" >> \
-		"${S}/${obj_dir}/dist/bin/browser/defaults/preferences/all-gentoo.js" || die
+		"${S}/${obj_dir}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
+		|| die
 
 	MOZ_MAKE_FLAGS="${MAKEOPTS}" \
-	emake DESTDIR="${D}" install || die "emake install failed"
+	emake DESTDIR="${D}" install
 
 	# Install language packs
 	mozlinguas_src_install
@@ -351,35 +358,37 @@ src_install() {
 	# Install icons and .desktop for menu entry
 	for size in ${sizes}; do
 		insinto "/usr/share/icons/hicolor/${size}x${size}/apps"
-		newins "${icon_path}/default${size}.png" "${icon}.png" || die
+		newins "${icon_path}/default${size}.png" "${icon}.png"
 	done
 	# The 128x128 icon has a different name
 	insinto "/usr/share/icons/hicolor/128x128/apps"
-	newins "${icon_path}/mozicon128.png" "${icon}.png" || die
+	newins "${icon_path}/mozicon128.png" "${icon}.png"
 	# Install a 48x48 icon into /usr/share/pixmaps for legacy DEs
-	newicon "${icon_path}/content/icon48.png" "${icon}.png" || die
-	newmenu "${FILESDIR}/icon/${PN}.desktop" "${PN}.desktop" || die
+	newicon "${icon_path}/content/icon48.png" "${icon}.png"
+	newmenu "${FILESDIR}/icon/${PN}.desktop" "${PN}.desktop"
 	sed -i -e "s:@NAME@:${name}:" -e "s:@ICON@:${icon}:" \
 		"${ED}/usr/share/applications/${PN}.desktop" || die
 
 	# Add StartupNotify=true bug 237317
 	if use startup-notification ; then
-		echo "StartupNotify=true" >> "${ED}/usr/share/applications/${PN}.desktop"
+		echo "StartupNotify=true"\
+			 >> "${ED}/usr/share/applications/${PN}.desktop" \
+			|| die
 	fi
 
 	# Required in order to use plugins and even run firefox on hardened.
 	pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/{firefox,firefox-bin,plugin-container}
 
 	if use minimal; then
-		rm -rf "${ED}"/usr/include "${ED}${MOZILLA_FIVE_HOME}"/{idl,include,lib,sdk} || \
-			die "Failed to remove sdk and headers"
+		rm -r "${ED}"/usr/include "${ED}${MOZILLA_FIVE_HOME}"/{idl,include,lib,sdk} \
+			|| die "Failed to remove sdk and headers"
 	fi
 
 	# very ugly hack to make firefox not sigbus on sparc
 	# FIXME: is this still needed??
 	use sparc && { sed -e 's/Firefox/FirefoxGentoo/g' \
-					 -i "${ED}/${MOZILLA_FIVE_HOME}/application.ini" || \
-					 die "sparc sed failed"; }
+					 -i "${ED}/${MOZILLA_FIVE_HOME}/application.ini" \
+					|| die "sparc sed failed"; }
 }
 
 pkg_preinst() {
