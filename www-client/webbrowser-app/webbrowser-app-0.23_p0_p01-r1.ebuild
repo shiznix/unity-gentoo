@@ -10,7 +10,7 @@ inherit distutils-r1 cmake-utils ubuntu-versionator	# Inheritance order importan
 
 UURL="mirror://ubuntu/pool/main/w/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140319"
+UVER_PREFIX="+14.04.20140324"
 
 DESCRIPTION="Unity webapps browser application"
 HOMEPAGE="https://launchpad.net/webbrowser-app"

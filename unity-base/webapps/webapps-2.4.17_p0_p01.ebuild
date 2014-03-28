@@ -6,8 +6,8 @@ EAPI=4
 
 inherit eutils gnome2-utils ubuntu-versionator
 
-URELEASE="trusty"
-UVER_PREFIX="daily13.06.20"
+URELEASE="saucy"
+UVER_PREFIX="+13.10.20130924.1"
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors are too unpredictable #
 
 DESCRIPTION="WebApps: Complete set of Apps for the Unity desktop"
@@ -15,11 +15,10 @@ HOMEPAGE="https://launchpad.net/webapps-applications"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="www-client/webbrowser-app"
 DEPEND="unity-base/webapps-base"
 
 ## Neat and efficient way of bundling and tracking all available webapps into one ebuild ##
@@ -37,9 +36,9 @@ setvar cnn-news			2.4.16+13.10.20130924.2	0ubuntu1
 setvar cuttherope		2.2
 setvar deezer			2.4.16+13.10.20130924.2	0ubuntu1
 setvar deviantart		2.4.16+13.10.20130926.1	0ubuntu1
-setvar facebookmessenger	2.4.16+14.04.20140217	0ubuntu1
-setvar gmail			2.4.16+14.04.20140130.3	0ubuntu1
-setvar googlecalendar		2.4.16+14.04.20131108.2	0ubuntu1
+setvar facebookmessenger	2.4.16+13.10.20130924.2	0ubuntu1
+setvar gmail			2.4.16+13.10.20131016.2	0ubuntu1
+setvar googlecalendar		2.4.16+13.10.20130924.2	0ubuntu1
 setvar googledocs		2.4.16+13.10.20130924.2	0ubuntu1
 setvar googlenews		2.4.16+13.10.20130924.2	0ubuntu1
 setvar googleplus		2.4.17+13.10.20130924.2	0ubuntu1

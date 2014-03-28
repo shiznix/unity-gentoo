@@ -59,7 +59,7 @@ DEPEND="${RDEPEND}
 	sys-devel/flex"
 
 S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
-
+QT5_BUILD_DIR="${S}"
 
 pkg_setup() {
 	python-any-r1_pkg_setup

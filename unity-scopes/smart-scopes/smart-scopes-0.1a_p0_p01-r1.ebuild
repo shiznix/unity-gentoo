@@ -53,7 +53,7 @@ setvar gmusicbrowser		0.1+13.10.20130723	0ubuntu1
 setvar googlenews		0.1+13.10.20130723	0ubuntu1
 setvar gourmet			0.1+13.10.20130723	0ubuntu1
 setvar guayadeque		0.1+13.10.20130927.1	0ubuntu1
-setvar manpages			3.0+13.10.20130723	0ubuntu1
+setvar manpages			3.0+14.04.20140324	0ubuntu1
 setvar musique			0.1+13.10.20130723	0ubuntu1
 setvar openclipart		0.1+13.10.20130723	0ubuntu1
 setvar openweathermap		0.1+13.10.20130828	0ubuntu1
