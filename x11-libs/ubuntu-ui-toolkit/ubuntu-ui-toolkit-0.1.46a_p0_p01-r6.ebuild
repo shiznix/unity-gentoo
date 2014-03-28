@@ -8,7 +8,7 @@ inherit base gnome2-utils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140317"
+UVER_PREFIX="+14.04.20140321.1"
 
 DESCRIPTION="Qt Components for the Unity desktop - QML plugin"
 HOMEPAGE="https://launchpad.net/ubuntu-ui-toolkit"

@@ -85,7 +85,7 @@ ubuntu-versionator_pkg_pretend() {
 ubuntu-versionator_pkg_postinst() {
 	## Create a new bamf-2.index file at postinst stage of every package to capture all *.desktop files ##
 	if [[ -x /usr/bin/bamf-index-create ]]; then
-		elog "Checking bamf-2.index"
+		einfo "Checking bamf-2.index"
 			/usr/bin/bamf-index-create triggered
 	fi
 

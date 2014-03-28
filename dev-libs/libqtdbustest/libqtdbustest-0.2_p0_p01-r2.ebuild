@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libq/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140303.1"
+UVER_PREFIX="+14.04.20140325"
 
 DESCRIPTION="Library to facilitate testing DBus interactions in Qt applications"
 HOMEPAGE="https://launchpad.net/libqtdbustest"

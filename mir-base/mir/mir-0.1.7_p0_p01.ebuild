@@ -55,10 +55,6 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/strcmp_fix.patch"
 	epatch -p1 "${FILESDIR}/mir-0.1.2-build_benchmarks_only_with_tests_enabled.patch"
 
-	# Fix Xmir crashing Xorg at session start (LP# 1277343) #
-	#  [xmir] Failed to set new display config: std::exception::what: Invalid format for used output #
-	epatch "${FILESDIR}/invalid_pixel_format-fix.diff"
-
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	export CMAKE_BUILD_TYPE=none
 }

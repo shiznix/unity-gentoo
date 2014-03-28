@@ -8,7 +8,9 @@ PYTHON_REQ_USE="xml"
 GCONF_DEBUG="no"
 
 inherit eutils gnome2 python-single-r1 toolchain-funcs ubuntu-versionator
-UVER=
+
+URELEASE="trusty"
+UVER="1"
 
 DESCRIPTION="Introspection infrastructure for generating gobject library bindings for various languages"
 HOMEPAGE="http://live.gnome.org/GObjectIntrospection/"

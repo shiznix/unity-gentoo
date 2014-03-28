@@ -10,7 +10,7 @@ inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140320"
+UVER_PREFIX="+14.04.20140324.is.12.10.2+14.04.20140320"
 
 DESCRIPTION="System sound indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-sound"
@@ -35,7 +35,7 @@ DEPEND="${RDEPEND}
 	net-misc/url-dispatcher
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}/${PN}-${PV}+14.04.20140320"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {

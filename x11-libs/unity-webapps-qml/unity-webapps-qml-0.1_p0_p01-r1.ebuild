@@ -8,7 +8,7 @@ inherit qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140317.1"
+UVER_PREFIX="+14.04.20140321.1"
 
 DESCRIPTION="Unity Webapps QML component"
 HOMEPAGE="https://launchpad.net/unity-webapps-qml"
