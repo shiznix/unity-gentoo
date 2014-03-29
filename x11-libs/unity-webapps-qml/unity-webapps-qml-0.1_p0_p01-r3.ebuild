@@ -3,12 +3,13 @@
 # $Header: $
 
 EAPI=5
+PYTHON_COMPAT=( python{2_6,2_7} )
 
-inherit qt5-build ubuntu-versionator
+inherit python-any-r1 qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140325"
+UVER_PREFIX="+14.04.20140328"
 
 DESCRIPTION="Unity Webapps QML component"
 HOMEPAGE="https://launchpad.net/unity-webapps-qml"
@@ -30,7 +31,14 @@ DEPEND="dev-libs/glib
 	x11-libs/accounts-qml-module
 	x11-libs/libnotify
 	x11-libs/ubuntu-ui-toolkit
-	x11-libs/unity-action-api"
+	x11-libs/unity-action-api
+	${PYTHON_DEPS}"
 
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
 export PATH="${PATH}:/usr/$(get_libdir)/qt5/bin"
+
+#pkg_setup() {
+#        python-any-r1_pkg_setup
+#        qt5-build_pkg_setup
+#}
+

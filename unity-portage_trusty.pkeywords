@@ -36,8 +36,10 @@ dev-qt/qtwidgets:5
 dev-qt/qtxml:5
 dev-qt/qtxmlpatterns:5
 ~dev-util/boost-build-1.53.0
+~dev-util/umockdev-0.7
 ~net-zope/zope-fixers-1.1.2
 ~net-zope/zope-interface-4.1.0
+~media-libs/glm-0.9.3.2
 sys-devel/gcc:4.8 
 sys-devel/llvm:0/3.3
 sys-kernel/ubuntu-sources
