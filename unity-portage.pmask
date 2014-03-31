@@ -15,7 +15,6 @@
 >=media-video/cheese-3.10.0::gentoo
 >=app-text/evince-3.10.0::gentoo
 >=x11-libs/gtksourceview-3.10.0::gentoo
->=gnome-base/librsvg-2.40.1::gentoo
 >=app-arch/file-roller-3.10.2::gentoo
 >=media-libs/clutter-1.16.4::gentoo
 >=mail-client/evolution-3.10.0::gentoo
