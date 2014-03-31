@@ -44,3 +44,10 @@ pkg_setup() {
 	python-any-r1_pkg_setup
 	qt5-build_pkg_setup
 }
+
+src_prepare() {
+	# Fix missing installation of files due to malformed UnityWebApps.pro #
+	sed -e 's:js_files.files = $$PLUGIN_JS_FILES:js_files.files = $$PLUGIN_JS_FILES $$CLIENT_JS_FILES:' \
+		-i src/Ubuntu/UnityWebApps/UnityWebApps.pro
+	qt5-build_src_prepare
+}
