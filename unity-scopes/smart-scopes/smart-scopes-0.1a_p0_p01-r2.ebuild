@@ -39,11 +39,11 @@ setvar() {
 	packages+=(${1})
 }
 setvar audacious		0.1+13.10.20130927.1	0ubuntu1
-setvar calculator		0.1+13.10.20130723	0ubuntu1
+setvar calculator		0.1+14.04.20140328	0ubuntu1
 setvar chromiumbookmarks	0.1+13.10.20130723	0ubuntu1
 setvar clementine		0.1+13.10.20130723	0ubuntu1
 setvar colourlovers		0.1+13.10.20130723	0ubuntu1
-setvar devhelp			0.1+13.10.20130809.1	0ubuntu1
+setvar devhelp			0.1+14.04.20140328	0ubuntu1
 setvar deviantart		0.1+13.10.20130723	0ubuntu1
 setvar firefoxbookmarks		0.1+13.10.20130809.1	0ubuntu1
 setvar gallica			0.1+13.10.20130816.2	0ubuntu1
@@ -58,7 +58,7 @@ setvar musique			0.1+13.10.20130723	0ubuntu1
 setvar openclipart		0.1+13.10.20130723	0ubuntu1
 setvar openweathermap		0.1+13.10.20130828	0ubuntu1
 setvar soundcloud		0.1+13.10.20130723	0ubuntu1
-setvar texdoc			0.1+13.10.20130723	0ubuntu1
+setvar texdoc			0.1+14.04.20140328	0ubuntu1
 setvar tomboy			0.1+13.10.20130723	0ubuntu1
 setvar virtualbox		0.1+13.10.20130723	0ubuntu1
 setvar yahoostock		0.1+13.10.20130723	0ubuntu1

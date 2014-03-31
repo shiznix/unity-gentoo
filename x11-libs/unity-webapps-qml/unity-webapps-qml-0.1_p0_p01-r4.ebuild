@@ -21,7 +21,9 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-libs/glib
+RDEPEND="x11-libs/content-hub"
+DEPEND="${RDEPEND}
+	dev-libs/glib
 	dev-libs/libunity
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
@@ -35,10 +37,10 @@ DEPEND="dev-libs/glib
 	${PYTHON_DEPS}"
 
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
+QT5_BUILD_DIR="${S}"
 export PATH="${PATH}:/usr/$(get_libdir)/qt5/bin"
 
-#pkg_setup() {
-#        python-any-r1_pkg_setup
-#        qt5-build_pkg_setup
-#}
-
+pkg_setup() {
+	python-any-r1_pkg_setup
+	qt5-build_pkg_setup
+}

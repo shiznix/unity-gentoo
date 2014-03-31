@@ -3,8 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python3_3 )
-DISTUTILS_SINGLE_IMPL=1
+PYTHON_COMPAT=( python{3_2,3_3} )
 
 inherit autotools distutils-r1 ubuntu-versionator vala
 
