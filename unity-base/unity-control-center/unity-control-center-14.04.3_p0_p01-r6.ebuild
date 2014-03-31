@@ -69,7 +69,7 @@ COMMON_DEPEND="
 	colord? ( >=x11-misc/colord-0.1.29 )
 	cups? (
 		>=net-print/cups-1.4[dbus]
-		>=net-fs/samba-3.6.14-r1[smbclient] )
+		|| ( >=net-fs/samba-3.6.14-r1[smbclient] >=net-fs/samba-4.0.0[client] ) )
 	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.8.1 )
 	i18n? ( >=app-i18n/ibus-1.4.99 )
 	kerberos? ( virtual/krb5 )
