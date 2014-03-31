@@ -11,6 +11,5 @@ dev-libs/gobject-introspection-common::unity-gentoo
 dev-util/gdbus-codegen::unity-gentoo
 
 # unmask gnome packages, which have no gnome-3.8 representives
-=net-libs/gnome-online-accounts-3.10*
 =net-wireless/gnome-bluetooth-3.10*
 
