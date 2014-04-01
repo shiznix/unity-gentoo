@@ -10,7 +10,6 @@ inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 
 URELEASE="trusty"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-UVER="ubuntu1"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/unity-tweak-tool"
@@ -52,15 +51,18 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}"
 
 src_prepare() {
-	# Make Unity Tweak Tool appear in gnome-control-center #
-	sed -e 's:Categories=.*:Categories=Settings;X-GNOME-Settings-Panel;X-GNOME-PersonalSettings;:' \
+	# Make Unity Tweak Tool appear in unity-control-center #
+	sed -e 's:Categories=.*:Categories=Settings;X-GNOME-Settings-Panel;X-GNOME-PersonalSettings;X-Unity-Settings-Panel;:' \
 		-e 's:Exec=.*:Exec=unity-tweak-tool:' \
-		-e '/Actions=/{:a;n;/^$/!ba;i\X-GNOME-Settings-Panel=unitytweak' -e '}' \
+		-e '/Actions=/{:a;n;/^$/!ba;i\X-Unity-Settings-Panel=unitytweak' -e '}' \
 			-i unity-tweak-tool.desktop.in || die
 
 	# Include /usr/share/cursors/xorg-x11/ in the paths to check for cursor themes as Gentoo #
 	#  installs cursor themes in both /usr/share/cursors/xorg-x11/ and /usr/share/icons/ #
 	epatch -p1 "${FILESDIR}/xorg-cursor-themes-path.diff"
+
+	# Patch LP# 1281467 - GLib-GIO-ERROR **: Settings schema 'org.compiz.scale' does not contain a key named 'show-desktop' #
+	epatch -p1 "${FILESDIR}/show-desktop_compiz.scale-schema.diff"
 }
 
 src_compile() {

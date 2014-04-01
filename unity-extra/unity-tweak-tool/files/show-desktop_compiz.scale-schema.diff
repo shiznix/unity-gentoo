@@ -1,0 +1,25 @@
+diff -urN unity-tweak-tool/UnityTweakTool/section/spaghetti/compiz.py unity-tweak-tool-patched/UnityTweakTool/section/spaghetti/compiz.py
+--- unity-tweak-tool/UnityTweakTool/section/spaghetti/compiz.py	2013-10-06 11:13:22.000000000 +1030
++++ unity-tweak-tool-patched/UnityTweakTool/section/spaghetti/compiz.py	2014-04-01 20:12:26.363759001 +1030
+@@ -428,8 +428,6 @@
+         else:
+             self.ui['check_overlay_emblem'].set_active(False)
+ 
+-        self.ui['check_click_desktop'].set_active(gsettings.scale.get_boolean('show-desktop'))
+-
+         model = self.ui['list_compiz_windows_spread_accelerators']
+ 
+         initiate_key = gsettings.scale.get_string('initiate-key')
+@@ -718,12 +716,6 @@
+         else:
+             gsettings.scale.set_int('overlay-icon', 0)
+ 
+-    def on_check_click_desktop_toggled(self, widget):
+-        if self.ui['check_click_desktop'].get_active() == True:
+-            gsettings.scale.set_boolean('show-desktop', True)
+-        else:
+-            gsettings.scale.set_boolean('show-desktop', False)
+-
+     def on_craccel_compiz_windows_spread_accel_edited(self, craccel, path, key, mods, hwcode, model = None):
+         accel = Gtk.accelerator_name(key, mods)
+         titer = self.ui['list_compiz_windows_spread_accelerators'].get_iter(path)
