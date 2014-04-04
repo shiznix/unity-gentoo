@@ -37,7 +37,6 @@ COMMON_DEPEND="
 	>=x11-libs/gtk+-3.7.10:3
 	>=gnome-base/gsettings-desktop-schemas-3.7.2.2
 	>=gnome-base/gnome-desktop-3.7.5:3=
-	>=gnome-base/gnome-settings-daemon-3.8.3[colord?,policykit]
 	>=gnome-base/libgnomekbd-2.91.91
 
 	app-admin/apg
@@ -54,6 +53,7 @@ COMMON_DEPEND="
 	>=sys-auth/polkit-0.97
 	>=sys-power/upower-0.9.1
 	unity-base/ubuntuone-control-panel
+	unity-base/unity-settings-daemon[colord?,policykit]
 	>=x11-libs/libnotify-0.7.3:0=
 
 	>=gnome-extra/nm-applet-0.9.7.995
@@ -94,7 +94,7 @@ RDEPEND="${COMMON_DEPEND}
 	cups? (
 		>=app-admin/system-config-printer-gnome-1.3.5
 		net-print/cups-pk-helper )
-	input_devices_wacom? ( gnome-base/gnome-settings-daemon[input_devices_wacom] )
+	input_devices_wacom? ( unity-base/unity-settings-daemon[input_devices_wacom] )
 
 	!<gnome-base/gdm-2.91.94
 	!<gnome-extra/gnome-color-manager-3.1.2

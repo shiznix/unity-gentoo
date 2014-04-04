@@ -22,13 +22,13 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/glib-2.37
+DEPEND=">=dev-libs/glib-2.40
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
-	>=gnome-base/gnome-settings-daemon-3.1.4
 	net-misc/url-dispatcher
-	sys-power/upower"
+	sys-power/upower
+	unity-base/unity-settings-daemon"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

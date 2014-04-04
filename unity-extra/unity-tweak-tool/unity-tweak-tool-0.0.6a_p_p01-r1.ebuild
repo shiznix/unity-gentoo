@@ -30,7 +30,6 @@ DEPEND="${RDEPEND}
 	dev-libs/libunity-webapps
 	dev-util/intltool
 	dev-util/pkgconfig
-	gnome-base/gnome-settings-daemon
 	gnome-base/gsettings-desktop-schemas
 	gnome-base/nautilus
 	sys-devel/gettext
@@ -38,6 +37,7 @@ DEPEND="${RDEPEND}
 	unity-base/hud
 	unity-base/overlay-scrollbar
 	unity-base/unity
+	unity-base/unity-settings-daemon
 	unity-indicators/indicator-bluetooth
 	unity-indicators/indicator-datetime
 	unity-indicators/indicator-power

@@ -19,15 +19,15 @@ dev-libs/libdbusmenu-qt::gentoo
 dev-libs/libindicator::gentoo
 dev-util/gdbus-codegen::gentoo
 gnome-base/gconf::gentoo
-gnome-base/gnome-control-center::gentoo
 gnome-base/gnome-core-apps::gentoo
 gnome-base/gnome-core-libs::gentoo
 gnome-base/gnome-desktop::gentoo
 gnome-base/gnome-fallback::gentoo
+gnome-base/gnome-control-center::gentoo	# Need to still use 'saucy' version as portage tree pulls 'gnome-desktop-3.10.2', which is not compatible with Unity patched 'nautilus-3.10'
 gnome-base/gnome-menus:3::gentoo
 gnome-base/gnome-panel::gentoo
 gnome-base/gnome-session::gentoo
-gnome-base/gnome-settings-daemon::gentoo
+gnome-base/gnome-settings-daemon::gentoo	# Need to still use 'saucy' version as portage tree pulls 'gnome-desktop-3.10.2', which is not compatible with Unity patched 'nautilus-3.10'
 gnome-base/gsettings-desktop-schemas::gentoo
 gnome-base/nautilus::gentoo
 gnome-extra/activity-log-manager::gentoo

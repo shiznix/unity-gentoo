@@ -57,7 +57,6 @@ DEPEND="dev-libs/boost
 	app-text/yelp-tools
 	gnome-base/gnome-desktop:3
 	>=gnome-base/gnome-menus-3.8:3
-	>=gnome-base/gnome-settings-daemon-3.8
 	>=gnome-base/gnome-session-3.8
 	>=gnome-base/gsettings-desktop-schemas-3.8
 	gnome-base/libgdu
@@ -73,6 +72,7 @@ DEPEND="dev-libs/boost
 	>=unity-base/nux-4.0.0[debug?]
 	unity-base/overlay-scrollbar
 	unity-base/unity-control-center
+	unity-base/unity-settings-daemon
 	x11-base/xorg-server[dmx]
 	>=x11-libs/cairo-1.13.1
 	x11-libs/libXfixes
