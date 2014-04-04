@@ -2,11 +2,12 @@
 
 */*::unity-gentoo
 
-
 ## GNOME keyword unmasking ##
 
 ## Other packages keyword unmasking ##
 ~app-admin/packagekit-base-0.8.15
+dev-lang/python:3.4
+dev-lang/python-exec:2	# Need this as 'python3_4' is only puse.unmasked at ~keyword level
 ~dev-libs/boost-1.53.0
 dev-libs/libindicate
 dev-libs/libindicate-qt
@@ -40,6 +41,7 @@ dev-qt/qtxmlpatterns:5
 ~net-zope/zope-fixers-1.1.2
 ~net-zope/zope-interface-4.1.0
 ~media-libs/glm-0.9.3.2
+~sys-apps/portage-2.2.10	# Need this as 'python3_4' is only puse.unmasked at ~keyword level
 sys-devel/gcc:4.8 
 sys-devel/llvm:0/3.3
 sys-kernel/ubuntu-sources

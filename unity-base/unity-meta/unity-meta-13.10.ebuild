@@ -2,14 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity packages"
 HOMEPAGE="http://unity.ubuntu.com/"
 
+URELEASE="saucy"
+
 LICENSE="metapackage"
-SLOT="0"
-KEYWORDS="~amd64 ~x86"
+SLOT="0/${URELEASE}"
+KEYWORDS="amd64 x86"
 IUSE="accessibility +chat +cloud gnome gnome-extras +xdm +webapps"
 RESTRICT="mirror"
 

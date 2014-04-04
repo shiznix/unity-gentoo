@@ -7,9 +7,9 @@ GCONF_DEBUG="no"
 
 inherit autotools gnome2 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/g/${PN}"
+UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140224"
+UVER_PREFIX="+14.04.20140401"
 
 DESCRIPTION="GSettings deskop-wide schemas for the Unity desktop"
 HOMEPAGE="https://launchpad.net/gsettings-ubuntu-touch-schemas"

@@ -5,7 +5,7 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
 
-PYTHON_COMPAT=( python{3_2,3_3} )
+PYTHON_COMPAT=( python{3_3,3_4} )
 
 inherit ubuntu-versionator distutils-r1
 
