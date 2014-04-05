@@ -20,8 +20,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
 RDEPEND="x11-libs/libaccounts-qt:="
 DEPEND="${RDEPEND}
 	dev-qt/qtcore:4
@@ -33,3 +31,6 @@ DEPEND="${RDEPEND}
 	net-libs/libproxy
 	unity-base/signon
 	x11-libs/libnotify"
+
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+QT5_BUILD_DIR="${S}"
