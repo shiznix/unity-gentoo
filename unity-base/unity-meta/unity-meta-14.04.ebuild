@@ -11,7 +11,7 @@ URELEASE="trusty"
 
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
-KEYWORDS="amd64 x86"
+#KEYWORDS="amd64 x86"
 IUSE="accessibility +chat +cloud gnome gnome-extras +xdm +webapps"
 RESTRICT="mirror"
 
