@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit qt4-r2 ubuntu-versionator
+inherit qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
 URELEASE="saucy"
