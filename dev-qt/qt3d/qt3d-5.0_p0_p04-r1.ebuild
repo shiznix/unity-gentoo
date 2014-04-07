@@ -13,7 +13,7 @@ UVER_PREFIX="~git20130731"
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="Qt 3D QML module"
 KEYWORDS="~amd64 ~x86"
 
 # TODO: egl, qml, tools

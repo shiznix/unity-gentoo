@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python{2_6,2_7,3_3,3_4} )
+PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
 
 inherit eutils python-r1 qmake-utils toolchain-funcs
 
@@ -57,7 +57,7 @@ RDEPEND="
 	qml? ( ~dev-qt/qtdeclarative-${QT_PV} )
 	sql? ( ~dev-qt/qtsql-${QT_PV} )
 	svg? ( ~dev-qt/qtsvg-${QT_PV} )
-	webkit? ( ~dev-qt/qtwebkit-${QT_PV} )
+	webkit? ( >=dev-qt/qtwebkit-5.1.1 )
 	xmlpatterns? ( ~dev-qt/qtxmlpatterns-${QT_PV} )
 "
 DEPEND="${RDEPEND}
