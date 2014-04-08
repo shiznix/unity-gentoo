@@ -96,7 +96,7 @@ ubuntu-versionator_pkg_setup() {
                 fi
 
                 has_version unity-base/unity-build-env:0/${PROFILE_RELEASE} || \
-                        die "Please run 'emerge unity-base/unity-build-env:0/${PROFILE_RELEASE}', this needs to be installed to setup mask, keyword and use files"
+                        die "Please run 'emerge -1 unity-base/unity-build-env:0/${PROFILE_RELEASE}', this needs to be installed to setup mask, keyword and use files"
                 export UNITY_BUILD_OK=1
         fi
 }
