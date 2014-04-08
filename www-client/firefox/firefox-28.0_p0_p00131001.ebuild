@@ -111,6 +111,7 @@ fi
 QA_PRESTRIPPED="usr/$(get_libdir)/${PN}/firefox"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	moz_pkgsetup
 
 	# Avoid PGO profiling problems due to enviroment leakage

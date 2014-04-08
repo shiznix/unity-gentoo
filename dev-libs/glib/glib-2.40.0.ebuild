@@ -69,6 +69,7 @@ PDEPEND="x11-misc/shared-mime-info
 DOCS="AUTHORS ChangeLog* NEWS* README"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	if use kernel_linux ; then
 		CONFIG_CHECK="~INOTIFY_USER"
 		if use test; then

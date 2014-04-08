@@ -41,6 +41,11 @@ RDEPEND="!dev-python/imaging
 	virtual/python-imaging[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_prepare() {
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do

@@ -45,6 +45,11 @@ RDEPEND="!dev-libs/libubuntuone
 	x11-themes/ubuntuone-client-data[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_prepare() {
 	sed -e "s:\[ -d \"\$HOME\/Ubuntu One\" \] \&\& ubuntuone-launch:\[ ! -d \"\$HOME\/Ubuntu One\" \] \&\& mkdir \"\$HOME/Ubuntu One\" \&\& ubuntuone-launch || ubuntuone-launch:" \
 		-i "${S}/data/ubuntuone-launch.desktop.in" || die

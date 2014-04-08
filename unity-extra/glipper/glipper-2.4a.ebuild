@@ -36,6 +36,11 @@ RDEPEND="!x11-misc/glipper
 DEPEND="${RDEPEND}
 	>=dev-python/python-distutils-extra-2.37"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python_pkg_setup
+}
+
 src_install() {
 	sed -e "s:DATA_DIR = \"\":DATA_DIR = \"/usr/share\":g" \
 		-i glipper/defs.py

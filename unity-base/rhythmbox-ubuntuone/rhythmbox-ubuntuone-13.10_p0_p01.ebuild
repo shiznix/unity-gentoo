@@ -33,6 +33,11 @@ DEPEND="dev-libs/libpeas[${PYTHON_USEDEP}]
 	unity-base/unity
 	$(vala_depend)"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_install() {
 	distutils-r1_src_install
 

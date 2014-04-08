@@ -31,6 +31,7 @@ PATCHES=(
 AUTOTOOLS_AUTORECONF="1"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	python_pkg_setup
 	python_set_active_version 2
 }

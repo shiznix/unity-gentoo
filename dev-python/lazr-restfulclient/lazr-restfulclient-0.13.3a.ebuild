@@ -31,3 +31,8 @@ DEPEND="dev-python/httplib2[${PYTHON_USEDEP}]
 	net-zope/zope-interface[${PYTHON_USEDEP}]"
 
 S="${WORKDIR}/lazr.restfulclient-${PV}"
+
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}

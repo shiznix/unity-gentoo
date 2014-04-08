@@ -28,3 +28,8 @@ RDEPEND="${DEPEND}
 	dev-python/pyopenssl[${PYTHON_USEDEP}]
 	>=dev-python/twisted-core-12.2.0[${PYTHON_USEDEP}]
 	dev-python/pyxdg[${PYTHON_USEDEP}]"
+
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}

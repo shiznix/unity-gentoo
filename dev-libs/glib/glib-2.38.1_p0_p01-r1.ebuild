@@ -67,6 +67,7 @@ PDEPEND="x11-misc/shared-mime-info
 DOCS="AUTHORS ChangeLog* NEWS* README"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	if use kernel_linux ; then
 		CONFIG_CHECK="~INOTIFY_USER"
 		if use test; then
@@ -84,7 +85,7 @@ src_prepare() {
 
 	# Fix gmodule issues on fbsd; bug #184301, upstream bug #107626
 	epatch "${FILESDIR}"/${PN}-2.12.12-fbsd.patch
-	
+
 	if use test; then
 		# Do not try to remove files on live filesystem, upstream bug #619274
 		sed 's:^\(.*"/desktop-app-info/delete".*\):/*\1*/:' \

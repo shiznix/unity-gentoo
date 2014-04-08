@@ -153,6 +153,7 @@ S="${WORKDIR}/Mesa-${PV}"
 PATCHES+=( "${WORKDIR}/${MY_PN}_${PV}-${UVER}.diff" )	# This needs to be applied for the debian/ directory to be present #
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	# workaround toc-issue wrt #386545
 	use ppc64 && append-flags -mminimal-toc
 

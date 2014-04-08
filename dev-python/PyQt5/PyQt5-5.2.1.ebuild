@@ -40,7 +40,7 @@ QT_PV="${PV}:5"
 RDEPEND="
 	${PYTHON_DEPS}
 	dev-python/python-exec:2[${PYTHON_USEDEP}]
-	>=dev-python/sip-4.15.0:=[${PYTHON_USEDEP}]
+	>=dev-python/sip-4.15.5:=[${PYTHON_USEDEP}]
 	~dev-qt/qtcore-${QT_PV}
 	X? (
 		~dev-qt/qtgui-${QT_PV}

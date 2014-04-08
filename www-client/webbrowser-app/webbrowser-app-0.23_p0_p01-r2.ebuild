@@ -34,6 +34,11 @@ DEPEND="dev-libs/glib
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
 export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qmake
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_install() {
 	cmake-utils_src_install
 

@@ -41,6 +41,7 @@ QT5_BUILD_DIR="${S}"
 export PATH="${PATH}:/usr/$(get_libdir)/qt5/bin"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	python-any-r1_pkg_setup
 	qt5-build_pkg_setup
 }

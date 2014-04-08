@@ -18,7 +18,7 @@
 # If this occurs, the ebuild should be named package-3.6.0a_p0_p02
 
 
-EXPORT_FUNCTIONS pkg_pretend pkg_postinst
+EXPORT_FUNCTIONS pkg_setup pkg_postinst
 
 #---------------------------------------------------------------------------------------------------------------------------------#
 ### GLOBAL ECLASS INHERIT DEFAULTS ##
@@ -73,16 +73,40 @@ else
 	UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 fi
 
-## Check we have the correct masking in place for the overlay to work ##
-ubuntu-versionator_pkg_pretend() {
-	readlink /etc/portage/package.mask/unity-portage.pmask &> /dev/null || \
-		die "Please create symlink 'ln -s /var/lib/layman/unity-gentoo/unity-portage.pmask /etc/portage/package.mask/unity-portage.pmask'"
 
-	grep -R '\*/\*::unity-gentoo' /etc/portage/package.keywords* &> /dev/null || \
-		die "Please place '*/*::unity-gentoo' in your package.keywords file"
+# @FUNCTION: ubuntu-versionator_pkg_setup
+# @DESCRIPTION:
+# Check we have a valid profile set and the correct
+# masking in place for the overlay to work
+ubuntu-versionator_pkg_setup() {
+	debug-print-function ${FUNCNAME} "$@"
+
+        # Use a profile to set things like make.defaults and use.mask only, and to fill $SUBSLOT for unity-base/unity-build-env #
+        #   unity-base/unity-build-env creates symlinks to /etc/portage/package.* #
+        # This allows masking category/package::gentoo and override IUSE in /etc/portage/make.conf, which cannot be done in profiles/ #
+        # Using profiles/ also sets a sane base set of USE flags by all profiles inheriting the Gentoo 'desktop' profile #
+
+        if [ -z "${UNITY_BUILD_OK}" ]; then     # Creates a oneshot so it only checks on the 1st package in the emerge list
+                CURRENT_PROFILE=$(eselect --brief profile show)
+
+                if [ -z "$(echo ${CURRENT_PROFILE} | grep unity-gentoo)" ]; then
+                        die "Invalid profile detected, please select a 'unity-gentoo' profile for your architecture shown in 'eselect profile list'"
+                else
+                        PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | sed -n 's/.*:\(.*\)\/.*/\1/p')
+                fi
+
+                has_version unity-base/unity-build-env:0/${PROFILE_RELEASE} || \
+                        die "Please run 'emerge unity-base/unity-build-env:0/${PROFILE_RELEASE}', this needs to be installed to setup mask, keyword and use files"
+                export UNITY_BUILD_OK=1
+        fi
 }
 
+# @FUNCTION: ubuntu-versionator_pkg_postinst
+# @DESCRIPTION:
+# Re-create bamf.index and trigger re-profile of ureadahead if installed
 ubuntu-versionator_pkg_postinst() {
+	debug-print-function ${FUNCNAME} "$@"
+
 	## Create a new bamf-2.index file at postinst stage of every package to capture all *.desktop files ##
 	if [[ -x /usr/bin/bamf-index-create ]]; then
 		einfo "Checking bamf-2.index"

@@ -1,0 +1,5 @@
+amd64   saucy/amd64	stable
+x86	saucy/x86	stable
+
+amd64	trusty/amd64	dev
+x86	trusty/x86	dev

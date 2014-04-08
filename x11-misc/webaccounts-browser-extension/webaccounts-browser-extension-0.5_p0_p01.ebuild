@@ -33,6 +33,7 @@ DEPEND="${RDEPEND}
 # Webapp integration doesn't work properly for www-client/firefox-bin or www-client/google-chrome #
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	! use firefox && ! use chromium && \
 		die "At least one or both of either 'chromium' or 'firefox' USE flags needs to be enabled"
 }

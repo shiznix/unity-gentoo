@@ -42,6 +42,7 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	kill_gconf
 }
 

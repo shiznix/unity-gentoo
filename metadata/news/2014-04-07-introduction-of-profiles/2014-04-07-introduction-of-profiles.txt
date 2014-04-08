@@ -1,0 +1,25 @@
+Title: Introduction of Ubuntu release profiles for the unity-gentoo overlay
+Author: shiznix <rickfharris@yahoo.com.au>
+Content-Type: text/plain
+Posted: 2014-04-07
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: sys-apps/portage
+
+The process of having to manually symlink masks and keywords files into /etc/portage/package.*/ is being deprecated.
+
+For the upcoming release (Trusty Tahr), a 'unity-gentoo' overlay profile must now be selected.
+
+The unity-gentoo profiles available for your architecture can be found with the 'eselect profile list' command.
+
+Using ubuntu-versionator.eclass, the overlay will automatically check the selected profile is valid and provide checks
+that the unity-build-env:0/<PROFILE> package is pre-installed ready for the Unity desktop (unity-meta) to be installed.
+
+This should simplify the upgrade/downgrade process for users who previously had to manually make symlinks:
+1. 'eselect profile list' and set to unity-gentoo profile for your arch
+2. 'emerge unity-build-env:0/<PROFILE>'
+3. 'emerge -uDNavt unity-meta'
+
+For convenience the old unity-portage.p* files still exist so as not to break pre-existing symlink installations.
+
+However it is strongly recommended to migrate over to the new profile setup as the unity-portage.p* files will be removed once Trusty is stable in overlay.

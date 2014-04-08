@@ -1,0 +1,4 @@
+USE_EXPAND="LIGHTDM_GREETERS"
+
+# [Trusty] set correct python single target where needed, e.g. 'media-sound/rhythmbox' etc.
+PYTHON_SINGLE_TARGET="python3_3"

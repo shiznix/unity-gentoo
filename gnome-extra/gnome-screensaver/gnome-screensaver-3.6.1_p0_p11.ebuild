@@ -56,6 +56,7 @@ DEPEND="${RDEPEND}
 	x11-proto/xf86miscproto"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	DOCS="AUTHORS ChangeLog HACKING NEWS README"
 	G2CONF="${G2CONF}
 		$(use_enable doc docbook-docs)

@@ -107,6 +107,7 @@ else
 fi
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	moz_pkgsetup
 
 	export MOZILLA_DIR="${S}/mozilla"

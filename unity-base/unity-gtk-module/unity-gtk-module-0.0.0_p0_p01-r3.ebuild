@@ -32,6 +32,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	python_export_best
 }
 

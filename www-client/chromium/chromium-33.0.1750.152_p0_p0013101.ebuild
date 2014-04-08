@@ -146,6 +146,8 @@ For other desktop environments, try one of the following:
 "
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
+
 	if [[ "${SLOT}" == "0" ]]; then
 		CHROMIUM_SUFFIX=""
 	else

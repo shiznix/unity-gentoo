@@ -25,6 +25,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	python_set_active_version 2
 	python_pkg_setup
 }

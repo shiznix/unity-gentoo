@@ -97,6 +97,7 @@ DEPEND="${COMMON_DEPEND}
 #	vala? ( >=dev-lang/vala-0.9.4:0.12 )
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	use python && python-single-r1_pkg_setup
 }
 

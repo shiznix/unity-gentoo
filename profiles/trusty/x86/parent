@@ -1,0 +1,4 @@
+gentoo:default/linux/x86/13.0
+gentoo:targets/desktop
+gentoo:arch/x86
+unity-gentoo:trusty/base

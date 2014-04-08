@@ -62,6 +62,7 @@ S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	python-any-r1_pkg_setup
 	qt5-build_pkg_setup
 }

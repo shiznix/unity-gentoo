@@ -44,6 +44,11 @@ RDEPEND="dev-libs/dbus-glib
 	x11-misc/xdg-utils"
 DEPEND="${RDEPEND}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_install() {
 	# Delete some files that are only useful on Ubuntu
 	rm -rf "${D}"etc/apport "${D}"usr/share/apport

@@ -4,6 +4,8 @@
 
 EAPI=5
 
+inherit ubuntu-versionator
+
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity packages"
 HOMEPAGE="http://unity.ubuntu.com/"
 

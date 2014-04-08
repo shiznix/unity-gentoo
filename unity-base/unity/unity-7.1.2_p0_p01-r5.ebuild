@@ -91,6 +91,11 @@ pkg_pretend() {
 	fi
 }
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_prepare() {
 	if use test; then
 		## Disable source trying to run it's own dummy-xorg-test-runner.sh script ##

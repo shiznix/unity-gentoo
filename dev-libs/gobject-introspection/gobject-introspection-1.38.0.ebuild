@@ -41,6 +41,7 @@ DEPEND="${RDEPEND}
 PDEPEND="cairo? ( x11-libs/cairo[glib] )"
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	python-single-r1_pkg_setup
 }
 

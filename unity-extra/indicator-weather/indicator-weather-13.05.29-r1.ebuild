@@ -38,6 +38,11 @@ DEPEND="dev-libs/libappindicator
 
 S="${WORKDIR}/${MY_PN}_${PV}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_prepare() {
 	sed -e 's:share/common-licenses:portage/licenses:g' \
 		-i bin/indicator-weather
