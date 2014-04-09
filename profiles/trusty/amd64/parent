@@ -1,4 +1,5 @@
 gentoo:default/linux/amd64/13.0
-gentoo:targets/desktop
+gentoo:targets/desktop/gnome
+gentoo:targets/systemd
 gentoo:arch/amd64
 unity-gentoo:trusty/base
