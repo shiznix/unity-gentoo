@@ -46,6 +46,11 @@ DEPEND="${RDEPEND}
 # upstream doesn't want it enabled everywhere (#29334#c12)
 RESTRICT="test"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-any-r1_pkg_setup
+}
+
 src_prepare() {
         for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
                 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )

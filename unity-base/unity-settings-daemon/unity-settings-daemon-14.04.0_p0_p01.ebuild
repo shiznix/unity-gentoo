@@ -37,6 +37,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.35.3:2
 	>=media-libs/lcms-2.2:2
 	media-libs/libcanberra[gtk3]
 	>=media-sound/pulseaudio-2
+	sys-apps/accountsservice
 	sys-apps/systemd
 	>=sys-power/upower-0.9.11
 	x11-libs/cairo

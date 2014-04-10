@@ -42,6 +42,11 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python_pkg_setup
+}
+
 src_prepare () {
 	# The /usr/lib/cli location for Mono bindings is specific to Ubuntu
 	sed -e 's|assemblydir = $(libdir)/cli/appindicator-sharp-0.1|assemblydir = $(libdir)/appindicator-sharp-0.1|' \

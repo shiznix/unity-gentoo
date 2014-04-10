@@ -43,6 +43,11 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python_pkg_setup
+}
+
 src_prepare () {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
 
