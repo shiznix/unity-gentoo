@@ -11,11 +11,9 @@ inherit autotools base eutils gnome2 ubuntu-versionator
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-#UURL="mirror://ubuntu/pool/main/g/${PN}"
-UURL="http://ppa.launchpad.net/gnome3-team/gnome3-staging/ubuntu/pool/main/g/${PN}"
+UURL="https://launchpad.net/~gnome3-team/+archive/gnome3-staging/+files"
 URELEASE="saucy"
 UVER_PREFIX="~raring2"
-MY_P="${MY_P/daemon-/daemon_}"
 
 DESCRIPTION="GNOME Desktop Configuration Tool patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
