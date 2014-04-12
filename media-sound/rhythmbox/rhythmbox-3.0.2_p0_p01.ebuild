@@ -57,7 +57,7 @@ COMMON_DEPEND="	>=dev-libs/glib-2.34:2
 	libnotify? ( >=x11-libs/libnotify-0.7.0 )
 	libsecret? ( >=app-crypt/libsecret-0.14 )
 	lirc? ( app-misc/lirc )
-	python? ( >=dev-python/pygobject-3:3 )
+	python? ( >=dev-python/pygobject-3:3[${PYTHON_USEDEP}] )
 	udev? (
 		virtual/udev[gudev]
 		ipod? ( >=media-libs/libgpod-0.7.92[udev] )
@@ -83,7 +83,7 @@ RDEPEND="${COMMON_DEPEND}
 
 		dbus? ( sys-apps/dbus )
 		webkit? (
-			dev-python/mako
+			dev-python/mako[${PYTHON_USEDEP}]
 			>=net-libs/webkit-gtk-1.3.9:3[introspection] ) )
 "
 DEPEND="${COMMON_DEPEND}
