@@ -5,10 +5,10 @@
 EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
-PYTHON_COMPAT=( python{3_2,3_3} )
+PYTHON_COMPAT=( python{3_2,3_3,3_4} )
 PYTHON_REQ_USE="xml"
 
-inherit autotools base eutils gnome2 python-single-r1 multilib ubuntu-versionator virtualx
+inherit autotools base eutils gnome2 python-r1 multilib ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"
 URELEASE="trusty"
@@ -32,8 +32,7 @@ REQUIRED_USE="
 	webkit? ( python )"
 
 # FIXME: double check what to do with fm-radio plugin
-COMMON_DEPEND="
-	>=dev-libs/glib-2.34:2
+COMMON_DEPEND="	>=dev-libs/glib-2.34:2
 	>=dev-libs/libxml2-2.7.8:2
 	>=x11-libs/gtk+-3.8:3[introspection]
 	>=x11-libs/gdk-pixbuf-2.18.0:2
@@ -58,7 +57,7 @@ COMMON_DEPEND="
 	libnotify? ( >=x11-libs/libnotify-0.7.0 )
 	libsecret? ( >=app-crypt/libsecret-0.14 )
 	lirc? ( app-misc/lirc )
-	python? ( >=dev-python/pygobject-3:3[${PYTHON_USEDEP}] )
+	python? ( >=dev-python/pygobject-3:3 )
 	udev? (
 		virtual/udev[gudev]
 		ipod? ( >=media-libs/libgpod-0.7.92[udev] )
@@ -84,7 +83,7 @@ RDEPEND="${COMMON_DEPEND}
 
 		dbus? ( sys-apps/dbus )
 		webkit? (
-			dev-python/mako[${PYTHON_USEDEP}]
+			dev-python/mako
 			>=net-libs/webkit-gtk-1.3.9:3[introspection] ) )
 "
 DEPEND="${COMMON_DEPEND}
@@ -93,13 +92,8 @@ DEPEND="${COMMON_DEPEND}
 	>=dev-util/gtk-doc-am-1.4
 	>=dev-util/intltool-0.35
 	virtual/pkgconfig
-	test? ( dev-libs/check )"
-#	vala? ( >=dev-lang/vala-0.9.4:0.12 )
-
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	use python && python-single-r1_pkg_setup
-}
+	test? ( dev-libs/check )
+	${PYTHON_DEPS}"
 
 src_prepare() {
 	# Ubuntu patchset #
@@ -116,36 +110,51 @@ src_prepare() {
 }
 
 src_configure() {
-	# FIXME: bug???
-	export GST_INSPECT=/bin/true
+	python_copy_sources
+	configuration() {
+		# FIXME: bug???
+		export GST_INSPECT=/bin/true
 
-	# --enable-vala just installs the sample vala plugin, and the configure
-	# checks are broken, so don't enable it
-	gnome2_src_configure \
-		MOZILLA_PLUGINDIR=/usr/$(get_libdir)/nsbrowser/plugins \
-		VALAC=$(type -P valac-0.14) \
-		--enable-mmkeys \
-		--disable-more-warnings \
-		--disable-static \
-		--disable-vala \
-		--without-hal \
-		$(use_enable clutter visualizer) \
-		$(use_enable daap) \
-		$(use_enable libnotify) \
-		$(use_enable lirc) \
-		$(use_enable nsplugin browser-plugin) \
-		$(use_enable python) \
-		$(use_enable upnp-av grilo) \
-		$(use_with cdr brasero) \
-		$(use_with html webkit) \
-		$(use_with ipod) \
-		$(use_with libsecret) \
-		$(use_with mtp) \
-		$(use_with udev gudev)
+		# --enable-vala just installs the sample vala plugin, and the configure
+		# checks are broken, so don't enable it
+		gnome2_src_configure \
+			MOZILLA_PLUGINDIR=/usr/$(get_libdir)/nsbrowser/plugins \
+			VALAC=$(type -P valac-0.14) \
+			--enable-mmkeys \
+			--disable-more-warnings \
+			--disable-static \
+			--disable-vala \
+			--without-hal \
+			$(use_enable clutter visualizer) \
+			$(use_enable daap) \
+			$(use_enable libnotify) \
+			$(use_enable lirc) \
+			$(use_enable nsplugin browser-plugin) \
+			$(use_enable python) \
+			$(use_enable upnp-av grilo) \
+			$(use_with cdr brasero) \
+			$(use_with html webkit) \
+			$(use_with ipod) \
+			$(use_with libsecret) \
+			$(use_with mtp) \
+			$(use_with udev gudev)
+	}
+	python_foreach_impl run_in_build_dir configuration
+}
+
+src_compile() {
+	compilation() {
+		emake || die
+	}
+	python_foreach_impl run_in_build_dir compilation
 }
 
 src_install() {
-	gnome2_src_install
+	installation() {
+		gnome2_src_install
+		python_optimize
+	}
+	python_foreach_impl run_in_build_dir installation
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
