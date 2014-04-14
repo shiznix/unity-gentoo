@@ -40,7 +40,6 @@ net-misc/networkmanager modemmanager ppp
 sys-apps/systemd pam
 sys-libs/talloc python
 sys-libs/zlib minizip
-unity-base/rhythmbox-ubuntuone 
 virtual/notification-daemon -gnome	# Needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
 x11-base/xorg-server dmx
 x11-libs/libdrm libkms
