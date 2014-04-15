@@ -73,7 +73,6 @@ else
 	UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 fi
 
-
 # @FUNCTION: ubuntu-versionator_pkg_setup
 # @DESCRIPTION:
 # Check we have a valid profile set and the correct

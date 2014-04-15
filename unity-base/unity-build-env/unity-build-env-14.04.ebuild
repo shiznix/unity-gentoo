@@ -29,3 +29,9 @@ src_install() {
 			"/etc/portage/package.${pfile}/unity-portage.p${pfile}" || die
 	done
 }
+
+pkg_postinst() {
+	echo
+	elog "If you have recently changed profile then you should re-run 'emerge -uDNavt @world' to catch any upgrades"
+	echo
+}
