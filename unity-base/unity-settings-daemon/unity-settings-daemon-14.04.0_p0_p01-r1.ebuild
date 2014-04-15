@@ -10,7 +10,7 @@ inherit autotools base eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
-UVER_PREFIX="+14.04.20140402"
+UVER_PREFIX="+14.04.20140414"
 
 DESCRIPTION="Unity Settings Daemon"
 HOMEPAGE="https://launchpad.net/unity-settings-daemon"
