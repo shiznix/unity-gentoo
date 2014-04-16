@@ -109,6 +109,10 @@ src_prepare() {
 			-e 's:git_revert_remove_automount_helper.patch:#git_revert_remove_automount_helper.patch:g' \
 				-i "${WORKDIR}/debian/patches/series"
 
+	# Stop IBus dbus service from killing off the systray panel #
+	sed -e 's:--panel disable::g' \
+		-i data/org.freedesktop.IBus.service.in
+
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )

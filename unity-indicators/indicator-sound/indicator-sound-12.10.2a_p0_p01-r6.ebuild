@@ -42,10 +42,6 @@ src_prepare() {
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 
-	# Make "Sound Settings" open gnome-control-center sound settings #
-	sed -e 's:sound-nua:sound:g' \
-		-i src/service.vala
-
 	# Make indicator start using XDG autostart #
 	sed -e '/NotShowIn=/d' \
 		-i data/indicator-sound.desktop.in

@@ -112,7 +112,6 @@ gnome-base/gnome-settings-daemon::unity-gentoo **
 gnome-base/gsettings-desktop-schemas::unity-gentoo **
 gnome-base/nautilus::unity-gentoo **
 gnome-extra/activity-log-manager::unity-gentoo **
-gnome-extra/gnome-screensaver::unity-gentoo **
 gnome-extra/nm-applet::unity-gentoo **
 gnome-extra/zeitgeist::unity-gentoo **
 mail-client/thunderbird::unity-gentoo **
