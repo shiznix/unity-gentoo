@@ -26,6 +26,7 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-base/gnome-control-center-unity
 	unity-base/hud
 	unity-base/unity
+	unity-base/unity-build-env
 	unity-extra/unity-tweak-tool
 	unity-indicators/unity-indicators-meta
 	unity-lenses/unity-lens-meta

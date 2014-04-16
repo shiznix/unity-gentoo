@@ -13,7 +13,7 @@ URELEASE="trusty"
 
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
-#KEYWORDS="amd64 x86"
+KEYWORDS="amd64 x86"
 IUSE="accessibility +chat +cloud gnome gnome-extras +xdm +webapps"
 RESTRICT="mirror"
 
@@ -26,6 +26,7 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-base/unity-control-center
 	unity-base/hud
 	unity-base/unity
+	unity-base/unity-build-env
 	unity-extra/unity-tweak-tool
 	unity-indicators/unity-indicators-meta
 	unity-lenses/unity-lens-meta
