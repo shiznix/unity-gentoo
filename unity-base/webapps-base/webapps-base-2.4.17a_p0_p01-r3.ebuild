@@ -10,7 +10,7 @@ inherit autotools gnome2-utils python-r1 ubuntu-versionator
 MY_PN="webapps-applications"
 URELEASE="trusty"
 UURL="mirror://ubuntu/pool/main/w/${MY_PN}"
-UVER_PREFIX="+14.04.20140415"
+UVER_PREFIX="+14.04.20140416"
 
 DESCRIPTION="WebApps: Initial set of Apps for the Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-applications"

@@ -72,9 +72,3 @@ src_install() {
 	cmake-utils_src_install
 	dodoc HACKING.md README.md COPYING.GPL COPYING.LGPL doc/*.md
 }
-
-pkg_postinst() {
-	elog
-	elog "Read /usr/share/doc/${P}/HACKING.md.bz2 for how to run the MIR display server"
-	elog
-}
