@@ -23,11 +23,13 @@ gnome-base/gnome-core-apps::gentoo
 gnome-base/gnome-core-libs::gentoo
 gnome-base/gnome-desktop::gentoo
 gnome-base/gnome-fallback::gentoo
-gnome-base/gnome-control-center::gentoo	# Need to still use 'saucy' version as portage tree pulls 'gnome-desktop-3.10.2', which is not compatible with Unity patched 'nautilus-3.10'
+gnome-base/gnome-control-center::gentoo		# Need to still use version 3.8 as 3.10 pulls 'gnome-desktop-3.10.2', which is not compatible with Unity patched 'nautilus-3.10'
+						#  gnome-control-center-3.8 from tree also fails to build with Trusty net-libs/gnome-online-accounts
 gnome-base/gnome-menus:3::gentoo
 gnome-base/gnome-panel::gentoo
 gnome-base/gnome-session::gentoo
-gnome-base/gnome-settings-daemon::gentoo	# Need to still use 'saucy' version as portage tree pulls 'gnome-desktop-3.10.2', which is not compatible with Unity patched 'nautilus-3.10'
+gnome-base/gnome-settings-daemon::gentoo	# Need to still use version 3.8 as 3.10 pulls 'gnome-desktop-3.10.2', which is not compatible with Unity patched 'nautilus-3.10'
+						#  unity-settings-daemon (Trusty) also fails to start (and so Unity) when using unpatched gnome-settings-daemon from tree
 gnome-base/gsettings-desktop-schemas::gentoo
 gnome-base/nautilus::gentoo
 gnome-extra/activity-log-manager::gentoo

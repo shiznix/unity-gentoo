@@ -49,6 +49,11 @@ src_prepare() {
 	eautoreconf
 }
 
+src_configure() {
+	econf \
+		--without-ccpanel
+}
+
 src_install() {
 	gnome2_src_install
 
