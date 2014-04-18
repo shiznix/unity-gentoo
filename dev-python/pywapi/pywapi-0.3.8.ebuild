@@ -8,12 +8,11 @@ PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
-URELEASE="trusty"
-UVER="1"
+#URELEASE="trusty"
 
 DESCRIPTION="Python wrapper around different weather APIs"
-HOMEPAGE="https://code.google.com/p/python-weather-api/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+HOMEPAGE="https://launchpad.net/python-weather-api"
+SRC_URI="https://launchpad.net/python-weather-api/trunk/0.3.8/+download/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
