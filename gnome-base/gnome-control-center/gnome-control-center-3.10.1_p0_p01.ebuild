@@ -13,7 +13,7 @@ S="${WORKDIR}/${PN}-${PV}"
 
 UURL="https://launchpad.net/~gnome3-team/+archive/gnome3-staging/+files"
 URELEASE="saucy"
-UVER_PREFIX="~raring2"
+UVER_PREFIX="~saucy3"
 
 DESCRIPTION="GNOME Desktop Configuration Tool patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
@@ -23,11 +23,12 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2+"
 SLOT="2"
 IUSE="+bluetooth +colord +cups +gnome-online-accounts +i18n input_devices_wacom kerberos modemmanager +socialweb v4l"
-if [[ ${PV} = 9999 ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
-fi
+#if [[ ${PV} = 9999 ]]; then
+#	KEYWORDS=""
+#else
+#	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
+#fi
+#KEYWORDS=""
 RESTRICT="mirror"
 
 # False positives caused by nested configure scripts
@@ -134,23 +135,23 @@ DEPEND="${COMMON_DEPEND}
 src_prepare() {
 	# Make some panels optional; requires eautoreconf
 	# https://bugzilla.gnome.org/697478
-	epatch "${FILESDIR}/${PN}-3.8.0-optional-r1.patch"
+#	epatch "${FILESDIR}/${PN}-3.8.0-optional-r1.patch"
 
 	# https://bugzilla.gnome.org/686840
-	epatch "${FILESDIR}/${PN}-3.7.4-optional-kerberos.patch"
+#	epatch "${FILESDIR}/${PN}-3.7.4-optional-kerberos.patch"
 
 	# Fix some absolute paths to be appropriate for Gentoo
-	epatch "${FILESDIR}/${PN}-3.8.0-paths-makefiles.patch"
-	epatch "${FILESDIR}/${PN}-3.8.0-paths.patch"
+#	epatch "${FILESDIR}/${PN}-3.8.0-paths-makefiles.patch"
+#	epatch "${FILESDIR}/${PN}-3.8.0-paths.patch"
 
 	# Make modemmanager optional, bug 463852, upstream bug #700145
-	epatch "${FILESDIR}/${PN}-3.8.1.5-optional-modemmanager.patch"
+#	epatch "${FILESDIR}/${PN}-3.8.1.5-optional-modemmanager.patch"
 
 	# Fix crash of 'Details' entry when running as guest in VirtualBox
-	epatch "${FILESDIR}/${PN}-3.8.3-fix-details-crash.patch"
+#	epatch "${FILESDIR}/${PN}-3.8.3-fix-details-crash.patch"
 
 	# Use 'dev-libs/libtimezonemap' instead of built in timezonemap implementation
-	epatch "${FILESDIR}/${PN}-3.8.3-use-libtimezonemap.patch"
+#	epatch "${FILESDIR}/${PN}-3.8.3-use-libtimezonemap.patch"
 
 	# Disable selected patches #
 	sed \
