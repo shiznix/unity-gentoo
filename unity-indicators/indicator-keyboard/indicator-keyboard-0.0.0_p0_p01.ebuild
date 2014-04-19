@@ -27,7 +27,7 @@ RESTRICT="mirror"
 
 RDEPEND="gnome-extra/gucharmap"
 DEPEND="${RDEPEND}
-	app-i18n/ibus
+	app-i18n/ibus[vala(+)]
 	>=dev-libs/glib-2.37
 	dev-libs/libappindicator
 	dev-libs/libgee:0
