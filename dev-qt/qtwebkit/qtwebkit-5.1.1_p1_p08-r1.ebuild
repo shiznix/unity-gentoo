@@ -73,17 +73,35 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 
+	use gstreamer  || epatch "${FILESDIR}/${PN}-5.2.1-disable-gstreamer.patch"
+	use libxml2    || sed -i -e '/config_libxml2: WEBKIT_CONFIG += use_libxml2/d' \
+		Tools/qmake/mkspecs/features/features.prf || die
+	use multimedia || sed -i -e '/WEBKIT_CONFIG += video use_qt_multimedia/d' \
+		Tools/qmake/mkspecs/features/features.prf || die
+	use opengl     || sed -i -e '/contains(QT_CONFIG, opengl): WEBKIT_CONFIG += use_3d_graphics/d' \
+		Tools/qmake/mkspecs/features/features.prf || die
+	use qml        || sed -i -e '/have?(QTQUICK): SUBDIRS += declarative/d' \
+		Source/QtWebKit.pro || die
+	use udev       || sed -i -e '/linux: WEBKIT_CONFIG += gamepad/d' \
+		Tools/qmake/mkspecs/features/features.prf || die
+	use webp       || sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
+		Tools/qmake/mkspecs/features/features.prf || die
+	use widgets    || sed -i -e '/SUBDIRS += webkitwidgets/d' \
+		Source/QtWebKit.pro || die
+	use xslt       || sed -i -e '/config_libxslt: WEBKIT_CONFIG += xslt/d' \
+		Tools/qmake/mkspecs/features/features.prf || die
+
 	# bug 458222
 	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
 
 	qt5-build_src_prepare
 }
 
-src_configure() {
-	qt5-build_src_configure
-
-	# Hack to fix linktime paths for geolocation (see b.g.o #451456) #
-	#  NB - This is caused by library paths being present #
-	#	for QMAKE_PRL_LIBS variable in /usr/lib64/libQt5*.prl files #
-	echo "LIBS+=-L${S}/lib" >> Source/widgetsapi.pri
-}
+#src_configure() {
+#	qt5-build_src_configure
+#
+#	# Hack to fix linktime paths for geolocation (see b.g.o #451456) #
+#	#  NB - This is caused by library paths being present #
+#	#	for QMAKE_PRL_LIBS variable in /usr/lib64/libQt5*.prl files #
+#	echo "LIBS+=-L${S}/lib" >> Source/widgetsapi.pri
+#}

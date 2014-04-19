@@ -1,5 +1,5 @@
 */* -consolekit -packagekit systemd zeitgeist
-*/*::unity-gentoo qt5
+*/*::unity-gentoo-roko__ qt5
 
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
