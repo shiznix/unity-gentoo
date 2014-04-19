@@ -24,6 +24,8 @@ DEPEND="dev-libs/glib:2
 	media-libs/gst-plugins-base:1.0
 	media-libs/gst-plugins-good:1.0
 	x11-libs/gdk-pixbuf
-	x11-misc/shared-mime-info"
+	x11-misc/shared-mime-info
+	>=dev-qt/qtdeclarative-5.0
+	>=net-libs/libsoup-2.42.3.1"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
