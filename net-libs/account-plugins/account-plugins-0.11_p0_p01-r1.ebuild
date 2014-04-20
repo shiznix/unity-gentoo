@@ -50,9 +50,14 @@ src_configure() {
 		--with-twitter-consumer-key="NGOB5S7sICsj6epjh0PhAw" \
 		--with-twitter-consumer-secret="rbUEJCBEokMnGZd8bubd0QL2cSmoCjJeyiSJpnx3OM0" \
 		--with-windows-live-client-id="00000000400D5635" \
+		--with-facebook-client-id="271112146382618" \
 		--with-foursquare-client-id="1I2UNJXPHNDZT3OPZOOA5LCPIUEUJFMKRXSF42UFCN1KXKTK" \
 		--with-google-client-id="759250720802-4sii0me9963n9fdqdmi7cepn6ub8luoh.apps.googleusercontent.com" \
 		--with-google-client-secret="juFngKUcuhB7IRQqHtSLavqJ" \
 		--with-flickr-consumer-key="d87224f0b467093b2a87fd788d950e27" \
-		--with-flickr-consumer-secret="4c7e48102c226509"
+		--with-flickr-consumer-secret="4c7e48102c226509" \
+		--with-linkedin-consumer-key="34gnzrg96iq5" \
+		--with-linkedin-consumer-secret="BazRki2LE8eZtcqh" \
+		--with-instagram-client-id="01c3df41a2274a14882adea8e8ebbd46" \
+		--with-instagram-client-secret="4751ccdc39c648719ea83cfb1c866c26"
 }
