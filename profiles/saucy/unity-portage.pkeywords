@@ -112,7 +112,6 @@ dev-lang/vala
 dev-libs/atk
 =dev-libs/boost-1.53*
 dev-libs/check
-~dev-libs/json-c-0.11
 dev-libs/json-glib
 dev-libs/libindicate
 dev-libs/libindicate-qt
