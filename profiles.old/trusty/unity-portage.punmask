@@ -1,0 +1,9 @@
+~dev-libs/lzo-2.06
+sys-libs/db:5.1
+x11-misc/lightdm::unity-gentoo-roko__
+media-libs/mesa::unity-gentoo-roko__
+
+gnome-base/gnome-core-libs::unity-gentoo-roko__
+gnome-base/gnome-core-apps::unity-gentoo-roko__
+
+x11-libs/cairo::unity-gentoo-roko__

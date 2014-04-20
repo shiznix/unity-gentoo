@@ -15,7 +15,7 @@ IUSE=""
 
 pkg_setup() {
 	mkdir -p "${S}"
-	REPO_ROOT="$(portageq get_repo_path / unity-gentoo)"
+	REPO_ROOT="/unity-gentoo"
 	PROFILE_RELEASE=$(eselect --brief profile show | sed -n 's/.*:\(.*\)\/.*/\1/p')
 }
 
