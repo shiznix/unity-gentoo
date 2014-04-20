@@ -1,5 +1,5 @@
 */* -consolekit -packagekit systemd zeitgeist
-*/*::unity-gentoo qt5
+*/*::unity-gentoo qt5 vala
 
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus

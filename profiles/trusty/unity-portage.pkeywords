@@ -11,6 +11,7 @@ dev-libs/libindicate
 dev-libs/libindicate-qt
 ~dev-libs/lzo-2.06
 ~dev-libs/userspace-rcu-0.8.3
+dev-python/configparser
 ~dev-python/httplib2-0.8
 ~dev-python/oauth-1.0.1
 ~dev-python/oauthlib-0.6.1
@@ -116,8 +117,8 @@ gnome-extra/nm-applet::unity-gentoo **
 gnome-extra/zeitgeist::unity-gentoo **
 mail-client/thunderbird::unity-gentoo **
 media-gfx/thumbnailer **
-# media-libs/mesa::unity-gentoo **	# Masked until we can get mesa-10 working from main portage tree
-# media-libs/mesa-mir **		# Masked until we can get mesa-10 working from main portage tree
+media-libs/mesa::unity-gentoo **
+media-libs/mesa-mir **
 media-sound/rhythmbox::unity-gentoo **
 mir-base/mir **
 mir-base/unity-system-compositor **
@@ -176,11 +177,13 @@ unity-indicators/indicator-application **
 unity-indicators/indicator-appmenu **
 unity-indicators/indicator-bluetooth **
 unity-indicators/indicator-datetime **
+unity-indicators/indicator-keyboard **
 unity-indicators/indicator-messages **
 unity-indicators/indicator-power **
 unity-indicators/indicator-session **
 unity-indicators/indicator-sound **
 unity-indicators/indicator-sync **
+unity-indicators/unity-indicators-meta **
 unity-lenses/unity-lens-applications **
 unity-lenses/unity-lens-files **
 unity-lenses/unity-lens-friends **

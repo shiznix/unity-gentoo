@@ -14,13 +14,12 @@ DISTUTILS_SINGLE_IMPL=1
 
 inherit distutils-r1 eutils gnome2-utils ubuntu-versionator
 
-#URELEASE="saucy"	# Was dropped from Raring for being buggy, uncomment when it rejoins to become part of Saucy #
-MY_PN="weather-indicator"
+#URELEASE="trusty"	# Was dropped from Raring for being buggy, uncomment when it rejoins #
 UVER=
 
 DESCRIPTION="Weather indicator used by the Unity desktop"
-HOMEPAGE="https://launchpad.net/indicator-weather"
-SRC_URI="https://launchpad.net/weather-indicator/2.0/${PV}/+download/${MY_PN}_${PV}.tar.gz"
+HOMEPAGE="https://launchpad.net/weather-indicator"
+SRC_URI="https://launchpad.net/weather-indicator/2.0/${PV}/+download/${PN}_${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -33,10 +32,8 @@ DEPEND="dev-libs/libappindicator
 	dev-libs/libindicate-qt
 	>=dev-python/python-distutils-extra-2.37
 	dev-python/pytz[${PYTHON_USEDEP}]
-	>=dev-python/pywapi-0.3.3[${PYTHON_USEDEP}]
+	>=dev-python/pywapi-0.3.7[${PYTHON_USEDEP}]
 	x11-themes/gnome-icon-theme"
-
-S="${WORKDIR}/${MY_PN}_${PV}"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup

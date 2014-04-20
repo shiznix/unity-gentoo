@@ -46,7 +46,16 @@ src_prepare() {
 	cp "${FILESDIR}"/config.vapi src/ || die
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
+
+	# Fix broken libgnome-control-center check #
+	sed -e 's:test "x$with_ccpanel" != xcheck:test "x$with_ccpanel" != xcheck \&\& test "x$with_ccpanel" != xno:g' \
+		-i configure.ac
 	eautoreconf
+}
+
+src_configure() {
+	econf \
+		--with-ccpanel=no
 }
 
 src_install() {

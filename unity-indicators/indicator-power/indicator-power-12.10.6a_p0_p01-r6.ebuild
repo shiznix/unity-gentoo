@@ -22,7 +22,9 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/glib-2.40
+RDEPEND="gnome-extra/gnome-power-manager"
+DEPEND="${RDEPEND}
+	>=dev-libs/glib-2.40
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt

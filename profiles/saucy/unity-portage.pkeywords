@@ -122,6 +122,7 @@ dev-libs/libzeitgeist
 dev-libs/userspace-rcu
 dev-libs/vala-common
 dev-python/bsddb3
+dev-python/configparser
 dev-python/dbus-python
 dev-python/html5lib
 dev-python/httplib2
