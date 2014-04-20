@@ -21,8 +21,13 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-libs/glib:2
+	dev-libs/libxml2
+	dev-qt/qtcore:5
+	dev-qt/qtdeclarative:5
 	media-libs/gst-plugins-base:1.0
 	media-libs/gst-plugins-good:1.0
+	media-libs/libexif
+	net-libs/libsoup:2.4
 	x11-libs/gdk-pixbuf
 	x11-misc/shared-mime-info
 	>=dev-qt/qtdeclarative-5.0

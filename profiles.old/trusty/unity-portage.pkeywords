@@ -11,6 +11,7 @@ dev-libs/libindicate
 dev-libs/libindicate-qt
 ~dev-libs/lzo-2.06
 ~dev-libs/userspace-rcu-0.8.3
+dev-python/configparser
 ~dev-python/httplib2-0.8
 ~dev-python/oauth-1.0.1
 ~dev-python/oauthlib-0.6.1

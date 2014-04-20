@@ -1,5 +1,9 @@
 */* -consolekit -packagekit systemd zeitgeist
+<<<<<<< HEAD
 */*::unity-gentoo-roko__ qt5
+=======
+*/*::unity-gentoo qt5 vala
+>>>>>>> shiznix/master
 
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
