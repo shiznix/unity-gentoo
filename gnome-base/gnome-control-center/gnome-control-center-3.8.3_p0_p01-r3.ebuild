@@ -11,13 +11,13 @@ inherit autotools base eutils gnome2 ubuntu-versionator
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="https://launchpad.net/~gnome3-team/+archive/gnome3-staging/+files"
+UURL="https://github.com/shiznix/unity-gentoo/raw/master/files"
 URELEASE="saucy"
 UVER_PREFIX="~raring2"
 
 DESCRIPTION="GNOME Desktop Configuration Tool patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.8/${PN}-${PV}.tar.xz
 	${UURL}/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.gz"
 
 LICENSE="GPL-2+"
