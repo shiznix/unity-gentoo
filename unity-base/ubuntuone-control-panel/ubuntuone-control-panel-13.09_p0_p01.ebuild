@@ -24,17 +24,18 @@ RESTRICT="mirror"
 RDEPEND="dev-libs/dbus-glib
 	>=dev-libs/gobject-introspection-1.36
 	dev-python/configglue[${PYTHON_USEDEP}]
+	dev-python/configparser[${PYTHON_USEDEP}]
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/gnome-keyring-python
 	dev-python/httplib2[${PYTHON_USEDEP}]
 	dev-python/notify-python[${PYTHON_USEDEP}]
 	dev-python/oauth[${PYTHON_USEDEP}]
-	<=dev-python/oauthlib-0.3.7
+	dev-python/oauthlib[${PYTHON_USEDEP}]
 	dev-python/pygobject[${PYTHON_USEDEP}]
 	dev-python/dirspec[${PYTHON_USEDEP}]
 	dev-python/lazr-restfulclient[${PYTHON_USEDEP}]
 	dev-python/pyinotify[${PYTHON_USEDEP}]
-	dev-python/PyQt4[${PYTHON_USEDEP}]
+	dev-python/PyQt4[${PYTHON_USEDEP},dbus]
 	dev-python/pyxdg[${PYTHON_USEDEP}]
 	dev-python/simplejson[${PYTHON_USEDEP}]
 	>=dev-python/twisted-names-12.2.0[${PYTHON_USEDEP}]
@@ -49,10 +50,18 @@ pkg_setup() {
 	python-single-r1_pkg_setup
 }
 
-src_install() {
-	# Delete some files that are only useful on Ubuntu
-	rm -rf "${D}"etc/apport "${D}"usr/share/apport
+src_prepare() {
+	distutils-r1_src_prepare
+	# Enable UbuntuOne showing up in unity-control-center #
+	sed -e 's:X-GNOME-PersonalSettings:X-GNOME-PersonalSettings;X-Unity-Settings-Panel;:g' \
+		-i ubuntuone-installer.desktop.in
+	echo "X-Unity-Settings-Panel=ubuntuone" >> ubuntuone-installer.desktop.in
+}
 
+src_install() {
 	distutils-r1_src_install
 	python_fix_shebang "${ED}"
+
+	# Delete some files that are only useful on Ubuntu
+	rm -rf "${ED}"etc/apport "${ED}"usr/share/apport
 }
