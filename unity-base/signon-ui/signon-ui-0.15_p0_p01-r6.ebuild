@@ -32,7 +32,7 @@ DEPEND="${RDEPEND}
 	dev-qt/qtxmlpatterns:5
 	dev-qt/qtwebkit:5
 	dev-qt/qtwidgets:5
-	net-libs/libproxy
+	net-libs/libproxy[-kde]
 	unity-base/signon[qt5]
 	x11-libs/libaccounts-qt[qt5]
 	x11-libs/libnotify"

@@ -34,6 +34,7 @@ media-sound/rhythmbox zeitgeist
 media-video/ffmpeg opus
 net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
 net-libs/libgadu gnutls
+net-libs/libproxy -kde
 net-libs/gnome-online-accounts uoa
 net-misc/openssh -bindist
 net-misc/networkmanager modemmanager ppp
