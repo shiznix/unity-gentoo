@@ -7,3 +7,6 @@ gnome-base/gnome-core-libs::unity-gentoo
 gnome-base/gnome-core-apps::unity-gentoo
 
 x11-libs/cairo::unity-gentoo
+
+=gnome-extra/gnome-user-share-3.8.3
+=gnome-base/gnome-extra-apps-3.8.0-r1

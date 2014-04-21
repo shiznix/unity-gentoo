@@ -1,5 +1,5 @@
---- configure.ac.orig	2014-04-21 10:06:07.861879774 +0300
-+++ configure.ac	2014-04-21 10:10:45.405862417 +0300
+--- configure.ac.orig	2014-04-21 11:07:23.353649919 +0300
++++ configure.ac	2014-04-21 11:07:50.193648241 +0300
 @@ -338,35 +338,18 @@
  
  AC_MSG_CHECKING([the GStreamer version to use])
@@ -20,7 +20,7 @@
  
 -case "$with_gstreamer" in
 -     0.10) GSTREAMER_REQUIRED_VERSION=$GSTREAMER_0_10_REQUIRED_VERSION
-+     	   GSTREAMER_REQUIRED_VERSION=$GSTREAMER_0_10_REQUIRED_VERSION
++           GSTREAMER_REQUIRED_VERSION=$GSTREAMER_0_10_REQUIRED_VERSION
             GSTREAMER_PLUGINS_BASE_REQUIRED_VERSION=$GSTREAMER_0_10_PLUGINS_BASE_REQUIRED_VERSION
             GST_API_VERSION=0.10
 -           ;;
@@ -54,6 +54,18 @@
  
  PKG_CHECK_MODULES(GAIL, $GAIL_PC_NAME >= $GAIL_REQUIRED_VERSION)
  AC_SUBST(GAIL_CFLAGS)
+@@ -1041,9 +1015,8 @@
+                        gstreamer-pbutils-$GST_API_VERSION
+                        gstreamer-plugins-base-$GST_API_VERSION >= $GSTREAMER_PLUGINS_BASE_REQUIRED_VERSION
+                        gstreamer-video-$GST_API_VERSION";
+-   if test "$GST_API_VERSION" != "1.0"; then
+-       gstreamer_modules="$gstreamer_modules gstreamer-interfaces-$GST_API_VERSION";
+-   fi
++		       gstreamer_modules="$gstreamer_modules gstreamer-interfaces-$GST_API_VERSION";
++
+    PKG_CHECK_MODULES([GSTREAMER], [$gstreamer_modules], [have_gstreamer=yes])
+    AC_SUBST([GSTREAMER_CFLAGS])
+    AC_SUBST([GSTREAMER_LIBS])
 --- GNUmakefile.am.orig	2014-04-21 10:20:59.213824032 +0300
 +++ GNUmakefile.am	2014-04-21 10:21:17.190822907 +0300
 @@ -204,7 +204,7 @@

@@ -1,0 +1,33 @@
+Author: Pino Toscano <pino@debian.org>
+Description: fix (workaround) build on GNU/Hurd
+ Apparently PTHREAD_MUTEX_NORMAL and PTHREAD_MUTEX_DEFAULT cannot be used
+ in preprocessor expressions, so temporarly use directly the code which would
+ be used on GNU/Hurd.
+Origin: vendor
+Forwarded: not-needed
+Last-Update: 2011-12-30
+
+---
+ Source/JavaScriptCore/wtf/FastMalloc.cpp |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+--- a/Source/WTF/wtf/FastMalloc.cpp
++++ b/Source/WTF/wtf/FastMalloc.cpp
+@@ -1744,6 +1744,9 @@ ALWAYS_INLINE void TCMalloc_PageHeap::su
+ void TCMalloc_PageHeap::initializeScavenger()
+ {
+     // Create a non-recursive mutex.
++#if defined(__GNU__)
++    pthread_mutex_init(&m_scavengeMutex, 0);
++#else
+ #if !defined(PTHREAD_MUTEX_NORMAL) || PTHREAD_MUTEX_NORMAL == PTHREAD_MUTEX_DEFAULT
+     pthread_mutex_init(&m_scavengeMutex, 0);
+ #else
+@@ -1755,6 +1758,7 @@ void TCMalloc_PageHeap::initializeScaven
+ 
+     pthread_mutexattr_destroy(&attr);
+ #endif
++#endif
+ 
+     pthread_cond_init(&m_scavengeCondition, 0);
+     m_scavengeThreadActive = true;

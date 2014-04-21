@@ -1,0 +1,29 @@
+From a98262c78af597b2af26e5bddf2101884bba2d73 Mon Sep 17 00:00:00 2001
+From: Allan Sandfeld Jensen <allan.jensen@digia.com>
+Date: Thu, 19 Sep 2013 17:43:47 +0200
+Subject: [PATCH 6/8] Update location of qaccessiblewidget.h
+
+The definition of QAccessibleWidget has moved again.
+
+Change-Id: Ibeebdd236d5a5d40e4e811975524e5c3c5ee0673
+Reviewed-by: Allan Sandfeld Jensen <allan.jensen@digia.com>
+---
+ Source/WebKit/qt/WidgetApi/qwebviewaccessible_p.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Source/WebKit/qt/WidgetApi/qwebviewaccessible_p.h b/Source/WebKit/qt/WidgetApi/qwebviewaccessible_p.h
+index a17b29e..3ba10b6 100644
+--- a/Source/WebKit/qt/WidgetApi/qwebviewaccessible_p.h
++++ b/Source/WebKit/qt/WidgetApi/qwebviewaccessible_p.h
+@@ -22,7 +22,7 @@
+ 
+ #include <qaccessible.h>
+ #include <qaccessibleobject.h>
+-#if QT_VERSION >= QT_VERSION_CHECK(5, 1, 0)
++#if QT_VERSION >= QT_VERSION_CHECK(5, 1, 0) && QT_VERSION < QT_VERSION_CHECK(5, 2, 0)
+ #include <private/qaccessiblewidget_p.h>
+ #else
+ #include <qaccessiblewidget.h>
+-- 
+1.9.0
+
