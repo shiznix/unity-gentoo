@@ -69,9 +69,37 @@ pkg_setup() {
 
 src_prepare() {
 	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+#	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+#		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+#	done
+
+#	epatch	"${FILESDIR}/Fix-QtWebKit-compilation-with-GStreamer-1.0.patch"
+	epatch	"${FILESDIR}/gstreamer-0.10.patch"
+	epatch	"${FILESDIR}/ubuntu/0001-Qt-memory-leak-in-WebCore-FontCache-getLastResortFal.patch"
+	epatch  "${FILESDIR}/ubuntu/0002-adjust-to-new-MODULE_-variable-semantics.patch"
+	epatch  "${FILESDIR}/ubuntu/0003-Assertion-while-scrolling-news.google.com.patch"
+	epatch  "${FILESDIR}/ubuntu/0004-Qt-Enable-QML-handling-of-crashed-unresponsive-QtWeb.patch"
+	epatch  "${FILESDIR}/ubuntu/0005-JSC-ARM-traditional-failing-on-Octane-NavierStokes-t.patch"
+	epatch  "${FILESDIR}/ubuntu/0006-Update-location-of-qaccessiblewidget.h.patch"
+	epatch  "${FILESDIR}/ubuntu/0007-Fix-build-with-namespaced-Qt.patch"
+	epatch  "${FILESDIR}/ubuntu/0008-arm-Inverted-src-and-dest-FP-registers-in-DFG-specul.patch"
+	epatch  "${FILESDIR}/ubuntu/0009-Qt-Fix-build-with-Qt-5.2-QtPosition-module.patch"
+	epatch  "${FILESDIR}/ubuntu/05_sparc_unaligned_access.diff"
+	epatch  "${FILESDIR}/ubuntu/LLIntCLoop32BigEndian.patch"
+	epatch  "${FILESDIR}/ubuntu/aarch64.patch"
+	epatch  "${FILESDIR}/ubuntu/add_experimentalDevicePixelRatio.patch"
+	epatch  "${FILESDIR}/ubuntu/bug_118860_qtwebkit_511.patch"
+	epatch  "${FILESDIR}/ubuntu/devicePixelResolution.patch"
+	epatch  "${FILESDIR}/ubuntu/disable_jit.patch"
+	epatch  "${FILESDIR}/ubuntu/dont_pollute_pri_and_pc_with_private_deps.patch"
+	epatch  "${FILESDIR}/ubuntu/file_access.patch"
+	epatch  "${FILESDIR}/ubuntu/hurd.diff"
+	epatch  "${FILESDIR}/ubuntu/no_gc_sections.diff"
+	epatch  "${FILESDIR}/ubuntu/stabs_format_debug_info.diff"
+	epatch  "${FILESDIR}/ubuntu/webkit-119798.patch"
+	epatch  "${FILESDIR}/ubuntu/webkit_qt_hide_symbols.diff"
+#	epatch  "${FILESDIR}/ubuntu/"
+
 
 	# bug 458222
 	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
