@@ -61,7 +61,7 @@ DEPEND="dev-libs/boost
 	>=gnome-base/gnome-session-3.8
 	>=gnome-base/gsettings-desktop-schemas-3.8
 	gnome-base/libgdu
-	>=gnome-extra/polkit-gnome-0.105
+	>=gnome-extra/polkit-gnome-0.105-r9
 	media-libs/clutter-gtk:1.0
 	media-libs/glew
 	sys-apps/dbus
