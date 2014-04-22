@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="test"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/libdbusmenu:=
@@ -52,4 +52,8 @@ src_install() {
 
 	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
 	rm -rf "${ED}usr/share/upstart"
+}
+
+src_test() {
+	emake check
 }
