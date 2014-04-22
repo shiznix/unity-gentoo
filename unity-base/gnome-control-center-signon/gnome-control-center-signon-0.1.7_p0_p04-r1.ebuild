@@ -12,7 +12,7 @@ UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="trusty"
 UVER_PREFIX="~+14.04.20140211.2"
 
-DESCRIPTION="Online account plugin for gnome-control-center used by the Unity desktop"
+DESCRIPTION="Online account plugin for unity-control-center used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/online-accounts-gnome-control-center"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
@@ -38,6 +38,7 @@ DEPEND=">=dev-libs/libaccounts-glib-1.10
 	dev-libs/libxslt
 	>=dev-util/intltool-0.40.1
 	>=sys-devel/gettext-0.17
+	unity-base/unity-control-center
 	virtual/pkgconfig
 	x11-libs/gtk+:3
 	x11-proto/xproto
@@ -54,8 +55,6 @@ src_prepare() {
 }
 
 pkg_postinst() {
-	elog
 	elog "To reset all Online Accounts do the following as your desktop user:"
 	elog "rm -rfv ~/.cache/telepathy ~/.local/share/telepathy ~/.config/libaccounts-glib"
-	elog
 }
