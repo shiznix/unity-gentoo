@@ -649,7 +649,7 @@ src_install() {
 	einfo "Installing language files for the following LINGUAS: ${LINGUAS}"
 	for TARBALL_LANG in ${TARBALL_LANGS}; do
 		if has ${TARBALL_LANG} ${LINGUAS}; then
-			for SUB_LANG in `find "${WORKDIR}/language-pack-gnome-${TARBALL_LANG}-base/data" -maxdepth 1 -type d | awk -Fdata/ '{print $2}'`; do
+			for SUB_LANG in `find "${WORKDIR}/language-pack-gnome-${TARBALL_LANG}-base/data" -maxdepth 1 -type d | awk -Fdata/ '{print $NF}' | grep -v /data`; do
 				# Remove all translations except those we need #
 				find language-pack-gnome-${TARBALL_LANG}-base/data/${SUB_LANG} \
 					-type f \! -iname '*activity-log-manager*' \
