@@ -14,8 +14,7 @@
   * workaround:
     -> Right click in password entry box to give it focus
 
-- x11-wm/mutter and gnome-base/gnome-shell 3.8 are not compatible with dev-libs/gobject-introspection 1.39
-  * >=dev-libs/gobject-introspection-1.39 is masked for now
-
-- media-libs/mesa-10* is known not to work yet on Gentoo
-  * media-libs/mesa-10* is masked for now
+- Launchpad bug #1295851
+  * Xmir session keyboard input degrades over time from being slow to one character behind
+  * workaround:
+    -> None at this time, don't use Xmir
