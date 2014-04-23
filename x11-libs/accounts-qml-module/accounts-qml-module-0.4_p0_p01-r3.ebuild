@@ -27,6 +27,7 @@ DEPEND="dev-qt/qtcore:5
 	x11-libs/libaccounts-qt[qt5]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+QT5_BUILD_DIR="${S}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
