@@ -26,6 +26,7 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'mesa-mir'`" ]; then treepackname="${packname}"; packname="mesa"
 	elif [ -n "`echo "${packbasename}" | grep 'nm-applet'`" ]; then treepackname="${packname}"; packname="network-manager-applet"
 	elif [ -n "`echo "${packbasename}" | grep 'qt3d'`" ]; then treepackname="${packname}"; packname="qt3d-opensource-src"
+	elif [ -n "`echo "${packbasename}" | grep 'qtdeclarative'`" ]; then treepackname="${packname}"; packname="qtdeclarative-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtfeedback'`" ]; then treepackname="${packname}"; packname="qtfeedback-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtpim'`" ]; then treepackname="${packname}"; packname="qtpim-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtwebkit'`" ]; then treepackname="${packname}"; packname="qtwebkit-opensource-src"

@@ -97,6 +97,7 @@ dev-python/dirspec **
 dev-python/lazr-restfulclient **
 dev-python/python-testscenarios **
 dev-python/pywapi **
+dev-python/u1db **
 dev-qt/qtfeedback **
 dev-qt/qtpim **
 dev-util/dbus-test-runner **
@@ -209,6 +210,8 @@ x11-libs/libaccounts-qt **
 x11-libs/libXfixes::unity-gentoo **
 x11-libs/libXi::unity-gentoo **
 x11-libs/qml-friends **
+x11-libs/u1db-qt **
+x11-libs/ubuntu-settings-components **
 x11-libs/ubuntu-ui-toolkit **
 x11-libs/unity-action-api **
 x11-libs/unity-webapps-qml **

@@ -24,8 +24,10 @@ RDEPEND="dev-qt/qtgraphicaleffects
 	net-im/friends
 	x11-libs/accounts-qml-module
 	x11-libs/qml-friends
+	x11-libs/u1db-qt
 	x11-libs/ubuntu-ui-toolkit"
-DEPEND="dev-qt/qtcore:5
+DEPEND="${RDEPEND}
+	dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
 	dev-qt/qtgui:5"
 
