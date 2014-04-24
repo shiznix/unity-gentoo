@@ -81,7 +81,6 @@ net-libs/rest
 ~sys-apps/kmod-15
 ~sys-apps/hwids-20130915.1
 ~sys-apps/gentoo-systemd-integration-2
-x11-libs/cairo
 ~x11-libs/gdk-pixbuf-2.30.1
 x11-libs/gnome-pty-helper
 ~x11-libs/libdrm-2.4.46
@@ -307,7 +306,6 @@ x11-drivers/xf86-video-intel::unity-gentoo
 x11-libs/accounts-qml-module
 x11-libs/dee-qt
 x11-libs/gtk+::unity-gentoo
-=x11-libs/gtk+-3.10.8*::unity-gentoo **  # needed for gnome-3.10 packages where no older packages are available
 x11-libs/libaccounts-qt
 x11-libs/libXfixes::unity-gentoo
 x11-libs/libXi::unity-gentoo
