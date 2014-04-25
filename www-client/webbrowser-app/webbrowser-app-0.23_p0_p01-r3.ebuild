@@ -27,6 +27,7 @@ DEPEND="dev-libs/glib
 	dev-qt/qtgui:5
 	dev-qt/qtdeclarative:5
 	dev-qt/qtnetwork:5
+	dev-qt/qtsql:5
 	dev-qt/qtwebkit:5[libxml2,qml,multimedia,webp,widgets,xslt]
 	dev-qt/qtwidgets:5
 	x11-libs/unity-webapps-qml"
