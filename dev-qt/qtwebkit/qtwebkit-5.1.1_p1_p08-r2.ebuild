@@ -75,7 +75,8 @@ src_prepare() {
 #	done
 
 #	epatch	"${FILESDIR}/Fix-QtWebKit-compilation-with-GStreamer-1.0.patch"
-	epatch	"${FILESDIR}/gstreamer-0.10.patch"
+#	epatch	"${FILESDIR}/gstreamer-0.10.patch"
+	epatch	"${FILESDIR}/ubuntu/gstreamer-build-issue-gst10.patch"
 	epatch	"${FILESDIR}/ubuntu/0001-Qt-memory-leak-in-WebCore-FontCache-getLastResortFal.patch"
 	epatch  "${FILESDIR}/ubuntu/0002-adjust-to-new-MODULE_-variable-semantics.patch"
 	epatch  "${FILESDIR}/ubuntu/0003-Assertion-while-scrolling-news.google.com.patch"
