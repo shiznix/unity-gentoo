@@ -5,7 +5,7 @@
 EAPI=5
 PYTHON_COMPAT=( python3_3 )
 
-inherit autotools distutils-r1 gnome2-utils ubuntu-versionator vala
+inherit autotools gnome2-utils python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 URELEASE="trusty"
@@ -36,36 +36,43 @@ RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	x11-libs/gtk+:3
 	>=x11-libs/gdk-pixbuf-2.28
 	x11-libs/libnotify
+	${PYTHON_DEPS}
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	vala_src_prepare
-	distutils-r1_src_prepare
+
 	cd service
 	eautoreconf
 }
 
 src_configure() {
+	python_copy_sources
+
 	cd service
 	econf
 }
 
 src_compile() {
-	distutils-r1_src_compile
+	compilation() {
+		${EPYTHON} setup.py build
+	}
+	python_foreach_impl run_in_build_dir compilation
+
 	cd service
 	emake
 }
 
 src_install(){
-	distutils-r1_src_install
-	python3 setup.py install_service_files -d "${ED}usr"
+	installation() {
+		${EPYTHON} setup.py install --root="${ED}"
+		${EPYTHON} setup.py install_service_files -d "${ED}usr"
+	}
+	python_foreach_impl run_in_build_dir installation
 
 	cd service
-	emake DESTDIR="${ED}" install
-
-	cd service/data
 	emake DESTDIR="${ED}" install
 }
 
