@@ -1,0 +1,47 @@
+From 14b85a7094ae84f2431c59b84eba1aa5a0737664 Mon Sep 17 00:00:00 2001
+From: Julien Brianceau <jbriance@cisco.com>
+Date: Wed, 16 Oct 2013 16:04:05 +0200
+Subject: [PATCH 8/8] [arm] Inverted src and dest FP registers in DFG
+ speculative JIT when using hardfp.
+
+https://bugs.webkit.org/show_bug.cgi?id=122555
+
+Patch by Julien Brianceau <jbriance@cisco.com> on 2013-10-09
+Reviewed by Michael Saboff.
+
+* dfg/DFGSpeculativeJIT.h:
+(JSC::DFG::SpeculativeJIT::appendCallWithExceptionCheckSetResult):
+(JSC::DFG::SpeculativeJIT::appendCallSetResult):
+
+Change-Id: Ib633513948031702efd5ca0d4b89920e99979755
+git-svn-id: http://svn.webkit.org/repository/webkit/trunk@157173 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+Reviewed-by: Allan Sandfeld Jensen <allan.jensen@digia.com>
+---
+ Source/JavaScriptCore/dfg/DFGSpeculativeJIT.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Source/JavaScriptCore/dfg/DFGSpeculativeJIT.h b/Source/JavaScriptCore/dfg/DFGSpeculativeJIT.h
+index 949ddfe..7edaee1 100644
+--- a/Source/JavaScriptCore/dfg/DFGSpeculativeJIT.h
++++ b/Source/JavaScriptCore/dfg/DFGSpeculativeJIT.h
+@@ -2037,13 +2037,15 @@ public:
+     JITCompiler::Call appendCallWithExceptionCheckSetResult(const FunctionPtr& function, FPRReg result)
+     {
+         JITCompiler::Call call = appendCallWithExceptionCheck(function);
+-        m_jit.moveDouble(result, FPRInfo::argumentFPR0);
++        if (result != InvalidFPRReg)
++            m_jit.moveDouble(FPRInfo::argumentFPR0, result);
+         return call;
+     }
+     JITCompiler::Call appendCallSetResult(const FunctionPtr& function, FPRReg result)
+     {
+         JITCompiler::Call call = m_jit.appendCall(function);
+-        m_jit.moveDouble(result, FPRInfo::argumentFPR0);
++        if (result != InvalidFPRReg)
++            m_jit.moveDouble(FPRInfo::argumentFPR0, result);
+         return call;
+     }
+ #else
+-- 
+1.9.0
+

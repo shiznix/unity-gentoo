@@ -1,0 +1,76 @@
+Description: Fix C loop backend work on (big endian) 32 bit platforms
+ The fix is from webkit bugzilla, not yet in qtwebkit.
+ 
+ 2013-01-17  Tobias Netzel  <tobias.netzel@goolemail.com>
+ 
+        LLInt C Loop backend should work on 32 bit platforms, both big and little endian
+        https://bugs.webkit.org/show_bug.cgi?id=103128
+
+        Reviewed by NOBODY (OOPS!).
+
+        This makes the C Loop backend work on 32 bit platforms (again)
+        and fixes big endian support for 32 bit platforms.
+        All tests pass on PowerPC OS X.
+
+        * llint/LowLevelInterpreter.asm: When accessing the call frame always respect endianness.
+        * llint/LowLevelInterpreter.cpp:
+        (LLInt): Added missing header.
+        (JSC::LLInt::Double2Ints): Added missing implementation.
+        * llint/LowLevelInterpreter32_64.asm: When accessing the call frame always respect endianness.
+Bug: https://bugs.webkit.org/show_bug.cgi?id=10312
+Last-Update: 2013-03-05
+
+Index: a/Source/JavaScriptCore/llint/LowLevelInterpreter32_64.asm
+===================================================================
+--- a/Source/JavaScriptCore/llint/LowLevelInterpreter32_64.asm	(revision 139916)
++++ b/Source/JavaScriptCore/llint/LowLevelInterpreter32_64.asm	(working copy)
+@@ -1728,7 +1728,7 @@ _llint_op_next_pname:
+     loadi 20[PC], t2
+     loadi PayloadOffset[cfr, t2, 8], t2
+     loadp JSPropertyNameIterator::m_jsStrings[t2], t3
+-    loadi [t3, t0, 8], t3
++    loadi PayloadOffset[t3, t0, 8], t3
+     addi 1, t0
+     storei t0, PayloadOffset[cfr, t1, 8]
+     loadi 4[PC], t1
+Index: a/Source/JavaScriptCore/llint/LowLevelInterpreter.asm
+===================================================================
+--- a/Source/JavaScriptCore/llint/LowLevelInterpreter.asm	(revision 139916)
++++ b/Source/JavaScriptCore/llint/LowLevelInterpreter.asm	(working copy)
+@@ -263,13 +263,13 @@ macro assertNotConstant(index)
+ end
+ 
+ macro functionForCallCodeBlockGetter(targetRegister)
+-    loadp Callee[cfr], targetRegister
++    loadp Callee + PayloadOffset[cfr], targetRegister
+     loadp JSFunction::m_executable[targetRegister], targetRegister
+     loadp FunctionExecutable::m_codeBlockForCall[targetRegister], targetRegister
+ end
+ 
+ macro functionForConstructCodeBlockGetter(targetRegister)
+-    loadp Callee[cfr], targetRegister
++    loadp Callee + PayloadOffset[cfr], targetRegister
+     loadp JSFunction::m_executable[targetRegister], targetRegister
+     loadp FunctionExecutable::m_codeBlockForConstruct[targetRegister], targetRegister
+ end
+@@ -841,7 +841,7 @@ macro interpretResolveWithBase(opcodeLen
+     getResolveOperation(4, t0, t1)
+     btpz t0, .slowPath
+ 
+-    loadp ScopeChain[cfr], t3
++    loadp ScopeChain + PayloadOffset[cfr], t3
+     # Get the base
+     loadis ResolveOperation::m_operation[t0], t2
+ 
+Index: a/Source/JavaScriptCore/llint/LowLevelInterpreter.cpp
+===================================================================
+--- a/Source/JavaScriptCore/llint/LowLevelInterpreter.cpp	(revision 139916)
++++ b/Source/JavaScriptCore/llint/LowLevelInterpreter.cpp	(working copy)
+@@ -33,6 +33,7 @@
+ 
+ #if ENABLE(LLINT_C_LOOP)
+ #include "CodeBlock.h"
++#include "JSValueInlines.h"
+ #include "LLIntCLoop.h"
+ #include "LLIntSlowPaths.h"
+ #include "VMInspector.h"

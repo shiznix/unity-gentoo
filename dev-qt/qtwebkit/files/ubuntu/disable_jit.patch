@@ -1,0 +1,45 @@
+Description: disable JIT on archs where it is not supported
+ Also, disable YARR JIT on archs where LLINT_C_LOOP is used.
+Author: Dmitry Shachnev <mitya57@ubuntu.com>
+Last-Update: 2014-03-15
+
+--- a/Source/WTF/wtf/Platform.h
++++ b/Source/WTF/wtf/Platform.h
+@@ -629,10 +629,6 @@
+ #if PLATFORM(IOS_SIMULATOR)
+     #define ENABLE_JIT 0
+     #define ENABLE_YARR_JIT 0
+-#else
+-    #define ENABLE_JIT 1
+-    #define ENABLE_LLINT 1
+-    #define ENABLE_YARR_JIT 1
+ #endif
+ 
+ #define WTF_USE_APPKIT 0
+@@ -896,12 +892,15 @@
+ #endif
+ 
+ /* The JIT is enabled by default on all x86, x86-64, ARM & MIPS platforms. */
+-#if !defined(ENABLE_JIT) \
+-    && (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(MIPS)) \
++#if !defined(ENABLE_JIT)
++#if (CPU(X86) || CPU(X86_64) || CPU(ARM) || CPU(MIPS)) \
+     && (OS(DARWIN) || !COMPILER(GCC) || GCC_VERSION_AT_LEAST(4, 1, 0)) \
+     && !OS(WINCE) \
+     && !OS(QNX)
+ #define ENABLE_JIT 1
++#else
++#define ENABLE_JIT 0
++#endif
+ #endif
+ 
+ /* If possible, try to enable a disassembler. This is optional. We proceed in two
+@@ -1014,7 +1013,7 @@
+ #define ENABLE_REGEXP_TRACING 0
+ 
+ /* Yet Another Regex Runtime - turned on by default for JIT enabled ports. */
+-#if !defined(ENABLE_YARR_JIT) && (ENABLE(JIT) || ENABLE(LLINT_C_LOOP)) && !PLATFORM(CHROMIUM)
++#if !defined(ENABLE_YARR_JIT) && !ENABLE(LLINT_C_LOOP) && !PLATFORM(CHROMIUM)
+ #define ENABLE_YARR_JIT 1
+ 
+ /* Setting this flag compares JIT results with interpreter results. */

@@ -1,0 +1,39 @@
+From b6f68bb1304c2f0616572143e224c3dca935d46f Mon Sep 17 00:00:00 2001
+From: Gabor Rapcsanyi <rgabor@webkit.org>
+Date: Tue, 10 Sep 2013 16:13:54 +0200
+Subject: [PATCH 5/8] JSC ARM traditional failing on Octane NavierStokes test
+
+https://bugs.webkit.org/show_bug.cgi?id=115626
+
+Reviewed by Zoltan Herczeg.
+
+Change the ARM traditional assembler to use double precision on value
+conversions.
+
+* assembler/ARMAssembler.h:
+
+Change-Id: I2fbf6323a59120b497215696e10a1582ff927347
+git-svn-id: http://svn.webkit.org/repository/webkit/trunk@149601 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+Reviewed-by: Jocelyn Turcotte <jocelyn.turcotte@digia.com>
+---
+ Source/JavaScriptCore/assembler/ARMAssembler.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Source/JavaScriptCore/assembler/ARMAssembler.h b/Source/JavaScriptCore/assembler/ARMAssembler.h
+index 18b1017..31d316d 100644
+--- a/Source/JavaScriptCore/assembler/ARMAssembler.h
++++ b/Source/JavaScriptCore/assembler/ARMAssembler.h
+@@ -163,8 +163,8 @@ namespace JSC {
+             VMOV_VFP32 = 0x0e000a10,
+             VMOV_ARM32 = 0x0e100a10,
+             VCVT_F64_S32 = 0x0eb80bc0,
+-            VCVT_S32_F64 = 0x0ebd0b40,
+-            VCVT_U32_F64 = 0x0ebc0b40,
++            VCVT_S32_F64 = 0x0ebd0bc0,
++            VCVT_U32_F64 = 0x0ebc0bc0,
+             VCVT_F32_F64 = 0x0eb70bc0,
+             VCVT_F64_F32 = 0x0eb70ac0,
+             VMRS_APSR = 0x0ef1fa10,
+-- 
+1.9.0
+

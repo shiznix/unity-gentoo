@@ -1,0 +1,31 @@
+From 6b098d5bd4d821181bf2cb2399c76e1f2e6b4868 Mon Sep 17 00:00:00 2001
+From: Allan Sandfeld Jensen <allan.jensen@digia.com>
+Date: Fri, 13 Sep 2013 17:35:03 +0200
+Subject: [PATCH 7/8] Fix build with namespaced Qt
+
+One forward declaration of QUrl was missing proper namespace macros.
+
+Change-Id: Ibb2414b63e2926015874b4cf7024f101d59be6dc
+Reviewed-by: Allan Sandfeld Jensen <allan.jensen@digia.com>
+---
+ Source/WebKit2/UIProcess/API/qt/qquickurlschemedelegate_p.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Source/WebKit2/UIProcess/API/qt/qquickurlschemedelegate_p.h b/Source/WebKit2/UIProcess/API/qt/qquickurlschemedelegate_p.h
+index 596d3c2..4e5ac34 100644
+--- a/Source/WebKit2/UIProcess/API/qt/qquickurlschemedelegate_p.h
++++ b/Source/WebKit2/UIProcess/API/qt/qquickurlschemedelegate_p.h
+@@ -26,6 +26,10 @@
+ #include <QtCore/QUrl>
+ #include <QtQuick/qquickitem.h>
+ 
++QT_BEGIN_NAMESPACE
++class QUrl;
++QT_END_NAMESPACE
++
+ class QQuickNetworkRequest;
+ class QQuickNetworkReply;
+ 
+-- 
+1.9.0
+

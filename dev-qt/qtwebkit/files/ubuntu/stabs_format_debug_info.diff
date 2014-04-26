@@ -1,0 +1,39 @@
+Description: build s390, armel, mips*, iX86 debugging symbols with -gstabs
+ -g exhausts memory on these arches. Thanks to Oswald Buddenhagen for the hint.
+Author: Sune Vuorela <sune@debian.org>
+Author: Modestas Vainius <modax@debian.org>
+Author: Timo Jyrinki <timo@debian.org>
+Bug-Debian: http://bugs.debian.org/528485
+Bug-Debian: http://bugs.debian.org/618325
+Last-Update: 2013-02-07 (add iX86)
+ 
+--- a/Source/WebKit/WebKit1.pri
++++ b/Source/WebKit/WebKit1.pri
+@@ -7,6 +7,12 @@
+ 
+ SOURCE_DIR = $${ROOT_WEBKIT_DIR}/Source/WebKit
+ 
++equals(QT_ARCH, s390)|equals(QT_ARCH, arm)|equals(QT_ARCH, mips)|equals(QT_ARCH, i386)|equals(QT_ARCH, i686)|equals(QT_ARCH, m68k) {
++    message("s390, armel, armhf, mipsel, i386 workaround for QtWebkit: do not build with -g, but with -gstabs")
++    QMAKE_CXXFLAGS -= -g
++    QMAKE_CXXFLAGS += -gstabs
++}
++
+ INCLUDEPATH += \
+     $$SOURCE_DIR/qt/Api \
+     $$SOURCE_DIR/qt/WebCoreSupport \
+--- a/Source/WebKit2/WebKit2.pri
++++ b/Source/WebKit2/WebKit2.pri
+@@ -9,6 +9,12 @@ SOURCE_DIR = $${ROOT_WEBKIT_DIR}/Source/
+ 
+ WEBKIT2_GENERATED_SOURCES_DIR = $${ROOT_BUILD_DIR}/Source/WebKit2/$${GENERATED_SOURCES_DESTDIR}
+ 
++equals(QT_ARCH, s390)|equals(QT_ARCH, arm)|equals(QT_ARCH, mips)|equals(QT_ARCH, i386)|equals(QT_ARCH, i686)|equals(QT_ARCH, m68k) {
++    message("s390, armel, armhf, mipsel, i686 workaround for QtWebkit: do not build with -g, but with -gstabs")
++    QMAKE_CXXFLAGS -= -g
++    QMAKE_CXXFLAGS += -gstabs
++}
++
+ INCLUDEPATH += \
+     $$SOURCE_DIR \
+     $$SOURCE_DIR/Platform \

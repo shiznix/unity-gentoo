@@ -1,0 +1,40 @@
+From 31a1ec780aaba33c1008b8dc7bca7da88bd297ff Mon Sep 17 00:00:00 2001
+From: Jocelyn Turcotte <jocelyn.turcotte@digia.com>
+Date: Tue, 28 Jan 2014 13:07:59 +0100
+Subject: [PATCH] Don't pollute .prl & .pc files with private dependencies
+
+Also change the creating_module check in needToLink to make sure that
+only the main module will try to link directly with the WebCore and
+JavaScriptCore static libraries.
+
+Task-number: QTBUG-35774
+Initial-patch-by: Oswald Buddenhagen <oswald.buddenhagen@digia.com>
+Change-Id: Ib5992e112803679837249400e98cb8c22636096d
+---
+ Source/widgetsapi.pri                         | 1 +
+ Tools/qmake/mkspecs/features/default_post.prf | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+--- a/Source/widgetsapi.pri
++++ b/Source/widgetsapi.pri
+@@ -47,6 +47,7 @@
+ WEBKIT += javascriptcore wtf webcore
+ 
+ MODULE = webkitwidgets
++CONFIG += creating_module
+ 
+ MODULE_SYNCQT_DIR = $$_PRO_FILE_PWD_
+ 
+--- a/Tools/qmake/mkspecs/features/default_post.prf
++++ b/Tools/qmake/mkspecs/features/default_post.prf
+@@ -189,8 +189,8 @@
+ }
+ 
+ defineTest(needToLink) {
+-    # The main dynamic library always needs to link in the intermediate libraries
+-    creating_module: return(true)
++    # The main module dynamic library always needs to link in the intermediate libraries
++    isEqual(MODULE, webkit): return(true)
+ 
+     force_static_libs_as_shared {
+         # So do the individual libraries if they are dynamic

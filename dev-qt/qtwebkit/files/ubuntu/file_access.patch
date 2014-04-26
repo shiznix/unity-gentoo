@@ -1,0 +1,133 @@
+Description: file access
+ The patch is from webkit upstream (not qtwebkit)
+ 2013-03-22  Maxim Ermilov  <maxim.ermilov@canonical.com>
+
+        [Qt] Qml WebKit needs preferences to change security knobs
+        https://bugs.webkit.org/show_bug.cgi?id=111979
+
+        Reviewed by NOBODY (OOPS!).
+
+        * UIProcess/API/qt/qwebpreferences.cpp:
+        (QWebPreferencesPrivate::testAttribute):
+        (QWebPreferencesPrivate::setAttribute):
+        (QWebPreferences::universalAccessFromFileURLsAllowed):
+        (QWebPreferences::setUniversalAccessFromFileURLsAllowed):
+        (QWebPreferences::fileAccessFromFileURLsAllowed):
+        (QWebPreferences::setFileAccessFromFileURLsAllowed):
+        * UIProcess/API/qt/qwebpreferences_p.h:
+        * UIProcess/API/qt/qwebpreferences_p_p.h:
+ 
+Bug: https://bugs.webkit.org/show_bug.cgi?id=111979
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qtwebkit-opensource-src/+bug/1175836
+Last-Update: 2013-06-14
+
+Index: qtwebkit-opensource-src-5.0.1/Source/WebKit2/UIProcess/API/qt/qwebpreferences.cpp
+===================================================================
+--- qtwebkit-opensource-src-5.0.1.orig/Source/WebKit2/UIProcess/API/qt/qwebpreferences.cpp	2013-01-29 14:03:39.000000000 -0500
++++ qtwebkit-opensource-src-5.0.1/Source/WebKit2/UIProcess/API/qt/qwebpreferences.cpp	2013-04-22 15:19:30.625241410 -0400
+@@ -80,6 +80,10 @@
+         return preferences()->caretBrowsingEnabled();
+     case NotificationsEnabled:
+         return preferences()->notificationsEnabled();
++    case UniversalAccessFromFileURLsAllowed:
++        return preferences()->allowUniversalAccessFromFileURLs();
++    case FileAccessFromFileURLsAllowed:
++        return preferences()->allowFileAccessFromFileURLs();
+     default:
+         ASSERT_NOT_REACHED();
+         return false;
+@@ -150,6 +154,12 @@
+     case NotificationsEnabled:
+         preferences()->setNotificationsEnabled(enable);
+         break;
++    case UniversalAccessFromFileURLsAllowed:
++        preferences()->setAllowUniversalAccessFromFileURLs(enable);
++        break;
++    case FileAccessFromFileURLsAllowed:
++        preferences()->setAllowFileAccessFromFileURLs(enable);
++        break;
+     default:
+         ASSERT_NOT_REACHED();
+     }
+@@ -374,6 +384,32 @@
+     emit dnsPrefetchEnabledChanged();
+ }
+ 
++bool QWebPreferences::universalAccessFromFileURLsAllowed() const
++{
++    return d->testAttribute(QWebPreferencesPrivate::UniversalAccessFromFileURLsAllowed);
++}
++
++void QWebPreferences::setUniversalAccessFromFileURLsAllowed(bool enable)
++{
++    if (universalAccessFromFileURLsAllowed() == enable)
++        return;
++    d->setAttribute(QWebPreferencesPrivate::UniversalAccessFromFileURLsAllowed, enable);
++    emit universalAccessFromFileURLsAllowedChanged();
++}
++
++bool QWebPreferences::fileAccessFromFileURLsAllowed() const
++{
++    return d->testAttribute(QWebPreferencesPrivate::FileAccessFromFileURLsAllowed);
++}
++
++void QWebPreferences::setFileAccessFromFileURLsAllowed(bool enable)
++{
++    if (fileAccessFromFileURLsAllowed() == enable)
++        return;
++    d->setAttribute(QWebPreferencesPrivate::FileAccessFromFileURLsAllowed, enable);
++    emit fileAccessFromFileURLsAllowedChanged();
++}
++
+ bool QWebPreferences::developerExtrasEnabled() const
+ {
+     return d->testAttribute(QWebPreferencesPrivate::DeveloperExtrasEnabled);
+Index: qtwebkit-opensource-src-5.0.1/Source/WebKit2/UIProcess/API/qt/qwebpreferences_p.h
+===================================================================
+--- qtwebkit-opensource-src-5.0.1.orig/Source/WebKit2/UIProcess/API/qt/qwebpreferences_p.h	2013-01-29 14:03:39.000000000 -0500
++++ qtwebkit-opensource-src-5.0.1/Source/WebKit2/UIProcess/API/qt/qwebpreferences_p.h	2013-04-22 15:22:13.977246784 -0400
+@@ -48,6 +48,8 @@
+     Q_PROPERTY(bool scrollAnimatorEnabled READ scrollAnimatorEnabled WRITE setScrollAnimatorEnabled NOTIFY scrollAnimatorEnabledChanged FINAL)
+     Q_PROPERTY(bool caretBrowsingEnabled READ caretBrowsingEnabled WRITE setCaretBrowsingEnabled NOTIFY caretBrowsingEnabledChanged FINAL)
+     Q_PROPERTY(bool notificationsEnabled READ notificationsEnabled WRITE setNotificationsEnabled NOTIFY notificationsEnabledChanged FINAL)
++    Q_PROPERTY(bool universalAccessFromFileURLsAllowed READ universalAccessFromFileURLsAllowed WRITE setUniversalAccessFromFileURLsAllowed NOTIFY universalAccessFromFileURLsAllowedChanged FINAL)
++    Q_PROPERTY(bool fileAccessFromFileURLsAllowed READ fileAccessFromFileURLsAllowed WRITE setFileAccessFromFileURLsAllowed NOTIFY fileAccessFromFileURLsAllowedChanged FINAL)
+ 
+     Q_PROPERTY(QString standardFontFamily READ standardFontFamily WRITE setStandardFontFamily NOTIFY standardFontFamilyChanged FINAL)
+     Q_PROPERTY(QString fixedFontFamily READ fixedFontFamily WRITE setFixedFontFamily NOTIFY fixedFontFamilyChanged FINAL)
+@@ -138,6 +140,11 @@
+     unsigned defaultFixedFontSize() const;
+     void setDefaultFixedFontSize(unsigned size);
+ 
++    bool universalAccessFromFileURLsAllowed() const;
++    void setUniversalAccessFromFileURLsAllowed(bool enable);
++    bool fileAccessFromFileURLsAllowed() const;
++    void setFileAccessFromFileURLsAllowed(bool enable);
++
+ Q_SIGNALS:
+     void autoLoadImagesChanged();
+     void pluginsEnabledChanged();
+@@ -156,6 +163,8 @@
+     void scrollAnimatorEnabledChanged();
+     void caretBrowsingEnabledChanged();
+     void notificationsEnabledChanged();
++    void universalAccessFromFileURLsAllowedChanged();
++    void fileAccessFromFileURLsAllowedChanged();
+ 
+     void standardFontFamilyChanged();
+     void fixedFontFamilyChanged();
+Index: qtwebkit-opensource-src-5.0.1/Source/WebKit2/UIProcess/API/qt/qwebpreferences_p_p.h
+===================================================================
+--- qtwebkit-opensource-src-5.0.1.orig/Source/WebKit2/UIProcess/API/qt/qwebpreferences_p_p.h	2013-01-29 14:03:39.000000000 -0500
++++ qtwebkit-opensource-src-5.0.1/Source/WebKit2/UIProcess/API/qt/qwebpreferences_p_p.h	2013-04-22 15:22:58.525248250 -0400
+@@ -44,7 +44,9 @@
+         WebAudioEnabled,
+         ScrollAnimatorEnabled,
+         CaretBrowsingEnabled,
+-        NotificationsEnabled
++        NotificationsEnabled,
++        UniversalAccessFromFileURLsAllowed,
++        FileAccessFromFileURLsAllowed
+     };
+ 
+     enum FontFamily {

@@ -1,0 +1,38 @@
+Description: fix some alignment problems on sparc.
+Author: Mike Hommey <glandium@debian.org>
+Author: Timo Jyrinki <timo@debian.org>
+
+---
+ Source/JavaScriptCore/wtf/ListHashSet.h |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
+--- a/Source/WTF/wtf/ListHashSet.h
++++ b/Source/WTF/wtf/ListHashSet.h
+@@ -168,7 +168,7 @@ namespace WTF {
+             : m_freeList(pool())
+             , m_isDoneWithInitialFreeList(false)
+         { 
+-            memset(m_pool.pool, 0, sizeof(m_pool.pool));
++            memset(m_pool, 0, sizeof(m_pool));
+         }
+ 
+         Node* allocate()
+@@ -217,16 +217,13 @@ namespace WTF {
+         }
+ 
+     private:
+-        Node* pool() { return reinterpret_cast_ptr<Node*>(m_pool.pool); }
++        Node* pool() { return reinterpret_cast_ptr<Node*>(m_pool); }
+         Node* pastPool() { return pool() + m_poolSize; }
+ 
+         Node* m_freeList;
+         bool m_isDoneWithInitialFreeList;
+         static const size_t m_poolSize = inlineCapacity;
+-        union {
+-            char pool[sizeof(Node) * m_poolSize];
+-            double forAlignment;
+-        } m_pool;
++        uint32_t m_pool[(sizeof(Node) * m_poolSize + sizeof(uint32_t) - 1) / sizeof(uint32_t)];
+     };
+ 
+     template<typename ValueArg, size_t inlineCapacity> struct ListHashSetNode {

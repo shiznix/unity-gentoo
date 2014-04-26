@@ -1,0 +1,25 @@
+Description: do not pass -Wl,--gc-sections on powerpc, s390, arm*, mips*, iX86 when building
+             libQtWebKit.so; works around a binutils bug that results in a
+             segfault on powerpc, internal link error on s390 and OOM on armel/mipsel.
+Author: Steve Langasek <vorlon@debian.org>
+Author: Modestas Vainius <modax@debian.org>
+Author: Timo Jyrinki <timo@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2013-02-07 (add i686)
+
+---
+ Source/WebCore/WebCore.pri |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/Source/WebCore/WebCore.pri
++++ b/Source/WebCore/WebCore.pri
+@@ -289,7 +289,7 @@ mac {
+     unix:!mac:*-g++*:QMAKE_CXXFLAGS += -ffunction-sections
+ }
+ unix:!mac:*-g++*:QMAKE_CXXFLAGS += -fdata-sections
+-unix:!mac:*-g++*:QMAKE_LFLAGS += -Wl,--gc-sections
++unix:!mac:*-g++*:!equals(QT_ARCH, powerpc):!equals(QT_ARCH, s390):!equals(QT_ARCH, mips):!equals(QT_ARCH, arm):!equals(QT_ARCH, i386):!equals(QT_ARCH, i686):QMAKE_LFLAGS += -Wl,--gc-sections
+ linux*-g++*:QMAKE_LFLAGS += $$QMAKE_LFLAGS_NOUNDEF
+ 
+ contains(DEFINES, ENABLE_OPENCL=1) {

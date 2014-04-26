@@ -1,0 +1,28 @@
+From: Modestas Vainius <modax@debian.org>
+SUbject: Make hide_symbols to cover all QtWebKit portions
+Origin: vendor
+Author: Timo Jyrinki <timo@debian.org>
+Last-Update: 2013-01-28 (use a similar patch on Qt 5)
+Forwarded: no
+
+Almost everything in Source/WebCore/generated was not build with
+-fvisibility=hidden resulting into redundantly polluted and huge dynamic symbol
+list in libQtWebKit.so.
+
+Therefore, move +hide_symbols configuration parameter upwards in order for it
+to cover everything including the offending Source/WebCore/CodeGenerators.pri
+
+--- a/Source/QtWebKit.pro	2012-12-18 19:04:43.000000000 +0000
++++ b/Source/QtWebKit.pro	2013-01-28 08:25:56.342911517 +0000
+@@ -7,6 +7,11 @@
+ TEMPLATE = subdirs
+ CONFIG += ordered
+ 
++CONFIG(release):!CONFIG(standalone_package) {
++    contains(QT_CONFIG, reduce_exports):CONFIG += hide_symbols
++    unix:contains(QT_CONFIG, reduce_relocations):CONFIG += bsymbolic_functions
++}
++
+ api.file = api.pri
+ SUBDIRS += api
+ 
