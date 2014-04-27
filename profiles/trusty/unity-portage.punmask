@@ -8,5 +8,10 @@ gnome-base/gnome-core-apps::unity-gentoo
 
 x11-libs/cairo::unity-gentoo
 
+<<<<<<< HEAD
 =gnome-extra/gnome-user-share-3.8.3
 =gnome-base/gnome-extra-apps-3.8.0-r1
+=======
+dev-util/gdbus-codegen::unity-gentoo
+dev-libs/glib::unity-gentoo
+>>>>>>> 6b94d805e59bde04c5858da89514591366147f76
