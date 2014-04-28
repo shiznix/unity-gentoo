@@ -68,7 +68,9 @@ sys-libs/db:5.1
 ~x11-themes/notify-osd-icons-0.7
 
 ## Overlay missing keyword unmasking ##
-app-accessibility/onboard::unity-gentoo **
+app-accessibility/onboard **
+app-accessibility/sphinx-voxforge-en **
+app-accessibility/unity-voice **
 app-backup/deja-dup::unity-gentoo **
 dev-libs/dee::unity-gentoo **
 dev-libs/glib::unity-gentoo **
@@ -162,7 +164,6 @@ unity-base/unity-gtk-module **
 unity-base/unity-language-pack **
 unity-base/unity-meta **
 unity-base/unity-settings-daemon **
-unity-base/unity-voice **
 unity-base/webapps **
 unity-base/webapps-base **
 unity-extra/glipper **
