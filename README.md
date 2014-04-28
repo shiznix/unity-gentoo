@@ -9,7 +9,7 @@ A Gentoo overlay to install the Unity desktop
 
 * To add the overlay using layman, do 'layman -a unity-gentoo'
 
-* Select one of the unity-gentoo profiles listed with 'emerge profile list'
+* Select one of the unity-gentoo profiles listed with 'eselect profile list'
 
 * emerge -uDNvta unity-meta
 
