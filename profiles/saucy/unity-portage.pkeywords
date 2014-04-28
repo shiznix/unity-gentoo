@@ -173,8 +173,6 @@ net-libs/liboauth
 net-libs/telepathy-farstream
 net-libs/telepathy-glib
 =net-libs/webkit-gtk-1.10*
-net-misc/modemmanager
-net-misc/networkmanager
 ~net-misc/netifrc-0.1
 net-fs/samba
 net-voip/telepathy-rakia
