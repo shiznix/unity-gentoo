@@ -1,13 +1,19 @@
 ~dev-libs/lzo-2.06
 sys-libs/db:5.1
-x11-misc/lightdm::unity-gentoo
-media-libs/mesa::unity-gentoo
+
+dev-libs/glib::unity-gentoo
+dev-libs/gobject-introspection::unity-gentoo
+dev-libs/gobject-introspection-common::unity-gentoo
+dev-util/gdbus-codegen::unity-gentoo
 
 gnome-base/gnome-core-libs::unity-gentoo
 gnome-base/gnome-core-apps::unity-gentoo
 
+media-libs/mesa::unity-gentoo
 x11-libs/cairo::unity-gentoo
+x11-misc/lightdm::unity-gentoo
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =gnome-extra/gnome-user-share-3.8.3
 =gnome-base/gnome-extra-apps-3.8.0-r1
@@ -15,3 +21,5 @@ x11-libs/cairo::unity-gentoo
 dev-util/gdbus-codegen::unity-gentoo
 dev-libs/glib::unity-gentoo
 >>>>>>> 6b94d805e59bde04c5858da89514591366147f76
+=======
+>>>>>>> 8d554f3ba22bb756548503c5ef4e0ba56a585dfc
