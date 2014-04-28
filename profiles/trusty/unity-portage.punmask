@@ -7,3 +7,6 @@ gnome-base/gnome-core-libs::unity-gentoo
 gnome-base/gnome-core-apps::unity-gentoo
 
 x11-libs/cairo::unity-gentoo
+
+dev-util/gdbus-codegen::unity-gentoo
+dev-libs/glib::unity-gentoo
