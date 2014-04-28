@@ -23,10 +23,9 @@ SLOT="0"
 IUSE="test"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=
-	unity-base/bamf:=
-	unity-base/unity-voice:=
-"
+RDEPEND="app-accessibility/unity-voice:=
+	dev-libs/libdbusmenu:=
+	unity-base/bamf:="
 DEPEND="${RDEPEND}
 	dev-cpp/gmock
 	dev-db/sqlite:3
