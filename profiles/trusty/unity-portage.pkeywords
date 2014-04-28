@@ -72,13 +72,9 @@ sys-libs/db:5.1
 ~x11-themes/notify-osd-icons-0.7
 
 ## Overlay missing keyword unmasking ##
-<<<<<<< HEAD
 app-accessibility/onboard::unity-gentoo **
-=======
-app-accessibility/onboard **
->>>>>>> upstream/master
-app-accessibility/sphinx-voxforge-en **
-app-accessibility/unity-voice **
+app-accessibility/sphinx-voxforge-en::unity-gentoo **
+app-accessibility/unity-voice::unity-gentoo **
 app-backup/deja-dup::unity-gentoo **
 dev-libs/dee::unity-gentoo **
 dev-libs/glib::unity-gentoo **
