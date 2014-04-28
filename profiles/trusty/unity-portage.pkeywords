@@ -73,6 +73,8 @@ sys-libs/db:5.1
 
 ## Overlay missing keyword unmasking ##
 app-accessibility/onboard::unity-gentoo **
+app-accessibility/sphinx-voxforge-en **
+app-accessibility/unity-voice **
 app-backup/deja-dup::unity-gentoo **
 dev-libs/dee::unity-gentoo **
 dev-libs/glib::unity-gentoo **
