@@ -11,11 +11,11 @@ inherit autotools base eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
 UVER_PREFIX="+14.04.20140414"
+MY_PR="${PR/r/}"
 
 DESCRIPTION="Unity Settings Daemon"
 HOMEPAGE="https://launchpad.net/unity-settings-daemon"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+SRC_URI="http://bazaar.launchpad.net/~noskcaj/${PN}/gnome-desktop-3.10/tarball/${MY_PR} -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -26,11 +26,11 @@ REQUIRED_USE="packagekit? ( udev )
 RESTRICT="mirror"
 
 # require colord-0.1.27 dependency for connection type support
-COMMON_DEPEND=">=dev-libs/glib-2.35.3:2
+COMMON_DEPEND=">=dev-libs/glib-2.37.7:2
 	dev-libs/libappindicator:=
 	>=x11-libs/gtk+-3.7.8:3
-	>=gnome-base/gnome-desktop-3.7.90:3=
-	>=gnome-base/gsettings-desktop-schemas-3.7.2.1
+	>=gnome-base/gnome-desktop-3.9:3=
+	>=gnome-base/gsettings-desktop-schemas-3.9.91.1
 	>=gnome-base/librsvg-2.36.2
 	media-fonts/cantarell
 	media-libs/fontconfig
@@ -51,7 +51,12 @@ COMMON_DEPEND=">=dev-libs/glib-2.35.3:2
 	x11-libs/libXtst
 	x11-libs/libXxf86misc
 
-	colord? ( >=x11-misc/colord-0.1.27:= )
+	app-misc/geoclue:2.0
+	>=dev-libs/libgweather-3.9.5:2
+	>=sci-geosciences/geocode-glib-3.10
+	>=sys-auth/polkit-0.103
+
+	colord? ( >=x11-misc/colord-1.0.2:= )
 	cups? ( >=net-print/cups-1.4[dbus] )
 	i18n? ( >=app-i18n/ibus-1.4.99 )
 	input_devices_wacom? (
@@ -77,7 +82,7 @@ DEPEND="${COMMON_DEPEND}
 	x11-proto/inputproto
 	x11-proto/xf86miscproto
 	>=x11-proto/xproto-7.0.15"
-S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
+S="${WORKDIR}/~noskcaj/${PN}/gnome-desktop-3.10"
 
 src_prepare() {
 	# https://bugzilla.gnome.org/show_bug.cgi?id=621836
@@ -90,15 +95,15 @@ src_prepare() {
 	# Make colord and wacom optional; requires eautoreconf
 	epatch "${FILESDIR}/${PN}-optional-color-wacom.patch"
 
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	eautoreconf
 	gnome2_src_prepare
 }
 
 src_configure() {
 	append-ldflags -Wl,--warn-unresolved-symbols
+	append-cflags -Wno-deprecated-declarations
 
-gnome2_src_configure \
+	gnome2_src_configure \
 		--disable-static \
 		--enable-man \
 		$(use_enable colord color) \

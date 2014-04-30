@@ -31,6 +31,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 RDEPEND="dev-libs/dee:=
 	dev-libs/libdbusmenu:=
 	dev-libs/libunity-misc:=
+	gnome-base/gnome-desktop:3=
 	media-libs/glew:=
 	>=unity-base/bamf-0.4.0:=
 	>=unity-base/compiz-0.9.9:=

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 PYTHON_COMPAT=( python{3_2,3_3,3_4} )
@@ -25,7 +25,8 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="gnome-extra/gucharmap"
+RDEPEND="gnome-extra/gucharmap
+	gnome-base/gnome-desktop:3="
 DEPEND="${RDEPEND}
 	app-i18n/ibus[vala]
 	>=dev-libs/glib-2.37
@@ -33,7 +34,6 @@ DEPEND="${RDEPEND}
 	dev-libs/libgee:0
 	dev-libs/libdbusmenu
 	gnome-base/dconf
-	gnome-base/gnome-desktop:3
 	gnome-base/libgnomekbd
 	sys-apps/accountsservice
 	unity-base/bamf

@@ -22,29 +22,30 @@ SLOT="0"
 IUSE="accessibility battery +branding networkmanager nls"
 RESTRICT="mirror"
 
-DEPEND="x11-libs/gtk+:3
-	dev-libs/libindicator
-	>=x11-misc/lightdm-1.4.0
+DEPEND="dev-libs/libindicator
+	gnome-base/gnome-desktop:3=
 	media-libs/freetype:2
-	x11-libs/cairo
 	media-libs/libcanberra
 	unity-base/unity-settings-daemon
 	unity-indicators/ido
+	x11-libs/cairo
+	x11-libs/gtk+:3
+	>=x11-misc/lightdm-1.4.0
 	$(vala_depend)"
 
 RDEPEND="accessibility? ( app-accessibility/onboard
 			app-accessibility/orca )
 	battery? ( unity-indicators/indicator-power )
 	networkmanager? ( >=gnome-extra/nm-applet-0.9.8.0 )
+	>=app-admin/eselect-lightdm-0.1
+	>=gnome-base/gsettings-desktop-schemas-3.8
 	media-fonts/ubuntu-font-family
 	unity-base/unity-language-pack
 	unity-indicators/indicator-session
 	unity-indicators/indicator-datetime
 	unity-indicators/indicator-sound
 	unity-indicators/indicator-application
-	x11-themes/ubuntu-wallpapers
-	>=gnome-base/gsettings-desktop-schemas-3.8
-	>=app-admin/eselect-lightdm-0.1"
+	x11-themes/ubuntu-wallpapers"
 
 pkg_pretend() {
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
