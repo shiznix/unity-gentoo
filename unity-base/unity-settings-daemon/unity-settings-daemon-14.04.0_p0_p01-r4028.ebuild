@@ -6,7 +6,7 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
-inherit autotools base eutils flag-o-matic gnome2 virtualx ubuntu-versionator
+inherit autotools base bzr eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
@@ -15,7 +15,11 @@ MY_PR="${PR/r/}"
 
 DESCRIPTION="Unity Settings Daemon"
 HOMEPAGE="https://launchpad.net/unity-settings-daemon"
-SRC_URI="http://bazaar.launchpad.net/~noskcaj/${PN}/gnome-desktop-3.10/tarball/${MY_PR} -> ${P}.tar.gz"
+SRC_URI=	# 'gnome2' inherits 'gnome.org' which tries to set SRC_URI
+
+EBZR_PROJECT="${PN}"
+EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10"
+EBZR_REVISION="${MY_PR}"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -82,9 +86,15 @@ DEPEND="${COMMON_DEPEND}
 	x11-proto/inputproto
 	x11-proto/xf86miscproto
 	>=x11-proto/xproto-7.0.15"
-S="${WORKDIR}/~noskcaj/${PN}/gnome-desktop-3.10"
+S="${WORKDIR}/${P}"
+
+src_unpack() {
+	bzr_src_unpack
+}
 
 src_prepare() {
+	bzr_src_prepare
+
 	# https://bugzilla.gnome.org/show_bug.cgi?id=621836
 	# Apparently this change severely affects touchpad usability for some
 	# people, so revert it if USE=short-touchpad-timeout.

@@ -6,7 +6,7 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-inherit autotools base eutils gnome2 ubuntu-versionator vala
+inherit autotools base bzr eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
@@ -15,7 +15,11 @@ MY_PR="${PR/r/}"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="http://bazaar.launchpad.net/~noskcaj/${PN}/gnome-desktop-3.10/tarball/${MY_PR} -> ${P}.tar.gz"
+SRC_URI=	# 'gnome2' inherits 'gnome.org' which tries to set SRC_URI
+
+EBZR_PROJECT="${PN}"
+EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10"
+EBZR_REVISION="${MY_PR}"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -128,9 +132,15 @@ DEPEND="${COMMON_DEPEND}
 # Needed for autoreconf
 #	gnome-base/gnome-common
 
-S="${WORKDIR}/~noskcaj/${PN}/gnome-desktop-3.10"
+S="${WORKDIR}/${P}"
+
+src_unpack() {
+	bzr_src_unpack
+}
 
 src_prepare() {
+	bzr_src_prepare
+
 	epatch "${FILESDIR}/01_unity-control-center-optional-bt-colord-wacom.patch"
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel.patch"
