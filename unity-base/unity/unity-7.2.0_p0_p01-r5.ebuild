@@ -137,9 +137,6 @@ src_prepare() {
 		-e 's:.*"stop", "unity-panel-service".*:        subprocess.call(["pkill -e unity-panel-service"], shell=True):' \
 		-e 's:.*"start", "unity-panel-service".*:        subprocess.call(["/usr/lib/unity/unity-panel-service"], shell=True):' \
 			-i tools/unity.cmake
-
-#subprocess.call(["pkill -e unity-panel-service"], shell=True)
-#subprocess.call(["/usr/lib/unity/unity-panel-service"], shell=True)
 }
 
 src_configure() {
