@@ -34,6 +34,11 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_install() {
 	distutils-r1_src_install
 
