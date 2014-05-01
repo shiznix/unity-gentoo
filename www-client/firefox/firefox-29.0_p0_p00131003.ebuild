@@ -29,7 +29,7 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-28.0-patches-0.1"
+PATCH="${PN}-29.0-patches-0.1"
 # Upstream ftp release URI that's used by mozlinguas.eclass
 # We don't use the http mirror because it deletes old tarballs.
 MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
@@ -38,7 +38,7 @@ MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-3 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
 
 URELEASE="saucy-updates"
-UVER_PREFIX="+build2"
+UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 
 DESCRIPTION="Firefox Web Browser"
@@ -47,7 +47,7 @@ HOMEPAGE="http://www.mozilla.com/firefox"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist gstreamer +jit +minimal pgo pulseaudio selinux system-cairo system-icu system-jpeg system-sqlite test"
+IUSE="bindist gstreamer hardened +jit +minimal pgo pulseaudio selinux system-cairo system-icu system-jpeg system-sqlite test"
 RESTRICT="mirror"
 
 # More URIs appended below...
@@ -160,11 +160,6 @@ src_prepare() {
 	PATCHES+=( "${WORKDIR}/debian/patches/unity-menubar.patch" )
 	base_src_prepare
 
-	# Discard system cairo patch if support is not requested
-	if ! use system-cairo ; then
-		export EPATCH_EXCLUDE="6009_fix_system_cairo_support.patch"
-	fi
-
 	# Apply our patches
 	EPATCH_EXCLUDE="7007_fix_missing_strings.patch" \
 	EPATCH_SUFFIX="patch" \
@@ -189,7 +184,6 @@ src_prepare() {
 	# Fix sandbox violations during make clean, bug 372817
 	sed -e "s:\(/no-such-file\):${T}\1:g" \
 		-i "${S}"/config/rules.mk \
-		-i "${S}"/js/src/config/rules.mk \
 		-i "${S}"/nsprpub/configure{.in,} \
 		|| die
 
@@ -225,6 +219,9 @@ src_configure() {
 	# It doesn't compile on alpha without this LDFLAGS
 	use alpha && append-ldflags "-Wl,--no-relax"
 
+	# Add full relro support for hardened
+	use hardened && append-ldflags "-Wl,-z,relro,-z,now"
+
 	# We must force enable jemalloc 3 threw .mozconfig
 	echo "export MOZ_JEMALLOC=1" >> ${S}/.mozconfig || die
 
@@ -237,6 +234,7 @@ src_configure() {
 	mozconfig_annotate '' --disable-mailnews
 	mozconfig_annotate '' --with-system-png
 	mozconfig_annotate '' --enable-system-ffi
+	mozconfig_annotate '' --disable-gold
 
 	# Other ff-specific settings
 	mozconfig_annotate '' --with-default-mozilla-five-home=${MOZILLA_FIVE_HOME}
