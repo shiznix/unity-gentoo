@@ -7,18 +7,17 @@ GCONF_DEBUG="yes"
 
 inherit autotools base gnome2 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}3"
+UURL="https://github.com/shiznix/unity-gentoo/raw/master/files"
 URELEASE="trusty"
 MY_P="${PN}3_${PV}"
 
 DESCRIPTION="Libraries for the gnome desktop that are not part of the UI patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-desktop"
-
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.10/${PN}-${PV}.tar.xz
+	${UURL}/${MY_P}-${UVER}~saucy1.debian.tar.gz"
 
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
-SLOT="3/7" # subslot = libgnome-desktop-3 soname version
+SLOT="3/8" # subslot = libgnome-desktop-3 soname version
 IUSE="+introspection"
 #KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~arm-linux ~x86-linux ~x86-solaris"
 RESTRICT="mirror"

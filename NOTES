@@ -108,26 +108,6 @@ x11-wm/metacity				# Patched to support compiz window decoration
 * Ubuntu Single Signon (as used by UbuntuOne services)
 	- Check ~/.cache/sso/sso-client*.log
 
-* Customising gnome-control-center entries comes by way of Ubuntu's 'ubuntu_external_panels.patch' for gnome-control-center
-	- With this patch launchers are supposed to be added to gnome-control-center when their .desktop file is named in the following format
-		gnome-'panelname'-panel.desktop or 'panelname'-ccpanel.desktop
-
-	- There are also a list of launchers hardcoded into the patch that gnome-control-center needs to know about at compile time
-		in shell/cc-panel-loader.c as seen below:
-
-		/* This is a list of desktop file launchers that should be loaded
-			where they are available */
-		static struct {
-		  const char *name;
-		} all_launchers[] = {
-		  {"gufw"},
-		  {"landscape-client-settings"},
-		  {"language-selector"},
-		  {"software-properties-gtk"},
-		  {"system-config-printer"},
-		  {"ubuntuone-installer"},
-		};
-
 * Mir EGL Display Server
 	- Circular dependencies between mir-base/mir and media-libs/mesa
 		- Mesa requires mir support patch
