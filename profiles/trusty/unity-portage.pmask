@@ -56,3 +56,6 @@ x11-themes/gtk-engines-unico::gentoo
 x11-wm/metacity::gentoo
 x11-misc/lightdm::gentoo
 x11-misc/lightdm-kde::gentoo
+
+gnome-extra/gnome-user-share::gentoo
+gnome-base/gnome-extra-apps::gentoo
