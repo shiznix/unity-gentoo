@@ -1,8 +1,8 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/mail-client/thunderbird/thunderbird-24.2.0.ebuild,v 1.3 2013/12/15 21:08:45 anarchy Exp $
+# $Header: $
 
-EAPI="3"
+EAPI=5
 WANT_AUTOCONF="2.1"
 MOZ_ESR=""
 MOZ_LIGHTNING_VER="2.6.2"
@@ -45,7 +45,7 @@ KEYWORDS="~alpha amd64 ~arm ~ppc ~ppc64 ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
 IUSE="bindist crypt gstreamer +jit ldap +lightning +minimal mozdom pulseaudio selinux system-cairo system-icu system-jpeg system-sqlite"
-RESTRICT="mirro"
+RESTRICT="mirror"
 
 PATCH="thunderbird-24.0-patches-0.1"
 PATCHFF="firefox-24.0-patches-0.9"
@@ -66,18 +66,18 @@ SRC_URI="${SRC_URI}
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 RDEPEND="
-	>=dev-libs/nss-3.15.3
-	>=dev-libs/nspr-4.10.2
+	>=dev-libs/nss-3.16
+	>=dev-libs/nspr-4.10.4
 	>=dev-libs/glib-2.26:2
 	>=media-libs/mesa-7.10
-	>=media-libs/libpng-1.5.13[apng]
+	>=media-libs/libpng-1.6.6[apng]
 	virtual/libffi
 	gstreamer? ( media-plugins/gst-plugins-meta:0.10[ffmpeg] )
 	pulseaudio? ( media-sound/pulseaudio )
 	system-cairo? ( >=x11-libs/cairo-1.12[X] )
-	system-icu? ( >=dev-libs/icu-0.51.1 )
+	system-icu? ( >=dev-libs/icu-51.1 )
 	system-jpeg? ( >=media-libs/libjpeg-turbo-1.2.1 )
-	system-sqlite? ( >=dev-db/sqlite-3.7.17:3[secure-delete,debug=] )
+	system-sqlite? ( >=dev-db/sqlite-3.8.0.2:3[secure-delete,debug=] )
 	>=media-libs/libvpx-1.0.0
 	kernel_linux? ( media-libs/alsa-lib )
 	selinux? ( sec-policy/selinux-thunderbird )
@@ -106,8 +106,10 @@ else
 	S="${WORKDIR}/comm-esr${PV%%.*}"
 fi
 
+CHECKREQS_DISK_BUILD="4G"
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
+	check-reqs_pkg_setup
 	moz_pkgsetup
 
 	export MOZILLA_DIR="${S}/mozilla"
@@ -119,10 +121,6 @@ pkg_setup() {
 		elog "You can disable it by emerging ${PN} _with_ the bindist USE-flag"
 		elog
 	fi
-
-	# Ensure we have enough disk space to compile
-	CHECKREQS_DISK_BUILD="4G"
-	check-reqs_pkg_setup
 }
 
 src_unpack() {
@@ -283,15 +281,15 @@ src_configure() {
 src_compile() {
 	CC="$(tc-getCC)" CXX="$(tc-getCXX)" LD="$(tc-getLD)" \
 	MOZ_MAKE_FLAGS="${MAKEOPTS}" SHELL="${SHELL}" \
-	emake -f client.mk || die "emake failed"
+	emake -f client.mk
 
 	# Only build enigmail extension if crypt enabled.
 	if use crypt ; then
 		cd "${S}"/mailnews/extensions/enigmail || die
 		./makemake -r 2&> /dev/null
 		cd "${S}"/tbird/mailnews/extensions/enigmail
-		emake || die "make enigmail failed"
-		emake xpi || die "make enigmail xpi failed"
+		emake
+		emake xpi
 	fi
 }
 
@@ -305,17 +303,19 @@ src_install() {
 
 	# Copy our preference before omnijar is created.
 	cp "${FILESDIR}"/thunderbird-gentoo-default-prefs-1.js-1 \
-		"${S}/${obj_dir}/mozilla/dist/bin/defaults/pref/all-gentoo.js" || die
+		"${S}/${obj_dir}/mozilla/dist/bin/defaults/pref/all-gentoo.js" \
+		|| die
 
 	# Set default path to search for dictionaries.
 	echo "pref(\"spellchecker.dictionary_path\", ${DICTPATH});" \
-		>> "${S}/${obj_dir}/mozilla/dist/bin/defaults/pref/all-gentoo.js" || die
+		>> "${S}/${obj_dir}/mozilla/dist/bin/defaults/pref/all-gentoo.js" \
+		|| die
 
 	# Pax mark xpcshell for hardened support, only used for startupcache creation.
 	pax-mark m "${S}"/${obj_dir}/mozilla/dist/bin/xpcshell
 
 	MOZ_MAKE_FLAGS="${MAKEOPTS}" \
-	emake DESTDIR="${D}" install || die "emake install failed"
+	emake DESTDIR="${D}" install
 
 	# Install language packs
 	mozlinguas_src_install
@@ -334,7 +334,8 @@ src_install() {
 
 	if use crypt ; then
 		cd "${T}" || die
-		unzip "${S}"/${obj_dir}/mozilla/dist/bin/enigmail*.xpi install.rdf || die
+		unzip "${S}"/${obj_dir}/mozilla/dist/bin/enigmail*.xpi install.rdf \
+		|| die
 		emid=$(sed -n '/<em:id>/!d; s/.*\({.*}\).*/\1/; p; q' install.rdf)
 
 		dodir ${MOZILLA_FIVE_HOME}/extensions/${emid} || die
@@ -364,11 +365,12 @@ src_install() {
 
 		emid="{e2fda1a4-762b-4020-b5ad-a41df1933103}"
 		dodir ${MOZILLA_FIVE_HOME}/extensions/${emid}
-		cd "${ED}"${MOZILLA_FIVE_HOME}/extensions/${emid}
-		unzip "${S}"/${obj_dir}/mozilla/dist/xpi-stage/lightning-*.xpi
+		cd "${ED}"${MOZILLA_FIVE_HOME}/extensions/${emid} || die
+		unzip "${S}"/${obj_dir}/mozilla/dist/xpi-stage/lightning-*.xpi \
+			|| die
 		# Install locales for lightning - each locale is a jar file
 		insinto ${MOZILLA_FIVE_HOME}/extensions/${emid}/chrome
-		cd "${WORKDIR}"/lightning-${MOZ_LIGHTNING_VER}/chrome
+		cd "${WORKDIR}"/lightning-${MOZ_LIGHTNING_VER}/chrome || die
 		for l in "${mozlinguas[@]}"; do if [[ -e calendar-${l}.jar ]]; then
 			for c in calendar lightning; do
 				doins ${c}-${l}.jar
@@ -384,7 +386,7 @@ src_install() {
 		# This requires that the .desktop file was already installed earlier
 		sed -e "s:^\(MimeType=\):\1text/calendar;:" \
 			-e "s:^\(Categories=\):\1Calendar;:" \
-			-i "${ED}"/usr/share/applications/${PN}.desktop
+			-i "${ED}"/usr/share/applications/${PN}.desktop || die
 	fi
 
 	pax-mark m "${ED}"/${MOZILLA_FIVE_HOME}/{thunderbird-bin,thunderbird}
