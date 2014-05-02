@@ -126,6 +126,7 @@ mail-client/thunderbird::unity-gentoo **
 media-gfx/thumbnailer **
 media-libs/mesa::unity-gentoo **
 media-libs/mesa-mir **
+media-sound/banshee **
 media-sound/rhythmbox::unity-gentoo **
 mir-base/mir **
 mir-base/unity-system-compositor **

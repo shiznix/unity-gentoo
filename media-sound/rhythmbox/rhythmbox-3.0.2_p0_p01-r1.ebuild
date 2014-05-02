@@ -8,7 +8,7 @@ GCONF_DEBUG="no"
 PYTHON_COMPAT=( python3_{2,3} )
 PYTHON_REQ_USE="xml"
 
-inherit autotools base eutils gnome2 python-r1 multilib ubuntu-versionator virtualx
+inherit autotools base eutils gnome2 python-single-r1 multilib ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"
 URELEASE="trusty"
@@ -167,3 +167,7 @@ src_test() {
 	unset DBUS_SESSION_BUS_ADDRESS
 	Xemake check || die "test failed"
 }
+
+pkg_preinst() { gnome2_icon_savelist; }
+pkg_postinst() { gnome2_icon_cache_update; }
+pkg_postrm() { gnome2_icon_cache_update; }

@@ -22,7 +22,8 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
 	dev-libs/libunity:=
-	media-sound/rhythmbox"
+	|| ( media-sound/rhythmbox
+		media-sound/banshee )"
 DEPEND="dev-db/sqlite:3
 	dev-libs/dee
 	dev-libs/glib:2
@@ -45,4 +46,11 @@ src_prepare() {
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
+}
+
+src_install() {
+	emake DESTDIR="${D}" install
+
+	dosym /usr/share/unity/icons \
+		/usr/share/unity/6
 }

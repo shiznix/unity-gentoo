@@ -44,7 +44,8 @@ gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 gnome-extra/zeitgeist			# Zeitgeist must be built with vala-0.20 due to the way unity-base/unity uses the vala generated zeitgeist-datamodel.h
 media-libs/mesa				# Patched for mir display server support
-media-sound/rhythmbox			# Patched to work with gstreamer-1.0 and to have indicator-sound youtube webapp work
+media-sound/banshee			# Patched/compiled for indicator-sound support, Meego UI and other Ubuntu UI improvements
+media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu quicklist, Magnatune and other Ubuntu UI improvements
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 net-im/telepathy-mission-control	# Enables Ubuntu libaccounts-sso integration
 net-libs/gnome-online-accounts		# Allow access to Gnome Online Accounts (GOA) via Ubuntu Online Accounts (UOA)

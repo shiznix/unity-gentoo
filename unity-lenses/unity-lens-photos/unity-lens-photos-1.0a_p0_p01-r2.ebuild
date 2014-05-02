@@ -4,6 +4,7 @@
 
 EAPI=5
 PYTHON_COMPAT=( python{3_2,3_3} )
+DISTUTILS_SINGLE_IMPL=1
 
 inherit distutils-r1 eutils ubuntu-versionator
 
@@ -19,11 +20,13 @@ LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE=""
+IUSE+=" python_single_target_python3_2 +python_single_target_python3_3"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	dev-libs/libgee
 	net-libs/liboauth
+	dev-python/pygobject[${PYTHON_USEDEP}]
 	net-libs/libsoup
 	net-libs/libsoup-gnome
 	dev-libs/libunity[${PYTHON_USEDEP}]
@@ -37,10 +40,17 @@ RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_install() {
 	distutils-r1_src_install
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+
+	python_fix_shebang "${ED}"
 }
