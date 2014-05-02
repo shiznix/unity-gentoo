@@ -52,7 +52,7 @@ src_prepare() {
 		-i schemas/org.gnome.desktop.interface.gschema.xml.in.in
 
 	# Set default Ubuntu release backgrounds #
-	sed -e "s:themes/Adwaita/backgrounds/adwaita-timed.xml:backgrounds/contest/saucy.xml:" \
+	sed -e "s:themes/Adwaita/backgrounds/adwaita-timed.xml:backgrounds/contest/trusty.xml:" \
 		-i schemas/org.gnome.desktop.background.gschema.xml.in.in
 
 	# Set window controls buttons on the left side of the titlebar by default as in native Unity #

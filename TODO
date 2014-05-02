@@ -3,5 +3,3 @@
 * Convert all ebuilds to EAPI=5 with subslot rebuilds where necessary
 * Convert ebuilds to use new python-r1.eclass for multi-abi installs (see dev-libs/dee)
 * Convert ebuilds to use new distutils-r1.eclass
-
-* [Trusty] change link of wallpapers in 'gnome-base/gsettings-desktop-schemas' to trusty version ('trusty.xml') of 'x11-themes/ubuntu-wallpapers'
