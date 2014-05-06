@@ -119,11 +119,9 @@ src_prepare() {
 	done
 	base_src_prepare
 
-	# Forcibly stop {gnome,unity}-settings-daemon from disabling the cursor if/when display query fails #
-	#  Display queries for gnome-settings-daemon as of 3.10 rely on Mutter being present #
-	#    refer to https://bugs.launchpad.net/unity-settings-daemon/+bug/1228765/ #
-	sed -e '/gnome\/settings-daemon\/plugins\/cursor/ {n;n;s/true/false/}' \
-		-i data/org.gnome.settings-daemon.plugins.gschema.xml.in.in
+	# Stop gnome-settings-daemon from being used in a Unity session #
+	sed -e 's:Unity;::' \
+		-i data/gnome-settings-daemon.desktop.in.in
 
 	eautoreconf
 

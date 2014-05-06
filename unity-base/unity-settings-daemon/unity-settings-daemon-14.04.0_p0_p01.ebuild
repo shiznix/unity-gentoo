@@ -11,7 +11,6 @@ inherit autotools base bzr eutils flag-o-matic gnome2 virtualx ubuntu-versionato
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
 UVER_PREFIX="+14.04.20140414"
-MY_PR="${PR/r/}"
 
 DESCRIPTION="Unity Settings Daemon"
 HOMEPAGE="https://launchpad.net/unity-settings-daemon"
@@ -19,7 +18,7 @@ SRC_URI=	# 'gnome2' inherits 'gnome.org' which tries to set SRC_URI
 
 EBZR_PROJECT="${PN}"
 EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10"
-EBZR_REVISION="${MY_PR}"
+EBZR_REVISION="4028"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -104,6 +103,13 @@ src_prepare() {
 
 	# Make colord and wacom optional; requires eautoreconf
 	epatch "${FILESDIR}/${PN}-optional-color-wacom.patch"
+
+	# Disable build of cursor plugin #
+	# This fixes the missing cursor in lightdm for gnome-3.10 #
+	sed \
+		-e '/cursor/d' \
+		-e 's:.*disabled_plugins.*:disabled_plugins = cursor:' \
+			-i plugins/Makefile.am || die
 
 	eautoreconf
 	gnome2_src_prepare
