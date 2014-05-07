@@ -137,6 +137,11 @@ src_prepare() {
 		-e 's:.*"stop", "unity-panel-service".*:        subprocess.call(["pkill -e unity-panel-service"], shell=True):' \
 		-e 's:.*"start", "unity-panel-service".*:        subprocess.call(["/usr/lib/unity/unity-panel-service"], shell=True):' \
 			-i tools/unity.cmake
+
+	# Don't kill -9 unity-panel-service when launched using PANEL_USE_LOCAL_SERVICE env variable #
+	#  It slows down the launch of unity-panel-service in lockscreen mode #
+	sed -e '/killall -9 unity-panel-service/,+1d' \
+		-i UnityCore/DBusIndicators.cpp
 }
 
 src_configure() {
