@@ -33,6 +33,10 @@ src_prepare() {
 	gnome2_src_prepare
 }
 
+src_configure() {
+	econf --localstatedir=/var
+}
+
 pkg_preinst() {
         gnome2_schemas_savelist
 }

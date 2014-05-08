@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="examples"
 RESTRICT="mirror"
 
 RDEPEND="dev-qt/qtfeedback
@@ -40,12 +40,19 @@ MAKEOPTS="${MAKEOPTS} -j1"
 QT5_BUILD_DIR="${S}"
 
 src_prepare() {
-#	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 
 	# Docs don't build - full of segfaults and incorrect paths #
 	sed -e '/documentation\/documentation.pri/d' \
 		-i ubuntu-sdk.pro
 	qt5-build_src_prepare
+}
+
+src_install() {
+	qt5-build_src_install
+
+	use examples || \
+		rm -rf "${ED}usr/lib/ubuntu-ui-toolkit/examples"
 }
 
 pkg_preinst() {

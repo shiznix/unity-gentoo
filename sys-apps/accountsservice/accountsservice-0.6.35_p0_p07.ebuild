@@ -51,17 +51,13 @@ pkg_pretend() {
 }
 
 src_prepare() {
-#	epatch "${FILESDIR}/${PN}-0.6.34-gentoo-system-users.patch"
-
-#	sed -i '/0001-formats-locale-property.patch/d' "${WORKDIR}/debian/patches/series" || die
+	# Disable selected patches #
 	sed -i '/0002-create-and-manage-groups-like-on-a-ubuntu-system.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0002-create-and-manage-groups-like-on-a-debian-system.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0006-adduser_instead_of_useradd.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0009-language-tools.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0010-set-language.patch/d' "${WORKDIR}/debian/patches/series" || die
-#	sed -i '/0012-add-keyboard-layout-support.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0013-add-has-message-support.patch/d' "${WORKDIR}/debian/patches/series" || die
-#	sed -i '/0016-add-input-sources-support.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/1001-buildsystem.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/2001-filtering_out_users.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/2002-disable_systemd.patch/d' "${WORKDIR}/debian/patches/series" || die
@@ -69,7 +65,6 @@ src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
-
 	base_src_prepare
 
 	eautoreconf
