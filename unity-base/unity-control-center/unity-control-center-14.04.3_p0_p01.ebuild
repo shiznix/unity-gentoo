@@ -11,7 +11,6 @@ inherit autotools base bzr eutils gnome2 ubuntu-versionator vala
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="trusty"
 UVER_PREFIX="+14.04.20140410"
-MY_PR="${PR/r/}"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
@@ -19,7 +18,7 @@ SRC_URI=	# 'gnome2' inherits 'gnome.org' which tries to set SRC_URI
 
 EBZR_PROJECT="${PN}"
 EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10"
-EBZR_REVISION="${MY_PR}"
+EBZR_REVISION="12740"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -105,6 +104,8 @@ RDEPEND="${COMMON_DEPEND}
 		net-print/cups-pk-helper )
 	input_devices_wacom? ( unity-base/unity-settings-daemon[input_devices_wacom] )
 
+	>=gnome-base/gnome-control-center-3.10
+
 	!<gnome-base/gdm-2.91.94
 	!<gnome-extra/gnome-color-manager-3.1.2
 	!gnome-extra/gnome-media[pulseaudio]
@@ -162,7 +163,6 @@ src_configure() {
 		--disable-update-mimedb \
 		--disable-static \
 		--enable-documentation \
-		--disable-goa \
 		--without-cheese \
 		$(use_enable bluetooth) \
 		$(use_enable colord color) \
@@ -179,4 +179,11 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+
+	# Add Region and Language locale support #
+	#  Unable to use Unity's language-selector as it needs a complete apt/dpkg enabled system #
+	exeinto /usr/bin
+	doexe "${FILESDIR}/unity-cc-region"
+	insinto /usr/share/applications
+	doins "${FILESDIR}/unity-language-selector.desktop"
 }

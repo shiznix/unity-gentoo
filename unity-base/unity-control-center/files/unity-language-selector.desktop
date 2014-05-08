@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Language Support
+Comment=Configure multiple and native language support on your system
+Exec=/usr/bin/unity-cc-region
+Icon=preferences-desktop-locale
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Settings;DesktopSettings;X-Unity-Settings-Panel;X-GNOME-PersonalSettings;
+OnlyShowIn=Unity;
+X-Unity-Settings-Panel=language
+Keywords=Language;Input method;Region;Format;

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Executed by unity-language-selector.desktop #
+#  Need to first kill unity-control-center so as to free up
+#  org.gnome.ControlCenter on the DBus ready for gnome-control-center process
+
+killall -q unity-control-center
+export GTK_MODULES=unity-gtk-module
+/usr/bin/gnome-control-center region
