@@ -49,6 +49,7 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs="${mycmakeargs}
+		-DCMAKE_INSTALL_LOCALSTATEDIR=/var
 		-DVALA_COMPILER=$VALAC
 		-DVAPI_GEN=$VAPIGEN"
 	cmake-utils_src_configure
