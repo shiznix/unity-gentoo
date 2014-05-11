@@ -22,11 +22,13 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="!dev-python/imaging
+RDEPEND="!dev-python/imaging[${PYTHON_USEDEP}]
 	>=dev-libs/glib-2.32.3
+	dev-libs/openssl:0
 	dev-python/configglue[${PYTHON_USEDEP}]
 	dev-python/dbus-python[${PYTHON_USEDEP}]
-	dev-python/gnome-keyring-python
+	dev-python/dirspec[${PYTHON_USEDEP}]
+	dev-python/keyring[${PYTHON_USEDEP}]
 	dev-python/httplib2[${PYTHON_USEDEP}]
 	dev-python/notify-python[${PYTHON_USEDEP}]
 	>=dev-python/oauth-1.0[${PYTHON_USEDEP}]
@@ -38,7 +40,9 @@ RDEPEND="!dev-python/imaging
 	>=dev-python/twisted-names-12.2.0[${PYTHON_USEDEP}]
 	>=dev-python/twisted-web-12.2.0[${PYTHON_USEDEP}]
 	net-libs/libsoup
-	virtual/python-imaging[${PYTHON_USEDEP}]"
+	net-libs/libsoup-gnome
+	net-zope/zope-interface[${PYTHON_USEDEP}]
+	virtual/python-imaging"
 DEPEND="${RDEPEND}"
 
 pkg_setup() {
