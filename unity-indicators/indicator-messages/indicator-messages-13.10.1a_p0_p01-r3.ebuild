@@ -38,3 +38,10 @@ src_prepare() {
 	export VALA_API_GEN="$VAPIGEN"
 	gnome2_src_prepare
 }
+
+src_install() {
+	emake DESTDIR="${ED}" install
+
+	# Remove upstart jobs as we use /etc/xdg/autostart/*.desktop files #
+	rm -rf "${ED}usr/share/upstart"
+}
