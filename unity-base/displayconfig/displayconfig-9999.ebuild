@@ -14,6 +14,16 @@ LICENSE="GPL-2"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 
+DEPENDS="dev-libs/glib:2
+	>=gnome-base/gnome-desktop-3.10
+	sys-power/upower
+	x11-libs/gtk+:3
+	x11-libs/libXcomposite
+	x11-libs/libXdamage
+	x11-libs/libXfixes
+	x11-libs/libXi
+	x11-libs/libXrender"
+
 src_prepare() {
 	eautoreconf
 }
