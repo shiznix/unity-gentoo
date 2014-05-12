@@ -38,7 +38,6 @@ DEPEND=">=dev-libs/libaccounts-glib-1.10
 	dev-libs/libxslt
 	>=dev-util/intltool-0.40.1
 	>=sys-devel/gettext-0.17
-	unity-base/unity-control-center
 	virtual/pkgconfig
 	x11-libs/gtk+:3
 	x11-proto/xproto

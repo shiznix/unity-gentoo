@@ -58,6 +58,7 @@ COMMON_DEPEND="
 	>=sys-auth/polkit-0.97
 	>=sys-power/upower-0.9.1
 	unity-base/displayconfig
+	unity-base/gnome-control-center-signon
 	unity-base/ubuntuone-control-panel
 	unity-base/unity-settings-daemon[colord?,policykit]
 	virtual/krb5
@@ -187,3 +188,7 @@ src_install() {
 	insinto /usr/share/applications
 	doins "${FILESDIR}/unity-language-selector.desktop"
 }
+
+pkg_preinst() { gnome2_icon_savelist; }
+pkg_postinst() { gnome2_icon_cache_update; }
+pkg_postrm() { gnome2_icon_cache_update; }
