@@ -104,6 +104,9 @@ src_prepare() {
 	# Make colord and wacom optional; requires eautoreconf
 	epatch "${FILESDIR}/${PN}-optional-color-wacom.patch"
 
+	# Correct backlight percentage #
+	epatch "${FILESDIR}/${PN}_backlight-percent-fix.diff"
+
 	# Disable build of cursor plugin #
 	# This fixes the missing cursor in lightdm for gnome-3.10 #
 	sed \

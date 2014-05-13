@@ -1,0 +1,21 @@
+diff -urN unity-settings-daemon-14.04.0_p0_p01/plugins/power/gpm-common.c unity-settings-daemon-14.04.0_p0_p01-patched/plugins/power/gpm-common.c
+--- unity-settings-daemon-14.04.0_p0_p01/plugins/power/gpm-common.c	2014-05-14 07:16:19.389166000 +0930
++++ unity-settings-daemon-14.04.0_p0_p01-patched/plugins/power/gpm-common.c	2014-05-14 07:30:11.016345512 +0930
+@@ -1427,7 +1427,7 @@
+                 now = gnome_rr_output_get_backlight (output);
+                 if (now < 0)
+                         goto out;
+-                value = ABS_TO_PERCENTAGE (min, max, now);
++                value = ABS_TO_PERCENTAGE (0, 100, now);
+                 goto out;
+         }
+ 
+@@ -1438,7 +1438,7 @@
+         now = backlight_helper_get_value ("get-brightness", error);
+         if (now < 0)
+                 goto out;
+-        value = ABS_TO_PERCENTAGE (0, 100, now);
++        value = ABS_TO_PERCENTAGE (min, max, now);
+ out:
+         return value;
+ }
