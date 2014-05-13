@@ -14,6 +14,7 @@ LICENSE="GPL-2"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 
+RDEPEND="dev-qt/qtdbus:4"
 DEPEND="dev-libs/glib:2
 	>=gnome-base/gnome-desktop-3.10
 	sys-power/upower
@@ -26,4 +27,11 @@ DEPEND="dev-libs/glib:2
 
 src_prepare() {
 	eautoreconf
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+
+	insinto /etc/xdg/autostart
+	doins "${FILESDIR}/unity-displayconfig.desktop"
 }
