@@ -12,5 +12,6 @@ gnome-base/gnome-core-apps::unity-gentoo
 media-libs/mesa::unity-gentoo
 net-im/telepathy-mission-control::unity-gentoo
 x11-libs/cairo::unity-gentoo
+x11-libs/gtk+::unity-gentoo
 x11-misc/lightdm::unity-gentoo
 
