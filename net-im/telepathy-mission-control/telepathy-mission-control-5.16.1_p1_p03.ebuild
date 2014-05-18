@@ -36,6 +36,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
+	dev-libs/libaccounts-glib
 	>=dev-util/gtk-doc-am-1.17
 	virtual/pkgconfig
 "
