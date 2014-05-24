@@ -16,9 +16,7 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
-URELEASE="saucy-updates"
-UVER="0ubuntu~1.13.10.0"
-UVER_SUFFIX="~pkg991"
+URELEASE="trusty"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
