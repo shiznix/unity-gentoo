@@ -1,1 +1,10 @@
-export UNITY_LOG_SEVERITY="unity=DEBUG:nux=DEBUG"
+# "dotted.module" inherits settings from "dotted", which in turn inherits settings from the <root> module #
+# Valid log types are: TRACE, DEBUG, INFO, WARNING, ERROR #
+
+# Examples to specify different logging targets:
+#  export UNITY_LOG_SEVERITY="unity=DEBUG:nux=DEBUG"
+#  export UNITY_LOG_SEVERITY="unity.dash.scopeview=DEBUG:nux=DEBUG"
+
+# For a full list of logging targets: grep -r DECLARE_LOGGER <unity-source-tree>/*
+
+export UNITY_LOG_SEVERITY="<root>=DEBUG"	# Sets all logging targets to DEBUG
