@@ -34,6 +34,9 @@ src_prepare() {
 	# Make indicator start using XDG autostart #
 	sed -e '/NotShowIn=/d' \
 		-i data/indicator-application.desktop.in
+
+	# Show systray icons even if they report themselves as 'Passive' #
+	epatch -p1 "${FILESDIR}/sni-systray_show-passive.diff"
 }
 
 src_install() {
