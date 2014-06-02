@@ -55,7 +55,6 @@ sys-libs/db:5.1
 ~sys-libs/libcap-2.22
 ~sys-libs/libnih-1.0.3
 ~x11-base/xorg-drivers-1.15
-~x11-drivers/xf86-input-synaptics-1.7.3
 ~x11-libs/gdk-pixbuf-2.30.7
 ~x11-libs/libdrm-2.4.46
 ~x11-libs/libnotify-0.7.6
@@ -219,7 +218,6 @@ x11-libs/libXfixes::unity-gentoo **
 x11-libs/libXi::unity-gentoo **
 x11-libs/qml-friends **
 x11-libs/u1db-qt **
-x11-libs/ubuntu-settings-components **
 x11-libs/ubuntu-ui-toolkit **
 x11-libs/unity-action-api **
 x11-libs/unity-webapps-qml **
