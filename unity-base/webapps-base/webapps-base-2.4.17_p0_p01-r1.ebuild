@@ -8,9 +8,9 @@ PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 inherit autotools gnome2-utils python-r1 ubuntu-versionator
 
 MY_PN="webapps-applications"
-URELEASE="trusty"
+URELEASE="saucy"
 UURL="mirror://ubuntu/pool/main/w/${MY_PN}"
-UVER_PREFIX="+14.04.20140416"
+UVER_PREFIX="+13.10.20130924.1"
 
 DESCRIPTION="WebApps: Initial set of Apps for the Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-applications"
@@ -18,12 +18,10 @@ SRC_URI="${UURL}/${MY_PN}_${PV}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="!<unity-base/webapps-2.4.16_p0_p01-r2
-	!<x11-themes/unity-asset-pool-0.8.24a_p0_p01-r1"
 DEPEND=">=dev-libs/glib-2.32.3
 	dev-libs/json-glib
 	dev-libs/libindicate[gtk,introspection]

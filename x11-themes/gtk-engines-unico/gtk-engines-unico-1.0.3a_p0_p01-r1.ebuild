@@ -11,7 +11,7 @@ MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/main/u/${MY_PN}"
 URELEASE="trusty"
-UVER_PREFIX="daily13.05.30"
+UVER_PREFIX="+14.04.20140109"
 
 DESCRIPTION="The Unico GTK+ 3.x Theming Engine"
 HOMEPAGE="https://launchpad.net/unico"
