@@ -54,7 +54,7 @@ RDEPEND="
 	multimedia? ( ~dev-qt/qtmultimedia-${QT_PV} )
 	opengl? ( ~dev-qt/qtopengl-${QT_PV} )
 	print? ( ~dev-qt/qtprintsupport-${QT_PV} )
-	qml? ( ~dev-qt/qtdeclarative-${QT_PV} )
+	qml? ( >=dev-qt/qtdeclarative-${QT_PV} )
 	sql? ( ~dev-qt/qtsql-${QT_PV} )
 	svg? ( ~dev-qt/qtsvg-${QT_PV} )
 	webkit? ( >=dev-qt/qtwebkit-5.1.1 )
