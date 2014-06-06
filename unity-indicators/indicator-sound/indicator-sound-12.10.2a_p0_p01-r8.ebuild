@@ -23,6 +23,7 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/libdbusmenu:=
+	sys-auth/polkit-pkla-compat
 	unity-base/bamf:=
 	unity-base/gsettings-ubuntu-touch-schemas
 	unity-indicators/ido:="
