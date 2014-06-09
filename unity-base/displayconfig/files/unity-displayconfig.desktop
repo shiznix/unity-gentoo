@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Displayconfig
-Exec=qdbus org.gnome.Mutter.DisplayConfig
+Exec=dbus-send --session --dest="org.gnome.Mutter.DisplayConfig" /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig
 OnlyShowIn=Unity;
 NoDisplay=true
 StartupNotify=false
