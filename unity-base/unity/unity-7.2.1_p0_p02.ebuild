@@ -11,8 +11,8 @@ DISTUTILS_SINGLE_IMPL=1
 inherit base cmake-utils distutils-r1 eutils gnome2 toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+14.04.20140416"
+URELEASE="trusty-updates"
+UVER_PREFIX="+14.04.20140513"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
@@ -220,11 +220,12 @@ src_install() {
 	# Remove upstart jobs as we use xsession based scripts in /etc/X11/xinit/xinitrc.d/ #
 	rm -rf "${ED}usr/share/upstart"
 
-	exeinto /etc/X11/xinit/xinitrc.d/
-	doexe "${FILESDIR}/99unity-panel-service"
+	insinto /etc/xdg/autostart
+	doins "${FILESDIR}/unity-panel-service.desktop"
 
-	exeinto /usr/share/dbus-1/services/
-	doexe "${FILESDIR}/com.canonical.Unity.Panel.Service.LockScreen.service"
+	insinto /usr/share/dbus-1/services/
+	doins "${FILESDIR}/com.canonical.Unity.Panel.Service.Desktop.service"
+	doins "${FILESDIR}/com.canonical.Unity.Panel.Service.LockScreen.service"
 }
 
 pkg_postinst() {

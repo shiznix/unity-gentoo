@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Unity Panel Service
+Exec=dbus-send --session --dest="com.canonical.Unity.Panel.Service.Desktop" /com/canonical/Unity/Panel/Service/Desktop com.canonical.Unity.Panel.Service.Desktop
+OnlyShowIn=Unity;
+NoDisplay=true
+StartupNotify=false
+Terminal=false
+AutostartCondition=GNOME3 unless-session gnome
