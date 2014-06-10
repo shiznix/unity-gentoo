@@ -14,7 +14,7 @@ OPENGL_DIR="xorg-x11"
 MY_PN="mesa"
 MY_PV="${PV}"
 UURL="mirror://ubuntu/pool/main/m/${MY_PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 
 DESCRIPTION="OpenGL-like graphic library for Linux"
 HOMEPAGE="http://mesa3d.sourceforge.net/"

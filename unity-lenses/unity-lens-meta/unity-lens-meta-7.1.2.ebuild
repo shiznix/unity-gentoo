@@ -4,7 +4,7 @@
 
 EAPI=4
 
-DESCRIPTION="Unity Desktop - merge this to pull in all Unity packages"
+DESCRIPTION="Unity Desktop - merge this to pull in all Unity lenses"
 HOMEPAGE="http://unity.ubuntu.com/"
 
 LICENSE="GPL-3"

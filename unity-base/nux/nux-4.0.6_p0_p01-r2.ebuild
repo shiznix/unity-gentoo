@@ -22,6 +22,7 @@ SLOT="0/4"
 IUSE="debug doc examples test"
 RESTRICT="mirror"
 
+RDEPEND="media-libs/glew:="
 DEPEND="app-i18n/ibus
 	dev-cpp/gtest
 	dev-libs/boost

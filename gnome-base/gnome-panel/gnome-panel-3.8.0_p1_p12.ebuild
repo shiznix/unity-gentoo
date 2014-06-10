@@ -9,7 +9,7 @@ GCONF_DEBUG="no"
 inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/g/${PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 
 DESCRIPTION="The GNOME panel patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"

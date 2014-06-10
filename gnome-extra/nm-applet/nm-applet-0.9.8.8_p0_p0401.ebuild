@@ -13,9 +13,7 @@ MY_P="${GNOME_ORG_MODULE}_${PV}"
 S="${WORKDIR}/${GNOME_ORG_MODULE}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/n/${GNOME_ORG_MODULE}"
-URELEASE="trusty"
-MY_P="${MY_P/applet-/applet_}"
-
+URELEASE="trusty-updates"
 
 DESCRIPTION="GNOME applet for NetworkManager"
 HOMEPAGE="http://projects.gnome.org/NetworkManager/"

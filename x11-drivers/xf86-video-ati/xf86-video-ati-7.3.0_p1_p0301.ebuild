@@ -10,7 +10,7 @@ inherit base linux-info xorg-2 ubuntu-versionator
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-ati"
 UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 
 DESCRIPTION="ATI video driver"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz

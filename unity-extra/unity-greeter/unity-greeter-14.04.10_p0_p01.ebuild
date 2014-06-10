@@ -9,7 +9,7 @@ GCONF_DEBUG="yes"
 inherit autotools flag-o-matic gnome2 ubuntu-versionator base vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 
 DESCRIPTION="The greeter (login screen) application for Unity. It is implemented as a LightDM greeter."
 HOMEPAGE="https://launchpad.net/unity-greeter"

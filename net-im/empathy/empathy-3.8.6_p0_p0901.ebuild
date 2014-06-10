@@ -10,7 +10,7 @@ PYTHON_COMPAT=( python2_{5,6,7} )
 inherit autotools base gnome2 python-any-r1 virtualx ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/e/${PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 
 DESCRIPTION="Telepathy instant messaging and video/audio call client for GNOME patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Empathy"

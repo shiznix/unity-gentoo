@@ -11,7 +11,7 @@ PYTHON_REQ_USE="xml"
 inherit autotools base eutils gnome2 python-single-r1 multilib ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 
 DESCRIPTION="Music management and playback software for GNOME patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Rhythmbox"

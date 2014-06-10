@@ -12,7 +12,7 @@ inherit base autotools eutils multilib multilib-minimal flag-o-matic \
 OPENGL_DIR="xorg-x11"
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 
 DESCRIPTION="OpenGL-like graphic library for Linux"
 HOMEPAGE="http://mesa3d.sourceforge.net/"

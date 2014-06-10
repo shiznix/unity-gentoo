@@ -8,8 +8,8 @@ GCONF_DEBUG="no"
 inherit base gnome2 cmake-utils eutils python ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+14.04.20140409"
+URELEASE="trusty-updates"
+UVER_PREFIX="+14.04.20140423"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/compiz"
@@ -61,11 +61,13 @@ COMMONDEPEND="!!x11-wm/compiz
 	x11-wm/metacity
 	kde? ( >=kde-base/kwin-4.11.1 )
 	test? ( dev-cpp/gtest
-		dev-cpp/gmock 
+		dev-cpp/gmock
 		sys-apps/xorg-gtest )"
 
+# <sys-devel/gettext-0.19 needed until compiz supports missing 'Language' header in *.po files for 'msgfmt' #
 DEPEND="${COMMONDEPEND}
 	dev-util/pkgconfig
+	<sys-devel/gettext-0.19
 	x11-proto/damageproto
 	x11-proto/xineramaproto"
 

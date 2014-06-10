@@ -10,7 +10,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="+battery +datetime +keyboard paste sensors +session +sound +sync weather"
+IUSE="+battery +datetime +keyboard paste sensors +session +sound weather"
 RESTRICT="mirror"
 
 DEPEND="unity-indicators/indicator-applet
@@ -23,6 +23,5 @@ DEPEND="unity-indicators/indicator-applet
 	sensors? ( unity-extra/indicator-psensor )
 	session? ( unity-indicators/indicator-session )
 	sound? ( unity-indicators/indicator-sound )
-	sync? ( unity-indicators/indicator-sync )
 	weather? ( unity-extra/indicator-weather )"
 RDEPEND="${DEPEND}"
