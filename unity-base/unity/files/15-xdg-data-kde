@@ -1,0 +1,6 @@
+if [ "$DESKTOP_SESSION" = "unity" ]; then
+	if type xdg-user-dirs-update &>/dev/null; then
+		xdg-user-dirs-update
+	fi
+	export XDG_DATA_DIRS="${XDG_DATA_DIRS}:/usr/share/kde"
+fi
