@@ -226,6 +226,12 @@ src_install() {
 	insinto /usr/share/dbus-1/services/
 	doins "${FILESDIR}/com.canonical.Unity.Panel.Service.Desktop.service"
 	doins "${FILESDIR}/com.canonical.Unity.Panel.Service.LockScreen.service"
+
+	# Allow zeitgeist-fts to find KDE *.desktop files, so that KDE applications show in Dash 'Recently Used' #
+	#  (refer https://developer.gnome.org/gio/2.33/gio-Desktop-file-based-GAppInfo.html#g-desktop-app-info-new)
+	dosym /usr/share/applications/kde4/ /usr/share/kde4/applications
+	insinto /etc/X11/xinit/xinitrc.d
+	doins "${FILESDIR}/15-xdg-data-kde"
 }
 
 pkg_postinst() {

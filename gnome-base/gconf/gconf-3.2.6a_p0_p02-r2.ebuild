@@ -116,6 +116,10 @@ multilib_src_install_all() {
 	echo 'GSETTINGS_BACKEND="gconf"' >> 50gconf
 	doenvd 50gconf
 	dodir /root/.gconfd
+
+	# Install Ubuntu's gconf update tool #
+	exeinto /usr/bin
+	doexe "${FILESDIR}/update-gconf-defaults"
 }
 
 pkg_preinst() {
