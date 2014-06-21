@@ -157,7 +157,6 @@ dev-util/fix-la-relink-command
 dev-util/dbus-test-runner
 dev-util/umockdev
 media-libs/fontconfig
-media-libs/gexiv2
 media-libs/glm
 media-libs/lcms:2
 media-libs/libpng:0
