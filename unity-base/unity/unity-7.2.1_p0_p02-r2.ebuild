@@ -211,6 +211,7 @@ src_install() {
 	if use branding; then
 		insinto /usr/share/unity/icons
 		doins "${FILESDIR}/launcher_bfb.png"
+		doins "${FILESDIR}/cof.png"
 	fi
 
 	# Remove all installed language files as they can be incomplete #
