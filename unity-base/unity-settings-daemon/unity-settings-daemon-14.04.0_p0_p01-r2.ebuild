@@ -9,8 +9,8 @@ GCONF_DEBUG="no"
 inherit autotools base bzr eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+14.04.20140414"
+URELEASE="trusty-updates"
+UVER_PREFIX="+14.04.20140606"
 
 DESCRIPTION="Unity Settings Daemon"
 HOMEPAGE="https://launchpad.net/unity-settings-daemon"

@@ -9,8 +9,8 @@ GCONF_DEBUG="yes"
 inherit autotools base bzr eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+14.04.20140410"
+URELEASE="trusty-updates"
+UVER_PREFIX="+14.04.20140604"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"

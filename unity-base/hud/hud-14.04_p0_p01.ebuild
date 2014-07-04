@@ -10,8 +10,8 @@ DISTUTILS_SINGLE_IMPL=1
 inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+14.04.20140402"
+URELEASE="trusty-updates"
+UVER_PREFIX="+14.04.20140604"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"
