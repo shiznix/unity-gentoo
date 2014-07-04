@@ -47,6 +47,9 @@ src_prepare() {
 	# Fix schema errors and sandbox violations #
 	epatch "${FILESDIR}/sandbox_violations_fix.diff"
 
+	# Make indicator-datetime compatiable with systemd's timezone changes #
+	epatch "${FILESDIR}/get-timezone-from-systemd-timedatectl.diff"
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 
