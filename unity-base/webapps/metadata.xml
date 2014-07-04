@@ -9,7 +9,4 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
-	<use>
-		<flag name="ubuntuonemusic-old-store">Use the old featureful music store (supports Genres and able to be browsed)</flag>
-	</use>
 </pkgmetadata>

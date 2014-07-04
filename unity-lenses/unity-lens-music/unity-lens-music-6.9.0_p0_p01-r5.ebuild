@@ -22,7 +22,8 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
 	dev-libs/libunity:=
-	unity-base/rhythmbox-ubuntuone"
+	|| ( media-sound/rhythmbox
+		media-sound/banshee )"
 DEPEND="dev-db/sqlite:3
 	dev-libs/dee
 	dev-libs/glib:2

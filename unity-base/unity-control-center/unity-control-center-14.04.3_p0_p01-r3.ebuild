@@ -59,7 +59,6 @@ COMMON_DEPEND="
 	>=sys-power/upower-0.9.1
 	unity-base/displayconfig
 	unity-base/gnome-control-center-signon
-	unity-base/ubuntuone-control-panel
 	unity-base/unity-settings-daemon[colord?,policykit]
 	virtual/krb5
 	>=x11-libs/libnotify-0.7.3:0=

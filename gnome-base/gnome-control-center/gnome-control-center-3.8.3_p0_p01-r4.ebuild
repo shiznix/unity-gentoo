@@ -60,7 +60,6 @@ COMMON_DEPEND="
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
 	>=sys-power/upower-0.9.1
-	unity-base/ubuntuone-control-panel
 	>=x11-libs/libnotify-0.7.3:0=
 
 	>=gnome-extra/nm-applet-0.9.7.995

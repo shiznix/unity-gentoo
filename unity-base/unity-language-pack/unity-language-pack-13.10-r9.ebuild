@@ -19,9 +19,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-# Soft block to resolve file collisions (remove on next version bump) #
-RDEPEND="!<media-sound/rhythmbox-2.99
-	!<unity-base/rhythmbox-ubuntuone-13.10"
 DEPEND="sys-devel/gettext"
 
 setvar() {
@@ -658,7 +655,6 @@ src_install() {
 					-type f \! -iname '*credentials-control-center*' \
 					-type f \! -iname '*indicator-*' \
 					-type f \! -iname '*libdbusmenu*' \
-					-type f \! -iname '*rhythmbox*' \
 					-type f \! -iname '*signon*' \
 					-type f \! -iname '*ubuntu-sso-client*' \
 					-type f \! -iname '*unity*' \

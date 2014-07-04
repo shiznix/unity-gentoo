@@ -14,7 +14,7 @@ URELEASE="saucy"
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
 KEYWORDS="amd64 x86"
-IUSE="accessibility +chat +cloud gnome gnome-extras +xdm +webapps"
+IUSE="accessibility +chat gnome gnome-extras +xdm +webapps"
 RESTRICT="mirror"
 
 DEPEND="app-backup/deja-dup[nautilus]
@@ -38,7 +38,6 @@ DEPEND="app-backup/deja-dup[nautilus]
 		>=app-accessibility/orca-3.8
 		>=gnome-extra/mousetweaks-3.8 )
 	chat? ( net-im/empathy )
-	cloud? ( unity-base/ubuntuone-control-panel )
 	gnome? ( gnome-base/gnome-core-apps )
 	gnome-extras? ( gnome-base/gnome-extra-apps )
 	webapps? ( unity-base/webapps
