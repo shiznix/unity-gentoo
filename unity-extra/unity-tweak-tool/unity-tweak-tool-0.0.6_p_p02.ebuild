@@ -10,10 +10,11 @@ inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 
 URELEASE="trusty"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
+UVER_PREFIX="~ubuntu14.04.1"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/unity-tweak-tool"
-SRC_URI="${UURL}/${MY_P}.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER}${UVER_PREFIX}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -48,7 +49,7 @@ DEPEND="${RDEPEND}
 	x11-misc/notify-osd
 	${PYTHON_DEPS}"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}/${PN}-trusty"
 
 src_prepare() {
 	# Make Unity Tweak Tool appear in unity-control-center #
@@ -62,7 +63,7 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/xorg-cursor-themes-path.diff"
 
 	# Patch LP# 1281467 - GLib-GIO-ERROR **: Settings schema 'org.compiz.scale' does not contain a key named 'show-desktop' #
-	epatch -p1 "${FILESDIR}/show-desktop_compiz.scale-schema.diff"
+#	epatch -p1 "${FILESDIR}/show-desktop_compiz.scale-schema.diff"
 }
 
 src_compile() {
