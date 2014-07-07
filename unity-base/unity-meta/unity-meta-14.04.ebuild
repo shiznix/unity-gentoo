@@ -44,4 +44,5 @@ DEPEND="app-backup/deja-dup[nautilus]
 			x11-misc/webaccounts-browser-extension
 			x11-misc/webapps-greasemonkey )
 	xdm? ( || ( unity-extra/unity-greeter gnome-base/gdm ) )"
-RDEPEND="${DEPEND}"
+RDEPEND="!unity-base/gnome-control-center-unity
+	${DEPEND}"
