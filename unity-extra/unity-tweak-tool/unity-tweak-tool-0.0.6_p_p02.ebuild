@@ -26,6 +26,7 @@ RDEPEND="dev-libs/glib:2
 	dev-python/pycairo[${PYTHON_USEDEP}]
 	dev-python/pyxdg[${PYTHON_USEDEP}]
 	dev-python/pygobject:3[${PYTHON_USEDEP}]
+	dev-python/python-distutils-extra[${PYTHON_USEDEP}]
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}
 	dev-libs/libunity-webapps
