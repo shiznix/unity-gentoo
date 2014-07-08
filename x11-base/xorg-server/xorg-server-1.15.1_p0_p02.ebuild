@@ -12,7 +12,7 @@ UURL="mirror://ubuntu/pool/main/x/${PN}"
 URELEASE="trusty"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
-#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 

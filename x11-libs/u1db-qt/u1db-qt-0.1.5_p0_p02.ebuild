@@ -15,7 +15,7 @@ HOMEPAGE="https://launchpad.net/u1db-qt"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-python/u1db

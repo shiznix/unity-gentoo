@@ -25,7 +25,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="LGPL-2+"
 SLOT="2"
-#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~arm-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~arm-linux ~x86-linux"
 IUSE="debug +introspection ldap policykit"
 
 RDEPEND="

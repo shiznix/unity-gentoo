@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="3/4.0.12"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug gtk +introspection"	# We force 'gtk' and 'introspection', but keep these in IUSE for main portage tree ebuilds
 RESTRICT="mirror"
 

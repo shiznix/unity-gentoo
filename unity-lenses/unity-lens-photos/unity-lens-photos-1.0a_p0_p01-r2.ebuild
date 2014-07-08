@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 IUSE+=" python_single_target_python3_2 +python_single_target_python3_3"
 RESTRICT="mirror"

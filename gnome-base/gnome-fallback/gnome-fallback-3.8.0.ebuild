@@ -5,7 +5,7 @@
 EAPI="5"
 
 UVER=
-URELEASE="saucy"
+URELEASE="trusty"
 
 DESCRIPTION="Sub-meta package for GNOME 3 fallback mode"
 HOMEPAGE="https://wiki.gnome.org/GnomeFlashback"

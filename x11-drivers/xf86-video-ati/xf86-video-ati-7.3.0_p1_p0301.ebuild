@@ -16,7 +16,7 @@ DESCRIPTION="ATI video driver"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 	${UURL}/${MY_PN}_${PV}-${UVER}.diff.gz"
 
-#KEYWORDS="~alpha amd64 ~ia64 ppc ppc64 ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~ia64 ppc ppc64 ~sparc ~x86"
 IUSE="glamor mir udev"
 RESTRICT="mirror strip"
 

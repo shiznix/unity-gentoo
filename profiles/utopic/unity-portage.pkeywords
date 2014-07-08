@@ -166,9 +166,6 @@ unity-base/signon-keyring-extension **
 unity-base/signon-plugin-oauth2 **
 unity-base/signon-ui **
 unity-base/ubuntu-docs **
-unity-base/ubuntuone-client **
-unity-base/ubuntuone-control-panel **
-unity-base/ubuntuone-storage-protocol **
 unity-base/ubuntu-sso-client **
 unity-base/unity **
 unity-base/unity-control-center **
@@ -236,7 +233,6 @@ x11-misc/webapps-greasemonkey **
 x11-proto/fixesproto::unity-gentoo **
 x11-themes/gtk-engines-unico::unity-gentoo **
 x11-themes/humanity-icon-theme **
-x11-themes/ubuntuone-client-data **
 x11-themes/ubuntu-themes **
 x11-themes/unity-asset-pool **
 x11-wm/metacity::unity-gentoo **

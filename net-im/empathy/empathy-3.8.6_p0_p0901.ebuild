@@ -25,7 +25,7 @@ SLOT="0"
 #IUSE="debug +geocode +geoloc gnome gnome-online-accounts +map sendto spell test +v4l"
 IUSE="debug +geoloc gnome +gnome-online-accounts +map spell test +v4l"
 
-#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-linux"
 RESTRICT="mirror"
 
 # False positives caused by nested configure scripts

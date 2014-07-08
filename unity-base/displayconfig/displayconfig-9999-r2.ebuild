@@ -12,7 +12,7 @@ DESCRIPTION="Unity monitor display config"
 HOMEPAGE="https://github.com/darkxst/displayconfig"
 LICENSE="GPL-2"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 DEPEND="dev-libs/glib:2
 	>=gnome-base/gnome-desktop-3.10

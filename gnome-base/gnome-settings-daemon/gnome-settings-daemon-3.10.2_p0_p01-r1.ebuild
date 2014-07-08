@@ -20,7 +20,7 @@ SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.10/${PN}-${PV}.tar.xz
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="+colord +cups debug +i18n input_devices_wacom nls openrc-force packagekit policykit +short-touchpad-timeout smartcard +udev"
-#KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
+KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 REQUIRED_USE="
 	packagekit? ( udev )
 	smartcard? ( udev )

@@ -17,7 +17,7 @@ SRC_URI="https://launchpad.net/python-weather-api/trunk/0.3.8/+download/${P}.tar
 
 LICENSE="MIT"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
