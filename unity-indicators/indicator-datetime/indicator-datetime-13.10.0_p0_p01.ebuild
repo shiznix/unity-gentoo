@@ -45,10 +45,11 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
 
 	# Fix schema errors and sandbox violations #
-	epatch "${FILESDIR}/sandbox_violations_fix.diff"
+	epatch -p1 "${FILESDIR}/sandbox_violations_fix.diff"
 
 	# Make indicator-datetime compatiable with systemd's timezone changes #
-	epatch "${FILESDIR}/get-timezone-from-systemd-timedatectl.diff"
+	epatch -p1 "${FILESDIR}/get-timezone-from-systemd-timedatectl.diff"
+	epatch -p1 "${FILESDIR}/systemd-timezone-nullptr-check.diff"
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

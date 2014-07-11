@@ -1,0 +1,15 @@
+--- a/src/timezone-systemd.cpp	2014-06-30 15:38:53.397571301 -0400
++++ b/src/timezone-systemd-nullcheck.cpp	2014-06-30 15:40:35.128794407 -0400
+@@ -63,6 +63,12 @@
+ SystemdTimezone::set_timezone()
+ {
+     const gchar * tz_new = timedate1_get_timezone(m_timedate);
++
++    if (tz_new == nullptr)
++    {
++        return; //quick fix
++    }
++
+     timezone.set(tz_new);
+ }
+ 
