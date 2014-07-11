@@ -8,13 +8,12 @@ PYTHON_COMPAT=( python{3_2,3_3} )
 
 inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 
-URELEASE="trusty"
+URELEASE="utopic"
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-UVER_PREFIX="~ubuntu14.04.1"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/unity-tweak-tool"
-SRC_URI="${UURL}/${MY_P}${UVER}${UVER_PREFIX}.tar.xz"
+SRC_URI="${UURL}/${MY_P}${UVER}${UVER_PREFIX}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

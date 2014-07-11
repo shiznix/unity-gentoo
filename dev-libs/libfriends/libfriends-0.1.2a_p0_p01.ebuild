@@ -7,8 +7,8 @@ EAPI=5
 inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/libf/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+14.04.20131108.1"
+URELEASE="utopic"
+UVER_PREFIX="+14.10.20140709"
 
 DESCRIPTION="API for accessing social networks"
 HOMEPAGE="https://launchpad.net/friends"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="spell"
 RESTRICT="mirror"
 

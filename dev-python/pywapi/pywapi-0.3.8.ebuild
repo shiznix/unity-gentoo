@@ -9,7 +9,7 @@ inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
 #URELEASE="trusty"
-UVER=
+UVER="1"
 
 DESCRIPTION="Python wrapper around different weather APIs"
 HOMEPAGE="https://launchpad.net/python-weather-api"

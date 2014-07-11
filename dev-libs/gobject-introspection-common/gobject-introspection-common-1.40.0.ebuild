@@ -5,7 +5,10 @@
 EAPI="5"
 GNOME_ORG_MODULE="gobject-introspection"
 
-inherit gnome.org
+inherit gnome.org ubuntu-versionator
+
+URELEASE="trusty-updates"
+UVER="1ubuntu0.1"
 
 DESCRIPTION="Build infrastructure for GObject Introspection"
 HOMEPAGE="http://live.gnome.org/GObjectIntrospection/"

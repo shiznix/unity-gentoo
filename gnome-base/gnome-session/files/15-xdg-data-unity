@@ -6,8 +6,8 @@ if [ "$DESKTOP_SESSION" = "unity" ]; then
 	[ -z "$XDG_MENU_PREFIX" ] && export XDG_MENU_PREFIX=gnome-
 
         if [ -z "$XDG_DATA_DIRS" ]; then
-                export XDG_DATA_DIRS=/usr/share/gnome:/usr/share/glib-2.0/schemas/:/usr/local/share/:/usr/share/
+                export XDG_DATA_DIRS=/usr/share/gnome:/usr/share/kde4:/usr/share/glib-2.0/schemas/:/usr/local/share/:/usr/share/
         else
-                export XDG_DATA_DIRS=/usr/share/gnome:/usr/share/glib-2.0/schemas/:"$XDG_DATA_DIRS"
+                export XDG_DATA_DIRS=/usr/share/gnome:/usr/share/kde4:/usr/share/glib-2.0/schemas/:"$XDG_DATA_DIRS"
         fi
 fi

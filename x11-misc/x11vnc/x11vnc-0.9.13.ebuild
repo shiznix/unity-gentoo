@@ -4,7 +4,10 @@
 
 EAPI="4"
 
-inherit eutils
+inherit eutils ubuntu-versionator
+
+URELEASE="trusty"
+UVER="1.1"
 
 DESCRIPTION="A VNC server for real X displays"
 HOMEPAGE="http://www.karlrunge.com/x11vnc/"

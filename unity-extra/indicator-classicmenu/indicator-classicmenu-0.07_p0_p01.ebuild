@@ -10,7 +10,7 @@ inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 MY_PN="classicmenu-indicator"
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${MY_PN}"
-URELEASE="saucy"
+URELEASE="trusty"
 
 DESCRIPTION="Indicator to provide the main menu of Gnome2/Gnome Classic for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/classicmenu-indicator"
