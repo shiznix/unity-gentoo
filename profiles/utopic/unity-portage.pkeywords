@@ -68,7 +68,7 @@ sys-libs/db:5.1
 =virtual/libintl-0-r1
 ~x11-base/xorg-drivers-1.15
 ~x11-libs/gdk-pixbuf-2.30.7
-~x11-libs/libdrm-2.4.46
+~x11-libs/libdrm-2.4.54
 ~x11-libs/libnotify-0.7.6
 ~x11-libs/libxcb-1.10
 ~x11-libs/libxshmfence-1.1
@@ -85,6 +85,7 @@ sys-libs/db:5.1
 
 ## Overlay missing keyword unmasking ##
 app-backup/deja-dup **
+dev-cpp/gmock **
 dev-cpp/gtest **
 dev-libs/libdbusmenu-qt **
 dev-libs/libtimezonemap **

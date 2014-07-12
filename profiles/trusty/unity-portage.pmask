@@ -56,8 +56,6 @@ x11-drivers/xf86-video-ati::gentoo
 x11-drivers/xf86-video-intel::gentoo
 x11-drivers/xf86-video-nouveau::gentoo
 x11-libs/gtk+::gentoo
-x11-libs/libXfixes::unity-gentoo	# To be removed when Saucy is dropped
-x11-proto/fixesproto::unity-gentoo	# To be removed when Saucy is dropped
 x11-themes/gtk-engines-unico::gentoo
 x11-wm/metacity::gentoo
 x11-misc/lightdm::gentoo

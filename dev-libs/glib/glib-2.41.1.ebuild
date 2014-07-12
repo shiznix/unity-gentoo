@@ -149,9 +149,6 @@ src_prepare() {
 	# gdbus-codegen is a separate package
 	epatch "${FILESDIR}/${PN}-2.40.0-external-gdbus-codegen.patch"
 
-	# do not allow libgobject to unload; bug #405173, https://bugzilla.gnome.org/show_bug.cgi?id=707298
-	epatch "${FILESDIR}/${PN}-2.36.4-znodelete.patch"
-
 	# leave python shebang alone
 	sed -e '/${PYTHON}/d' \
 		-i glib/Makefile.{am,in} || die
