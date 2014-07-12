@@ -41,6 +41,7 @@ src_configure() {
 }
 
 src_compile() {
+	rm -rfv tests/
 	distutils-r1_src_compile
 	pushd lib/
 		emake
