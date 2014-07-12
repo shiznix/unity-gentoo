@@ -16,6 +16,7 @@ dev-libs/libindicate-qt
 ~dev-libs/nettle-2.7.1
 =dev-libs/openssl-1.0.1*
 ~dev-libs/userspace-rcu-0.8.3
+~dev-util/gtk-builder-convert-2.24.24
 dev-python/configparser
 ~dev-python/httplib2-0.8
 dev-python/keyring
