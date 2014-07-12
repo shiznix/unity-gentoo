@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 
 DEPEND="dev-libs/glib:2
 	>=gnome-base/gnome-desktop-3.10
-	sys-power/upower
+	|| ( sys-power/upower sys-power/upower-pm-utils >=sys-apps/systemd-183 )
 	x11-libs/gtk+:3
 	x11-libs/libXcomposite
 	x11-libs/libXdamage

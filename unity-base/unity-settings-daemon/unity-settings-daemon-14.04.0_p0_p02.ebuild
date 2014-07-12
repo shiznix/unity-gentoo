@@ -42,7 +42,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.37.7:2
 	>=media-sound/pulseaudio-2
 	sys-apps/accountsservice
 	sys-apps/systemd
-	>=sys-power/upower-0.9.11
+	|| ( >=sys-power/upower-0.9.11 sys-power/upower-pm-utils >=sys-apps/systemd-183 )
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/libnotify-0.7.3:=

@@ -29,7 +29,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
 	net-misc/url-dispatcher
-	sys-power/upower
+	|| ( sys-power/upower sys-power/upower-pm-utils >=sys-apps/systemd-183 )
 	unity-base/unity-settings-daemon"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
