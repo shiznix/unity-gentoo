@@ -8,7 +8,7 @@ QT5_MODULE="qtbase"
 
 inherit multilib qt5-build
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="SQL abstraction library for the Qt5 tooolkit"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
@@ -20,12 +20,14 @@ fi
 IUSE="firebird freetds mysql oci8 odbc postgres +sqlite"
 
 REQUIRED_USE="
-	|| ( firebird freetds mysql oci8 odbc postgres sqlite )
+	|| ( freetds mysql oci8 odbc postgres sqlite )
 "
 
-DEPEND="
+# See QTBUG-39216, fixed for Qt 5.4 #
+#  In the meantime will only build after old version is first unmerged #
+#    Remove hard block once bumped to 5.4 #
+DEPEND="!!<dev-qt/qtsql-5.3:5
 	~dev-qt/qtcore-${PV}[debug=]
-	firebird? ( dev-db/firebird )
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )
 	oci8? ( dev-db/oracle-instantclient-basic )
@@ -42,7 +44,6 @@ QT5_TARGET_SUBDIRS=(
 
 src_configure() {
 	local myconf=(
-		$(qt_use firebird sql-ibase  plugin)
 		$(qt_use freetds  sql-tds    plugin)
 		$(qt_use mysql    sql-mysql  plugin)
 		$(qt_use oci8     sql-oci    plugin)

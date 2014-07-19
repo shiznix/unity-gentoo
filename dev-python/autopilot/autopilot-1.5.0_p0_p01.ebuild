@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_3 )
 
 inherit distutils-r1 ubuntu-versionator
 
@@ -28,10 +28,10 @@ RDEPEND="app-i18n/ibus[introspection]
 	dev-python/pyxdg[${PYTHON_USEDEP}]
 	dev-python/PyQt4[dbus,${PYTHON_USEDEP}]
 	dev-python/python-xlib
-	dev-python/python-testscenarios[${PYTHON_USEDEP}]
+	dev-python/python-testscenarios
 	dev-python/testtools[${PYTHON_USEDEP}]
 	gnome-base/gconf[introspection]
-	gnome-extra/zeitgeist[${PYTHON_USEDEP}]
+	gnome-extra/zeitgeist
 	unity-base/compiz
 	x11-libs/gtk+:3[introspection]"
 DEPEND="${RDEPEND}"

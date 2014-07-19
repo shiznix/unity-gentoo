@@ -36,10 +36,6 @@ src_prepare() {
                 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
         done
 
-	# Hack to fix include paths for Qml (see b.g.o #498894) #
-	sed -e 's:core-private:core-private quick-private:' \
-		-i tools/qml/qml.pro || die
-
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
 

@@ -14,6 +14,8 @@ gl gu-IN he hi-IN hr hu hy-AM id is it ja kk km kn ko ku lt lv mai mk ml mr
 nb-NO nl nn-NO or pa-IN pl pt-BR pt-PT rm ro ru si sk sl son sq sr sv-SE ta te
 th tr uk vi xh zh-CN zh-TW zu )
 
+FULL_PV="${PV}"
+
 # Taken from ubuntu-versionator.eclass
 MY_PV="${PV%%[a-z]_p*}"
 MY_PV="${MY_PV%%_p*}"
@@ -61,7 +63,7 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 # Mesa 7.10 needed for WebGL + bugfixes
 RDEPEND="
-	>=dev-libs/nss-3.16
+	>=dev-libs/nss-3.16.2
 	>=dev-libs/nspr-4.10.6
 	>=dev-libs/glib-2.26:2
 	>=media-libs/mesa-7.10
@@ -88,12 +90,12 @@ DEPEND="${RDEPEND}
 		virtual/opengl )"
 
 # No source releases for alpha|beta
-if [[ ${PV} =~ alpha ]]; then
+if [[ ${FULL_PV} =~ alpha ]]; then
 	CHANGESET="8a3042764de7"
 	SRC_URI="${SRC_URI}
 		http://dev.gentoo.org/~nirbheek/mozilla/firefox/firefox-${MOZ_PV}_${CHANGESET}.source.tar.bz2"
 	S="${WORKDIR}/mozilla-aurora-${CHANGESET}"
-elif [[ ${PV} =~ beta ]]; then
+elif [[ ${FULL_PV} =~ beta ]]; then
 	S="${WORKDIR}/mozilla-beta"
 	SRC_URI="${SRC_URI}
 		${MOZ_FTP_URI}/${MOZ_PV}/source/firefox-${MOZ_PV}.source.tar.bz2

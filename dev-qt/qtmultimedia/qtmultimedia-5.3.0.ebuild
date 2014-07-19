@@ -21,7 +21,10 @@ fi
 
 IUSE="alsa gstreamer openal pulseaudio qml"
 
-DEPEND="
+# Possibly related to QTBUG-39216, fixed for Qt 5.4 #
+#  In the meantime will only build after old version is first unmerged #
+#    Remove hard block once bumped to 5.4 #
+DEPEND="!!<dev-qt/qtmultimedia-5.3:5
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]

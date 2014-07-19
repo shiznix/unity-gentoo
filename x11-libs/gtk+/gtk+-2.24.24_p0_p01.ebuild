@@ -53,7 +53,7 @@ COMMON_DEPEND="
 	>=dev-libs/atk-2.10.0[introspection?,${MULTILIB_USEDEP}]
 	>=media-libs/fontconfig-2.10.92[${MULTILIB_USEDEP}]
 	x11-misc/shared-mime-info
-	cups? ( >=net-print/cups-1.7.1-r2:=[${MULTILIB_USEDEP}] )
+	cups? ( >=net-print/cups-1.7.3:=[${MULTILIB_USEDEP}] )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.3 )
 	!<gnome-base/gail-1000
 "
