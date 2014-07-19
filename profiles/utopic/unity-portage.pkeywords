@@ -93,6 +93,7 @@ dev-libs/libdbusmenu-qt **
 dev-libs/libtimezonemap **
 dev-libs/glib **
 dev-libs/libupstart **
+dev-libs/libubuntu-app-launch **
 dev-libs/libfriends **
 dev-libs/libcolumbus **
 dev-libs/gobject-introspection **

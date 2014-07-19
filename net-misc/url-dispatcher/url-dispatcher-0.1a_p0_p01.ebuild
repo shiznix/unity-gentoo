@@ -23,7 +23,7 @@ RESTRICT="mirror"
 RDEPEND="dev-libs/libdbusmenu:="
 DEPEND="${RDEPEND}
 	dev-libs/glib:2
-	dev-libs/libupstart-app-launch
+	dev-libs/libubuntu-app-launch
 	sys-apps/dbus
 	test? ( dev-util/dbus-test-runner )"
 

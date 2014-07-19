@@ -27,6 +27,7 @@ DEPEND="${RDEPEND}
 	dev-qt/qtdeclarative:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtgui:5
+	dev-qt/qtprintsupport:5
 	dev-qt/qtsql:5
 	dev-qt/qttest:5
 	dev-qt/qtxmlpatterns:5

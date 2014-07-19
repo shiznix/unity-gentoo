@@ -49,7 +49,8 @@ DEPEND="${RDEPEND}
 	x11-misc/notify-osd
 	${PYTHON_DEPS}"
 
-S="${WORKDIR}/${PN}-trusty"
+#S="${WORKDIR}/${PN}-trusty"
+S="${WORKDIR}/utt"
 
 src_prepare() {
 	# Make Unity Tweak Tool appear in unity-control-center #
