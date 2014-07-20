@@ -97,6 +97,7 @@ dev-libs/libubuntu-app-launch **
 dev-libs/libfriends **
 dev-libs/libcolumbus **
 dev-libs/gobject-introspection **
+dev-libs/gobject-introspection-common **
 dev-libs/libdbusmenu **
 dev-python/autopilot **
 dev-python/python-testscenarios **

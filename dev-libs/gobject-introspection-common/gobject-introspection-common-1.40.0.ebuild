@@ -5,7 +5,7 @@
 EAPI="5"
 GNOME_ORG_MODULE="gobject-introspection"
 
-inherit gnome.org ubuntu-versionator
+inherit ubuntu-versionator gnome.org
 
 URELEASE="trusty-updates"
 UVER="1ubuntu0.1"
@@ -19,9 +19,9 @@ KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86
 IUSE=""
 
 DEPEND=""
-RDEPEND="${DEPEND}
-	!<dev-libs/gobject-introspection-1.32.0"
-# Before 1.32.0, ${PN} was part of gobject-introspection
+RDEPEND="!<${CATEGORY}/${PN/-common}-${PV}"
+# Use !<${PV} because mixing gobject-introspection with different version of -common can cause issues like:
+# http://forums.gentoo.org/viewtopic-p-7421930.html
 
 src_configure() { :; }
 
