@@ -1,0 +1,11 @@
+diff -urN unity-system-compositor-0.0.4+14.10.20140718/src/server_configuration.cpp unity-system-compositor-0.0.4+14.10.20140718-patched/src/server_configuration.cpp
+--- unity-system-compositor-0.0.4+14.10.20140718/src/server_configuration.cpp	2014-07-21 19:19:42.903909627 +0930
++++ unity-system-compositor-0.0.4+14.10.20140718-patched/src/server_configuration.cpp	2014-07-21 19:20:24.522501185 +0930
+@@ -16,6 +16,7 @@
+  * Authored by: Alexandros Frantzis <alexandros.frantzis@canonical.com>
+  */
+ 
++#include <iostream>
+ #include "server_configuration.h"
+ #include "external_spinner.h"
+ #include "session_coordinator.h"

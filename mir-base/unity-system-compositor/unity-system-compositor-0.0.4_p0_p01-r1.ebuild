@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140703.1"
+UVER_PREFIX="+14.10.20140718"
 
 DESCRIPTION="Compositor for Mir display server that switches graphics and input between running sessions"
 HOMEPAGE="https://launchpad.net/unity-system-compositor"
@@ -35,6 +35,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	epatch -p1 "${FILESDIR}/stdcerr_iostream-fix.diff"
 }
 
 src_install() {

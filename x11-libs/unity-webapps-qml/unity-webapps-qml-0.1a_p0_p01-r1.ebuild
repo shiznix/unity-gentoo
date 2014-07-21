@@ -9,7 +9,7 @@ inherit python-any-r1 qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140626.1"
+UVER_PREFIX="+14.10.20140718.1"
 
 DESCRIPTION="Unity Webapps QML component"
 HOMEPAGE="https://launchpad.net/unity-webapps-qml"

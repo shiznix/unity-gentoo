@@ -183,6 +183,7 @@ x11-base/xorg-server **
 x11-drivers/xf86-video-ati **
 x11-libs/content-hub **
 x11-libs/libaccounts-qt **
+x11-libs/u1db-qt **
 x11-libs/ubuntu-ui-toolkit **
 x11-libs/unity-webapps-qml **
 x11-libs/gtk+:2 **

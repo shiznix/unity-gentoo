@@ -82,7 +82,6 @@ src_configure() {
 		--docdir="${EPREFIX}"/usr/share/doc/${PF}
 		$(use_enable doc docbook-docs)
 		$(use_enable introspection)
-		$(use_enable vala)
 		$(use_enable systemd)
 		$(systemd_with_unitdir)"
 	gnome2_src_configure
