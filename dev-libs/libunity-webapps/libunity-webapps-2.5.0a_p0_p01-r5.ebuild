@@ -26,7 +26,7 @@ RDEPEND="dev-libs/libdbusmenu:=
 	dev-libs/libunity:="
 DEPEND="${RDEPEND}
 	app-admin/packagekit-base
-	app-misc/geoclue
+	app-misc/geoclue:0
 	dev-db/sqlite:3
 	>=dev-libs/glib-2.32.3:2
 	dev-libs/gobject-introspection
