@@ -11,6 +11,10 @@ UURL="mirror://ubuntu/pool/main/c/${PN}"
 URELEASE="trusty-updates"
 UVER_PREFIX="+14.04.20140701"
 
+## Oops, Utopic versioning is lower than Trusty's ?! ##
+PV="${PV}.1"
+MY_P="${PN}_${PV}"
+
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/compiz"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
