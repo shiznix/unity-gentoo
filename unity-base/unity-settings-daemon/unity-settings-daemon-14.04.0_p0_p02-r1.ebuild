@@ -16,9 +16,9 @@ DESCRIPTION="Unity Settings Daemon"
 HOMEPAGE="https://launchpad.net/unity-settings-daemon"
 SRC_URI=	# 'gnome2' inherits 'gnome.org' which tries to set SRC_URI
 
-EBZR_PROJECT="${PN}"
-EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10"
-EBZR_REVISION="4028"
+EBZR_PROJECT="${PN}/gnome-desktop-3.10c"
+EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10c"
+EBZR_REVISION="4055"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -103,9 +103,6 @@ src_prepare() {
 
 	# Make colord and wacom optional; requires eautoreconf
 	epatch "${FILESDIR}/${PN}-optional-color-wacom.patch"
-
-	# Correct backlight percentage #
-	epatch "${FILESDIR}/${PN}_backlight-percent-fix.diff"
 
 	# Disable build of cursor plugin #
 	# This fixes the missing cursor in lightdm for gnome-3.10 #

@@ -1,0 +1,12 @@
+diff -urN unity-control-center-14.10.0_p0_p01/panels/appearance/cc-appearance-panel.c unity-control-center-14.10.0_p0_p01-patched/panels/appearance/cc-appearance-panel.c
+--- unity-control-center-14.10.0_p0_p01/panels/appearance/cc-appearance-panel.c	2014-07-24 09:53:25.176423000 +0930
++++ unity-control-center-14.10.0_p0_p01-patched/panels/appearance/cc-appearance-panel.c	2014-07-24 09:56:08.393479296 +0930
+@@ -1847,7 +1847,7 @@
+   if (schema)
+     {
+       priv->unity_launcher_settings = g_settings_new (UNITY_LAUNCHER_GSETTINGS_SCHEMA);
+-      g_object_unref (schema);
++      g_settings_schema_unref (schema);
+     }
+   schema = g_settings_schema_source_lookup (source, UNITY_GSETTINGS_SCHEMA, TRUE);
+   if (schema)
