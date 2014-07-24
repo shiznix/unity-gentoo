@@ -56,6 +56,8 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 
+	epatch -p1 "${FILESDIR}"/0001-libzeitgeist-Add-a-missing-dependency-on-gio-2.0.patch
+
 	local PYTHON
 	python_export_best
 	sed \
