@@ -10,10 +10,11 @@ inherit autotools distutils-r1 ubuntu-versionator vala
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 URELEASE="utopic"
 UVER=
+UVER_PREFIX="build1"
 
 DESCRIPTION="Ubuntu mobile platform package management framework"
 HOMEPAGE="https://launchpad.net/click"
-SRC_URI="${UURL}/${MY_P}.tar.xz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -26,6 +27,8 @@ DEPEND="dev-libs/glib:2
 	dev-libs/libgee:0.8
 	nls? ( virtual/libintl )
 	$(vala_depend)"
+
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	vala_src_prepare

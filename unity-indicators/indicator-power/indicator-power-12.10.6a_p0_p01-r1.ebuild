@@ -6,11 +6,11 @@ EAPI=4
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
+inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140624"
+UVER_PREFIX="+14.10.20140718"
 
 DESCRIPTION="Indicator showing power state used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-power"
@@ -35,18 +35,30 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	append-cflags -Wno-error
-	eautoreconf
-
+	epatch "${FILESDIR}/sandbox_violations_fix.diff"
 
 	# Make indicator start using XDG autostart #
 	sed -e '/NotShowIn=/d' \
 		-i data/indicator-power.desktop.in
+
+	cmake-utils_src_prepare
 }
 
 src_install() {
-	emake DESTDIR="${D}" install
-
 	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
 	rm -rf "${ED}usr/share/upstart"
+
+	cmake-utils_src_install
+}
+
+pkg_preinst() {
+        gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+        gnome2_schemas_update
+}
+
+pkg_postrm() {
+        gnome2_schemas_update
 }
