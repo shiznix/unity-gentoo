@@ -14,7 +14,7 @@ URELEASE="trusty-updates"
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Nautilus"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"

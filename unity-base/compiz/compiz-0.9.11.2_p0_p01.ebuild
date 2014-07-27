@@ -9,10 +9,10 @@ inherit base gnome2 cmake-utils eutils python ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 URELEASE="trusty-updates"
-UVER_PREFIX="+14.04.20140701"
+UVER_PREFIX="+14.04.20140714"
 
 ## Oops, Utopic versioning is lower than Trusty's ?! ##
-PV="${PV}.1"
+#PV="${PV}.1"
 MY_P="${PN}_${PV}"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
