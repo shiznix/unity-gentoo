@@ -67,7 +67,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.37.7:2
 		x11-drivers/xf86-input-wacom )
 	packagekit? ( >=app-admin/packagekit-base-0.7.4 )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
-	udev? ( virtual/udev[gudev] )"
+	udev? ( virtual/libgudev:= )"
 RDEPEND="${COMMON_DEPEND}
 	gnome-base/dconf
 	>=x11-themes/gnome-themes-standard-2.91

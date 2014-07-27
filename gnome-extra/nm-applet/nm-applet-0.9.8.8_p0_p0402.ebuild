@@ -47,7 +47,7 @@ RDEPEND="
 	introspection? ( >=dev-libs/gobject-introspection-0.9.6 )
 	modemmanager? ( >=net-misc/modemmanager-0.7.990 )
 	virtual/freedesktop-icon-theme
-	virtual/udev[gudev]
+	virtual/libgudev:=
 "
 DEPEND="${RDEPEND}
 	virtual/pkgconfig

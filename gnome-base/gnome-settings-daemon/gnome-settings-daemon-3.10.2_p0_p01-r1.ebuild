@@ -65,7 +65,7 @@ COMMON_DEPEND="
 		x11-drivers/xf86-input-wacom )
 	packagekit? ( >=app-admin/packagekit-base-0.7.4 )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
-	udev? ( virtual/udev[gudev] )
+	udev? ( virtual/libgudev:= )
 "
 # Themes needed by g-s-d, gnome-shell, gtk+:3 apps to work properly
 # <gnome-color-manager-3.1.1 has file collisions with g-s-d-3.1.x

@@ -68,7 +68,7 @@ COMMON_DEPEND="
 	lirc? ( app-misc/lirc )
 	python? ( >=dev-python/pygobject-3.0:3[${PYTHON_USEDEP}] )
 	udev? (
-		virtual/udev[gudev]
+		virtual/libgudev:=
 		ipod? ( >=media-libs/libgpod-0.7.92[udev] )
 		mtp? ( >=media-libs/libmtp-0.3 ) )
 	zeitgeist? ( gnome-extra/zeitgeist )

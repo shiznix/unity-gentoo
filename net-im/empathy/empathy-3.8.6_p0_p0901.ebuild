@@ -76,7 +76,7 @@ COMMON_DEPEND="
 	v4l? (
 		media-plugins/gst-plugins-v4l2:1.0
 		>=media-video/cheese-3.4:=
-		virtual/udev[gudev] )
+		virtual/libgudev:= )
 "
 #geocode? ( >=sci-geosciences/geocode-glib-0.99.1 )
 

@@ -44,7 +44,7 @@ dev-qt/qtwidgets:5
 dev-qt/qtxml:5
 dev-qt/qtxmlpatterns:5
 ~dev-util/boost-build-1.55.0
-~dev-util/umockdev-0.7
+~dev-util/umockdev-0.8.2
 ~net-zope/zope-fixers-1.1.2
 ~net-zope/zope-interface-4.1.0
 ~net-libs/gnutls-3.3.4
