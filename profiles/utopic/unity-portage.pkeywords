@@ -7,7 +7,7 @@
 dev-lang/python:3.4
 dev-lang/python-exec:2	# Need this as 'python3_4' is only puse.unmasked at ~keyword level
 ~dev-libs/atk-2.12.0
-~dev-libs/boost-1.53.0
+~dev-libs/boost-1.55.0
 ~dev-libs/libgcrypt-1.6.1
 dev-libs/libindicate
 dev-libs/libindicate-qt
@@ -43,7 +43,7 @@ dev-qt/qttest:5
 dev-qt/qtwidgets:5
 dev-qt/qtxml:5
 dev-qt/qtxmlpatterns:5
-~dev-util/boost-build-1.53.0
+~dev-util/boost-build-1.55.0
 ~dev-util/umockdev-0.7
 ~net-zope/zope-fixers-1.1.2
 ~net-zope/zope-interface-4.1.0
@@ -99,6 +99,7 @@ dev-libs/libcolumbus **
 dev-libs/gobject-introspection **
 dev-libs/gobject-introspection-common **
 dev-libs/libdbusmenu **
+dev-libs/ubuntu-download-manager **
 dev-python/autopilot **
 dev-python/python-testscenarios **
 dev-qt/qtxml:5 **
@@ -128,6 +129,7 @@ dev-qt/qtlocation:5 **
 dev-qt/qtcore:5 **
 dev-qt/qtsvg:5 **
 dev-qt/qtsql:5 **
+dev-qt/qtsystems:5 **
 dev-qt/qtopengl:5 **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **

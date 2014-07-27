@@ -1,0 +1,32 @@
+diff -Nur ubuntu-download-manager-0.7+14.10.20140721_orig/CMakeLists.txt ubuntu-download-manager-0.7+14.10.20140721/CMakeLists.txt
+--- ubuntu-download-manager-0.7+14.10.20140721_orig/CMakeLists.txt	2014-07-21 11:39:38.000000000 +0200
++++ ubuntu-download-manager-0.7+14.10.20140721/CMakeLists.txt	2014-07-27 18:37:13.809722183 +0200
+@@ -24,12 +24,6 @@
+   ENABLE_COVERAGE_REPORT(TARGETS ${DIALER_APP})
+ ENDIF(CMAKE_BUILD_TYPE MATCHES [cC][oO][vV][eE][rR][aA][gG][eE])
+ 
+-execute_process(
+-    COMMAND qmake -query QT_INSTALL_QML
+-    OUTPUT_VARIABLE QT_INSTALL_QML
+-    OUTPUT_STRIP_TRAILING_WHITESPACE
+-)
+-
+ set(UDM_VERSION_MAJOR 0)
+ set(UDM_VERSION_MINOR 7)
+ set(UDM_VERSION_PATCH 0)
+@@ -55,6 +49,15 @@
+ pkg_check_modules(GLOG REQUIRED libglog)
+ pkg_check_modules(GLOG libglog)
+ 
++get_target_property(QMAKE_EXECUTABLE Qt5::qmake LOCATION)
++execute_process(
++    COMMAND ${QMAKE_EXECUTABLE} -query QT_INSTALL_QML
++    OUTPUT_VARIABLE QT_INSTALL_QML
++    OUTPUT_STRIP_TRAILING_WHITESPACE
++)
++
++message (STATUS "QT_INSTALL_QML: " ${QT_INSTALL_QML})
++
+ enable_testing()
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pipe -std=c++11 -Werror -O2 -Wall -W -D_REENTRANT -fPIC -pedantic -Wextra")
+ add_definitions("-DNDEBUG")

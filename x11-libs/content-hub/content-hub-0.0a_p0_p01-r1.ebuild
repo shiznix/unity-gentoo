@@ -22,14 +22,17 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/glib
 	dev-libs/libupstart-app-launch
+	dev-libs/ubuntu-download-manager
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
 	dev-qt/qttest:5
 	dev-util/dbus-test-runner
+	dev-util/lcov
 	sys-libs/libnih[dbus]
-	x11-libs/gsettings-qt"
+	x11-libs/gsettings-qt
+"
 
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
 export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qmake

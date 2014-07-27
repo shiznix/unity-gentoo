@@ -1,0 +1,45 @@
+diff -Nur ubuntu-download-manager-0.7+14.10.20140721_orig/src/common/public/CMakeLists.txt ubuntu-download-manager-0.7+14.10.20140721/src/common/public/CMakeLists.txt
+--- ubuntu-download-manager-0.7+14.10.20140721_orig/src/common/public/CMakeLists.txt	2014-07-21 11:38:52.000000000 +0200
++++ ubuntu-download-manager-0.7+14.10.20140721/src/common/public/CMakeLists.txt	2014-07-27 19:20:46.716750109 +0200
+@@ -60,7 +60,7 @@
+ 
+ configure_file(${TARGET}.pc.in ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc @ONLY)
+ 
+-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/pkgconfig)
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+ install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+ install(FILES ${TRANSFERS_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ubuntu/transfers)
+ install(FILES ${ERRORS_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ubuntu/transfers/errors)
+diff -Nur ubuntu-download-manager-0.7+14.10.20140721_orig/src/downloads/client/CMakeLists.txt ubuntu-download-manager-0.7+14.10.20140721/src/downloads/client/CMakeLists.txt
+--- ubuntu-download-manager-0.7+14.10.20140721_orig/src/downloads/client/CMakeLists.txt	2014-07-21 11:38:52.000000000 +0200
++++ ubuntu-download-manager-0.7+14.10.20140721/src/downloads/client/CMakeLists.txt	2014-07-27 19:20:04.438296289 +0200
+@@ -71,6 +71,6 @@
+ 
+ configure_file(${TARGET}.pc.in ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc @ONLY)
+ 
+-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/pkgconfig)
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+ install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+ install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ubuntu/download_manager)
+diff -Nur ubuntu-download-manager-0.7+14.10.20140721_orig/src/downloads/common/CMakeLists.txt ubuntu-download-manager-0.7+14.10.20140721/src/downloads/common/CMakeLists.txt
+--- ubuntu-download-manager-0.7+14.10.20140721_orig/src/downloads/common/CMakeLists.txt	2014-07-21 11:38:52.000000000 +0200
++++ ubuntu-download-manager-0.7+14.10.20140721/src/downloads/common/CMakeLists.txt	2014-07-27 19:20:25.420521479 +0200
+@@ -47,6 +47,6 @@
+ 
+ configure_file(${TARGET}.pc.in ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc @ONLY)
+ 
+-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/pkgconfig)
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+ install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+ install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ubuntu/download_manager)
+diff -Nur ubuntu-download-manager-0.7+14.10.20140721_orig/src/uploads/common/CMakeLists.txt ubuntu-download-manager-0.7+14.10.20140721/src/uploads/common/CMakeLists.txt
+--- ubuntu-download-manager-0.7+14.10.20140721_orig/src/uploads/common/CMakeLists.txt	2014-07-21 11:38:52.000000000 +0200
++++ ubuntu-download-manager-0.7+14.10.20140721/src/uploads/common/CMakeLists.txt	2014-07-27 19:19:37.076002726 +0200
+@@ -43,6 +43,6 @@
+ 
+ configure_file(${TARGET}.pc.in ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc @ONLY)
+ 
+-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/pkgconfig)
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+ install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+ install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ubuntu/upload_manager)
