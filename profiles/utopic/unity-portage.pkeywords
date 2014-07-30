@@ -143,6 +143,7 @@ gnome-extra/nm-applet **
 media-gfx/thumbnailer **
 media-libs/mesa-mir **
 media-libs/mesa **
+media-sound/banshee **
 media-sound/rhythmbox **
 mir-base/mir **
 mir-base/unity-system-compositor **

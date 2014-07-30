@@ -16,7 +16,8 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
-URELEASE="trusty"
+URELEASE="utopic"
+UVER_SUFFIX="~pkg1029"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -46,6 +47,7 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	)
 	>=dev-libs/elfutils-0.149
 	dev-libs/expat:=
+	dev-libs/icu:=
 	>=dev-libs/jsoncpp-0.5.0-r1:=
 	>=dev-libs/libevent-1.4.13:=
 	dev-libs/libxml2:=[icu]
@@ -54,15 +56,13 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	>=dev-libs/nss-3.14.3:=
 	dev-libs/re2:=
 	gnome? ( >=gnome-base/gconf-2.24.0:= )
-	gnome-keyring? ( >=gnome-base/gnome-keyring-2.28.2:= )
+	gnome-keyring? ( gnome-base/libgnome-keyring:= )
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/flac:=
 	media-libs/harfbuzz:=[icu(+)]
 	>=media-libs/libjpeg-turbo-1.2.0-r1:=
 	media-libs/libpng:0=
-	>=media-libs/libvpx-1.3.0:=
 	>=media-libs/libwebp-0.4.0:=
-	media-libs/opus:=
 	media-libs/speex:=
 	pulseaudio? ( media-sound/pulseaudio:= )
 	sys-apps/dbus:=
@@ -70,6 +70,7 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	>=sys-libs/libcap-2.22:=
 	sys-libs/zlib:=[minizip]
 	virtual/udev
+	x11-libs/libdrm
 	x11-libs/gtk+:2=
 	>=x11-libs/libXi-1.6.0:=
 	x11-libs/libXinerama:=
@@ -85,7 +86,7 @@ DEPEND="${RDEPEND}
 	dev-perl/JSON
 	>=dev-util/gperf-3.0.3
 	dev-util/ninja
-	sys-apps/hwids
+	sys-apps/hwids[usb(+)]
 	>=sys-devel/bison-2.4.3
 	sys-devel/flex
 	virtual/pkgconfig
@@ -102,15 +103,11 @@ RDEPEND+="
 # Python dependencies. The DEPEND part needs to be kept in sync
 # with python_check_deps.
 DEPEND+=" $(python_gen_any_dep '
-	>=dev-python/jinja-2.7[${PYTHON_USEDEP}]
-	dev-python/ply[${PYTHON_USEDEP}]
 	dev-python/simplejson[${PYTHON_USEDEP}]
 	test? ( dev-python/pyftpdlib[${PYTHON_USEDEP}] )
 ')"
 python_check_deps() {
-	has_version ">=dev-python/jinja-2.7[${PYTHON_USEDEP}]" && \
-		has_version "dev-python/ply[${PYTHON_USEDEP}]" && \
-		has_version "dev-python/simplejson[${PYTHON_USEDEP}]" && \
+	has_version "dev-python/simplejson[${PYTHON_USEDEP}]" && \
 		{ ! use test || has_version "dev-python/pyftpdlib[${PYTHON_USEDEP}]"; }
 }
 
@@ -179,11 +176,7 @@ src_prepare() {
 	#	touch out/Release/gen/sdk/toolchain/linux_x86_newlib/stamp.untar || die
 	# fi
 
-	epatch "${FILESDIR}/${PN}-system-jinja-r4.patch"
-	epatch "${FILESDIR}/${PN}-gn-r1.patch"
-	epatch "${FILESDIR}/${PN}-depot-tools-r0.patch"
-	epatch "${FILESDIR}/${PN}-cups-r0.patch"
-	epatch "${FILESDIR}/${PN}-arm-r0.patch"
+	epatch "${FILESDIR}/${PN}-system-zlib-r0.patch"
 
 	epatch_user
 
@@ -193,6 +186,7 @@ src_prepare() {
 		'base/third_party/dynamic_annotations' \
 		'base/third_party/icu' \
 		'base/third_party/nspr' \
+		'base/third_party/superfasthash' \
 		'base/third_party/symbolize' \
 		'base/third_party/valgrind' \
 		'base/third_party/xdg_mime' \
@@ -208,11 +202,13 @@ src_prepare() {
 		'third_party/cacheinvalidation' \
 		'third_party/cld' \
 		'third_party/cros_system_api' \
+		'third_party/dom_distiller_js' \
 		'third_party/ffmpeg' \
 		'third_party/flot' \
 		'third_party/hunspell' \
 		'third_party/iccjpeg' \
-		'third_party/icu' \
+		'third_party/icu/icu.isolate' \
+		'third_party/jinja2' \
 		'third_party/jstemplate' \
 		'third_party/khronos' \
 		'third_party/leveldatabase' \
@@ -221,18 +217,22 @@ src_prepare() {
 		'third_party/libphonenumber' \
 		'third_party/libsrtp' \
 		'third_party/libusb' \
+		'third_party/libvpx' \
 		'third_party/libwebm' \
 		'third_party/libxml/chromium' \
 		'third_party/libXNVCtrl' \
 		'third_party/libyuv' \
 		'third_party/lss' \
 		'third_party/lzma_sdk' \
+		'third_party/markupsafe' \
 		'third_party/mesa' \
 		'third_party/modp_b64' \
 		'third_party/mt19937ar' \
 		'third_party/npapi' \
 		'third_party/nss.isolate' \
+		'third_party/opus' \
 		'third_party/ots' \
+		'third_party/ply' \
 		'third_party/polymer' \
 		'third_party/protobuf' \
 		'third_party/pywebsocket' \
@@ -283,32 +283,36 @@ src_configure() {
 
 	# Use system-provided libraries.
 	# TODO: use_system_hunspell (upstream changes needed).
-	# TODO: use_system_icu (resolve startup crash).
 	# TODO: use_system_libsrtp (bug #459932).
+	# TODO: use_system_libvpx (http://crbug.com/347823).
 	# TODO: use_system_libusb (http://crbug.com/266149).
+	# TODO: use_system_opus (https://code.google.com/p/webrtc/issues/detail?id=3077).
+	# TODO: use_system_protobuf (bug #503084).
 	# TODO: use_system_ssl (http://crbug.com/58087).
 	# TODO: use_system_sqlite (http://crbug.com/22208).
 	myconf+="
 		-Duse_system_bzip2=1
 		-Duse_system_flac=1
 		-Duse_system_harfbuzz=1
+		-Duse_system_icu=1
 		-Duse_system_jsoncpp=1
 		-Duse_system_libevent=1
 		-Duse_system_libjpeg=1
 		-Duse_system_libpng=1
-		-Duse_system_libvpx=1
 		-Duse_system_libwebp=1
 		-Duse_system_libxml=1
 		-Duse_system_libxslt=1
 		-Duse_system_minizip=1
 		-Duse_system_nspr=1
 		-Duse_system_openssl=1
-		-Duse_system_opus=1
 		-Duse_system_re2=1
 		-Duse_system_snappy=1
 		-Duse_system_speex=1
 		-Duse_system_xdg_utils=1
 		-Duse_system_zlib=1"
+
+	# Needed for system icu - we don't need additional data files.
+	myconf+=" -Dicu_use_data_file_flag=0"
 
 	# TODO: patch gyp so that this arm conditional is not needed.
 	if ! use arm; then
@@ -319,7 +323,6 @@ src_configure() {
 	# Optional dependencies.
 	# TODO: linux_link_kerberos, bug #381289.
 	myconf+="
-		$(gyp_use aura)
 		$(gyp_use cups)
 		$(gyp_use gnome use_gconf)
 		$(gyp_use gnome-keyring use_gnome_keyring)
@@ -348,6 +351,9 @@ src_configure() {
 	myconf+="
 		-Dlinux_use_gold_binary=0
 		-Dlinux_use_gold_flags=0"
+
+	# TODO: enable mojo after fixing compile failures.
+	myconf+=" -Duse_mojo=0"
 
 	# Always support proprietary codecs.
 	myconf+=" -Dproprietary_codecs=1"
@@ -408,6 +414,9 @@ src_configure() {
 	# Depending on GCC version the warnings are different and we don't want
 	# the build to fail because of that.
 	myconf+=" -Dwerror="
+
+	# Disable fatal linker warnings, bug 506268.
+	myconf+=" -Ddisable_fatal_linker_warnings=1"
 
 	# Avoid CFLAGS problems, bug #352457, bug #390147.
 	if ! use custom-cflags; then
@@ -552,6 +561,7 @@ chromium_test() {
 		"NetUtilTest.IDNToUnicode*" # bug 361885
 		"NetUtilTest.FormatUrl*" # see above
 		"SpdyFramerTests/SpdyFramerTest.CreatePushPromiseCompressed/2" # bug #478168
+		"SpdyFramerTests/SpdyFramerTest.CreateContinuationCompressed/2" # see above
 		"HostResolverImplTest.BypassCache" # bug #498304
 		"HostResolverImplTest.FlushCacheOnIPAddressChange" # bug #481812
 		"HostResolverImplTest.ResolveFromCache" # see above
@@ -559,6 +569,8 @@ chromium_test() {
 		"SSLClientSocketTest.ConnectMismatched" # see above
 		"UDPSocketTest.*" # see above
 		"*EndToEndTest*" # see above
+		"Version/QuicHttpStreamTest.Priority/0" # bug #503010
+		"Version/QuicHttpStreamTest.DestroyedEarly/0" # see above
 	)
 	runtest out/Release/net_unittests "${excluded_net_unittests[@]}"
 
@@ -613,7 +625,6 @@ src_install() {
 	popd
 
 	insinto "${CHROMIUM_HOME}"
-	doins out/Release/icudtl.dat || die
 	doins out/Release/*.pak || die
 
 	doins -r out/Release/locales || die
