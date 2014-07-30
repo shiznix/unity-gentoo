@@ -81,8 +81,8 @@ RDEPEND="
 	gallium? ( app-admin/eselect-mesa )
 	>=app-admin/eselect-opengl-1.2.7
 	>=dev-libs/expat-2.1.0-r3[${MULTILIB_USEDEP}]
-	gbm? ( >=virtual/udev-208-r2[${MULTILIB_USEDEP}] )
-	dri3? ( >=virtual/udev-208-r2[${MULTILIB_USEDEP}] )
+	gbm? ( >=virtual/udev-215 )
+	dri3? ( >=virtual/udev-215 )
 	>=x11-libs/libX11-1.6.2[${MULTILIB_USEDEP}]
 	>=x11-libs/libxshmfence-1.1[${MULTILIB_USEDEP}]
 	>=x11-libs/libXdamage-1.1.4-r1[${MULTILIB_USEDEP}]
