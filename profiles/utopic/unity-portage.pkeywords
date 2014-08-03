@@ -4,6 +4,7 @@
 
 ## Other packages keyword unmasking ##
 ~app-admin/packagekit-base-0.8.15
+~dev-dotnet/libgdiplus-2.10.9
 dev-lang/python:3.4
 dev-lang/python-exec:2	# Need this as 'python3_4' is only puse.unmasked at ~keyword level
 ~dev-libs/atk-2.12.0
