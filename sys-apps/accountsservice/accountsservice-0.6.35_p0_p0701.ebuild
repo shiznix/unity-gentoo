@@ -12,7 +12,7 @@ DESCRIPTION="D-Bus interfaces for querying and manipulating user account informa
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"

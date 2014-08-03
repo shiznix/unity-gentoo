@@ -3,18 +3,15 @@
 # $Header: $
 
 EAPI=5
-#VALA_MIN_API_VERSION="0.22"
-#VALA_MAX_API_VERSION="0.22"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://ubuntu/pool/universe/u/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140721"
+UVER_PREFIX="+14.10.20140725"
 
-DESCRIPTION="A daemon that offers a DBus API to perform downloads."
+DESCRIPTION="A daemon that offers a DBus API to perform downloads"
 HOMEPAGE="https://launchpad.net/ubuntu-download-manager"
-#SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
-SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

@@ -8,7 +8,7 @@ inherit qt4-r2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140624"
+UVER_PREFIX="+14.10.20140801.1"
 
 DESCRIPTION="Qml bindings for GSettings."
 HOMEPAGE="https://launchpad.net/gsettings-qt"

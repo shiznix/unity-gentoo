@@ -9,7 +9,7 @@ inherit eutils ubuntu-versionator
 MY_PN="upstart"
 MY_P="${MY_PN}_${PV}"
 UURL="mirror://ubuntu/pool/main/u/${MY_PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 
 DESCRIPTION="Event-based replacement for the /sbin/init daemon."
 HOMEPAGE="http://upstart.ubuntu.com/"

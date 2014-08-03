@@ -5,6 +5,8 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
+VALA_MIN_API_VERSION="0.24"
+VALA_MAX_API_VERSION="0.24"
 
 inherit autotools flag-o-matic gnome2 ubuntu-versionator base vala
 
@@ -13,7 +15,7 @@ URELEASE="utopic"
 
 DESCRIPTION="The greeter (login screen) application for Unity. It is implemented as a LightDM greeter."
 HOMEPAGE="https://launchpad.net/unity-greeter"
-SRC_URI="${UURL}/${MY_P}-${UVER}.tar.gz"
+SRC_URI="${UURL}/${MY_P}-${UVER}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"

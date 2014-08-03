@@ -7,7 +7,7 @@ EAPI=5
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 UVER_PREFIX="+14.10.20140716"
 
 DESCRIPTION="Qt/QML implementation of U1DB"

@@ -15,7 +15,7 @@ UURL="mirror://ubuntu/pool/main/a/${PN}"
 URELEASE="utopic"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3+"
 SLOT="0"

@@ -10,7 +10,7 @@ inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140718"
+UVER_PREFIX="+14.10.20140730"
 
 DESCRIPTION="Indicator showing power state used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-power"
@@ -33,6 +33,7 @@ DEPEND="${RDEPEND}
 	unity-base/unity-settings-daemon"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+MAKEOPTS="-j1"
 
 src_prepare() {
 	epatch "${FILESDIR}/sandbox_violations_fix.diff"

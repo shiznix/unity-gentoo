@@ -1,0 +1,18 @@
+diff -urN lightdm-1.11.5/debian/guest-account.sh lightdm-1.11.5-patched/debian/guest-account.sh
+--- lightdm-1.11.5/debian/guest-account.sh	2014-08-03 17:40:58.360555766 +0930
++++ lightdm-1.11.5-patched/debian/guest-account.sh	2014-08-03 17:43:30.572636210 +0930
+@@ -131,6 +131,14 @@
+       . /etc/guest-session/prefs.sh
+   fi
+ 
++  # Load default dconf settings
++  if [ -d /etc/guest-session/gsettings/ ]; then
++    for i in /etc/guest-session/gsettings/*; do
++      cat "${i}" | sed '/^\[.*\]$/ s/\./\//g' | \
++        su - $USER -c 'dbus-launch dconf load /'
++    done
++  fi
++
+   chown -R $USER:$USER "$HOME"
+ 
+   echo $USER  
