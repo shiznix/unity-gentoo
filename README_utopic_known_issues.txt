@@ -3,11 +3,6 @@
   * workaround:
     -> XSESSION=unity startx -- vt$(tty | sed 's:.*[a-z]::g')
 
-- Launchpad bug #1295851
-  * Xmir session keyboard input degrades over time from being slow to one character behind
-  * workaround:
-    -> None at this time, don't use Xmir
-
 - Some applications duplicate menu entries in the menu bar due to displaying the application menu and appmenu at the same time
   * Known affected applications so far are gnome-terminal and eog
   * Ubuntu currently workaround this by patching these applications to disable the application menu

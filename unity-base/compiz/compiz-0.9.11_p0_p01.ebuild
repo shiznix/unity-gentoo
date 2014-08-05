@@ -12,7 +12,7 @@ URELEASE="trusty-updates"
 UVER_PREFIX="+14.04.20140714"
 
 ## Oops, Utopic versioning is lower than Trusty's ?! ##
-#PV="${PV}.1"
+PV="${PV}.2"
 MY_P="${PN}_${PV}"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"

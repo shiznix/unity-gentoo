@@ -10,11 +10,12 @@ inherit base gnome2 cmake-utils eutils python ubuntu-versionator xdummy
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 URELEASE="utopic"
 UVER_PREFIX="+14.10.20140707"
+UVER_SUFFIX="b1"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/compiz"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff.gz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0/${PV}"
@@ -58,7 +59,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	x11-libs/libICE
 	x11-libs/libSM
 	>=x11-libs/startup-notification-0.7
-	x11-wm/metacity
+	>=x11-wm/metacity-3.12
 	kde? ( >=kde-base/kwin-4.11.1 )
 	test? ( dev-cpp/gtest
 		dev-cpp/gmock
@@ -83,7 +84,7 @@ pkg_setup() {
 
 src_prepare() {
 	# Ubuntu patchset #
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${S}/debian/patches/${patch}" )
 	done
