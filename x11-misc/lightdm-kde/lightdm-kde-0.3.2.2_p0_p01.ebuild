@@ -35,12 +35,13 @@ RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${PN/-kde}-0.3.2.1	# Incorrect versioning from upstream in tarball
 
-pkg_pretend() {
-        if [[ $(gcc-major-version) -lt 4 ]] || \
-                ( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
-                        ( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
-                                die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
-        fi
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	if [[ $(gcc-major-version) -lt 4 ]] || \
+		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
+			( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
+				die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
+	fi
 }
 
 src_prepare() {

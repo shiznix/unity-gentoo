@@ -28,9 +28,10 @@ DEPEND=">=sys-devel/gcc-4.6
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-pkg_pretend() {
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 6 ) ]]; then
-		die "${P} requires an active >=gcc:4.6, please consult the output of 'gcc-config -l'"
+		die "${P} requires an active >=gcc-4.6, please consult the output of 'gcc-config -l'"
 	fi
 }
 

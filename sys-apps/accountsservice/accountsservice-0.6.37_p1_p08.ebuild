@@ -44,9 +44,10 @@ DEPEND="${RDEPEND}
 		app-text/xmlto )
 	vala? ( $(vala_depend) )"
 
-pkg_pretend() {
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
-		die "${P} requires an active >=gcc-4.7.3:4.7, please consult the output of 'gcc-config -l'"
+		die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
 	fi
 }
 

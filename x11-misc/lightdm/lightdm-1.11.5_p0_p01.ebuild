@@ -59,15 +59,14 @@ PDEPEND="lightdm_greeters_gtk? ( x11-misc/lightdm-gtk-greeter )
 	lightdm_greeters_unity? ( unity-extra/unity-greeter )"
 DOCS=( NEWS )
 
-pkg_pretend() {
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	if [[ $(gcc-major-version) -lt 4 ]] || \
 		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
 			( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
 				die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
 	fi
-}
 
-pkg_setup() {
         if [ -z "${LIGHTDM_GREETERS}" ]; then
 		ewarn " "
                 ewarn "At least one GREETER should be set in /etc/make.conf"

@@ -38,7 +38,8 @@ DEPEND="dev-cpp/gflags
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-pkg_pretend() {
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	if [[ $(gcc-major-version) -lt 4 ]] || \
 		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
 			( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
@@ -47,10 +48,6 @@ pkg_pretend() {
 }
 
 src_prepare() {
-	# Disable '-Werror' #
-#	sed -e 's/-Werror//g' \
-#		-i CMakeLists.txt
-
 	epatch -p1 "${FILESDIR}/include_stdint.diff"
 	epatch -p1 "${FILESDIR}/strcmp_fix.patch"
 	epatch -p1 "${FILESDIR}/mir-0.1.2-build_benchmarks_only_with_tests_enabled.patch"
