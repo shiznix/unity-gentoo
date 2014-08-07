@@ -161,6 +161,7 @@ sys-apps/accountsservice **
 unity-base/hud **
 unity-base/unity-settings-daemon **
 unity-base/gsettings-ubuntu-touch-schemas **
+unity-base/nux **
 unity-base/overlay-scrollbar **
 unity-base/ubuntu-sso-client **
 unity-base/unity-control-center **
