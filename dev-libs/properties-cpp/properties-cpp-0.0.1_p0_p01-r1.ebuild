@@ -22,7 +22,16 @@ IUSE="test"
 RESTRICT="mirror"
 
 DEPEND="test? ( dev-cpp/gtest )
-	dev-libs/boost"
+	dev-libs/boost
+	>=sys-devel/gcc-4.8"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
+
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	if [[ $(gcc-major-version) -lt 4 ]] || \
+		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 8 ]] ); then
+			die "${P} requires an active >=gcc-4.8, please consult the output of 'gcc-config -l'"
+	fi
+}
