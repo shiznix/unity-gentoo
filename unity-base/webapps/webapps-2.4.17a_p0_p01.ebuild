@@ -45,7 +45,7 @@ setvar googlenews		2.4.16+13.10.20130924.2	0ubuntu1
 setvar googleplus		2.4.17+14.10.20140623	0ubuntu1
 setvar googleplusgames		2.4.16+13.10.20130924.2	0ubuntu1
 setvar grooveshark		2.4.16+13.10.20130924.2	0ubuntu1
-##setvar hulu-player		2.4.16daily13.06.20	0ubuntu1	# Corrupt tarball authored by upstream
+setvar hulu-player		2.4.16+13.10.20130924.2	0ubuntu1	# Corrupt tarball authored by upstream
 setvar lastfm-radio		2.4.16+13.10.20130924.2	0ubuntu1
 setvar launchpad		2.4.16+13.10.20130924.2	0ubuntu1
 setvar librefm			2.4.16+13.10.20130924.2	0ubuntu1
