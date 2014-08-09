@@ -53,7 +53,7 @@ if [ "${bump}" = "1" ]; then
 		version_check
 	done
 else
-	for ebuild in $(grep packages *.ebuild | awk -F: '{print $1}' | uniq); do
+	for ebuild in $(grep -l packages *.ebuild | uniq); do
 		echo -e "\nChecking ${ebuild}"
 		unset packages
 		source $(pwd)/${ebuild} 2> /dev/null

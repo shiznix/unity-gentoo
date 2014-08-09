@@ -31,10 +31,10 @@ setvar() {
 }
 ##setvar amazon			2.4.16daily13.06.20	0ubuntu1	# Collides with files from unity-base/webapps-base
 setvar amazoncloudreader	2.4.16+13.10.20130924.1	0ubuntu1
-setvar angrybirds		2.2
+##setvar angrybirds		2.2					# Dropped from upstream packaging
 setvar bbcnews			2.4.16+13.10.20130924.2	0ubuntu1
 setvar cnn-news			2.4.16+13.10.20130924.2	0ubuntu1
-setvar cuttherope		2.2
+##setvar cuttherope		2.2					# Dropped from upstream packaging
 setvar deezer			2.4.16+13.10.20130924.2	0ubuntu1
 setvar deviantart		2.4.16+13.10.20130926.1	0ubuntu1
 setvar facebookmessenger	2.4.16+14.04.20140217	0ubuntu1
