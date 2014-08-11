@@ -22,6 +22,7 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
+RDEPEND="net-libs/oxide-qt"
 DEPEND="dev-libs/glib
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5

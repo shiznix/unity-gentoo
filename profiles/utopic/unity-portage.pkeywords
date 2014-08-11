@@ -155,6 +155,7 @@ net-im/friends **
 net-im/friends-app **
 net-im/telepathy-mission-control **
 net-libs/gnome-online-accounts **
+net-libs/oxide-qt **
 net-misc/url-dispatcher **
 sys-apps/accountsservice **
 sys-apps/click **
