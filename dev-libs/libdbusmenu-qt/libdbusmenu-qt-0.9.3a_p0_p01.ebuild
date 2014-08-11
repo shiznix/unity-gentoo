@@ -19,36 +19,23 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="LGPL-2"
 SLOT="0"
 IUSE="debug doc qt5"
+# tests fail due to missing conection to dbus
+RESTRICT="mirror test"
 
-RDEPEND="
-	dev-libs/qjson
+RDEPEND="dev-libs/qjson
 	>=dev-qt/qtcore-${QT_DEPEND}:4
 	>=dev-qt/qtdbus-${QT_DEPEND}:4
 	>=dev-qt/qtgui-${QT_DEPEND}:4
-	qt5? (
-		dev-qt/qtcore:5
+	>=dev-qt/qttest-${QT_DEPEND}:4
+	qt5? ( dev-qt/qtcore:5
 		dev-qt/qtdbus:5
 		dev-qt/qtgui:5
-	)
-"
+		dev-qt/qttest:5 )"
 DEPEND="${RDEPEND}
-	doc? ( app-doc/doxygen )
-	test? (
-		dev-libs/qjson
-		>=dev-qt/qttest-${QT_DEPEND}:4
-		qt5? (
-			dev-qt/qttest:5
-		)
-	)
-"
+	doc? ( app-doc/doxygen )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
 DOCS=( NEWS README )
-#PATCHES=( "${FILESDIR}/${PN}-${PV}-optionaltests.patch" )
-
-# tests fail due to missing conection to dbus
-RESTRICT="mirror test"
 
 src_configure() {
 	local mycmakeargs=(

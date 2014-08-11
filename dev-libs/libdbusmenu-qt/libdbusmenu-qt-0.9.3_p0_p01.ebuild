@@ -1,14 +1,11 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/libdbusmenu-qt/libdbusmenu-qt-0.9.2.ebuild,v 1.11 2013/08/14 12:31:24 kensington Exp $
+# $Header: $
 
 EAPI=5
-
 QT_DEPEND="4.6.3"
-EBZR_REPO_URI="lp:libdbusmenu-qt"
 
-[[ ${PV} == 9999* ]] && BZR_ECLASS="bzr"
-inherit cmake-utils virtualx ${BZR_ECLASS} ubuntu-versionator
+inherit cmake-utils virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
 URELEASE="trusty"
@@ -16,47 +13,29 @@ UVER_PREFIX="+14.04.20140314"
 
 DESCRIPTION="A library providing Qt implementation of DBusMenu specification"
 HOMEPAGE="https://launchpad.net/libdbusmenu-qt/"
-if [[ ${PV} == 9999* ]] ; then
-	KEYWORDS=""
-else
-	SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
-#	KEYWORDS="amd64 ~arm ppc ppc64 x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
-fi
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+KEYWORDS="amd64 ~arm ppc ppc64 x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
 
 LICENSE="LGPL-2"
 SLOT="0"
 IUSE="debug doc qt5"
+# tests fail due to missing conection to dbus
+RESTRICT="mirror test"
 
-RDEPEND="
-	dev-libs/qjson
+RDEPEND="dev-libs/qjson
 	>=dev-qt/qtcore-${QT_DEPEND}:4
 	>=dev-qt/qtdbus-${QT_DEPEND}:4
 	>=dev-qt/qtgui-${QT_DEPEND}:4
-	qt5? (
-		dev-qt/qtcore:5
+	>=dev-qt/qttest-${QT_DEPEND}:4
+	qt5? ( dev-qt/qtcore:5
 		dev-qt/qtdbus:5
 		dev-qt/qtgui:5
-	)
-
-"
+		dev-qt/qttest:5 )"
 DEPEND="${RDEPEND}
-	doc? ( app-doc/doxygen )
-	test? (
-		dev-libs/qjson
-		>=dev-qt/qttest-${QT_DEPEND}:4
-		qt5? (
-			dev-qt/qttest:5
-		)
-	)
-"
+	doc? ( app-doc/doxygen )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
 DOCS=( NEWS README )
-#PATCHES=( "${FILESDIR}/${PN}-${PV}-optionaltests.patch" )
-
-# tests fail due to missing conection to dbus
-RESTRICT="test"
 
 src_configure() {
 	local mycmakeargs=(
