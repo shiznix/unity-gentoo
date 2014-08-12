@@ -35,7 +35,7 @@ COMMON_DEPEND="
 	>=x11-libs/gtk+-2.90.7:3
 	>=dev-libs/json-glib-0.10
 	>=dev-libs/dbus-glib-0.76
-	>=sys-power/upower-0.9.0
+	|| ( >=sys-power/upower-0.9.0 sys-power/upower-pm-utils >=sys-apps/systemd-183 )
 	elibc_FreeBSD? ( dev-libs/libexecinfo )
 
 	virtual/opengl
