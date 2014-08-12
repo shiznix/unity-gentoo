@@ -3,8 +3,9 @@
 # $Header: $
 
 EAPI=5
+PYTHON_COMPAT=( python2_7 )
 
-inherit base cmake-utils ubuntu-versionator
+inherit base cmake-utils python-single-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
 URELEASE="utopic"
@@ -47,6 +48,7 @@ export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qmake
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
 	if [[ $(gcc-major-version) -lt 4 ]] || \
 		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 8 ]] ); then
 			die "${P} requires an active >=gcc-4.8, please consult the output of 'gcc-config -l'"
