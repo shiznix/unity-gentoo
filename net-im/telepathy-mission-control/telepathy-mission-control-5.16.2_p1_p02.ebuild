@@ -30,7 +30,6 @@ RDEPEND="
 	>=sys-apps/dbus-0.95
 	>=net-libs/telepathy-glib-0.19
 	connman? ( net-misc/connman )
-	gnome-keyring? ( gnome-base/libgnome-keyring )
 	networkmanager? ( >=net-misc/networkmanager-0.7 )
 	upower? ( || ( >=sys-power/upower-0.9.11 sys-power/upower-pm-utils >=sys-apps/systemd-183 ) )
 "
@@ -66,7 +65,6 @@ src_configure() {
 		--disable-static \
 		--enable-libaccounts-sso \
 		$(use_enable debug) \
-		$(use_enable gnome-keyring) \
 		$(use_with connman connectivity connman) \
 		$(use_with networkmanager connectivity nm) \
 		$(use_enable upower)
