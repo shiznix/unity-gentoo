@@ -32,7 +32,7 @@ RDEPEND="
 	connman? ( net-misc/connman )
 	gnome-keyring? ( gnome-base/libgnome-keyring )
 	networkmanager? ( >=net-misc/networkmanager-0.7 )
-	upower? ( >=sys-power/upower-0.9.11 )
+	upower? ( >=sys-power/upower-0.9.11 || sys-power/upower-pm-utils)
 "
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
