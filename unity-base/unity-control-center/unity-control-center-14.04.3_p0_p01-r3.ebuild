@@ -56,7 +56,7 @@ COMMON_DEPEND="
 	>=media-libs/libcanberra-0.13[gtk3]
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
-	>=sys-power/upower-0.9.1
+	|| ( >=sys-power/upower-0.9.1 sys-power/upower-pm-utils unity-base/unity-control-center )
 	unity-base/displayconfig
 	unity-base/gnome-control-center-signon
 	unity-base/unity-settings-daemon[colord?,policykit]
