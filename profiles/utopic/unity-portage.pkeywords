@@ -200,6 +200,7 @@ x11-libs/libaccounts-qt **
 x11-libs/u1db-qt **
 x11-libs/ubuntu-ui-toolkit **
 x11-libs/unity-webapps-qml **
+x11-misc/appmenu-qt5 **
 x11-misc/webapps-greasemonkey **
 x11-misc/lightdm **
 x11-themes/ubuntu-themes **

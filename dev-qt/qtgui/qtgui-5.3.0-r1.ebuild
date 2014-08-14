@@ -19,7 +19,7 @@ fi
 
 # TODO: directfb, linuxfb, offscreen
 
-IUSE="accessibility egl eglfs evdev +gif gles2 +glib harfbuzz ibus jpeg kms +opengl +png udev +xcb"
+IUSE="accessibility egl eglfs evdev +gif gles2 +glib gtkstyle harfbuzz ibus jpeg kms +opengl +png udev +xcb"
 REQUIRED_USE="
 	egl? ( evdev opengl )
 	eglfs? ( egl )
@@ -36,6 +36,10 @@ RDEPEND="
 	evdev? ( sys-libs/mtdev )
 	gles2? ( media-libs/mesa[gles2] )
 	glib? ( dev-libs/glib:2 )
+	gtkstyle? (
+		x11-libs/cairo[-qt4]
+		x11-libs/gtk+:2
+	)
 	harfbuzz? ( >=media-libs/harfbuzz-0.9.12:0= )
 	ibus? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	jpeg? ( virtual/jpeg:0 )
@@ -86,6 +90,7 @@ pkg_setup() {
 		$(usev evdev && echo mtdev)
 		fontconfig
 		$(use gles2 && echo opengles2)
+		$(usev gtkstyle && echo gtk2)
 		$(use harfbuzz && echo system-harfbuzz)
 		$(usev kms)
 		$(usev opengl)
@@ -98,14 +103,16 @@ pkg_setup() {
 		$(use eglfs     || echo QT_NO_EGLFS)
 		$(use evdev     || echo QT_NO_EVDEV)
 		$(use gles2     && echo QT_OPENGL_ES QT_OPENGL_ES_2)
+		$(use gtkstyle	&& echo QT_STYLE_GTK)
 		$(use jpeg      || echo QT_NO_IMAGEFORMAT_JPEG)
 		$(use opengl    && echo QT_OPENGL || echo QT_NO_OPENGL)
 		$(use png       || echo QT_NO_IMAGEFORMAT_PNG)
 	)
 
-	use opengl && QT5_TARGET_SUBDIRS+=(src/openglextensions)
-	use ibus   && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
-	use xcb    && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/compose)
+	use gtkstyle	&& QT5_TARGET_SUBDIRS+=(src/plugins/platformthemes)
+	use opengl	&& QT5_TARGET_SUBDIRS+=(src/openglextensions)
+	use ibus	&& QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
+	use xcb		&& QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/compose)
 
 	qt5-build_pkg_setup
 }
@@ -140,6 +147,7 @@ src_configure() {
 		$(use gif || echo -no-gif)
 		${gl}
 		$(qt_use glib)
+		$(qt_use gtkstyle)
 		$(qt_use harfbuzz harfbuzz system)
 		$(qt_use jpeg libjpeg system)
 		$(qt_use kms)
@@ -148,4 +156,17 @@ src_configure() {
 		$(use xcb && echo -xcb -xcb-xlib -xinput2 -xrender -sm)
 	)
 	qt5-build_src_configure
+}
+
+src_install() {
+	qt5-build_src_install
+
+	if use gtkstyle; then
+		local tempfile=${T}/${PN}${SLOT}.sh
+		cat <<-EOF > "${tempfile}"
+		export GTK2_RC_FILES=\${HOME}/.gtkrc-2.0
+		EOF
+		insinto /etc/profile.d
+		doins "${tempfile}"
+	fi
 }

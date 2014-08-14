@@ -80,6 +80,7 @@ DEPEND="dev-libs/boost
 	x11-libs/startup-notification
 	unity-base/unity-gtk-module
 	x11-misc/appmenu-qt
+	x11-misc/appmenu-qt5
 	doc? ( app-doc/doxygen )
 	test? ( dev-cpp/gmock
 		dev-cpp/gtest
