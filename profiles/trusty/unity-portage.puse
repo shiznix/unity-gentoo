@@ -39,7 +39,6 @@ net-libs/libgadu gnutls
 net-libs/libproxy -kde
 net-libs/gnome-online-accounts uoa
 net-misc/openssh -bindist
-net-misc/networkmanager modemmanager ppp
 sys-apps/systemd pam
 sys-libs/talloc python
 sys-libs/zlib minizip
