@@ -20,7 +20,7 @@ IUSE="cups"
 
 RDEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=]
+	>=dev-qt/qtgui-${PV}[debug=]
 	~dev-qt/qtwidgets-${PV}[debug=]
 	cups? ( net-print/cups )
 "

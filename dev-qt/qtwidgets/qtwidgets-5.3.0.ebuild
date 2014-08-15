@@ -21,7 +21,7 @@ IUSE=""
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=]
+	>=dev-qt/qtgui-${PV}[debug=]
 "
 RDEPEND="${DEPEND}"
 

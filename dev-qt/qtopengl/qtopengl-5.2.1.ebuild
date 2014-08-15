@@ -20,7 +20,7 @@ IUSE=""
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=,opengl]
+	>=dev-qt/qtgui-${PV}[debug=,opengl]
 	~dev-qt/qtwidgets-${PV}[debug=]
 	virtual/opengl
 "

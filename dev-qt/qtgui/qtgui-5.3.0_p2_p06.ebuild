@@ -81,6 +81,9 @@ PDEPEND="
 	ibus? ( app-i18n/ibus )
 "
 
+S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
+QT5_BUILD_DIR="${S}"
+
 QT5_TARGET_SUBDIRS=(
 	src/gui
 	src/platformsupport
