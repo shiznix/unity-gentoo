@@ -19,7 +19,7 @@ IUSE=""
 
 RDEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=,xcb]
+	>=dev-qt/qtgui-${PV}[debug=,xcb]
 	~dev-qt/qtwidgets-${PV}[debug=]
 "
 DEPEND="${RDEPEND}"

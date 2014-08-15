@@ -43,7 +43,7 @@ RDEPEND="
 	>=dev-python/sip-4.15.5:=[${PYTHON_USEDEP}]
 	~dev-qt/qtcore-${QT_PV}
 	X? (
-		~dev-qt/qtgui-${QT_PV}
+		>=dev-qt/qtgui-${QT_PV}
 		~dev-qt/qttest-${QT_PV}
 	)
 	dbus? (

@@ -23,7 +23,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	test? (
-		~dev-qt/qtgui-${PV}[debug=]
+		>=dev-qt/qtgui-${PV}[debug=]
 		~dev-qt/qtxml-${PV}[debug=]
 	)
 "
