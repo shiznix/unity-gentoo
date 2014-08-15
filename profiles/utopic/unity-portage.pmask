@@ -13,7 +13,6 @@
 >=app-cdr/brasero-3.12.0::gentoo
 >=app-editors/gedit-3.12.0::gentoo
 >=app-text/evince-3.12.0::gentoo
->=dev-cpp/gtkmm-3.12.0::gentoo
 >=dev-libs/libgweather-3.12.0::gentoo
 >=mail-client/evolution-3.12.0::gentoo
 >=media-gfx/eog-3.12.0::gentoo

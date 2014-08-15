@@ -6,9 +6,15 @@ EAPI=5
 
 QT5_MODULE="qtbase"
 
-inherit qt5-build
+inherit qt5-build ubuntu-versionator eutils
+
+UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
+URELEASE="trusty-updates"
+UVER_PREFIX="+dfsg"
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
+	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
@@ -58,7 +64,7 @@ RDEPEND="
 		>=x11-libs/libXi-1.6
 		x11-libs/libXrender
 		>=x11-libs/libxcb-1.10[xkb]
-		>=x11-libs/libxkbcommon-0.2.0
+		>=x11-libs/libxkbcommon-0.4.1[X]
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
@@ -73,6 +79,9 @@ DEPEND="${RDEPEND}
 PDEPEND="
 	ibus? ( app-i18n/ibus )
 "
+
+S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
+QT5_BUILD_DIR="${S}"
 
 QT5_TARGET_SUBDIRS=(
 	src/gui
@@ -111,6 +120,14 @@ pkg_setup() {
 	use opengl && QT5_TARGET_SUBDIRS+=(src/openglextensions)
 
 	qt5-build_pkg_setup
+}
+
+src_prepare() {
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	qt5-build_src_prepare
 }
 
 src_configure() {

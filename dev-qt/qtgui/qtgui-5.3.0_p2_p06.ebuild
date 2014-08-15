@@ -6,9 +6,16 @@ EAPI=5
 
 QT5_MODULE="qtbase"
 
-inherit qt5-build
+inherit qt5-build ubuntu-versionator eutils
+
+UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
+URELEASE="utopic"
+UVER_PREFIX="+dfsg"
 
 DESCRIPTION="The GUI module and platform plugins for the Qt5 toolkit"
+SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
+	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+RESTRICT="mirror"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
@@ -118,6 +125,10 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 	qt5-build_src_prepare
 	rm -rfv include/
 	./bin/syncqt.pl
