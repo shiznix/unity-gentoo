@@ -8,7 +8,7 @@ inherit base gnome2-utils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140804"
+UVER_PREFIX="+14.10.20140813.4"
 
 DESCRIPTION="Qt Components for the Unity desktop - QML plugin"
 HOMEPAGE="https://launchpad.net/ubuntu-ui-toolkit"
@@ -49,7 +49,9 @@ src_prepare() {
 }
 
 src_install() {
-	qt5-build_src_install
+	# Needs to be run in a virtual Xserver so that qmlplugindump's #
+	#	qmltypes generation can successfully spawn dbus #
+		Xemake INSTALL_ROOT="${ED}" install
 
 	use examples || \
 		rm -rf "${ED}usr/lib/ubuntu-ui-toolkit/examples"

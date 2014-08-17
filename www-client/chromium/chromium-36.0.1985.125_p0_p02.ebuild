@@ -17,12 +17,11 @@ MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
 URELEASE="utopic"
-UVER_SUFFIX="~pkg1029"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
 SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}.tar.xz
-	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.debian.tar.gz
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz
 	test? ( https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}-testdata.tar.xz )"
 
 LICENSE="BSD"
@@ -60,6 +59,7 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/flac:=
 	media-libs/harfbuzz:=[icu(+)]
+	media-libs/libexif:=
 	>=media-libs/libjpeg-turbo-1.2.0-r1:=
 	media-libs/libpng:0=
 	>=media-libs/libwebp-0.4.0:=
@@ -86,7 +86,7 @@ DEPEND="${RDEPEND}
 	dev-perl/JSON
 	>=dev-util/gperf-3.0.3
 	dev-util/ninja
-	sys-apps/hwids[usb(+)]
+	sys-apps/hwids
 	>=sys-devel/bison-2.4.3
 	sys-devel/flex
 	virtual/pkgconfig
@@ -176,7 +176,7 @@ src_prepare() {
 	#	touch out/Release/gen/sdk/toolchain/linux_x86_newlib/stamp.untar || die
 	# fi
 
-	epatch "${FILESDIR}/${PN}-system-zlib-r0.patch"
+	epatch "${FILESDIR}/${PN}-ffmpeg-r0.patch"
 
 	epatch_user
 
@@ -193,6 +193,7 @@ src_prepare() {
 		'base/third_party/xdg_user_dirs' \
 		'breakpad/src/third_party/curl' \
 		'chrome/third_party/mozilla_security_manager' \
+		'courgette/third_party' \
 		'crypto/third_party/nss' \
 		'net/third_party/mozilla_security_manager' \
 		'net/third_party/nss' \
@@ -229,7 +230,6 @@ src_prepare() {
 		'third_party/modp_b64' \
 		'third_party/mt19937ar' \
 		'third_party/npapi' \
-		'third_party/nss.isolate' \
 		'third_party/opus' \
 		'third_party/ots' \
 		'third_party/ply' \
@@ -329,7 +329,7 @@ src_configure() {
 		$(gyp_use gnome-keyring linux_link_gnome_keyring)
 		$(gyp_use kerberos)
 		$(gyp_use pulseaudio)
-		$(gyp_use tcmalloc linux_use_tcmalloc)"
+		$(gyp_use tcmalloc use_allocator tcmalloc none)"
 
 	# Use explicit library dependencies instead of dlopen.
 	# This makes breakages easier to detect by revdep-rebuild.
@@ -349,7 +349,8 @@ src_configure() {
 
 	# Never use bundled gold binary. Disable gold linker flags for now.
 	myconf+="
-		-Dlinux_use_gold_binary=0
+		-Dlinux_use_bundled_binutils=0
+		-Dlinux_use_bundled_gold=0
 		-Dlinux_use_gold_flags=0"
 
 	# TODO: enable mojo after fixing compile failures.

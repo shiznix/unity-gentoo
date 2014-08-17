@@ -59,11 +59,6 @@ src_prepare() {
         for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
                 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
         done
-#        PATCHES+=( "${FILESDIR}/modemmanager_build-fix.diff" )
-
-	# Allow nm-applet to autostart in gnome-2 and gnome-3.6 fallback sessions
-#	PATCHES+=( "${FILESDIR}/${PN}-0.9.8.4-autostart.patch" )
-
         base_src_prepare
 
 	sed -e "s:-Werror::g" \

@@ -7,7 +7,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140725"
+UVER_PREFIX="+14.10.20140807"
 
 DESCRIPTION="A daemon that offers a DBus API to perform downloads"
 HOMEPAGE="https://launchpad.net/ubuntu-download-manager"

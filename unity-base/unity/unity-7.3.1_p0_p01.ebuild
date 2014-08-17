@@ -12,7 +12,7 @@ inherit base cmake-utils distutils-r1 eutils gnome2 toolchain-funcs ubuntu-versi
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140731.1"
+UVER_PREFIX="+14.10.20140811"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"

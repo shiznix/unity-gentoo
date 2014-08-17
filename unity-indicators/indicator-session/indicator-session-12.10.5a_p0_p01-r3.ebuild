@@ -8,7 +8,7 @@ inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140718"
+UVER_PREFIX="+14.10.20140814"
 
 DESCRIPTION="Indicator showing session management, status and user switching used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-session"

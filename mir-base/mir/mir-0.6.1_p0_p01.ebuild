@@ -8,7 +8,7 @@ inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140728"
+UVER_PREFIX="+14.10.20140814"
 
 DESCRIPTION="Mir is a display server technology"
 HOMEPAGE="https://launchpad.net/mir/"
@@ -48,10 +48,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch -p1 "${FILESDIR}/include_stdint.diff"
-	epatch -p1 "${FILESDIR}/strcmp_fix.patch"
-	epatch -p1 "${FILESDIR}/mir-0.1.2-build_benchmarks_only_with_tests_enabled.patch"
-
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	export CMAKE_BUILD_TYPE=none
 }

@@ -10,11 +10,10 @@ inherit autotools distutils-r1 ubuntu-versionator vala
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 URELEASE="utopic"
 UVER=
-UVER_PREFIX="build1"
 
 DESCRIPTION="Ubuntu mobile platform package management framework"
 HOMEPAGE="https://launchpad.net/click"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.tar.xz"
+SRC_URI="${UURL}/${MY_P}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"

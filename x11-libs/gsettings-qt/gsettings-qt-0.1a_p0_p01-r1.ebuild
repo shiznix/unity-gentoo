@@ -4,11 +4,11 @@
 
 EAPI=5
 
-inherit qt4-r2 ubuntu-versionator
+inherit qt5-build ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140801.1"
+UVER_PREFIX="+14.10.20140807"
 
 DESCRIPTION="Qml bindings for GSettings."
 HOMEPAGE="https://launchpad.net/gsettings-qt"
@@ -29,6 +29,8 @@ DEPEND="
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	qt5-build_src_prepare
+
 	# Don't pre-strip
 	echo "CONFIG+=nostrip" >> "${S}"/GSettings/gsettings-qt.pro
 	echo "CONFIG+=nostrip" >> "${S}"/src/gsettings-qt.pro
@@ -42,24 +44,10 @@ src_prepare() {
 
 }
 
-src_configure() {
-	cd "${WORKDIR}"
-	cp -rf "${S}" "${S}"-build_qt5
-	pushd "${S}"-build_qt5
-		/usr/$(get_libdir)/qt5/bin/qmake PREFIX=/usr
-	popd
-}
-
-src_compile() {
-	pushd "${S}"-build_qt5
-		emake
-	popd
-}
-
 src_install() {
-	pushd "${S}"-build_qt5
-#		qt5-build_src_install
-		 qt4-r2_src_install
+	# Needs to be run in a virtual Xserver so that qmlplugindump's #
+	#       qmltypes generation can successfully spawn dbus #
+	pushd ${QT5_BUILD_DIR}
+		Xemake INSTALL_ROOT="${ED}" install
 	popd
 }
-

@@ -8,8 +8,8 @@ PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 inherit autotools base eutils autotools python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+14.04.20140210"
+URELEASE="utopic"
+UVER_PREFIX="+14.10.20140808"
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"
@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0/9.0.2"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

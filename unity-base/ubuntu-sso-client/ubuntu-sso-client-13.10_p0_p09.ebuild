@@ -14,7 +14,7 @@ URELEASE="utopic"
 DESCRIPTION="Ubuntu Single Sign-On client for the Unity desktop"
 HOMEPAGE="https://launchpad.net/ubuntu-sso-client"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

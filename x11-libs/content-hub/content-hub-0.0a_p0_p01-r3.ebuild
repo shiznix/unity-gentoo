@@ -8,7 +8,7 @@ inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/c/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140801.4"
+UVER_PREFIX="+14.10.20140806.2"
 
 DESCRIPTION="Content sharing/picking infrastructure and service, designed to allow apps to securely and efficiently exchange content"
 HOMEPAGE="https://launchpad.net/content-hub"

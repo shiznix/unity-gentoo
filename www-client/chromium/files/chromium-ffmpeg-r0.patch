@@ -1,0 +1,30 @@
+--- third_party/ffmpeg/libavcodec/x86/vp3dsp_init.c.orig	2014-05-22 08:12:08.770613935 +0000
++++ third_party/ffmpeg/libavcodec/x86/vp3dsp_init.c	2014-05-22 08:20:23.970456534 +0000
+@@ -43,7 +43,7 @@
+ void ff_vp3_h_loop_filter_mmxext(uint8_t *src, int stride,
+                                  int *bounding_values);
+ 
+-#if HAVE_MMX_INLINE
++#if HAVE_MMX_INLINE && HAVE_6REGS
+ 
+ #define MOVQ_BFE(regd)                                  \
+     __asm__ volatile (                                  \
+@@ -95,15 +95,15 @@
+         :"memory");
+ //    STOP_TIMER("put_vp_no_rnd_pixels8_l2_mmx")
+ }
+-#endif /* HAVE_MMX_INLINE */
++#endif /* HAVE_MMX_INLINE && HAVE_6REGS */
+ 
+ av_cold void ff_vp3dsp_init_x86(VP3DSPContext *c, int flags)
+ {
+     int cpu_flags = av_get_cpu_flags();
+ 
+-#if HAVE_MMX_INLINE
++#if HAVE_MMX_INLINE && HAVE_6REGS
+     c->put_no_rnd_pixels_l2 = put_vp_no_rnd_pixels8_l2_mmx;
+-#endif /* HAVE_MMX_INLINE */
++#endif /* HAVE_MMX_INLINE && HAVE_6REGS */
+ 
+ #if ARCH_X86_32
+     if (EXTERNAL_MMX(cpu_flags)) {

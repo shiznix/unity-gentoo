@@ -9,7 +9,7 @@ inherit autotools gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140802.1"
+UVER_PREFIX="+14.10.20140815"
 
 DESCRIPTION="GSettings deskop-wide schemas for the Unity desktop"
 HOMEPAGE="https://launchpad.net/gsettings-ubuntu-touch-schemas"
