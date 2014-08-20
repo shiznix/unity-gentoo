@@ -159,8 +159,10 @@ net-libs/oxide-qt **
 net-misc/url-dispatcher **
 sys-apps/accountsservice **
 sys-apps/click **
+unity-base/bamf **
 unity-base/compiz **
 unity-base/evemu **
+unity-base/gnome-control-center-signon **
 unity-base/gsettings-ubuntu-touch-schemas **
 unity-base/hud **
 unity-base/nux **
