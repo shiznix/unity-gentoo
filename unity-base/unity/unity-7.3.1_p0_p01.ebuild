@@ -8,7 +8,7 @@ GCONF_DEBUG="yes"
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
-inherit base cmake-utils distutils-r1 eutils gnome2 toolchain-funcs ubuntu-versionator xdummy
+inherit base cmake-utils distutils-r1 eutils gnome2 pam toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 URELEASE="utopic"
@@ -65,6 +65,7 @@ DEPEND="dev-libs/boost
 	media-libs/clutter-gtk:1.0
 	media-libs/glew
 	sys-apps/dbus
+	sys-auth/pambase
 	>=sys-devel/gcc-4.8
 	sys-libs/libnih[dbus]
 	>=unity-base/bamf-0.4.0
@@ -79,6 +80,7 @@ DEPEND="dev-libs/boost
 	x11-libs/libXfixes
 	x11-libs/startup-notification
 	unity-base/unity-gtk-module
+	virtual/pam
 	x11-misc/appmenu-qt
 	x11-misc/appmenu-qt5
 	doc? ( app-doc/doxygen )
@@ -165,7 +167,8 @@ src_configure() {
 		-DCOMPIZ_PLUGIN_INSTALL_TYPE=package
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
 		-DUSE_GSETTINGS=TRUE
-		-DCMAKE_INSTALL_PREFIX=/usr"
+		-DCMAKE_INSTALL_PREFIX=/usr
+		-DCMAKE_SYSCONFDIR=/etc"
 	cmake-utils_src_configure || die
 }
 
@@ -231,6 +234,10 @@ src_install() {
 	dosym /usr/share/applications/kde4/ /usr/share/kde4/applications
 	insinto /etc/X11/xinit/xinitrc.d
 	doins "${FILESDIR}/15-xdg-data-kde"
+
+	# Clean up pam file installation as used in lockscreen (LP# 1305440) #
+	rm "${ED}etc/pam.d/${PN}"
+	pamd_mimic system-local-login ${PN} auth account session
 }
 
 pkg_postinst() {
