@@ -8,7 +8,7 @@ inherit qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140612"
+UVER_PREFIX="+14.10.20140814"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-ui"

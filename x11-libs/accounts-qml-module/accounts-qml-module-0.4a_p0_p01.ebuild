@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=5
+VIRTUALX_REQUIRED="always"
 
 inherit base gnome2-utils qt5-build ubuntu-versionator virtualx
 
