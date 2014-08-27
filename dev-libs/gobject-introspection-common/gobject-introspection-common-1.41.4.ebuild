@@ -8,7 +8,7 @@ GNOME_ORG_MODULE="gobject-introspection"
 inherit ubuntu-versionator gnome.org
 
 URELEASE="utopic"
-UVER="2ubuntu1"
+UVER="0ubuntu1"
 
 DESCRIPTION="Build infrastructure for GObject Introspection"
 HOMEPAGE="http://live.gnome.org/GObjectIntrospection/"

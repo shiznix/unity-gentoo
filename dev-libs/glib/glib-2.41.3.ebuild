@@ -13,7 +13,7 @@ MY_P="${PN}2.0_${PV}"
 
 UURL="mirror://ubuntu/pool/main/g/${PN}2.0"
 URELEASE="utopic"
-UVER="2"
+UVER="1"
 
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/glib"

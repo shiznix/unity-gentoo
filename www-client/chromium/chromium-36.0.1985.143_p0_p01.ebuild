@@ -17,11 +17,12 @@ MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
 URELEASE="utopic"
+UVER_SUFFIX="~pkg1042"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
 SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}.tar.xz
-	${UURL}/${MY_P}-${UVER}.debian.tar.xz
+	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.debian.tar.xz
 	test? ( https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}-testdata.tar.xz )"
 
 LICENSE="BSD"

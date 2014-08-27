@@ -13,7 +13,7 @@ UVER=
 
 DESCRIPTION="Ubuntu mobile platform package management framework"
 HOMEPAGE="https://launchpad.net/click"
-SRC_URI="${UURL}/${MY_P}.tar.xz"
+SRC_URI="${UURL}/${MY_P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
