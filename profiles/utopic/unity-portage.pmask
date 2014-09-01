@@ -5,8 +5,7 @@
 >dev-libs/xapian-1.2.14
 >dev-libs/xapian-bindings-1.2.14
 
-# Gnome-3.10 needs either <sys-power/upower-0.99 or sys-power/upower-pm-utils for upower hibernate and suspend support
-#   DEPEND="|| ( <sys-power/upower-0.99 sys-power/upower-pm-utils )"
+# Gnome-3.10 needs <sys-power/upower-0.99 for upower hibernate and suspend support
 >=sys-power/upower-0.99
 
 # mask gnome-3.12 packages
