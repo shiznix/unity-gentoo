@@ -12,7 +12,6 @@ dev-lang/python-exec:2	# Need this as 'python3_4' is only puse.unmasked at ~keyw
 ~dev-libs/libgcrypt-1.6.1
 dev-libs/libindicate
 dev-libs/libindicate-qt
-~dev-libs/libxslt-1.1.28
 ~dev-libs/lzo-2.06
 ~dev-libs/nettle-2.7.1
 =dev-libs/openssl-1.0.1*
