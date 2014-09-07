@@ -117,7 +117,7 @@ src_prepare() {
 
 src_configure() {
 	append-ldflags -Wl,--warn-unresolved-symbols
-	append-cflags -Wno-deprecated-declarations
+	append-cflags -Wno-deprecated-declarations -I/usr/include/librsvg-2.0
 
 	gnome2_src_configure \
 		--disable-static \
