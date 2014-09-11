@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 inherit autotools eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="trusty"
+URELEASE="trusty-updates"
 UVER_PREFIX="+14.04.20140403"
 
 DESCRIPTION="GTK+ module for exporting old-style menus as GMenuModels"

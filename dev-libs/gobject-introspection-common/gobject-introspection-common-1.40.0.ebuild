@@ -8,7 +8,7 @@ GNOME_ORG_MODULE="gobject-introspection"
 inherit ubuntu-versionator gnome.org
 
 URELEASE="trusty-updates"
-UVER="1ubuntu0.1"
+UVER="1ubuntu0.2"
 
 DESCRIPTION="Build infrastructure for GObject Introspection"
 HOMEPAGE="http://live.gnome.org/GObjectIntrospection/"

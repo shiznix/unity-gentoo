@@ -12,6 +12,7 @@ dev-lang/python-exec:2	# Need this as 'python3_4' is only puse.unmasked at ~keyw
 ~dev-libs/libgcrypt-1.6.1
 dev-libs/libindicate
 dev-libs/libindicate-qt
+~dev-libs/libxml2-2.9.1
 ~dev-libs/libxslt-1.1.28
 ~dev-libs/lzo-2.06
 ~dev-libs/nettle-2.7.1
@@ -137,8 +138,11 @@ dev-qt/qtopengl:5 **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
 gnome-base/gconf **
-gnome-base/gsettings-desktop-schemas **
+gnome-base/gnome-control-center **
+gnome-base/gnome-desktop **
 gnome-base/gnome-panel **
+gnome-base/gnome-settings-daemon **
+gnome-base/gsettings-desktop-schemas **
 gnome-base/nautilus **
 gnome-base/gnome-session **
 gnome-extra/zeitgeist **

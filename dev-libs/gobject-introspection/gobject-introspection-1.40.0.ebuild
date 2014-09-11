@@ -10,7 +10,7 @@ GCONF_DEBUG="no"
 inherit eutils gnome2 python-single-r1 toolchain-funcs ubuntu-versionator
 
 URELEASE="trusty-updates"
-UVER="1ubuntu0.1"
+UVER="1ubuntu0.2"
 
 DESCRIPTION="Introspection infrastructure for generating gobject library bindings for various languages"
 HOMEPAGE="http://live.gnome.org/GObjectIntrospection/"
