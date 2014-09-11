@@ -22,8 +22,6 @@
 >=dev-libs/libgweather-3.12.0::gentoo
 >=mail-client/evolution-3.12.0::gentoo
 >=media-gfx/eog-3.12.0::gentoo
->=media-libs/clutter-1.18.0::gentoo
->=media-libs/cogl-1.18.0::gentoo
 >=media-video/cheese-3.12.0::gentoo
 >=media-video/totem-3.12::gentoo
 >=net-misc/vinagre-3.12::gentoo

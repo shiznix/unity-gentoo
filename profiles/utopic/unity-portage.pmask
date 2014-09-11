@@ -8,7 +8,6 @@
 # unity-control-center-14.10 needs gnome-bluetooth-3.10
 >=net-wireless/gnome-bluetooth-3.12::gentoo
 
-
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
 app-backup/deja-dup::gentoo
