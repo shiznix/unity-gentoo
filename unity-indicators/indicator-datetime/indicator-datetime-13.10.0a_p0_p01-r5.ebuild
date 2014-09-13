@@ -10,7 +10,7 @@ inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140819"
+UVER_PREFIX="+14.10.20140908.1"
 
 DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"

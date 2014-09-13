@@ -9,8 +9,8 @@ GCONF_DEBUG="yes"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140908"
+URELEASE="trusty"
+UVER_PREFIX="+14.04.20140411"
 
 DESCRIPTION="Desktop service to integrate Telepathy with the messaging menu used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/telepathy-indicator"
@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

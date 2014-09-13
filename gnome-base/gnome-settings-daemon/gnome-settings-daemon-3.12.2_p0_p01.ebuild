@@ -10,7 +10,7 @@ inherit autotools base eutils gnome2 systemd virtualx ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 UURL="https://github.com/shiznix/unity-gentoo/raw/master/files"
-URELEASE="trusty"
+URELEASE="utopic"
 UVER_PREFIX="~utopic2"
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"

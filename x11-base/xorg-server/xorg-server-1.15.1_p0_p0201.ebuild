@@ -9,10 +9,10 @@ inherit base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 UURL="mirror://ubuntu/pool/main/x/${PN}"
-URELEASE="utopic"
+URELEASE="trusty-updates"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
-#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 

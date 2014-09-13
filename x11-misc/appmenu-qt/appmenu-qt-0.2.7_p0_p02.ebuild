@@ -6,7 +6,7 @@ EAPI=5
 
 inherit cmake-utils ubuntu-versionator
 
-URELEASE="trusty"
+URELEASE="utopic"
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 UVER_PREFIX="+14.04.20140305"
 

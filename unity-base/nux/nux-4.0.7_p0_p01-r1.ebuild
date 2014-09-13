@@ -8,7 +8,7 @@ inherit autotools base eutils ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/n/${PN}"
 URELEASE="utopic"
-UVER_PREFIX="+14.10.20140731"
+UVER_PREFIX="+14.10.20140904"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
 HOMEPAGE="http://launchpad.net/nux"

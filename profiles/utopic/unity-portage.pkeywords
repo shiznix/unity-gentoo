@@ -68,7 +68,7 @@ sys-libs/db:5.1
 ~sys-libs/libnih-1.0.3
 =virtual/pkgconfig-0-r1
 =virtual/libintl-0-r1
-~x11-base/xorg-drivers-1.15
+~x11-base/xorg-drivers-1.16
 ~x11-libs/gdk-pixbuf-2.30.7
 ~x11-libs/libdrm-2.4.54
 ~x11-libs/libnotify-0.7.6
@@ -90,6 +90,7 @@ sys-libs/db:5.1
 app-backup/deja-dup **
 dev-cpp/gmock **
 dev-cpp/gtest **
+dev-libs/libaccounts-glib **
 dev-libs/libdbusmenu-qt **
 dev-libs/libtimezonemap **
 dev-libs/glib **
@@ -159,6 +160,7 @@ net-im/friends-app **
 net-im/telepathy-mission-control **
 net-libs/gnome-online-accounts **
 net-libs/oxide-qt **
+net-libs/telepathy-indicator **
 net-misc/url-dispatcher **
 sys-apps/accountsservice **
 sys-apps/click **
@@ -196,6 +198,7 @@ www-client/firefox **
 x11-base/xorg-server **
 x11-drivers/xf86-video-ati **
 x11-drivers/xf86-video-intel **
+x11-drivers/xf86-video-nouveau **
 x11-libs/accounts-qml-module **
 x11-libs/content-hub **
 x11-libs/gsettings-qt **

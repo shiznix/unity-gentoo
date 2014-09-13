@@ -9,15 +9,15 @@ inherit base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 UURL="mirror://ubuntu/pool/main/x/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
+#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
-IUSE="${IUSE_SERVERS} ipv6 minimal mir nptl selinux +suid tslib +udev"
+IUSE="${IUSE_SERVERS} glamor ipv6 minimal mir nptl selinux +suid systemd tslib +udev unwind wayland"
 RESTRICT="mirror"
 
 RDEPEND=">=app-admin/eselect-opengl-1.0.8
@@ -35,7 +35,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	>=x11-libs/libxkbfile-1.0.4
 	>=x11-libs/libxshmfence-1.1
 	>=x11-libs/pixman-0.27.2
-	>=x11-libs/xtrans-1.3.2
+	>=x11-libs/xtrans-1.3.3
 	>=x11-misc/xbitmaps-1.0.1
 	>=x11-misc/xkeyboard-config-2.4.1-r3
 	dmx? (
@@ -51,6 +51,11 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 		>=x11-libs/libXres-1.0.3
 		>=x11-libs/libXtst-1.0.99.2
 	)
+	glamor? (
+		media-libs/libepoxy
+		media-libs/mesa[egl,gbm]
+		!x11-libs/glamor
+	)
 	kdrive? (
 		>=x11-libs/libXext-1.0.5
 		x11-libs/libXv
@@ -63,8 +68,17 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	mir? ( mir-base/mir:= )
 	tslib? ( >=x11-libs/tslib-1.0 )
 	udev? ( >=virtual/udev-150 )
+	unwind? ( sys-libs/libunwind )
+	wayland? (
+		>=dev-libs/wayland-1.3.0
+		media-libs/libepoxy
+	)
 	>=x11-apps/xinit-1.3
-	selinux? ( sec-policy/selinux-xserver )"
+	selinux? ( sec-policy/selinux-xserver )
+	systemd? (
+		sys-apps/dbus
+		sys-apps/systemd
+	)"
 
 DEPEND="${RDEPEND}
 	sys-devel/flex
@@ -72,7 +86,7 @@ DEPEND="${RDEPEND}
 	>=x11-proto/compositeproto-0.4
 	>=x11-proto/damageproto-1.1
 	>=x11-proto/fixesproto-5.0
-	>=x11-proto/fontsproto-2.0.2
+	>=x11-proto/fontsproto-2.1.3
 	>=x11-proto/glproto-1.4.17
 	>=x11-proto/inputproto-2.2.99.1
 	>=x11-proto/kbproto-1.0.3
@@ -89,7 +103,7 @@ DEPEND="${RDEPEND}
 	>=x11-proto/xf86rushproto-1.1.2
 	>=x11-proto/xf86vidmodeproto-2.2.99.1
 	>=x11-proto/xineramaproto-1.1.3
-	>=x11-proto/xproto-7.0.22
+	>=x11-proto/xproto-7.0.26
 	>=x11-proto/presentproto-1.0
 	>=x11-proto/dri3proto-1.0
 	dmx? (
@@ -144,12 +158,15 @@ src_configure() {
 	XORG_CONFIGURE_OPTIONS=(
 		$(use_enable ipv6)
 		$(use_enable dmx)
+		$(use_enable glamor)
 		$(use_enable kdrive)
 		$(use_enable kdrive kdrive-kbd)
 		$(use_enable kdrive kdrive-mouse)
 		$(use_enable kdrive kdrive-evdev)
 		$(use_enable suid install-setuid)
 		$(use_enable tslib)
+		$(use_enable unwind libunwind)
+		$(use_enable wayland xwayland)
 		$(use_enable !minimal record)
 		$(use_enable !minimal xfree86-utils)
 		$(use_enable !minimal install-libxf86config)
@@ -163,6 +180,8 @@ src_configure() {
 		$(use_enable udev config-udev)
 		$(use_with doc doxygen)
 		$(use_with doc xmlto)
+		$(use_with systemd systemd-daemon)
+		$(use_enable systemd systemd-logind)
 		--enable-libdrm
 		--sysconfdir="${EPREFIX}"/etc/X11
 		--localstatedir="${EPREFIX}"/var
@@ -173,6 +192,7 @@ src_configure() {
 		--without-dtrace
 		--without-fop
 		--with-os-vendor=Gentoo
+		--with-sha1=libcrypto
 	)
 
 	# Xorg-server requires includes from OS mesa which are not visible for
@@ -202,7 +222,7 @@ src_install() {
 	fi
 
 	newinitd "${FILESDIR}"/xdm-setup.initd-1 xdm-setup
-	newinitd "${FILESDIR}"/xdm.initd-10 xdm
+	newinitd "${FILESDIR}"/xdm.initd-11 xdm
 	newconfd "${FILESDIR}"/xdm.confd-4 xdm
 
 	# install the @x11-module-rebuild set for Portage
@@ -215,6 +235,9 @@ pkg_postinst() {
 	eselect opengl set xorg-x11 --use-old
 
 	if [[ ${PV} != 9999 && $(get_version_component_range 2 ${REPLACING_VERSIONS}) != $(get_version_component_range 2 ${PV}) ]]; then
+		elog "You should consider reading upgrade guide for this release:"
+		elog "  http://www.gentoo.org/proj/en/desktop/x/x11/xorg-server-$(get_version_component_range 1-2)-upgrade-guide.xml"
+		echo
 		ewarn "You must rebuild all drivers if upgrading from <xorg-server-$(get_version_component_range 1-2)"
 		ewarn "because the ABI changed. If you cannot start X because"
 		ewarn "of module version mismatch errors, this is your problem."
@@ -223,11 +246,6 @@ pkg_postinst() {
 		ewarn "You can rebuild all installed packages in the x11-drivers"
 		ewarn "category using this command:"
 		ewarn "	emerge @x11-module-rebuild"
-	fi
-
-	if use udev && has_version virtual/udev[-keymap]; then
-		ewarn "virtual/udev was built without keymap support. This may cause input device"
-		ewarn "autoconfiguration to fail."
 	fi
 }
 
