@@ -42,6 +42,8 @@ RDEPEND="
 	dev-python/python-exec:2[${PYTHON_USEDEP}]
 	>=dev-python/sip-4.15.5:=[${PYTHON_USEDEP}]
 	~dev-qt/qtcore-${QT_PV}
+	~dev-qt/qtnetwork-${QT_PV}
+	~dev-qt/linguist-tools-${QT_PV}
 	X? (
 		>=dev-qt/qtgui-${QT_PV}
 		~dev-qt/qttest-${QT_PV}
@@ -58,6 +60,7 @@ RDEPEND="
 	sql? ( ~dev-qt/qtsql-${QT_PV} )
 	svg? ( ~dev-qt/qtsvg-${QT_PV} )
 	webkit? ( >=dev-qt/qtwebkit-5.1.1 )
+	widgets? ( >=dev-qt/qtwidgets-${QT_PV} )
 	xmlpatterns? ( ~dev-qt/qtxmlpatterns-${QT_PV} )
 "
 DEPEND="${RDEPEND}
@@ -142,12 +145,6 @@ src_configure() {
 				$(use dbus && echo QtDBus) \
 				$(use designer && echo QtDesigner) \
 				$(use qml && echo "QtQml QtQuick"); do
-			# Run eqmake5 inside the qpy subdirectories to respect
-			# CC, CXX, CFLAGS, CXXFLAGS, LDFLAGS and avoid stripping.
-			pushd qpy/${mod} > /dev/null || return
-				eqmake5 $(ls w_qpy*.pro)
-			popd > /dev/null || return
-
 			# Fix insecure runpaths.
 			sed -i -e "/^LFLAGS\s*=/ s:-Wl,-rpath,${BUILD_DIR}/qpy/${mod}::" \
 				${mod}/Makefile || die "failed to fix rpath for ${mod}"
