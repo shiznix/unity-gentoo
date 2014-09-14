@@ -1,0 +1,11 @@
+--- third_party/ffmpeg/chromium/scripts/generate_gyp.py.orig	2014-06-13 13:13:35.762996021 +0000
++++ third_party/ffmpeg/chromium/scripts/generate_gyp.py	2014-06-13 13:13:38.693099249 +0000
+@@ -131,7 +131,7 @@
+ """
+ 
+ # Controls GYP conditional stanza generation.
+-SUPPORTED_ARCHITECTURES = ['ia32', 'arm', 'arm-neon']
++SUPPORTED_ARCHITECTURES = ['ia32', 'arm', 'arm-neon', 'x64']
+ SUPPORTED_TARGETS = ['Chromium', 'Chrome', 'ChromiumOS', 'ChromeOS']
+ # Mac doesn't have any platform specific files, so just use linux and win.
+ SUPPORTED_PLATFORMS = ['linux', 'win']
