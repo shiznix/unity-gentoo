@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
+PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
 inherit eutils python-r1 qmake-utils toolchain-funcs
 
@@ -41,27 +41,27 @@ RDEPEND="
 	${PYTHON_DEPS}
 	dev-python/python-exec:2[${PYTHON_USEDEP}]
 	>=dev-python/sip-4.15.5:=[${PYTHON_USEDEP}]
-	~dev-qt/qtcore-${QT_PV}
-	~dev-qt/qtnetwork-${QT_PV}
-	~dev-qt/linguist-tools-${QT_PV}
+	>=dev-qt/qtcore-${QT_PV}
+	>=dev-qt/qtnetwork-${QT_PV}
+	>=dev-qt/linguist-tools-${QT_PV}
 	X? (
 		>=dev-qt/qtgui-${QT_PV}
-		~dev-qt/qttest-${QT_PV}
+		>=dev-qt/qttest-${QT_PV}
 	)
 	dbus? (
 		>=dev-python/dbus-python-0.80[${PYTHON_USEDEP}]
-		~dev-qt/qtdbus-${QT_PV}
+		>=dev-qt/qtdbus-${QT_PV}
 	)
-	designer? ( ~dev-qt/designer-${QT_PV} )
-	multimedia? ( ~dev-qt/qtmultimedia-${QT_PV} )
-	opengl? ( ~dev-qt/qtopengl-${QT_PV} )
-	print? ( ~dev-qt/qtprintsupport-${QT_PV} )
+	designer? ( >=dev-qt/designer-${QT_PV} )
+	multimedia? ( >=dev-qt/qtmultimedia-${QT_PV} )
+	opengl? ( >=dev-qt/qtopengl-${QT_PV} )
+	print? ( >=dev-qt/qtprintsupport-${QT_PV} )
 	qml? ( >=dev-qt/qtdeclarative-${QT_PV} )
-	sql? ( ~dev-qt/qtsql-${QT_PV} )
-	svg? ( ~dev-qt/qtsvg-${QT_PV} )
+	sql? ( >=dev-qt/qtsql-${QT_PV} )
+	svg? ( >=dev-qt/qtsvg-${QT_PV} )
 	webkit? ( >=dev-qt/qtwebkit-5.1.1 )
 	widgets? ( >=dev-qt/qtwidgets-${QT_PV} )
-	xmlpatterns? ( ~dev-qt/qtxmlpatterns-${QT_PV} )
+	xmlpatterns? ( >=dev-qt/qtxmlpatterns-${QT_PV} )
 "
 DEPEND="${RDEPEND}
 	dbus? ( virtual/pkgconfig )
