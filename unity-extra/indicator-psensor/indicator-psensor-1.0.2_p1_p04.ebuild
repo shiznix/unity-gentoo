@@ -6,7 +6,7 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-inherit gnome2 ubuntu-versionator
+inherit base gnome2 ubuntu-versionator
 
 MY_PN="psensor"
 UURL="mirror://ubuntu/pool/universe/p/${MY_PN}"
@@ -14,7 +14,8 @@ URELEASE="utopic"
 
 DESCRIPTION="Indicator for monitoring hardware temperature used by the Unity desktop"
 HOMEPAGE="http://wpitchoune.net/psensor"
-SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
+	${UURL}/${MY_PN}_${PV}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -39,7 +40,15 @@ DEPEND="dev-libs/glib:2
 	hddtemp? ( app-admin/hddtemp )"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
-	
+MAKEOPTS="-j1"
+
+src_prepare() {
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	base_src_prepare
+}
 
 src_configure() {
 	econf \

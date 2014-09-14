@@ -8,6 +8,7 @@ DESCRIPTION="Merge this to setup the Unity desktop build environment package.{ke
 HOMEPAGE="http://unity.ubuntu.com/"
 
 URELEASE="utopic"
+UVER=
 
 SLOT="0/${URELEASE}"
 KEYWORDS="amd64 x86"
