@@ -5,7 +5,7 @@
 EAPI=5
 WANT_AUTOCONF="2.1"
 MOZ_ESR=""
-MOZ_LIGHTNING_VER="2.6.5"
+MOZ_LIGHTNING_VER="3.3"
 MOZ_LIGHTNING_GDATA_VER="2.6.3"
 
 # This list can be updated using scripts/get_langs.sh from the mozilla overlay
@@ -27,13 +27,13 @@ fi
 MOZ_P="${PN}-${MOZ_PV}"
 
 # Enigmail version
-EMVER="1.7"
+EMVER="1.7.2"
 # Upstream ftp release URI that's used by mozlinguas.eclass
 # We don't use the http mirror because it deletes old tarballs.
 MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
 MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 
-inherit base flag-o-matic toolchain-funcs mozconfig-3 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
+inherit base flag-o-matic toolchain-funcs mozconfig-v4.31 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
 URELEASE="utopic"
 UVER_PREFIX="+build1"
@@ -45,11 +45,11 @@ HOMEPAGE="http://www.mozilla.com/en-US/thunderbird/"
 KEYWORDS="~alpha amd64 ~arm ~ppc ~ppc64 ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist crypt gstreamer +jit ldap +lightning +minimal mozdom pulseaudio selinux system-cairo system-icu system-jpeg system-sqlite"
+IUSE="bindist crypt ldap +lightning +minimal mozdom selinux"
 RESTRICT="mirror"
 
 PATCH="thunderbird-31.0-patches-0.1"
-PATCHFF="firefox-31.0-patches-0.1"
+PATCHFF="firefox-31.0-patches-0.2"
 
 SRC_URI="${SRC_URI}
 	${MOZ_FTP_URI}${MOZ_PV}/source/${MOZ_P}.source.tar.bz2
@@ -69,20 +69,8 @@ SRC_URI="${SRC_URI}
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 RDEPEND="
-	>=dev-libs/nss-3.16
-	>=dev-libs/nspr-4.10.4
-	>=dev-libs/glib-2.26:2
-	>=media-libs/mesa-7.10
-	>=media-libs/libpng-1.6.6[apng]
-	virtual/libffi
-	gstreamer? ( media-plugins/gst-plugins-meta:1.0[ffmpeg] )
-	pulseaudio? ( media-sound/pulseaudio )
-	system-cairo? ( >=x11-libs/cairo-1.12[X] )
-	system-icu? ( >=dev-libs/icu-51.1 )
-	system-jpeg? ( >=media-libs/libjpeg-turbo-1.2.1 )
-	system-sqlite? ( >=dev-db/sqlite-3.8.3.1:3[secure-delete,debug=] )
-	>=media-libs/libvpx-1.0.0
-	kernel_linux? ( media-libs/alsa-lib )
+	>=dev-libs/nss-3.16.2
+	>=dev-libs/nspr-4.10.6
 	selinux? ( sec-policy/selinux-thunderbird )
 	!x11-plugins/enigmail
 	crypt?  ( || (
@@ -96,8 +84,6 @@ RDEPEND="
 	) )"
 
 DEPEND="${RDEPEND}
-	>=sys-devel/binutils-2.16.1
-	virtual/pkgconfig
 	amd64? ( ${ASM_DEPEND}
 		virtual/opengl )
 	x86? ( ${ASM_DEPEND}
@@ -163,11 +149,6 @@ src_prepare() {
 	epatch "${WORKDIR}/firefox"
 	popd &>/dev/null || die
 
-	mkdir -p "${BUILD_OBJ_DIR}"
-	use crypt && \
-		mkdir -p "${BUILD_OBJ_DIR}"/mailnews/extensions
-		mv "${WORKDIR}"/enigmail "${BUILD_OBJ_DIR}"/mailnews/extensions/enigmail
-
 	# Ensure that are plugins dir is enabled as default
 	sed -i -e "s:/usr/lib/mozilla/plugins:/usr/lib/nsbrowser/plugins:" \
 		"${S}"/mozilla/xpcom/io/nsAppFileLocationProvider.cpp || die "sed failed to replace plugin path for 32bit!"
@@ -189,6 +170,15 @@ src_prepare() {
 		einfo edos2unix "${file}"
 		edos2unix "${file}"
 	done
+
+	# Confirm the version of lightning being grabbed for langpacks is the same
+	# as that used in thunderbird
+	local THIS_MOZ_LIGHTNING_VER=$(python "${S}"/calendar/lightning/build/makeversion.py ${PV})
+	if [[ ${MOZ_LIGHTNING_VER} != ${THIS_MOZ_LIGHTNING_VER} ]]; then
+		eqawarn "The version of lightning used for localization differs from the version"
+		eqawarn "in thunderbird.  Please update MOZ_LIGHTNING_VER in the ebuild from ${MOZ_LIGHTNING_VER}"
+		eqawarn "to ${THIS_MOZ_LIGHTNING_VER}"
+	fi
 
 	# Allow user to apply any additional patches without modifing ebuild
 	epatch_user
@@ -217,41 +207,15 @@ src_configure() {
 	# It doesn't compile on alpha without this LDFLAGS
 	use alpha && append-ldflags "-Wl,--no-relax"
 
-	# We must force enable jemalloc 3 threw .mozconfig
-	echo "export MOZ_JEMALLOC=1" >> ${S}/.mozconfig
-
-	mozconfig_annotate '' --enable-jemalloc
-	mozconfig_annotate '' --enable-replace-malloc
-	mozconfig_annotate '' --prefix="${EPREFIX}"/usr
-	mozconfig_annotate '' --libdir="${EPREFIX}"/usr/$(get_libdir)
 	mozconfig_annotate '' --enable-extensions="${MEXTENSIONS}"
-	mozconfig_annotate '' --disable-gconf
 	mozconfig_annotate '' --disable-mailnews
-	mozconfig_annotate '' --with-system-png
-	mozconfig_annotate '' --enable-system-ffi
 
-	# Other ff-specific settings
+	# Other tb-specific settings
 	mozconfig_annotate '' --with-default-mozilla-five-home=${MOZILLA_FIVE_HOME}
 	mozconfig_annotate '' --with-user-appdir=.thunderbird
-	mozconfig_annotate '' --target="${CTARGET:-${CHOST}}"
-	mozconfig_annotate '' --build="${CTARGET:-${CHOST}}"
 
-	# Use enable features
-	if use gstreamer ; then
-		mozconfig_annotate '' --enable-gstreamer=1.0
-	else
-		mozconfig_annotate '' --disable-gstreamer
-	fi
-	mozconfig_use_enable pulseaudio
-	mozconfig_use_enable system-cairo
-	mozconfig_use_enable system-sqlite
-	mozconfig_use_with system-jpeg
-	mozconfig_use_with system-icu
-	mozconfig_use_enable system-icu intl-api
 	mozconfig_use_enable lightning calendar
 	mozconfig_use_enable ldap
-	# Feature is know to cause problems on hardened
-	mozconfig_use_enable jit ion
 
 	# Bug #72667
 	if use mozdom; then
@@ -281,14 +245,15 @@ src_configure() {
 		fi
 	fi
 
-	if use crypt ; then
-		cd "${BUILD_OBJ_DIR}"/mailnews/extensions/enigmail || die
+	if use crypt; then
+		pushd "${WORKDIR}"/enigmail &>/dev/null ||die
 		econf
+		popd &>/dev/null ||die
 	fi
 }
 
 src_compile() {
-	cd "${BUILD_OBJ_DIR}" || die
+	mkdir -p "${BUILD_OBJ_DIR}" && cd "${BUILD_OBJ_DIR}" || die
 
 	CC="$(tc-getCC)" CXX="$(tc-getCXX)" LD="$(tc-getLD)" \
 	MOZ_MAKE_FLAGS="${MAKEOPTS}" SHELL="${SHELL}" \
@@ -296,9 +261,11 @@ src_compile() {
 
 	# Only build enigmail extension if crypt enabled.
 	if use crypt ; then
-		cd "${BUILD_OBJ_DIR}"/mailnews/extensions/enigmail
-		# Use 'make' instead of 'emake' as some python warnings are written to stderr causing emerge to fail
-		make
+		einfo "Building enigmail"
+		pushd "${WORKDIR}"/enigmail &>/dev/null || die
+		emake -j1
+		emake -j1 xpi
+		popd &>/dev/null || die
 	fi
 }
 
@@ -341,10 +308,14 @@ src_install() {
 	fi
 
 	if use crypt ; then
-		emid=$(sed -n '/<em:id>/!d; s/.*\({.*}\).*/\1/; p; q' \
-			"${BUILD_OBJ_DIR}"/mailnews/extensions/enigmail/build/dist/install.rdf)
-		insinto ${MOZILLA_FIVE_HOME}/extensions/${emid} || die
-		doins -r "${BUILD_OBJ_DIR}"/mailnews/extensions/enigmail/build/dist/*
+		local enigmail_xpipath="${WORKDIR}/enigmail/build"
+		cd "${T}" || die
+		unzip "${enigmail_xpipath}"/enigmail*.xpi install.rdf || die
+		emid=$(sed -n '/<em:id>/!d; s/.*\({.*}\).*/\1/; p; q' install.rdf)
+
+		dodir ${MOZILLA_FIVE_HOME}/extensions/${emid} || die
+		cd "${D}"${MOZILLA_FIVE_HOME}/extensions/${emid} || die
+		unzip "${enigmail_xpipath}"/enigmail*.xpi || die
 	fi
 
 	if use lightning ; then
@@ -406,6 +377,16 @@ src_install() {
 }
 
 pkg_postinst() {
+	if use crypt; then
+		local peimpl=$(eselect --brief --colour=no pinentry show)
+		case "${peimpl}" in
+		*gtk*|*qt*) ;;
+		*)      ewarn "The pinentry front-end currently selected is not one supported by thunderbird."
+			ewarn "You may be prompted for your password in an inaccessible shell!!"
+			ewarn "Please use 'eselect pinentry' to select either the gtk or qt front-end"
+			;;
+		esac
+	fi
 	elog
 	elog "If you experience problems with plugins please issue the"
 	elog "following command : rm \${HOME}/.thunderbird/*/extensions.sqlite ,"
