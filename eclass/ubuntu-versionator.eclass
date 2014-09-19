@@ -7,11 +7,12 @@
 #  <patchlevel>ubuntu<revision> strings for Ubuntu based SRC_URIs
 
 ## Naming convention examples ##
-# 0ubuntu0.12.10.3	= package-3.6.0_p0_p00121003
-# 0ubuntu0.13.04.3	= package-3.6.0_p0_p00130403
-# 0ubuntu3.2		= package-3.6.0_p0_p0302
-# 1ubuntu5		= package-3.6.0_p1_p05
-# 0ubuntu6		= package-3.6.0_p0_p06
+# 0ubuntu0.12.10.3		= package-3.6.0_p0_p00121003
+# 0ubuntu0.13.04.3		= package-3.6.0_p0_p00130403
+# 0ubuntu3.2			= package-3.6.0_p0_p0302
+# 1ubuntu5			= package-3.6.0_p1_p05
+# 0ubuntu6			= package-3.6.0_p0_p06
+# +14.10.20140915-1ubuntu2.2	= package-3.6.0_p1_p0202_p20140915 (14.10 is the Ubuntu release version taken from URELEASE)
 #
 ## When upgrading <revision> from a floating point to a whole number, portage will see the upgrade as a downgrade ##
 # Example: package-3.6.0_p0_p0101 (0ubuntu1.1) to package-3.6.0_p0_p02 (0ubuntu2)
@@ -34,6 +35,11 @@ export VALA_MAX_API_VERSION=${VALA_MAX_API_VERSION:=0.20}
 export VALA_USE_DEPEND="vapigen"
 #---------------------------------------------------------------------------------------------------------------------------------#
 
+
+[[ "${URELEASE}" == *trusty* ]] && UVER_RELEASE="14.04"
+[[ "${URELEASE}" == *utopic* ]] && UVER_RELEASE="14.10"
+
+
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
 PV="${PV%%[a-z]*}"	# For package-3.6.0a
 PV="${PV%%_p*}"		# For package-3.6.0_p0_p02
@@ -42,10 +48,18 @@ PV="${PV%%_*}"		# For package-3.6.0_p_p02
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-PVR_PL_MAJOR="${PVR#*_p}"
-PVR_PL_MAJOR="${PVR_PL_MAJOR%_p*}"
-PVR_PL="${PVR##*_p}"
-PVR_PL="${PVR_PL%%-r*}"
+OIFS="${IFS}"
+IFS=p; read -ra PVR_ARRAY <<< "${PVR}"
+IFS="${OIFS}"
+
+PVR_PL_MAJOR="${PVR_ARRAY[1]}"
+PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"	# Major
+
+PVR_PL="${PVR_ARRAY[2]}"
+PVR_PL="${PVR_PL%*_}"			# Minor
+
+PVR_MICRO="${PVR_ARRAY[3]}"
+PVR_MICRO="${PVR_MICRO%*_}"		# Micro
 
 char=2
 index=1

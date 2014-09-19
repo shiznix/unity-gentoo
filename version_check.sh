@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Script to compare upstream versions of packages with versions in overlay tree ##
 # If run without any arguments it recurses through the overlay tree and compares versions for all packages #
@@ -75,18 +75,17 @@ version_check() {
 
 local_version_check() {
 	packbasename_saved="${packbasename}"    # Save off $packbasename for when uver() loops #
-	if [ -z "`grep UVER= ${pack}`" ]; then
-		uver
-	else
-		UVER=`grep UVER= ${pack} | awk -F\" '{print $2}'`
-	fi
-	UVER_PREFIX=`grep UVER_PREFIX= ${pack} | awk -F\" '{print $2}'`
-	UVER_SUFFIX=`grep UVER_SUFFIX= ${pack} | awk -F\" '{print $2}'`
-	URELEASE=`grep URELEASE= ${pack} | awk -F\" '{print $2}'`
+	. "${pack}" &> /dev/null
+		if [ -z "${UVER}" ]; then
+			uver
+		fi
+	. "${pack}" &> /dev/null
 	if [ -n "${URELEASE}" ]; then
 		if [ -n "${UVER}" ]; then
-			packbasename=`echo "${packbasename}" | sed -e 's:[a-z]$::'`	# Strip off trailing letter suffixes from ${PV}
-			current=`echo "${packbasename}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}"`
+			packbasename=`echo "${packbasename}" | \
+				sed -e 's:-r[0-9].*$::g' \
+					-e 's:[a-z]$::'`	# Strip off trailing letter and revision suffixes from ${PV}
+				current=`echo "${packbasename}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}"`
 		else
 			current=`echo "${packbasename}" | \
 				sed -e 's:-r[0-9].*$::g' \
@@ -94,6 +93,9 @@ local_version_check() {
 		fi
 	fi
 	packbasename="${packbasename_saved}"
+	UVER=
+	UVER_PREFIX=
+	UVER_SUFFIX=
 }
 
 
@@ -211,13 +213,26 @@ version_check_other_releases() {
 
 
 uver() {
-	PVR=`echo "${packbasename}" | awk -F_p '{print "_p"$(NF-1)"_p"$NF }'`
+	[[ "${URELEASE}" == *trusty* ]] && UVER_RELEASE="14.04"
+	[[ "${URELEASE}" == *utopic* ]] && UVER_RELEASE="14.10"
+	PVR=`echo "${packbasename}" | sed -e 's/.*-\([0-9]\)/\1/' -e 's:-r[0-9].*$::g'`
+	PVR="_${PVR#*_}"
+
 	packbasename=`echo "${packbasename}" | sed "s/${PVR}//"`
 	packbasename=`echo "${packbasename}" | sed "s/[a-z]$//"`
-	PVR_PL_MAJOR="${PVR#*_p}"
-	PVR_PL_MAJOR="${PVR_PL_MAJOR%_p*}"
-	PVR_PL="${PVR##*_p}"
-	PVR_PL="${PVR_PL%%-r*}"
+	OIFS=${IFS}
+	IFS=p; read -ra PVR_ARRAY <<< "${PVR}"
+	IFS=${OIFS}
+
+	PVR_PL_MAJOR="${PVR_ARRAY[1]}"
+	PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"	# Major
+
+	PVR_PL="${PVR_ARRAY[2]}"
+	PVR_PL="${PVR_PL%*_}"			# Minor
+
+	PVR_MICRO="${PVR_ARRAY[3]}"
+	PVR_MICRO="${PVR_MICRO%*_}"		# Micro
+
 	char=2
 	index=1
 	strlength="${#PVR_PL}"

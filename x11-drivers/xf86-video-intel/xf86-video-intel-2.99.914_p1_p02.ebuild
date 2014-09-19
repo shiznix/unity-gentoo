@@ -9,8 +9,8 @@ inherit autotools base linux-info xorg-2 ubuntu-versionator
 
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-intel"
-UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
 URELEASE="utopic"
+UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
 UVER_PREFIX="1~exp"
 
 DESCRIPTION="X.Org driver for Intel cards"

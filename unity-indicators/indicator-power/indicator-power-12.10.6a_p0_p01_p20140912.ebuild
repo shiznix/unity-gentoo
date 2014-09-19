@@ -6,11 +6,11 @@ EAPI=4
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="utopic"
 inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140912"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Indicator showing power state used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-power"
@@ -29,7 +29,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
 	net-misc/url-dispatcher
-	|| ( sys-power/upower sys-power/upower-pm-utils >=sys-apps/systemd-183 )
+	sys-power/upower
 	unity-base/unity-settings-daemon"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

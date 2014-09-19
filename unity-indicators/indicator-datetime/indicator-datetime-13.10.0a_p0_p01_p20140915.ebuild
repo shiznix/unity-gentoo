@@ -6,11 +6,11 @@ EAPI=5
 VALA_MIN_API_VERSION="0.22"
 VALA_MAX_API_VERSION="0.22"
 
+URELEASE="utopic"
 inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140908.1"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"

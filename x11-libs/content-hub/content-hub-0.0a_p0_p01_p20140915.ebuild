@@ -4,11 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/c/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140828"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Content sharing/picking infrastructure and service, designed to allow apps to securely and efficiently exchange content"
 HOMEPAGE="https://launchpad.net/content-hub"
