@@ -1,6 +1,6 @@
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/data/com.canonical.indicator.datetime.gschema.xml.in indicator-datetime-13.10.0+14.10.20140819/data/com.canonical.indicator.datetime.gschema.xml.in
---- indicator-datetime-13.10.0+14.10.20140819_orig/data/com.canonical.indicator.datetime.gschema.xml.in	2014-08-19 22:18:56.000000000 +0200
-+++ indicator-datetime-13.10.0+14.10.20140819/data/com.canonical.indicator.datetime.gschema.xml.in	2014-08-27 20:52:23.107543253 +0200
+diff -urN indicator-datetime-13.10.0+14.10.20140919/data/com.canonical.indicator.datetime.gschema.xml.in indicator-datetime-13.10.0+14.10.20140919-patched/data/com.canonical.indicator.datetime.gschema.xml.in
+--- indicator-datetime-13.10.0+14.10.20140919/data/com.canonical.indicator.datetime.gschema.xml.in	2014-09-20 00:03:46.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/data/com.canonical.indicator.datetime.gschema.xml.in	2014-09-20 19:38:09.766241145 +0930
 @@ -98,7 +98,7 @@
  			<default>false</default>
  			<_summary>Show the auto-detected location in the indicator</_summary>
@@ -10,20 +10,42 @@ diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/data/com.canonical.indi
  			</_description>
  		</key>
  		<key name="show-locations" type="b">
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/include/datetime/timezone-file.h indicator-datetime-13.10.0+14.10.20140819/include/datetime/timezone-file.h
---- indicator-datetime-13.10.0+14.10.20140819_orig/include/datetime/timezone-file.h	2014-08-19 22:18:56.000000000 +0200
-+++ indicator-datetime-13.10.0+14.10.20140819/include/datetime/timezone-file.h	2014-08-27 20:53:15.230160921 +0200
-@@ -40,6 +40,7 @@
-     FileTimezone();
+diff -urN indicator-datetime-13.10.0+14.10.20140919/include/datetime/timezone-file.h indicator-datetime-13.10.0+14.10.20140919-patched/include/datetime/timezone-file.h
+--- indicator-datetime-13.10.0+14.10.20140919/include/datetime/timezone-file.h	2014-09-20 00:04:32.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/include/datetime/timezone-file.h	2014-09-20 19:38:09.767241145 +0930
+@@ -36,6 +36,7 @@
+ public:
      FileTimezone(const std::string& filename);
      ~FileTimezone();
 +    static bool have_file(const std::string& filename);
  
  private:
-     void set_filename(const std::string& filename);
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/include/datetime/timezone-systemd.h indicator-datetime-13.10.0+14.10.20140819/include/datetime/timezone-systemd.h
---- indicator-datetime-13.10.0+14.10.20140819_orig/include/datetime/timezone-systemd.h	1970-01-01 01:00:00.000000000 +0100
-+++ indicator-datetime-13.10.0+14.10.20140819/include/datetime/timezone-systemd.h	2014-08-27 20:54:37.538134907 +0200
+     class Impl;
+diff -urN indicator-datetime-13.10.0+14.10.20140919/include/datetime/timezones-live.h indicator-datetime-13.10.0+14.10.20140919-patched/include/datetime/timezones-live.h
+--- indicator-datetime-13.10.0+14.10.20140919/include/datetime/timezones-live.h	2014-09-20 00:03:46.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/include/datetime/timezones-live.h	2014-09-20 19:38:09.767241145 +0930
+@@ -24,6 +24,7 @@
+ #include <datetime/timezones.h>
+ #include <datetime/timezone-file.h>
+ #include <datetime/timezone-geoclue.h>
++#include <datetime/timezone-systemd.h>
+ 
+ #include <memory> // shared_ptr<>
+ 
+@@ -43,8 +44,10 @@
+ private:
+     void update_geolocation();
+     void update_timezones();
++    bool m_etc_timezone = false;
+ 
+     FileTimezone m_file;
++    SystemdTimezone m_systemd;
+     std::shared_ptr<const Settings> m_settings;
+     std::shared_ptr<GeoclueTimezone> m_geo;
+ };
+diff -urN indicator-datetime-13.10.0+14.10.20140919/include/datetime/timezone-systemd.h indicator-datetime-13.10.0+14.10.20140919-patched/include/datetime/timezone-systemd.h
+--- indicator-datetime-13.10.0+14.10.20140919/include/datetime/timezone-systemd.h	1970-01-01 09:30:00.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/include/datetime/timezone-systemd.h	2014-09-20 19:38:09.767241145 +0930
 @@ -0,0 +1,60 @@
 +/*
 + * Copyright 2014 Xiao-Long Chen <chenxiaolong@cxl.epac.to>
@@ -85,32 +107,9 @@ diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/include/datetime/timezo
 +} // namespace unity
 +
 +#endif // INDICATOR_DATETIME_SYSTEMD_TIMEZONE_H
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/include/datetime/timezones-live.h indicator-datetime-13.10.0+14.10.20140819/include/datetime/timezones-live.h
---- indicator-datetime-13.10.0+14.10.20140819_orig/include/datetime/timezones-live.h	2014-08-19 22:18:56.000000000 +0200
-+++ indicator-datetime-13.10.0+14.10.20140819/include/datetime/timezones-live.h	2014-08-27 20:55:39.070861959 +0200
-@@ -24,6 +24,7 @@
- #include <datetime/timezones.h>
- #include <datetime/timezone-file.h>
- #include <datetime/timezone-geoclue.h>
-+#include <datetime/timezone-systemd.h>
- 
- #include <memory> // shared_ptr<>
- 
-@@ -43,8 +44,11 @@
- private:
-     void update_geolocation();
-     void update_timezones();
-+    bool m_etc_timezone = false;
- 
-     FileTimezone m_file;
-+    SystemdTimezone m_systemd;
-+
-     std::shared_ptr<const Settings> m_settings;
-     std::shared_ptr<GeoclueTimezone> m_geo;
- };
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/CMakeLists.txt indicator-datetime-13.10.0+14.10.20140819/src/CMakeLists.txt
---- indicator-datetime-13.10.0+14.10.20140819_orig/src/CMakeLists.txt	2014-08-19 22:19:09.000000000 +0200
-+++ indicator-datetime-13.10.0+14.10.20140819/src/CMakeLists.txt	2014-08-27 20:57:20.902063153 +0200
+diff -urN indicator-datetime-13.10.0+14.10.20140919/src/CMakeLists.txt indicator-datetime-13.10.0+14.10.20140919-patched/src/CMakeLists.txt
+--- indicator-datetime-13.10.0+14.10.20140919/src/CMakeLists.txt	2014-09-20 00:03:46.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/src/CMakeLists.txt	2014-09-20 19:38:09.767241145 +0930
 @@ -4,6 +4,21 @@
  add_definitions (-DTIMEZONE_FILE="/etc/timezone"
                   -DG_LOG_DOMAIN="Indicator-Datetime")
@@ -133,7 +132,7 @@ diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/CMakeLists.txt indi
  # handwritten sources
  set (SERVICE_C_SOURCES
       utils.c)
-@@ -33,8 +48,11 @@
+@@ -36,8 +51,11 @@
       sound.cpp
       timezone-file.cpp
       timezone-geoclue.cpp
@@ -145,10 +144,10 @@ diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/CMakeLists.txt indi
       wakeup-timer-mainloop.cpp
       wakeup-timer-powerd.cpp)
  
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/main.cpp indicator-datetime-13.10.0+14.10.20140819/src/main.cpp
---- indicator-datetime-13.10.0+14.10.20140819_orig/src/main.cpp	2014-08-19 22:19:09.000000000 +0200
-+++ indicator-datetime-13.10.0+14.10.20140819/src/main.cpp	2014-08-27 20:58:50.131113673 +0200
-@@ -31,6 +31,7 @@
+diff -urN indicator-datetime-13.10.0+14.10.20140919/src/main.cpp indicator-datetime-13.10.0+14.10.20140919-patched/src/main.cpp
+--- indicator-datetime-13.10.0+14.10.20140919/src/main.cpp	2014-09-20 00:04:11.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/src/main.cpp	2014-09-21 08:05:08.302387058 +0930
+@@ -33,6 +33,7 @@
  #include <datetime/state.h>
  #include <datetime/timezone-file.h>
  #include <datetime/timezones-live.h>
@@ -156,23 +155,19 @@ diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/main.cpp indicator-
  #include <datetime/wakeup-timer-powerd.h>
  #include <notifications/notifications.h>
  
-@@ -120,7 +121,12 @@
+@@ -127,7 +128,8 @@
      textdomain(GETTEXT_PACKAGE);
  
      auto engine = create_engine();
--    auto timezone = std::make_shared<FileTimezone>(TIMEZONE_FILE);
-+    std::shared_ptr<Timezone> timezone = (nullptr);
-+    if (FileTimezone::have_file(TIMEZONE_FILE))
-+        timezone = std::shared_ptr<Timezone>(new FileTimezone(TIMEZONE_FILE));
-+    else
-+        timezone = std::shared_ptr<Timezone>(new SystemdTimezone());
-+
-     auto state = create_state(engine, timezone);
+-    auto timezone_ = std::make_shared<FileTimezone>(TIMEZONE_FILE);
++    std::shared_ptr<Timezone> timezone_ = (nullptr);
++    timezone_ = std::shared_ptr<Timezone>(new SystemdTimezone());
+     auto state = create_state(engine, timezone_);
      auto actions = std::make_shared<LiveActions>(state);
      MenuFactory factory(actions, state);
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/timedate1-interface.xml indicator-datetime-13.10.0+14.10.20140819/src/timedate1-interface.xml
---- indicator-datetime-13.10.0+14.10.20140819_orig/src/timedate1-interface.xml	1970-01-01 01:00:00.000000000 +0100
-+++ indicator-datetime-13.10.0+14.10.20140819/src/timedate1-interface.xml	2014-08-27 21:00:17.223137255 +0200
+diff -urN indicator-datetime-13.10.0+14.10.20140919/src/timedate1-interface.xml indicator-datetime-13.10.0+14.10.20140919-patched/src/timedate1-interface.xml
+--- indicator-datetime-13.10.0+14.10.20140919/src/timedate1-interface.xml	1970-01-01 09:30:00.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/src/timedate1-interface.xml	2014-09-20 19:38:09.767241145 +0930
 @@ -0,0 +1,74 @@
 +<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
 +"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
@@ -248,21 +243,21 @@ diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/timedate1-interface
 +  </method>
 + </interface>
 +</node>
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/timezone-file.cpp indicator-datetime-13.10.0+14.10.20140819/src/timezone-file.cpp
---- indicator-datetime-13.10.0+14.10.20140819_orig/src/timezone-file.cpp	2014-08-19 22:18:56.000000000 +0200
-+++ indicator-datetime-13.10.0+14.10.20140819/src/timezone-file.cpp	2014-08-27 21:02:11.001471892 +0200
-@@ -85,7 +85,8 @@
+diff -urN indicator-datetime-13.10.0+14.10.20140919/src/timezone-file.cpp indicator-datetime-13.10.0+14.10.20140919-patched/src/timezone-file.cpp
+--- indicator-datetime-13.10.0+14.10.20140919/src/timezone-file.cpp	2014-09-20 00:04:32.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/src/timezone-file.cpp	2014-09-20 19:38:09.768241145 +0930
+@@ -39,7 +39,8 @@
+     Impl(FileTimezone& owner, const std::string& filename):
+         m_owner(owner)
+     {
+-        set_filename(filename);
++        if (have_file(filename))
++            set_filename(filename);
+     }
  
- FileTimezone::FileTimezone(const std::string& filename)
+     ~Impl()
+@@ -183,6 +184,12 @@
  {
--    set_filename(filename);
-+    if (have_file(filename))
-+        set_filename(filename);
- }
- 
- FileTimezone::~FileTimezone()
-@@ -93,6 +94,12 @@
-     clear();
  }
  
 +bool
@@ -271,12 +266,38 @@ diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/timezone-file.cpp i
 +    return g_file_test(filename.c_str(), G_FILE_TEST_EXISTS);
 +}
 +
- void
- FileTimezone::clear()
+ /***
+ ****
+ ***/
+diff -urN indicator-datetime-13.10.0+14.10.20140919/src/timezones-live.cpp indicator-datetime-13.10.0+14.10.20140919-patched/src/timezones-live.cpp
+--- indicator-datetime-13.10.0+14.10.20140919/src/timezones-live.cpp	2014-09-20 00:03:46.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/src/timezones-live.cpp	2014-09-20 19:38:09.768241145 +0930
+@@ -28,9 +28,11 @@
+ LiveTimezones::LiveTimezones(const std::shared_ptr<const Settings>& settings,
+                              const std::string& filename):
+     m_file(filename),
++    m_systemd(),
+     m_settings(settings)
  {
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/timezone-systemd.cpp indicator-datetime-13.10.0+14.10.20140819/src/timezone-systemd.cpp
---- indicator-datetime-13.10.0+14.10.20140819_orig/src/timezone-systemd.cpp	1970-01-01 01:00:00.000000000 +0100
-+++ indicator-datetime-13.10.0+14.10.20140819/src/timezone-systemd.cpp	2014-08-27 21:03:15.957232548 +0200
+-    m_file.timezone.changed().connect([this](const std::string&){update_timezones();});
++    g_warning("Getting timezone from systemd's timedate1 interface");
++    m_systemd.timezone.changed().connect([this](const std::string&){update_timezones();});
+ 
+     m_settings->show_detected_location.changed().connect([this](bool){update_geolocation();});
+     update_geolocation();
+@@ -54,7 +56,8 @@
+ 
+ void LiveTimezones::update_timezones()
+ {
+-    const auto a = m_file.timezone.get();
++    const auto tz = m_systemd.timezone;
++    const auto a = tz.get();
+     const auto b = m_geo ? m_geo->timezone.get() : "";
+ 
+     timezone.set(a.empty() ? b : a);
+diff -urN indicator-datetime-13.10.0+14.10.20140919/src/timezone-systemd.cpp indicator-datetime-13.10.0+14.10.20140919-patched/src/timezone-systemd.cpp
+--- indicator-datetime-13.10.0+14.10.20140919/src/timezone-systemd.cpp	1970-01-01 09:30:00.000000000 +0930
++++ indicator-datetime-13.10.0+14.10.20140919-patched/src/timezone-systemd.cpp	2014-09-20 19:38:09.768241145 +0930
 @@ -0,0 +1,71 @@
 +/*
 + * Copyright 2014 Xiao-Long Chen <chenxiaolong@cxl.epac.to>
@@ -349,29 +370,3 @@ diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/timezone-systemd.cp
 +} // namespace datetime
 +} // namespace indicator
 +} // namespace unity
-diff -Nur indicator-datetime-13.10.0+14.10.20140819_orig/src/timezones-live.cpp indicator-datetime-13.10.0+14.10.20140819/src/timezones-live.cpp
---- indicator-datetime-13.10.0+14.10.20140819_orig/src/timezones-live.cpp	2014-08-19 22:18:56.000000000 +0200
-+++ indicator-datetime-13.10.0+14.10.20140819/src/timezones-live.cpp	2014-08-27 21:04:38.644199519 +0200
-@@ -28,9 +28,11 @@
- LiveTimezones::LiveTimezones(const std::shared_ptr<const Settings>& settings,
-                              const std::string& filename):
-     m_file(filename),
-+    m_systemd(),
-     m_settings(settings)
- {
--    m_file.timezone.changed().connect([this](const std::string&){update_timezones();});
-+    g_warning("Getting timezone from systemd's timedate1 interface");
-+    m_systemd.timezone.changed().connect([this](const std::string&){update_timezones();});
- 
-     m_settings->show_detected_location.changed().connect([this](bool){update_geolocation();});
-     update_geolocation();
-@@ -54,7 +56,8 @@
- 
- void LiveTimezones::update_timezones()
- {
--    const auto a = m_file.timezone.get();
-+    const auto tz = m_systemd.timezone;
-+    const auto a = tz.get();
-     const auto b = m_geo ? m_geo->timezone.get() : "";
- 
-     timezone.set(a.empty() ? b : a);
