@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
+URELEASE="utopic"
 inherit autotools flag-o-matic ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.04.20140320"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Run executables under a new DBus session for testing"
 HOMEPAGE="https://launchpad.net/dbus-test-runner"

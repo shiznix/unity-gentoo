@@ -4,10 +4,10 @@
 
 EAPI=5
 
+URELEASE="trusty"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-URELEASE="trusty"
 UVER_PREFIX="+14.04.20140411"
 
 DESCRIPTION="Compositor for Mir display server that switches graphics and input between running sessions"

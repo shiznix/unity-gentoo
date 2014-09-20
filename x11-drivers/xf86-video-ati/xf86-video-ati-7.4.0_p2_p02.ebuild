@@ -17,12 +17,14 @@ SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 	${UURL}/${MY_PN}_${PV}-${UVER}.diff.gz"
 
 #KEYWORDS="~alpha amd64 ~ia64 ppc ppc64 ~sparc ~x86"
-IUSE="glamor mir udev"
+IUSE="+glamor mir udev"
 RESTRICT="mirror strip"
 
-RDEPEND=">=x11-libs/libdrm-2.4.46[video_cards_radeon]
-	glamor? ( x11-libs/glamor )
-	udev? ( virtual/udev )"
+RDEPEND=">=x11-libs/libdrm-2.4.54[video_cards_radeon]
+	glamor? ( || (
+		x11-base/xorg-server[glamor]
+		>=x11-libs/glamor-0.6
+	) )"
 DEPEND="${RDEPEND}"
 
 pkg_pretend() {

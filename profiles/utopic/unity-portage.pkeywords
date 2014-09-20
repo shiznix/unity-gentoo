@@ -51,6 +51,7 @@ dev-qt/qtxmlpatterns:5
 ~net-libs/gnutls-3.3.6
 ~net-print/cups-1.7.3
 ~media-gfx/graphite2-1.2.4
+~media-libs/libepoxy-1.2
 ~media-libs/flac-1.3.0
 ~media-libs/freetype-2.5.3
 ~media-libs/giflib-4.2.3
@@ -148,6 +149,7 @@ gnome-base/gnome-settings-daemon **
 gnome-base/gsettings-desktop-schemas **
 gnome-base/nautilus **
 gnome-base/gnome-session **
+gnome-extra/activity-log-manager **
 gnome-extra/zeitgeist **
 gnome-extra/nm-applet **
 media-gfx/thumbnailer **
@@ -161,6 +163,7 @@ net-im/empathy **
 net-im/friends **
 net-im/friends-app **
 net-im/telepathy-mission-control **
+net-libs/account-plugins **
 net-libs/gnome-online-accounts **
 net-libs/oxide-qt **
 net-libs/telepathy-indicator **
@@ -215,4 +218,5 @@ x11-misc/appmenu-qt5 **
 x11-misc/webapps-greasemonkey **
 x11-misc/lightdm **
 x11-themes/ubuntu-themes **
+x11-themes/ubuntu-wallpapers **
 x11-wm/metacity **

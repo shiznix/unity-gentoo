@@ -4,11 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140910"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Compositor for Mir display server that switches graphics and input between running sessions"
 HOMEPAGE="https://launchpad.net/unity-system-compositor"

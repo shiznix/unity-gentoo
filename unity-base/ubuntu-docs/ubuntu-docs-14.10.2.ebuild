@@ -28,8 +28,6 @@ DEPEND=">=app-text/gnome-doc-utils-0.20.5
 	dev-libs/libxml2
 	gnome-extra/yelp"
 
-S="${WORKDIR}/trunk"
-
 src_prepare() {
 	eautoreconf
 }

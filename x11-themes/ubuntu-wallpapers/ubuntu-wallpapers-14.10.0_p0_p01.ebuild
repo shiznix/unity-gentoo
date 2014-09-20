@@ -4,17 +4,17 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="trusty"
 
 DESCRIPTION="Ubuntu wallpapers"
 HOMEPAGE="https://launchpad.net/ubuntu-wallpapers"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="CC-BY-SA-3.0"
-KEYWORDS="amd64 arm x86"
+#KEYWORDS="amd64 arm x86"
 SLOT="0"
 IUSE=""
 RESTRICT="mirror"

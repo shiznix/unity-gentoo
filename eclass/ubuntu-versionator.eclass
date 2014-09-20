@@ -57,9 +57,11 @@ PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"	# Major
 
 PVR_PL="${PVR_ARRAY[2]}"
 PVR_PL="${PVR_PL%*_}"			# Minor
+PVR_PL="${PVR_PL%%-r*}"		# Strip revision strings
 
 PVR_MICRO="${PVR_ARRAY[3]}"
 PVR_MICRO="${PVR_MICRO%*_}"		# Micro
+PVR_MICRO="${PVR_MICRO%%-r*}"	# Strip revision strings
 
 char=2
 index=1

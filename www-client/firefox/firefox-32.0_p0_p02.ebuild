@@ -38,7 +38,7 @@ MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="trusty-updates"
+URELEASE="utopic"
 UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v4.1 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
@@ -56,7 +56,7 @@ RESTRICT="mirror"
 SRC_URI="${SRC_URI}
 	http://dev.gentoo.org/~anarchy/mozilla/patchsets/${PATCH}.tar.xz
 	http://dev.gentoo.org/~axs/distfiles/${PATCH}.tar.xz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 

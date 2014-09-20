@@ -4,11 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140814"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-ui"
