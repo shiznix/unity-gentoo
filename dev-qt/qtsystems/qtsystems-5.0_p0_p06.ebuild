@@ -19,18 +19,14 @@ DESCRIPTION="The Qt toolkit is a comprehensive C++ application development frame
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="
-	dev-qt/qtcore:5
+RDEPEND="dev-qt/qtcore:5
 	dev-qt/qtxmlpatterns:5
-	dev-qt/qtdeclarative:5
-	dev-qt/qtjsbackend:5
-"
+	dev-qt/qtdeclarative:5"
 DEPEND="${RDEPEND}
 	gnome-base/gconf
 	net-wireless/bluez
 	virtual/udev
-	x11-libs/libX11
-"
+	x11-libs/libX11"
 
 S="${WORKDIR}"
 QT5_BUILD_DIR="${S}"

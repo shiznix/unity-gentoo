@@ -21,7 +21,6 @@ RESTRICT="mirror"
 DEPEND=">=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtdeclarative-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=,opengl]
-	>=dev-qt/qtjsbackend-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
 	>=dev-qt/qtopengl-${PV}:5[debug=]
 	>=dev-qt/qtwidgets-${PV}:5[debug=]

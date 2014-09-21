@@ -29,7 +29,6 @@ DEPEND="${RDEPEND}
 	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
 	dev-qt/qtgui:5
-	dev-qt/qtjsbackend:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtpim:5
 	dev-qt/qtsvg:5
