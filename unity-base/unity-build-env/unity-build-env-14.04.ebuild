@@ -16,11 +16,12 @@ IUSE=""
 
 pkg_setup() {
 	mkdir -p "${S}"
-	REPO_ROOT="$(portageq get_repo_path / unity-gentoo)"
-	PROFILE_RELEASE=$(eselect --brief profile show | sed -n 's/.*:\(.*\)\/.*/\1/p')
 }
 
 src_install() {
+	local REPO_ROOT="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
+	local PROFILE_RELEASE=$(eselect --brief profile show | sed -n 's/.*:\(.*\)\/.*/\1/p')
+
 	if [ -z "${REPO_ROOT}" ] || [ -z "${PROFILE_RELEASE}" ]; then
 		die "Failed to detect unity-gentoo overlay and/or profile"
 	fi
