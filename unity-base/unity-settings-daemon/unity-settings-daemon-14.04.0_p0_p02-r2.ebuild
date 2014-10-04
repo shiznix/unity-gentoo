@@ -16,7 +16,7 @@ DESCRIPTION="Unity Settings Daemon"
 HOMEPAGE="https://launchpad.net/unity-settings-daemon"
 SRC_URI=	# 'gnome2' inherits 'gnome.org' which tries to set SRC_URI
 
-EBZR_PROJECT="${PN}/gnome-desktop-3.10c"
+EBZR_PROJECT="${PN}"
 EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10c"
 EBZR_REVISION="4055"
 

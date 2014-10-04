@@ -6,24 +6,24 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="utopic"
 inherit autotools base bzr eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="trusty-updates"
-UVER_PREFIX="+14.04.20140604"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
 SRC_URI=	# 'gnome2' inherits 'gnome.org' which tries to set SRC_URI
 
 EBZR_PROJECT="${PN}"
-EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10"
-EBZR_REVISION="12740"
+EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10c"
+EBZR_REVISION="12785"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+bluetooth +colord +cups +gnome-online-accounts +i18n input_devices_wacom +socialweb v4l"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
+IUSE="+cups +gnome-online-accounts +i18n +socialweb v4l"
+#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 RESTRICT="mirror"
 
 # False positives caused by nested configure scripts
@@ -56,10 +56,11 @@ COMMON_DEPEND="
 	>=media-libs/libcanberra-0.13[gtk3]
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
-	|| ( >=sys-power/upower-0.9.1 sys-power/upower-pm-utils unity-base/unity-control-center )
+	>=sys-power/upower-0.99:=
+	|| ( >=sys-power/upower-0.9.1 sys-power/upower-pm-utils >=sys-apps/systemd-183 )
 	unity-base/displayconfig
 	unity-base/gnome-control-center-signon
-	unity-base/unity-settings-daemon[colord?,policykit]
+	unity-base/unity-settings-daemon[colord,policykit]
 	virtual/krb5
 	>=x11-libs/libnotify-0.7.3:0=
 
@@ -73,11 +74,12 @@ COMMON_DEPEND="
 	x11-libs/libXxf86misc
 	>=x11-libs/libXi-1.2
 
-	bluetooth? ( >=net-wireless/gnome-bluetooth-3.9.3:= )
-	colord? (
-		net-libs/libsoup:2.4
-		>=x11-misc/colord-0.1.34:0=
-		>=x11-libs/colord-gtk-0.1.24 )
+	>=net-wireless/gnome-bluetooth-3.9.3:=
+
+	net-libs/libsoup:2.4
+	>=x11-misc/colord-0.1.34:0=
+	>=x11-libs/colord-gtk-0.1.24
+
 	cups? (
 		>=net-print/cups-1.4[dbus]
 		|| ( >=net-fs/samba-3.6.14-r1[smbclient] >=net-fs/samba-4.0.0[client] ) )
@@ -88,21 +90,22 @@ COMMON_DEPEND="
 		media-libs/gstreamer:1.0
 		media-libs/clutter-gtk:1.0
 		>=media-video/cheese-3.5.91 )
-	input_devices_wacom? (
-		>=dev-libs/libwacom-0.7
-		>=media-libs/clutter-1.11.3:1.0
-		media-libs/clutter-gtk:1.0
-		>=x11-libs/libXi-1.2 )
+
+	>=dev-libs/libwacom-0.7
+	>=media-libs/clutter-1.11.3:1.0
+	media-libs/clutter-gtk:1.0
+	>=x11-libs/libXi-1.2
+
 	$(vala_depend)"
 RDEPEND="${COMMON_DEPEND}
 	|| ( ( app-admin/openrc-settingsd sys-auth/consolekit ) >=sys-apps/systemd-31 )
 	>=sys-apps/accountsservice-0.6.30
 	x11-themes/gnome-icon-theme-symbolic
-	colord? ( >=gnome-extra/gnome-color-manager-3 )
+	>=gnome-extra/gnome-color-manager-3
 	cups? (
 		>=app-admin/system-config-printer-gnome-1.3.5
 		net-print/cups-pk-helper )
-	input_devices_wacom? ( unity-base/unity-settings-daemon[input_devices_wacom] )
+	unity-base/unity-settings-daemon[input_devices_wacom]
 
 	>=gnome-base/gnome-control-center-3.10
 
@@ -142,9 +145,13 @@ src_unpack() {
 src_prepare() {
 	bzr_src_prepare
 
-	epatch "${FILESDIR}/01_unity-control-center-optional-bt-colord-wacom.patch"
-	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
-	epatch "${FILESDIR}/03_enable_printer_panel.patch"
+	epatch -p1 "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
+	epatch -p1 "${FILESDIR}/03_enable_printer_panel.patch"
+
+	# Lots of work by upstream to be compatible with their chosen glib-2.41 #
+	#  This preliminary patch fixes being able to use the Appearance dialog once only #
+	#   Subsequent use of Appearance will lead to 'SIGSEGV in g_type_check_instance_cast' #
+	epatch -p1 "${FILESDIR}/appearance-glib2.41_sigsegv-fix.diff"
 	eautoreconf
 	gnome2_src_prepare
 	vala_src_prepare
@@ -164,12 +171,8 @@ src_configure() {
 		--disable-static \
 		--enable-documentation \
 		--without-cheese \
-		$(use_enable bluetooth) \
-		$(use_enable colord color) \
 		$(use_enable cups) \
 		$(use_enable i18n ibus) \
-		$(use_with socialweb libsocialweb) \
-		$(use_enable input_devices_wacom wacom) \
 		$(use_with socialweb libsocialweb)
 }
 
