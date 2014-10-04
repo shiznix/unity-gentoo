@@ -56,7 +56,7 @@ RESTRICT="mirror"
 SRC_URI="${SRC_URI}
 	http://dev.gentoo.org/~anarchy/mozilla/patchsets/${PATCH}.tar.xz
 	http://dev.gentoo.org/~axs/distfiles/${PATCH}.tar.xz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
@@ -65,14 +65,14 @@ RDEPEND="
 	>=dev-libs/nss-3.16.4
 	>=dev-libs/nspr-4.10.6
 	>=media-libs/mesa-10.1
-	>=media-libs/libpng-1.6.7[apng]
+	>=media-libs/libpng-1.6.10[apng]
 	virtual/libffi
 	gstreamer? ( media-plugins/gst-plugins-meta:1.0[ffmpeg] )
 	pulseaudio? ( media-sound/pulseaudio )
 	system-cairo? ( >=x11-libs/cairo-1.12[X] )
 	system-icu? ( >=dev-libs/icu-51.1 )
 	system-jpeg? ( >=media-libs/libjpeg-turbo-1.2.1 )
-	system-sqlite? ( >=dev-db/sqlite-3.8.3.1:3[secure-delete,debug=] )
+	system-sqlite? ( >=dev-db/sqlite-3.8.4.2:3[secure-delete,debug=] )
 	>=media-libs/libvpx-1.3.0
 	kernel_linux? ( media-libs/alsa-lib )
 	selinux? ( sec-policy/selinux-mozilla )"
