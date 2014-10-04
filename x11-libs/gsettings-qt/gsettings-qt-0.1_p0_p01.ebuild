@@ -20,13 +20,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-DEPEND="
-	dev-qt/qtcore:5
+DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
-	>=dev-libs/glib-2.38.1
-"
+	>=dev-libs/glib-2.38.1"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+QT5_BUILD_DIR="${S}"
 
 src_prepare() {
 	# Don't pre-strip
