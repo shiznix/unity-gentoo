@@ -48,3 +48,17 @@ src_prepare() {
 	sed -e 's:<db.h>:<db5.1/db.h>:g' \
 		-i src/* || die
 }
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+	ubuntu-versionator_pkg_postinst
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
+}
+
