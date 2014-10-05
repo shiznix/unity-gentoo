@@ -5,13 +5,13 @@
 EAPI="5"
 GCONF_DEBUG="yes"
 
+URELEASE="utopic"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="utopic"
 UVER_PREFIX="~trusty3"
 
 DESCRIPTION="Gnome session manager patched for the Unity desktop"

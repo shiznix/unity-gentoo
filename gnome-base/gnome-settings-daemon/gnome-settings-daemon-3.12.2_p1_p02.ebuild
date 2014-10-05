@@ -6,17 +6,15 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
+URELEASE="utopic"
 inherit autotools base eutils gnome2 systemd virtualx ubuntu-versionator
 
-MY_P="${PN}_${PV}"
-UURL="https://github.com/shiznix/unity-gentoo/raw/master/files"
-URELEASE="utopic"
-UVER_PREFIX="~utopic2"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org"
-SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.12/${PN}-${PV}.tar.xz
-	https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.xz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -110,12 +108,12 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-3.12.0-optional.patch"
 
 	# Disable selected patches #
-#	sed \
-#		`# Fix desktop icons disappearing after a time and causing compiz freezing windows (see LP#1170483) ` \
-#			-e 's:revert_background_dropping.patch:#revert_background_dropping.patch:g' \
-#			-e 's:52_sync_background_to_accountsservice.patch:#52_sync_background_to_accountsservice.patch:g' \
-#			-e 's:git_revert_remove_automount_helper.patch:#git_revert_remove_automount_helper.patch:g' \
-#				-i "${WORKDIR}/debian/patches/series"
+	sed \
+		`# Keep support in for upower-0.99 ` \
+			-e 's:revert_power_310:#revert_power_310:g' \
+		`# Fix desktop icons disappearing after a time and causing compiz freezing windows (see LP#1170483) ` \
+			-e 's:revert_background_dropping.patch:#revert_background_dropping.patch:g' \
+				-i "${WORKDIR}/debian/patches/series"
 
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do

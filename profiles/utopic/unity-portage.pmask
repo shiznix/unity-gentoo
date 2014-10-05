@@ -32,8 +32,11 @@ gnome-base/gnome-fallback::gentoo
 gnome-base/gnome-menus:3::gentoo
 gnome-base/gnome-panel::gentoo
 gnome-base/gnome-session::gentoo
-gnome-base/gnome-settings-daemon::gentoo	# Compiz needs patched gnome-settings-daemon, see error below...
-						# GLib-GIO-ERROR **: Settings schema 'org.gnome.settings-daemon.plugins.media-keys' does not contain a key named 'terminal'
+
+# Compiz needs patched gnome-settings-daemon, see error below...
+# GLib-GIO-ERROR **: Settings schema 'org.gnome.settings-daemon.plugins.media-keys' does not contain a key named 'terminal'
+gnome-base/gnome-settings-daemon::gentoo
+
 gnome-base/gsettings-desktop-schemas::gentoo
 gnome-base/nautilus::gentoo
 gnome-extra/activity-log-manager::gentoo

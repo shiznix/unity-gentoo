@@ -5,16 +5,17 @@
 EAPI="5"
 GCONF_DEBUG="yes"
 
+URELEASE="utopic"
 inherit autotools base gnome2 ubuntu-versionator
 
-UURL="https://github.com/shiznix/unity-gentoo/raw/master/files"
-URELEASE="utopic"
-MY_P="${PN}3_${PV}"
+MY_PN="${PN}3"
+MY_P="${MY_PN}_${PV}"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
 
 DESCRIPTION="Libraries for the gnome desktop that are not part of the UI patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-desktop"
-SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.12/${PN}-${PV}.tar.xz
-	https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/${MY_P}-${UVER}~utopic2.debian.tar.xz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="3/8" # subslot = libgnome-desktop-3 soname version

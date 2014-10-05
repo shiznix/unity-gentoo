@@ -6,25 +6,23 @@ EAPI="5"
 GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes" # gmodule is used, which uses dlopen
 
+URELEASE="utopic"
 inherit autotools base bash-completion-r1 eutils gnome2 ubuntu-versionator vala
 
-MY_P="${PN}_${PV}"
-S="${WORKDIR}/${PN}-${PV}"
-
-UURL="https://github.com/shiznix/unity-gentoo/raw/master/files"
-URELEASE="utopic"
-UVER_PREFIX="~utopic4"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
 
 DESCRIPTION="GNOME Desktop Configuration Tool patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.12/${PN}-${PV}.tar.xz
-	https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.xz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+"
 SLOT="2"
 IUSE="+bluetooth +colord +cups +gnome-online-accounts +i18n input_devices_wacom kerberos +socialweb v4l"
 #KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 RESTRICT="mirror"
+
+S="${WORKDIR}/${PN}-${PV}"
 
 # False positives caused by nested configure scripts
 QA_CONFIGURE_OPTIONS=".*"
@@ -72,6 +70,7 @@ COMMON_DEPEND="
 	x11-libs/libXxf86misc
 	>=x11-libs/libXi-1.2
 
+	`# Require a lower gnome-bluetooth version to account for unity-control-center dev lag #`
 	bluetooth? ( >=net-wireless/gnome-bluetooth-3.10:= )
 	colord? (
 		net-libs/libsoup:2.4
@@ -141,27 +140,20 @@ src_prepare() {
 
 	# Disable selected patches #
 	sed \
-		`# Avoid Ubuntu's package management` \
-			-e 's:05_run_update_manager.patch:#05_run_update_manager.patch:g' \
+		`# Keep support in for upower-0.99 ` \
+			-e 's:power-panel-3.10:#power-panel-3.10:g' \
 		`# Don't use Ubuntu specific region and language selector settings` \
-			-e 's:52_region_language.patch:#52_region_language.patch:g' \
+			-e 's:52_region_language:#52_region_language:g' \
 		`# Disable Ubuntu branding` \
 			-e 's:56_use_ubuntu_info_branding:#56_use_ubuntu_info_branding:g' \
-		`# Don't patch out Gnome's printer settings panel (indicator-printers doesn't work)` \
-			-e 's:91_unity_no_printing_panel:#91_unity_no_printing_panel:g' \
 		`# Other Ubuntu specific patches to disable` \
-			-e 's:92_ubuntu_system_proxy.patch:#92_ubuntu_system_proxy.patch:g' \
-			-e 's:ubuntu_region_packagekit.patch:#ubuntu_region_packagekit.patch:g' \
-			-e 's:ubuntu_region_install_dialog.patch:#ubuntu_region_install_dialog.patch:g' \
+			-e 's:92_ubuntu_system_proxy:#92_ubuntu_system_proxy:g' \
+			-e 's:ubuntu_external_panels:#ubuntu_external_panels:g' \
 				-i "${WORKDIR}/debian/patches/series"
 		for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 			PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 		done
 	base_src_prepare
-
-	# Make some panels and dependencies optional; requires eautoreconf
-	# https://bugzilla.gnome.org/686840, 697478, 700145
-	epatch "${FILESDIR}"/${PN}-3.12.1-optional.patch
 
 	# Fix some absolute paths to be appropriate for Gentoo
 	epatch "${FILESDIR}"/${PN}-3.10.2-gentoo-paths.patch
