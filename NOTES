@@ -29,7 +29,7 @@ dev-libs/libdbusmenu			# See "Using portage tree libindicate packages" item abov
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
-gnome-base/gnome-control-center		# Patch out gnome-online-accounts and use ubuntu-online-accounts
+gnome-base/gnome-control-center		# [trusty] Patch out gnome-online-accounts and use ubuntu-online-accounts / [utopic] Require gnome-bluetooth-3.10 to match unity-control-center
 gnome-base/gnome-core-apps		# Included so that Gnome package's minor versions may differ to overall gnome version (eg. gnome-desktop-3.8 alongside gnome-3.10)
 gnome-base/gnome-core-libs		# Included so that Gnome package's minor versions may differ to overall gnome version (eg. gnome-desktop-3.8 alongside gnome-3.10)
 gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen

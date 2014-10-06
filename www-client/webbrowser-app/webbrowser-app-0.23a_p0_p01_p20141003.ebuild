@@ -6,11 +6,11 @@ EAPI=5
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
+URELEASE="utopic"
 inherit distutils-r1 cmake-utils ubuntu-versionator	# Inheritance order important
 
 UURL="mirror://ubuntu/pool/main/w/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140910"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity webapps browser application"
 HOMEPAGE="https://launchpad.net/webbrowser-app"

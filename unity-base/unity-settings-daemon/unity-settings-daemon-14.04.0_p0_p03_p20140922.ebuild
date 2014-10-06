@@ -6,11 +6,11 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
+URELEASE="utopic"
 inherit autotools base bzr eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140605"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity Settings Daemon"
 HOMEPAGE="https://launchpad.net/unity-settings-daemon"
@@ -42,7 +42,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.37.7:2
 	>=media-sound/pulseaudio-2
 	sys-apps/accountsservice
 	sys-apps/systemd
-	|| ( >=sys-power/upower-0.9.11 sys-power/upower-pm-utils >=sys-apps/systemd-183 )
+	>=sys-power/upower-0.99:=
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/libnotify-0.7.3:=

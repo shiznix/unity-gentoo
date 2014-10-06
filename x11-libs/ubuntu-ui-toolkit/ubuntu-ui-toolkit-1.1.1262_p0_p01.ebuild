@@ -4,11 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit base gnome2-utils qt5-build ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140908"
+UVER_PREFIX="+14.10.20140922.2"
 
 DESCRIPTION="Qt Components for the Unity desktop - QML plugin"
 HOMEPAGE="https://launchpad.net/ubuntu-ui-toolkit"

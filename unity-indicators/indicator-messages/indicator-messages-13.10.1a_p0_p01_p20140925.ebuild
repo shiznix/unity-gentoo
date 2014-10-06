@@ -6,11 +6,11 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="utopic"
 inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140814.1"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Indicator that collects messages that need a response used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-messages"

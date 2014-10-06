@@ -4,11 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit qt5-build ubuntu-versionator
 
-URELEASE="utopic"
 UURL="mirror://ubuntu/pool/main/a/${PN}"
-UVER_PREFIX="+14.10.20140528"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Application menu module for Qt"
 HOMEPAGE="https://launchpad.net/appmenu-qt"

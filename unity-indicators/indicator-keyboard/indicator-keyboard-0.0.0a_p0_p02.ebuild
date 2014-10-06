@@ -9,10 +9,10 @@ PYTHON_COMPAT=( python{3_2,3_3,3_4} )
 VALA_MIN_API_VERSION="0.22"
 VALA_MAX_API_VERSION="0.22"
 
+URELEASE="utopic"
 inherit autotools eutils flag-o-matic gnome2 python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="utopic"
 UVER_PREFIX="+14.10.20140620.1"
 
 DESCRIPTION="Keyboard indicator used by the Unity desktop"

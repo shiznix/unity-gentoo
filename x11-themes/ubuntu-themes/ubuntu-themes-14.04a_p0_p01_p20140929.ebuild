@@ -6,11 +6,11 @@ EAPI=5
 GCONF_DEBUG="yes"
 PYTHON_COMPAT=( python2_7 )
 
+URELEASE="utopic"
 inherit eutils gnome2 python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140806"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Monochrome icons for the Unity desktop (default icon theme)"
 HOMEPAGE="https://launchpad.net/ubuntu-themes"

@@ -57,7 +57,6 @@ COMMON_DEPEND="
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
 	>=sys-power/upower-0.99:=
-	|| ( >=sys-power/upower-0.9.1 sys-power/upower-pm-utils >=sys-apps/systemd-183 )
 	unity-base/displayconfig
 	unity-base/gnome-control-center-signon
 	unity-base/unity-settings-daemon[colord,policykit]
@@ -113,8 +112,8 @@ RDEPEND="${COMMON_DEPEND}
 	!<gnome-extra/gnome-color-manager-3.1.2
 	!gnome-extra/gnome-media[pulseaudio]
 	!<gnome-extra/gnome-media-2.32.0-r300
-	!<net-wireless/gnome-bluetooth-3.3.2
-"
+	!<net-wireless/gnome-bluetooth-3.3.2"
+
 # PDEPEND to avoid circular dependency
 PDEPEND=">=gnome-base/gnome-session-2.91.6-r1"
 
@@ -131,8 +130,7 @@ DEPEND="${COMMON_DEPEND}
 
 	cups? ( sys-apps/sed )
 
-	gnome-base/gnome-common
-"
+	gnome-base/gnome-common"
 # Needed for autoreconf
 #	gnome-base/gnome-common
 
@@ -145,8 +143,8 @@ src_unpack() {
 src_prepare() {
 	bzr_src_prepare
 
-	epatch -p1 "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
-	epatch -p1 "${FILESDIR}/03_enable_printer_panel.patch"
+	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
+	epatch "${FILESDIR}/03_enable_printer_panel.patch"
 
 	# Lots of work by upstream to be compatible with their chosen glib-2.41 #
 	#  This preliminary patch fixes being able to use the Appearance dialog once only #

@@ -5,11 +5,11 @@
 EAPI=5
 GCONF_DEBUG="no"
 
+URELEASE="utopic"
 inherit base gnome2 cmake-utils eutils python ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140812"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/compiz"
