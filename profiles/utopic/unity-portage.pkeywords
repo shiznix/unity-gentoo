@@ -156,6 +156,7 @@ media-gfx/thumbnailer **
 media-libs/mesa **
 media-libs/mesa-mir **
 media-sound/banshee **
+media-sound/pulseaudio **
 media-sound/rhythmbox **
 mir-base/mir **
 mir-base/unity-system-compositor **

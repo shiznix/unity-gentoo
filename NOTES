@@ -45,6 +45,7 @@ gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 
 gnome-extra/zeitgeist			# Zeitgeist must be built with vala-0.20 due to the way unity-base/unity uses the vala generated zeitgeist-datamodel.h
 media-libs/mesa				# Patched for mir display server support
 media-sound/banshee			# Patched/compiled for indicator-sound support, Meego UI and other Ubuntu UI improvements
+media-sound/pulseaudio			# Patched for indicator-sound 'cork' support
 media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu quicklist, Magnatune and other Ubuntu UI improvements
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 net-im/telepathy-mission-control	# Enables Ubuntu libaccounts-sso integration

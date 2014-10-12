@@ -8,6 +8,9 @@
 # unity-control-center-14.10 needs gnome-bluetooth-3.10
 >=net-wireless/gnome-bluetooth-3.12::gentoo
 
+# >=media-libs/libmikmod-3.3.5 needs pulseaudio-5 but indicator-sound needs pulseaudio-4
+>=media-libs/libmikmod-3.3.5
+
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
 app-backup/deja-dup::gentoo
@@ -46,6 +49,7 @@ gnome-extra/zeitgeist::gentoo
 
 mail-client/thunderbird::gentoo
 media-libs/mesa::gentoo
+media-sound/pulseaudio::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
 net-im/telepathy-mission-control::gentoo
