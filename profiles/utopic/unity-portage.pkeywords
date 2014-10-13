@@ -103,6 +103,7 @@ dev-libs/gobject-introspection-common **
 dev-libs/libcolumbus **
 dev-libs/libdbusmenu **
 dev-libs/libfriends **
+dev-libs/libhybris **
 dev-libs/libqtdbusmock **
 dev-libs/libupstart **    
 dev-libs/libubuntu-app-launch **
@@ -139,6 +140,7 @@ dev-qt/qtsvg:5 **
 dev-qt/qtsql:5 **
 dev-qt/qtsystems:5 **
 dev-qt/qtopengl:5 **
+dev-util/android-headers **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
 gnome-base/gconf **

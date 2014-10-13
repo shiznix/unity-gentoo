@@ -8,7 +8,7 @@ URELEASE="utopic"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
-UVER_PREFIX="+14.10.20140918.1"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Mir is a display server technology"
 HOMEPAGE="https://launchpad.net/mir/"
@@ -16,22 +16,23 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3 MIT"
-SLOT="0/5"
+SLOT="0/26"
 #KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/boost:=
-	dev-libs/protobuf:="
 DEPEND="dev-cpp/gflags
 	dev-cpp/glog
-	dev-libs/boost
-	dev-libs/protobuf
+	dev-libs/boost:=
+	dev-libs/libhybris
+	dev-libs/protobuf:=
+	dev-util/android-headers
 	>=dev-util/lttng-tools-2.1.1[ust]
 	dev-util/umockdev
 	<media-libs/glm-0.9.5.1
 	media-libs/mesa[egl,gbm,gles2,mir]
 	>=sys-devel/gcc-4.7.3
+	virtual/libudev
 	x11-libs/libdrm
 	x11-libs/libxkbcommon
 	test? ( dev-cpp/gtest )"
