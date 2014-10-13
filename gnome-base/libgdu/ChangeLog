@@ -1,0 +1,43 @@
+# ChangeLog for gnome-base/libgdu
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/gnome-base/libgdu/ChangeLog,v 1.11 2012/10/28 15:52:33 armin76 Exp $
+
+  28 Oct 2012; Raúl Porcel <armin76@gentoo.org> libgdu-3.0.2.ebuild:
+  ia64/sh/sparc stable wrt #427544
+
+  16 Oct 2012; Anthony G. Basile <blueness@gentoo.org> libgdu-3.0.2.ebuild:
+  stable ppc, bug #427544
+
+  15 Oct 2012; Matt Turner <mattst88@gentoo.org> libgdu-3.0.2.ebuild:
+  Stable on alpha, bug 427544.
+
+  07 Oct 2012; Anthony G. Basile <blueness@gentoo.org> libgdu-3.0.2.ebuild:
+  stable ppc64, bug #427544
+
+  06 Oct 2012; Markus Meier <maekke@gentoo.org> libgdu-3.0.2.ebuild:
+  arm stable, bug #427544
+
+  04 Oct 2012; Agostino Sarubbo <ago@gentoo.org> libgdu-3.0.2.ebuild:
+  Stable for amd64, wrt bug #427544
+
+  03 Oct 2012; Pawel Hajdan jr <phajdan.jr@gentoo.org> libgdu-3.0.2.ebuild:
+  x86 stable wrt bug #427544
+
+  02 Jun 2012; Anthony G. Basile <blueness@gentoo.org> libgdu-3.0.2.ebuild:
+  Keyword ~mips
+
+  05 May 2012; Jeff Horelick <jdhore@gentoo.org> libgdu-3.0.2.ebuild:
+  dev-util/pkgconfig -> virtual/pkgconfig
+
+  24 Apr 2012; Justin Lecher <jlec@gentoo.org> libgdu-3.0.2.ebuild,
+  +files/libgdu-3.0.2-gold.patch, metadata.xml:
+  Added compatibility fix for gold
+
+*libgdu-3.0.2 (12 Apr 2012)
+
+  12 Apr 2012; Alexandre Rostovtsev <tetromino@gentoo.org>
+  +libgdu-3.0.2.ebuild, +files/libgdu-3.0.2-no-palimpsest-nautilus.patch,
+  +files/libgdu-3.0.2-optional-avahi.patch, +metadata.xml:
+  New ebuild for gnome-disk-utility's libraries. Split out of
+  gnome-disk-utility for use by gvfs since gnome-disk-utility-3.4 no longer
+  provides them.
