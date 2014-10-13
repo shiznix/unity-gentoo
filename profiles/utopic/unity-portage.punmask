@@ -19,10 +19,7 @@ dev-libs/gobject-introspection::unity-gentoo
 dev-libs/gobject-introspection-common::unity-gentoo
 dev-util/gdbus-codegen::unity-gentoo
 
-gnome-base/gnome-core-libs::unity-gentoo
-gnome-base/gnome-core-apps::unity-gentoo
-gnome-base/gconf::unity-gentoo
-gnome-base/libgdu::unity-gentoo
+gnome-base/*::unity-gentoo
 
 media-libs/mesa::unity-gentoo
 net-im/telepathy-mission-control::unity-gentoo
