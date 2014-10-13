@@ -5,11 +5,11 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
+URELEASE="utopic"
 inherit autotools eutils ubuntu-versionator vala xdummy python-single-r1
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.04.20140409"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="BAMF Application Matching Framework"
 HOMEPAGE="https://launchpad.net/bamf"

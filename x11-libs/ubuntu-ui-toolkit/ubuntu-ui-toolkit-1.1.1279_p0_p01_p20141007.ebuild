@@ -3,48 +3,57 @@
 # $Header: $
 
 EAPI=5
-VIRTUALX_REQUIRED="always"
 
+URELEASE="utopic"
 inherit base gnome2-utils qt5-build ubuntu-versionator virtualx
 
-UURL="mirror://ubuntu/pool/main/a/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140528"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
-DESCRIPTION="Expose Unity Online Accounts API to QML applications"
-HOMEPAGE="https://launchpad.net/accounts-qml-module"
+DESCRIPTION="Qt Components for the Unity desktop - QML plugin"
+HOMEPAGE="https://launchpad.net/ubuntu-ui-toolkit"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	 ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="doc"
+IUSE="examples"
 RESTRICT="mirror"
 
-DEPEND="dev-qt/qtcore:5
+RDEPEND="dev-qt/qtfeedback
+	x11-libs/unity-action-api"
+DEPEND="${RDEPEND}
+	dev-libs/glib:2
+	dev-qt/qtcore:5
+	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
-	unity-base/signon[qt5]
-	x11-libs/libaccounts-qt[qt5]"
+	dev-qt/qtgui:5
+	dev-qt/qtnetwork:5
+	dev-qt/qtpim:5
+	dev-qt/qtsvg:5
+	media-gfx/thumbnailer"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+MAKEOPTS="${MAKEOPTS} -j1"
 QT5_BUILD_DIR="${S}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 
-	use doc || \
-		sed -e '/doc\/doc.pri/d' \
-			-i accounts-qml-module.pro
+	# Docs don't build - full of segfaults and incorrect paths #
+	sed -e '/documentation\/documentation.pri/d' \
+		-i ubuntu-sdk.pro
 	qt5-build_src_prepare
 }
 
 src_install() {
 	# Needs to be run in a virtual Xserver so that qmlplugindump's #
 	#	qmltypes generation can successfully spawn dbus #
-	pushd ${QT5_BUILD_DIR}
 		Xemake INSTALL_ROOT="${ED}" install
-	popd
+
+	use examples || \
+		rm -rf "${ED}usr/lib/ubuntu-ui-toolkit/examples"
 }
 
 pkg_preinst() {
@@ -53,6 +62,7 @@ pkg_preinst() {
 
 pkg_postinst() {
 	gnome2_icon_cache_update
+	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {

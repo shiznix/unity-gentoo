@@ -200,6 +200,7 @@ unity-indicators/indicator-messages **
 unity-indicators/indicator-power **
 unity-indicators/indicator-session **
 unity-indicators/indicator-sound **
+unity-lenses/unity-lens-music **
 www-client/webbrowser-app **
 www-client/firefox **
 x11-base/xorg-server **
