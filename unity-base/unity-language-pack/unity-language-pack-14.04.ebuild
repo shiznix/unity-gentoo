@@ -293,10 +293,10 @@ setvar language-pack-ky			14.04+20140410
 setvar language-pack-ky-base		14.04+20140410
 setvar language-pack-gnome-ky		14.04+20140410
 setvar language-pack-gnome-ky-base	14.04+20140410
-setvar language-pack-la			12.10+20121009
-setvar language-pack-la-base		12.10+20121009
-setvar language-pack-gnome-la		12.10+20121009
-setvar language-pack-gnome-la-base	12.10+20121009
+setvar language-pack-la			12.04+20130128
+setvar language-pack-la-base		12.04+20130128
+setvar language-pack-gnome-la		12.04+20130128
+setvar language-pack-gnome-la-base	12.04+20130128
 setvar language-pack-lb			14.04+20140410
 setvar language-pack-lb-base		14.04+20140410
 setvar language-pack-gnome-lb		14.04+20140410

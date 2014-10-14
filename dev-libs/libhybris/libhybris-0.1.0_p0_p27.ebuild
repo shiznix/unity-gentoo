@@ -24,6 +24,7 @@ RESTRICT="mirror"
 DEPEND="dev-cpp/gflags
 	dev-cpp/glog
 	dev-libs/wayland
+	dev-util/android-headers
 	media-libs/mesa
 	sys-apps/dbus"
 

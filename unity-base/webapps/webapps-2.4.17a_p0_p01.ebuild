@@ -54,7 +54,6 @@ setvar livemail			2.4.16+13.10.20130924.2	0ubuntu1
 setvar mail-ru			2.4.16+13.10.20130924.2	0ubuntu1
 setvar newsblur			2.4.16+13.10.20130924.2	0ubuntu1
 setvar pandora			2.4.16+13.10.20130924.2	0ubuntu1
-setvar pandora-com		2.2ubuntu1
 ##setvar qml
 setvar qq-mail			2.4.16+13.10.20130924.2	0ubuntu1
 setvar reddit			2.4.16+13.10.20130924.2	0ubuntu1
