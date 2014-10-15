@@ -14,7 +14,7 @@ dev-libs/libindicate
 dev-libs/libindicate-qt
 ~dev-libs/lzo-2.06
 ~dev-libs/nettle-2.7.1
-~dev-libs/nss-3.17
+~dev-libs/nss-3.17.1
 =dev-libs/openssl-1.0.1*
 ~dev-libs/userspace-rcu-0.8.3
 ~dev-util/gtk-builder-convert-2.24.24
@@ -48,7 +48,7 @@ dev-qt/qtxmlpatterns:5
 ~dev-util/umockdev-0.8.2
 ~net-zope/zope-fixers-1.1.2
 ~net-zope/zope-interface-4.1.0
-~net-libs/gnutls-3.3.6
+~net-libs/gnutls-3.3.8
 ~net-print/cups-1.7.3
 ~media-gfx/graphite2-1.2.4
 ~media-libs/libepoxy-1.2
