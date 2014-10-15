@@ -1,5 +1,7 @@
 app-text/evince-3.10.3
 
+dev-libs/libgweather-3.10.2
+
 dev-util/devhelp-3.8.2
 
 gnome-extra/evolution-data-server-3.10.4
