@@ -41,7 +41,7 @@ MOZCONFIG_OPTIONAL_JIT="enabled"
 URELEASE="utopic"
 UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
-inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v4.1 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
+inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v5.31 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
