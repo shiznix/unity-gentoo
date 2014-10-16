@@ -8,22 +8,22 @@ inherit mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
 MY_PV="${PV}"
-BASE_PV="3.13.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
+BASE_PV="3.16.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
 UURL="mirror://ubuntu/pool/main/l/${MY_PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 
 DESCRIPTION="Ubuntu patched kernel sources"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/linux"
 SRC_URI="${UURL}/${MY_PN}_${BASE_PV}.orig.tar.gz
 	${UURL}/${MY_PN}_${BASE_PV}-${UVER}.diff.gz
-	amd64? ( http://kernel.ubuntu.com/~kernel-ppa/configs/saucy/amd64-config.flavour.generic )
-	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/saucy/i386-config.flavour.generic )"
+	amd64? ( http://kernel.ubuntu.com/~kernel-ppa/configs/trusty/amd64-config.flavour.generic )
+	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/trusty/i386-config.flavour.generic )"
 LICENSE="GPL-2"
 KEYWORDS="~x86 ~amd64"
 IUSE="binary"
 RESTRICT="binchecks mirror strip"
 
-DEPEND="binary? ( >=sys-kernel/genkernel-3.4.12.6-r4 )"
+DEPEND="binary? ( sys-kernel/genkernel-next )"
 RDEPEND="binary? ( virtual/udev )"
 
 S="${WORKDIR}/linux-$(get_version_component_range 1-2)"
