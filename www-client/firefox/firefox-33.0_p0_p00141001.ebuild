@@ -39,9 +39,9 @@ MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="utopic"
-UVER_PREFIX="+build1"
+UVER_PREFIX="+build2"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
-inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v5.31 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
+inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v5.33 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
@@ -49,7 +49,7 @@ HOMEPAGE="http://www.mozilla.com/firefox"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist gstreamer hardened +minimal pgo pulseaudio selinux system-cairo system-icu system-jpeg system-sqlite test"
+IUSE="bindist hardened +minimal pgo selinux test"
 RESTRICT="mirror"
 
 # More URIs appended below...
@@ -62,24 +62,11 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 # Mesa 7.10 needed for WebGL + bugfixes
 RDEPEND="
-	>=dev-libs/nss-3.16.4
+	>=dev-libs/nss-3.17.1
 	>=dev-libs/nspr-4.10.6
-	>=media-libs/mesa-10.1
-	>=media-libs/libpng-1.6.10[apng]
-	virtual/libffi
-	gstreamer? ( media-plugins/gst-plugins-meta:1.0[ffmpeg] )
-	pulseaudio? ( media-sound/pulseaudio )
-	system-cairo? ( >=x11-libs/cairo-1.12[X] )
-	system-icu? ( >=dev-libs/icu-51.1 )
-	system-jpeg? ( >=media-libs/libjpeg-turbo-1.2.1 )
-	system-sqlite? ( >=dev-db/sqlite-3.8.4.2:3[secure-delete,debug=] )
-	>=media-libs/libvpx-1.3.0
-	kernel_linux? ( media-libs/alsa-lib )
 	selinux? ( sec-policy/selinux-mozilla )"
 
 DEPEND="${RDEPEND}
-	>=sys-devel/binutils-2.16.1
-	virtual/pkgconfig
 	pgo? (
 		>=sys-devel/gcc-4.5 )
 	amd64? ( ${ASM_DEPEND}
@@ -234,41 +221,15 @@ src_configure() {
 	# Add full relro support for hardened
 	use hardened && append-ldflags "-Wl,-z,relro,-z,now"
 
-	# We must force enable jemalloc 3 threw .mozconfig
-	echo "export MOZ_JEMALLOC=1" >> "${S}"/.mozconfig || die
-
 	# Setup api key for location services
 	echo -n "${_google_api_key}" > "${S}"/google-api-key
 	mozconfig_annotate '' --with-google-api-keyfile="${S}/google-api-key"
 
-	mozconfig_annotate '' --enable-jemalloc
-	mozconfig_annotate '' --enable-replace-malloc
-	mozconfig_annotate '' --prefix="${EPREFIX}"/usr
-	mozconfig_annotate '' --libdir="${EPREFIX}"/usr/$(get_libdir)
 	mozconfig_annotate '' --enable-extensions="${MEXTENSIONS}"
-	mozconfig_annotate '' --disable-gconf
 	mozconfig_annotate '' --disable-mailnews
-	mozconfig_annotate '' --with-system-png
-	mozconfig_annotate '' --enable-system-ffi
-	mozconfig_annotate '' --disable-gold
 
 	# Other ff-specific settings
 	mozconfig_annotate '' --with-default-mozilla-five-home=${MOZILLA_FIVE_HOME}
-	mozconfig_annotate '' --target="${CTARGET:-${CHOST}}"
-	mozconfig_annotate '' --build="${CTARGET:-${CHOST}}"
-
-	# gstreamer now needs the version specified
-	if use gstreamer; then
-		mozconfig_annotate '' --enable-gstreamer=1.0
-	else
-		mozconfig_annotate '' --disable-gstreamer
-	fi
-	mozconfig_use_enable pulseaudio
-	mozconfig_use_enable system-cairo
-	mozconfig_use_enable system-sqlite
-	mozconfig_use_with system-jpeg
-	mozconfig_use_with system-icu
-	mozconfig_use_enable system-icu intl-api
 
 	# Allow for a proper pgo build
 	if use pgo; then
@@ -390,8 +351,6 @@ src_install() {
 
 	# Required in order to use plugins and even run firefox on hardened.
 	pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/{firefox,firefox-bin,plugin-container}
-	# Required in order for jit to work on hardened, as of firefox-31
-	use jit && pax-mark p "${ED}"${MOZILLA_FIVE_HOME}/{firefox,firefox-bin}
 
 	if use minimal; then
 		rm -r "${ED}"/usr/include "${ED}${MOZILLA_FIVE_HOME}"/{idl,include,lib,sdk} \

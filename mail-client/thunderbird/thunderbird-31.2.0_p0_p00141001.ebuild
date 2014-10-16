@@ -33,10 +33,10 @@ EMVER="1.7.2"
 MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
 MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 
-inherit base flag-o-matic toolchain-funcs mozconfig-v4.31 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
+inherit base flag-o-matic toolchain-funcs mozconfig-v5.31 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
 URELEASE="utopic"
-UVER_PREFIX="+build1"
+UVER_PREFIX="+build2"
 UURL="mirror://ubuntu/pool/main/t/${PN}"
 
 DESCRIPTION="Thunderbird Mail Client"
@@ -69,7 +69,7 @@ SRC_URI="${SRC_URI}
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 RDEPEND="
-	>=dev-libs/nss-3.16.2
+	>=dev-libs/nss-3.16.5
 	>=dev-libs/nspr-4.10.6
 	selinux? ( sec-policy/selinux-thunderbird )
 	!x11-plugins/enigmail
@@ -381,7 +381,7 @@ pkg_postinst() {
 		local peimpl=$(eselect --brief --colour=no pinentry show)
 		case "${peimpl}" in
 		*gtk*|*qt*) ;;
-		*)      ewarn "The pinentry front-end currently selected is not one supported by thunderbird."
+		*)	ewarn "The pinentry front-end currently selected is not one supported by thunderbird."
 			ewarn "You may be prompted for your password in an inaccessible shell!!"
 			ewarn "Please use 'eselect pinentry' to select either the gtk or qt front-end"
 			;;
