@@ -72,10 +72,9 @@ src_compile() {
 		--no-save-config \
 		--kernel-config="$defconfig_src" \
 		--kernname="${PN}" \
-		--build-src="$S" \
-		--build-dst=${WORKDIR}/build \
+		--kerneldir="${S}" \
+		--kernel-outputdir=${WORKDIR}/build \
 		--makeopts="${MAKEOPTS}" \
-		--firmware-dst=${WORKDIR}/out/lib/firmware \
 		--cachedir="${T}/cache" \
 		--tempdir="${T}/twork" \
 		--logfile="${WORKDIR}/genkernel.log" \
