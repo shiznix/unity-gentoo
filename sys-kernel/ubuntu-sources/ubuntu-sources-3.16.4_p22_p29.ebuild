@@ -20,12 +20,8 @@ SRC_URI="${UURL}/${MY_PN}_${BASE_PV}.orig.tar.gz
 	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/trusty/i386-config.flavour.generic )"
 LICENSE="GPL-2"
 KEYWORDS="~x86 ~amd64"
-IUSE="binary"
+IUSE=""
 RESTRICT="binchecks mirror strip"
-
-DEPEND="binary? ( sys-kernel/genkernel-next )"
-RDEPEND="binary? ( virtual/udev )"
-
 S="${WORKDIR}/linux-$(get_version_component_range 1-2)"
 
 pkg_setup() {
@@ -63,29 +59,6 @@ src_prepare() {
 	mv "${TEMP}/configs" "${S}" || die
 }
 
-src_compile() {
-	! use binary && return
-	install -d ${WORKDIR}/out/{lib,boot}
-	install -d ${T}/{cache,twork}
-	install -d $WORKDIR/build $WORKDIR/out/lib/firmware
-	DEFAULT_KERNEL_SOURCE="${S}" CMD_KERNEL_DIR="${S}" genkernel ${GKARGS} \
-		--no-save-config \
-		--kernel-config="$defconfig_src" \
-		--kernname="${PN}" \
-		--kerneldir="${S}" \
-		--kernel-outputdir=${WORKDIR}/build \
-		--makeopts="${MAKEOPTS}" \
-		--cachedir="${T}/cache" \
-		--tempdir="${T}/twork" \
-		--logfile="${WORKDIR}/genkernel.log" \
-		--bootdir="${WORKDIR}/out/boot" \
-		--lvm \
-		--luks \
-		--iscsi \
-		--module-prefix="${WORKDIR}/out" \
-		all || die "genkernel failed"
-}
-
 src_install() {
 	# copy sources into place #
 	dodir /usr/src
@@ -96,24 +69,6 @@ src_install() {
 	make mrproper || die
 	cp $defconfig_src .config || die
 	yes "" | make oldconfig || die
-
-	use binary || return
-	cp -a ${WORKDIR}/out/* ${D}/ || die "couldn't copy output files into place"
-	make prepare || die
-	make scripts || die
-
-	# module symlink fixup #
-	rm -f ${D}/lib/modules/*/source || die
-	rm -f ${D}/lib/modules/*/build || die
-	cd ${D}/lib/modules
-
-	# module strip #
-	find -iname *.ko -exec strip --strip-debug {} \;
-
-	# back to the symlink fixup #
-	local moddir="$(ls -d 2*)"
-	ln -s /usr/src/${PN}-${MY_PV}-${UVER} ${D}/lib/modules/${moddir}/source || die
-	ln -s /usr/src/${PN}-${MY_PV}-${UVER} ${D}/lib/modules/${moddir}/build || die
 }
 
 pkg_postinst() {
