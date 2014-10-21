@@ -15,6 +15,7 @@ dev-libs/libindicate-qt
 dev-python/configparser
 ~dev-python/httplib2-0.8
 dev-python/keyring
+~dev-python/oauthlib-0.6.3
 ~dev-python/python-prctl-1.5.0
 dev-qt/qtconcurrent:5
 dev-qt/qtcore:5
