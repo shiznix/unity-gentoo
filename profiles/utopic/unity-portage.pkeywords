@@ -18,17 +18,6 @@ dev-python/configparser
 ~dev-python/httplib2-0.8
 dev-python/keyring
 ~dev-python/python-prctl-1.5.0
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-~dev-python/six-1.6.1
-~dev-python/twisted-core-13.0.0
-~dev-python/twisted-names-13.0.0
-~dev-python/twisted-web-13.0.0
-=======
-~dev-python/oauthlib-0.6.3
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 dev-qt/qtconcurrent:5
 dev-qt/qtcore:5
 dev-qt/qtdbus:5
