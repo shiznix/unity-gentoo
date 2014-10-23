@@ -10,6 +10,8 @@
 
 # >=media-libs/libmikmod-3.3.5 needs pulseaudio-5 but indicator-sound needs pulseaudio-4
 >=media-libs/libmikmod-3.3.5
+>=media-libs/sdl-mixer-1.2.12-r4
+
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
