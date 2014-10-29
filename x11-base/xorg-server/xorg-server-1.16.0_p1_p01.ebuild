@@ -78,6 +78,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	systemd? (
 		sys-apps/dbus
 		sys-apps/systemd
+		>=x11-apps/xinit-1.3.4
 	)"
 
 DEPEND="${RDEPEND}
