@@ -12,6 +12,7 @@ dev-lang/python-exec:2	# Need this as 'python3_4' is only puse.unmasked at ~keyw
 ~dev-libs/nss-3.17.1
 dev-libs/libindicate
 dev-libs/libindicate-qt
+~dev-libs/userspace-rcu-0.8.4
 dev-python/configparser
 ~dev-python/httplib2-0.8
 dev-python/keyring
