@@ -21,7 +21,7 @@ SLOT="0/26"
 IUSE="test"
 RESTRICT="mirror"
 
-DEPEND="dev-cpp/gflags
+DEPEND="<dev-cpp/gflags-2.1
 	dev-cpp/glog
 	dev-libs/boost:=
 	dev-libs/libhybris
