@@ -1,8 +1,3 @@
-- Redhat bug #806491
-  * systemd-logind not tracking startx sessions leading to user not having system suspend and drive mounting permissions
-  * workaround:
-    -> XSESSION=unity startx -- vt$(tty | sed 's:.*[a-z]::g')
-
 - Some applications duplicate menu entries in the menu bar due to displaying the application menu and appmenu at the same time
   * Known affected applications so far are gnome-terminal and eog
   * Ubuntu currently workaround this by patching these applications to disable the application menu
@@ -33,3 +28,5 @@
 		- This has broken laptop power settings in unity-control-center -
 	Another example is Gnome >=3.10 moving DisplayConfig settings (xrandr, color, power) from gnome-desktop into x11-wm/mutter as a dbus interface (LP# 1228765)
 		- This has broken multi-monitor display setups and laptop brightness settings, changing screen resolution lacks confirmation dialog -
+
+- Xrandr does not work in Mir (unable to get a list of valid screen resolutions other than the one being used, screen rotate does nothing)

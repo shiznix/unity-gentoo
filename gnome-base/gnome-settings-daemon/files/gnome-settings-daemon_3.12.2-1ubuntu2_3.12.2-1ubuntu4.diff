@@ -1,0 +1,3295 @@
+diff -Nru gnome-settings-daemon-3.12.2/debian/changelog gnome-settings-daemon-3.12.2/debian/changelog
+--- gnome-settings-daemon-3.12.2/debian/changelog	2014-10-01 04:07:18.000000000 +0000
++++ gnome-settings-daemon-3.12.2/debian/changelog	2014-11-01 13:32:00.000000000 +0000
+@@ -1,3 +1,17 @@
++gnome-settings-daemon (3.12.2-1ubuntu4) vivid; urgency=medium
++
++  * geoclue-2.0 build-deps were accidentally uncommented in the previous
++    upload - remove them again.
++
++ -- Iain Lane <iain@orangesquash.org.uk>  Sat, 01 Nov 2014 13:32:00 +0000
++
++gnome-settings-daemon (3.12.2-1ubuntu3) vivid; urgency=medium
++
++  * Drop revert_power_310.patch and build against upower 0.99. (LP: #1330037)
++  * ubuntu-lid-close-suspend.patch: Unfuzz.
++
++ -- Martin Pitt <martin.pitt@ubuntu.com>  Fri, 31 Oct 2014 11:15:18 +0100
++
+ gnome-settings-daemon (3.12.2-1ubuntu2) utopic; urgency=medium
+ 
+   * debian/patches/geoclue-build-fixes.patch: disable build of new
+diff -Nru gnome-settings-daemon-3.12.2/debian/control gnome-settings-daemon-3.12.2/debian/control
+--- gnome-settings-daemon-3.12.2/debian/control	2014-10-01 04:07:22.000000000 +0000
++++ gnome-settings-daemon-3.12.2/debian/control	2014-11-01 13:32:03.000000000 +0000
+@@ -7,7 +7,7 @@
+ Priority: optional
+ Maintainer: Ubuntu Desktop Team <ubuntu-desktop@lists.ubuntu.com>
+ XSBC-Original-Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
+-Uploaders: Andreas Henriksson <andreas@fatal.se>, Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>, Emilio Pozuelo Monfort <pochu@debian.org>, Sjoerd Simons <sjoerd@debian.org>
++Uploaders: Andreas Henriksson <andreas@fatal.se>, Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>, Emilio Pozuelo Monfort <pochu@debian.org>
+ Build-Depends: cdbs,
+                debhelper (>= 9),
+                gnome-pkg-tools,
+@@ -33,7 +33,7 @@
+                libcups2-dev,
+                libpolkit-gobject-1-dev,
+                libpackagekit-glib2-dev (>= 0.6.4),
+-               libupower-glib-dev (>= 0.9.0),
++               libupower-glib-dev (>= 0.99.0),
+                libgudev-1.0-dev [linux-any],
+                libcolord-dev (>= 1.0.2),
+                liblcms2-dev,
+diff -Nru gnome-settings-daemon-3.12.2/debian/control.in gnome-settings-daemon-3.12.2/debian/control.in
+--- gnome-settings-daemon-3.12.2/debian/control.in	2014-10-01 04:07:18.000000000 +0000
++++ gnome-settings-daemon-3.12.2/debian/control.in	2014-10-31 10:15:38.000000000 +0000
+@@ -29,7 +29,7 @@
+                libcups2-dev,
+                libpolkit-gobject-1-dev,
+                libpackagekit-glib2-dev (>= 0.6.4),
+-               libupower-glib-dev (>= 0.9.0),
++               libupower-glib-dev (>= 0.99.0),
+                libgudev-1.0-dev [linux-any],
+                libcolord-dev (>= 1.0.2),
+                liblcms2-dev,
+diff -Nru gnome-settings-daemon-3.12.2/debian/patches/revert_power_310.patch gnome-settings-daemon-3.12.2/debian/patches/revert_power_310.patch
+--- gnome-settings-daemon-3.12.2/debian/patches/revert_power_310.patch	2014-10-01 04:07:18.000000000 +0000
++++ gnome-settings-daemon-3.12.2/debian/patches/revert_power_310.patch	1970-01-01 00:00:00.000000000 +0000
+@@ -1,3143 +0,0 @@
+-From 092b9692f6be1c5c57bee8146ff26f26fa360c0b Mon Sep 17 00:00:00 2001
+-From: Tim Lunn <tim@feathertop.org>
+-Date: Tue, 16 Sep 2014 08:51:23 +1000
+-Subject: [PATCH] revert power panel to 3.10
+-
+----
+- plugins/power/Makefile.am               |    2 +-
+- plugins/power/gpm-common.c              |  904 +++++++++++++++++++-
+- plugins/power/gpm-common.h              |   12 +-
+- plugins/power/gsd-power-constants.h     |    3 +-
+- plugins/power/gsd-power-manager.c       | 1394 +++++++++++++++++++++++++++----
+- plugins/power/gsd-power-manager.h       |    3 +-
+- plugins/power/gsd-power-plugin.c        |    3 +-
+- plugins/power/gsm-inhibitor-flag.h      |    4 +-
+- plugins/power/gsm-manager-logout-mode.h |    3 +-
+- plugins/power/gsm-presence-flag.h       |    4 +-
+- plugins/power/test.py                   |   22 +-
+- 11 files changed, 2158 insertions(+), 196 deletions(-)
+-
+-Index: gnome-settings-daemon/plugins/power/Makefile.am
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/Makefile.am
+-+++ gnome-settings-daemon/plugins/power/Makefile.am
+-@@ -77,7 +77,7 @@ gsd_test_power_SOURCES =				\
+- 	test-power.c
+- 
+- gsd_test_power_CFLAGS = $(libpower_la_CFLAGS)
+--gsd_test_power_CPPFLAGS = $(libpower_la_CPPFLAGS) -DGSD_MOCK=1
+-+gsd_test_power_CPPFLAGS = $(libpower_la_CPPFLAGS) -DGSD_MOCK=1 -DGSD_ACTION_DELAY=1
+- gsd_test_power_LDADD =					\
+- 	-lm						\
+- 	$(top_builddir)/plugins/common/libcommon.la	\
+-Index: gnome-settings-daemon/plugins/power/gpm-common.c
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/gpm-common.c
+-+++ gnome-settings-daemon/plugins/power/gpm-common.c
+-@@ -98,6 +98,892 @@ gpm_get_timestring (guint time_secs)
+-         return timestring;
+- }
+- 
+-+static const gchar *
+-+gpm_upower_get_device_icon_index (UpDevice *device)
+-+{
+-+        gdouble percentage;
+-+        /* get device properties */
+-+        g_object_get (device, "percentage", &percentage, NULL);
+-+        if (percentage < 10)
+-+                return "000";
+-+        else if (percentage < 30)
+-+                return "020";
+-+        else if (percentage < 50)
+-+                return "040";
+-+        else if (percentage < 70)
+-+                return "060";
+-+        else if (percentage < 90)
+-+                return "080";
+-+        return "100";
+-+}
+-+
+-+static const gchar *
+-+gpm_upower_get_device_icon_suffix (UpDevice *device)
+-+{
+-+        gdouble percentage;
+-+        /* get device properties */
+-+        g_object_get (device, "percentage", &percentage, NULL);
+-+        if (percentage < 10)
+-+                return "caution";
+-+        else if (percentage < 30)
+-+                return "low";
+-+        else if (percentage < 60)
+-+                return "good";
+-+        return "full";
+-+}
+-+
+-+GIcon *
+-+gpm_upower_get_device_icon (UpDevice *device, gboolean use_symbolic)
+-+{
+-+        GString *filename;
+-+        gchar **iconnames;
+-+        const gchar *kind_str;
+-+        const gchar *suffix_str;
+-+        const gchar *index_str;
+-+        UpDeviceKind kind;
+-+        UpDeviceState state;
+-+        gboolean is_present;
+-+        gdouble percentage;
+-+        GIcon *icon = NULL;
+-+
+-+        g_return_val_if_fail (device != NULL, NULL);
+-+
+-+        /* get device properties */
+-+        g_object_get (device,
+-+                      "kind", &kind,
+-+                      "state", &state,
+-+                      "percentage", &percentage,
+-+                      "is-present", &is_present,
+-+                      NULL);
+-+
+-+        /* get correct icon prefix */
+-+        filename = g_string_new (NULL);
+-+
+-+        /* get the icon from some simple rules */
+-+        if (kind == UP_DEVICE_KIND_LINE_POWER) {
+-+                if (use_symbolic)
+-+                        g_string_append (filename, "ac-adapter-symbolic;");
+-+                g_string_append (filename, "ac-adapter;");
+-+
+-+        } else if (kind == UP_DEVICE_KIND_MONITOR) {
+-+                if (use_symbolic)
+-+                        g_string_append (filename, "gpm-monitor-symbolic;");
+-+                g_string_append (filename, "gpm-monitor;");
+-+
+-+        } else {
+-+
+-+                kind_str = up_device_kind_to_string (kind);
+-+                if (!is_present) {
+-+                        if (use_symbolic)
+-+                                g_string_append (filename, "battery-missing-symbolic;");
+-+                        g_string_append_printf (filename, "gpm-%s-missing;", kind_str);
+-+                        g_string_append_printf (filename, "gpm-%s-000;", kind_str);
+-+                        g_string_append (filename, "battery-missing;");
+-+
+-+                } else {
+-+                        switch (state) {
+-+                        case UP_DEVICE_STATE_EMPTY:
+-+                                if (use_symbolic)
+-+                                        g_string_append (filename, "battery-empty-symbolic;");
+-+                                g_string_append_printf (filename, "gpm-%s-empty;", kind_str);
+-+                                g_string_append_printf (filename, "gpm-%s-000;", kind_str);
+-+                                g_string_append (filename, "battery-empty;");
+-+                                break;
+-+                        case UP_DEVICE_STATE_FULLY_CHARGED:
+-+                                if (use_symbolic) {
+-+                                        g_string_append (filename, "battery-full-charged-symbolic;");
+-+                                        g_string_append (filename, "battery-full-charging-symbolic;");
+-+                                }
+-+                                g_string_append_printf (filename, "gpm-%s-full;", kind_str);
+-+                                g_string_append_printf (filename, "gpm-%s-100;", kind_str);
+-+                                g_string_append (filename, "battery-full-charged;");
+-+                                g_string_append (filename, "battery-full-charging;");
+-+                                break;
+-+                        case UP_DEVICE_STATE_CHARGING:
+-+                        case UP_DEVICE_STATE_PENDING_CHARGE:
+-+                                suffix_str = gpm_upower_get_device_icon_suffix (device);
+-+                                index_str = gpm_upower_get_device_icon_index (device);
+-+                                if (use_symbolic)
+-+                                        g_string_append_printf (filename, "battery-%s-charging-symbolic;", suffix_str);
+-+                                g_string_append_printf (filename, "gpm-%s-%s-charging;", kind_str, index_str);
+-+                                g_string_append_printf (filename, "battery-%s-charging;", suffix_str);
+-+                                break;
+-+                        case UP_DEVICE_STATE_DISCHARGING:
+-+                        case UP_DEVICE_STATE_PENDING_DISCHARGE:
+-+                                suffix_str = gpm_upower_get_device_icon_suffix (device);
+-+                                index_str = gpm_upower_get_device_icon_index (device);
+-+                                if (use_symbolic)
+-+                                        g_string_append_printf (filename, "battery-%s-symbolic;", suffix_str);
+-+                                g_string_append_printf (filename, "gpm-%s-%s;", kind_str, index_str);
+-+                                g_string_append_printf (filename, "battery-%s;", suffix_str);
+-+                                break;
+-+                        default:
+-+                                if (use_symbolic)
+-+                                        g_string_append (filename, "battery-missing-symbolic;");
+-+                                g_string_append (filename, "gpm-battery-missing;");
+-+                                g_string_append (filename, "battery-missing;");
+-+                        }
+-+                }
+-+        }
+-+
+-+        /* nothing matched */
+-+        if (filename->len == 0) {
+-+                g_warning ("nothing matched, falling back to default icon");
+-+                g_string_append (filename, "dialog-warning;");
+-+        }
+-+
+-+        g_debug ("got filename: %s", filename->str);
+-+
+-+        iconnames = g_strsplit (filename->str, ";", -1);
+-+        icon = g_themed_icon_new_from_names (iconnames, -1);
+-+
+-+        g_strfreev (iconnames);
+-+        g_string_free (filename, TRUE);
+-+        return icon;
+-+}
+-+
+-+/**
+-+ * gpm_precision_round_down:
+-+ * @value: The input value
+-+ * @smallest: The smallest increment allowed
+-+ *
+-+ * 101, 10      100
+-+ * 95,  10      90
+-+ * 0,   10      0
+-+ * 112, 10      110
+-+ * 100, 10      100
+-+ **/
+-+static gint
+-+gpm_precision_round_down (gfloat value, gint smallest)
+-+{
+-+        gfloat division;
+-+        if (fabs (value) < 0.01)
+-+                return 0;
+-+        if (smallest == 0) {
+-+                g_warning ("divisor zero");
+-+                return 0;
+-+        }
+-+        division = (gfloat) value / (gfloat) smallest;
+-+        division = floorf (division);
+-+        division *= smallest;
+-+        return (gint) division;
+-+}
+-+
+-+gchar *
+-+gpm_upower_get_device_summary (UpDevice *device)
+-+{
+-+        const gchar *kind_desc = NULL;
+-+        const gchar *device_desc = NULL;
+-+        GString *description;
+-+        guint time_to_full_round;
+-+        guint time_to_empty_round;
+-+        gchar *time_to_full_str = NULL;
+-+        gchar *time_to_empty_str = NULL;
+-+        UpDeviceKind kind;
+-+        UpDeviceState state;
+-+        gdouble percentage;
+-+        gboolean is_present;
+-+        gint64 time_to_full;
+-+        gint64 time_to_empty;
+-+
+-+        /* get device properties */
+-+        g_object_get (device,
+-+                      "kind", &kind,
+-+                      "state", &state,
+-+                      "percentage", &percentage,
+-+                      "is-present", &is_present,
+-+                      "time-to-full", &time_to_full,
+-+                      "time-to-empty", &time_to_empty,
+-+                      NULL);
+-+
+-+        description = g_string_new (NULL);
+-+        kind_desc = gpm_device_kind_to_localised_string (kind, 1);
+-+        device_desc = gpm_device_to_localised_string (device);
+-+
+-+        /* not installed */
+-+        if (!is_present) {
+-+                g_string_append (description, device_desc);
+-+                goto out;
+-+        }
+-+
+-+        /* don't display all the extra stuff for keyboards and mice */
+-+        if (kind == UP_DEVICE_KIND_MOUSE ||
+-+            kind == UP_DEVICE_KIND_KEYBOARD ||
+-+            kind == UP_DEVICE_KIND_PDA) {
+-+                g_string_append (description, kind_desc);
+-+                g_string_append_printf (description, " (%.0f%%)", percentage);
+-+                goto out;
+-+        }
+-+
+-+        /* we care if we are on AC */
+-+        if (kind == UP_DEVICE_KIND_PHONE) {
+-+                if (state == UP_DEVICE_STATE_CHARGING || !(state == UP_DEVICE_STATE_DISCHARGING)) {
+-+                        g_string_append (description, device_desc);
+-+                        g_string_append_printf (description, " (%.0f%%)", percentage);
+-+                        goto out;
+-+                }
+-+                g_string_append (description, kind_desc);
+-+                g_string_append_printf (description, " (%.0f%%)", percentage);
+-+                goto out;
+-+        }
+-+
+-+        /* precalculate so we don't get Unknown time remaining */
+-+        time_to_full_round = gpm_precision_round_down (time_to_full, GPM_UP_TIME_PRECISION);
+-+        time_to_empty_round = gpm_precision_round_down (time_to_empty, GPM_UP_TIME_PRECISION);
+-+
+-+        /* we always display "Laptop battery 16 minutes remaining" as we need to clarify what device we are refering to */
+-+        if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+
+-+                g_string_append (description, device_desc);
+-+
+-+                if (kind == UP_DEVICE_KIND_BATTERY && time_to_empty_round > GPM_UP_TEXT_MIN_TIME) {
+-+                        time_to_empty_str = gpm_get_timestring (time_to_empty_round);
+-+                        g_string_append (description, " - ");
+-+                        /* TRANSLATORS: The laptop battery is charged, and we know a time.
+-+                         * The parameter is the time, e.g. 7 hours 6 minutes */
+-+                        g_string_append_printf (description, _("provides %s laptop runtime"), time_to_empty_str);
+-+                }
+-+                goto out;
+-+        }
+-+        if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+
+-+                if (time_to_empty_round > GPM_UP_TEXT_MIN_TIME) {
+-+                        time_to_empty_str = gpm_get_timestring (time_to_empty_round);
+-+                        /* TRANSLATORS: the device is discharging, and we have a time remaining
+-+                         * The first parameter is the device type, e.g. "Laptop battery" and
+-+                         * the second is the time, e.g. 7 hours 6 minutes */
+-+                        g_string_append_printf (description, _("%s %s remaining"),
+-+                                                kind_desc, time_to_empty_str);
+-+                        g_string_append_printf (description, " (%.0f%%)", percentage);
+-+                } else {
+-+                        g_string_append (description, device_desc);
+-+                        g_string_append_printf (description, " (%.0f%%)", percentage);
+-+                }
+-+                goto out;
+-+        }
+-+        if (state == UP_DEVICE_STATE_CHARGING) {
+-+
+-+                if (time_to_full_round > GPM_UP_TEXT_MIN_TIME &&
+-+                    time_to_empty_round > GPM_UP_TEXT_MIN_TIME) {
+-+
+-+                        /* display both discharge and charge time */
+-+                        time_to_full_str = gpm_get_timestring (time_to_full_round);
+-+                        time_to_empty_str = gpm_get_timestring (time_to_empty_round);
+-+
+-+                        /* TRANSLATORS: device is charging, and we have a time to full and a percentage
+-+                         * The first parameter is the device type, e.g. "Laptop battery" and
+-+                         * the second is the time, e.g. "7 hours 6 minutes" */
+-+                        g_string_append_printf (description, _("%s %s until charged"),
+-+                                                kind_desc, time_to_full_str);
+-+                        g_string_append_printf (description, " (%.0f%%)", percentage);
+-+
+-+                        g_string_append (description, " - ");
+-+                        /* TRANSLATORS: the device is charging, and we have a time to full and empty.
+-+                         * The parameter is a time string, e.g. "7 hours 6 minutes" */
+-+                        g_string_append_printf (description, _("provides %s battery runtime"),
+-+                                                time_to_empty_str);
+-+                } else if (time_to_full_round > GPM_UP_TEXT_MIN_TIME) {
+-+
+-+                        /* display only charge time */
+-+                        time_to_full_str = gpm_get_timestring (time_to_full_round);
+-+
+-+                        /* TRANSLATORS: device is charging, and we have a time to full and a percentage.
+-+                         * The first parameter is the device type, e.g. "Laptop battery" and
+-+                         * the second is the time, e.g. "7 hours 6 minutes" */
+-+                        g_string_append_printf (description, _("%s %s until charged"),
+-+                                                kind_desc, time_to_full_str);
+-+                        g_string_append_printf (description, " (%.0f%%)", percentage);
+-+                } else {
+-+                        g_string_append (description, device_desc);
+-+                        g_string_append_printf (description, " (%.0f%%)", percentage);
+-+                }
+-+                goto out;
+-+        }
+-+        if (state == UP_DEVICE_STATE_PENDING_DISCHARGE) {
+-+                g_string_append (description, device_desc);
+-+                g_string_append_printf (description, " (%.0f%%)", percentage);
+-+                goto out;
+-+        }
+-+        if (state == UP_DEVICE_STATE_PENDING_CHARGE) {
+-+                g_string_append (description, device_desc);
+-+                g_string_append_printf (description, " (%.0f%%)", percentage);
+-+                goto out;
+-+        }
+-+        if (state == UP_DEVICE_STATE_EMPTY) {
+-+                g_string_append (description, device_desc);
+-+                goto out;
+-+        }
+-+
+-+        /* fallback */
+-+        g_warning ("in an undefined state we are not charging or "
+-+                     "discharging and the batteries are also not charged");
+-+        g_string_append (description, device_desc);
+-+        g_string_append_printf (description, " (%.0f%%)", percentage);
+-+out:
+-+        g_free (time_to_full_str);
+-+        g_free (time_to_empty_str);
+-+        return g_string_free (description, FALSE);
+-+}
+-+
+-+gchar *
+-+gpm_upower_get_device_description (UpDevice *device)
+-+{
+-+        GString *details;
+-+        const gchar *text;
+-+        gchar *time_str;
+-+        UpDeviceKind kind;
+-+        UpDeviceState state;
+-+        UpDeviceTechnology technology;
+-+        gdouble percentage;
+-+        gdouble capacity;
+-+        gdouble energy;
+-+        gdouble energy_full;
+-+        gdouble energy_full_design;
+-+        gdouble energy_rate;
+-+        gboolean is_present;
+-+        gint64 time_to_full;
+-+        gint64 time_to_empty;
+-+        gchar *vendor = NULL;
+-+        gchar *serial = NULL;
+-+        gchar *model = NULL;
+-+
+-+        g_return_val_if_fail (device != NULL, NULL);
+-+
+-+        /* get device properties */
+-+        g_object_get (device,
+-+                      "kind", &kind,
+-+                      "state", &state,
+-+                      "percentage", &percentage,
+-+                      "is-present", &is_present,
+-+                      "time-to-full", &time_to_full,
+-+                      "time-to-empty", &time_to_empty,
+-+                      "technology", &technology,
+-+                      "capacity", &capacity,
+-+                      "energy", &energy,
+-+                      "energy-full", &energy_full,
+-+                      "energy-full-design", &energy_full_design,
+-+                      "energy-rate", &energy_rate,
+-+                      "vendor", &vendor,
+-+                      "serial", &serial,
+-+                      "model", &model,
+-+                      NULL);
+-+
+-+        details = g_string_new ("");
+-+        text = gpm_device_kind_to_localised_string (kind, 1);
+-+        /* TRANSLATORS: the type of data, e.g. Laptop battery */
+-+        g_string_append_printf (details, "<b>%s</b> %s\n", _("Product:"), text);
+-+
+-+        if (!is_present) {
+-+                /* TRANSLATORS: device is missing */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Status:"), _("Missing"));
+-+        } else if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                /* TRANSLATORS: device is charged */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Status:"), _("Charged"));
+-+        } else if (state == UP_DEVICE_STATE_CHARGING) {
+-+                /* TRANSLATORS: device is charging */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Status:"), _("Charging"));
+-+        } else if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                /* TRANSLATORS: device is discharging */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Status:"), _("Discharging"));
+-+        }
+-+
+-+        if (percentage >= 0) {
+-+                /* TRANSLATORS: percentage */
+-+                g_string_append_printf (details, "<b>%s</b> %.1f%%\n", _("Percentage charge:"), percentage);
+-+        }
+-+        if (vendor) {
+-+                /* TRANSLATORS: manufacturer */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Vendor:"), vendor);
+-+        }
+-+        if (technology != UP_DEVICE_TECHNOLOGY_UNKNOWN) {
+-+                text = gpm_device_technology_to_localised_string (technology);
+-+                /* TRANSLATORS: how the battery is made, e.g. Lithium Ion */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Technology:"), text);
+-+        }
+-+        if (serial) {
+-+                /* TRANSLATORS: serial number of the battery */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Serial number:"), serial);
+-+        }
+-+        if (model) {
+-+                /* TRANSLATORS: model number of the battery */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Model:"), model);
+-+        }
+-+        if (time_to_full > 0) {
+-+                time_str = gpm_get_timestring (time_to_full);
+-+                /* TRANSLATORS: time to fully charged */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Charge time:"), time_str);
+-+                g_free (time_str);
+-+        }
+-+        if (time_to_empty > 0) {
+-+                time_str = gpm_get_timestring (time_to_empty);
+-+                /* TRANSLATORS: time to empty */
+-+                g_string_append_printf (details, "<b>%s</b> %s\n", _("Discharge time:"), time_str);
+-+                g_free (time_str);
+-+        }
+-+        if (capacity > 0) {
+-+                const gchar *condition;
+-+                if (capacity > 99) {
+-+                        /* TRANSLATORS: Excellent, Good, Fair and Poor are all related to battery Capacity */
+-+                        condition = _("Excellent");
+-+                } else if (capacity > 90) {
+-+                        condition = _("Good");
+-+                } else if (capacity > 70) {
+-+                        condition = _("Fair");
+-+                } else {
+-+                        condition = _("Poor");
+-+                }
+-+                /* TRANSLATORS: %.1f is a percentage and %s the condition (Excellent, Good, ...) */
+-+                g_string_append_printf (details, "<b>%s</b> %.1f%% (%s)\n",
+-+                                        _("Capacity:"), capacity, condition);
+-+        }
+-+        if (kind == UP_DEVICE_KIND_BATTERY) {
+-+                if (energy > 0) {
+-+                        /* TRANSLATORS: current charge */
+-+                        g_string_append_printf (details, "<b>%s</b> %.1f Wh\n",
+-+                                                _("Current charge:"), energy);
+-+                }
+-+                if (energy_full > 0 &&
+-+                    energy_full_design != energy_full) {
+-+                        /* TRANSLATORS: last full is the charge the battery was seen to charge to */
+-+                        g_string_append_printf (details, "<b>%s</b> %.1f Wh\n",
+-+                                                _("Last full charge:"), energy_full);
+-+                }
+-+                if (energy_full_design > 0) {
+-+                        /* Translators:  */
+-+                        /* TRANSLATORS: Design charge is the amount of charge the battery is designed to have when brand new */
+-+                        g_string_append_printf (details, "<b>%s</b> %.1f Wh\n",
+-+                                                _("Design charge:"), energy_full_design);
+-+                }
+-+                if (energy_rate > 0) {
+-+                        /* TRANSLATORS: the charge or discharge rate */
+-+                        g_string_append_printf (details, "<b>%s</b> %.1f W\n",
+-+                                                _("Charge rate:"), energy_rate);
+-+                }
+-+        }
+-+        if (kind == UP_DEVICE_KIND_MOUSE ||
+-+            kind == UP_DEVICE_KIND_KEYBOARD) {
+-+                if (energy > 0) {
+-+                        /* TRANSLATORS: the current charge for CSR devices */
+-+                        g_string_append_printf (details, "<b>%s</b> %.0f/7\n",
+-+                                                _("Current charge:"), energy);
+-+                }
+-+                if (energy_full_design > 0) {
+-+                        /* TRANSLATORS: the design charge for CSR devices */
+-+                        g_string_append_printf (details, "<b>%s</b> %.0f/7\n",
+-+                                                _("Design charge:"), energy_full_design);
+-+                }
+-+        }
+-+        /* remove the last \n */
+-+        g_string_truncate (details, details->len-1);
+-+
+-+        g_free (vendor);
+-+        g_free (serial);
+-+        g_free (model);
+-+        return g_string_free (details, FALSE);
+-+}
+-+
+-+const gchar *
+-+gpm_device_kind_to_localised_string (UpDeviceKind kind, guint number)
+-+{
+-+        const gchar *text = NULL;
+-+        switch (kind) {
+-+        case UP_DEVICE_KIND_LINE_POWER:
+-+                /* TRANSLATORS: system power cord */
+-+                text = ngettext ("AC adapter", "AC adapters", number);
+-+                break;
+-+        case UP_DEVICE_KIND_BATTERY:
+-+                /* TRANSLATORS: laptop primary battery */
+-+                text = ngettext ("Laptop battery", "Laptop batteries", number);
+-+                break;
+-+        case UP_DEVICE_KIND_UPS:
+-+                /* TRANSLATORS: battery-backed AC power source */
+-+                text = ngettext ("UPS", "UPSs", number);
+-+                break;
+-+        case UP_DEVICE_KIND_MONITOR:
+-+                /* TRANSLATORS: a monitor is a device to measure voltage and current */
+-+                text = ngettext ("Monitor", "Monitors", number);
+-+                break;
+-+        case UP_DEVICE_KIND_MOUSE:
+-+                /* TRANSLATORS: wireless mice with internal batteries */
+-+                text = ngettext ("Mouse", "Mice", number);
+-+                break;
+-+        case UP_DEVICE_KIND_KEYBOARD:
+-+                /* TRANSLATORS: wireless keyboard with internal battery */
+-+                text = ngettext ("Keyboard", "Keyboards", number);
+-+                break;
+-+        case UP_DEVICE_KIND_PDA:
+-+                /* TRANSLATORS: portable device */
+-+                text = ngettext ("PDA", "PDAs", number);
+-+                break;
+-+        case UP_DEVICE_KIND_PHONE:
+-+                /* TRANSLATORS: cell phone (mobile...) */
+-+                text = ngettext ("Cell phone", "Cell phones", number);
+-+                break;
+-+#if UP_CHECK_VERSION(0,9,5)
+-+        case UP_DEVICE_KIND_MEDIA_PLAYER:
+-+                /* TRANSLATORS: media player, mp3 etc */
+-+                text = ngettext ("Media player", "Media players", number);
+-+                break;
+-+        case UP_DEVICE_KIND_TABLET:
+-+                /* TRANSLATORS: tablet device */
+-+                text = ngettext ("Tablet", "Tablets", number);
+-+                break;
+-+        case UP_DEVICE_KIND_COMPUTER:
+-+                /* TRANSLATORS: tablet device */
+-+                text = ngettext ("Computer", "Computers", number);
+-+                break;
+-+#endif
+-+        default:
+-+                g_warning ("enum unrecognised: %i", kind);
+-+                text = up_device_kind_to_string (kind);
+-+        }
+-+        return text;
+-+}
+-+
+-+const gchar *
+-+gpm_device_kind_to_icon (UpDeviceKind kind)
+-+{
+-+        const gchar *icon = NULL;
+-+        switch (kind) {
+-+        case UP_DEVICE_KIND_LINE_POWER:
+-+                icon = "ac-adapter";
+-+                break;
+-+        case UP_DEVICE_KIND_BATTERY:
+-+                icon = "battery";
+-+                break;
+-+        case UP_DEVICE_KIND_UPS:
+-+                icon = "network-wired";
+-+                break;
+-+        case UP_DEVICE_KIND_MONITOR:
+-+                icon = "application-certificate";
+-+                break;
+-+        case UP_DEVICE_KIND_MOUSE:
+-+                icon = "input-mouse";
+-+                break;
+-+        case UP_DEVICE_KIND_KEYBOARD:
+-+                icon = "input-keyboard";
+-+                break;
+-+        case UP_DEVICE_KIND_PDA:
+-+                icon = "pda";
+-+                break;
+-+        case UP_DEVICE_KIND_PHONE:
+-+                icon = "phone";
+-+                break;
+-+#if UP_CHECK_VERSION(0,9,5)
+-+        case UP_DEVICE_KIND_MEDIA_PLAYER:
+-+                icon = "multimedia-player";
+-+                break;
+-+        case UP_DEVICE_KIND_TABLET:
+-+                icon = "input-tablet";
+-+                break;
+-+        case UP_DEVICE_KIND_COMPUTER:
+-+                icon = "computer-apple-ipad";
+-+                break;
+-+#endif
+-+        default:
+-+                g_warning ("enum unrecognised: %i", kind);
+-+                icon = "gtk-help";
+-+        }
+-+        return icon;
+-+}
+-+
+-+const gchar *
+-+gpm_device_technology_to_localised_string (UpDeviceTechnology technology_enum)
+-+{
+-+        const gchar *technology = NULL;
+-+        switch (technology_enum) {
+-+        case UP_DEVICE_TECHNOLOGY_LITHIUM_ION:
+-+                /* TRANSLATORS: battery technology */
+-+                technology = _("Lithium Ion");
+-+                break;
+-+        case UP_DEVICE_TECHNOLOGY_LITHIUM_POLYMER:
+-+                /* TRANSLATORS: battery technology */
+-+                technology = _("Lithium Polymer");
+-+                break;
+-+        case UP_DEVICE_TECHNOLOGY_LITHIUM_IRON_PHOSPHATE:
+-+                /* TRANSLATORS: battery technology */
+-+                technology = _("Lithium Iron Phosphate");
+-+                break;
+-+        case UP_DEVICE_TECHNOLOGY_LEAD_ACID:
+-+                /* TRANSLATORS: battery technology */
+-+                technology = _("Lead acid");
+-+                break;
+-+        case UP_DEVICE_TECHNOLOGY_NICKEL_CADMIUM:
+-+                /* TRANSLATORS: battery technology */
+-+                technology = _("Nickel Cadmium");
+-+                break;
+-+        case UP_DEVICE_TECHNOLOGY_NICKEL_METAL_HYDRIDE:
+-+                /* TRANSLATORS: battery technology */
+-+                technology = _("Nickel metal hydride");
+-+                break;
+-+        case UP_DEVICE_TECHNOLOGY_UNKNOWN:
+-+                /* TRANSLATORS: battery technology */
+-+                technology = _("Unknown technology");
+-+                break;
+-+        default:
+-+                g_assert_not_reached ();
+-+                break;
+-+        }
+-+        return technology;
+-+}
+-+
+-+const gchar *
+-+gpm_device_state_to_localised_string (UpDeviceState state)
+-+{
+-+        const gchar *state_string = NULL;
+-+
+-+        switch (state) {
+-+        case UP_DEVICE_STATE_CHARGING:
+-+                /* TRANSLATORS: battery state */
+-+                state_string = _("Charging");
+-+                break;
+-+        case UP_DEVICE_STATE_DISCHARGING:
+-+                /* TRANSLATORS: battery state */
+-+                state_string = _("Discharging");
+-+                break;
+-+        case UP_DEVICE_STATE_EMPTY:
+-+                /* TRANSLATORS: battery state */
+-+                state_string = _("Empty");
+-+                break;
+-+        case UP_DEVICE_STATE_FULLY_CHARGED:
+-+                /* TRANSLATORS: battery state */
+-+                state_string = _("Charged");
+-+                break;
+-+        case UP_DEVICE_STATE_PENDING_CHARGE:
+-+                /* TRANSLATORS: battery state */
+-+                state_string = _("Waiting to charge");
+-+                break;
+-+        case UP_DEVICE_STATE_PENDING_DISCHARGE:
+-+                /* TRANSLATORS: battery state */
+-+                state_string = _("Waiting to discharge");
+-+                break;
+-+        default:
+-+                g_assert_not_reached ();
+-+                break;
+-+        }
+-+        return state_string;
+-+}
+-+
+-+const gchar *
+-+gpm_device_to_localised_string (UpDevice *device)
+-+{
+-+        UpDeviceState state;
+-+        UpDeviceKind kind;
+-+        gboolean present;
+-+
+-+        /* get device parameters */
+-+        g_object_get (device,
+-+                      "is-present", &present,
+-+                      "kind", &kind,
+-+                      "state", &state,
+-+                      NULL);
+-+
+-+        /* laptop battery */
+-+        if (kind == UP_DEVICE_KIND_BATTERY) {
+-+
+-+                if (!present) {
+-+                        /* TRANSLATORS: device not present */
+-+                        return _("Laptop battery not present");
+-+                }
+-+                if (state == UP_DEVICE_STATE_CHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Laptop battery is charging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Laptop battery is discharging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_EMPTY) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Laptop battery is empty");
+-+                }
+-+                if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Laptop battery is charged");
+-+                }
+-+                if (state == UP_DEVICE_STATE_PENDING_CHARGE) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Laptop battery is waiting to charge");
+-+                }
+-+                if (state == UP_DEVICE_STATE_PENDING_DISCHARGE) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Laptop battery is waiting to discharge");
+-+                }
+-+        }
+-+
+-+        /* UPS */
+-+        if (kind == UP_DEVICE_KIND_UPS) {
+-+
+-+                if (state == UP_DEVICE_STATE_CHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("UPS is charging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("UPS is discharging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_EMPTY) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("UPS is empty");
+-+                }
+-+                if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("UPS is charged");
+-+                }
+-+        }
+-+
+-+        /* mouse */
+-+        if (kind == UP_DEVICE_KIND_MOUSE) {
+-+
+-+                if (state == UP_DEVICE_STATE_CHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Mouse is charging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Mouse is discharging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_EMPTY) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Mouse is empty");
+-+                }
+-+                if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Mouse is charged");
+-+                }
+-+        }
+-+
+-+        /* keyboard */
+-+        if (kind == UP_DEVICE_KIND_KEYBOARD) {
+-+
+-+                if (state == UP_DEVICE_STATE_CHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Keyboard is charging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Keyboard is discharging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_EMPTY) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Keyboard is empty");
+-+                }
+-+                if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Keyboard is charged");
+-+                }
+-+        }
+-+
+-+        /* PDA */
+-+        if (kind == UP_DEVICE_KIND_PDA) {
+-+
+-+                if (state == UP_DEVICE_STATE_CHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("PDA is charging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("PDA is discharging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_EMPTY) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("PDA is empty");
+-+                }
+-+                if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("PDA is charged");
+-+                }
+-+        }
+-+
+-+        /* phone */
+-+        if (kind == UP_DEVICE_KIND_PHONE) {
+-+
+-+                if (state == UP_DEVICE_STATE_CHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Cell phone is charging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Cell phone is discharging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_EMPTY) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Cell phone is empty");
+-+                }
+-+                if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Cell phone is charged");
+-+                }
+-+        }
+-+#if UP_CHECK_VERSION(0,9,5)
+-+
+-+        /* media player */
+-+        if (kind == UP_DEVICE_KIND_MEDIA_PLAYER) {
+-+
+-+                if (state == UP_DEVICE_STATE_CHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Media player is charging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Media player is discharging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_EMPTY) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Media player is empty");
+-+                }
+-+                if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Media player is charged");
+-+                }
+-+        }
+-+
+-+        /* tablet */
+-+        if (kind == UP_DEVICE_KIND_TABLET) {
+-+
+-+                if (state == UP_DEVICE_STATE_CHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Tablet is charging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Tablet is discharging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_EMPTY) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Tablet is empty");
+-+                }
+-+                if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Tablet is charged");
+-+                }
+-+        }
+-+
+-+        /* computer */
+-+        if (kind == UP_DEVICE_KIND_COMPUTER) {
+-+
+-+                if (state == UP_DEVICE_STATE_CHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Computer is charging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Computer is discharging");
+-+                }
+-+                if (state == UP_DEVICE_STATE_EMPTY) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Computer is empty");
+-+                }
+-+                if (state == UP_DEVICE_STATE_FULLY_CHARGED) {
+-+                        /* TRANSLATORS: battery state */
+-+                        return _("Computer is charged");
+-+                }
+-+        }
+-+#endif
+-+
+-+        return gpm_device_kind_to_localised_string (kind, 1);
+-+}
+-+
+- static gboolean
+- parse_vm_kernel_cmdline (gboolean *is_virtual_machine)
+- {
+-@@ -576,7 +1462,7 @@ backlight_get_max (GnomeRRScreen *rr_scr
+- 
+- gboolean
+- backlight_set_percentage (GnomeRRScreen *rr_screen,
+--                          gint *value,
+-+                          guint value,
+-                           GError **error)
+- {
+-         GnomeRROutput *output;
+-@@ -587,23 +1473,17 @@ backlight_set_percentage (GnomeRRScreen
+- 
+-         /* prefer xbacklight */
+-         output = get_primary_output (rr_screen);
+--        if (output != NULL) {
+--                if (!gnome_rr_output_set_backlight (output, *value, error))
+--                        return ret;
+--                *value = gnome_rr_output_get_backlight (output);
+--                return TRUE;
+--        }
+-+        if (output != NULL)
+-+                return gnome_rr_output_set_backlight (output, value, error);
+- 
+-         /* fall back to the polkit helper */
+-         max = backlight_helper_get_value ("get-max-brightness", error);
+-         if (max < 0)
+-                 return ret;
+--        discrete = PERCENTAGE_TO_ABS (min, max, *value);
+-+        discrete = PERCENTAGE_TO_ABS (min, max, value);
+-         ret = backlight_helper_set_value ("set-brightness",
+-                                           discrete,
+-                                           error);
+--        if (ret)
+--                *value = ABS_TO_PERCENTAGE (min, max, discrete);
+- 
+-         return ret;
+- }
+-@@ -639,7 +1519,7 @@ backlight_step_up (GnomeRRScreen *rr_scr
+-                 now = gnome_rr_output_get_backlight (output);
+-                 if (now < 0)
+-                        return percentage_value;
+--                step = MAX(gnome_rr_output_get_min_backlight_step (output), BRIGHTNESS_STEP_AMOUNT(max - min + 1));
+-+                step = BRIGHTNESS_STEP_AMOUNT (max - min + 1);
+-                 discrete = MIN (now + step, max);
+-                 ret = gnome_rr_output_set_backlight (output,
+-                                                      discrete,
+-@@ -698,7 +1578,7 @@ backlight_step_down (GnomeRRScreen *rr_s
+-                 now = gnome_rr_output_get_backlight (output);
+-                 if (now < 0)
+-                        return percentage_value;
+--                step = MAX (gnome_rr_output_get_min_backlight_step (output), BRIGHTNESS_STEP_AMOUNT (max - min + 1));
+-+                step = BRIGHTNESS_STEP_AMOUNT (max - min + 1);
+-                 discrete = MAX (now - step, 0);
+-                 ret = gnome_rr_output_set_backlight (output,
+-                                                      discrete,
+-Index: gnome-settings-daemon/plugins/power/gpm-common.h
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/gpm-common.h
+-+++ gnome-settings-daemon/plugins/power/gpm-common.h
+-@@ -29,6 +29,16 @@ G_BEGIN_DECLS
+- 
+- /* UPower helpers */
+- gchar           *gpm_get_timestring                     (guint           time);
+-+const gchar     *gpm_device_to_localised_string         (UpDevice       *device);
+-+const gchar     *gpm_device_kind_to_localised_string    (UpDeviceKind    kind,
+-+                                                         guint           number);
+-+const gchar     *gpm_device_kind_to_icon                (UpDeviceKind    kind);
+-+const gchar     *gpm_device_technology_to_localised_string (UpDeviceTechnology technology_enum);
+-+const gchar     *gpm_device_state_to_localised_string   (UpDeviceState   state);
+-+GIcon           *gpm_upower_get_device_icon             (UpDevice       *device,
+-+                                                         gboolean        use_symbolic);
+-+gchar           *gpm_upower_get_device_summary          (UpDevice       *device);
+-+gchar           *gpm_upower_get_device_description      (UpDevice       *device);
+- 
+- /* Power helpers */
+- gboolean         gsd_power_is_hardware_a_vm             (void);
+-@@ -50,7 +60,7 @@ int              backlight_get_percentag
+- int              backlight_get_min                      (GnomeRRScreen *rr_screen);
+- int              backlight_get_max                      (GnomeRRScreen *rr_screen, GError **error);
+- gboolean         backlight_set_percentage               (GnomeRRScreen *rr_screen,
+--                                                         gint *value,
+-+                                                         guint value,
+-                                                          GError **error);
+- int              backlight_step_up                      (GnomeRRScreen *rr_screen, GError **error);
+- int              backlight_step_down                    (GnomeRRScreen *rr_screen, GError **error);
+-Index: gnome-settings-daemon/plugins/power/gsd-power-constants.h
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/gsd-power-constants.h
+-+++ gnome-settings-daemon/plugins/power/gsd-power-constants.h
+-@@ -13,7 +13,8 @@
+-  * GNU General Public License for more details.
+-  *
+-  * You should have received a copy of the GNU General Public License
+-- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+-+ * along with this program; if not, write to the Free Software
+-+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-  *
+-  */
+- 
+-Index: gnome-settings-daemon/plugins/power/gsd-power-manager.c
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/gsd-power-manager.c
+-+++ gnome-settings-daemon/plugins/power/gsd-power-manager.c
+-@@ -16,7 +16,8 @@
+-  * GNU General Public License for more details.
+-  *
+-  * You should have received a copy of the GNU General Public License
+-- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+-+ * along with this program; if not, write to the Free Software
+-+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-  *
+-  */
+- 
+-@@ -71,17 +72,31 @@
+- #define GSD_POWER_MANAGER_NOTIFY_TIMEOUT_SHORT          10 * 1000 /* ms */
+- #define GSD_POWER_MANAGER_NOTIFY_TIMEOUT_LONG           30 * 1000 /* ms */
+- 
+-+#define GSD_POWER_MANAGER_RECALL_DELAY                  30 /* seconds */
+-+
+- #define SYSTEMD_DBUS_NAME                       "org.freedesktop.login1"
+- #define SYSTEMD_DBUS_PATH                       "/org/freedesktop/login1"
+- #define SYSTEMD_DBUS_INTERFACE                  "org.freedesktop.login1.Manager"
+- 
+--/* Time between notifying the user about a critical action and the action itself in UPower. */
+-+/* Time between notifying the user about a critical action and executing it.
+-+ * This can be changed with the GSD_ACTION_DELAY constant. */
+-+#ifndef GSD_ACTION_DELAY
+- #define GSD_ACTION_DELAY 20
+--/* And the time before we stop the warning sound */
+--#define GSD_STOP_SOUND_DELAY GSD_ACTION_DELAY - 2
+-+#endif /* !GSD_ACTION_DELAY */
+- 
+- static const gchar introspection_xml[] =
+- "<node>"
+-+"  <interface name='org.gnome.SettingsDaemon.Power'>"
+-+"    <property name='Icon' type='s' access='read'/>"
+-+"    <property name='Tooltip' type='s' access='read'/>"
+-+"    <property name='Percentage' type='d' access='read'/>"
+-+"    <method name='GetPrimaryDevice'>"
+-+"      <arg name='device' type='(susdut)' direction='out' />"
+-+"    </method>"
+-+"    <method name='GetDevices'>"
+-+"      <arg name='devices' type='a(susdut)' direction='out' />"
+-+"    </method>"
+-+"  </interface>"
+- "  <interface name='org.gnome.SettingsDaemon.Power.Screen'>"
+- "    <property name='Brightness' type='i' access='readwrite'/>"
+- "    <method name='StepUp'>"
+-@@ -130,6 +145,14 @@ struct GsdPowerManagerPrivate
+-         GSettings               *settings_screensaver;
+-         GSettings               *settings_xrandr;
+- 
+-+        gboolean                 use_time_primary;
+-+        guint                    action_percentage;
+-+        guint                    action_time;
+-+        guint                    critical_percentage;
+-+        guint                    critical_time;
+-+        guint                    low_percentage;
+-+        guint                    low_time;
+-+
+-         /* Screensaver */
+-         GsdScreenSaver          *screensaver_proxy;
+-         gboolean                 screensaver_active;
+-@@ -138,12 +161,15 @@ struct GsdPowerManagerPrivate
+-         gboolean                 lid_is_present;
+-         gboolean                 lid_is_closed;
+-         UpClient                *up_client;
+-+        gchar                   *previous_summary;
+-+        GIcon                   *previous_icon;
+-         GPtrArray               *devices_array;
+-         UpDevice                *device_composite;
+-         GnomeRRScreen           *rr_screen;
+-         NotifyNotification      *notification_ups_discharging;
+-         NotifyNotification      *notification_low;
+-         NotifyNotification      *notification_sleep_warning;
+-+        NotifyNotification      *notification_logout_warning;
+-         GsdPowerActionType       sleep_action_type;
+-         gboolean                 battery_is_low; /* laptop battery low, or UPS discharging */
+- 
+-@@ -191,7 +217,11 @@ enum {
+- static void     gsd_power_manager_class_init  (GsdPowerManagerClass *klass);
+- static void     gsd_power_manager_init        (GsdPowerManager      *power_manager);
+- 
+--static void      engine_device_warning_changed_cb (UpDevice *device, GParamSpec *pspec, GsdPowerManager *manager);
+-+static void      engine_device_changed_cb (UpClient *client, UpDevice *device, GsdPowerManager *manager);
+-+static void      engine_update_composite_device (GsdPowerManager *manager);
+-+static GIcon    *engine_get_icon (GsdPowerManager *manager);
+-+static gchar    *engine_get_summary (GsdPowerManager *manager);
+-+static gdouble   engine_get_percentage (GsdPowerManager *manager);
+- static void      do_power_action_type (GsdPowerManager *manager, GsdPowerActionType action_type);
+- static void      uninhibit_lid_switch (GsdPowerManager *manager);
+- static void      stop_inhibit_lid_switch_timer (GsdPowerManager *manager);
+-@@ -222,24 +252,738 @@ notify_close_if_showing (NotifyNotificat
+-         g_clear_object (notification);
+- }
+- 
+-+typedef enum {
+-+        WARNING_NONE            = 0,
+-+        WARNING_DISCHARGING     = 1,
+-+        WARNING_LOW             = 2,
+-+        WARNING_CRITICAL        = 3,
+-+        WARNING_ACTION          = 4
+-+} GsdPowerManagerWarning;
+-+
+-+static GVariant *
+-+engine_get_icon_property_variant (GsdPowerManager  *manager)
+-+{
+-+        GIcon *icon;
+-+        GVariant *retval;
+-+
+-+        icon = engine_get_icon (manager);
+-+        if (icon != NULL) {
+-+                char *str;
+-+                str = g_icon_to_string (icon);
+-+                g_object_unref (icon);
+-+                retval = g_variant_new_string (str);
+-+                g_free (str);
+-+        } else {
+-+                retval = g_variant_new_string ("");
+-+        }
+-+        return retval;
+-+}
+-+
+-+static GVariant *
+-+engine_get_tooltip_property_variant (GsdPowerManager  *manager)
+-+{
+-+        char *tooltip;
+-+        GVariant *retval;
+-+
+-+        tooltip = engine_get_summary (manager);
+-+        retval = g_variant_new_string (tooltip != NULL ? tooltip : "");
+-+        g_free (tooltip);
+-+
+-+        return retval;
+-+}
+-+
+- static void
+--engine_device_add (GsdPowerManager *manager, UpDevice *device)
+-+engine_emit_changed (GsdPowerManager *manager,
+-+                     gboolean         icon_changed,
+-+                     gboolean         state_changed)
+-+{
+-+        GVariantBuilder props_builder;
+-+        GVariant *props_changed = NULL;
+-+        GError *error = NULL;
+-+
+-+        /* not yet connected to the bus */
+-+        if (manager->priv->connection == NULL)
+-+                return;
+-+
+-+        g_variant_builder_init (&props_builder, G_VARIANT_TYPE ("a{sv}"));
+-+
+-+        if (icon_changed)
+-+                g_variant_builder_add (&props_builder, "{sv}", "Icon",
+-+                                       engine_get_icon_property_variant (manager));
+-+        if (state_changed)
+-+                g_variant_builder_add (&props_builder, "{sv}", "Tooltip",
+-+                                       engine_get_tooltip_property_variant (manager));
+-+        g_variant_builder_add (&props_builder, "{sv}", "Percentage",
+-+                               g_variant_new_double (engine_get_percentage (manager)));
+-+
+-+        props_changed = g_variant_new ("(s@a{sv}@as)", GSD_POWER_DBUS_INTERFACE,
+-+                                       g_variant_builder_end (&props_builder),
+-+                                       g_variant_new_strv (NULL, 0));
+-+        g_variant_ref_sink (props_changed);
+-+
+-+        if (!g_dbus_connection_emit_signal (manager->priv->connection,
+-+                                            NULL,
+-+                                            GSD_POWER_DBUS_PATH,
+-+                                            "org.freedesktop.DBus.Properties",
+-+                                            "PropertiesChanged",
+-+                                            props_changed,
+-+                                            &error))
+-+                goto out;
+-+
+-+ out:
+-+        if (error) {
+-+                g_warning ("%s", error->message);
+-+                g_clear_error (&error);
+-+        }
+-+        if (props_changed)
+-+                g_variant_unref (props_changed);
+-+}
+-+
+-+static GsdPowerManagerWarning
+-+engine_get_warning_csr (GsdPowerManager *manager, UpDevice *device)
+-+{
+-+        gdouble percentage;
+-+
+-+        /* get device properties */
+-+        g_object_get (device, "percentage", &percentage, NULL);
+-+
+-+        if (percentage < 26.0f)
+-+                return WARNING_LOW;
+-+        else if (percentage < 13.0f)
+-+                return WARNING_CRITICAL;
+-+        return WARNING_NONE;
+-+}
+-+
+-+static GsdPowerManagerWarning
+-+engine_get_warning_percentage (GsdPowerManager *manager, UpDevice *device)
+-+{
+-+        gdouble percentage;
+-+
+-+        /* get device properties */
+-+        g_object_get (device, "percentage", &percentage, NULL);
+-+
+-+        if (percentage <= manager->priv->action_percentage)
+-+                return WARNING_ACTION;
+-+        if (percentage <= manager->priv->critical_percentage)
+-+                return WARNING_CRITICAL;
+-+        if (percentage <= manager->priv->low_percentage)
+-+                return WARNING_LOW;
+-+        return WARNING_NONE;
+-+}
+-+
+-+static GsdPowerManagerWarning
+-+engine_get_warning_time (GsdPowerManager *manager, UpDevice *device)
+-+{
+-+        UpDeviceKind kind;
+-+        gint64 time_to_empty;
+-+
+-+        /* get device properties */
+-+        g_object_get (device,
+-+                      "kind", &kind,
+-+                      "time-to-empty", &time_to_empty,
+-+                      NULL);
+-+
+-+        /* this is probably an error condition */
+-+        if (time_to_empty == 0) {
+-+                g_debug ("time zero, falling back to percentage for %s",
+-+                         up_device_kind_to_string (kind));
+-+                return engine_get_warning_percentage (manager, device);
+-+        }
+-+
+-+        if (time_to_empty <= manager->priv->action_time)
+-+                return WARNING_ACTION;
+-+        if (time_to_empty <= manager->priv->critical_time)
+-+                return WARNING_CRITICAL;
+-+        if (time_to_empty <= manager->priv->low_time)
+-+                return WARNING_LOW;
+-+        return WARNING_NONE;
+-+}
+-+
+-+/**
+-+ * This gets the possible engine state for the device according to the
+-+ * policy, which could be per-percent, or per-time.
+-+ **/
+-+static GsdPowerManagerWarning
+-+engine_get_warning (GsdPowerManager *manager, UpDevice *device)
+-+{
+-+        UpDeviceKind kind;
+-+        UpDeviceState state;
+-+        GsdPowerManagerWarning warning_type;
+-+
+-+        /* get device properties */
+-+        g_object_get (device,
+-+                      "kind", &kind,
+-+                      "state", &state,
+-+                      NULL);
+-+
+-+        /* default to no engine */
+-+        warning_type = WARNING_NONE;
+-+
+-+        /* if the device in question is on ac, don't give a warning */
+-+        if (state == UP_DEVICE_STATE_CHARGING)
+-+                goto out;
+-+
+-+        if (kind == UP_DEVICE_KIND_MOUSE ||
+-+            kind == UP_DEVICE_KIND_KEYBOARD) {
+-+
+-+                warning_type = engine_get_warning_csr (manager, device);
+-+
+-+        } else if (kind == UP_DEVICE_KIND_UPS ||
+-+                   kind == UP_DEVICE_KIND_MEDIA_PLAYER ||
+-+                   kind == UP_DEVICE_KIND_TABLET ||
+-+                   kind == UP_DEVICE_KIND_COMPUTER ||
+-+                   kind == UP_DEVICE_KIND_PDA) {
+-+
+-+                warning_type = engine_get_warning_percentage (manager, device);
+-+
+-+        } else if (kind == UP_DEVICE_KIND_PHONE) {
+-+
+-+                warning_type = engine_get_warning_percentage (manager, device);
+-+
+-+        } else if (kind == UP_DEVICE_KIND_BATTERY) {
+-+                /* only use the time when it is accurate, and settings is not disabled */
+-+                if (manager->priv->use_time_primary)
+-+                        warning_type = engine_get_warning_time (manager, device);
+-+                else
+-+                        warning_type = engine_get_warning_percentage (manager, device);
+-+        }
+-+
+-+        /* If we have no important engines, we should test for discharging */
+-+        if (warning_type == WARNING_NONE) {
+-+                if (state == UP_DEVICE_STATE_DISCHARGING)
+-+                        warning_type = WARNING_DISCHARGING;
+-+        }
+-+
+-+ out:
+-+        return warning_type;
+-+}
+-+
+-+static gchar *
+-+engine_get_summary (GsdPowerManager *manager)
+-+{
+-+        guint i;
+-+        GPtrArray *array;
+-+        UpDevice *device;
+-+        UpDeviceState state;
+-+        GString *tooltip = NULL;
+-+        gchar *part;
+-+        gboolean is_present;
+-+
+-+
+-+        /* need to get AC state */
+-+        tooltip = g_string_new ("");
+-+
+-+        /* do we have specific device types? */
+-+        array = manager->priv->devices_array;
+-+        for (i=0;i<array->len;i++) {
+-+                device = g_ptr_array_index (array, i);
+-+                g_object_get (device,
+-+                              "is-present", &is_present,
+-+                              "state", &state,
+-+                              NULL);
+-+                if (!is_present)
+-+                        continue;
+-+                if (state == UP_DEVICE_STATE_EMPTY)
+-+                        continue;
+-+                part = gpm_upower_get_device_summary (device);
+-+                if (part != NULL)
+-+                        g_string_append_printf (tooltip, "%s\n", part);
+-+                g_free (part);
+-+        }
+-+
+-+        /* remove the last \n */
+-+        g_string_truncate (tooltip, tooltip->len-1);
+-+
+-+        g_debug ("tooltip: %s", tooltip->str);
+-+
+-+        return g_string_free (tooltip, FALSE);
+-+}
+-+
+-+static gdouble
+-+engine_get_percentage (GsdPowerManager *manager)
+-+{
+-+        gboolean is_present;
+-+        gdouble percentage;
+-+
+-+        g_object_get (manager->priv->device_composite,
+-+                      "percentage", &percentage,
+-+                      "is-present", &is_present,
+-+                      NULL);
+-+
+-+        if (is_present)
+-+                return percentage;
+-+        else
+-+                return -1;
+-+}
+-+
+-+static GIcon *
+-+engine_get_icon_priv (GsdPowerManager *manager,
+-+                      UpDeviceKind device_kind,
+-+                      GsdPowerManagerWarning warning,
+-+                      gboolean use_state)
+- {
+-+        guint i;
+-+        GPtrArray *array;
+-+        UpDevice *device;
+-+        GsdPowerManagerWarning warning_temp;
+-         UpDeviceKind kind;
+-+        UpDeviceState state;
+-+        gboolean is_present;
+- 
+--        /* Batteries and UPSes are already handled through
+--         * the composite battery */
+--        g_object_get (device, "kind", &kind, NULL);
+--        if (kind == UP_DEVICE_KIND_BATTERY ||
+--            kind == UP_DEVICE_KIND_UPS ||
+--            kind == UP_DEVICE_KIND_LINE_POWER)
+-+        /* do we have specific device types? */
+-+        array = manager->priv->devices_array;
+-+        for (i=0;i<array->len;i++) {
+-+                device = g_ptr_array_index (array, i);
+-+
+-+                /* get device properties */
+-+                g_object_get (device,
+-+                              "kind", &kind,
+-+                              "state", &state,
+-+                              "is-present", &is_present,
+-+                              NULL);
+-+
+-+                /* if battery then use composite device to cope with multiple batteries */
+-+                if (kind == UP_DEVICE_KIND_BATTERY)
+-+                        device = manager->priv->device_composite;
+-+
+-+                warning_temp = GPOINTER_TO_INT(g_object_get_data (G_OBJECT(device),
+-+                                                                  "engine-warning-old"));
+-+                if (kind == device_kind && is_present) {
+-+                        if (warning != WARNING_NONE) {
+-+                                if (warning_temp == warning)
+-+                                        return gpm_upower_get_device_icon (device, TRUE);
+-+                                continue;
+-+                        }
+-+                        if (use_state) {
+-+                                if (state == UP_DEVICE_STATE_CHARGING ||
+-+                                    state == UP_DEVICE_STATE_DISCHARGING)
+-+                                        return gpm_upower_get_device_icon (device, TRUE);
+-+                                continue;
+-+                        }
+-+                        return gpm_upower_get_device_icon (device, TRUE);
+-+                }
+-+        }
+-+        return NULL;
+-+}
+-+
+-+static GIcon *
+-+engine_get_icon (GsdPowerManager *manager)
+-+{
+-+        GIcon *icon = NULL;
+-+
+-+
+-+        /* we try CRITICAL: BATTERY, UPS */
+-+        icon = engine_get_icon_priv (manager, UP_DEVICE_KIND_BATTERY, WARNING_CRITICAL, FALSE);
+-+        if (icon != NULL)
+-+                return icon;
+-+        icon = engine_get_icon_priv (manager, UP_DEVICE_KIND_UPS, WARNING_CRITICAL, FALSE);
+-+        if (icon != NULL)
+-+                return icon;
+-+
+-+        /* we try CRITICAL: BATTERY, UPS */
+-+        icon = engine_get_icon_priv (manager, UP_DEVICE_KIND_BATTERY, WARNING_LOW, FALSE);
+-+        if (icon != NULL)
+-+                return icon;
+-+        icon = engine_get_icon_priv (manager, UP_DEVICE_KIND_UPS, WARNING_LOW, FALSE);
+-+        if (icon != NULL)
+-+                return icon;
+-+
+-+        /* we try (DIS)CHARGING: BATTERY, UPS */
+-+        icon = engine_get_icon_priv (manager, UP_DEVICE_KIND_BATTERY, WARNING_NONE, TRUE);
+-+        if (icon != NULL)
+-+                return icon;
+-+        icon = engine_get_icon_priv (manager, UP_DEVICE_KIND_UPS, WARNING_NONE, TRUE);
+-+        if (icon != NULL)
+-+                return icon;
+-+
+-+        /* we try PRESENT: BATTERY, UPS */
+-+        icon = engine_get_icon_priv (manager, UP_DEVICE_KIND_BATTERY, WARNING_NONE, FALSE);
+-+        if (icon != NULL)
+-+                return icon;
+-+        icon = engine_get_icon_priv (manager, UP_DEVICE_KIND_UPS, WARNING_NONE, FALSE);
+-+        if (icon != NULL)
+-+                return icon;
+-+
+-+        /* do not show an icon */
+-+        return NULL;
+-+}
+-+
+-+static gboolean
+-+engine_recalculate_state_icon (GsdPowerManager *manager)
+-+{
+-+        GIcon *icon;
+-+
+-+        /* show a different icon if we are disconnected */
+-+        icon = engine_get_icon (manager);
+-+
+-+        if (g_icon_equal (icon, manager->priv->previous_icon)) {
+-+                g_clear_object (&icon);
+-+                return FALSE;
+-+        }
+-+
+-+        g_clear_object (&manager->priv->previous_icon);
+-+        manager->priv->previous_icon = icon;
+-+
+-+        g_debug ("Icon changed");
+-+
+-+        return TRUE;
+-+}
+-+
+-+static gboolean
+-+engine_recalculate_state_summary (GsdPowerManager *manager)
+-+{
+-+        char *summary;
+-+
+-+        summary = engine_get_summary (manager);
+-+
+-+        if (g_strcmp0 (manager->priv->previous_summary, summary) == 0) {
+-+                g_free (summary);
+-+                return FALSE;
+-+        }
+-+
+-+        g_free (manager->priv->previous_summary);
+-+        manager->priv->previous_summary = summary;
+-+
+-+        g_debug ("Summary changed");
+-+
+-+        return TRUE;
+-+}
+-+
+-+static void
+-+engine_recalculate_state (GsdPowerManager *manager)
+-+{
+-+        gboolean icon_changed = FALSE;
+-+        gboolean state_changed = FALSE;
+-+
+-+        icon_changed = engine_recalculate_state_icon (manager);
+-+        state_changed = engine_recalculate_state_summary (manager);
+-+
+-+        /* only emit if the icon or summary has changed */
+-+        if (icon_changed || state_changed)
+-+                engine_emit_changed (manager, icon_changed, state_changed);
+-+}
+-+
+-+static void
+-+engine_update_composite_device (GsdPowerManager *manager)
+-+{
+-+        guint i;
+-+        gdouble percentage = 0.0;
+-+        gdouble energy_total = 0.0;
+-+        gdouble energy_full_total = 0.0;
+-+        gdouble energy_rate_total = 0.0;
+-+        gint64 time_to_empty_total = 0;
+-+        gint64 time_to_full_total = 0;
+-+        guint battery_devices = 0;
+-+        gboolean is_charging = FALSE;
+-+        gboolean is_discharging = FALSE;
+-+        gboolean is_fully_charged = TRUE;
+-+        GPtrArray *array;
+-+        UpDevice *device;
+-+        UpDeviceState state;
+-+
+-+        /* update the composite device */
+-+        array = manager->priv->devices_array;
+-+        for (i=0;i<array->len;i++) {
+-+                UpDeviceKind kind;
+-+                gdouble energy = 0.0;
+-+                gdouble energy_full = 0.0;
+-+                gdouble energy_rate = 0.0;
+-+                gint64 time_to_empty = 0;
+-+                gint64 time_to_full = 0;
+-+
+-+                device = g_ptr_array_index (array, i);
+-+                g_object_get (device,
+-+                              "kind", &kind,
+-+                              "state", &state,
+-+                              "energy", &energy,
+-+                              "energy-full", &energy_full,
+-+                              "energy-rate", &energy_rate,
+-+                              "time-to-empty", &time_to_empty,
+-+                              "time-to-full", &time_to_full,
+-+                              NULL);
+-+                if (kind != UP_DEVICE_KIND_BATTERY)
+-+                        continue;
+-+
+-+                /* one of these will be charging or discharging */
+-+                if (state == UP_DEVICE_STATE_CHARGING)
+-+                        is_charging = TRUE;
+-+                else if (state == UP_DEVICE_STATE_DISCHARGING)
+-+                        is_discharging = TRUE;
+-+                else if (state != UP_DEVICE_STATE_FULLY_CHARGED)
+-+                        is_fully_charged = FALSE;
+-+
+-+                /* sum up composite */
+-+                energy_total += energy;
+-+                energy_full_total += energy_full;
+-+                energy_rate_total += energy_rate;
+-+                time_to_empty_total += time_to_empty;
+-+                time_to_full_total += time_to_full;
+-+                battery_devices++;
+-+        }
+-+
+-+        if (battery_devices == 0) {
+-+                state = UP_DEVICE_STATE_UNKNOWN;
+-+                goto out;
+-+        }
+-+
+-+        /* use percentage weighted for each battery capacity */
+-+        if (energy_full_total > 0.0)
+-+                percentage = 100.0 * energy_total / energy_full_total;
+-+
+-+        /* set composite state */
+-+        if (is_discharging)
+-+                state = UP_DEVICE_STATE_DISCHARGING;
+-+        else if (is_charging)
+-+                state = UP_DEVICE_STATE_CHARGING;
+-+        else if (is_fully_charged)
+-+                state = UP_DEVICE_STATE_FULLY_CHARGED;
+-+        else
+-+                state = UP_DEVICE_STATE_UNKNOWN;
+-+
+-+        if (battery_devices == 1)
+-+                goto out;
+-+
+-+        /* calculate a quick and dirty time remaining value */
+-+        if (energy_rate_total > 0) {
+-+                if (state == UP_DEVICE_STATE_DISCHARGING)
+-+                        time_to_empty_total = 3600 * (energy_total / energy_rate_total);
+-+                else if (state == UP_DEVICE_STATE_CHARGING)
+-+                        time_to_full_total = 3600 * ((energy_full_total - energy_total) / energy_rate_total);
+-+        }
+-+
+-+ out:
+-+        g_debug ("printing composite device");
+-+        g_object_set (manager->priv->device_composite,
+-+                      "energy", energy_total,
+-+                      "energy-full", energy_full_total,
+-+                      "energy-rate", energy_rate_total,
+-+                      "time-to-empty", time_to_empty_total,
+-+                      "time-to-full", time_to_full_total,
+-+                      "percentage", percentage,
+-+                      "state", state,
+-+                      "is-present", (battery_devices > 0),
+-+                      NULL);
+-+
+-+        /* force update of icon */
+-+        if (engine_recalculate_state_icon (manager))
+-+                engine_emit_changed (manager, TRUE, FALSE);
+-+}
+-+
+-+typedef struct {
+-+        GsdPowerManager *manager;
+-+        UpDevice        *device;
+-+} GsdPowerManagerRecallData;
+-+
+-+static void
+-+device_perhaps_recall_response_cb (GtkDialog *dialog,
+-+                                   gint response_id,
+-+                                   GsdPowerManagerRecallData *recall_data)
+-+{
+-+        GdkScreen *screen;
+-+        GtkWidget *dialog_error;
+-+        GError *error = NULL;
+-+        gboolean ret;
+-+        gchar *website = NULL;
+-+
+-+        /* don't show this again */
+-+        if (response_id == GTK_RESPONSE_CANCEL) {
+-+                g_settings_set_boolean (recall_data->manager->priv->settings,
+-+                                        "notify-perhaps-recall",
+-+                                        FALSE);
+-+                goto out;
+-+        }
+-+
+-+        /* visit recall website */
+-+        if (response_id == GTK_RESPONSE_OK) {
+-+
+-+                g_object_get (recall_data->device,
+-+                              "recall-url", &website,
+-+                              NULL);
+-+
+-+                screen = gdk_screen_get_default();
+-+                ret = gtk_show_uri (screen,
+-+                                    website,
+-+                                    gtk_get_current_event_time (),
+-+                                    &error);
+-+                if (!ret) {
+-+                        dialog_error = gtk_message_dialog_new (NULL,
+-+                                                               GTK_DIALOG_MODAL,
+-+                                                               GTK_MESSAGE_INFO,
+-+                                                               GTK_BUTTONS_OK,
+-+                                                               "Failed to show url %s",
+-+                                                               error->message);
+-+                        gtk_dialog_run (GTK_DIALOG (dialog_error));
+-+                        g_error_free (error);
+-+                }
+-+        }
+-+out:
+-+        gtk_widget_destroy (GTK_WIDGET (dialog));
+-+        g_object_unref (recall_data->device);
+-+        g_object_unref (recall_data->manager);
+-+        g_free (recall_data);
+-+        g_free (website);
+-+        return;
+-+}
+-+
+-+static gboolean
+-+device_perhaps_recall_delay_cb (gpointer user_data)
+-+{
+-+        gchar *vendor;
+-+        const gchar *title = NULL;
+-+        GString *message = NULL;
+-+        GtkWidget *dialog;
+-+        GsdPowerManagerRecallData *recall_data = (GsdPowerManagerRecallData *) user_data;
+-+
+-+        g_object_get (recall_data->device,
+-+                      "recall-vendor", &vendor,
+-+                      NULL);
+-+
+-+        /* TRANSLATORS: the battery may be recalled by its vendor */
+-+        title = _("Battery may be recalled");
+-+        message = g_string_new ("");
+-+        g_string_append_printf (message,
+-+                                _("A battery in your computer may have been "
+-+                                  "recalled by %s and you may be at risk."), vendor);
+-+        g_string_append (message, "\n\n");
+-+        g_string_append (message, _("For more information visit the battery recall website."));
+-+        dialog = gtk_message_dialog_new_with_markup (NULL,
+-+                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+-+                                                     GTK_MESSAGE_INFO,
+-+                                                     GTK_BUTTONS_CLOSE,
+-+                                                     "<span size='larger'><b>%s</b></span>",
+-+                                                     title);
+-+        gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
+-+                                                    "%s", message->str);
+-+
+-+        /* TRANSLATORS: button text, visit the manufacturers recall website */
+-+        gtk_dialog_add_button (GTK_DIALOG (dialog), _("Visit recall website"),
+-+                               GTK_RESPONSE_OK);
+-+
+-+        /* TRANSLATORS: button text, do not show this bubble again */
+-+        gtk_dialog_add_button (GTK_DIALOG (dialog), _("Do not show me this again"),
+-+                               GTK_RESPONSE_CANCEL);
+-+
+-+        gtk_widget_show (dialog);
+-+        g_signal_connect (dialog, "response",
+-+                          G_CALLBACK (device_perhaps_recall_response_cb),
+-+                          recall_data);
+-+
+-+        g_string_free (message, TRUE);
+-+        g_free (vendor);
+-+        return FALSE;
+-+}
+-+
+-+static void
+-+device_perhaps_recall (GsdPowerManager *manager, UpDevice *device)
+-+{
+-+        gboolean ret;
+-+        guint timer_id;
+-+        GsdPowerManagerRecallData *recall_data;
+-+
+-+        /* don't show when running under GDM */
+-+        if (g_getenv ("RUNNING_UNDER_GDM") != NULL) {
+-+                g_debug ("running under gdm, so no notification");
+-                 return;
+--        g_ptr_array_add (manager->priv->devices_array, g_object_ref (device));
+-+        }
+- 
+--        g_signal_connect (device, "notify::warning-level",
+--                          G_CALLBACK (engine_device_warning_changed_cb), manager);
+-+        /* already shown, and dismissed */
+-+        ret = g_settings_get_boolean (manager->priv->settings,
+-+                                      "notify-perhaps-recall");
+-+        if (!ret) {
+-+                g_debug ("settings prevents recall notification");
+-+                return;
+-+        }
+- 
+--        engine_device_warning_changed_cb (device, NULL, manager);
+-+        recall_data = g_new0 (GsdPowerManagerRecallData, 1);
+-+        recall_data->manager = g_object_ref (manager);
+-+        recall_data->device = g_object_ref (device);
+-+
+-+        /* delay by a few seconds so the session can load */
+-+        timer_id = g_timeout_add_seconds (GSD_POWER_MANAGER_RECALL_DELAY,
+-+                                          device_perhaps_recall_delay_cb,
+-+                                          recall_data);
+-+        g_source_set_name_by_id (timer_id, "[GsdPowerManager] perhaps-recall");
+-+}
+-+
+-+static void
+-+engine_device_add (GsdPowerManager *manager, UpDevice *device)
+-+{
+-+        gboolean recall_notice;
+-+        GsdPowerManagerWarning warning;
+-+        UpDeviceState state;
+-+        UpDeviceKind kind;
+-+
+-+        /* assign warning */
+-+        warning = engine_get_warning (manager, device);
+-+        g_object_set_data (G_OBJECT(device),
+-+                           "engine-warning-old",
+-+                           GUINT_TO_POINTER(warning));
+-+
+-+        /* get device properties */
+-+        g_object_get (device,
+-+                      "kind", &kind,
+-+                      "state", &state,
+-+                      "recall-notice", &recall_notice,
+-+                      NULL);
+-+
+-+        /* add old state for transitions */
+-+        g_debug ("adding %s with state %s",
+-+                 up_device_get_object_path (device), up_device_state_to_string (state));
+-+        g_object_set_data (G_OBJECT(device),
+-+                           "engine-state-old",
+-+                           GUINT_TO_POINTER(state));
+-+
+-+        if (kind == UP_DEVICE_KIND_BATTERY) {
+-+                g_debug ("updating because we added a device");
+-+                engine_update_composite_device (manager);
+-+
+-+                /* reset those values for the composite device */
+-+                g_object_set_data (G_OBJECT(manager->priv->device_composite),
+-+                                   "engine-warning-old",
+-+                                   GUINT_TO_POINTER(WARNING_NONE));
+-+                g_object_set_data (G_OBJECT(manager->priv->device_composite),
+-+                                   "engine-state-old",
+-+                                   GUINT_TO_POINTER(UP_DEVICE_STATE_UNKNOWN));
+-+
+-+                engine_device_changed_cb (NULL, manager->priv->device_composite, manager);
+-+        }
+-+
+-+        /* the device is recalled */
+-+        if (recall_notice)
+-+                device_perhaps_recall (manager, device);
+-+}
+-+
+-+static gboolean
+-+engine_check_recall (GsdPowerManager *manager, UpDevice *device)
+-+{
+-+        UpDeviceKind kind;
+-+        gboolean recall_notice = FALSE;
+-+        gchar *recall_vendor = NULL;
+-+        gchar *recall_url = NULL;
+-+
+-+        /* get device properties */
+-+        g_object_get (device,
+-+                      "kind", &kind,
+-+                      "recall-notice", &recall_notice,
+-+                      "recall-vendor", &recall_vendor,
+-+                      "recall-url", &recall_url,
+-+                      NULL);
+-+
+-+        /* not battery */
+-+        if (kind != UP_DEVICE_KIND_BATTERY)
+-+                goto out;
+-+
+-+        /* no recall data */
+-+        if (!recall_notice)
+-+                goto out;
+-+
+-+        /* emit signal for manager */
+-+        g_debug ("** EMIT: perhaps-recall");
+-+        g_debug ("%s-%s", recall_vendor, recall_url);
+-+out:
+-+        g_free (recall_vendor);
+-+        g_free (recall_url);
+-+        return recall_notice;
+- }
+- 
+- static gboolean
+-@@ -248,6 +992,18 @@ engine_coldplug (GsdPowerManager *manage
+-         guint i;
+-         GPtrArray *array = NULL;
+-         UpDevice *device;
+-+        gboolean ret;
+-+        GError *error = NULL;
+-+
+-+        /* get devices from UPower */
+-+        ret = up_client_enumerate_devices_sync (manager->priv->up_client, NULL, &error);
+-+        if (!ret) {
+-+                g_warning ("failed to get device list: %s", error->message);
+-+                g_error_free (error);
+-+                return FALSE;
+-+        }
+-+
+-+        engine_recalculate_state (manager);
+- 
+-         /* add to database */
+-         array = up_client_get_devices (manager->priv->up_client);
+-@@ -255,6 +1011,7 @@ engine_coldplug (GsdPowerManager *manage
+-         for (i = 0 ; array != NULL && i < array->len ; i++) {
+-                 device = g_ptr_array_index (array, i);
+-                 engine_device_add (manager, device);
+-+                engine_check_recall (manager, device);
+-         }
+- 
+-         g_clear_pointer (&array, g_ptr_array_unref);
+-@@ -266,22 +1023,22 @@ engine_coldplug (GsdPowerManager *manage
+- static void
+- engine_device_added_cb (UpClient *client, UpDevice *device, GsdPowerManager *manager)
+- {
+-+        /* add to list */
+-+        g_ptr_array_add (manager->priv->devices_array, g_object_ref (device));
+-         engine_device_add (manager, device);
+-+        engine_check_recall (manager, device);
+-+
+-+        engine_recalculate_state (manager);
+- }
+- 
+- static void
+--engine_device_removed_cb (UpClient *client, const char *object_path, GsdPowerManager *manager)
+-+engine_device_removed_cb (UpClient *client, UpDevice *device, GsdPowerManager *manager)
+- {
+--        guint i;
+--
+--        for (i = 0; i < manager->priv->devices_array->len; i++) {
+--                UpDevice *device = g_ptr_array_index (manager->priv->devices_array, i);
+--
+--                if (g_strcmp0 (object_path, up_device_get_object_path (device)) == 0) {
+--                        g_ptr_array_remove_index (manager->priv->devices_array, i);
+--                        break;
+--                }
+--        }
+-+        gboolean ret;
+-+        ret = g_ptr_array_remove (manager->priv->devices_array, device);
+-+        if (!ret)
+-+                return;
+-+        engine_recalculate_state (manager);
+- }
+- 
+- static void
+-@@ -290,15 +1047,35 @@ on_notification_closed (NotifyNotificati
+-     g_object_unref (notification);
+- }
+- 
+-+static const gchar *
+-+get_first_themed_icon_name (GIcon *icon)
+-+{
+-+        const gchar* const *icon_names;
+-+        const gchar *icon_name = NULL;
+-+
+-+        /* no icon */
+-+        if (icon == NULL)
+-+                goto out;
+-+
+-+        /* just use the first icon */
+-+        icon_names = g_themed_icon_get_names (G_THEMED_ICON (icon));
+-+        if (icon_names != NULL)
+-+                icon_name = icon_names[0];
+-+out:
+-+        return icon_name;
+-+}
+-+
+- static void
+- create_notification (const char *summary,
+-                      const char *body,
+--                     const char *icon_name,
+-+                     GIcon      *icon,
+-                      NotifyNotification **weak_pointer_location)
+- {
+-         NotifyNotification *notification;
+- 
+--        notification = notify_notification_new (summary, body, icon_name);
+-+        notification = notify_notification_new (summary,
+-+                                                body,
+-+                                                icon ? get_first_themed_icon_name (icon) : NULL);
+-         *weak_pointer_location = notification;
+-         g_object_add_weak_pointer (G_OBJECT (notification),
+-                                    (gpointer *) weak_pointer_location);
+-@@ -312,17 +1089,23 @@ engine_ups_discharging (GsdPowerManager
+-         const gchar *title;
+-         gchar *remaining_text = NULL;
+-         gdouble percentage;
+--        char *icon_name;
+-+        GIcon *icon = NULL;
+-         gint64 time_to_empty;
+-         GString *message;
+-+        UpDeviceKind kind;
+- 
+-         /* get device properties */
+-         g_object_get (device,
+-+                      "kind", &kind,
+-                       "percentage", &percentage,
+-                       "time-to-empty", &time_to_empty,
+--                      "icon-name", &icon_name,
+-                       NULL);
+- 
+-+        if (kind != UP_DEVICE_KIND_UPS)
+-+                return;
+-+
+-+        main_battery_or_ups_low_changed (manager, TRUE);
+-+
+-         /* only show text if there is a valid time */
+-         if (time_to_empty > 0)
+-                 remaining_text = gpm_get_timestring (time_to_empty);
+-@@ -336,16 +1119,18 @@ engine_ups_discharging (GsdPowerManager
+-                 g_string_append_printf (message, _("%s of UPS backup power remaining"),
+-                                         remaining_text);
+-         } else {
+--                g_string_append (message, _("Unknown amount of UPS backup power remaining"));
+-+                g_string_append (message, gpm_device_to_localised_string (device));
+-         }
+-         g_string_append_printf (message, " (%.0f%%)", percentage);
+- 
+-+        icon = gpm_upower_get_device_icon (device, TRUE);
+-+
+-         /* close any existing notification of this class */
+-         notify_close_if_showing (&manager->priv->notification_ups_discharging);
+- 
+-         /* create a new notification */
+-         create_notification (title, message->str,
+--                             icon_name,
+-+                             icon,
+-                              &manager->priv->notification_ups_discharging);
+-         notify_notification_set_timeout (manager->priv->notification_ups_discharging,
+-                                          GSD_POWER_MANAGER_NOTIFY_TIMEOUT_LONG);
+-@@ -359,35 +1144,105 @@ engine_ups_discharging (GsdPowerManager
+-         notify_notification_show (manager->priv->notification_ups_discharging, NULL);
+- 
+-         g_string_free (message, TRUE);
+--        g_free (icon_name);
+-+        if (icon != NULL)
+-+                g_object_unref (icon);
+-         g_free (remaining_text);
+- }
+- 
+- static GsdPowerActionType
+--manager_critical_action_get (GsdPowerManager *manager)
+-+manager_critical_action_get (GsdPowerManager *manager,
+-+                             gboolean         is_ups)
+- {
+-         GsdPowerActionType policy;
+--        char *action;
+-+        GVariant *result = NULL;
+-+
+-+        policy = g_settings_get_enum (manager->priv->settings, "critical-battery-action");
+-+
+-+        if (policy == GSD_POWER_ACTION_SUSPEND) {
+-+                if (is_ups == FALSE) {
+-+                        result = g_dbus_proxy_call_sync (manager->priv->logind_proxy,
+-+                                                         "CanSuspend",
+-+                                                         NULL,
+-+                                                         G_DBUS_CALL_FLAGS_NONE,
+-+                                                         -1, NULL, NULL);
+-+                }
+-+        } else if (policy == GSD_POWER_ACTION_HIBERNATE) {
+-+                result = g_dbus_proxy_call_sync (manager->priv->logind_proxy,
+-+                                                 "CanHibernate",
+-+                                                 NULL,
+-+                                                 G_DBUS_CALL_FLAGS_NONE,
+-+                                                 -1, NULL, NULL);
+-+        } else {
+-+                /* Other actions need no check */
+-+                return policy;
+-+        }
+-+
+-+        if (result) {
+-+                const char *s;
+- 
+--        action = up_client_get_critical_action (manager->priv->up_client);
+--        /* We don't make the difference between HybridSleep and Hibernate */
+--        if (g_strcmp0 (action, "PowerOff") == 0)
+-+                g_variant_get (result, "(s)", &s);
+-+                if (g_strcmp0 (s, "yes") != 0)
+-+                        policy = GSD_POWER_ACTION_SHUTDOWN;
+-+                g_variant_unref (result);
+-+        } else {
+-                 policy = GSD_POWER_ACTION_SHUTDOWN;
+--        else
+--                policy = GSD_POWER_ACTION_HIBERNATE;
+--        g_free (action);
+-+        }
+-+
+-         return policy;
+- }
+- 
+- static gboolean
+--manager_critical_action_stop_sound_cb (GsdPowerManager *manager)
+-+manager_critical_action_do (GsdPowerManager *manager,
+-+                            gboolean         is_ups)
+- {
+-+        GsdPowerActionType action_type;
+-+
+-         /* stop playing the alert as it's too late to do anything now */
+-         play_loop_stop (&manager->priv->critical_alert_timeout_id);
+- 
+-+        action_type = manager_critical_action_get (manager, is_ups);
+-+        do_power_action_type (manager, action_type);
+-+
+-+        return FALSE;
+-+}
+-+
+-+static gboolean
+-+manager_critical_action_do_cb (GsdPowerManager *manager)
+-+{
+-+        manager_critical_action_do (manager, FALSE);
+-+        return FALSE;
+-+}
+-+
+-+static gboolean
+-+manager_critical_ups_action_do_cb (GsdPowerManager *manager)
+-+{
+-+        manager_critical_action_do (manager, TRUE);
+-         return FALSE;
+- }
+- 
+-+static gboolean
+-+engine_just_laptop_battery (GsdPowerManager *manager)
+-+{
+-+        UpDevice *device;
+-+        UpDeviceKind kind;
+-+        GPtrArray *array;
+-+        gboolean ret = TRUE;
+-+        guint i;
+-+
+-+        /* find if there are any other device types that mean we have to
+-+         * be more specific in our wording */
+-+        array = manager->priv->devices_array;
+-+        for (i=0; i<array->len; i++) {
+-+                device = g_ptr_array_index (array, i);
+-+                g_object_get (device, "kind", &kind, NULL);
+-+                if (kind != UP_DEVICE_KIND_BATTERY) {
+-+                        ret = FALSE;
+-+                        break;
+-+                }
+-+        }
+-+        return ret;
+-+}
+-+
+- static void
+- engine_charge_low (GsdPowerManager *manager, UpDevice *device)
+- {
+-@@ -397,7 +1252,7 @@ engine_charge_low (GsdPowerManager *mana
+-         gchar *tmp;
+-         gchar *remaining_text;
+-         gdouble percentage;
+--        char *icon_name;
+-+        GIcon *icon = NULL;
+-         gint64 time_to_empty;
+-         UpDeviceKind kind;
+- 
+-@@ -406,13 +1261,20 @@ engine_charge_low (GsdPowerManager *mana
+-                       "kind", &kind,
+-                       "percentage", &percentage,
+-                       "time-to-empty", &time_to_empty,
+--                      "icon-name", &icon_name,
+-                       NULL);
+- 
+-+        /* check to see if the batteries have not noticed we are on AC */
+-+        if (kind == UP_DEVICE_KIND_BATTERY) {
+-+                if (!up_client_get_on_battery (manager->priv->up_client)) {
+-+                        g_warning ("ignoring low message as we are not on battery power");
+-+                        goto out;
+-+                }
+-+        }
+-+
+-         if (kind == UP_DEVICE_KIND_BATTERY) {
+- 
+-                 /* if the user has no other batteries, drop the "Laptop" wording */
+--                ret = (manager->priv->devices_array->len > 0);
+-+                ret = engine_just_laptop_battery (manager);
+-                 if (ret) {
+-                         /* TRANSLATORS: laptop battery low, and we only have one battery */
+-                         title = _("Battery low");
+-@@ -428,6 +1290,8 @@ engine_charge_low (GsdPowerManager *mana
+-                 message = g_strdup_printf (_("Approximately %s remaining (%.0f%%)"), remaining_text, percentage);
+-                 g_free (remaining_text);
+- 
+-+                main_battery_or_ups_low_changed (manager, TRUE);
+-+
+-         } else if (kind == UP_DEVICE_KIND_UPS) {
+-                 /* TRANSLATORS: UPS is starting to get a little low */
+-                 title = _("UPS low");
+-@@ -489,12 +1353,15 @@ engine_charge_low (GsdPowerManager *mana
+-                 message = g_strdup_printf (_("Attached computer is low in power (%.0f%%)"), percentage);
+-         }
+- 
+-+        /* get correct icon */
+-+        icon = gpm_upower_get_device_icon (device, TRUE);
+-+
+-         /* close any existing notification of this class */
+-         notify_close_if_showing (&manager->priv->notification_low);
+- 
+-         /* create a new notification */
+-         create_notification (title, message,
+--                             icon_name,
+-+                             icon,
+-                              &manager->priv->notification_low);
+-         notify_notification_set_timeout (manager->priv->notification_low,
+-                                          GSD_POWER_MANAGER_NOTIFY_TIMEOUT_LONG);
+-@@ -512,7 +1379,9 @@ engine_charge_low (GsdPowerManager *mana
+-                          /* TRANSLATORS: this is the sound description */
+-                          CA_PROP_EVENT_DESCRIPTION, _("Battery is low"), NULL);
+- 
+--        g_free (icon_name);
+-+out:
+-+        if (icon != NULL)
+-+                g_object_unref (icon);
+-         g_free (message);
+- }
+- 
+-@@ -523,7 +1392,7 @@ engine_charge_critical (GsdPowerManager
+-         gboolean ret;
+-         gchar *message = NULL;
+-         gdouble percentage;
+--        char *icon_name;
+-+        GIcon *icon = NULL;
+-         gint64 time_to_empty;
+-         GsdPowerActionType policy;
+-         UpDeviceKind kind;
+-@@ -533,13 +1402,20 @@ engine_charge_critical (GsdPowerManager
+-                       "kind", &kind,
+-                       "percentage", &percentage,
+-                       "time-to-empty", &time_to_empty,
+--                      "icon-name", &icon_name,
+-                       NULL);
+- 
+-+        /* check to see if the batteries have not noticed we are on AC */
+-+        if (kind == UP_DEVICE_KIND_BATTERY) {
+-+                if (!up_client_get_on_battery (manager->priv->up_client)) {
+-+                        g_warning ("ignoring critically low message as we are not on battery power");
+-+                        goto out;
+-+                }
+-+        }
+-+
+-         if (kind == UP_DEVICE_KIND_BATTERY) {
+- 
+-                 /* if the user has no other batteries, drop the "Laptop" wording */
+--                ret = (manager->priv->devices_array->len > 0);
+-+                ret = engine_just_laptop_battery (manager);
+-                 if (ret) {
+-                         /* TRANSLATORS: laptop battery critically low, and only have one kind of battery */
+-                         title = _("Battery critically low");
+-@@ -549,10 +1425,18 @@ engine_charge_critical (GsdPowerManager
+-                 }
+- 
+-                 /* we have to do different warnings depending on the policy */
+--                policy = manager_critical_action_get (manager);
+-+                policy = manager_critical_action_get (manager, FALSE);
+- 
+-                 /* use different text for different actions */
+--                if (policy == GSD_POWER_ACTION_HIBERNATE) {
+-+                if (policy == GSD_POWER_ACTION_NOTHING) {
+-+                        /* TRANSLATORS: tell the use to insert the plug, as we're not going to do anything */
+-+                        message = g_strdup (_("Plug in your AC adapter to avoid losing data."));
+-+
+-+                } else if (policy == GSD_POWER_ACTION_SUSPEND) {
+-+                        /* TRANSLATORS: give the user a ultimatum */
+-+                        message = g_strdup_printf (_("Computer will suspend very soon unless it is plugged in."));
+-+
+-+                } else if (policy == GSD_POWER_ACTION_HIBERNATE) {
+-                         /* TRANSLATORS: give the user a ultimatum */
+-                         message = g_strdup_printf (_("Computer will hibernate very soon unless it is plugged in."));
+- 
+-@@ -561,6 +1445,8 @@ engine_charge_critical (GsdPowerManager
+-                         message = g_strdup_printf (_("Computer will shutdown very soon unless it is plugged in."));
+-                 }
+- 
+-+                main_battery_or_ups_low_changed (manager, TRUE);
+-+
+-         } else if (kind == UP_DEVICE_KIND_UPS) {
+-                 gchar *remaining_text;
+-                 gchar *tmp;
+-@@ -640,12 +1526,15 @@ engine_charge_critical (GsdPowerManager
+-                                            percentage);
+-         }
+- 
+-+        /* get correct icon */
+-+        icon = gpm_upower_get_device_icon (device, TRUE);
+-+
+-         /* close any existing notification of this class */
+-         notify_close_if_showing (&manager->priv->notification_low);
+- 
+-         /* create a new notification */
+-         create_notification (title, message,
+--                             icon_name,
+-+                             icon,
+-                              &manager->priv->notification_low);
+-         notify_notification_set_timeout (manager->priv->notification_low,
+-                                          NOTIFY_EXPIRES_NEVER);
+-@@ -671,8 +1560,9 @@ engine_charge_critical (GsdPowerManager
+-                                  CA_PROP_EVENT_DESCRIPTION, _("Battery is critically low"), NULL);
+-                 break;
+-         }
+--
+--        g_free (icon_name);
+-+out:
+-+        if (icon != NULL)
+-+                g_object_unref (icon);
+-         g_free (message);
+- }
+- 
+-@@ -681,7 +1571,7 @@ engine_charge_action (GsdPowerManager *m
+- {
+-         const gchar *title = NULL;
+-         gchar *message = NULL;
+--        char *icon_name;
+-+        GIcon *icon = NULL;
+-         GsdPowerActionType policy;
+-         guint timer_id;
+-         UpDeviceKind kind;
+-@@ -689,19 +1579,39 @@ engine_charge_action (GsdPowerManager *m
+-         /* get device properties */
+-         g_object_get (device,
+-                       "kind", &kind,
+--                      "icon-name", &icon_name,
+-                       NULL);
+- 
+-+        /* check to see if the batteries have not noticed we are on AC */
+-+        if (kind == UP_DEVICE_KIND_BATTERY) {
+-+                if (!up_client_get_on_battery (manager->priv->up_client)) {
+-+                        g_warning ("ignoring critically low message as we are not on battery power");
+-+                        goto out;
+-+                }
+-+        }
+-+
+-         if (kind == UP_DEVICE_KIND_BATTERY) {
+- 
+-                 /* TRANSLATORS: laptop battery is really, really, low */
+-                 title = _("Laptop battery critically low");
+- 
+-                 /* we have to do different warnings depending on the policy */
+--                policy = manager_critical_action_get (manager);
+-+                policy = manager_critical_action_get (manager, FALSE);
+- 
+-                 /* use different text for different actions */
+--                if (policy == GSD_POWER_ACTION_HIBERNATE) {
+-+                if (policy == GSD_POWER_ACTION_NOTHING) {
+-+                        /* TRANSLATORS: computer will shutdown without saving data */
+-+                        message = g_strdup (_("The battery is below the critical level and "
+-+                                              "this computer will <b>power-off</b> when the "
+-+                                              "battery becomes completely empty."));
+-+
+-+                } else if (policy == GSD_POWER_ACTION_SUSPEND) {
+-+                        /* TRANSLATORS: computer will suspend */
+-+                        message = g_strdup (_("The battery is below the critical level and "
+-+                                              "this computer is about to suspend.\n"
+-+                                              "<b>NOTE:</b> A small amount of power is required "
+-+                                              "to keep your computer in a suspended state."));
+-+
+-+                } else if (policy == GSD_POWER_ACTION_HIBERNATE) {
+-                         /* TRANSLATORS: computer will hibernate */
+-                         message = g_strdup (_("The battery is below the critical level and "
+-                                               "this computer is about to hibernate."));
+-@@ -713,8 +1623,8 @@ engine_charge_action (GsdPowerManager *m
+-                 }
+- 
+-                 /* wait 20 seconds for user-panic */
+--                timer_id = g_timeout_add_seconds (GSD_STOP_SOUND_DELAY,
+--                                                  (GSourceFunc) manager_critical_action_stop_sound_cb,
+-+                timer_id = g_timeout_add_seconds (GSD_ACTION_DELAY,
+-+                                                  (GSourceFunc) manager_critical_action_do_cb,
+-                                                   manager);
+-                 g_source_set_name_by_id (timer_id, "[GsdPowerManager] battery critical-action");
+- 
+-@@ -723,10 +1633,16 @@ engine_charge_action (GsdPowerManager *m
+-                 title = _("UPS critically low");
+- 
+-                 /* we have to do different warnings depending on the policy */
+--                policy = manager_critical_action_get (manager);
+-+                policy = manager_critical_action_get (manager, TRUE);
+- 
+-                 /* use different text for different actions */
+--                if (policy == GSD_POWER_ACTION_HIBERNATE) {
+-+                if (policy == GSD_POWER_ACTION_NOTHING) {
+-+                        /* TRANSLATORS: computer will shutdown without saving data */
+-+                        message = g_strdup (_("UPS is below the critical level and "
+-+                                              "this computer will <b>power-off</b> when the "
+-+                                              "UPS becomes completely empty."));
+-+
+-+                } else if (policy == GSD_POWER_ACTION_HIBERNATE) {
+-                         /* TRANSLATORS: computer will hibernate */
+-                         message = g_strdup (_("UPS is below the critical level and "
+-                                               "this computer is about to hibernate."));
+-@@ -738,8 +1654,8 @@ engine_charge_action (GsdPowerManager *m
+-                 }
+- 
+-                 /* wait 20 seconds for user-panic */
+--                timer_id = g_timeout_add_seconds (GSD_STOP_SOUND_DELAY,
+--                                                  (GSourceFunc) manager_critical_action_stop_sound_cb,
+-+                timer_id = g_timeout_add_seconds (GSD_ACTION_DELAY,
+-+                                                  (GSourceFunc) manager_critical_ups_action_do_cb,
+-                                                   manager);
+-                 g_source_set_name_by_id (timer_id, "[GsdPowerManager] ups critical-action");
+-         }
+-@@ -748,12 +1664,15 @@ engine_charge_action (GsdPowerManager *m
+-         if (title == NULL)
+-                 return;
+- 
+-+        /* get correct icon */
+-+        icon = gpm_upower_get_device_icon (device, TRUE);
+-+
+-         /* close any existing notification of this class */
+-         notify_close_if_showing (&manager->priv->notification_low);
+- 
+-         /* create a new notification */
+-         create_notification (title, message,
+--                             icon_name,
+-+                             icon,
+-                              &manager->priv->notification_low);
+-         notify_notification_set_timeout (manager->priv->notification_low,
+-                                          NOTIFY_EXPIRES_NEVER);
+-@@ -769,40 +1688,77 @@ engine_charge_action (GsdPowerManager *m
+-                          CA_PROP_EVENT_ID, "battery-caution",
+-                          /* TRANSLATORS: this is the sound description */
+-                          CA_PROP_EVENT_DESCRIPTION, _("Battery is critically low"), NULL);
+--
+--        g_free (icon_name);
+-+out:
+-+        if (icon != NULL)
+-+                g_object_unref (icon);
+-         g_free (message);
+- }
+- 
+- static void
+--engine_device_warning_changed_cb (UpDevice *device, GParamSpec *pspec, GsdPowerManager *manager)
+-+engine_device_changed_cb (UpClient *client, UpDevice *device, GsdPowerManager *manager)
+- {
+--        UpDeviceLevel warning;
+-+        UpDeviceKind kind;
+-+        UpDeviceState state;
+-+        UpDeviceState state_old;
+-+        GsdPowerManagerWarning warning_old;
+-+        GsdPowerManagerWarning warning;
+-+
+-+        /* get device properties */
+-+        g_object_get (device,
+-+                      "kind", &kind,
+-+                      NULL);
+-+
+-+        /* if battery then use composite device to cope with multiple batteries */
+-+        if (kind == UP_DEVICE_KIND_BATTERY) {
+-+                g_debug ("updating because %s changed", up_device_get_object_path (device));
+-+                engine_update_composite_device (manager);
+-+                device = manager->priv->device_composite;
+-+        }
+-+
+-+        /* get device properties (may be composite) */
+-+        g_object_get (device,
+-+                      "state", &state,
+-+                      NULL);
+- 
+--        g_object_get (device, "warning-level", &warning, NULL);
+-+        g_debug ("%s state is now %s", up_device_get_object_path (device), up_device_state_to_string (state));
+- 
+--        if (warning == UP_DEVICE_LEVEL_DISCHARGING) {
+--                g_debug ("** EMIT: discharging");
+--                engine_ups_discharging (manager, device);
+--        } else if (warning == UP_DEVICE_LEVEL_LOW) {
+--                g_debug ("** EMIT: charge-low");
+--                engine_charge_low (manager, device);
+--        } else if (warning == UP_DEVICE_LEVEL_CRITICAL) {
+--                g_debug ("** EMIT: charge-critical");
+--                engine_charge_critical (manager, device);
+--        } else if (warning == UP_DEVICE_LEVEL_ACTION) {
+--                g_debug ("** EMIT: charge-action");
+--                engine_charge_action (manager, device);
+--        } else if (warning == UP_DEVICE_LEVEL_NONE) {
+--                /* FIXME: this only handles one notification
+--                 * for the whole system, instead of one per device */
+--                g_debug ("fully charged or charging, hiding notifications if any");
+--                play_loop_stop (&manager->priv->critical_alert_timeout_id);
+--                notify_close_if_showing (&manager->priv->notification_low);
+--                notify_close_if_showing (&manager->priv->notification_ups_discharging);
+-+        /* see if any interesting state changes have happened */
+-+        state_old = GPOINTER_TO_INT(g_object_get_data (G_OBJECT(device), "engine-state-old"));
+-+        if (state_old != state) {
+-+                if (state == UP_DEVICE_STATE_DISCHARGING) {
+-+                        g_debug ("discharging");
+-+                        engine_ups_discharging (manager, device);
+-+                } else if (state == UP_DEVICE_STATE_FULLY_CHARGED ||
+-+                           state == UP_DEVICE_STATE_CHARGING) {
+-+                        g_debug ("fully charged or charging, hiding notifications if any");
+-+                        notify_close_if_showing (&manager->priv->notification_low);
+-+                        notify_close_if_showing (&manager->priv->notification_ups_discharging);
+-+                        main_battery_or_ups_low_changed (manager, FALSE);
+-+                }
+-+
+-+                /* save new state */
+-+                g_object_set_data (G_OBJECT(device), "engine-state-old", GUINT_TO_POINTER(state));
+-+        }
+-+
+-+        /* check the warning state has not changed */
+-+        warning_old = GPOINTER_TO_INT(g_object_get_data (G_OBJECT(device), "engine-warning-old"));
+-+        warning = engine_get_warning (manager, device);
+-+        if (warning != warning_old) {
+-+                if (warning == WARNING_LOW) {
+-+                        g_debug ("** EMIT: charge-low");
+-+                        engine_charge_low (manager, device);
+-+                } else if (warning == WARNING_CRITICAL) {
+-+                        g_debug ("** EMIT: charge-critical");
+-+                        engine_charge_critical (manager, device);
+-+                } else if (warning == WARNING_ACTION) {
+-+                        g_debug ("charge-action");
+-+                        engine_charge_action (manager, device);
+-+                }
+-+                /* save new state */
+-+                g_object_set_data (G_OBJECT(device), "engine-warning-old", GUINT_TO_POINTER(warning));
+-         }
+- 
+--        main_battery_or_ups_low_changed (manager, (warning != UP_DEVICE_LEVEL_NONE));
+-+        engine_recalculate_state (manager);
+- }
+- 
+- static void
+-@@ -1210,10 +2166,17 @@ do_lid_closed_action (GsdPowerManager *m
+- }
+- 
+- static void
+--lid_state_changed_cb (UpClient *client, GParamSpec *pspec, GsdPowerManager *manager)
+-+up_client_changed_cb (UpClient *client, GsdPowerManager *manager)
+- {
+-         gboolean tmp;
+- 
+-+        if (!up_client_get_on_battery (client)) {
+-+            /* if we are playing a critical charge sound loop on AC, stop it */
+-+            play_loop_stop (&manager->priv->critical_alert_timeout_id);
+-+            notify_close_if_showing (&manager->priv->notification_low);
+-+            main_battery_or_ups_low_changed (manager, FALSE);
+-+        }
+-+
+-         if (!manager->priv->lid_is_present)
+-                 return;
+- 
+-@@ -1264,13 +2227,17 @@ backlight_iface_emit_changed (GsdPowerMa
+-                               gint32           value)
+- {
+-         GVariant *params;
+-+        gchar *string;
+- 
+-         /* not yet connected to the bus */
+-         if (manager->priv->connection == NULL)
+-                 return;
+- 
+--        params = g_variant_new_parsed ("(%s, [{'Brightness', <%i>}], @as [])", interface_name,
+--                                       value);
+-+        string = g_strdup_printf ("('%s', [{'Brightness', %%v}], @as [])", interface_name);
+-+        params = g_variant_new_parsed (string,
+-+                                       g_variant_new_int32 (value));
+-+        g_free (string);
+-+
+-         g_dbus_connection_emit_signal (manager->priv->connection,
+-                                        NULL,
+-                                        GSD_POWER_DBUS_PATH,
+-@@ -1628,12 +2595,9 @@ idle_configure (GsdPowerManager *manager
+-         if (timeout_sleep != 0) {
+-                 g_debug ("setting up sleep callback %is", timeout_sleep);
+- 
+--                if (action_type != GSD_POWER_ACTION_NOTHING) {
+--                        manager->priv->idle_sleep_id = gnome_idle_monitor_add_idle_watch (manager->priv->idle_monitor,
+--                                                                                          timeout_sleep * 1000,
+--                                                                                          idle_triggered_idle_cb, manager, NULL);
+--                }
+--
+-+                manager->priv->idle_sleep_id = gnome_idle_monitor_add_idle_watch (manager->priv->idle_monitor,
+-+                                                                                  timeout_sleep * 1000,
+-+                                                                                  idle_triggered_idle_cb, manager, NULL);
+-                 if (action_type == GSD_POWER_ACTION_LOGOUT ||
+-                     action_type == GSD_POWER_ACTION_SUSPEND ||
+-                     action_type == GSD_POWER_ACTION_HIBERNATE) {
+-@@ -1696,7 +2660,7 @@ idle_configure (GsdPowerManager *manager
+- 
+- static void
+- main_battery_or_ups_low_changed (GsdPowerManager *manager,
+--                                 gboolean         is_low)
+-+                          gboolean         is_low)
+- {
+-         if (is_low == manager->priv->battery_is_low)
+-                 return;
+-@@ -1824,12 +2788,6 @@ handle_screensaver_active (GsdPowerManag
+- }
+- 
+- static void
+--handle_wake_up_screen (GsdPowerManager *manager)
+--{
+--        set_temporary_unidle_on_ac (manager, TRUE);
+--}
+--
+--static void
+- screensaver_signal_cb (GDBusProxy *proxy,
+-                        const gchar *sender_name,
+-                        const gchar *signal_name,
+-@@ -1838,8 +2796,6 @@ screensaver_signal_cb (GDBusProxy *proxy
+- {
+-         if (g_strcmp0 (signal_name, "ActiveChanged") == 0)
+-                 handle_screensaver_active (GSD_POWER_MANAGER (user_data), parameters);
+--        else if (g_strcmp0 (signal_name, "WakeUpScreen") == 0)
+--                handle_wake_up_screen (GSD_POWER_MANAGER (user_data));
+- }
+- 
+- static void
+-@@ -1898,7 +2854,7 @@ power_keyboard_proxy_ready_cb (GObject
+- 
+-         /* set brightness to max if not currently set so is something
+-          * sensible */
+--        if (manager->priv->kbd_brightness_now <= 0) {
+-+        if (manager->priv->kbd_brightness_now < 0) {
+-                 gboolean ret;
+-                 ret = upower_kbd_set_brightness (manager,
+-                                                  manager->priv->kbd_brightness_max,
+-@@ -1956,17 +2912,9 @@ show_sleep_warning (GsdPowerManager *man
+-         notify_notification_set_app_name (manager->priv->notification_sleep_warning, _("Power"));
+- 
+-         notify_notification_show (manager->priv->notification_sleep_warning, NULL);
+--}
+--
+--static void
+--idle_set_mode_no_temp (GsdPowerManager  *manager,
+--                       GsdPowerIdleMode  mode)
+--{
+--        if (manager->priv->temporary_unidle_on_ac_id != 0 &&
+--            manager->priv->previous_idle_mode == mode)
+--                return;
+- 
+--        idle_set_mode (manager, mode);
+-+        if (manager->priv->sleep_action_type == GSD_POWER_ACTION_LOGOUT)
+-+                set_temporary_unidle_on_ac (manager, TRUE);
+- }
+- 
+- static void
+-@@ -1984,11 +2932,11 @@ idle_triggered_idle_cb (GnomeIdleMonitor
+-                 g_debug ("idletime watch: %s (%i)", id_name, watch_id);
+- 
+-         if (watch_id == manager->priv->idle_dim_id) {
+--                idle_set_mode_no_temp (manager, GSD_POWER_IDLE_MODE_DIM);
+-+                idle_set_mode (manager, GSD_POWER_IDLE_MODE_DIM);
+-         } else if (watch_id == manager->priv->idle_blank_id) {
+--                idle_set_mode_no_temp (manager, GSD_POWER_IDLE_MODE_BLANK);
+-+                idle_set_mode (manager, GSD_POWER_IDLE_MODE_BLANK);
+-         } else if (watch_id == manager->priv->idle_sleep_id) {
+--                idle_set_mode_no_temp (manager, GSD_POWER_IDLE_MODE_SLEEP);
+-+                idle_set_mode (manager, GSD_POWER_IDLE_MODE_SLEEP);
+-         } else if (watch_id == manager->priv->idle_sleep_warning_id) {
+-                 show_sleep_warning (manager);
+-         }
+-@@ -2016,6 +2964,10 @@ engine_settings_key_changed_cb (GSetting
+-                                 const gchar *key,
+-                                 GsdPowerManager *manager)
+- {
+-+        if (g_strcmp0 (key, "use-time-for-policy") == 0) {
+-+                manager->priv->use_time_primary = g_settings_get_boolean (settings, key);
+-+                return;
+-+        }
+-         if (g_str_has_prefix (key, "sleep-inactive") ||
+-             g_str_equal (key, "idle-delay") ||
+-             g_str_equal (key, "idle-dim")) {
+-@@ -2219,6 +3171,12 @@ handle_suspend_actions (GsdPowerManager
+- static void
+- handle_resume_actions (GsdPowerManager *manager)
+- {
+-+        /* close existing notifications on resume, the system power
+-+         * state is probably different now */
+-+        notify_close_if_showing (&manager->priv->notification_low);
+-+        notify_close_if_showing (&manager->priv->notification_ups_discharging);
+-+        main_battery_or_ups_low_changed (manager, FALSE);
+-+
+-         /* ensure we turn the panel back on after resume */
+-         backlight_enable (manager);
+- 
+-@@ -2256,19 +3214,10 @@ on_rr_screen_acquired (GObject      *obj
+-                        gpointer      user_data)
+- {
+-         GsdPowerManager *manager = user_data;
+--        GError *error = NULL;
+- 
+-         gnome_settings_profile_start (NULL);
+- 
+--        manager->priv->rr_screen = gnome_rr_screen_new_finish (result, &error);
+--
+--        if (error) {
+--                g_warning ("Could not create GnomeRRScreen: %s\n", error->message);
+--                g_error_free (error);
+--                gnome_settings_profile_end (NULL);
+--
+--                return;
+--        }
+-+        manager->priv->rr_screen = gnome_rr_screen_new_finish (result, NULL);
+- 
+-         /* set up the screens */
+-         if (manager->priv->lid_is_present) {
+-@@ -2311,8 +3260,10 @@ on_rr_screen_acquired (GObject      *obj
+-                           G_CALLBACK (engine_device_added_cb), manager);
+-         g_signal_connect (manager->priv->up_client, "device-removed",
+-                           G_CALLBACK (engine_device_removed_cb), manager);
+--        g_signal_connect_after (manager->priv->up_client, "notify::lid-is-closed",
+--                                G_CALLBACK (lid_state_changed_cb), manager);
+-+        g_signal_connect (manager->priv->up_client, "device-changed",
+-+                          G_CALLBACK (engine_device_changed_cb), manager);
+-+        g_signal_connect_after (manager->priv->up_client, "changed",
+-+                                G_CALLBACK (up_client_changed_cb), manager);
+-         g_signal_connect (manager->priv->up_client, "notify::on-battery",
+-                           G_CALLBACK (up_client_on_battery_cb), manager);
+- 
+-@@ -2342,9 +3293,34 @@ on_rr_screen_acquired (GObject      *obj
+-         manager->priv->devices_array = g_ptr_array_new_with_free_func (g_object_unref);
+- 
+-         /* create a fake virtual composite battery */
+--        manager->priv->device_composite = up_client_get_display_device (manager->priv->up_client);
+--        g_signal_connect (manager->priv->device_composite, "notify::warning-level",
+--                          G_CALLBACK (engine_device_warning_changed_cb), manager);
+-+        manager->priv->device_composite = up_device_new ();
+-+        g_object_set (manager->priv->device_composite,
+-+                      "kind", UP_DEVICE_KIND_BATTERY,
+-+                      "is-rechargeable", TRUE,
+-+                      "native-path", "dummy:composite_battery",
+-+                      "power-supply", TRUE,
+-+                      NULL);
+-+        engine_update_composite_device (manager);
+-+
+-+        /* get percentage policy */
+-+        manager->priv->low_percentage = g_settings_get_int (manager->priv->settings,
+-+                                                            "percentage-low");
+-+        manager->priv->critical_percentage = g_settings_get_int (manager->priv->settings,
+-+                                                                 "percentage-critical");
+-+        manager->priv->action_percentage = g_settings_get_int (manager->priv->settings,
+-+                                                               "percentage-action");
+-+
+-+        /* get time policy */
+-+        manager->priv->low_time = g_settings_get_int (manager->priv->settings,
+-+                                                      "time-low");
+-+        manager->priv->critical_time = g_settings_get_int (manager->priv->settings,
+-+                                                           "time-critical");
+-+        manager->priv->action_time = g_settings_get_int (manager->priv->settings,
+-+                                                         "time-action");
+-+
+-+        /* we can disable this if the time remaining is inaccurate or just plain wrong */
+-+        manager->priv->use_time_primary = g_settings_get_boolean (manager->priv->settings,
+-+                                                                  "use-time-for-policy");
+- 
+-         /* create IDLETIME watcher */
+-         manager->priv->idle_monitor = gnome_idle_monitor_new ();
+-@@ -2358,15 +3334,6 @@ on_rr_screen_acquired (GObject      *obj
+-         /* don't blank inside a VM */
+-         manager->priv->is_virtual_machine = gsd_power_is_hardware_a_vm ();
+- 
+--        /* queue a signal in case the proxy from gnome-shell was created before we got here
+--           (likely, considering that to get here we need a reply from gnome-shell)
+--        */
+--        if (manager->priv->backlight_available)
+--                backlight_iface_emit_changed (manager, GSD_POWER_DBUS_INTERFACE_SCREEN,
+--                                              backlight_get_percentage (manager->priv->rr_screen, NULL));
+--        else
+--                backlight_iface_emit_changed (manager, GSD_POWER_DBUS_INTERFACE_SCREEN, -1);
+--
+-         gnome_settings_profile_end (NULL);
+- }
+- 
+-@@ -2463,6 +3430,9 @@ gsd_power_manager_stop (GsdPowerManager
+-         g_ptr_array_unref (manager->priv->devices_array);
+-         manager->priv->devices_array = NULL;
+-         g_clear_object (&manager->priv->device_composite);
+-+        g_clear_object (&manager->priv->previous_icon);
+-+
+-+        g_clear_pointer (&manager->priv->previous_summary, g_free);
+- 
+-         g_clear_object (&manager->priv->session_presence_proxy);
+-         g_clear_object (&manager->priv->screensaver_proxy);
+-@@ -2577,6 +3547,114 @@ out:
+-         }
+- }
+- 
+-+static GVariant *
+-+device_to_variant_blob (UpDevice *device)
+-+{
+-+        const gchar *object_path;
+-+        gchar *device_icon;
+-+        gdouble percentage;
+-+        GIcon *icon;
+-+        guint64 time_empty, time_full;
+-+        guint64 time_state = 0;
+-+        GVariant *value;
+-+        UpDeviceKind kind;
+-+        UpDeviceState state;
+-+        gboolean is_present;
+-+
+-+        g_object_get (device,
+-+                      "is-present", &is_present,
+-+                      "kind", &kind,
+-+                      "percentage", &percentage,
+-+                      "state", &state,
+-+                      "time-to-empty", &time_empty,
+-+                      "time-to-full", &time_full,
+-+                      NULL);
+-+
+-+        if (!is_present)
+-+                return NULL;
+-+
+-+        icon = gpm_upower_get_device_icon (device, TRUE);
+-+        device_icon = g_icon_to_string (icon);
+-+
+-+        /* only return time for these simple states */
+-+        if (state == UP_DEVICE_STATE_DISCHARGING)
+-+                time_state = time_empty;
+-+        else if (state == UP_DEVICE_STATE_CHARGING)
+-+                time_state = time_full;
+-+
+-+        /* get an object path, even for the composite device */
+-+        object_path = up_device_get_object_path (device);
+-+        if (object_path == NULL)
+-+                object_path = GSD_DBUS_PATH;
+-+
+-+        /* format complex object */
+-+        value = g_variant_new ("(susdut)",
+-+                               object_path,
+-+                               kind,
+-+                               device_icon,
+-+                               percentage,
+-+                               state,
+-+                               time_state);
+-+        g_free (device_icon);
+-+        g_object_unref (icon);
+-+        return value;
+-+}
+-+
+-+static void
+-+handle_method_call_main (GsdPowerManager *manager,
+-+                         const gchar *method_name,
+-+                         GVariant *parameters,
+-+                         GDBusMethodInvocation *invocation)
+-+{
+-+        GPtrArray *array;
+-+        guint i;
+-+        GVariantBuilder *builder;
+-+        GVariant *tuple = NULL;
+-+        GVariant *value = NULL;
+-+
+-+        /* return object */
+-+        if (g_strcmp0 (method_name, "GetPrimaryDevice") == 0) {
+-+                value = device_to_variant_blob (manager->priv->device_composite);
+-+                if (value) {
+-+                        tuple = g_variant_new_tuple (&value, 1);
+-+                        g_dbus_method_invocation_return_value (invocation, tuple);
+-+                } else {
+-+                        g_dbus_method_invocation_return_error_literal (invocation,
+-+                                                                       GSD_POWER_MANAGER_ERROR,
+-+                                                                       GSD_POWER_MANAGER_ERROR_FAILED,
+-+                                                                       "Main battery device not available");
+-+                }
+-+                return;
+-+        }
+-+
+-+        /* return array */
+-+        if (g_strcmp0 (method_name, "GetDevices") == 0) {
+-+                UpDevice *device;
+-+
+-+                /* create builder */
+-+                builder = g_variant_builder_new (G_VARIANT_TYPE("a(susdut)"));
+-+
+-+                /* add each tuple to the array */
+-+                array = manager->priv->devices_array;
+-+                for (i=0; i<array->len; i++) {
+-+                        device = g_ptr_array_index (array, i);
+-+                        value = device_to_variant_blob (device);
+-+                        if (!value)
+-+                                continue;
+-+                        g_variant_builder_add_value (builder, value);
+-+                }
+-+
+-+                /* return the value */
+-+                value = g_variant_builder_end (builder);
+-+                tuple = g_variant_new_tuple (&value, 1);
+-+                g_dbus_method_invocation_return_value (invocation, tuple);
+-+                g_variant_builder_unref (builder);
+-+                return;
+-+        }
+-+
+-+        g_assert_not_reached ();
+-+}
+-+
+- static void
+- handle_method_call (GDBusConnection       *connection,
+-                     const gchar           *sender,
+-@@ -2598,7 +3676,12 @@ handle_method_call (GDBusConnection
+-         g_debug ("Calling method '%s.%s' for Power",
+-                  interface_name, method_name);
+- 
+--        if (g_strcmp0 (interface_name, GSD_POWER_DBUS_INTERFACE_SCREEN) == 0) {
+-+        if (g_strcmp0 (interface_name, GSD_POWER_DBUS_INTERFACE) == 0) {
+-+                handle_method_call_main (manager,
+-+                                         method_name,
+-+                                         parameters,
+-+                                         invocation);
+-+        } else if (g_strcmp0 (interface_name, GSD_POWER_DBUS_INTERFACE_SCREEN) == 0) {
+-                 handle_method_call_screen (manager,
+-                                            method_name,
+-                                            parameters,
+-@@ -2614,6 +3697,30 @@ handle_method_call (GDBusConnection
+- }
+- 
+- static GVariant *
+-+handle_get_property_main (GsdPowerManager *manager,
+-+                          const gchar *property_name,
+-+                          GError **error)
+-+{
+-+        GVariant *retval = NULL;
+-+
+-+        if (g_strcmp0 (property_name, "Icon") == 0) {
+-+                retval = engine_get_icon_property_variant (manager);
+-+        } else if (g_strcmp0 (property_name, "Tooltip") == 0) {
+-+                retval = engine_get_tooltip_property_variant (manager);
+-+        } else if (g_strcmp0 (property_name, "Percentage") == 0) {
+-+                gdouble percentage;
+-+                percentage = engine_get_percentage (manager);
+-+                if (percentage >= 0)
+-+                        retval = g_variant_new_double (percentage);
+-+        }
+-+        if (retval == NULL) {
+-+                g_set_error (error, G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
+-+                             "Failed to get property: %s", property_name);
+-+        }
+-+        return retval;
+-+}
+-+
+-+static GVariant *
+- handle_get_property_other (GsdPowerManager *manager,
+-                            const gchar *interface_name,
+-                            const gchar *property_name,
+-@@ -2661,7 +3768,9 @@ handle_get_property (GDBusConnection *co
+-                 return NULL;
+-         }
+- 
+--        if (g_strcmp0 (interface_name, GSD_POWER_DBUS_INTERFACE_SCREEN) == 0 ||
+-+        if (g_strcmp0 (interface_name, GSD_POWER_DBUS_INTERFACE) == 0) {
+-+                return handle_get_property_main (manager, property_name, error);
+-+        } else if (g_strcmp0 (interface_name, GSD_POWER_DBUS_INTERFACE_SCREEN) == 0 ||
+-                    g_strcmp0 (interface_name, GSD_POWER_DBUS_INTERFACE_KEYBOARD) == 0) {
+-                 return handle_get_property_other (manager, interface_name, property_name, error);
+-         } else {
+-@@ -2688,26 +3797,13 @@ handle_set_property_other (GsdPowerManag
+- 
+-         if (g_strcmp0 (interface_name, GSD_POWER_DBUS_INTERFACE_SCREEN) == 0) {
+-                 g_variant_get (value, "i", &brightness_value);
+--                if (backlight_set_percentage (manager->priv->rr_screen, &brightness_value, error)) {
+--                        backlight_iface_emit_changed (manager, GSD_POWER_DBUS_INTERFACE_SCREEN, brightness_value);
+--                        return TRUE;
+--                } else {
+--                        g_set_error (error, G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
+--                                     "Setting %s.%s failed", interface_name, property_name);
+--                        return FALSE;
+--                }
+-+                return backlight_set_percentage (manager->priv->rr_screen,
+-+                                                 brightness_value, error);
+-         } else if (g_strcmp0 (interface_name, GSD_POWER_DBUS_INTERFACE_KEYBOARD) == 0) {
+-                 g_variant_get (value, "i", &brightness_value);
+-                 brightness_value = PERCENTAGE_TO_ABS (0, manager->priv->kbd_brightness_max,
+-                                                       brightness_value);
+--                if (upower_kbd_set_brightness (manager, brightness_value, error)) {
+--                        backlight_iface_emit_changed (manager, GSD_POWER_DBUS_INTERFACE_KEYBOARD, brightness_value);
+--                        return TRUE;
+--                } else {
+--                        g_set_error (error, G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
+--                                     "Setting %s.%s failed", interface_name, property_name);
+--                        return FALSE;
+--                }
+-+                return upower_kbd_set_brightness (manager, brightness_value, error);
+-         }
+- 
+-         g_set_error (error, G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
+-Index: gnome-settings-daemon/plugins/power/gsd-power-manager.h
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/gsd-power-manager.h
+-+++ gnome-settings-daemon/plugins/power/gsd-power-manager.h
+-@@ -13,7 +13,8 @@
+-  * GNU General Public License for more details.
+-  *
+-  * You should have received a copy of the GNU General Public License
+-- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+-+ * along with this program; if not, write to the Free Software
+-+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-  *
+-  */
+- 
+-Index: gnome-settings-daemon/plugins/power/gsd-power-plugin.c
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/gsd-power-plugin.c
+-+++ gnome-settings-daemon/plugins/power/gsd-power-plugin.c
+-@@ -13,7 +13,8 @@
+-  * GNU General Public License for more details.
+-  *
+-  * You should have received a copy of the GNU General Public License
+-- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+-+ * along with this program; if not, write to the Free Software
+-+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-  *
+-  */
+- 
+-Index: gnome-settings-daemon/plugins/power/gsm-inhibitor-flag.h
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/gsm-inhibitor-flag.h
+-+++ gnome-settings-daemon/plugins/power/gsm-inhibitor-flag.h
+-@@ -13,7 +13,9 @@
+-  * Lesser General Public License for more details.
+-  *
+-  * You should have received a copy of the GNU General Public License
+-- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+-+ * along with this program; if not, write to the Free Software
+-+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+-+ * 02111-1307, USA.
+-  */
+- 
+- #ifndef __GSM_INHIBITOR_FLAG_H__
+-Index: gnome-settings-daemon/plugins/power/gsm-manager-logout-mode.h
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/gsm-manager-logout-mode.h
+-+++ gnome-settings-daemon/plugins/power/gsm-manager-logout-mode.h
+-@@ -13,7 +13,8 @@
+-  * GNU General Public License for more details.
+-  *
+-  * You should have received a copy of the GNU General Public License
+-- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+-+ * along with this program; if not, write to the Free Software
+-+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-  *
+-  */
+- 
+-Index: gnome-settings-daemon/plugins/power/gsm-presence-flag.h
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/gsm-presence-flag.h
+-+++ gnome-settings-daemon/plugins/power/gsm-presence-flag.h
+-@@ -13,7 +13,9 @@
+-  * Lesser General Public License for more details.
+-  *
+-  * You should have received a copy of the GNU General Public License
+-- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+-+ * along with this program; if not, write to the Free Software
+-+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+-+ * 02111-1307, USA.
+-  */
+- 
+- #ifndef __GSM_PRESENCE_FLAG_H__
+-Index: gnome-settings-daemon/plugins/power/test.py
+-===================================================================
+---- gnome-settings-daemon.orig/plugins/power/test.py
+-+++ gnome-settings-daemon/plugins/power/test.py
+-@@ -668,7 +668,7 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-         # add a fake battery with 30%/2 hours charge to upower
+-         bat_path = self.obj_upower.AddDischargingBattery('mock_BAT', 'Mock Bat', 30.0, 1200)
+-         obj_bat = self.system_bus_con.get_object('org.freedesktop.UPower', bat_path)
+--        self.obj_upower.EmitSignal('', 'DeviceAdded', 'o', [bat_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceAdded', 's', [bat_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+- 
+-         time.sleep(1)
+-@@ -678,7 +678,7 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-                     dbus.Int64(30, variant_level=1),
+-                     dbus_interface=dbus.PROPERTIES_IFACE)
+-         obj_bat.EmitSignal('', 'Changed', '', [], dbus_interface='org.freedesktop.DBus.Mock')
+--        self.obj_upower.EmitSignal('', 'DeviceChanged', 'o', [obj_bat.object_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceChanged', 's', [obj_bat.object_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+- 
+-         time.sleep(0.5)
+-@@ -696,7 +696,7 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-         # add a fake battery with 2%/1 minute charge to upower
+-         bat_path = self.obj_upower.AddDischargingBattery('mock_BAT', 'Mock Bat', 2.0, 60)
+-         obj_bat = self.system_bus_con.get_object('org.freedesktop.UPower', bat_path)
+--        self.obj_upower.EmitSignal('', 'DeviceAdded', 'o', [bat_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceAdded', 's', [bat_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+- 
+-         time.sleep(5)
+-@@ -715,12 +715,12 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-         # add two fake batteries to upower
+-         bat1_path = self.obj_upower.AddDischargingBattery('mock_BAT1', 'Bat0', 30.0, 1200)
+-         obj_bat1 = self.system_bus_con.get_object('org.freedesktop.UPower', bat1_path)
+--        self.obj_upower.EmitSignal('', 'DeviceAdded', 'o', [bat1_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceAdded', 's', [bat1_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+- 
+-         bat2_path = self.obj_upower.AddDischargingBattery('mock_BAT2', 'Bat2', 40.0, 1600)
+-         obj_bat2 = self.system_bus_con.get_object('org.freedesktop.UPower', bat2_path)
+--        self.obj_upower.EmitSignal('', 'DeviceAdded', 'o', [bat2_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceAdded', 's', [bat2_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+-         time.sleep(1)
+- 
+-@@ -732,7 +732,7 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-                      dbus.Double(0.5, variant_level=1),
+-                      dbus_interface=dbus.PROPERTIES_IFACE)
+-         obj_bat1.EmitSignal('', 'Changed', '', [], dbus_interface='org.freedesktop.DBus.Mock')
+--        self.obj_upower.EmitSignal('', 'DeviceChanged', 'o', [bat1_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceChanged', 's', [bat1_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+- 
+-         # wait long enough to ensure it didn't do anything (as we still have
+-@@ -747,7 +747,7 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-                      dbus.Double(0.4, variant_level=1),
+-                      dbus_interface=dbus.PROPERTIES_IFACE)
+-         obj_bat2.EmitSignal('', 'Changed', '', [], dbus_interface='org.freedesktop.DBus.Mock')
+--        self.obj_upower.EmitSignal('', 'DeviceChanged', 'o', [bat2_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceChanged', 's', [bat2_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+- 
+-         self.check_for_suspend(5)
+-@@ -758,7 +758,7 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-         # add a fake battery to upower
+-         bat1_path = self.obj_upower.AddDischargingBattery('mock_BAT1', 'Bat0', 30.0, 1200)
+-         obj_bat1 = self.system_bus_con.get_object('org.freedesktop.UPower', bat1_path)
+--        self.obj_upower.EmitSignal('', 'DeviceAdded', 'o', [bat1_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceAdded', 's', [bat1_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+- 
+-         bat2_path = '/org/freedesktop/UPower/devices/' + 'mock_MOUSE_BAT1'
+-@@ -779,7 +779,7 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-                                    }, dbus.Array([], signature='(ssss)'))
+- 
+-         obj_bat2 = self.system_bus_con.get_object('org.freedesktop.UPower', bat2_path)
+--        self.obj_upower.EmitSignal('', 'DeviceAdded', 'o', [bat2_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceAdded', 's', [bat2_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+-         time.sleep(1)
+- 
+-@@ -791,7 +791,7 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-                      dbus.Double(0.5, variant_level=1),
+-                      dbus_interface=dbus.PROPERTIES_IFACE)
+-         obj_bat2.EmitSignal('', 'Changed', '', [], dbus_interface='org.freedesktop.DBus.Mock')
+--        self.obj_upower.EmitSignal('', 'DeviceChanged', 'o', [bat2_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceChanged', 's', [bat2_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+- 
+-         # wait long enough to ensure it didn't do anything (as we still have
+-@@ -806,7 +806,7 @@ class PowerPluginTest(gsdtestcase.GSDTes
+-                      dbus.Double(0.4, variant_level=1),
+-                      dbus_interface=dbus.PROPERTIES_IFACE)
+-         obj_bat1.EmitSignal('', 'Changed', '', [], dbus_interface='org.freedesktop.DBus.Mock')
+--        self.obj_upower.EmitSignal('', 'DeviceChanged', 'o', [bat1_path],
+-+        self.obj_upower.EmitSignal('', 'DeviceChanged', 's', [bat1_path],
+-                                    dbus_interface='org.freedesktop.DBus.Mock')
+- 
+-         self.check_for_suspend(5)
+-Index: gnome-settings-daemon/configure.ac
+-===================================================================
+---- gnome-settings-daemon.orig/configure.ac
+-+++ gnome-settings-daemon/configure.ac
+-@@ -55,7 +55,7 @@ LIBWACOM_REQUIRED_VERSION=0.7
+- LIBRSVG_REQUIRED_VERSION=2.36.2
+- PANGO_REQUIRED_VERSION=1.20.0
+- POLKIT_REQUIRED_VERSION=0.103
+--UPOWER_REQUIRED_VERSION=0.99.0
+-+UPOWER_REQUIRED_VERSION=0.9.0
+- IBUS_REQUIRED_VERSION=1.4.99
+- GSETTINGS_DESKTOP_SCHEMAS_REQUIRED_VERSION=3.9.91
+- GEOCODE_GLIB_REQUIRED_VERSION=3.10.0
+diff -Nru gnome-settings-daemon-3.12.2/debian/patches/series gnome-settings-daemon-3.12.2/debian/patches/series
+--- gnome-settings-daemon-3.12.2/debian/patches/series	2014-10-01 04:07:18.000000000 +0000
++++ gnome-settings-daemon-3.12.2/debian/patches/series	2014-10-31 10:15:38.000000000 +0000
+@@ -1,4 +1,3 @@
+-revert_power_310.patch
+ 05_disable_corner_tapping.patch
+ 43_disable_locale_settings.patch
+ 45_suppress-printer-may-not-be-connected-notification.patch
+diff -Nru gnome-settings-daemon-3.12.2/debian/patches/ubuntu-lid-close-suspend.patch gnome-settings-daemon-3.12.2/debian/patches/ubuntu-lid-close-suspend.patch
+--- gnome-settings-daemon-3.12.2/debian/patches/ubuntu-lid-close-suspend.patch	2014-10-01 04:07:18.000000000 +0000
++++ gnome-settings-daemon-3.12.2/debian/patches/ubuntu-lid-close-suspend.patch	2014-10-31 10:15:38.000000000 +0000
+@@ -47,7 +47,7 @@
+ ===================================================================
+ --- gnome-settings-daemon.orig/plugins/power/gsd-power-manager.c
+ +++ gnome-settings-daemon/plugins/power/gsd-power-manager.c
+-@@ -183,6 +183,7 @@ struct GsdPowerManagerPrivate
++@@ -165,6 +165,7 @@ struct GsdPowerManagerPrivate
+          GDBusProxy              *logind_proxy;
+          gint                     inhibit_lid_switch_fd;
+          gboolean                 inhibit_lid_switch_taken;
+@@ -55,15 +55,15 @@
+          gint                     inhibit_suspend_fd;
+          gboolean                 inhibit_suspend_taken;
+          guint                    inhibit_lid_switch_timer_id;
+-@@ -215,6 +216,7 @@ static GIcon    *engine_get_icon (GsdPow
+- static gchar    *engine_get_summary (GsdPowerManager *manager);
+- static gdouble   engine_get_percentage (GsdPowerManager *manager);
++@@ -193,6 +194,7 @@ static void     gsd_power_manager_init
++ 
++ static void      engine_device_warning_changed_cb (UpDevice *device, GParamSpec *pspec, GsdPowerManager *manager);
+  static void      do_power_action_type (GsdPowerManager *manager, GsdPowerActionType action_type);
+ +static void      inhibit_lid_switch (GsdPowerManager *manager);
+  static void      uninhibit_lid_switch (GsdPowerManager *manager);
+  static void      stop_inhibit_lid_switch_timer (GsdPowerManager *manager);
+  static void      main_battery_or_ups_low_changed (GsdPowerManager *manager, gboolean is_low);
+-@@ -2033,6 +2035,9 @@ suspend_on_lid_close (GsdPowerManager *m
++@@ -1085,6 +1087,9 @@ suspend_on_lid_close (GsdPowerManager *m
+  {
+          GsdXrandrBootBehaviour val;
+  
+@@ -73,7 +73,7 @@
+          if (!external_monitor_is_connected (manager->priv->rr_screen))
+                  return TRUE;
+  
+-@@ -2092,6 +2097,26 @@ restart_inhibit_lid_switch_timer (GsdPow
++@@ -1144,6 +1149,26 @@ restart_inhibit_lid_switch_timer (GsdPow
+  }
+  
+  static void
+@@ -100,7 +100,7 @@
+  do_lid_open_action (GsdPowerManager *manager)
+  {
+          /* play a sound, using sounds from the naming spec */
+-@@ -2172,6 +2197,8 @@ up_client_changed_cb (UpClient *client,
++@@ -1217,6 +1242,8 @@ lid_state_changed_cb (UpClient *client,
+          if (!manager->priv->lid_is_present)
+                  return;
+  
+@@ -109,7 +109,7 @@
+          /* same lid state */
+          tmp = up_client_get_lid_is_closed (manager->priv->up_client);
+          if (manager->priv->lid_is_closed == tmp)
+-@@ -2962,6 +2989,10 @@ engine_settings_key_changed_cb (GSetting
++@@ -2022,6 +2049,10 @@ engine_settings_key_changed_cb (GSetting
+                  idle_configure (manager);
+                  return;
+          }
+@@ -120,7 +120,7 @@
+  }
+  
+  static void
+-@@ -3348,6 +3379,7 @@ gsd_power_manager_start (GsdPowerManager
++@@ -2413,6 +2444,7 @@ gsd_power_manager_start (GsdPowerManager
+          manager->priv->settings_bus = g_settings_new ("org.gnome.desktop.session");
+          manager->priv->settings_xrandr = g_settings_new (GSD_XRANDR_SETTINGS_SCHEMA);
+  
+@@ -128,7 +128,7 @@
+          gnome_settings_profile_end (NULL);
+          return TRUE;
+  }
+-@@ -3385,6 +3417,7 @@ gsd_power_manager_stop (GsdPowerManager
++@@ -2450,6 +2482,7 @@ gsd_power_manager_stop (GsdPowerManager
+                  close (manager->priv->inhibit_lid_switch_fd);
+                  manager->priv->inhibit_lid_switch_fd = -1;
+                  manager->priv->inhibit_lid_switch_taken = FALSE;
+@@ -136,7 +136,7 @@
+          }
+          if (manager->priv->inhibit_suspend_fd != -1) {
+                  close (manager->priv->inhibit_suspend_fd);
+-@@ -3421,6 +3454,7 @@ gsd_power_manager_init (GsdPowerManager
++@@ -2483,6 +2516,7 @@ gsd_power_manager_init (GsdPowerManager
+          manager->priv = GSD_POWER_MANAGER_GET_PRIVATE (manager);
+          manager->priv->inhibit_lid_switch_fd = -1;
+          manager->priv->inhibit_suspend_fd = -1;

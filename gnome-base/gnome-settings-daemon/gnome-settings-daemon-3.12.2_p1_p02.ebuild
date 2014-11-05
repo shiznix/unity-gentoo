@@ -107,10 +107,13 @@ src_prepare() {
 	# Make colord and wacom optional; requires eautoreconf
 	epatch "${FILESDIR}/${PN}-3.12.0-optional.patch"
 
+	# Backport Upower-0.99 support from Vivid Vervet #
+	pushd "${WORKDIR}"
+		epatch "${FILESDIR}/gnome-settings-daemon_3.12.2-1ubuntu2_3.12.2-1ubuntu4.diff"
+	popd
+
 	# Disable selected patches #
 	sed \
-		`# Keep support in for upower-0.99 ` \
-			-e 's:revert_power_310:#revert_power_310:g' \
 		`# Fix desktop icons disappearing after a time and causing compiz freezing windows (see LP#1170483) ` \
 			-e 's:revert_background_dropping.patch:#revert_background_dropping.patch:g' \
 				-i "${WORKDIR}/debian/patches/series"

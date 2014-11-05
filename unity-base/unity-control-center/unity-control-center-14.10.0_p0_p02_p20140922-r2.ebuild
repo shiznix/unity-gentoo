@@ -14,11 +14,7 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI=	# 'gnome2' inherits 'gnome.org' which tries to set SRC_URI
-
-EBZR_PROJECT="${PN}"
-EBZR_REPO_URI="lp:~noskcaj/${PN}/gnome-desktop-3.10c"
-EBZR_REVISION="12785"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -57,7 +53,6 @@ COMMON_DEPEND="
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
 	>=sys-power/upower-0.99:=
-	unity-base/displayconfig
 	unity-base/gnome-control-center-signon
 	unity-base/unity-settings-daemon[colord,policykit]
 	virtual/krb5
@@ -134,22 +129,15 @@ DEPEND="${COMMON_DEPEND}
 # Needed for autoreconf
 #	gnome-base/gnome-common
 
-S="${WORKDIR}/${P}"
-
-src_unpack() {
-	bzr_src_unpack
-}
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	bzr_src_prepare
+	# Backport Upower-0.99 support from Vivid Vervet #
+	epatch -p1 "${FILESDIR}/upower-0.99_support.diff"
 
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel.patch"
 
-	# Lots of work by upstream to be compatible with their chosen glib-2.41 #
-	#  This preliminary patch fixes being able to use the Appearance dialog once only #
-	#   Subsequent use of Appearance will lead to 'SIGSEGV in g_type_check_instance_cast' #
-	epatch -p1 "${FILESDIR}/appearance-glib2.41_sigsegv-fix.diff"
 	eautoreconf
 	gnome2_src_prepare
 	vala_src_prepare
