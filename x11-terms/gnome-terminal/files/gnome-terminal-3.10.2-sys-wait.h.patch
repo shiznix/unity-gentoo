@@ -1,0 +1,24 @@
+From 4c82fe8c37718ce2d6040a48d4e643ae6d862be6 Mon Sep 17 00:00:00 2001
+From: Jasper Lievisse Adriaanse <jasper@humppa.nl>
+Date: Mon, 1 Apr 2013 11:23:36 +0200
+Subject: [PATCH] Pull in sys/wait.h for WIFEXITED/WEXITSTATUS
+
+---
+ src/terminal-app.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/terminal-app.c b/src/terminal-app.c
+index 448e1ae..a92826c 100644
+--- a/src/terminal-app.c
++++ b/src/terminal-app.c
+@@ -41,6 +41,7 @@
+ #include "terminal-defines.h"
+ #include "terminal-prefs.h"
+ 
++#include <sys/wait.h>
+ #include <errno.h>
+ #include <string.h>
+ #include <stdlib.h>
+-- 
+1.9.1
+
