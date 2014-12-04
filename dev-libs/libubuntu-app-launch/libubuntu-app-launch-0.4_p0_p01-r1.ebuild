@@ -23,6 +23,7 @@ IUSE="+threads"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/glib:2
+	dev-lib/cgmanager
 	dev-libs/json-glib
 	dev-libs/libzeitgeist
 	dev-libs/libupstart
