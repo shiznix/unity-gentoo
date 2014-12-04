@@ -86,7 +86,6 @@ PDEPEND="alsa? ( >=media-plugins/alsa-plugins-1.0.27-r1[pulseaudio] )"
 # PyQt4 dep is for the qpaeq script
 RDEPEND="${RDEPEND}
 	equalizer? ( qt4? ( dev-python/PyQt4[dbus] ) )
-	X? ( gnome-extra/gnome-audio )
 	system-wide? (
 		sys-apps/openrc
 		alsa? ( media-sound/alsa-utils )
