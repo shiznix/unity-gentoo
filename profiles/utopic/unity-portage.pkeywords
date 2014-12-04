@@ -11,7 +11,7 @@ dev-lang/python-exec:2	# Need this as 'python3_4' is only puse.unmasked at ~keyw
 ~dev-libs/libgcrypt-1.6.1
 dev-libs/libindicate
 dev-libs/libindicate-qt
-~dev-libs/nss-3.17.1
+~dev-libs/nss-3.17.2
 ~dev-libs/userspace-rcu-0.8.4
 ~dev-util/gtk-builder-convert-2.24.25
 dev-python/configparser
@@ -40,7 +40,7 @@ dev-qt/qtxmlpatterns:5
 ~media-libs/libepoxy-1.2
 ~media-libs/giflib-4.2.3
 ~media-libs/glm-0.9.5.1
-~sys-apps/portage-2.2.12	# Need this as 'python3_4' is only puse.unmasked at ~keyword level
+~sys-apps/portage-2.2.14	# Need this as 'python3_4' is only puse.unmasked at ~keyword level
 sys-devel/gcc:4.8 
 sys-devel/llvm:0/3.3
 sys-kernel/ubuntu-sources
