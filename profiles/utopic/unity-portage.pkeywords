@@ -14,6 +14,8 @@ dev-libs/libindicate-qt
 ~dev-libs/nss-3.17.2
 ~dev-libs/userspace-rcu-0.8.4
 ~dev-util/gtk-builder-convert-2.24.25
+~dev-util/lttng-tools-2.5.0
+~dev-util/lttng-ust-2.5.0
 dev-python/configparser
 ~dev-python/httplib2-0.8
 dev-python/keyring
@@ -63,6 +65,7 @@ sys-libs/db:5.1
 app-backup/deja-dup **
 dev-cpp/gmock **
 dev-cpp/gtest **
+dev-libs/cgmanager **
 dev-libs/libaccounts-glib **
 dev-libs/libdbusmenu-qt **
 dev-libs/libtimezonemap **

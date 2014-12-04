@@ -23,11 +23,11 @@ IUSE="+threads"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/glib:2
-	dev-lib/cgmanager
+	dev-libs/cgmanager
 	dev-libs/json-glib
 	dev-libs/libzeitgeist
 	dev-libs/libupstart
-	dev-util/lttng-tools
+	>=dev-util/lttng-tools-2.5.0
 	dev-util/dbus-test-runner
 	sys-apps/click
 	sys-libs/libnih[dbus]"
