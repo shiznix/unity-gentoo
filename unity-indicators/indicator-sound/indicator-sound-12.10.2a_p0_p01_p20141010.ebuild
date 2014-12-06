@@ -32,7 +32,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libgee:0
 	dev-libs/libindicate-qt
 	>=x11-libs/libnotify-0.7.6
-	media-sound/pulseaudio
+	<media-sound/pulseaudio-5
 	net-misc/url-dispatcher
 	$(vala_depend)"
 

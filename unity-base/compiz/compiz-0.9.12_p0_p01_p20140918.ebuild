@@ -104,6 +104,10 @@ src_prepare() {
 	# Disable -Werror #
 	sed -e 's:-Werror::g' \
 		-i cmake/CompizCommon.cmake || die
+
+	# Disable gconftool-2 from being used (need to differentiate here so gsettings schemas will still be installed) #
+	sed -e 's:COMPIZ_DISABLE_SCHEMAS_INSTALL:COMPIZ_DISABLE_GCONF_SCHEMAS_INSTALL:g' \
+		-i cmake/{CompizGconf,/plugin_extensions/CompizGenGconf}.cmake || die
 }
 
 src_configure() {
@@ -122,6 +126,7 @@ src_configure() {
 	mycmakeargs="${mycmakeargs}
 		-DCMAKE_INSTALL_PREFIX="/usr"
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="/etc/gconf/schemas"
+		-DCOMPIZ_DISABLE_GCONF_SCHEMAS_INSTALL=TRUE
 		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DUSE_GCONF=OFF
@@ -158,7 +163,7 @@ src_install() {
 	pushd ${CMAKE_BUILD_DIR}
 		addpredict /root/.gconf/
 		addpredict /usr/share/glib-2.0/schemas/
-		GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 emake DESTDIR="${D}" install
+		emake DESTDIR="${ED}" install
 
 		# Window manager desktop file for GNOME #
 		insinto /usr/share/gnome/wm-properties/
@@ -224,7 +229,24 @@ src_install() {
 	fi
 	dodir /etc/gconf/gconf.xml.unity 2> /dev/null
 	/usr/bin/update-gconf-defaults \
-		--source="${D}usr/share/gconf/defaults" \
-			--destination="${D}etc/gconf/gconf.xml.unity" || die
-	gnome2_gconf_install
+		--source="${ED}usr/share/gconf/defaults" \
+			--destination="${ED}etc/gconf/gconf.xml.unity" || die
+}
+
+
+
+pkg_preinst() {
+        gnome2_gconf_savelist
+	gnome2_schemas_savelist
+        gnome2_icon_savelist
+}
+
+pkg_postinst() {
+        gnome2_gconf_install
+        gnome2_schemas_update
+        gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+        gnome2_schemas_update
 }

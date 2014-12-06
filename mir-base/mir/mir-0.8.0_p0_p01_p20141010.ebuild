@@ -51,6 +51,10 @@ pkg_setup() {
 src_prepare() {
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	export CMAKE_BUILD_TYPE=none
+
+        # Disable -Werror #
+        sed -e 's:-Werror::g' \
+                -i CMakeLists.txt || die
 }
 
 src_configure() {
