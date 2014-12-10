@@ -18,8 +18,7 @@ DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz
-        mirror://gentoo/introspection.m4.bz2"
+        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="LGPL-2"
 SLOT="2"

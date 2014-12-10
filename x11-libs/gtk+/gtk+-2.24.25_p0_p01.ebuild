@@ -18,8 +18,7 @@ DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz
-        mirror://gentoo/introspection.m4.bz2"
+        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="LGPL-2+"
 SLOT="2"
@@ -58,6 +57,7 @@ COMMON_DEPEND="
 	!<gnome-base/gail-1000
 "
 DEPEND="${COMMON_DEPEND}
+	dev-libs/gobject-introspection-common
 	sys-devel/gettext
 	>=virtual/pkgconfig-0-r1[${MULTILIB_USEDEP}]
 	!aqua? (
