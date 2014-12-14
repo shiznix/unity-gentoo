@@ -43,7 +43,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="trusty trusty-updates utopic"
+RELEASES="utopic utopic-updates vivid vivid-updates"
 SOURCES="main universe"
 
 sources_download() {
