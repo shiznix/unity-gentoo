@@ -17,6 +17,7 @@ dev-libs/libindicate-qt
 ~dev-util/lttng-tools-2.5.0
 ~dev-util/lttng-ust-2.5.0
 dev-python/configparser
+dev-python/fixtures
 ~dev-python/httplib2-0.8
 dev-python/keyring
 ~dev-python/oauthlib-0.6.3

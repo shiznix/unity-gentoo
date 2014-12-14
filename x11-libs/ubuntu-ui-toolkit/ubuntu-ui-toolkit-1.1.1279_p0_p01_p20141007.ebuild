@@ -18,42 +18,55 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="examples"
+IUSE="doc examples test"
 RESTRICT="mirror"
 
-RDEPEND="dev-qt/qtfeedback
+RDEPEND="dev-qt/qtfeedback:5
 	x11-libs/unity-action-api"
 DEPEND="${RDEPEND}
 	dev-libs/glib:2
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
+	dev-qt/qtgraphicaleffects:5
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtpim:5
 	dev-qt/qtsvg:5
-	media-gfx/thumbnailer"
+	dev-qt/qttest:5
+	media-gfx/thumbnailer
+	doc? ( dev-qt/qdoc:5 )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-MAKEOPTS="${MAKEOPTS} -j1"
+#MAKEOPTS="${MAKEOPTS} -j1"
 QT5_BUILD_DIR="${S}"
 
 src_prepare() {
+	export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qdoc
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 
-	# Docs don't build - full of segfaults and incorrect paths #
-	sed -e '/documentation\/documentation.pri/d' \
-		-i ubuntu-sdk.pro
+	# Don't install autopilot python testsuite files, they require dpkg to run tests #
+	sed -e '/autopilot/d' \
+		-i tests/tests.pro
+
+	use doc || \
+		sed -e '/documentation\/documentation.pri/d' \
+			-i ubuntu-sdk.pro
 	qt5-build_src_prepare
 }
 
+src_test() {
+	Xemake check	# Currently fails with 'tst_headActions.qml exited with 666' #
+}
+
 src_install() {
-	# Needs to be run in a virtual Xserver so that qmlplugindump's #
+	# 'make install' needs to be run in a virtual Xserver so that qmlplugindump's #
 	#	qmltypes generation can successfully spawn dbus #
-		Xemake INSTALL_ROOT="${ED}" install
+	Xemake INSTALL_ROOT="${ED}" install
 
 	use examples || \
-		rm -rf "${ED}usr/lib/ubuntu-ui-toolkit/examples"
+		rm -rf "${ED}usr/lib/ubuntu-ui-toolkit/examples" \
+			"${ED}usr/share/applications"
 }
 
 pkg_preinst() {

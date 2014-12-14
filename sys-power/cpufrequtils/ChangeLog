@@ -1,0 +1,380 @@
+# ChangeLog for sys-power/cpufrequtils
+# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sys-power/cpufrequtils/ChangeLog,v 1.81 2013/08/03 07:29:55 ago Exp $
+
+  03 Aug 2013; Agostino Sarubbo <ago@gentoo.org> cpufrequtils-008-r4.ebuild:
+  Stable for sparc, wrt bug #474312
+
+  13 Jul 2013; Agostino Sarubbo <ago@gentoo.org> cpufrequtils-008-r4.ebuild:
+  Stable for ppc64, wrt bug #474312
+
+  13 Jul 2013; Agostino Sarubbo <ago@gentoo.org> cpufrequtils-008-r4.ebuild:
+  Stable for ppc, wrt bug #474312
+
+  07 Jul 2013; Agostino Sarubbo <ago@gentoo.org> cpufrequtils-008-r4.ebuild:
+  Stable for ia64, wrt bug #474312
+
+  07 Jul 2013; Agostino Sarubbo <ago@gentoo.org> cpufrequtils-008-r4.ebuild:
+  Stable for arm, wrt bug #474312
+
+  07 Jul 2013; Agostino Sarubbo <ago@gentoo.org> cpufrequtils-008-r4.ebuild:
+  Stable for x86, wrt bug #474312
+
+  07 Jul 2013; Agostino Sarubbo <ago@gentoo.org> cpufrequtils-008-r4.ebuild:
+  Stable for amd64, wrt bug #474312
+
+*cpufrequtils-008-r4 (09 May 2013)
+
+  09 May 2013; Fabio Erculiani <lxnay@gentoo.org> -cpufrequtils-008-r3.ebuild,
+  +cpufrequtils-008-r4.ebuild, files/cpufrequtils-change.sh:
+  fix cpufrequtils-change.sh usage when the default interpreter is not bash,
+  fixes bug #469218
+
+*cpufrequtils-008-r3 (06 May 2013)
+
+  06 May 2013; Fabio Erculiani <lxnay@gentoo.org> -cpufrequtils-008-r2.ebuild,
+  +cpufrequtils-008-r3.ebuild, files/cpufrequtils-init.d-007,
+  files/cpufrequtils.service, files/cpufrequtils-change.sh:
+  fix usage with systemd when SYSFS_OPTS is not set
+
+*cpufrequtils-008-r2 (21 Apr 2013)
+
+  21 Apr 2013; Fabio Erculiani <lxnay@gentoo.org>
+  +files/cpufrequtils-init.d-007, +cpufrequtils-008-r2.ebuild,
+  +files/cpufrequtils.service, +files/cpufrequtils-change.sh:
+  add systemd support, create a new helper script
+  /usr/libexec/cpufrequtils-change.sh, close bug #466472
+
+  18 Feb 2013; Zac Medico <zmedico@gentoo.org> cpufrequtils-008-r1.ebuild:
+  Add ~arm-linux keyword.
+
+  18 Nov 2012; Pacho Ramos <pacho@gentoo.org> metadata.xml:
+  Drop mobile herd as talked in gentoo-dev ML
+
+  16 Aug 2011; Matt Turner <mattst88@gentoo.org> cpufrequtils-008-r1.ebuild:
+  Add dependency on libintl, bug 379313. Bump to EAPI=4.
+
+  14 Aug 2011; Matt Turner <mattst88@gentoo.org>
+  files/cpufrequtils-007-nls.patch:
+  Fix authorship of a patch.
+
+  14 Aug 2011; Matt Turner <mattst88@gentoo.org>
+  -files/cpufrequtils-conf.d-005, -files/cpufrequtils-init.d-005,
+  -cpufrequtils-005-r1.ebuild, -files/cpufrequtils-005-build.patch,
+  -files/cpufrequtils-005-nls.patch, -cpufrequtils-007.ebuild,
+  -cpufrequtils-008.ebuild:
+  Remove old ebuilds and patches.
+
+  07 Aug 2011; Raúl Porcel <armin76@gentoo.org> cpufrequtils-008-r1.ebuild:
+  ia64/sparc stable wrt #375921
+
+  07 Aug 2011; Markus Meier <maekke@gentoo.org> cpufrequtils-008-r1.ebuild:
+  arm stable, bug #375921
+
+  06 Aug 2011; Markus Meier <maekke@gentoo.org> cpufrequtils-008-r1.ebuild:
+  x86 stable, bug #375921
+
+  04 Aug 2011; Matt Turner <mattst88@gentoo.org> cpufrequtils-005-r1.ebuild,
+  cpufrequtils-007.ebuild:
+  Remove unnecessary dependency on sys-fs/sysfsutils, bug 348620 and 377721.
+
+  02 Aug 2011; Matt Turner <mattst88@gentoo.org> metadata.xml:
+  Add myself as maintainer.
+
+  26 Jul 2011; Matt Turner <mattst88@gentoo.org> cpufrequtils-008-r1.ebuild:
+  Added ~mips. Works on Yeeloong.
+
+  26 Jul 2011; Matt Turner <mattst88@gentoo.org> cpufrequtils-008-r1.ebuild,
+  +files/cpufrequtils-008-fix-compilation-on-x86-32-with-fPIC.patch:
+  Fix compilatin on x86-32 with -fPIC (for hardened), bug 375967.
+
+  26 Jul 2011; Kacper Kowalik <xarthisius@gentoo.org>
+  cpufrequtils-008-r1.ebuild:
+  ppc/ppc64 stable wrt #375921
+
+  25 Jul 2011; Zac Medico <zmedico@gentoo.org> cpufrequtils-008-r1.ebuild:
+  Fix src_install to use emake DESTDIR="${ED}" for prefix compatibility.
+  There's no configure script, so in this case we have to use emake
+  DESTDIR="${ED}" instead of the usual econf --prefix="${EPREFIX}".
+
+  24 Jul 2011; Markos Chandras <hwoarang@gentoo.org>
+  cpufrequtils-008-r1.ebuild:
+  Stable on amd64 wrt bug #375921
+
+*cpufrequtils-008-r1 (21 Jul 2011)
+
+  21 Jul 2011; Matt Turner <mattst88@gentoo.org> +cpufrequtils-008-r1.ebuild,
+  +files/cpufrequtils-008-cpuid.patch,
+  +files/cpufrequtils-008-fix-msr-read.patch,
+  +files/cpufrequtils-008-increase-MAX_LINE_LEN.patch:
+  Add a few upstream fixes patches, one of which allows us to use cpufrequtils
+  on mips.
+
+  13 Aug 2010; Joseph Jezak <josejx@gentoo.org> cpufrequtils-007.ebuild:
+  Marked ppc/ppc64 stable for bug #327035.
+
+  18 Jul 2010; Raúl Porcel <armin76@gentoo.org> cpufrequtils-007.ebuild:
+  arm/ia64/sparc stable wrt #327035
+
+  10 Jul 2010; Christian Faulhammer <fauli@gentoo.org>
+  cpufrequtils-007.ebuild:
+  stable x86, bug 327035
+
+  06 Jul 2010; Markos Chandras <hwoarang@gentoo.org>
+  cpufrequtils-007.ebuild:
+  Stable on amd64 wrt bug #327035
+
+*cpufrequtils-008 (05 Jul 2010)
+
+  05 Jul 2010; Mike Frysinger <vapier@gentoo.org> +cpufrequtils-008.ebuild:
+  Version bump.
+
+  31 Mar 2010; Jonathan Callen <abcd@gentoo.org> cpufrequtils-007.ebuild:
+  Bump to EAPI=3, add prefix keywords
+
+*cpufrequtils-007 (16 Jan 2010)
+
+  16 Jan 2010; Mike Frysinger <vapier@gentoo.org> +cpufrequtils-007.ebuild,
+  +files/cpufrequtils-007-build.patch, +files/cpufrequtils-007-nls.patch:
+  Version bump.
+
+  15 Jan 2010; Mike Frysinger <vapier@gentoo.org> cpufrequtils-006.ebuild,
+  -files/cpufrequtils-006-modprobe-gov.patch:
+  Drop the modprobe patch since the kernel handles this for us
+  automatically.
+
+*cpufrequtils-006 (15 Jan 2010)
+
+  15 Jan 2010; Mike Frysinger <vapier@gentoo.org>
+  +files/cpufrequtils-conf.d-006, +files/cpufrequtils-init.d-006,
+  +cpufrequtils-006.ebuild, +files/cpufrequtils-006-modprobe-gov.patch,
+  +files/cpufrequtils-006-nls.patch:
+  Version bump #292246 by gionnico with updated NLS patch by Lars Wendler
+  and a more flexible init.d script #179729 by Oliver Koch.
+
+  15 Jan 2010; Mike Frysinger <vapier@gentoo.org>
+  cpufrequtils-005-r1.ebuild:
+  add ia64 love.
+
+  11 Jul 2009; Joseph Jezak <josejx@gentoo.org> cpufrequtils-005-r1.ebuild:
+  Marked ppc/ppc64 stable for bug #256599.
+
+  07 Jun 2009; Raúl Porcel <armin76@gentoo.org> cpufrequtils-005-r1.ebuild:
+  arm/sparc stable wrt #256599
+
+  03 Jun 2009; Dawid Węgliński <cla@gentoo.org>
+  cpufrequtils-005-r1.ebuild:
+  Stable on amd64 (bug #256599)
+
+  02 Jun 2009; Christian Faulhammer <fauli@gentoo.org>
+  cpufrequtils-005-r1.ebuild:
+  stable x86, bug 256599
+
+*cpufrequtils-005-r1 (21 Oct 2008)
+
+  21 Oct 2008; Mike Frysinger <vapier@gentoo.org>
+  files/cpufrequtils-init.d-005, +files/cpufrequtils-005-build.patch,
+  +files/cpufrequtils-005-nls.patch, +cpufrequtils-005-r1.ebuild:
+  Fix building against uClibc #205576 by Jos van der Ende. Fix init.d
+  scripts to work properly #243008 by konsti / Rene Meier. Make sure we
+  respect LDFLAGS.
+
+*cpufrequtils-005 (20 Oct 2008)
+
+  20 Oct 2008; Mike Frysinger <vapier@gentoo.org>
+  +files/cpufrequtils-conf.d-005, +files/cpufrequtils-init.d-005,
+  +cpufrequtils-005.ebuild:
+  Version bump #228701 by Dennis Schridde and a more flexible init.d script
+  by me #182049 by Jakub Zawadzki.
+
+*cpufrequtils-002-r4 (11 Aug 2008)
+
+  11 Aug 2008; Raúl Porcel <armin76@gentoo.org> files/cpufrequtils-conf.d,
+  files/cpufrequtils-init.d, -cpufrequtils-002-r3.ebuild,
+  +cpufrequtils-002-r4.ebuild:
+  Fix init and confd scripts, bug #200018
+
+  06 Oct 2007; Tom Gall <tgall@gentoo.com> pufrequtils-002-r3.ebuild:
+  added ~ppc64
+
+*cpufrequtils-002-r3 (26 May 2007)
+
+  26 May 2007; Christian Heim <phreak@gentoo.org>
+  -cpufrequtils-002-r2.ebuild, +cpufrequtils-002-r3.ebuild:
+  Fix src_install to actually install the init/conf.d files. Thanks to Peter
+  Hjalmarsson <xake at rymdraket.net> for spotting.
+
+  17 May 2007; Christian Heim <phreak@gentoo.org> files/cpufrequtils-init.d:
+  Updating the init-script to be busybox/dash compatible (thanks to Mike
+  Arthur <mike at mikearthur.co.uk> in #178763).
+
+  17 May 2007; Christian Heim <phreak@gentoo.org>
+  -files/cpufrequtils-001-conf.d, -files/cpufrequtils-001-init.d,
+  -files/cpufrequtils-002-conf.d, -files/cpufrequtils-002-init.d,
+  +files/cpufrequtils-conf.d, +files/cpufrequtils-init.d,
+  -cpufrequtils-001.ebuild:
+  Cleaning up the older version; cleaning up $FILESDIR.
+
+  17 May 2007; Christian Heim <phreak@gentoo.org> metadata.xml:
+  Assigning sys-power/cpufrequtils directly to mobile at gentoo.org.
+
+  04 Nov 2006; Danny van Dyk <kugelfang@gentoo.org>
+  cpufrequtils-002-r2.ebuild:
+  Marked stable on amd64.
+
+  24 Oct 2006; Joshua Jackson <tsunam@gentoo.org>
+  cpufrequtils-002-r2.ebuild:
+  Stable x86; bug #152155
+
+  21 Oct 2006; <nixnut@gentoo.org> cpufrequtils-002-r2.ebuild:
+  Stable on ppc wrt bug 152155
+
+  20 Oct 2006; Christian Heim <phreak@gentoo.org>
+  files/cpufrequtils-002-conf.d, files/cpufrequtils-002-init.d:
+  Fixing the Governor restore on stop(), fixing #152090 (thanks to Daniel
+  Franke). Tuning the conf.d entry a bit.
+
+*cpufrequtils-002-r2 (17 Jul 2006)
+
+  17 Jul 2006; Christian Heim <phreak@gentoo.org>
+  files/cpufrequtils-002-init.d, -cpufrequtils-002-r1.ebuild,
+  +cpufrequtils-002-r2.ebuild:
+  Revision bump. Modifying the init-script a bit, it is now only using
+  cpu[0-9] from /sys/devices/.../cpu/ (thanks to Richard Fish <bigfish at
+  asmallpond.org> in #140689 for the fix)
+
+*cpufrequtils-002-r1 (16 Jul 2006)
+
+  16 Jul 2006; Christian Heim <phreak@gentoo.org>
+  files/cpufrequtils-002-init.d, -cpufrequtils-002.ebuild,
+  +cpufrequtils-002-r1.ebuild:
+  Adding a patch to restore the default state (#140505 thanks to Brian Harring
+  <ferringb at gmail.com>)
+
+  13 Jul 2006; Christian Heim <phreak@gentoo.org> metadata.xml,
+  cpufrequtils-001.ebuild, cpufrequtils-002.ebuild:
+  Fixing Quotation; Taking temporary maintainership
+
+  25 Jun 2006; Henrik Brix Andersen <brix@gentoo.org>
+  -files/cpufrequtils-0.4-conf.d, -files/cpufrequtils-0.4-init.d,
+  -cpufrequtils-0.4.ebuild:
+  Pruned old ebuild.
+
+  13 Jun 2006; Danny van Dyk <kugelfang@gentoo.org> cpufrequtils-001.ebuild:
+  Marked stable on amd64.
+
+  05 Jun 2006; Henrik Brix Andersen <brix@gentoo.org>
+  +files/cpufrequtils-002-parallel-make.patch, cpufrequtils-002.ebuild:
+  Fix compilation with parallel make, bug #135521.
+
+*cpufrequtils-002 (01 Jun 2006)
+
+  01 Jun 2006; Henrik Brix Andersen <brix@gentoo.org>
+  +files/cpufrequtils-002-conf.d, +files/cpufrequtils-002-init.d,
+  +cpufrequtils-002.ebuild:
+  Version bump. Fixed init script to work on SMP systems, thanks to Sebastien
+  LANGE and Stefano Varesi in bug #132461.
+
+  24 May 2006; Michael Hanselmann <hansmi@gentoo.org>
+  cpufrequtils-001.ebuild:
+  Stable on ppc.
+
+  26 Apr 2006; Henrik Brix Andersen <brix@gentoo.org>
+  cpufrequtils-001.ebuild:
+  Stable on x86.
+
+  05 Apr 2006; Scott Stoddard <deltacow@gentoo.org> cpufrequtils-001.ebuild:
+  Multilib fix to ensure correct library install path.
+
+*cpufrequtils-001 (26 Mar 2006)
+
+  26 Mar 2006; Henrik Brix Andersen <brix@gentoo.org>
+  +files/cpufrequtils-001-conf.d, +files/cpufrequtils-001-init.d,
+  +cpufrequtils-001.ebuild:
+  Version bump.
+
+  13 Feb 2006; Henrik Brix Andersen <brix@gentoo.org>
+  -files/cpufrequtils-0.3-conf.d, -files/cpufrequtils-0.3-init.d,
+  -cpufrequtils-0.3-r1.ebuild:
+  Pruned old ebuild.
+
+  24 Jan 2006; Patrick McLean <chutzpah@gentoo.org> cpufrequtils-0.4.ebuild:
+  Stable on amd64; bug #119926.
+
+  23 Jan 2006; Joshua Jackson <tsunam@gentoo.org> cpufrequtils-0.4.ebuild:
+  Stable on x86; bug #119926
+
+  23 Jan 2006; Joseph Jezak <josejx@gentoo.org> cpufrequtils-0.4.ebuild:
+  Marked ppc stable for bug #119926.
+
+  02 Jan 2006; Michael Hanselmann <hansmi@gentoo.org>
+  cpufrequtils-0.3-r1.ebuild:
+  Stable on ppc.
+
+*cpufrequtils-0.4 (18 Dec 2005)
+
+  18 Dec 2005; Henrik Brix Andersen <brix@gentoo.org>
+  +files/cpufrequtils-0.4-conf.d, +files/cpufrequtils-0.4-init.d,
+  +cpufrequtils-0.4.ebuild:
+  Version bump.
+
+  21 Nov 2005; Henrik Brix Andersen <brix@gentoo.org>
+  cpufrequtils-0.3-r1.ebuild:
+  Use mirror://kernel/
+
+  28 Aug 2005; Marcus D. Hanwell <cryos@gentoo.org>
+  cpufrequtils-0.3-r1.ebuild:
+  Stable on amd64.
+
+  20 Aug 2005; Jason Wever <weeve@gentoo.org> cpufrequtils-0.3-r1.ebuild:
+  Added ~sparc keyword.
+
+  25 Jun 2005; <brix@gentoo.org> -cpufrequtils-0.2.ebuild,
+  -cpufrequtils-0.3.ebuild:
+  Pruned old ebuilds
+
+  09 Jun 2005; <brix@gentoo.org> cpufrequtils-0.3-r1.ebuild:
+  Stable on x86.
+
+*cpufrequtils-0.3-r1 (16 May 2005)
+
+  16 May 2005; <brix@gentoo.org> +files/cpufrequtils-0.3-conf.d,
+  +files/cpufrequtils-0.3-init.d, +cpufrequtils-0.3-r1.ebuild:
+  Added init script for setting governor at boot time as per bug #92241,
+  thanks to Mark Rosenstand.
+
+*cpufrequtils-0.3 (08 May 2005)
+
+  08 May 2005; <brix@gentoo.org> +cpufrequtils-0.3.ebuild:
+  Version bump.
+
+  09 Apr 2005; Danny van Dyk <kugelfang@gentoo.org> cpufrequtils-0.2.ebuild:
+  Marked ~amd64.
+
+  07 Apr 2005; <brix@gentoo.org> cpufrequtils-0.2.ebuild:
+  Stable on x86.
+
+  01 Apr 2005; Joseph Jezak <josejx@gentoo.org> cpufrequtils-0.2.ebuild:
+  Marked ~ppc for bug #87487.
+
+*cpufrequtils-0.2 (14 Mar 2005)
+
+  14 Mar 2005; Ciaran McCreesh <ciaranm@gentoo.org> +metadata.xml,
+  +cpufrequtils-0.2.ebuild:
+  Moved from sys-apps/cpufrequtils to sys-power/cpufrequtils.
+
+  12 Mar 2005; Henrik Brix Andersen <brix@gentoo.org>
+  -cpufrequtils-0.1.ebuild, -cpufrequtils-0.2_pre1.ebuild:
+  Pruned old versions.
+
+*cpufrequtils-0.2 (28 Feb 2005)
+
+  28 Feb 2005; Henrik Brix Andersen <brix@gentoo.org>
+  +cpufrequtils-0.2.ebuild:
+  Version bump.
+
+*cpufrequtils-0.2_pre1 (22 Jan 2005)
+
+  22 Jan 2005; Henrik Brix Andersen <brix@gentoo.org> +metadata.xml,
+  +cpufrequtils-0.1.ebuild, +cpufrequtils-0.2_pre1.ebuild:
+  Initial commit. Thank you to all who commented on bug #69320.

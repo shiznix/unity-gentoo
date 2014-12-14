@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python{3_2,3_3} )
+PYTHON_COMPAT=( python{3_3,3_4} )
 DISTUTILS_SINGLE_IMPL=1
 
 inherit distutils-r1 eutils ubuntu-versionator
@@ -20,7 +20,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
-IUSE+=" python_single_target_python3_2 +python_single_target_python3_3"
+IUSE+=" +python_single_target_python3_3 python_single_target_python3_4"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]

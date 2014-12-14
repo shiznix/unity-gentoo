@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{3_2,3_3} )
+PYTHON_COMPAT=( python{3_3,3_4} )
 
 inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 
@@ -49,7 +49,6 @@ DEPEND="${RDEPEND}
 	x11-misc/notify-osd
 	${PYTHON_DEPS}"
 
-#S="${WORKDIR}/${PN}-trusty"
 S="${WORKDIR}/utt"
 
 src_prepare() {
@@ -62,9 +61,6 @@ src_prepare() {
 	# Include /usr/share/cursors/xorg-x11/ in the paths to check for cursor themes as Gentoo #
 	#  installs cursor themes in both /usr/share/cursors/xorg-x11/ and /usr/share/icons/ #
 	epatch -p1 "${FILESDIR}/xorg-cursor-themes-path.diff"
-
-	# Patch LP# 1281467 - GLib-GIO-ERROR **: Settings schema 'org.compiz.scale' does not contain a key named 'show-desktop' #
-#	epatch -p1 "${FILESDIR}/show-desktop_compiz.scale-schema.diff"
 }
 
 src_compile() {

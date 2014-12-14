@@ -107,7 +107,7 @@ src_prepare() {
 
 	# Disable gconftool-2 from being used (need to differentiate here so gsettings schemas will still be installed) #
 	sed -e 's:COMPIZ_DISABLE_SCHEMAS_INSTALL:COMPIZ_DISABLE_GCONF_SCHEMAS_INSTALL:g' \
-		-i cmake/{CompizGconf,/plugin_extensions/CompizGenGconf}.cmake || die
+		-i cmake/{CompizGconf,plugin_extensions/CompizGenGconf}.cmake || die
 }
 
 src_configure() {
@@ -232,8 +232,6 @@ src_install() {
 		--source="${ED}usr/share/gconf/defaults" \
 			--destination="${ED}etc/gconf/gconf.xml.unity" || die
 }
-
-
 
 pkg_preinst() {
         gnome2_gconf_savelist
