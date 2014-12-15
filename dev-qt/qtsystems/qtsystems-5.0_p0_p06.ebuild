@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

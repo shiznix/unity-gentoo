@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}+dfsg.orig.tar.xz
 	${UURL}/${QT5_MODULE}-opensource-src_${PV}+dfsg-${UVER}.debian.tar.xz"
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 # FIXME: tons of automagic deps
 IUSE="libxml2 multimedia opengl qml udev webp widgets xslt"

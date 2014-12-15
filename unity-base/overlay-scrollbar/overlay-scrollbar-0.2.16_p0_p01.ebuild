@@ -7,8 +7,8 @@ EAPI=4
 inherit autotools base eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+r359+14.04.20131129"
+URELEASE="utopic"
+UVER_PREFIX="+r359+14.10.20140625"
 
 DESCRIPTION="Ayatana Scrollbars use an overlay to ensure scrollbars take up no active screen real-estate"
 HOMEPAGE="http://launchpad.net/ayatana-scrollbar"

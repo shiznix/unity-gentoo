@@ -7,8 +7,8 @@ EAPI=4
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/w/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+13.10.20130920.1"
+URELEASE="utopic"
+UVER_PREFIX="+14.10.20140701"
 
 DESCRIPTION="WebApps: Websites integration Firefox plug-in for Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-greasemonkey"

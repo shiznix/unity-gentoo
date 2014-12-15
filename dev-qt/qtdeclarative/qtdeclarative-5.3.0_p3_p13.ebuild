@@ -13,7 +13,7 @@ DESCRIPTION="The Qt toolkit is a comprehensive C++ application development frame
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}.orig.tar.xz
         ${UURL}/${QT5_MODULE}-opensource-src_${PV}-${UVER}.debian.tar.xz"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+localstorage +widgets +xml"
 
 DEPEND="

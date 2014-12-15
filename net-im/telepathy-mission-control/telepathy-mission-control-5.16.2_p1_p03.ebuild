@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${PN}-5_${PV}.orig.tar.gz
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~arm-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~arm-linux ~x86-linux"
 IUSE="connman debug gnome-keyring networkmanager +upower" # test
 REQUIRED_USE="?? ( connman networkmanager )"
 

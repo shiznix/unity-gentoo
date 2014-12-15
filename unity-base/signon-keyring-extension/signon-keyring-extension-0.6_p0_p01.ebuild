@@ -7,8 +7,8 @@ EAPI=4
 inherit base qt4-r2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+14.04.20140307"
+URELEASE="utopic"
+UVER_PREFIX="+14.10.20140513"
 
 DESCRIPTION="GNOME keyring extension for signond used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-keyring-extension"
@@ -34,7 +34,7 @@ src_prepare() {
 
 	# Let portage strip files #
 	sed -e 's:CONFIG         +=:CONFIG += nostrip:g' -i "${S}/common-project-config.pri" || die
-	
+
 	# fix 'QA Notice: The following files contain insecure RUNPATHs'
 	sed -e 's:QMAKE_RPATHDIR:\#QMAKE_RPATHDIR:g' -i "${S}/tests/tests.pro" || die
 }

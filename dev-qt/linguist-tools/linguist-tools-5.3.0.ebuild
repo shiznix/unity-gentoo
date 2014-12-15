@@ -13,7 +13,7 @@ DESCRIPTION="Tools for working with Qt translation data files"
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	#KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~amd64 ~x86"
 :
 fi
 

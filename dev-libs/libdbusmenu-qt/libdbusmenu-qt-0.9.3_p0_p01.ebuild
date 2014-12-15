@@ -8,8 +8,8 @@ QT_DEPEND="4.6.3"
 inherit cmake-utils virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+14.04.20140314"
+URELEASE="utopic"
+UVER_PREFIX="+14.10.20140619"
 
 DESCRIPTION="A library providing Qt implementation of DBusMenu specification"
 HOMEPAGE="https://launchpad.net/libdbusmenu-qt/"

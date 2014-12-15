@@ -6,7 +6,7 @@ EAPI=4
 
 inherit eutils gnome2-utils ubuntu-versionator
 
-URELEASE="trusty"
+URELEASE="utopic"
 UVER_PREFIX="+14.04.20140130.3"
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors are too unpredictable #
 
@@ -38,11 +38,11 @@ setvar cnn-news			2.4.16+13.10.20130924.2	0ubuntu1
 setvar deezer			2.4.16+13.10.20130924.2	0ubuntu1
 setvar deviantart		2.4.16+13.10.20130926.1	0ubuntu1
 setvar facebookmessenger	2.4.16+14.04.20140217	0ubuntu1
-setvar gmail			2.4.16+14.04.20140409	0ubuntu1
-setvar googlecalendar		2.4.16+14.04.20140409	0ubuntu1
-setvar googledocs		2.4.16+14.04.20140411	0ubuntu1
+setvar gmail			2.4.16+14.10.20140623	0ubuntu1
+setvar googlecalendar		2.4.16+14.10.20140623	0ubuntu1
+setvar googledocs		2.4.16+14.10.20140623	0ubuntu1
 setvar googlenews		2.4.16+13.10.20130924.2	0ubuntu1
-setvar googleplus		2.4.17+14.04.20140409	0ubuntu1
+setvar googleplus		2.4.17+14.10.20140623	0ubuntu1
 setvar googleplusgames		2.4.16+13.10.20130924.2	0ubuntu1
 setvar grooveshark		2.4.16+13.10.20130924.2	0ubuntu1
 setvar hulu-player		2.4.16+13.10.20130924.2	0ubuntu1	# Corrupt tarball authored by upstream
@@ -54,7 +54,6 @@ setvar livemail			2.4.16+13.10.20130924.2	0ubuntu1
 setvar mail-ru			2.4.16+13.10.20130924.2	0ubuntu1
 setvar newsblur			2.4.16+13.10.20130924.2	0ubuntu1
 setvar pandora			2.4.16+13.10.20130924.2	0ubuntu1
-setvar pandora-com		2.2ubuntu1
 ##setvar qml
 setvar qq-mail			2.4.16+13.10.20130924.2	0ubuntu1
 setvar reddit			2.4.16+13.10.20130924.2	0ubuntu1

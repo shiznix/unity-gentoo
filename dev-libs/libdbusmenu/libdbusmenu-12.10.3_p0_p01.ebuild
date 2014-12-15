@@ -10,8 +10,8 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
-URELEASE="trusty-updates"
-UVER_PREFIX="+14.04.20140612"
+URELEASE="utopic"
+UVER_PREFIX="+14.10.20140610"
 
 DESCRIPTION="Library to pass menu structure across DBus"
 HOMEPAGE="https://launchpad.net/dbusmenu"

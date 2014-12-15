@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 
 LICENSE="BSD"
 SLOT="0"
-#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~amd64-linux ~x86-fbsd ~x86-linux ~ppc-macos"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~amd64-linux ~x86-fbsd ~x86-linux ~ppc-macos"
 IUSE="examples static-libs"
 RESTRICT="mirror"
 

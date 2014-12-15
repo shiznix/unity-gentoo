@@ -13,7 +13,7 @@ SRC_URI="http://googlemock.googlecode.com/files/${P}.zip"
 
 LICENSE="BSD"
 SLOT="0"
-#KEYWORDS="amd64 arm ~mips ppc ~ppc64 x86"
+KEYWORDS="amd64 arm ~mips ppc ~ppc64 x86"
 IUSE="static-libs"
 
 RDEPEND="=dev-cpp/gtest-${PV}*"

@@ -35,9 +35,9 @@ export VALA_MAX_API_VERSION=${VALA_MAX_API_VERSION:=0.20}
 export VALA_USE_DEPEND="vapigen"
 #---------------------------------------------------------------------------------------------------------------------------------#
 
-
 [[ "${URELEASE}" == *trusty* ]] && UVER_RELEASE="14.04"
 [[ "${URELEASE}" == *utopic* ]] && UVER_RELEASE="14.10"
+[[ "${URELEASE}" == *vivid* ]] && UVER_RELEASE="15.04"
 
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
