@@ -43,7 +43,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="utopic utopic-updates vivid vivid-updates"
+RELEASES="utopic utopic-security utopic-updates vivid vivid-security vivid-updates"
 SOURCES="main universe"
 
 sources_download() {
