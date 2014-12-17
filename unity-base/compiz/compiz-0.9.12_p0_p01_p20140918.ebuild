@@ -41,7 +41,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/glew
 	media-libs/libpng:0=
-	media-libs/mesa[gallium,llvm,${PYTHON_USEDEP}]
+	media-libs/mesa[gallium,llvm]
 	x11-base/xorg-server[dmx]
 	>=x11-libs/cairo-1.0
 	x11-libs/gtk+:3
@@ -236,17 +236,17 @@ src_install() {
 }
 
 pkg_preinst() {
-        gnome2_gconf_savelist
+	gnome2_gconf_savelist
 	gnome2_schemas_savelist
-        gnome2_icon_savelist
+	gnome2_icon_savelist
 }
 
 pkg_postinst() {
-        gnome2_gconf_install
-        gnome2_schemas_update
-        gnome2_icon_cache_update
+	gnome2_gconf_install
+	gnome2_schemas_update
+	gnome2_icon_cache_update
 }
 
 pkg_postrm() {
-        gnome2_schemas_update
+	gnome2_schemas_update
 }
