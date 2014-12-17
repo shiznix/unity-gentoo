@@ -3,9 +3,9 @@
 # $Header: $
 
 EAPI="5"
-PYTHON_DEPEND="2"
+PYTHON_COMPAT=( python2_7 )
 
-inherit eutils python autotools-multilib ubuntu-versionator
+inherit eutils python-single-r1 autotools-multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 URELEASE="utopic"
@@ -34,8 +34,7 @@ AUTOTOOLS_AUTORECONF="1"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
-	python_pkg_setup
-	python_set_active_version 2
+	python-single-r1_pkg_setup
 }
 
 src_prepare() {
@@ -48,9 +47,7 @@ src_prepare() {
 		-e '/^install-(data|exec)-local:/s|^.*$|&\ndisabled-&|' \
 		Makefile.am || die
 	autotools-multilib_src_prepare
-
-	python_convert_shebangs -r 2 .
-
+	python_fix_shebang .
 	multilib_copy_sources
 }
 

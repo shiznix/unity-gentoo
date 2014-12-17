@@ -24,7 +24,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-cpp/sparsehash
 	dev-libs/boost[${PYTHON_USEDEP}]
-	>=dev-libs/icu-52
+	>=dev-libs/icu-52:=
 	${PYTHON_DEPS}"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

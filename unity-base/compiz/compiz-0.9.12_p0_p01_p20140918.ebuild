@@ -4,9 +4,10 @@
 
 EAPI=5
 GCONF_DEBUG="no"
+PYTHON_COMPAT=( python2_7 )
 
 URELEASE="utopic"
-inherit base gnome2 cmake-utils eutils python ubuntu-versionator xdummy
+inherit base gnome2 cmake-utils eutils python-single-r1 ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -28,19 +29,19 @@ COMMONDEPEND="!!x11-wm/compiz
 	!!x11-libs/compiz-bcop
 	!!x11-libs/libcompizconfig
 	!!x11-plugins/compiz-plugins-main
-	dev-libs/boost:=
-	dev-libs/glib:2
+	dev-libs/boost:=[${PYTHON_USEDEP}]
+	dev-libs/glib:2[${PYTHON_USEDEP}]
 	dev-cpp/glibmm
-	dev-libs/libxml2
-	dev-libs/libxslt
-	dev-libs/protobuf
-	dev-python/pyrex
-	gnome-base/gconf
+	dev-libs/libxml2[${PYTHON_USEDEP}]
+	dev-libs/libxslt[${PYTHON_USEDEP}]
+	dev-libs/protobuf[${PYTHON_USEDEP}]
+	dev-python/pyrex[${PYTHON_USEDEP}]
+	gnome-base/gconf[${PYTHON_USEDEP}]
 	>=gnome-base/gsettings-desktop-schemas-3.8
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/glew
 	media-libs/libpng:0=
-	media-libs/mesa[gallium,llvm]
+	media-libs/mesa[gallium,llvm,${PYTHON_USEDEP}]
 	x11-base/xorg-server[dmx]
 	>=x11-libs/cairo-1.0
 	x11-libs/gtk+:3
@@ -62,7 +63,8 @@ COMMONDEPEND="!!x11-wm/compiz
 	kde? ( >=kde-base/kwin-4.11.1 )
 	test? ( dev-cpp/gtest
 		dev-cpp/gmock
-		sys-apps/xorg-gtest )"
+		sys-apps/xorg-gtest )
+	${PYTHON_DEPS}"
 
 # <sys-devel/gettext-0.19 needed until compiz supports missing 'Language' header in *.po files for 'msgfmt' #
 DEPEND="${COMMONDEPEND}
@@ -78,7 +80,7 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/xvinfo"
 
 pkg_setup() {
-	python_set_active_version 2
+	python-single-r1_pkg_setup
 }
 
 src_prepare() {

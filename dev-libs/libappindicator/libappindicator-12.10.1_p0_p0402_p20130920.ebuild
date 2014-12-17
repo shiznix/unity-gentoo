@@ -3,15 +3,16 @@
 # $Header: $
 
 EAPI=5
+PYTHON_COMPAT=( python2_7 )
 
-inherit autotools eutils python ubuntu-versionator vala
+URELEASE="utopic-updates"
+inherit autotools eutils python-single-r1 ubuntu-versionator vala
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/liba/${PN}"
-URELEASE="trusty"
-UVER_PREFIX="+13.10.20130920"
+UVER_PREFIX="+13.10.${PVR_MICRO}"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libappindicator"
@@ -32,20 +33,21 @@ DEPEND="${RDEPEND}
 	dev-libs/glib:2
 	dev-libs/xapian-bindings[python]
 	dev-perl/XML-LibXML
-	dev-python/dbus-python
-	dev-python/pygobject:2
-	dev-python/pygtk
-	dev-python/pyxdg
+	dev-python/dbus-python[${PYTHON_USEDEP}]
+	dev-python/pygobject:2[${PYTHON_USEDEP}]
+	dev-python/pygtk[${PYTHON_USEDEP}]
+	dev-python/pyxdg[${PYTHON_USEDEP}]
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
-	$(vala_depend)"
+	$(vala_depend)
+	${PYTHON_DEPS}"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
-	python_pkg_setup
+	python-single-r1_pkg_setup
 }
 
 src_prepare () {
@@ -69,17 +71,16 @@ src_configure() {
 	# Build GTK2 support #
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
-		PYTHON="$(PYTHON -2)" ../configure --prefix=/usr \
+		PYTHON="${EPYTHON}" ../configure --prefix=/usr \
 			--disable-static \
 			--with-gtk=2 \
 			$(use_enable test tests ) \
 			$(use_enable test mono-test ) || die
 	popd
-
 	# Build GTK3 support #
 	[[ -d build-gtk3 ]] || mkdir build-gtk3
 	pushd build-gtk3
-		PYTHON="$(PYTHON -2)" ../configure --prefix=/usr \
+		PYTHON="${EPYTHON}" ../configure --prefix=/usr \
 			--disable-static \
 			--with-gtk=3 \
 			$(use_enable test tests ) \
