@@ -38,7 +38,7 @@ MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="utopic-updates"
+URELEASE="utopic-security"
 UVER_PREFIX="+build2"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 

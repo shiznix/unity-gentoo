@@ -6,7 +6,7 @@ EAPI=5
 
 inherit autotools eutils ubuntu-versionator vala
 
-URELEASE="trusty"
+URELEASE="utopic"
 UVER_PREFIX="+14.04.20131029.1"
 UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
 

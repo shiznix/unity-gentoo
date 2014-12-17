@@ -26,6 +26,13 @@ case ":$PATH:" in
     ;;
 esac
 
+if [[ ${EUID} == 0 && -O ${XDG_CONFIG_HOME:-${HOME}} ]]; then
+	# Running as root with HOME owned by root.
+	# Pass --user-data-dir to work around upstream failsafe.
+	CHROMIUM_FLAGS="--user-data-dir=${XDG_CONFIG_HOME:-${HOME}/.config}/chromium
+		${CHROMIUM_FLAGS}"
+fi
+
 # Set the .desktop file name
 export CHROME_DESKTOP="chromium-browser-chromium.desktop"
 

@@ -9,7 +9,7 @@ DISTUTILS_SINGLE_IMPL=1
 inherit gnome2-utils distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 
 DESCRIPTION="Simple on-screen Keyboard with macros and easy layout creation"
 HOMEPAGE="https://launchpad.net/onboard"

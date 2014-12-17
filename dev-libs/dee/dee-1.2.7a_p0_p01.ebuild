@@ -12,7 +12,7 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 UVER_PREFIX="+14.04.20140324"
 
 DESCRIPTION="Provide objects allowing to create Model-View-Controller type programs across DBus"

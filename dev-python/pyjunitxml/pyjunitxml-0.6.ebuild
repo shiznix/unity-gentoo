@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{2_7,3_3} )
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 UVER="1.1build1"
 
 DESCRIPTION="PyUnit extension for reporting in JUnit compatible XML"

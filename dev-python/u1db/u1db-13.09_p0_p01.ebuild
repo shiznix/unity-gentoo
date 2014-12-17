@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 
 DESCRIPTION="U1DB is a database API for synchronised databases of JSON documents"
 HOMEPAGE="https://launchpad.net/u1db"

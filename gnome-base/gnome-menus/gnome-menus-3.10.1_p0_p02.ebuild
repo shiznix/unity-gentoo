@@ -11,7 +11,7 @@ MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 MY_P="${MY_P/menus-/menus_}"
 
 DESCRIPTION="The GNOME menu system, implementing the F.D.O cross-desktop spec, patched for the Unity desktop"

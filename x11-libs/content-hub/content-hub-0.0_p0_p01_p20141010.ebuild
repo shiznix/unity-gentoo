@@ -28,6 +28,7 @@ DEPEND="dev-libs/glib
 	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
 	dev-qt/qttest:5
+	dev-qt/qdoc:5
 	dev-util/dbus-test-runner
 	dev-util/lcov
 	sys-libs/libnih[dbus]

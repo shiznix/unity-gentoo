@@ -5,7 +5,7 @@
 EAPI=4
 inherit gnome2-utils ubuntu-versionator
 
-URELEASE="trusty"
+URELEASE="utopic"
 UVER=
 
 DESCRIPTION="A nice and well polished icon theme"

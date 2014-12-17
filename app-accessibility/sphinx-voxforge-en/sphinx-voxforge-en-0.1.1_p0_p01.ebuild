@@ -8,7 +8,7 @@ GCONF_DEBUG="yes"
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 UVER_PREFIX="~daily20130301"
 
 DESCRIPTION="English sphinx language and acoustic models built from Voxforge audio corpus"

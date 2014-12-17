@@ -6,8 +6,8 @@ EAPI="4"
 
 inherit eutils ubuntu-versionator
 
-URELEASE="trusty"
-UVER="1.1"
+URELEASE="utopic"
+UVER="1.2"
 
 DESCRIPTION="A VNC server for real X displays"
 HOMEPAGE="http://www.karlrunge.com/x11vnc/"

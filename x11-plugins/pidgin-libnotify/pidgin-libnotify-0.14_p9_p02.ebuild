@@ -7,7 +7,7 @@ EAPI=5
 inherit autotools base eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/p/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 
 DESCRIPTION="pidgin-libnotify provides popups for pidgin via a libnotify interface"
 HOMEPAGE="http://gaim-libnotify.sourceforge.net/"

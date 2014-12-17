@@ -10,7 +10,7 @@ PYTHON_COMPAT=( python{3_3,3_4} )
 inherit ubuntu-versionator distutils-r1
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 UVER=
 
 DESCRIPTION="Retrieve the list of remote desktop servers for a user."

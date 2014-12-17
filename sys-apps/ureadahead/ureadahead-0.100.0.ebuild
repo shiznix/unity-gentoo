@@ -6,7 +6,7 @@ EAPI=5
 inherit autotools eutils linux-info systemd ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 UVER="16"
 
 DESCRIPTION="Ureadahead - Read files in advance during boot"
