@@ -7,7 +7,7 @@ EAPI=5
 PYTHON_COMPAT=( python{2_6,2_7} )
 
 inherit base autotools eutils multilib multilib-minimal flag-o-matic \
-	python-single-r1 toolchain-funcs ubuntu-versionator
+	python-any-r1 toolchain-funcs ubuntu-versionator
 
 OPENGL_DIR="xorg-x11"
 
