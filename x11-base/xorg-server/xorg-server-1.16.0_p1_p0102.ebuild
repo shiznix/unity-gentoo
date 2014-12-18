@@ -5,7 +5,7 @@
 EAPI=5
 
 XORG_DOC=doc
-inherit base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
+inherit autotools base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 UURL="mirror://ubuntu/pool/main/x/${PN}"
@@ -148,6 +148,7 @@ src_prepare() {
 		PATCHES+=( "${S}/debian/patches/xmir.patch" )
 		base_src_prepare
 	fi
+	eautoreconf
 }
 
 src_configure() {
