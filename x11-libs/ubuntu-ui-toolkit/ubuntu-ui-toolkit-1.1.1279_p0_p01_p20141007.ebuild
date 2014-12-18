@@ -38,7 +38,6 @@ DEPEND="${RDEPEND}
 	doc? ( dev-qt/qdoc:5 )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-#MAKEOPTS="${MAKEOPTS} -j1"
 QT5_BUILD_DIR="${S}"
 
 src_prepare() {
@@ -62,6 +61,7 @@ src_test() {
 src_install() {
 	# 'make install' needs to be run in a virtual Xserver so that qmlplugindump's #
 	#	qmltypes generation can successfully spawn dbus #
+	addpredict $XDG_RUNTIME_DIR/dconf
 	Xemake INSTALL_ROOT="${ED}" install
 
 	use examples || \
