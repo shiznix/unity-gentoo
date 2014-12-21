@@ -4,15 +4,15 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit cmake-utils ubuntu-versionator
 
 MY_PN="ubuntu-app-launch"
 MY_P="${MY_PN}_${PV}"
 UURL="mirror://ubuntu/pool/main/u/${MY_PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20141006"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
-DESCRIPTION="An Upstart Job that is used to launch applications in a controlled and predictable manner. This is a small project, but there are *a lot* of different parts from different people, so we need a place to collaborate."
+DESCRIPTION="Session init system job for launching applications, libraries only"
 HOMEPAGE="https://launchpad.net/ubuntu-app-launch"
 SRC_URI="${UURL}/${MY_PN}_${PV}${UVER_PREFIX}.orig.tar.gz"
 

@@ -4,11 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit base gnome2-utils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/f/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140506.1"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Friends instant messaging client for the Unity desktop"
 HOMEPAGE="https://launchpad.net/friends-app"

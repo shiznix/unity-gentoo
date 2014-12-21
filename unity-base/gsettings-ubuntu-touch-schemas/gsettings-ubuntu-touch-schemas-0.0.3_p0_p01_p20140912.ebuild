@@ -5,11 +5,11 @@
 EAPI="5"
 GCONF_DEBUG="no"
 
+URELEASE="utopic"
 inherit autotools gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140912"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="GSettings deskop-wide schemas for the Unity desktop"
 HOMEPAGE="https://launchpad.net/gsettings-ubuntu-touch-schemas"

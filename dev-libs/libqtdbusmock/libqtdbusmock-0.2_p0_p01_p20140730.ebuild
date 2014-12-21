@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
+URELEASE="utopic"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libq/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140730"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Qt Bindings for python-dbusmock"
 HOMEPAGE="https://launchpad.net/libqtdbustest"

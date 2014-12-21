@@ -4,11 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140716"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Qt/QML implementation of U1DB"
 HOMEPAGE="https://launchpad.net/u1db-qt"

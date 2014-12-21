@@ -6,11 +6,11 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="utopic"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140908"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Desktop service to integrate Telepathy with the messaging menu used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/telepathy-indicator"

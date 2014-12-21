@@ -4,14 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit base autotools eutils flag-o-matic ubuntu-versionator vala virtualx
 
-MY_P="${PN}_${PV}"
-S="${WORKDIR}/${PN}-${PV}"
-
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140610"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Library to pass menu structure across DBus"
 HOMEPAGE="https://launchpad.net/dbusmenu"
@@ -19,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="LGPL-3"
-SLOT="3/4.0.12"
+SLOT="3/4.0.12"	# Takes *.so version
 KEYWORDS="~amd64 ~x86"
 IUSE="debug gtk +introspection"	# We force 'gtk' and 'introspection', but keep these in IUSE for main portage tree ebuilds
 RESTRICT="mirror"

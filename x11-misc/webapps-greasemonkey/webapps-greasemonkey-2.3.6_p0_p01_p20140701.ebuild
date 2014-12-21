@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
+URELEASE="utopic"
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/w/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140701"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="WebApps: Websites integration Firefox plug-in for Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-greasemonkey"

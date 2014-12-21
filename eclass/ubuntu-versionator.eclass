@@ -52,36 +52,55 @@ OIFS="${IFS}"
 IFS=p; read -ra PVR_ARRAY <<< "${PVR}"
 IFS="${OIFS}"
 
+## Major version field ##
 PVR_PL_MAJOR="${PVR_ARRAY[1]}"
-PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"	# Major
+PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"
 
-PVR_PL="${PVR_ARRAY[2]}"
-PVR_PL="${PVR_PL%*_}"			# Minor
-PVR_PL="${PVR_PL%%-r*}"		# Strip revision strings
-
-PVR_MICRO="${PVR_ARRAY[3]}"
-PVR_MICRO="${PVR_MICRO%*_}"		# Micro
-PVR_MICRO="${PVR_MICRO%%-r*}"	# Strip revision strings
-
-char=2
-index=1
-strlength="${#PVR_PL}"
-while [ "${PVR_PL}" != "" ]; do
-	strtmp="${PVR_PL:0:$char}"
-	if [ "${strlength}" -ge 6 ]; then	# Don't strip zeros from 3rd number field, this is the Ubuntu OS release #
-		if [ "${index}" != 3 ]; then
+## Minor version field ##
+PVR_PL_MINOR="${PVR_ARRAY[2]}"
+PVR_PL_MINOR="${PVR_PL_MINOR%*_}"
+PVR_PL_MINOR="${PVR_PL_MINOR%%-r*}"	# Strip revision strings
+	char=2
+	index=1
+	strlength="${#PVR_PL_MINOR}"
+	while [ "${PVR_PL_MINOR}" != "" ]; do
+		strtmp="${PVR_PL_MINOR:0:$char}"
+		if [ "${strlength}" -ge 6 ]; then	# Don't strip zeros from 3rd number field, this is the Ubuntu OS release #
+			if [ "${index}" != 3 ]; then
+				strtmp="${strtmp#0}"
+			fi
+		else
 			strtmp="${strtmp#0}"
 		fi
-	else
-		strtmp="${strtmp#0}"
-	fi
-	strarray+=( "${strtmp}" )
-	PVR_PL="${PVR_PL:$char}"
-	((index++))
-done
+		strarray+=( "${strtmp}" )
+		PVR_PL_MINOR="${PVR_PL_MINOR:$char}"
+		((index++))
+	done
+PVR_PL_MINOR_tmp="${strarray[@]}"
+PVR_PL_MINOR="${PVR_PL_MINOR_tmp// /.}"
 
-PVR_PL_MINOR="${strarray[@]}"
-PVR_PL_MINOR="${PVR_PL_MINOR// /.}"
+## Micro version field ##
+PVR_PL_MICRO="${PVR_ARRAY[3]}"
+PVR_PL_MICRO="${PVR_PL_MICRO%*_}"
+PVR_PL_MICRO="${PVR_PL_MICRO%%-r*}"	# Strip revision strings
+	strarray=
+	char=2
+	index=1
+	strlength="${#PVR_PL_MICRO}"
+	while [ "${PVR_PL_MICRO}" != "" ]; do
+		strtmp="${PVR_PL_MICRO:0:$char}"
+		if [ "${strlength}" -ge 10 ]; then	# Last field can be a floating point so strip off leading zero and add decimal point #
+			if [ "${index}" = 5 ]; then
+				strtmp=".${strtmp#0}"
+			fi
+		fi
+		strarray+=( "${strtmp}" )
+		PVR_PL_MICRO="${PVR_PL_MICRO:$char}"
+		((index++))
+	done
+PVR_PL_MICRO_tmp="${strarray[@]}"
+PVR_MICRO="${PVR_PL_MICRO_tmp// /}"
+
 
 if [ "${PN}" = "ubuntu-sources" ]; then
 	UVER="${PVR_PL_MAJOR}.${PVR_PL_MINOR}"

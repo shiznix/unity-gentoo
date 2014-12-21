@@ -4,12 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit cmake-utils ubuntu-versionator
 
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140730"
-
 UURL="mirror://ubuntu/pool/main/p/${PN}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Simple convenience library for handling properties and signals in C++11"
 HOMEPAGE="https://launchpad.net/properties-cpp"

@@ -5,11 +5,11 @@
 EAPI=5
 VIRTUALX_REQUIRED="always"
 
+URELEASE="utopic"
 inherit qt5-build ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140807"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Qml bindings for GSettings."
 HOMEPAGE="https://launchpad.net/gsettings-qt"

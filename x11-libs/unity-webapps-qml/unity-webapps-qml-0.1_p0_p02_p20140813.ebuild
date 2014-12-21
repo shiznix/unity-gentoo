@@ -5,11 +5,11 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_6,2_7} )
 
+URELEASE="utopic"
 inherit python-any-r1 qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140813"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity Webapps QML component"
 HOMEPAGE="https://launchpad.net/unity-webapps-qml"

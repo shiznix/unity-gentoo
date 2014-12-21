@@ -7,7 +7,7 @@ EAPI=5
 inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="trusty"
+URELEASE="utopic"
 UVER_PREFIX="+13.10.20130920"
 
 DESCRIPTION="Video lens for the Unity desktop"

@@ -8,7 +8,7 @@ URELEASE="utopic"
 inherit qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
-UVER_PREFIX="+14.10.20140912.1"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Single Signon oauth2 plugin used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-plugin-oauth2"

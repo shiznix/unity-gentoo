@@ -8,8 +8,7 @@ URELEASE="utopic"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-#UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
-UVER_PREFIX="+${UVER_RELEASE}.20141010.1"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Compositor for Mir display server that switches graphics and input between running sessions"
 HOMEPAGE="https://launchpad.net/unity-system-compositor"

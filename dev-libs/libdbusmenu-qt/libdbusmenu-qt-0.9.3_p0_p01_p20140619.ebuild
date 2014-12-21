@@ -5,11 +5,11 @@
 EAPI=5
 QT_DEPEND="4.6.3"
 
+URELEASE="utopic"
 inherit cmake-utils virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140619"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="A library providing Qt implementation of DBusMenu specification"
 HOMEPAGE="https://launchpad.net/libdbusmenu-qt/"

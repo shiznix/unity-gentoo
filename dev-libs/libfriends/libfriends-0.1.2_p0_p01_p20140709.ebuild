@@ -4,11 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/libf/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140709"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="API for accessing social networks"
 HOMEPAGE="https://launchpad.net/friends"

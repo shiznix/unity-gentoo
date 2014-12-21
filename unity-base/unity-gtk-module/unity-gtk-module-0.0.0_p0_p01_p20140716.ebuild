@@ -5,11 +5,11 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
+URELEASE="utopic"
 inherit autotools eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140716"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="GTK+ module for exporting old-style menus as GMenuModels"
 HOMEPAGE="https://launchpad.net/unity-gtk-module"

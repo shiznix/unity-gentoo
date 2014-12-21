@@ -5,11 +5,11 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
+URELEASE="utopic"
 inherit autotools flag-o-matic python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/liba/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140901"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Library for single signon for the Unity desktop"
 HOMEPAGE="http://code.google.com/p/accounts-sso/"

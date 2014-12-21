@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
+URELEASE="utopic"
 inherit base qt4-r2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.10.20140513"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="GNOME keyring extension for signond used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-keyring-extension"

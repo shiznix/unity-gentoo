@@ -13,6 +13,7 @@ dev-libs/glib utils
 dev-libs/keybinder python
 dev-libs/libgdata gnome
 dev-libs/libpcre pcre16
+dev-libs/libpeas python_targets_python3_3 -python_targets_python3_4
 dev-libs/libxml2 icu
 dev-libs/libxslt python
 dev-libs/openssl -bindist
