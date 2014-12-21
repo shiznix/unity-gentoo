@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit autotools eutils ubuntu-versionator vala
+inherit autotools eutils ubuntu-versionator vala virtualx
 
 URELEASE="utopic"
 UVER_PREFIX="+14.04.20131029.1"
@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${PN}_${PV}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="test"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee:=
@@ -36,7 +36,14 @@ DEPEND="dev-libs/dee
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	epatch -p1 "${FILESDIR}/0002-productsearch.ubuntu.com-only-accepts-locale-string.patch"
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
+}
+
+src_configure() {
+	use test || \
+		local myconf="--enable-headless-tests=no"
+	econf "${myconf}"
 }
