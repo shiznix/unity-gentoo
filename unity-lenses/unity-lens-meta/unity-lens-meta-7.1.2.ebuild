@@ -18,7 +18,6 @@ DEPEND="applications? ( unity-lenses/unity-lens-applications )
 	friends? ( unity-lenses/unity-lens-friends )
 	music? ( unity-lenses/unity-lens-music )
 	photos? ( unity-lenses/unity-lens-photos )
-	radio? ( unity-extra/unity-lens-radios )
 	video? ( unity-lenses/unity-lens-video )
 	unity-scopes/smart-scopes
 	unity-scopes/unity-scope-home"

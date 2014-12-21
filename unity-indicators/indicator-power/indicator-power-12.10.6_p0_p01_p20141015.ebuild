@@ -46,10 +46,10 @@ src_prepare() {
 }
 
 src_install() {
+	cmake-utils_src_install
+
 	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
 	rm -rf "${ED}usr/share/upstart"
-
-	cmake-utils_src_install
 }
 
 pkg_preinst() {
