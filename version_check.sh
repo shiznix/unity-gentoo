@@ -215,6 +215,7 @@ version_check_other_releases() {
 uver() {
 	[[ "${URELEASE}" == *trusty* ]] && UVER_RELEASE="14.04"
 	[[ "${URELEASE}" == *utopic* ]] && UVER_RELEASE="14.10"
+	[[ "${URELEASE}" == *vivid* ]] && UVER_RELEASE="15.04"
 	PVR=`echo "${packbasename}" | sed -e 's/.*-\([0-9]\)/\1/' -e 's:-r[0-9].*$::g'`
 	PVR="_${PVR#*_}"
 
@@ -224,20 +225,18 @@ uver() {
 	IFS=p; read -ra PVR_ARRAY <<< "${PVR}"
 	IFS=${OIFS}
 
+	## Major version field ##
 	PVR_PL_MAJOR="${PVR_ARRAY[1]}"
-	PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"	# Major
+	PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"
 
-	PVR_PL="${PVR_ARRAY[2]}"
-	PVR_PL="${PVR_PL%*_}"			# Minor
-
-	PVR_MICRO="${PVR_ARRAY[3]}"
-	PVR_MICRO="${PVR_MICRO%*_}"		# Micro
-
+	## Minor version field ##
+	PVR_PL_MINOR="${PVR_ARRAY[2]}"
+	PVR_PL_MINOR="${PVR_PL_MINOR%*_}"
 	char=2
 	index=1
-	strlength="${#PVR_PL}"
-	while [ "${PVR_PL}" != "" ]; do
-		strtmp="${PVR_PL:0:$char}"
+	strlength="${#PVR_PL_MINOR}"
+	while [ "${PVR_PL_MINOR}" != "" ]; do
+		strtmp="${PVR_PL_MINOR:0:$char}"
 		if [ "${strlength}" -ge 6 ]; then       # Don't strip zeros from 3rd number field, this is the Ubuntu OS release #
 			if [ "${index}" != 3 ]; then
 				strtmp="${strtmp#0}"
@@ -246,17 +245,42 @@ uver() {
 			strtmp="${strtmp#0}"
 		fi
 		strarray+=( "${strtmp}" )
-		PVR_PL="${PVR_PL:$char}"
+		PVR_PL_MINOR="${PVR_PL_MINOR:$char}"
 		((index++))
 	done
-	PVR_PL_MINOR="${strarray[@]}"
-	PVR_PL_MINOR="${PVR_PL_MINOR// /.}"	# Convert spaces in array to decimal points
+	PVR_PL_MINOR_tmp="${strarray[@]}"
+	PVR_PL_MINOR="${PVR_PL_MINOR_tmp// /.}"
+
+	## Micro version field ##
+	PVR_PL_MICRO="${PVR_ARRAY[3]}"
+	PVR_PL_MICRO="${PVR_PL_MICRO%*_}"
+	if [ -n "${PVR_PL_MICRO}" ]; then
+		[[ -n "${strarray[@]}" ]] && unset strarray[@]
+		char=2
+		index=1
+		strlength="${#PVR_PL_MICRO}"
+		while [ "${PVR_PL_MICRO}" != "" ]; do
+			strtmp="${PVR_PL_MICRO:0:$char}"
+			if [ "${strlength}" -ge 10 ]; then      # Last field can be a floating point so strip off leading zero and add decimal point #
+				if [ "${index}" = 5 ]; then
+					strtmp=".${strtmp#0}"
+				fi
+			fi
+			strarray+=( "${strtmp}" )
+			PVR_PL_MICRO="${PVR_PL_MICRO:$char}"
+			((index++))
+		done
+		PVR_PL_MICRO_tmp="${strarray[@]}"
+		PVR_MICRO="${PVR_PL_MICRO_tmp// /}"	# Value gets sourced later from UVER variable in .ebuild #
+	fi
+
+
 	if [ "${packname}" = "linux" ]; then
 		UVER="${PVR_PL_MAJOR}.${PVR_PL_MINOR}"
 	else
 		UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 	fi
-	unset strarray[@]
+	[[ -n "${strarray[@]}" ]] && unset strarray[@]
 }
 
 while (( "$#" )); do
