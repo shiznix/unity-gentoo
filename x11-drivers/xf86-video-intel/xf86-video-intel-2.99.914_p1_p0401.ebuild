@@ -11,7 +11,8 @@ MY_PV="${PV}"
 MY_PN="xserver-xorg-video-intel"
 URELEASE="utopic-updates"
 UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
-UVER_PREFIX="1~exp"
+#UVER_PREFIX="1~exp"
+UVER="1~exp${UVER}"
 
 DESCRIPTION="X.Org driver for Intel cards"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz

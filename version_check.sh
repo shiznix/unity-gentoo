@@ -2,7 +2,8 @@
 
 ## Script to compare upstream versions of packages with versions in overlay tree ##
 # If run without any arguments it recurses through the overlay tree and compares versions for all packages #
-# Or can be run on individual packages as 'version_check.sh category/package-version.ebuild' #
+# Can be run on individual packages as 'version_check.sh category/package/package-version.ebuild' #
+# Or 'cd category/package && ../../version_check.sh' #
 
 local_to_upstream_packnames() {
 	## Overlay package names to upstream package names mapping ##
@@ -76,9 +77,7 @@ version_check() {
 local_version_check() {
 	packbasename_saved="${packbasename}"    # Save off $packbasename for when uver() loops #
 	. "${pack}" &> /dev/null
-		if [ -z "${UVER}" ]; then
-			uver
-		fi
+		uver
 	. "${pack}" &> /dev/null
 	if [ -n "${URELEASE}" ]; then
 		if [ -n "${UVER}" ]; then

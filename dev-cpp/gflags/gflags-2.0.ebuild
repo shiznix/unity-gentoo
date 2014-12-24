@@ -2,7 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI=5
+
+URELEASE="utopic"
+inherit ubuntu-versionator
+
+UVER="2.1"
 
 DESCRIPTION="Google's C++ argument parsing library"
 HOMEPAGE="http://code.google.com/p/gflags/"

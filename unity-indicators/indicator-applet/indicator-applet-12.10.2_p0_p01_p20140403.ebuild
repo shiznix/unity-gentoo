@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
+URELEASE="utopic"
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/i/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.04.20140403"
+UVER_PREFIX="+14.04.${PVR_MICRO}"
 
 DESCRIPTION="Gnome panel indicator for the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-applet"

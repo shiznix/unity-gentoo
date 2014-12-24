@@ -8,9 +8,6 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="utopic-updates"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala
 
-MY_P="${PN}_${PV}"
-S="${WORKDIR}/${PN}-${PV}"
-
 UURL="mirror://ubuntu/pool/main/liba/${PN}"
 UVER_PREFIX="+13.10.${PVR_MICRO}"
 

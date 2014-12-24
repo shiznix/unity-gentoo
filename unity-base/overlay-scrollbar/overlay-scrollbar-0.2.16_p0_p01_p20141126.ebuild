@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
+URELEASE="vivid"
 inherit autotools base eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+r359+14.10.20140625"
+UVER_PREFIX="+r359+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Ayatana Scrollbars use an overlay to ensure scrollbars take up no active screen real-estate"
 HOMEPAGE="http://launchpad.net/ayatana-scrollbar"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

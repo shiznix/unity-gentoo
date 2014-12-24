@@ -1,20 +1,28 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnome-base/gnome-control-center/gnome-control-center-3.10.3.ebuild,v 1.7 2014/06/01 07:59:51 pacho Exp $
+# $Header: $
 
-EAPI="5"
+EAPI=5
 GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes" # gmodule is used, which uses dlopen
 
-inherit autotools bash-completion-r1 eutils gnome2
+URELEASE="vivid"
+inherit autotools base bash-completion-r1 eutils gnome2 ubuntu-versionator vala
 
-DESCRIPTION="GNOME's main interface to configure various aspects of the desktop"
-HOMEPAGE="https://git.gnome.org/browse/gnome-control-center/"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
+
+DESCRIPTION="GNOME Desktop Configuration Tool patched for the Unity desktop"
+HOMEPAGE="http://www.gnome.org/"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+"
 SLOT="2"
 IUSE="+bluetooth +colord +cups +gnome-online-accounts +i18n input_devices_wacom kerberos +socialweb v4l"
-KEYWORDS="~alpha amd64 ~arm ~ia64 ~ppc ~ppc64 ~sh ~sparc x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
+#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
+RESTRICT="mirror"
+
+S="${WORKDIR}/${PN}-${PV}"
 
 # False positives caused by nested configure scripts
 QA_CONFIGURE_OPTIONS=".*"
@@ -28,23 +36,28 @@ QA_CONFIGURE_OPTIONS=".*"
 #        networkmanager is not optional
 
 COMMON_DEPEND="
-	>=dev-libs/glib-2.37.2:2
+	>=dev-libs/glib-2.39.91:2
 	>=x11-libs/gdk-pixbuf-2.23.0:2
-	>=x11-libs/gtk+-3.9.12:3
+	>=x11-libs/gtk+-3.11.1:3
 	>=gnome-base/gsettings-desktop-schemas-3.9.91
-	>=gnome-base/gnome-desktop-3.9.90:3=
+	>=gnome-base/gnome-desktop-3.11.3:3=
 	>=gnome-base/gnome-settings-daemon-3.8.3[colord?,policykit]
+	>=gnome-base/libgnomekbd-2.91.91
 
-	>=dev-libs/libpwquality-1.2.2
+	dev-libs/libtimezonemap
+
+	app-text/iso-codes
+	dev-libs/libpwquality
 	dev-libs/libxml2:2
 	gnome-base/gnome-menus:3
 	gnome-base/libgtop:2
 	media-libs/fontconfig
+	>=media-libs/grilo-0.2.6:0.2
 
 	>=media-libs/libcanberra-0.13[gtk3]
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
-	|| ( <sys-power/upower-0.99 sys-power/upower-pm-utils )
+	>=sys-power/upower-0.99
 	>=x11-libs/libnotify-0.7.3:0=
 
 	>=gnome-extra/nm-applet-0.9.7.995
@@ -57,7 +70,8 @@ COMMON_DEPEND="
 	x11-libs/libXxf86misc
 	>=x11-libs/libXi-1.2
 
-	bluetooth? ( >=net-wireless/gnome-bluetooth-3.9.3:= )
+	`# Require a lower gnome-bluetooth version to account for unity-control-center dev lag #`
+	bluetooth? ( >=net-wireless/gnome-bluetooth-3.10:= )
 	colord? (
 		net-libs/libsoup:2.4
 		>=x11-misc/colord-0.1.34:0=
@@ -68,7 +82,6 @@ COMMON_DEPEND="
 	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.9.90 )
 	i18n? ( >=app-i18n/ibus-1.5.2 )
 	kerberos? ( app-crypt/mit-krb5 )
-	socialweb? ( net-libs/libsocialweb )
 	v4l? (
 		media-libs/gstreamer:1.0
 		media-libs/clutter-gtk:1.0
@@ -78,6 +91,7 @@ COMMON_DEPEND="
 		>=media-libs/clutter-1.11.3:1.0
 		media-libs/clutter-gtk:1.0
 		>=x11-libs/libXi-1.2 )
+	$(vala_depend)
 "
 # <gnome-color-manager-3.1.2 has file collisions with g-c-c-3.1.x
 # libgnomekbd needed only for gkbd-keyboard-display tool
@@ -89,8 +103,8 @@ RDEPEND="${COMMON_DEPEND}
 	cups? (
 		>=app-admin/system-config-printer-gnome-1.3.5
 		net-print/cups-pk-helper )
-	i18n? ( >=gnome-base/libgnomekbd-3 )
 	input_devices_wacom? ( gnome-base/gnome-settings-daemon[input_devices_wacom] )
+	i18n? ( >=gnome-base/libgnomekbd-3 )
 
 	!<gnome-base/gdm-2.91.94
 	!<gnome-extra/gnome-color-manager-3.1.2
@@ -122,42 +136,65 @@ DEPEND="${COMMON_DEPEND}
 src_prepare() {
 	# Gentoo handles completions in a different directory, bugs #465094 and #477390
 	sed -i "s|^completiondir =.*|completiondir = $(get_bashcompdir)|" \
-		shell/Makefile.am || die "sed completiondir failed"
+	shell/Makefile.am || die "sed completiondir failed"
 
-	# Make some panels and dependencies optional; requires eautoreconf
-	# https://bugzilla.gnome.org/686840, 697478, 700145
-	epatch "${FILESDIR}"/${PN}-3.10.2-optional.patch
+	# Disable selected patches #
+	sed \
+		`# Keep support in for upower-0.99 ` \
+			-e 's:power-panel-3.10:#power-panel-3.10:g' \
+		`# Don't use Ubuntu specific region and language selector settings` \
+			-e 's:52_region_language:#52_region_language:g' \
+		`# Disable Ubuntu branding` \
+			-e 's:56_use_ubuntu_info_branding:#56_use_ubuntu_info_branding:g' \
+		`# Other Ubuntu specific patches to disable` \
+			-e 's:92_ubuntu_system_proxy:#92_ubuntu_system_proxy:g' \
+			-e 's:ubuntu_external_panels:#ubuntu_external_panels:g' \
+				-i "${WORKDIR}/debian/patches/series"
+		for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+			PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+		done
+	base_src_prepare
 
 	# Fix some absolute paths to be appropriate for Gentoo
 	epatch "${FILESDIR}"/${PN}-3.10.2-gentoo-paths.patch
 
-	epatch_user
+	# 'ubuntu_external_panels.patch' allows customisation of g-c-c #
+	# The hardcoded launchers in the patch that are never used, give context for strip and replace #
+	sed -e 's:landscape-client-settings:unity-tweak-tool:' \
+		-i shell/cc-panel-loader.c
+
+	# Gentoo handles completions in a different directory, bug #465094
+	sed -i 's|^completiondir =.*|completiondir = $(datadir)/bash-completion|' \
+		shell/Makefile.am || die "sed completiondir failed"
 
 	eautoreconf
-
-	# panels/datetime/Makefile.am gets touched by "gentoo-paths" patch.
-	# We need to touch timedated{c,h} to prevent them from being
-	# regenerated (bug #415901)
-	# Upstream think they should be removed, preventing compilation errors too
-	# (https://bugzilla.gnome.org/704822)
-	[[ -f panels/datetime/timedated.h ]] && rm -f panels/datetime/timedated.h
-	[[ -f panels/datetime/timedated.c ]] && rm -f panels/datetime/timedated.c
-
 	gnome2_src_prepare
+
+	# panels/datetime/Makefile.am gets touched as a result of something in our
+	# src_prepare(). We need to touch timedated{c,h} to prevent them from being
+	# regenerated (bug #415901)
+	[[ -f panels/datetime/timedated.h ]] && touch panels/datetime/timedated.h
+	[[ -f panels/datetime/timedated.c ]] && touch panels/datetime/timedated.c
+
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 }
 
 src_configure() {
+	# cheese is disabled as it can cause gnome-control-center to segfault (and Ubuntu disable it anyway) #
+	# gnome-online-accounts is disabled as we use Ubuntu's online accounts method #
 	gnome2_src_configure \
 		--disable-update-mimedb \
 		--disable-static \
 		--enable-documentation \
+		--disable-goa \
+		--without-cheese \
 		$(use_enable bluetooth) \
 		$(use_enable colord color) \
 		$(use_enable cups) \
-		$(use_enable gnome-online-accounts goa) \
 		$(use_enable i18n ibus) \
 		$(use_enable kerberos) \
 		$(use_with socialweb libsocialweb) \
-		$(use_with v4l cheese) \
-		$(use_enable input_devices_wacom wacom)
+		$(use_enable input_devices_wacom wacom) \
+		$(use_with socialweb libsocialweb)
 }
