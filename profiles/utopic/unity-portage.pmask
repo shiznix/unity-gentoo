@@ -56,6 +56,7 @@ media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
 net-im/telepathy-mission-control::gentoo
 net-libs/gnome-online-accounts::gentoo
+>=net-misc/networkmanager-vpnc-0.9.10.0::gentoo
 sys-apps/accountsservice::gentoo
 www-client/chromium::gentoo
 www-client/firefox::gentoo
