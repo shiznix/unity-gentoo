@@ -47,7 +47,7 @@ if [ "${bump}" = "1" ]; then
 		local_version="${_ver}"
 		version_check
 	done
-	echo -e "\n Versions bumped in ${ebuild}, don't forget to enable *all* LINGUAS in make.conf before creating Manifest digests"
+	echo -e "\n Versions bumped in ${ebuild}, don't forget to first uninstall unity-base/unity-language-pack, then enable *all* LINGUAS in make.conf before creating Manifest digests"
 else
 	for ebuild in *.ebuild; do
 		echo -e "\nChecking ${ebuild}"
