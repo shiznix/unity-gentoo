@@ -4,28 +4,21 @@
 
 EAPI=5
 
-inherit qt5-build virtualx
+inherit qt5-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64"
+#	KEYWORDS="~amd64"
+:
 fi
 
 IUSE=""
 
-RDEPEND="
+DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtdeclarative-${PV}:5[debug=]
-	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]
+	virtual/udev
 "
-DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtgui-${PV}:5[debug=] )
-"
-
-src_test() {
-	local VIRTUALX_COMMAND="qt5-build_src_test"
-	virtualmake
-}
+RDEPEND="${DEPEND}"

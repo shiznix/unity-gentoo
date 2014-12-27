@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Displayconfig
-Exec=dbus-send --session --dest="org.gnome.Mutter.DisplayConfig" /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig
-OnlyShowIn=Unity;
-NoDisplay=true
-StartupNotify=false
-Terminal=false
-AutostartCondition=GNOME3 unless-session gnome

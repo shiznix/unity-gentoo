@@ -5,13 +5,14 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_6,2_7} )
 
+URELEASE="utopic"
 inherit autotools eutils python-any-r1 qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
-URELEASE="utopic"
+UVER_PREFIX="+dfsg"
 
-SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}+dfsg.orig.tar.xz
-	${UURL}/${QT5_MODULE}-opensource-src_${PV}+dfsg-${UVER}.debian.tar.xz"
+SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
+	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 KEYWORDS="~amd64 ~x86"

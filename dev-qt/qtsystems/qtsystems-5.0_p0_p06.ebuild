@@ -4,10 +4,10 @@
 
 EAPI=5
 
+URELEASE="utopic"
 inherit base qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/q/${PN}-opensource-src"
-URELEASE="utopic"
 UVER_PREFIX="~git20130712"
 
 SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz

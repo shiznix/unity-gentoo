@@ -28,7 +28,6 @@ dev-qt/qtdbus:5
 dev-qt/qtdeclarative:5
 dev-qt/qtgraphicaleffects:5
 dev-qt/qtgui:5
-dev-qt/qtjsbackend:5
 dev-qt/qtmultimedia:5
 dev-qt/qtnetwork:5
 dev-qt/qtscript:5

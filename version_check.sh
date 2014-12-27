@@ -35,8 +35,9 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'qtwebkit'`" ]; then treepackname="${packname}"; packname="qtwebkit-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'telepathy-mission-control'`" ]; then treepackname="${packname}"; packname="telepathy-mission-control-5"
 	elif [ -n "`echo "${packbasename}" | grep 'ubuntu-sources'`" ]; then treepackname="${packname}"; packname="linux"
-	elif [ -n "`echo "${packbasename}" | grep '^webapps$'`" ]; then treepackname="${packname}"; packname="webapps-applications"
 	elif [ -n "`echo "${packbasename}" | grep 'webapps-base'`" ]; then treepackname="${packname}"; packname="webapps-applications"
+	elif [ -n "`echo "${packbasename}" | grep 'webapps-greasemonkey'`" ]; then treepackname="${packname}"; packname="webapps-greasemonkey"
+	elif [ -n "`echo "${packbasename}" | grep '^webapps'`" ]; then treepackname="${packname}"; packname="webapps-applications"
 	elif [ -n "`echo "${packbasename}" | grep 'xf86-video-ati'`" ]; then treepackname="${packname}"; packname="xserver-xorg-video-ati"
 	elif [ -n "`echo "${packbasename}" | grep 'xf86-video-intel'`" ]; then treepackname="${packname}"; packname="xserver-xorg-video-intel"
 	elif [ -n "`echo "${packbasename}" | grep 'xf86-video-nouveau'`" ]; then treepackname="${packname}"; packname="xserver-xorg-video-nouveau"
@@ -104,7 +105,9 @@ upstream_version_check() {
 		sources_download
 		upstream_version=
 		upstream_version=`grep -A6 "Package: ${packname}$" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A4 "Package: ${packname}$" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A6 "Package: ${packname}$" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A6 "Package: ${packname}" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A6 "Package: ${packname}" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 		[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && [ -z "${checkmsg_supress}" ] && \
 			echo -e "\nChecking ${packname}  ::  $1"
 	fi
@@ -143,6 +146,7 @@ version_check_other_releases() {
 			echo "Checking ${catpack}"
 			echo "  Local versions:"
 			for ebuild in $(find $(pwd) -name "*.ebuild" 2> /dev/null | grep /"${catpack}"/); do
+				URELEASE=
 				pack="${ebuild}"
 				packbasename=$(basename ${pack} | awk -F.ebuild '{print $1}')
 				packname=$(echo ${catpack} | awk -F/ '{print $2}')
@@ -156,7 +160,11 @@ version_check_other_releases() {
 			local_versions_output=$(IFS=$'\n'; echo "${local_versions[*]}" | sort -k3)
 			echo "${local_versions_output}"
 
-			echo "  Upstream versions:"
+			if [ -n "${URELEASE}" ]; then
+				echo "  Upstream versions:"
+			else
+				echo "  No URELEASE found in ebuild, not tracking upstream versions!"
+			fi
 			for release in ${RELEASES}; do
 				for ebuild in $(find $(pwd) -name "*.ebuild" 2> /dev/null | grep /"${catpack}"/ | sort); do
 					pack="${ebuild}"
@@ -172,22 +180,24 @@ version_check_other_releases() {
 							upstream_versions+=( "	${packname}-${upstream_version}  ::  ${release}" )
 						fi
 					else
-						if [ -z "$(echo "${upstream_versions[@]}" | grep "${release}"$)" ]; then
+						if [ -z "$(echo "${upstream_versions[@]}" | grep "${release}"$)" ] && \
+							[ -n "${URELEASE}" ]; then
 							upstream_versions+=( "		(none available)  ::  ${release}" )
 						fi
 					fi
 				done
 			done
 			index=0
+
 			while [ "$index" -lt ${#upstream_versions[@]} ]; do
-				upstream_versions_namespace_stripped=$(echo ${upstream_versions[$index]} | sed 's/.*-\(.*[0-9]-[0-9].*\)/\1/p' | sed 's/[ 	]//g')
+				upstream_versions_namespace_stripped=$(echo ${upstream_versions[$index]} | sed 's/.*-\(.*[0-9].[0-9].*\)/\1/p' | sed 's/[ 	]//g')
 				local_versions_whitespace_stripped=$(echo ${local_versions[@]} | sed 's/[ 	]//g')
 				compare_versions_stripped=$(echo ${local_versions_whitespace_stripped} | grep "${upstream_versions_namespace_stripped}")
 				upstream_release=$(echo ${upstream_versions[$index]} | awk '{print $3}')
 				if [ -n "${compare_versions_stripped}" ] || [ -n "$(echo ${upstream_versions[$index]} | grep "none available")" ] || \
 					[ -n "$(echo ${local_versions[@]} | grep ${upstream_release}-updates)" ]; then
 					echo -e "${upstream_versions[$index]}"
-				else
+				elif [ -n "${URELEASE}" ]; then
 					echo -e "\033[1;31m${upstream_versions[$index]}\033[0m"
 				fi
 				((index++))

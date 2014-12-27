@@ -2,12 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-
-inherit eutils gnome2-utils ubuntu-versionator
+EAPI=5
 
 URELEASE="utopic"
-UVER_PREFIX="+14.04.20140130.3"
+inherit eutils gnome2-utils ubuntu-versionator
+
+UVER_PREFIX="+14.04.${PVR_MICRO}"
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors are too unpredictable #
 
 DESCRIPTION="WebApps: Complete set of Apps for the Unity desktop"

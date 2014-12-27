@@ -20,7 +20,6 @@
 	gnome-base/gnome-desktop
 	gnome-base/gnome-session
 	gnome-base/gnome-settings-daemon
-	unity-base/displayconfig (Ubuntu fork of x11-wm/mutter code into a daemon that provides the displayconfig dbus interfaces)
 	unity-base/unity-settings-daemon (Ubuntu fork of gnome-base/gnome-settings-daemon)
 	unity-base/unity-control-center (Ubuntu fork of gnome-base/gnome-control-center)
   * The flow-on effect of this development lag and subsequent version mismatch is that some updated features in Gnome, break in Unity
