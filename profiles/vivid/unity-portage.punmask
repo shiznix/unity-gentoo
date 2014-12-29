@@ -19,6 +19,7 @@ dev-libs/gobject-introspection::unity-gentoo
 dev-libs/gobject-introspection-common::unity-gentoo
 dev-util/gdbus-codegen::unity-gentoo
 
+dev-qt/*::unity-gentoo
 gnome-base/*::unity-gentoo
 
 media-libs/mesa::unity-gentoo
@@ -27,4 +28,3 @@ sys-power/cpufrequtils::unity-gentoo
 x11-libs/cairo::unity-gentoo
 x11-libs/gtk+::unity-gentoo
 x11-misc/lightdm::unity-gentoo
-

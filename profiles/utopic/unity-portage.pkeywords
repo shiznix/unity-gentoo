@@ -22,6 +22,7 @@ dev-python/fixtures
 dev-python/keyring
 ~dev-python/oauthlib-0.6.3
 ~dev-python/python-prctl-1.5.0
+dev-qt/qdoc:5
 dev-qt/qtconcurrent:5
 dev-qt/qtcore:5
 dev-qt/qtdbus:5
