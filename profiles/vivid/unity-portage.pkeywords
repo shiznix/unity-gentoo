@@ -178,6 +178,7 @@ unity-extra/indicator-psensor **
 unity-extra/unity-greeter **
 unity-extra/indicator-evolution **
 unity-extra/indicator-multiload **
+unity-extra/indicator-psensor **
 unity-indicators/ido **
 unity-indicators/indicator-applet **
 unity-indicators/indicator-datetime **
