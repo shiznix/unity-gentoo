@@ -184,6 +184,9 @@ src_install() {
 	readme.gentoo_create_doc
 
 	systemd_dounit "${FILESDIR}/${PN}.service"
+
+	# Create data directory
+	dodir /var/lib/${PN}-data
 }
 
 pkg_postinst() {
