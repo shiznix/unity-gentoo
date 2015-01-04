@@ -26,7 +26,7 @@ DEPEND="
 	>=dev-qt/qtprintsupport-${PV}:5[debug=]
 	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	>=dev-qt/qtxml-${PV}:5[debug=]
-	webkit? ( >=dev-qt/qtwebkit-5.1.1:5[debug=,widgets] )
+	webkit? ( >=dev-qt/qtwebkit-${PV}:5[debug=,widgets] )
 "
 RDEPEND="${DEPEND}"
 
