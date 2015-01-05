@@ -36,6 +36,9 @@ src_install() {
 	# Remove upstart jobs as we use xsession based scripts in /etc/X11/xinit/xinitrc.d/ #
 	rm -rf "${ED}usr/share/upstart"
 
-	exeinto /etc/X11/xinit/xinitrc.d/
-	doexe "${FILESDIR}/99url-dispatcher"
+	# url-dispatcher service must be started via dbus or process will zombie #
+	insinto /etc/xdg/autostart
+	doins "${FILESDIR}/url-dispatcher.desktop"
+	insinto /usr/share/dbus-1/services/
+	doins "${FILESDIR}/com.canonical.URLDispatcher.service"
 }
