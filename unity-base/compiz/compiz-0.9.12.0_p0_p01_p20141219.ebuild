@@ -66,10 +66,9 @@ COMMONDEPEND="!!x11-wm/compiz
 		sys-apps/xorg-gtest )
 	${PYTHON_DEPS}"
 
-# <sys-devel/gettext-0.19 needed until compiz supports missing 'Language' header in *.po files for 'msgfmt' #
 DEPEND="${COMMONDEPEND}
 	dev-util/pkgconfig
-	<sys-devel/gettext-0.19
+	sys-devel/gettext
 	x11-proto/damageproto
 	x11-proto/xineramaproto"
 

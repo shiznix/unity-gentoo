@@ -4,10 +4,11 @@
 
 EAPI=5
 
+URELEASE="vivid"
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
-URELEASE="utopic"
+UVER="1"
 
 DESCRIPTION="Central cgroup manager daemon"
 HOMEPAGE="https://launchpad.net/cgmanager"
@@ -15,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

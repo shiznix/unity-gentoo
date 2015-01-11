@@ -10,7 +10,7 @@ URELEASE="vivid"
 inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/g/${PN}"
-UVER="1~ubuntu1"
+UVER="1~ubuntu2"
 
 DESCRIPTION="The GNOME panel patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
