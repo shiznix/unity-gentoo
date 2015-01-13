@@ -7,7 +7,7 @@ GCONF_DEBUG="no"
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="utopic"
-inherit base gnome2 cmake-utils distutils-r1 eutils ubuntu-versionator xdummy
+inherit base gnome2 cmake-utils python-r1 eutils ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -35,6 +35,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	dev-libs/libxml2[${PYTHON_USEDEP}]
 	dev-libs/libxslt[${PYTHON_USEDEP}]
 	dev-libs/protobuf[${PYTHON_USEDEP}]
+	dev-python/python-distutils-extra[${PYTHON_USEDEP}]
 	dev-python/pyrex[${PYTHON_USEDEP}]
 	gnome-base/gconf[${PYTHON_USEDEP}]
 	>=gnome-base/gsettings-desktop-schemas-3.8
@@ -105,6 +106,10 @@ src_prepare() {
 	# Disable gconftool-2 from being used (need to differentiate here so gsettings schemas will still be installed) #
 	sed -e 's:COMPIZ_DISABLE_SCHEMAS_INSTALL:COMPIZ_DISABLE_GCONF_SCHEMAS_INSTALL:g' \
 		-i cmake/{CompizGconf,plugin_extensions/CompizGenGconf}.cmake || die
+
+	# Need to do a 'python_foreach_impl' run from python-r1 eclass to workaround corrupt generated python shebang for /usr/bin/ccsm #
+	#  Due to the way CMake invokes distutils setup.py, shebang will be inherited from the sandbox leading to runtime failure #
+	python_copy_sources
 }
 
 src_configure() {
@@ -126,7 +131,10 @@ src_configure() {
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF
 		-DCOMPIZ_DEFAULT_PLUGINS="ccp"
 		"
-	cmake-utils_src_configure
+	configuration() {
+		cmake-utils_src_configure
+	}
+	python_foreach_impl run_in_build_dir configuration
 }
 
 src_test() {
@@ -148,23 +156,29 @@ src_compile() {
 	sed -e "s:'unitymtgrabhandles',::g" \
 		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gsettings-override"
 
-	cmake-utils_src_compile VERBOSE=1
+	compilation() {
+		cmake-utils_src_compile VERBOSE=1
+	}
+	python_foreach_impl run_in_build_dir compilation
 }
 
 src_install() {
-	pushd ${CMAKE_BUILD_DIR}
-		addpredict /root/.gconf/
-		addpredict /usr/share/glib-2.0/schemas/
-		emake DESTDIR="${ED}" install
+	installation() {
+		pushd ${CMAKE_BUILD_DIR}
+			addpredict /root/.gconf/
+			addpredict /usr/share/glib-2.0/schemas/
+			emake DESTDIR="${ED}" install
 
-		# Window manager desktop file for GNOME #
-		insinto /usr/share/gnome/wm-properties/
-		doins gtk/gnome/compiz.desktop
+			# Window manager desktop file for GNOME #
+			insinto /usr/share/gnome/wm-properties/
+			doins gtk/gnome/compiz.desktop
 
-		# Keybinding files #
-		insinto /usr/share/gnome-control-center/keybindings
-		doins gtk/gnome/*.xml
-	popd ${CMAKE_BUILD_DIR}
+			# Keybinding files #
+			insinto /usr/share/gnome-control-center/keybindings
+			doins gtk/gnome/*.xml
+		popd ${CMAKE_BUILD_DIR}
+	}
+	python_foreach_impl run_in_build_dir installation
 
 	pushd ${CMAKE_USE_DIR}
 		CMAKE_DIR=$(cmake --system-information | grep '^CMAKE_ROOT' | awk -F\" '{print $2}')
