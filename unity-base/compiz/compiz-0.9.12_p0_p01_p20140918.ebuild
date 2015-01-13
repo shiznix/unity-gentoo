@@ -7,7 +7,7 @@ GCONF_DEBUG="no"
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="utopic"
-inherit base gnome2 cmake-utils eutils python-single-r1 ubuntu-versionator xdummy
+inherit base gnome2 cmake-utils distutils-r1 eutils ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -78,10 +78,6 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/mesa-progs
 	x11-apps/xvinfo"
 
-pkg_setup() {
-	python-single-r1_pkg_setup
-}
-
 src_prepare() {
 	# Ubuntu patchset #
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
@@ -115,11 +111,6 @@ src_configure() {
 	use kde && \
 		mycmakeargs="${mycmakeargs} -DUSE_KDE4=ON" || \
 		mycmakeargs="${mycmakeargs} -DUSE_KDE4=OFF"
-
-	# Current test results: #
-	# 99% tests passed, 1 tests failed out of 1362 #
-	# The following tests FAILED: #
-	#	15 - GWDMockSettingsTest.TestMock (Failed) #
 	use test && \
 		mycmakeargs="${mycmakeargs} -DCOMPIZ_BUILD_TESTING=ON" || \
 		mycmakeargs="${mycmakeargs} -DCOMPIZ_BUILD_TESTING=OFF"
