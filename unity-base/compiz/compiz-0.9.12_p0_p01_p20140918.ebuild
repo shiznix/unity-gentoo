@@ -7,7 +7,7 @@ GCONF_DEBUG="no"
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="utopic"
-inherit base gnome2 cmake-utils python-r1 eutils ubuntu-versionator xdummy
+inherit base gnome2 cmake-utils eutils python-r1 ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"

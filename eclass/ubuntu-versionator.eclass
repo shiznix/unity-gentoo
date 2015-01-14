@@ -24,10 +24,6 @@ EXPORT_FUNCTIONS pkg_setup pkg_postinst
 #---------------------------------------------------------------------------------------------------------------------------------#
 ### GLOBAL ECLASS INHERIT DEFAULTS ##
 
-## distutils-r1.eclass ##
-# Set this to catch future parallel build problems, parallel builds give us no real benefit for our tiny python packages #
-export DISTUTILS_NO_PARALLEL_BUILD=1
-
 ## vala.eclass ##
 # Set base sane vala version for all packages requiring vala, override in ebuild if or when specific higher versions are needed #
 export VALA_MIN_API_VERSION=${VALA_MIN_API_VERSION:=0.20}

@@ -2,18 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
+PYTHON_COMPAT=( python2_7 )
 
-PYTHON_DEPEND="2:2.7"
-SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
-
-inherit distutils gnome2-utils ubuntu-versionator
+URELEASE="utopic"
+inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/g/${PN}"
 UVER="4"
-URELEASE="utopic"
 
 DESCRIPTION="A PyGTK+ based advanced clipboard manager"
 HOMEPAGE="http://launchpad.net/glipper"
@@ -27,24 +24,19 @@ RESTRICT="mirror"
 
 RDEPEND="!x11-misc/glipper
 	dev-libs/keybinder:0[python]
-	dev-libs/libappindicator
-	dev-python/gconf-python
+	dev-libs/libappindicator[${PYTHON_USEDEP}]
+	dev-python/gconf-python[${PYTHON_USEDEP}]
 	dev-python/pycrypto
-	dev-python/pygtk:2
-	dev-python/python-prctl
+	dev-python/pygtk:2[${PYTHON_USEDEP}]
+	dev-python/python-prctl[${PYTHON_USEDEP}]
 	dev-python/pyxdg"
 DEPEND="${RDEPEND}
 	>=dev-python/python-distutils-extra-2.37"
 
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	python_pkg_setup
-}
-
 src_install() {
 	sed -e "s:DATA_DIR = \"\":DATA_DIR = \"/usr/share\":g" \
 		-i glipper/defs.py
-	distutils_src_install
+	distutils-r1_src_install
 
 	dodir /etc
 	mv -vf "${ED}"/usr/share/gconf "${ED}"/etc
@@ -56,13 +48,11 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	distutils_pkg_postinst
 	gnome2_gconf_install
 	gnome2_icon_cache_update
 	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {
-	distutils_pkg_postrm
 	gnome2_icon_cache_update
 }
