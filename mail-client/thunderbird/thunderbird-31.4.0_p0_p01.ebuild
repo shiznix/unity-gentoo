@@ -218,6 +218,9 @@ src_configure() {
 	# It doesn't compile on alpha without this LDFLAGS
 	use alpha && append-ldflags "-Wl,--no-relax"
 
+	# Add full relro support for hardened
+	use hardened && append-ldflags "-Wl,-z,relro,-z,now"
+
 	mozconfig_annotate '' --enable-extensions="${MEXTENSIONS}"
 	mozconfig_annotate '' --disable-mailnews
 
@@ -379,9 +382,8 @@ src_install() {
 			-i "${ED}"/usr/share/applications/${PN}.desktop || die
 	fi
 
-	pax-mark m "${ED}"/${MOZILLA_FIVE_HOME}/{thunderbird-bin,thunderbird}
 	# Required in order for jit to work on hardened, for mozilla-31
-	use jit && pax-mark p "${ED}"${MOZILLA_FIVE_HOME}/{thunderbird,thunderbird-bin}
+	use jit && pax-mark pm "${ED}"${MOZILLA_FIVE_HOME}/{thunderbird,thunderbird-bin}
 
 	# Plugin-container needs to be pax-marked for hardened to ensure plugins such as flash
 	# continue to work as expected.

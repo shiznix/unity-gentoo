@@ -11,7 +11,7 @@ UURL="mirror://ubuntu/pool/main/l/${PN}"
 
 DESCRIPTION="A lightweight display manager"
 HOMEPAGE="https://launchpad.net/lightdm"
-SRC_URI="${UURL}/${MY_P}-${UVER}.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
