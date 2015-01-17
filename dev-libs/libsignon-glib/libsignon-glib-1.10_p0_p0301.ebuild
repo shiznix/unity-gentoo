@@ -6,10 +6,10 @@ EAPI=5
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 WANT_AUTOMAKE=1.12
 
+URELEASE="utopic-updates"
 inherit vala autotools base eutils python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libs/${PN}"
-URELEASE="utopic"
 UVER_PREFIX="daily13.06.25"
 
 DESCRIPTION="GObject introspection data for the Signon library for the Unity desktop"
@@ -42,7 +42,7 @@ src_prepare() {
 	vala_src_prepare
 	eautoreconf
 }
- 
+
 src_configure() {
 	python_copy_sources
 	configuration() {
@@ -51,14 +51,14 @@ src_configure() {
 	}
 	python_foreach_impl run_in_build_dir configuration
 }
- 
+
 src_compile() {
 	compilation() {
 		emake || die
 	}
 	python_foreach_impl run_in_build_dir compilation
 }
- 
+
 src_install() {
 	installation() {
 		rm -rf "${D}usr/doc"

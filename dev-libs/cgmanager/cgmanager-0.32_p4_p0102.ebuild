@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="utopic-security"
+URELEASE="utopic-updates"
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
