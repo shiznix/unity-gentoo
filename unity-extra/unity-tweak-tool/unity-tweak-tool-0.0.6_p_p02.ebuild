@@ -61,6 +61,9 @@ src_prepare() {
 	# Include /usr/share/cursors/xorg-x11/ in the paths to check for cursor themes as Gentoo #
 	#  installs cursor themes in both /usr/share/cursors/xorg-x11/ and /usr/share/icons/ #
 	epatch -p1 "${FILESDIR}/xorg-cursor-themes-path.diff"
+
+	# Fix show/hide mounted drive icons (LP# 1372046) #
+	epatch -p1 "${FILESDIR}/show-hide_mounted_drive_icons.diff"
 }
 
 src_compile() {
