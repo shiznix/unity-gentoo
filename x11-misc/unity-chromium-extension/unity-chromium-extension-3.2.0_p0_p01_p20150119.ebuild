@@ -8,7 +8,7 @@ URELEASE="vivid"
 inherit autotools eutils multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-UVER_PREFIX="+14.10.${PVR_MICRO}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Chromium extension: Unity Integration"
 HOMEPAGE="https://launchpad.net/unity-chromium-extension"

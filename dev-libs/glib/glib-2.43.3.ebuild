@@ -11,7 +11,7 @@ inherit autotools base bash-completion-r1 gnome.org libtool eutils flag-o-matic 
 
 MY_P="${PN}2.0_${PV}"
 UURL="mirror://ubuntu/pool/main/g/${PN}2.0"
-UVER="1ubuntu1"
+UVER="1"
 
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/glib"
