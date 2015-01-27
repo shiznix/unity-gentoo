@@ -72,6 +72,7 @@ dev-libs/libfriends **
 dev-libs/libhybris **
 dev-libs/libqtdbusmock **
 dev-libs/libsignon-glib **
+dev-libs/libunity-webapps **
 dev-libs/libupstart **    
 dev-libs/libubuntu-app-launch **
 dev-libs/properties-cpp **
