@@ -30,6 +30,7 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-extra/unity-tweak-tool
 	unity-indicators/unity-indicators-meta
 	unity-lenses/unity-lens-meta
+	x11-misc/notify-osd
 	x11-themes/ubuntu-wallpapers
 	accessibility? (
 		>=app-accessibility/at-spi2-atk-2.8

@@ -14,13 +14,12 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 	dev-libs/dee
 	dev-libs/libappindicator
 	dev-libs/libunity
-	unity-base/launchpad-integration	# Not python-3 compatible
 	unity-lenses/unity-lens-video
 
 * Reasons for patching/maintaining packages:
 dev-cpp/gtest				# Customised ebuild to install /usr/src/gtest/* files lacking from main tree ebuild
 dev-cpp/gmock				# Customised ebuild to install /usr/src/gmock/* files lacking from main tree ebuild
-dev-libs/dee				# Portage tree lacks >=1.2 versions needed
+dev-libs/dee				# Portage tree versions can lag, maintained for patches and version control
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/gobject-introspection		# See glib reason above
 dev-libs/gobject-introspection-common	# See glib reason above
@@ -29,17 +28,13 @@ dev-libs/libdbusmenu			# See "Using portage tree libindicate packages" item abov
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
-gnome-base/gnome-control-center		# [trusty] Patch out gnome-online-accounts and use ubuntu-online-accounts / [utopic] Require gnome-bluetooth-3.10 to match unity-control-center
-gnome-base/gnome-core-apps		# Included so that Gnome package's minor versions may differ to overall gnome version (eg. gnome-desktop-3.8 alongside gnome-3.10)
-gnome-base/gnome-core-libs		# Included so that Gnome package's minor versions may differ to overall gnome version (eg. gnome-desktop-3.8 alongside gnome-3.10)
+gnome-base/gnome-core-apps		# Included to pull in lower 3.8 version of empathy for Ubuntu-Online-Accounts (UOA) integration
 gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
-gnome-base/gnome-fallback		# Support x11-misc/notify-osd
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
-gnome-base/gnome-settings-daemon	# [Saucy] Patched to have gnome-settings-daemon xdg-autostart on Unity login, [Trusty] New unity-settings-daemon relies on files created from patchset
+gnome-base/gnome-settings-daemon	# [Trusty] New unity-settings-daemon relies on files created from patchset
 gnome-base/gsettings-desktop-schemas	# Includes Unity desktop settings patches
 gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
-gnome-extra/gnome-screensaver		# Patched to have gnome-screensaver xdg-autostart on Unity login
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 gnome-extra/zeitgeist			# Zeitgeist must be built with vala-0.20 due to the way unity-base/unity uses the vala generated zeitgeist-datamodel.h
@@ -57,7 +52,7 @@ x11-drivers/xf86-video-ati		# Provides Mir display server support with 'mir' use
 x11-drivers/xf86-video-intel		# Provides Mir display server support with 'mir' useflag and patch
 x11-drivers/xf86-video-nouveau		# Provides Mir display server support with 'mir' useflag and patch
 x11-libs/gtk+				# Needed for global appmenu
-x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme for gtk+-3.6 (Unity fails to start otherwise)
+x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme (Unity fails to start otherwise)
 x11-wm/metacity				# Patched to support compiz window decoration
 
 

@@ -14,7 +14,12 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+#SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI=
+
+EBZR_PROJECT="${PN}"
+EBZR_REPO_URI="lp:~robert-ancell/${PN}/bluez5"
+EBZR_REVISION="12798"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -129,11 +134,14 @@ DEPEND="${COMMON_DEPEND}
 # Needed for autoreconf
 #	gnome-base/gnome-common
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}/${P}"
+
+src_unpack() {
+	bzr_src_unpack
+}
 
 src_prepare() {
-	# Backport Upower-0.99 support from Vivid Vervet #
-	epatch -p1 "${FILESDIR}/upower-0.99_support.diff"
+	bzr_src_prepare
 
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel.patch"

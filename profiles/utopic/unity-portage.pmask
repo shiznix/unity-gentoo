@@ -8,9 +8,6 @@
 >dev-libs/xapian-1.2.14
 >dev-libs/xapian-bindings-1.2.14
 
-# unity-control-center-14.10 needs gnome-bluetooth-3.10
->=net-wireless/gnome-bluetooth-3.12::gentoo
-
 # >=media-libs/libmikmod-3.3.5 needs pulseaudio-5 but indicator-sound needs pulseaudio-4
 >=media-libs/libmikmod-3.3.5
 >=media-libs/sdl-mixer-1.2.12-r4
@@ -32,7 +29,6 @@ dev-libs/libindicator::gentoo
 dev-util/gdbus-codegen::gentoo
 
 gnome-base/gconf::gentoo
-gnome-base/gnome-control-center::gentoo
 gnome-base/gnome-core-apps::gentoo
 gnome-base/gnome-core-libs::gentoo
 gnome-base/gnome-desktop::gentoo

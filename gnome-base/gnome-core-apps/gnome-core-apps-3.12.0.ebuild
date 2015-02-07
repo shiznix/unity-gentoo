@@ -20,10 +20,9 @@ KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 RDEPEND="
 	>=gnome-base/gnome-core-libs-${PV}[cups?]
 
-	>=gnome-base/gnome-session-3.8
+	>=gnome-base/gnome-session-${PV}
 	>=gnome-base/gnome-menus-${PV}:3
-	>=gnome-base/gnome-settings-daemon-3.8[cups?]
-	>=unity-base/unity-control-center-14.04.3[cups?]
+	>=gnome-base/gnome-settings-daemon-${PV}[cups?]
 
 	>=app-crypt/gcr-${PV}
 	>=gnome-base/nautilus-${PV}
@@ -47,7 +46,7 @@ RDEPEND="
 	>=x11-themes/gnome-icon-theme-symbolic-${PV}
 	>=x11-themes/gnome-themes-standard-${PV}
 
-	bluetooth? ( >=net-wireless/gnome-bluetooth-3.8 )
+	bluetooth? ( >=net-wireless/gnome-bluetooth-${PV} )
 	cdr? ( >=app-cdr/brasero-${PV} )
 
 	!gnome-base/gnome-applets
