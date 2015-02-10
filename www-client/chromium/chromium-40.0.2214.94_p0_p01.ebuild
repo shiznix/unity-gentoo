@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/www-client/chromium/chromium-39.0.2171.65.ebuild,v 1.3 2014/11/21 14:04:25 ago Exp $
 
 EAPI=5
 PYTHON_COMPAT=( python{2_6,2_7} )
@@ -12,12 +12,13 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
 inherit base chromium eutils flag-o-matic multilib multiprocessing pax-utils \
 	portability python-any-r1 readme.gentoo toolchain-funcs ubuntu-versionator versionator virtualx
 
+
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
 URELEASE="vivid"
-UVER_SUFFIX=".1108"
+UVER_SUFFIX=".1120"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -55,7 +56,6 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	dev-libs/libxslt:=
 	dev-libs/nspr:=
 	>=dev-libs/nss-3.14.3:=
-	>=dev-libs/protobuf-2.5.0-r1:=
 	dev-libs/re2:=
 	gnome? ( >=gnome-base/gconf-2.24.0:= )
 	gnome-keyring? ( >=gnome-base/libgnome-keyring-3.12:= )
@@ -158,6 +158,13 @@ For other desktop environments, try one of the following:
 - x11-themes/tango-icon-theme
 "
 
+pkg_pretend() {
+	if [[ $(tc-getCC)$ == *gcc* ]] && \
+		[[ $(gcc-major-version)$(gcc-minor-version) -lt 48 ]]; then
+		die 'At least gcc 4.8 is required, see bugs: #535730, #525374, #518668.'
+	fi
+}
+
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 
@@ -195,8 +202,8 @@ src_prepare() {
 	#	touch out/Release/gen/sdk/toolchain/linux_x86_newlib/stamp.untar || die
 	# fi
 
-	epatch "${FILESDIR}/${PN}-gcc-4.7-r0.patch"
 	epatch "${FILESDIR}/${PN}-system-jinja-r7.patch"
+	epatch "${FILESDIR}/${PN}-cups-r0.patch"
 
 	epatch_user
 
@@ -230,6 +237,9 @@ src_prepare() {
 		'third_party/ffmpeg' \
 		'third_party/fips181' \
 		'third_party/flot' \
+		'third_party/google_input_tools' \
+		'third_party/google_input_tools/third_party/closure_library' \
+		'third_party/google_input_tools/third_party/closure_library/third_party/closure' \
 		'third_party/hunspell' \
 		'third_party/iccjpeg' \
 		'third_party/jstemplate' \
@@ -252,6 +262,7 @@ src_prepare() {
 		'third_party/modp_b64' \
 		'third_party/mt19937ar' \
 		'third_party/npapi' \
+		'third_party/openmax_dl' \
 		'third_party/opus' \
 		'third_party/ots' \
 		'third_party/pdfium' \
@@ -260,6 +271,7 @@ src_prepare() {
 		'third_party/pdfium/third_party/numerics' \
 		'third_party/pdfium/third_party/template_util.h' \
 		'third_party/polymer' \
+		'third_party/protobuf' \
 		'third_party/qcms' \
 		'third_party/readability' \
 		'third_party/sfntly' \
@@ -269,11 +281,12 @@ src_prepare() {
 		'third_party/tcmalloc' \
 		'third_party/tlslite' \
 		'third_party/trace-viewer' \
+		'third_party/trace-viewer/third_party/components/polymer' \
+		'third_party/trace-viewer/third_party/d3' \
+		'third_party/trace-viewer/third_party/gl-matrix' \
 		'third_party/trace-viewer/third_party/jszip' \
 		'third_party/trace-viewer/third_party/tvcm' \
-		'third_party/trace-viewer/third_party/tvcm/third_party/d3' \
-		'third_party/trace-viewer/third_party/tvcm/third_party/gl-matrix' \
-		'third_party/trace-viewer/third_party/tvcm/third_party/polymer' \
+		'third_party/trace-viewer/third_party/tvcm/third_party/beautifulsoup/polymer_soup.py' \
 		'third_party/undoview' \
 		'third_party/usrsctp' \
 		'third_party/webdriver' \
@@ -282,9 +295,9 @@ src_prepare() {
 		'third_party/x86inc' \
 		'third_party/zlib/google' \
 		'url/third_party/mozilla' \
+		'v8/src/third_party/fdlibm' \
 		'v8/src/third_party/kernel' \
 		'v8/src/third_party/valgrind' \
-		'v8/third_party/fdlibm' \
 		--do-remove || die
 }
 
@@ -318,6 +331,7 @@ src_configure() {
 	# TODO: use_system_libvpx (http://crbug.com/347823).
 	# TODO: use_system_libusb (http://crbug.com/266149).
 	# TODO: use_system_opus (https://code.google.com/p/webrtc/issues/detail?id=3077).
+	# TODO: use_system_protobuf (bug #525560).
 	# TODO: use_system_ssl (http://crbug.com/58087).
 	# TODO: use_system_sqlite (http://crbug.com/22208).
 	myconf+="
@@ -334,7 +348,6 @@ src_configure() {
 		-Duse_system_libxslt=1
 		-Duse_system_minizip=1
 		-Duse_system_nspr=1
-		-Duse_system_protobuf=1
 		-Duse_system_re2=1
 		-Duse_system_snappy=1
 		-Duse_system_speex=1
