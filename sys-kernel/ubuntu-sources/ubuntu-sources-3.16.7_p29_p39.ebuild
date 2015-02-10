@@ -6,7 +6,7 @@ EAPI=5
 ETYPE="sources"
 
 URELEASE="utopic-security"
-inherit mount-boot kernel-2 versionator ubuntu-versionator
+inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
 MY_PV="${PV}"
@@ -43,6 +43,7 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
+	epatch_user
 }
 
 src_prepare() {
@@ -75,4 +76,5 @@ src_install() {
 pkg_postinst() {
 	[ ! -e ${ROOT}usr/src/linux ] && \
 		ln -s ${PN}-${MY_PV}-${UVER} ${ROOT}usr/src/linux
+	elog "Changelog can be found in /usr/src/linux/debian/changelog"
 }
