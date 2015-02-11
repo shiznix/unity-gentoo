@@ -21,11 +21,11 @@ RDEPEND="
 	>=gnome-base/gnome-core-libs-${PV}[cups?]
 
 	>=gnome-base/gnome-session-${PV}
-	>=gnome-base/gnome-menus-${PV}:3
+	>=gnome-base/gnome-menus-3.10:3
 	>=gnome-base/gnome-settings-daemon-${PV}[cups?]
 
 	>=app-crypt/gcr-${PV}
-	>=gnome-base/nautilus-${PV}
+	>=gnome-base/nautilus-3.10
 	>=gnome-base/gnome-keyring-${PV}
 	>=gnome-extra/evolution-data-server-${PV}
 

@@ -1,6 +1,7 @@
 */* -consolekit -packagekit systemd zeitgeist
 */*::unity-gentoo qml qt5 vala
 
+app-editors/gedit -python_targets_python3_3
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
@@ -13,7 +14,7 @@ dev-libs/glib utils
 dev-libs/keybinder python
 dev-libs/libgdata gnome
 dev-libs/libpcre pcre16
-dev-libs/libpeas python_targets_python3_3 -python_targets_python3_4
+dev-libs/libpeas -python_targets_python3_3
 dev-libs/libxml2 icu
 dev-libs/libxslt python
 dev-libs/openssl -bindist
@@ -28,6 +29,7 @@ dev-qt/qt-mobility organizer
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 gnome-extra/nm-applet -bluetooth	# Bluetooth relies on old bluez-4 to build, which we no longer use
+media-libs/libmediaart -qt4 -qt5
 media-libs/gst-plugins-base theora
 media-libs/harfbuzz icu
 media-libs/mesa egl gbm gles2

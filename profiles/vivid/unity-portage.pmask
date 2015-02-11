@@ -30,14 +30,13 @@ dev-util/gdbus-codegen::gentoo
 
 gnome-base/gconf::gentoo
 gnome-base/gnome-core-apps::gentoo
-gnome-base/gnome-core-libs::gentoo
 gnome-base/gnome-desktop::gentoo
 gnome-base/gnome-fallback::gentoo
 gnome-base/gnome-menus:3::gentoo
 gnome-base/gnome-panel::gentoo
 gnome-base/gnome-session::gentoo
 
-# Compiz needs patched gnome-settings-daemon, see error below...
+# Compiz needs patched gnome-settings-daemon to display desktop, see runtime error below...
 # GLib-GIO-ERROR **: Settings schema 'org.gnome.settings-daemon.plugins.media-keys' does not contain a key named 'terminal'
 gnome-base/gnome-settings-daemon::gentoo
 
