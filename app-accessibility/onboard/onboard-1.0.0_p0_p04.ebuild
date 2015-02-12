@@ -3,13 +3,13 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python3_3 )
+PYTHON_COMPAT=( python3_4 )
 DISTUTILS_SINGLE_IMPL=1
 
+URELEASE="utopic"
 inherit gnome2-utils distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
-URELEASE="utopic"
 
 DESCRIPTION="Simple on-screen Keyboard with macros and easy layout creation"
 HOMEPAGE="https://launchpad.net/onboard"
@@ -39,6 +39,11 @@ RDEPEND="app-accessibility/at-spi2-core
 	x11-libs/libxkbfile
 	x11-libs/pango"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_prepare() {
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
@@ -49,12 +54,15 @@ src_prepare() {
 
 pkg_preinst() {
 	gnome2_icon_savelist
+	gnome2_schemas_savelist
 }
 
 pkg_postinst() {
 	gnome2_icon_cache_update
+	gnome2_schemas_update
 }
 
 pkg_postrm() {
 	gnome2_icon_cache_update
+	gnome2_schemas_update
 }

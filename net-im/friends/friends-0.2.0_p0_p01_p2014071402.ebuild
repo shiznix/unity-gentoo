@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python3_3 )
+PYTHON_COMPAT=( python3_4 )
 
 URELEASE="utopic"
 inherit autotools gnome2-utils python-r1 ubuntu-versionator vala

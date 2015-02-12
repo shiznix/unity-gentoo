@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python3_3 )
+PYTHON_COMPAT=( python3_4 )
 
 URELEASE="vivid"
 inherit distutils-r1 ubuntu-versionator

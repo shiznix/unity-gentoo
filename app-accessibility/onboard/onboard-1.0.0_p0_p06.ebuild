@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python3_3 )
+PYTHON_COMPAT=( python3_4 )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="vivid"
@@ -39,6 +39,11 @@ RDEPEND="app-accessibility/at-spi2-core
 	x11-libs/libxkbfile
 	x11-libs/pango"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_prepare() {
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
@@ -49,12 +54,15 @@ src_prepare() {
 
 pkg_preinst() {
 	gnome2_icon_savelist
+	gnome2_schemas_savelist
 }
 
 pkg_postinst() {
 	gnome2_icon_cache_update
+	gnome2_schemas_update
 }
 
 pkg_postrm() {
 	gnome2_icon_cache_update
+	gnome2_schemas_update
 }

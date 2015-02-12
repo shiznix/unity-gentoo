@@ -1,7 +1,7 @@
 */* -consolekit -packagekit systemd zeitgeist
 */*::unity-gentoo qml qt5 vala
 
-app-editors/gedit -python_targets_python3_3
+app-editors/gedit -python_targets_python3_3 python_targets_python3_4	# Support highest stable python3 version
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
@@ -13,7 +13,7 @@ dev-libs/folks vala
 dev-libs/glib utils
 dev-libs/keybinder python
 dev-libs/libgdata gnome
-dev-libs/libpeas -python_targets_python3_3
+dev-libs/libpeas -python_targets_python3_3 python_targets_python3_4	# Support highest stable python3 version
 dev-libs/libpcre pcre16
 dev-libs/libxml2 icu
 dev-libs/libxslt python
@@ -36,7 +36,7 @@ media-libs/mesa egl gbm gles2
 media-libs/mesa-mir egl gbm gles2
 media-plugins/alsa-plugins pulseaudio
 media-plugins/gst-plugins-meta ffmpeg
-media-sound/rhythmbox zeitgeist
+media-sound/rhythmbox zeitgeist -python_targets_python3_3 python_targets_python3_4	# Support highest stable python3 version
 media-video/ffmpeg opus
 net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
 net-libs/libgadu gnutls
