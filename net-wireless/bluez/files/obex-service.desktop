@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Obex Bluetooth Transfer Service
+Exec=dbus-send --session --dest="org.bluez.obex" /org/bluez/obex org.bluez.obex
+NoDisplay=true
+StartupNotify=false
+Terminal=false
