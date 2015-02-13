@@ -16,16 +16,11 @@
   * Ubuntu's development of these packages lags greatly behind the changes Gnome upstream make and so also lags behind what
 	Gnome versions become available and are subsequently dropped in the portage tree
   * The most important packages affected are as follows:
-	gnome-base/gnome-control-center
 	gnome-base/gnome-desktop
 	gnome-base/gnome-session
 	gnome-base/gnome-settings-daemon
 	unity-base/unity-settings-daemon (Ubuntu fork of gnome-base/gnome-settings-daemon)
 	unity-base/unity-control-center (Ubuntu fork of gnome-base/gnome-control-center)
-  * The flow-on effect of this development lag and subsequent version mismatch is that some updated features in Gnome, break in Unity
-	An example of this is sys-power/upower support. Gnome >=3.12 needs upower-0.99 but unity-control-center and unity-settings-daemon are not yet compatible with upower-0.99 (LP# 1330037)
-		- This has broken laptop power settings in unity-control-center -
-	Another example is Gnome >=3.10 moving DisplayConfig settings (xrandr, color, power) from gnome-desktop into x11-wm/mutter as a dbus interface (LP# 1228765)
-		- This has broken multi-monitor display setups and laptop brightness settings, changing screen resolution lacks confirmation dialog -
+  * The flow-on effect of this development lag and subsequent version mismatch is that some updated features in Gnome can break in Unity
 
 - Xrandr does not work in Mir (unable to get a list of valid screen resolutions other than the one being used, screen rotate does nothing)

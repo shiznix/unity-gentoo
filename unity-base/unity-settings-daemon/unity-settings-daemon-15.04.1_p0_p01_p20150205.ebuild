@@ -6,7 +6,7 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
-URELEASE="utopic"
+URELEASE="vivid"
 inherit autotools base eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
@@ -88,9 +88,6 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 src_prepare() {
 	# Ubuntu patchset #
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"  # This needs to be applied for the debian/ directory to be present #
-
-	# Backport Upower-0.99 support from Vivid Vervet #
-	epatch -p1 "${FILESDIR}/upower-0.99_support.diff"
 
 	# https://bugzilla.gnome.org/show_bug.cgi?id=621836
 	# Apparently this change severely affects touchpad usability for some
