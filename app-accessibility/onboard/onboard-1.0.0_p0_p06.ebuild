@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python3_4 )
+PYTHON_COMPAT=( python{3_3,3_4} )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="vivid"
@@ -20,6 +20,10 @@ LICENSE="GPL-2"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 IUSE=""
+
+# Let people emerge this by default, bug #472932
+IUSE+=" +python_single_target_python3_3 python_single_target_python3_4"
+
 RESTRICT="mirror"
 
 RDEPEND="app-accessibility/at-spi2-core

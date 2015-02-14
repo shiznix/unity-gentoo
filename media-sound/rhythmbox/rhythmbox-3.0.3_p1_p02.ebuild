@@ -8,7 +8,7 @@ GCONF_DEBUG="no"
 PYTHON_COMPAT=( python{3_3,3_4} )
 PYTHON_REQ_USE="xml"
 
-inherit autotools base eutils gnome2 python-r1 multilib ubuntu-versionator virtualx
+inherit autotools base eutils gnome2 python-single-r1 multilib ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"
 URELEASE="utopic"
@@ -21,6 +21,9 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="cdr daap dbus html ipod libnotify libsecret lirc mtp nsplugin +python test +udev upnp-av visualizer webkit zeitgeist"
+
+# Let people emerge this by default, bug #472932
+IUSE+=" +python_single_target_python3_3 python_single_target_python3_4"
 
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 RESTRICT="mirror"

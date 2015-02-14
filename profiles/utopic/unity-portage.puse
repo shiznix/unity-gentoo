@@ -1,7 +1,10 @@
 */* -consolekit -packagekit systemd zeitgeist
 */*::unity-gentoo qml qt5 vala
 
-app-editors/gedit -python_targets_python3_3 python_targets_python3_4	# Support highest stable python3 version
+
+## Enabled PYTHON_SINGLE_TARGET must match state in PYTHON_TARGETS ##
+
+app-editors/gedit -python_targets_python3_4			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_3" as set by /usr/portage/profiles/base/make.defaults
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
@@ -13,7 +16,7 @@ dev-libs/folks vala
 dev-libs/glib utils
 dev-libs/keybinder python
 dev-libs/libgdata gnome
-dev-libs/libpeas -python_targets_python3_3 python_targets_python3_4	# Support highest stable python3 version
+dev-libs/libpeas -python_targets_python3_4			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_3" as set by /usr/portage/profiles/base/make.defaults
 dev-libs/libpcre pcre16
 dev-libs/libxml2 icu
 dev-libs/libxslt python
@@ -36,7 +39,7 @@ media-libs/mesa egl gbm gles2
 media-libs/mesa-mir egl gbm gles2
 media-plugins/alsa-plugins pulseaudio
 media-plugins/gst-plugins-meta ffmpeg
-media-sound/rhythmbox zeitgeist -python_targets_python3_3 python_targets_python3_4	# Support highest stable python3 version
+media-sound/rhythmbox zeitgeist
 media-video/ffmpeg opus
 net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
 net-libs/libgadu gnutls
@@ -47,7 +50,6 @@ sys-apps/systemd pam
 sys-libs/talloc python
 sys-libs/zlib minizip
 unity-base/unity-settings-daemon input_devices_wacom	# Wacom/colord/bluetooth is no longer optional for 'unity-base/unity-control-center'
-unity-lenses/unity-lens-photos -python_targets_python3_3 python_targets_python3_4	# Support highest stable python3 version
 virtual/notification-daemon -gnome	# Needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
 x11-base/xorg-server dmx xvfb
 x11-libs/libdrm libkms

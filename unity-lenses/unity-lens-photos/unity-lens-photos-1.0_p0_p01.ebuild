@@ -20,7 +20,10 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
-IUSE+=" python_single_target_python3_3 +python_single_target_python3_4"
+
+# Let people emerge this by default, bug #472932
+IUSE+=" +python_single_target_python3_3 python_single_target_python3_4"
+
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
