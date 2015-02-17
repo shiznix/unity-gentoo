@@ -32,7 +32,6 @@ gnome-base/gconf::gentoo
 gnome-base/gnome-core-apps::gentoo
 gnome-base/gnome-desktop::gentoo
 gnome-base/gnome-menus:3::gentoo
-gnome-base/gnome-panel::gentoo
 gnome-base/gnome-session::gentoo
 
 # Compiz needs patched gnome-settings-daemon to display desktop, see runtime error below...
@@ -62,6 +61,5 @@ x11-drivers/xf86-video-intel::gentoo
 x11-drivers/xf86-video-nouveau::gentoo
 x11-libs/gtk+::gentoo
 x11-themes/gtk-engines-unico::gentoo
-x11-wm/metacity::gentoo
 x11-misc/lightdm::gentoo
 x11-misc/lightdm-kde::gentoo
