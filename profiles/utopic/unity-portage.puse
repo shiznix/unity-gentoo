@@ -28,6 +28,7 @@ dev-qt/qtgui:5 ibus
 dev-qt/qtmultimedia:5 widgets
 dev-qt/qtquick1:5 webkit
 dev-qt/qtsql:5 sqlite
+dev-qt/qtwebkit:4 icu
 dev-qt/qtwebkit:5 icu qml libxml2 multimedia webp widgets xslt -gstreamer -gstreamer010
 dev-qt/qt-mobility organizer
 gnome-base/gvfs fuse
