@@ -5,10 +5,11 @@
 EAPI=5
 
 QT5_MODULE="qtbase"
+VIRTUALX_REQUIRED="test"
 
 inherit qt5-build
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="Unit testing library for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

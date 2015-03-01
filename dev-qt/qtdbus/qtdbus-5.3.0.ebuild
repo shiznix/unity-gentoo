@@ -8,7 +8,7 @@ QT5_MODULE="qtbase"
 
 inherit qt5-build
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="The D-Bus module for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
@@ -31,7 +31,11 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/qdbusxml2cpp
 	src/tools/qdbuscpp2xml
 )
-QCONFIG_ADD=( dbus dbus-linked )
+
+QT5_GENTOO_CONFIG=(
+	:dbus
+	:dbus-linked:
+)
 
 src_configure() {
 	local myconf=(

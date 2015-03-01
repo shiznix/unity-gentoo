@@ -23,11 +23,12 @@ dev-libs/libxslt python
 dev-libs/openssl -bindist
 dev-libs/protobuf python
 dev-libs/xapian-bindings python
-dev-qt/qtcore icu
-dev-qt/qtgui ibus
-dev-qt/qtquick1 webkit
-dev-qt/qtsql sqlite
-dev-qt/qtwebkit icu qml libxml2 multimedia webp widgets xslt
+dev-qt/qtcore:5 icu
+dev-qt/qtgui:5 ibus
+dev-qt/qtmultimedia:5 widgets
+dev-qt/qtquick1:5 webkit
+dev-qt/qtsql:5 sqlite
+dev-qt/qtwebkit:5 icu qml libxml2 multimedia webp widgets xslt -gstreamer -gstreamer010
 dev-qt/qt-mobility organizer
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala

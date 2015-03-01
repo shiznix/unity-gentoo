@@ -26,10 +26,10 @@ RDEPEND="net-libs/oxide-qt"
 DEPEND="dev-libs/glib
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
-	dev-qt/qtdeclarative:5
+	dev-qt/qtdeclarative:5[widgets]
 	dev-qt/qtnetwork:5
 	dev-qt/qtsql:5
-	dev-qt/qtwebkit:5[libxml2,qml,multimedia,webp,widgets,xslt]
+	dev-qt/qtwebkit:5[qml,multimedia,webp]
 	dev-qt/qtwidgets:5
 	x11-libs/unity-webapps-qml"
 

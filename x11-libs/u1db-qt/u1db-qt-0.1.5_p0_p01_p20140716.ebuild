@@ -3,9 +3,10 @@
 # $Header: $
 
 EAPI=5
+VIRTUALX_REQUIRED="always"
 
 URELEASE="utopic"
-inherit cmake-utils ubuntu-versionator
+inherit cmake-utils ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -27,3 +28,11 @@ DEPEND="dev-python/u1db
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qmlplugindump
+
+
+
+src_compile() {
+	# Needs to be run in a virtual Xserver so that qmlplugindump's #
+	#       qmltypes generation can successfully spawn dbus #
+	VIRTUALX_COMMAND=cmake-utils_src_compile virtualmake
+}
