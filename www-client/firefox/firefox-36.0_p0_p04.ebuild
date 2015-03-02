@@ -31,7 +31,7 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-35.0-patches-0.1"
+PATCH="${PN}-36.0-patches-01"
 # Upstream ftp release URI that's used by mozlinguas.eclass
 # We don't use the http mirror because it deletes old tarballs.
 MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
@@ -40,16 +40,17 @@ MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="utopic-security"
-UVER_PREFIX="+build1"
+URELEASE="vivid"
+UVER_PREFIX="+build2"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
+# No longer optional -- MOZCONFIG_OPTIONAL_JIT="enabled"
 
 inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v5.34 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
 
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
+#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
 IUSE="bindist hardened +minimal pgo selinux +gmp-autoupdate test"
@@ -59,13 +60,14 @@ RESTRICT="mirror"
 SRC_URI="${SRC_URI}
 	http://dev.gentoo.org/~anarchy/mozilla/patchsets/${PATCH}.tar.xz
 	http://dev.gentoo.org/~axs/distfiles/${PATCH}.tar.xz
+	http://dev.gentoo.org/~polynomial-c/mozilla/patchsets/${PATCH}.tar.xz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 # Mesa 7.10 needed for WebGL + bugfixes
 RDEPEND="
-	>=dev-libs/nss-3.17.3
+	>=dev-libs/nss-3.17.4
 	>=dev-libs/nspr-4.10.7
 	selinux? ( sec-policy/selinux-mozilla )"
 
@@ -139,13 +141,6 @@ pkg_pretend() {
 		CHECKREQS_DISK_BUILD="4G"
 	fi
 	check-reqs_pkg_setup
-
-	if use jit && [[ -n ${PROFILE_IS_HARDENED} ]]; then
-		ewarn "You are emerging this package on a hardened profile with USE=jit enabled."
-		ewarn "This is horribly insecure as it disables all PAGEEXEC restrictions."
-		ewarn "Please ensure you know what you are doing.  If you don't, please consider"
-		ewarn "emerging the package with USE=-jit"
-	fi
 }
 
 src_unpack() {
@@ -240,6 +235,12 @@ src_configure() {
 
 	# Other ff-specific settings
 	mozconfig_annotate '' --with-default-mozilla-five-home=${MOZILLA_FIVE_HOME}
+
+	# Force jit
+	mozconfig_annotate '' --enable-ion
+	# Force jit simulators for mips and arm
+	use arm && mozconfig_annotate '' --enable-arm-simulator
+	use mips && mozconfig_annotate '' --enable-mips-simulator
 
 	# Allow for a proper pgo build
 	if use pgo; then
@@ -367,11 +368,11 @@ src_install() {
 	fi
 
 	# Required in order to use plugins and even run firefox on hardened.
-	if use jit; then
+#	if use jit; then
 		pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/{firefox,firefox-bin,plugin-container}
-	else
-		pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/plugin-container
-	fi
+#	else
+#		pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/plugin-container
+#	fi
 
 	if use minimal; then
 		rm -r "${ED}"/usr/include "${ED}${MOZILLA_FIVE_HOME}"/{idl,include,lib,sdk} \
