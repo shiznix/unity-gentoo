@@ -22,8 +22,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+threads"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/glib:2
-	dev-libs/cgmanager
+DEPEND="app-admin/cgmanager
+	dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libzeitgeist
 	dev-libs/libupstart

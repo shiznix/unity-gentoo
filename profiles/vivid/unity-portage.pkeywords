@@ -3,6 +3,7 @@
 */*::unity-gentoo
 
 ## Other packages keyword unmasking ##
+app-admin/cgmanager
 ~app-admin/packagekit-base-0.8.15
 ~dev-dotnet/libgdiplus-2.10.9
 ~dev-libs/libgcrypt-1.6.1
@@ -40,7 +41,6 @@ app-backup/deja-dup **
 dev-cpp/gflags **
 dev-cpp/gmock **
 dev-cpp/gtest **
-dev-libs/cgmanager **
 dev-libs/libaccounts-glib **
 dev-libs/libdbusmenu-qt **
 dev-libs/libtimezonemap **
