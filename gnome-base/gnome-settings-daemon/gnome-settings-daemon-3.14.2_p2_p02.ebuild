@@ -105,12 +105,7 @@ src_prepare() {
 		epatch "${FILESDIR}/${PN}-3.7.90-short-touchpad-timeout.patch"
 
 	# Make colord and wacom optional; requires eautoreconf
-	epatch "${FILESDIR}/${PN}-3.12.0-optional.patch"
-
-	# Backport Upower-0.99 support from Vivid Vervet #
-	pushd "${WORKDIR}"
-		epatch "${FILESDIR}/gnome-settings-daemon_3.12.2-1ubuntu2_3.12.2-1ubuntu4.diff"
-	popd
+	epatch "${FILESDIR}/${PN}-3.14.0-optional.patch"
 
 	# Disable selected patches #
 	sed \

@@ -26,23 +26,23 @@ REQUIRED_USE="packagekit? ( udev )
 RESTRICT="mirror"
 
 # require colord-0.1.27 dependency for connection type support
-COMMON_DEPEND=">=dev-libs/glib-2.37.7:2
+COMMON_DEPEND="dev-libs/glib:2
 	dev-libs/libappindicator:=
-	>=x11-libs/gtk+-3.7.8:3
-	>=gnome-base/gnome-desktop-3.9:3=
+	x11-libs/gtk+:3
+	gnome-base/gnome-desktop:3=
 	>=gnome-base/gsettings-desktop-schemas-3.9.91.1
-	>=gnome-base/librsvg-2.36.2
+	gnome-base/librsvg
 	media-fonts/cantarell
 	media-libs/fontconfig
-	>=media-libs/lcms-2.2:2
+	media-libs/lcms:2
 	media-libs/libcanberra[gtk3]
-	>=media-sound/pulseaudio-2
+	media-sound/pulseaudio
 	sys-apps/accountsservice
 	sys-apps/systemd
 	>=sys-power/upower-0.99:=
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
-	>=x11-libs/libnotify-0.7.3:=
+	x11-libs/libnotify:=
 	x11-libs/libX11
 	x11-libs/libxkbfile
 	x11-libs/libXi
@@ -52,24 +52,24 @@ COMMON_DEPEND=">=dev-libs/glib-2.37.7:2
 	x11-libs/libXxf86misc
 
 	app-misc/geoclue:2.0
-	>=dev-libs/libgweather-3.9.5:2
-	>=sci-geosciences/geocode-glib-3.10
-	>=sys-auth/polkit-0.103
+	dev-libs/libgweather:2=
+	sci-geosciences/geocode-glib
+	sys-auth/polkit
 
-	colord? ( >=x11-misc/colord-1.0.2:= )
-	cups? ( >=net-print/cups-1.4[dbus] )
-	i18n? ( >=app-i18n/ibus-1.4.99 )
+	colord? ( x11-misc/colord:= )
+	cups? ( net-print/cups[dbus] )
+	i18n? ( app-i18n/ibus )
 	input_devices_wacom? (
-		>=dev-libs/libwacom-0.7
+		dev-libs/libwacom
 		x11-drivers/xf86-input-wacom )
-	packagekit? ( >=app-admin/packagekit-base-0.7.4 )
-	smartcard? ( >=dev-libs/nss-3.11.2 )
+	packagekit? ( app-admin/packagekit-base )
+	smartcard? ( dev-libs/nss )
 	udev? ( virtual/libgudev:= )"
 RDEPEND="${COMMON_DEPEND}
 	gnome-base/dconf
-	>=x11-themes/gnome-themes-standard-2.91
-	>=x11-themes/gnome-icon-theme-2.91
-	>=x11-themes/gnome-icon-theme-symbolic-2.91
+	x11-themes/gnome-themes-standard
+	x11-themes/gnome-icon-theme
+	x11-themes/gnome-icon-theme-symbolic
 	!<gnome-base/gnome-control-center-2.22
 	!<gnome-extra/gnome-color-manager-3.1.1
 	!<gnome-extra/gnome-power-manager-3.1.3"
@@ -145,6 +145,9 @@ src_install() {
 
 	insinto /usr/lib/unity-settings-daemon
 	doins gnome-settings-daemon/gnome-update-wallpaper-cache
+
+	dodir /usr/share/hwdata
+	dosym /usr/share/libgnome-desktop-3.0/pnp.ids /usr/share/hwdata/pnp.ids
 
 	prune_libtool_files --modules
 }

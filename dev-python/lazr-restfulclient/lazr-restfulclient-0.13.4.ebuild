@@ -11,13 +11,13 @@ inherit distutils-r1 ubuntu-versionator
 
 MY_PN="lazr.restfulclient"
 UURL="mirror://ubuntu/pool/main/l/${MY_PN}"
-UVER="3"
+UVER="4"
 MY_P="${MY_PN}_${PV}"
 
 DESCRIPTION="Client for lazr.restful-based web services for the Unity desktop"
 HOMEPAGE="https://launchpad.net/lazr.restfulclient"
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
-	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

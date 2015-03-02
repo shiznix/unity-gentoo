@@ -5,7 +5,7 @@
 EAPI=5
 VIRTUALX_REQUIRED="always"
 
-URELEASE="utopic"
+URELEASE="vivid"
 inherit cmake-utils ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
@@ -16,7 +16,7 @@ HOMEPAGE="https://launchpad.net/u1db-qt"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

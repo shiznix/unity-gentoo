@@ -8,7 +8,7 @@ URELEASE="vivid"
 inherit autotools eutils linux-info systemd ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-UVER="17"
+UVER="19"
 
 DESCRIPTION="Ureadahead - Read files in advance during boot"
 HOMEPAGE="https://launchpad.net/ureadahead"

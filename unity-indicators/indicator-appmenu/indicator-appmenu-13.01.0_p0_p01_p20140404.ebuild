@@ -6,11 +6,11 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="utopic"
 inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.04.20140404"
+UVER_PREFIX="+14.04.${PVR_MICRO}"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-appmenu"

@@ -153,6 +153,7 @@ unity-extra/indicator-multiload **
 unity-extra/indicator-psensor **
 unity-indicators/ido **
 unity-indicators/indicator-applet **
+unity-indicators/indicator-application **
 unity-indicators/indicator-appmenu **
 unity-indicators/indicator-datetime **
 unity-indicators/indicator-keyboard **
@@ -181,8 +182,11 @@ x11-libs/unity-webapps-qml **
 x11-misc/appmenu-qt5 **
 x11-misc/webapps-greasemonkey **
 x11-misc/lightdm **
+x11-misc/lightdm-kde **
+x11-misc/notify-osd **
 x11-misc/unity-chromium-extension **
 x11-themes/humanity-icon-theme **
+x11-themes/notify-osd-icons **
 x11-themes/ubuntu-themes **
 x11-themes/ubuntu-wallpapers **
 x11-themes/unity-asset-pool **

@@ -4,11 +4,11 @@
 
 EAPI=5
 
+URELEASE="utopic-updates"
 inherit eutils flag-o-matic autotools multilib-minimal ubuntu-versionator
 
 MY_PV="1.13.0"	# Wrong tarball versioning from Ubuntu
 UURL="mirror://ubuntu/pool/main/c/${PN}"
-URELEASE="utopic"
 UVER_PREFIX="~20140204"
 
 SRC_URI="${UURL}/${PN}_${MY_PV}${UVER_PREFIX}.orig.tar.xz"

@@ -8,7 +8,7 @@ VALA_MAX_API_VERSION="0.22"
 inherit cmake-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-URELEASE="utopic"
+URELEASE="utopic-updates"
 
 DESCRIPTION="Simple backup tool using duplicity back-end"
 HOMEPAGE="https://launchpad.net/deja-dup/"

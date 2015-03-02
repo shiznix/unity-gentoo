@@ -33,9 +33,9 @@ RDEPEND="dev-libs/dee:=
 	dev-libs/libunity-misc:=
 	gnome-base/gnome-desktop:3=
 	media-libs/glew:=
-	>=unity-base/bamf-0.4.0:=
-	>=unity-base/compiz-0.9.9:=
-	>=unity-base/nux-4.0.0:=[debug?]
+	unity-base/bamf:=
+	unity-base/compiz:=
+	unity-base/nux:=[debug?]
 	unity-base/gsettings-ubuntu-touch-schemas
 	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
@@ -48,7 +48,7 @@ DEPEND="dev-libs/boost
 	dev-libs/libdbusmenu
 	dev-libs/libindicate[gtk,introspection]
 	dev-libs/libindicate-qt
-	>=dev-libs/libindicator-12.10.2
+	dev-libs/libindicator
 	dev-libs/libunity
 	dev-libs/libunity-misc
 	dev-libs/libupstart
@@ -57,9 +57,9 @@ DEPEND="dev-libs/boost
 	>=gnome-base/gconf-3.2.5
 	app-text/yelp-tools
 	gnome-base/gnome-desktop:3
-	>=gnome-base/gnome-menus-3.8:3
-	>=gnome-base/gnome-session-3.8
-	>=gnome-base/gsettings-desktop-schemas-3.8
+	gnome-base/gnome-menus:3
+	gnome-base/gnome-session
+	gnome-base/gsettings-desktop-schemas
 	gnome-base/libgdu
 	>=gnome-extra/polkit-gnome-0.105-r9
 	media-libs/clutter-gtk:1.0
@@ -68,10 +68,10 @@ DEPEND="dev-libs/boost
 	sys-auth/pambase
 	>=sys-devel/gcc-4.8
 	sys-libs/libnih[dbus]
-	>=unity-base/bamf-0.4.0
-	>=unity-base/compiz-0.9.9
+	unity-base/bamf
+	unity-base/compiz
 	unity-base/dconf-qt
-	>=unity-base/nux-4.0.0[debug?]
+	unity-base/nux[debug?]
 	unity-base/overlay-scrollbar
 	unity-base/unity-control-center
 	unity-base/unity-settings-daemon

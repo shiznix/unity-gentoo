@@ -23,7 +23,7 @@ EBZR_REVISION="12798"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="bluetooth +cups +gnome-online-accounts +i18n +socialweb v4l"
+IUSE="+cups +gnome-online-accounts +i18n +socialweb v4l"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 RESTRICT="mirror"
 
@@ -73,7 +73,7 @@ COMMON_DEPEND="
 	x11-libs/libXxf86misc
 	>=x11-libs/libXi-1.2
 
-	>=net-wireless/gnome-bluetooth-3.9.3:=
+	net-wireless/gnome-bluetooth:=
 
 	net-libs/libsoup:2.4
 	>=x11-misc/colord-0.1.34:0=
@@ -165,7 +165,6 @@ src_configure() {
 		--disable-static \
 		--enable-documentation \
 		--without-cheese \
-		$(use_enable bluetooth) \
 		$(use_enable cups) \
 		$(use_enable i18n ibus) \
 		$(use_with socialweb libsocialweb)

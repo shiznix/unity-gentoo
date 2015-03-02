@@ -73,7 +73,7 @@ COMMON_DEPEND="
 	x11-libs/libXxf86misc
 	>=x11-libs/libXi-1.2
 
-	>=net-wireless/gnome-bluetooth-3.9.3:=
+	net-wireless/gnome-bluetooth:=
 
 	net-libs/libsoup:2.4
 	>=x11-misc/colord-0.1.34:0=

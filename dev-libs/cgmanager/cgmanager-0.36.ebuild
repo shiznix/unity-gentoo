@@ -8,7 +8,7 @@ URELEASE="vivid"
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
-UVER="1"
+UVER="2"
 
 DESCRIPTION="Central cgroup manager daemon"
 HOMEPAGE="https://launchpad.net/cgmanager"
