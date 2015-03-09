@@ -6,14 +6,14 @@ EAPI=5
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 AUTOTOOLS_AUTORECONF=y
 
+URELEASE="vivid"
 inherit autotools-utils eutils python-r1 ubuntu-versionator vala
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-URELEASE="utopic"
-UVER_PREFIX="+14.04.20140324"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Provide objects allowing to create Model-View-Controller type programs across DBus"
 HOMEPAGE="https://launchpad.net/dee/"
@@ -21,7 +21,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 SLOT="0/4.2.1"
 LICENSE="GPL-3"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="doc debug examples +icu static-libs test"
 RESTRICT="mirror"
 

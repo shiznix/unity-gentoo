@@ -6,10 +6,10 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
+URELEASE="utopic-updates"
 inherit autotools base eutils gnome2 readme.gentoo virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/n/${PN}"
-URELEASE="utopic"
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Nautilus"

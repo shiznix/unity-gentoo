@@ -74,6 +74,10 @@ src_prepare() {
 
 	epatch "${FILESDIR}/${PN}-1.2.5-remove-_FORTIFY_SOURCE-warning.patch"
 
+	# Fix sandbox violation #
+	sed -e "s:\${CMAKE_INSTALL_PREFIX}:${ED}\${CMAKE_INSTALL_PREFIX}:g" \
+		-i qt/CMakeLists.txt || die
+
 	base_src_prepare
 }
 

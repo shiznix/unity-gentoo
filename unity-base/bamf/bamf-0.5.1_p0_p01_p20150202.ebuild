@@ -9,7 +9,7 @@ URELEASE="vivid"
 inherit autotools eutils ubuntu-versionator vala xdummy python-single-r1
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
-UVER_PREFIX="+14.10.${PVR_MICRO}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="BAMF Application Matching Framework"
 HOMEPAGE="https://launchpad.net/bamf"

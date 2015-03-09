@@ -42,6 +42,7 @@ app-backup/deja-dup **
 dev-cpp/gflags **
 dev-cpp/gmock **
 dev-cpp/gtest **
+dev-libs/dee **
 dev-libs/libaccounts-glib **
 dev-libs/libdbusmenu-qt **
 dev-libs/libtimezonemap **
@@ -130,6 +131,7 @@ sys-apps/click **
 unity-base/bamf **
 unity-base/compiz **
 unity-base/evemu **
+unity-base/geis **
 unity-base/gnome-control-center-signon **
 unity-base/gsettings-ubuntu-touch-schemas **
 unity-base/hud **
