@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="+colord +cups debug +i18n input_devices_wacom nls packagekit policykit +short-touchpad-timeout smartcard +udev"
+IUSE="+colord +cups debug fcitx +i18n input_devices_wacom nls packagekit policykit +short-touchpad-timeout smartcard +udev"
 KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 REQUIRED_USE="packagekit? ( udev )
 		smartcard? ( udev )"
@@ -58,6 +58,7 @@ COMMON_DEPEND="dev-libs/glib:2
 
 	colord? ( x11-misc/colord:= )
 	cups? ( net-print/cups[dbus] )
+	fcitx? ( app-i18n/fcitx )
 	i18n? ( app-i18n/ibus )
 	input_devices_wacom? (
 		dev-libs/libwacom
@@ -121,6 +122,7 @@ src_configure() {
 		$(use_enable cups) \
 		$(use_enable debug) \
 		$(use_enable debug more-warnings) \
+		$(use_enable fcitx) \
 		$(use_enable i18n ibus) \
 		$(use_enable nls) \
 		$(use_enable packagekit) \

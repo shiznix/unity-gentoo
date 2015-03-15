@@ -11,22 +11,23 @@ inherit autotools base xorg-2 multilib versionator flag-o-matic ubuntu-versionat
 UURL="mirror://ubuntu/pool/main/x/${PN}"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
-#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
+SLOT="0/${PV}"
+#KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
-IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
+IUSE_SERVERS="dmx kdrive xephyr xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} glamor ipv6 minimal mir nptl selinux +suid systemd tslib +udev unwind wayland"
 RESTRICT="mirror"
 
-RDEPEND=">=app-admin/eselect-opengl-1.0.8
+CDEPEND=">=app-admin/eselect-opengl-1.3.0
 	dev-libs/openssl
 	media-libs/freetype
 	>=x11-apps/iceauth-1.0.2
 	>=x11-apps/rgb-1.0.3
 	>=x11-apps/xauth-1.0.3
 	x11-apps/xkbcomp
-	>=x11-libs/libdrm-2.4.20
+	>=x11-libs/libdrm-2.4.46
 	>=x11-libs/libpciaccess-0.12.901
 	>=x11-libs/libXau-1.0.4
 	>=x11-libs/libXdmcp-1.0.2
@@ -34,7 +35,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	>=x11-libs/libxkbfile-1.0.4
 	>=x11-libs/libxshmfence-1.1
 	>=x11-libs/pixman-0.27.2
-	>=x11-libs/xtrans-1.3.3
+	>=x11-libs/xtrans-1.3.5
 	>=x11-misc/xbitmaps-1.0.1
 	>=x11-misc/xkeyboard-config-2.4.1-r3
 	dmx? (
@@ -52,17 +53,25 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	)
 	glamor? (
 		media-libs/libepoxy
-		media-libs/mesa[egl,gbm]
+		>=media-libs/mesa-10.3.4-r1[egl,gbm]
 		!x11-libs/glamor
 	)
 	kdrive? (
 		>=x11-libs/libXext-1.0.5
 		x11-libs/libXv
 	)
+	xephyr? (
+		x11-libs/libxcb
+		x11-libs/xcb-util
+		x11-libs/xcb-util-image
+		x11-libs/xcb-util-keysyms
+		x11-libs/xcb-util-renderutil
+		x11-libs/xcb-util-wm
+	)
 	!minimal? (
 		>=x11-libs/libX11-1.1.5
 		>=x11-libs/libXext-1.0.5
-		>=media-libs/mesa-9.2.0[nptl=]
+		>=media-libs/mesa-10.3.4-r1[nptl=]
 	)
 	mir? ( mir-base/mir:= )
 	tslib? ( >=x11-libs/tslib-1.0 )
@@ -72,22 +81,20 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 		>=dev-libs/wayland-1.3.0
 		media-libs/libepoxy
 	)
-	>=x11-apps/xinit-1.3
-	selinux? ( sec-policy/selinux-xserver )
+	>=x11-apps/xinit-1.3.3-r1
 	systemd? (
 		sys-apps/dbus
 		sys-apps/systemd
-		>=x11-apps/xinit-1.3.4
 	)"
 
-DEPEND="${RDEPEND}
+DEPEND="${CDEPEND}
 	sys-devel/flex
 	>=x11-proto/bigreqsproto-1.1.0
 	>=x11-proto/compositeproto-0.4
 	>=x11-proto/damageproto-1.1
 	>=x11-proto/fixesproto-5.0
 	>=x11-proto/fontsproto-2.1.3
-	>=x11-proto/glproto-1.4.17
+	>=x11-proto/glproto-1.4.17-r1
 	>=x11-proto/inputproto-2.2.99.1
 	>=x11-proto/kbproto-1.0.3
 	>=x11-proto/randrproto-1.4.0
@@ -122,16 +129,26 @@ DEPEND="${RDEPEND}
 		>=x11-proto/dri2proto-2.8
 	)"
 
+RDEPEND="${CDEPEND}
+	selinux? ( sec-policy/selinux-xserver )
+	!x11-drivers/xf86-video-modesetting
+"
+
 PDEPEND="
 	xorg? ( >=x11-base/xorg-drivers-$(get_version_component_range 1-2) )"
 
 REQUIRED_USE="!minimal? (
 		|| ( ${IUSE_SERVERS} )
-	)"
+	)
+	xephyr? ( kdrive )"
+
+#UPSTREAMED_PATCHES=(
+#	"${WORKDIR}/patches/"
+#)
 
 PATCHES=(
 	"${UPSTREAMED_PATCHES[@]}"
-	"${FILESDIR}"/${PN}-1.12-ia64-fix_inx_outx.patch
+	"${FILESDIR}"/${PN}-1.17-ia64-fix_inx_outx.patch
 	"${FILESDIR}"/${PN}-1.12-unloadsubmodule.patch
 )
 
@@ -174,6 +191,7 @@ src_configure() {
 		$(use_enable !minimal dri)
 		$(use_enable !minimal dri2)
 		$(use_enable !minimal glx)
+		$(use_enable xephyr)
 		$(use_enable xnest)
 		$(use_enable xorg)
 		$(use_enable xvfb)
@@ -196,24 +214,11 @@ src_configure() {
 		--with-sha1=libcrypto
 	)
 
-	# Xorg-server requires includes from OS mesa which are not visible for
-	# users of binary drivers.
-	mkdir -p "${T}/mesa-symlinks/GL"
-	for i in gl glx glxmd glxproto glxtokens; do
-		ln -s "${EROOT}usr/$(get_libdir)/opengl/xorg-x11/include/$i.h" "${T}/mesa-symlinks/GL/$i.h" || die
-	done
-	for i in glext glxext; do
-		ln -s "${EROOT}usr/$(get_libdir)/opengl/global/include/$i.h" "${T}/mesa-symlinks/GL/$i.h" || die
-	done
-	append-cppflags "-I${T}/mesa-symlinks"
-
 	xorg-2_src_configure
 }
 
 src_install() {
 	xorg-2_src_install
-
-	dynamic_libgl_install
 
 	server_based_install
 
@@ -234,20 +239,6 @@ src_install() {
 pkg_postinst() {
 	# sets up libGL and DRI2 symlinks if needed (ie, on a fresh install)
 	eselect opengl set xorg-x11 --use-old
-
-	if [[ ${PV} != 9999 && $(get_version_component_range 2 ${REPLACING_VERSIONS}) != $(get_version_component_range 2 ${PV}) ]]; then
-		elog "You should consider reading upgrade guide for this release:"
-		elog "  http://www.gentoo.org/proj/en/desktop/x/x11/xorg-server-$(get_version_component_range 1-2)-upgrade-guide.xml"
-		echo
-		ewarn "You must rebuild all drivers if upgrading from <xorg-server-$(get_version_component_range 1-2)"
-		ewarn "because the ABI changed. If you cannot start X because"
-		ewarn "of module version mismatch errors, this is your problem."
-
-		echo
-		ewarn "You can rebuild all installed packages in the x11-drivers"
-		ewarn "category using this command:"
-		ewarn "	emerge @x11-module-rebuild"
-	fi
 }
 
 pkg_postrm() {
@@ -255,19 +246,6 @@ pkg_postrm() {
 	if [[ -z ${REPLACED_BY_VERSION} && -e ${EROOT}/usr/$(get_libdir)/xorg/modules ]]; then
 		rm -rf "${EROOT}"/usr/$(get_libdir)/xorg/modules
 	fi
-}
-
-dynamic_libgl_install() {
-	# next section is to setup the dynamic libGL stuff
-	ebegin "Moving GL files for dynamic switching"
-		dodir /usr/$(get_libdir)/opengl/xorg-x11/extensions
-		local x=""
-		for x in "${ED}"/usr/$(get_libdir)/xorg/modules/extensions/lib{glx,dri,dri2}*; do
-			if [ -f ${x} -o -L ${x} ]; then
-				mv -f ${x} "${ED}"/usr/$(get_libdir)/opengl/xorg-x11/extensions
-			fi
-		done
-	eend 0
 }
 
 server_based_install() {

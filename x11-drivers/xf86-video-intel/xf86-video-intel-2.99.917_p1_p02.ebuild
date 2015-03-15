@@ -11,27 +11,24 @@ inherit autotools base linux-info xorg-2 ubuntu-versionator
 MY_PN="xserver-xorg-video-intel"
 UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
 UVER="1~exp${UVER}"
+UVER_SUFFIX="build1"
 
 DESCRIPTION="X.Org driver for Intel cards"
-SRC_URI="${UURL}/${MY_PN}_${PV}-${UVER}.tar.gz"
+SRC_URI="${UURL}/${MY_PN}_${PV}-${UVER}.tar.gz
+	${UURL}/${MY_PN}_${PV}-${UVER}${UVER_SUFFIX}.diff.gz"
 
 #KEYWORDS="~amd64 ~x86 ~amd64-fbsd -x86-fbsd"
-IUSE="debug glamor mir +sna +udev uxa xvmc"
+IUSE="debug mir +sna +udev uxa xvmc"
 RESTRICT="mirror strip"
 
 REQUIRED_USE="
 	|| ( sna uxa )
-	glamor? ( uxa )
 "
 
 RDEPEND="x11-libs/libXext
 	x11-libs/libXfixes
 	>=x11-libs/pixman-0.27.1
 	>=x11-libs/libdrm-2.4.29[video_cards_intel]
-	glamor? ( || (
-		x11-base/xorg-server[glamor]
-		>=x11-libs/glamor-0.6.0
-	) )
 	sna? (
 		>=x11-base/xorg-server-1.10
 	)
@@ -46,6 +43,8 @@ RDEPEND="x11-libs/libXext
 "
 DEPEND="${RDEPEND}
 	>=x11-proto/dri2proto-2.6
+	x11-proto/dri3proto
+	x11-proto/presentproto
 	x11-proto/resourceproto"
 
 src_prepare() {
@@ -63,7 +62,6 @@ src_configure() {
 	XORG_CONFIGURE_OPTIONS=(
 		$(use_enable debug)
 		$(use_enable dri)
-		$(use_enable glamor)
 		$(use_enable sna)
 		$(use_enable uxa)
 		$(use_enable udev)
