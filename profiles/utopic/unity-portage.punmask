@@ -17,6 +17,11 @@ dev-util/gdbus-codegen::unity-gentoo
 
 gnome-base/*::unity-gentoo
 
+# Override specific packages masked by mass gnome-*/*14* version masking (is there a better wildcard masking pattern?) #
+gnome-base/orbit::gentoo
+gnome-extra/gnome-integration-spotify::gentoo
+
+
 media-libs/mesa::unity-gentoo
 net-im/telepathy-mission-control::unity-gentoo
 sys-power/cpufrequtils::unity-gentoo
