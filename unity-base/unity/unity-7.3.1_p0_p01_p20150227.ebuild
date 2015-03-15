@@ -142,6 +142,10 @@ src_prepare() {
 	#  It slows down the launch of unity-panel-service in lockscreen mode #
 	sed -e '/killall -9 unity-panel-service/,+1d' \
 		-i UnityCore/DBusIndicators.cpp
+
+	# Include directly iostream needed for std::cout #
+	sed -e 's/.*<fstream>.*/#include <iostream>\n&/' \
+		-i unity-shared/DebugDBusInterface.cpp
 }
 
 src_configure() {
