@@ -1,31 +1,7 @@
-## Revert some portage <gnome-3.10 masking ##
-<gnome-base/gnome-menus-3.10
-gnome-base/gnome-panel
-<media-sound/pulseaudio-5
-<net-im/empathy-3.10
-x11-wm/metacity
-gnome-base/libgdu
+# Unmask packages masked by main portage tree #
+x11-misc/lightdm::unity-gentoo
 
-#########################################
-
-sys-libs/db:5.1
-
-dev-libs/glib::unity-gentoo
-dev-libs/gobject-introspection::unity-gentoo
-dev-libs/gobject-introspection-common::unity-gentoo
-dev-util/gdbus-codegen::unity-gentoo
-
-gnome-base/*::unity-gentoo
-
-# Override specific packages masked by mass gnome-*/*14* version masking (is there a better wildcard masking pattern?) #
+# Override specific packages masked by mass overlay gnome-*/*14* version masking (is there a better wildcard masking pattern?) #
 gnome-base/orbit::gentoo
 gnome-extra/gnome-integration-spotify::gentoo
-
-
-media-libs/mesa::unity-gentoo
-net-im/telepathy-mission-control::unity-gentoo
-sys-power/cpufrequtils::unity-gentoo
-x11-libs/cairo::unity-gentoo
-x11-libs/gtk+::unity-gentoo
-x11-misc/lightdm::unity-gentoo
 

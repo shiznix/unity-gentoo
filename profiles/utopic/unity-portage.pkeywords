@@ -22,8 +22,6 @@ dev-python/fixtures
 ~media-libs/libepoxy-1.2
 ~media-libs/giflib-4.2.3
 ~media-libs/glm-0.9.5.1
-sys-devel/gcc:4.8
-sys-devel/llvm:0/3.3
 sys-kernel/ubuntu-sources
 sys-libs/db:5.1
 ~sys-libs/libnih-1.0.3
