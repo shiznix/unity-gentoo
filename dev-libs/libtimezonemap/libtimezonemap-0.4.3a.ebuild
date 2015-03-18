@@ -10,12 +10,11 @@ URELEASE="vivid"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libt/${PN}"
-UVER=
-UVER_PREFIX="build1"
+UVER="build1"
 
 DESCRIPTION="GTK+3 timezone map widget used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libtimezonemap"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0/1.0.0"

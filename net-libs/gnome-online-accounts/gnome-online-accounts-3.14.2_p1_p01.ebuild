@@ -9,7 +9,6 @@ URELEASE="vivid"
 inherit autotools gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-UVER="1"
 
 DESCRIPTION="GNOME framework for accessing online accounts"
 HOMEPAGE="https://wiki.gnome.org/GnomeOnlineAccounts"
