@@ -54,7 +54,6 @@ dev-libs/gobject-introspection-common **
 dev-libs/libappindicator **
 dev-libs/libcolumbus **
 dev-libs/libdbusmenu **
-dev-libs/libfriends **
 dev-libs/libhybris **
 dev-libs/libqtdbusmock **
 dev-libs/libsignon-glib **
@@ -120,8 +119,6 @@ media-sound/rhythmbox **
 mir-base/mir **
 mir-base/unity-system-compositor **
 net-im/empathy **
-net-im/friends **
-net-im/friends-app **
 net-im/telepathy-mission-control **
 net-libs/account-plugins **
 net-libs/gnome-online-accounts **
@@ -176,7 +173,6 @@ x11-drivers/xf86-video-ati **
 x11-drivers/xf86-video-intel **
 x11-drivers/xf86-video-nouveau **
 x11-libs/accounts-qml-module **
-x11-libs/cairo **
 x11-libs/content-hub **
 x11-libs/gsettings-qt **
 x11-libs/gtk+:2 **
