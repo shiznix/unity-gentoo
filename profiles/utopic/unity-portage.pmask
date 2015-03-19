@@ -12,9 +12,11 @@
 >=media-libs/libmikmod-3.3.5
 >=media-libs/sdl-mixer-1.2.12-r4
 
-# mask gnome-3.14 packages
+
+# mask gnome-3.14 packages #
 =gnome-*/*-*14*::gentoo
 =*/gnome*-*14*::gentoo
+
 >=app-accessibility/caribou-0.4.17
 >=app-accessibility/at-spi2-atk-2.14::gentoo
 >=app-accessibility/at-spi2-core-2.14::gentoo
@@ -27,6 +29,13 @@
 >=dev-libs/libgweather-3.14.0::gentoo
 >=dev-python/pyatspi-2.14.0::gentoo
 >=dev-python/pygobject-3.14.0::gentoo
+
+>=games-board/four-in-a-row-3.14::gentoo	# Games pulled in by gnome-base/gnome-extra-apps (unity-base/unity-meta[gnome-extras]) #
+>=games-board/iagno-3.14::gentoo
+>=games-puzzle/five-or-more-3.14::gentoo
+>=games-puzzle/hitori::gentoo
+>=games-puzzle/lightsoff-3.14::gentoo
+
 >=mail-client/evolution-3.14.0::gentoo
 >=media-gfx/eog-3.14.0::gentoo
 >=media-libs/clutter-1.20.0::gentoo
@@ -37,6 +46,7 @@
 >=www-client/epiphany-3.14.0::gentoo
 >=x11-libs/gtksourceview-3.14.0::gentoo
 >=x11-wm/mutter-3.14.0::gentoo
+
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
