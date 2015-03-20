@@ -33,7 +33,7 @@
 >=games-board/four-in-a-row-3.14::gentoo	# Games pulled in by gnome-base/gnome-extra-apps (unity-base/unity-meta[gnome-extras]) #
 >=games-board/iagno-3.14::gentoo
 >=games-puzzle/five-or-more-3.14::gentoo
->=games-puzzle/hitori::gentoo
+>=games-puzzle/hitori-3.14::gentoo
 >=games-puzzle/lightsoff-3.14::gentoo
 
 >=mail-client/evolution-3.14.0::gentoo
