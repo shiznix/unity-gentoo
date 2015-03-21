@@ -10,12 +10,11 @@ URELEASE="vivid"
 inherit autotools base eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/g/${PN}"
-UVER="1~ubuntu2"
 
 DESCRIPTION="The GNOME panel patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="0"

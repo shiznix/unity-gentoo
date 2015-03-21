@@ -3,10 +3,11 @@
 # $Header: $
 
 EAPI=5
+
+URELEASE="utopic-updates"
 inherit base eutils pam readme.gentoo ubuntu-versionator user autotools systemd
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
-URELEASE="utopic"
 
 DESCRIPTION="A lightweight display manager"
 HOMEPAGE="https://launchpad.net/lightdm"
@@ -25,7 +26,7 @@ done
 IUSE+=" +lightdm_greeters_unity +introspection qt4 qt5 mir test"
 RESTRICT="mirror"
 
-COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
+COMMON_DEPEND="dev-libs/glib:2
 	dev-libs/libxml2
 	sys-apps/accountsservice
 	virtual/pam
@@ -44,7 +45,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.32.3:2
 		dev-qt/qtgui:5
 		)"
 RDEPEND="${COMMON_DEPEND}
-	>=sys-auth/pambase-20101024-r2
+	sys-auth/pambase
 	x11-apps/xrandr
 	>=app-admin/eselect-lightdm-0.2"
 DEPEND="${COMMON_DEPEND}
@@ -79,7 +80,7 @@ src_prepare() {
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
 	# Do not depend on Debian/Ubuntu specific adduser package
-	epatch "${FILESDIR}"/guest-session-cross-distro_1.11.5.patch
+	epatch "${FILESDIR}"/guest-session-cross-distro_1.12.3.patch
 
 	# Add support for settings GSettings/dconf defaults in the guest session. Just
 	# put the files in /etc/guest-session/gsettings/. The file format is the same

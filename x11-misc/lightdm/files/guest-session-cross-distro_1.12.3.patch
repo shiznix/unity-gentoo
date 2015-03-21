@@ -1,6 +1,6 @@
-diff -urN lightdm-1.11.5/debian/guest-account.sh lightdm-1.11.5-patched/debian/guest-account.sh
---- lightdm-1.11.5/debian/guest-account.sh	2014-07-28 11:05:52.000000000 +0930
-+++ lightdm-1.11.5-patched/debian/guest-account.sh	2014-08-03 17:39:02.950981707 +0930
+diff -urN lightdm-1.12.3/debian/guest-account.sh lightdm-1.12.3-patched/debian/guest-account.sh
+--- lightdm-1.12.3/debian/guest-account.sh	2015-01-21 09:44:51.000000000 +1030
++++ lightdm-1.12.3-patched/debian/guest-account.sh	2015-03-21 11:12:46.368281997 +1030
 @@ -20,7 +20,12 @@
  
  add_account ()
@@ -38,40 +38,40 @@ diff -urN lightdm-1.11.5/debian/guest-account.sh lightdm-1.11.5-patched/debian/g
          umount "$HOME"
          rm -rf "$HOME"
          exit 1
-@@ -125,10 +144,15 @@
-     echo "Error: invalid user $USER"
+@@ -125,10 +144,16 @@
+     echo "Error: invalid user $GUEST_USER"
      exit 1
    }
--  UID=`echo "$PWENT" | cut -f3 -d:`
-+  USERUID=`echo "$PWENT" | cut -f3 -d:`
-   HOME=`echo "$PWENT" | cut -f6 -d:`
+-  GUEST_UID=`echo "$PWENT" | cut -f3 -d:`
++  GUEST_USERUID=`echo "$PWENT" | cut -f3 -d:`
+   GUEST_HOME=`echo "$PWENT" | cut -f6 -d:`
  
--  if [ "$UID" -ge 500 ]; then
+-  if [ "$GUEST_UID" -ge 500 ]; then
 +  # deluser is provided by the adduser package on Debian/Ubuntu. useradd
 +  # doesn't have a '--system' parameter, which causes deluser to only delete
 +  # system users, so this will be handled using this script.
 +  SYS_UID_MIN="$(cat /etc/login.defs | grep SYS_UID_MIN | awk '{print $2}')"
 +  SYS_UID_MAX="$(cat /etc/login.defs | grep SYS_UID_MAX | awk '{print $2}')"
-+  if [ "$USERUID" -lt "$SYS_UID_MIN" ] || [ "$USERUID" -gt "$SYS_UID_MAX" ]; then
-     echo "Error: user $USER is not a system user."
++  if [ "$GUEST_USERUID" -lt "$SYS_UID_MIN" ] || [ "$GUEST_USERUID" -gt "$SYS_UID_MAX" ]; then
++
+     echo "Error: user $GUEST_USER is not a system user."
      exit 1
    fi
-@@ -148,7 +172,7 @@
-   rm -rf "$HOME"
+@@ -148,7 +173,7 @@
+   rm -rf "$GUEST_HOME"
  
    # remove leftovers in /tmp
--  find /tmp -mindepth 1 -maxdepth 1 -uid "$UID" -print0 | xargs -0 rm -rf || true
-+  find /tmp -mindepth 1 -maxdepth 1 -uid "$USERUID" -print0 | xargs -0 rm -rf || true
+-  find /tmp -mindepth 1 -maxdepth 1 -uid "$GUEST_UID" -print0 | xargs -0 rm -rf || true
++  find /tmp -mindepth 1 -maxdepth 1 -uid "$GUEST_USERUID" -print0 | xargs -0 rm -rf || true
  
    # remove possible /media/guest-XXXXXX folder
-   if [ -d /media/"$USER" ]; then
-@@ -158,7 +182,8 @@
-     rmdir /media/"$USER" || true
+   if [ -d /media/"$GUEST_USER" ]; then
+@@ -158,7 +183,7 @@
+     rmdir /media/"$GUEST_USER" || true
    fi
  
--  deluser --system "$USER"
-+# deluser --system "$USER"
-+  userdel "$USER"
+-  deluser --system "$GUEST_USER"
++  userdel "$GUEST_USER"
  }
  
  case "$1" in
