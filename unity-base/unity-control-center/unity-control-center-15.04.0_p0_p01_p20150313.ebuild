@@ -23,7 +23,7 @@ EBZR_REVISION="12798"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+cups +gnome-online-accounts +i18n +socialweb v4l"
+IUSE="+cups +gnome-online-accounts +i18n v4l"
 #KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 RESTRICT="mirror"
 
@@ -84,7 +84,6 @@ COMMON_DEPEND="
 		|| ( >=net-fs/samba-3.6.14-r1[smbclient] >=net-fs/samba-4.0.0[client] ) )
 	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.9.90 )
 	i18n? ( >=app-i18n/ibus-1.5.2 )
-	socialweb? ( net-libs/libsocialweb )
 	v4l? (
 		media-libs/gstreamer:1.0
 		media-libs/clutter-gtk:1.0
@@ -166,8 +165,7 @@ src_configure() {
 		--enable-documentation \
 		--without-cheese \
 		$(use_enable cups) \
-		$(use_enable i18n ibus) \
-		$(use_with socialweb libsocialweb)
+		$(use_enable i18n ibus)
 }
 
 src_install() {
