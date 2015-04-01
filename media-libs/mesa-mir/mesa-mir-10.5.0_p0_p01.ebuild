@@ -73,8 +73,8 @@ RDEPEND="
 	!<x11-base/xorg-server-1.7
 	!<=x11-proto/xf86driproto-2.0.3
 	abi_x86_32? ( !app-emulation/emul-linux-x86-opengl[-abi_x86_32(-)] )
-	classic? ( app-admin/eselect-mesa )
-	gallium? ( app-admin/eselect-mesa )
+	classic? ( app-eselect/eselect-mesa )
+	gallium? ( app-eselect/eselect-mesa )
 	>=app-admin/eselect-opengl-1.3.0
 	udev? ( kernel_linux? ( >=virtual/libudev-215:=[${MULTILIB_USEDEP}] ) )
 	>=dev-libs/expat-2.1.0-r3:=[${MULTILIB_USEDEP}]

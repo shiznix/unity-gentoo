@@ -47,7 +47,7 @@ COMMON_DEPEND="dev-libs/glib:2
 RDEPEND="${COMMON_DEPEND}
 	sys-auth/pambase
 	x11-apps/xrandr
-	>=app-admin/eselect-lightdm-0.2"
+	>=app-eselect/eselect-lightdm-0.2"
 DEPEND="${COMMON_DEPEND}
 	dev-util/gtk-doc-am
 	dev-util/intltool

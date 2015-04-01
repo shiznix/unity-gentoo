@@ -4,7 +4,7 @@
 
 ## Other packages keyword unmasking ##
 app-admin/cgmanager
-app-admin/eselect-opengl
+app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
 ~app-emulation/emul-linux-x86-opengl-20140508-r1
 ~dev-dotnet/libgdiplus-2.10.9

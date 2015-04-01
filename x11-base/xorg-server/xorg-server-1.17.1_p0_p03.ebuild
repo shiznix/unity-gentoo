@@ -20,7 +20,7 @@ IUSE_SERVERS="dmx kdrive xephyr xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} glamor ipv6 minimal mir nptl selinux +suid systemd tslib +udev unwind wayland"
 RESTRICT="mirror"
 
-CDEPEND=">=app-admin/eselect-opengl-1.3.0
+CDEPEND=">=app-eselect/eselect-opengl-1.3.0
 	dev-libs/openssl
 	media-libs/freetype
 	>=x11-apps/iceauth-1.0.2

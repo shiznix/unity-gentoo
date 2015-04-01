@@ -1,1 +1,2 @@
 move dev-libs/cgmanager app-admin/cgmanager
+move app-admin/eselect-lightdm app-eselect/eselect-lightdm
