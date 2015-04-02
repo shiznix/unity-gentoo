@@ -48,6 +48,11 @@ src_prepare() {
         # Disable -Werror #
         sed -e 's:-Werror::g' \
                 -i CMakeLists.txt || die
+
+	# Fix libdrm include path #
+	#  Source typo(?) /usr/include/drm/drm.h on Ubuntu is a base kernel header, yet other functions in cursor.cpp use libdrm headers #
+	sed -e 's:drm/drm.h:drm.h:g' \
+		-i src/platforms/mesa/server/cursor.cpp
 }
 
 multilib_src_configure() {

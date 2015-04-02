@@ -66,6 +66,8 @@ dev-python/autopilot **
 dev-python/lazr-restfulclient **
 dev-python/python-testscenarios **
 dev-qt/designer:5 **
+dev-qt/linguist:5 **
+dev-qt/linguist-tools:5 **
 dev-qt/qdoc:5 **
 dev-qt/qt3d:5 **
 dev-qt/qtconcurrent:5 **

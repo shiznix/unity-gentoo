@@ -43,7 +43,6 @@ pkg_setup() {
 
 src_install() {
 	cmake-utils_src_install
-
-	dosym /usr/share/qtdeclarative5-ubuntu-ui-extras-browser-plugin/assets/multi_selection_handle\@20.png \
+	dosym /usr/share/qtdeclarative5-ubuntu-web-plugin/assets/multi_selection_handle\@20.png \
 		/usr/$(get_libdir)/qt5/qml/Ubuntu/Components/Extras/Browser/assets/multi_selection_handle.png
 }
