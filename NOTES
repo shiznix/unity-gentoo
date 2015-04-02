@@ -108,11 +108,18 @@ x11-wm/metacity				# Patched to support compiz window decoration
 * Mir EGL Display Server
 	- Circular dependencies between mir-base/mir and media-libs/mesa
 		- Mesa requires mir support patch
+		=== UTOPIC ===
 		- mir-base/mir requires libGL from media-libs/mesa to build
 		- media-libs/mesa with mir enabled requires mirclient from mir-base/mir
 			- SOLUTION:
 				- Introduce media-libs/mesa-mir ebuild that installs only the mesa EGL related files and DEPENDS on mir-base/mir
 				- Introduce 'mir' useflag to media-libs/mesa which when enabled removes all EGL related files and PDEPENDS on media-libs/mesa-mir
+		=== VIVID ===
+		- mir-base/mir now requires entire vanilla media-libs/mesa[-mir] to build
+		- media-libs/mesa with mir enabled requires mirclient from mir-base/mir
+			- SOLUTION:
+				- Remove and block media-libs/mesa-mir ebuild
+				- Insert check in media-libs/mesa ebuild that dies with message if mesa is trying to build with mir enabled before mir-base/mir is installed
 
 * Ubuntu use the 'upstart' init system to start services
 	- Since Trusty, Ubuntu migrate to use their own 'upstart' init system to start desktop services instead of dbus

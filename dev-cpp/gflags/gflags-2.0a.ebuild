@@ -5,7 +5,7 @@
 EAPI=5
 
 URELEASE="vivid"
-inherit ubuntu-versionator
+inherit autotools-multilib ubuntu-versionator
 
 UVER="2.1build1"
 
@@ -19,11 +19,14 @@ SLOT="0"
 IUSE="static-libs"
 
 src_configure() {
-	econf $(use_enable static-libs static)
+	local myeconfargs=(
+		$(use_enable static-libs static)
+	)
+	autotools-multilib_src_configure
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die
+	autotools-multilib_src_install
 
 	rm -rf "${ED}"/usr/share/doc/*
 	dodoc AUTHORS ChangeLog NEWS README

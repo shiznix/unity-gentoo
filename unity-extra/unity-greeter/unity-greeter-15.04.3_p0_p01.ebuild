@@ -49,15 +49,8 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 	unity-indicators/indicator-application
 	x11-themes/ubuntu-wallpapers"
 
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
-		die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
-	fi
-}
-
 src_prepare() {
-	epatch -p1 "${FILESDIR}/spawn_indicators.patch"
+	epatch -p1 "${FILESDIR}/spawn_indicators-15.04.patch"
 
 	# patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
@@ -65,11 +58,6 @@ src_prepare() {
 
 	# replace 'Ubuntu*' session with 'Unity' session to get right badge
 	sed -i -e "s:case \"ubuntu:case \"unity:" "${S}"/src/session-list.vala || die
-
-	# set gentoo badge
-	if use branding; then
-		sed -i -e "s:ubuntu_badge.png:gentoo_badge.png:" "${S}"/src/session-list.vala || die
-	fi
 
 	vala_src_prepare
 	base_src_prepare
@@ -89,17 +77,14 @@ src_install() {
 	# due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
 
-	# Remove Ubuntu logo -> would be nice, if we can replace it with a gentoo logo
+	# Remove Ubuntu logo #
 	rm -rf "${ED}usr/share/unity-greeter/logo.png"
 
 	# Gentoo logo for multi monitor usage #
         if use branding; then
-                insinto /usr/share/unity-greeter/
+                insinto /usr/share/unity-greeter
                 newins "${FILESDIR}/gentoo_cof.png" cof.png
         fi
-
-	insinto /usr/share/unity-greeter/
-	newins "${FILESDIR}/gentoo_badge.png" gentoo_badge.png
 
 	insinto /usr/share/polkit-1/rules.d/
 	newins "${FILESDIR}/50-unity-greeter.rules" 50-unity-greeter.rules || die
@@ -131,7 +116,7 @@ pkg_postinst() {
 pkg_postrm() {
 	if [ -e /usr/libexec/lightdm/lightdm-set-defaults ]; then
 		elog
-		elog "Remove ${PN} as default greeter of LightDM"
+		elog "Removing ${PN} as default greeter of LightDM"
 		/usr/libexec/lightdm/lightdm-set-defaults --remove --greeter=${PN}
 		/usr/libexec/lightdm/lightdm-set-defaults --remove --session=unity
 	fi

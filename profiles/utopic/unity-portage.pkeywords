@@ -10,10 +10,7 @@ app-admin/cgmanager
 dev-libs/libindicate
 dev-libs/libindicate-qt
 ~dev-libs/nss-3.17.4
-~dev-libs/userspace-rcu-0.8.4
 ~dev-util/gtk-builder-convert-2.24.25
-~dev-util/lttng-tools-2.5.0
-~dev-util/lttng-ust-2.5.0
 dev-python/configparser
 dev-python/fixtures
 ~dev-python/oauthlib-0.6.3

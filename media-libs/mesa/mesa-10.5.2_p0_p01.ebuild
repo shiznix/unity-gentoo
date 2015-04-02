@@ -4,22 +4,20 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_6,2_7} )
+PYTHON_COMPAT=( python2_7 )
 
 URELEASE="vivid"
-inherit autotools base eutils multilib multilib-minimal flag-o-matic \
+inherit base autotools eutils multilib multilib-minimal flag-o-matic \
 	python-any-r1 pax-utils ubuntu-versionator
 
 OPENGL_DIR="xorg-x11"
 
-MY_PN="mesa"
-MY_PV="${PV}"
-UURL="mirror://ubuntu/pool/main/m/${MY_PN}"
+UURL="mirror://ubuntu/pool/main/m/${PN}"
 
 DESCRIPTION="OpenGL-like graphic library for Linux"
 HOMEPAGE="http://mesa3d.sourceforge.net/"
-SRC_URI="${UURL}/${MY_PN}_${PV}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_PN}_${PV}${UVER_PREFIX}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -46,6 +44,7 @@ REQUIRED_USE="
 	openmax? ( gallium )
 	gles1?  ( egl )
 	gles2?  ( egl )
+	mir? ( egl gbm )
 	vaapi? ( gallium )
 	vdpau? ( gallium )
 	wayland? ( egl gbm )
@@ -73,9 +72,9 @@ RDEPEND="
 	!<x11-base/xorg-server-1.7
 	!<=x11-proto/xf86driproto-2.0.3
 	abi_x86_32? ( !app-emulation/emul-linux-x86-opengl[-abi_x86_32(-)] )
-	classic? ( app-admin/eselect-mesa )
-	gallium? ( app-admin/eselect-mesa )
-	>=app-admin/eselect-opengl-1.3.0
+	classic? ( app-eselect/eselect-mesa )
+	gallium? ( app-eselect/eselect-mesa )
+	>=app-eselect/eselect-opengl-1.3.0
 	udev? ( kernel_linux? ( >=virtual/libudev-215:=[${MULTILIB_USEDEP}] ) )
 	>=dev-libs/expat-2.1.0-r3:=[${MULTILIB_USEDEP}]
 	gbm? ( >=virtual/libudev-215:=[${MULTILIB_USEDEP}] )
@@ -104,7 +103,7 @@ RDEPEND="
 		>=sys-devel/llvm-3.4.2:=[${MULTILIB_USEDEP}]
 	)
 	opencl? (
-				app-admin/eselect-opencl
+				app-eselect/eselect-opencl
 				dev-libs/libclc
 				|| (
 					>=dev-libs/elfutils-0.155-r1:=[${MULTILIB_USEDEP}]
@@ -130,14 +129,9 @@ for card in ${RADEON_CARDS}; do
 	"
 done
 
-for mesa_use in ${IUSE}; do
-	MESA_USEDEPS+="${mesa_use}=,"
-done
-MESA_USEDEPS="${MESA_USEDEPS[@]/%,/}"
-MESA_USEDEPS="${MESA_USEDEPS//+/}"
-
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
+	!!media-libs/mesa-mir
 	llvm? (
 		video_cards_radeonsi? ( sys-devel/llvm[video_cards_radeon] )
 	)
@@ -146,8 +140,6 @@ DEPEND="${RDEPEND}
 				>=sys-devel/clang-3.4.2:=[${MULTILIB_USEDEP}]
 				>=sys-devel/gcc-4.6
 	)
-	=media-libs/mesa-${PVR}[${MESA_USEDEPS}]
-	mir-base/mir
 	sys-devel/bison
 	sys-devel/flex
 	$(python_gen_any_dep ">=dev-python/mako-0.7.3[\${PYTHON_USEDEP}]")
@@ -163,13 +155,14 @@ DEPEND="${RDEPEND}
 	>=x11-proto/xf86driproto-2.1.1-r1:=[${MULTILIB_USEDEP}]
 	>=x11-proto/xf86vidmodeproto-2.3.1-r1:=[${MULTILIB_USEDEP}]
 "
+PDEPEND="mir? ( mir-base/mir[${MULTILIB_USEDEP}] )"
 
 # It is slow without texrels, if someone wants slow
 # mesa without texrels +pic use is worth the shot
 QA_EXECSTACK="usr/lib*/libGL.so*"
 QA_WX_LOAD="usr/lib*/libGL.so*"
 
-S="${WORKDIR}/Mesa-${PV}"
+#S="${WORKDIR}/Mesa-${PV}"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
@@ -185,7 +178,7 @@ pkg_setup() {
 
 src_prepare() {
 	# Ubuntu patchset #
-	epatch -p1 "${WORKDIR}/${MY_PN}_${MY_PV}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
 		epatch -p1 "${S}/debian/patches/${patch}" || die;
 	done
@@ -225,7 +218,15 @@ multilib_src_configure() {
 	fi
 
 	if use egl; then
-		myconf+="--with-egl-platforms=x11,mir$(use wayland && echo ",wayland")$(use gbm && echo ",drm") "
+		myconf+="--with-egl-platforms=x11$(use wayland && echo ",wayland")$(use gbm && echo ",drm") "
+	fi
+
+	if use mir; then
+		if ! has_version mir-base/mir[${MULTILIB_USEDEP}]; then
+			die "Due to unresolveable double circular dependencies between Mesa and Mir, initial install of Mir requires you first do 'USE=-mir emerge -1 mesa mir'. Only then may mesa be installed with the 'mir' useflag enabled"
+		else
+			myconf+="--with-egl-platforms=x11,mir$(use wayland && echo ",wayland")$(use gbm && echo ",drm") "
+		fi
 	fi
 
 	if use gallium; then
@@ -308,36 +309,81 @@ multilib_src_configure() {
 multilib_src_install() {
 	emake install DESTDIR="${D}"
 
-	# Remove all files except those we need #
-	find "${ED}" \
-		\! -iname '*libEGL.so*' \
-		\! -iname 'eglplatform.h' \
-			-delete 2> /dev/null
+	if use classic || use gallium; then
+			ebegin "Moving DRI/Gallium drivers for dynamic switching"
+			local gallium_drivers=( i915_dri.so i965_dri.so r300_dri.so r600_dri.so swrast_dri.so )
+			keepdir /usr/$(get_libdir)/dri
+			dodir /usr/$(get_libdir)/mesa
+			for x in ${gallium_drivers[@]}; do
+				if [ -f "$(get_libdir)/gallium/${x}" ]; then
+					mv -f "${ED}/usr/$(get_libdir)/dri/${x}" "${ED}/usr/$(get_libdir)/dri/${x/_dri.so/g_dri.so}" \
+						|| die "Failed to move ${x}"
+				fi
+			done
+			if use classic; then
+				emake -C "${BUILD_DIR}/src/mesa/drivers/dri" DESTDIR="${D}" install
+			fi
+			for x in "${ED}"/usr/$(get_libdir)/dri/*.so; do
+				if [ -f ${x} -o -L ${x} ]; then
+					mv -f "${x}" "${x/dri/mesa}" \
+						|| die "Failed to move ${x}"
+				fi
+			done
+			pushd "${ED}"/usr/$(get_libdir)/dri || die "pushd failed"
+			ln -s ../mesa/*.so . || die "Creating symlink failed"
+			# remove symlinks to drivers known to eselect
+			for x in ${gallium_drivers[@]}; do
+				if [ -f ${x} -o -L ${x} ]; then
+					rm "${x}" || die "Failed to remove ${x}"
+				fi
+			done
+			popd
+		eend $?
+	fi
+	if use opencl; then
+		ebegin "Moving Gallium/Clover OpenCL implementation for dynamic switching"
+		local cl_dir="/usr/$(get_libdir)/OpenCL/vendors/mesa"
+		dodir ${cl_dir}/{lib,include}
+		if [ -f "${ED}/usr/$(get_libdir)/libOpenCL.so" ]; then
+			mv -f "${ED}"/usr/$(get_libdir)/libOpenCL.so* \
+			"${ED}"${cl_dir}
+		fi
+		if [ -f "${ED}/usr/include/CL/opencl.h" ]; then
+			mv -f "${ED}"/usr/include/CL \
+			"${ED}"${cl_dir}/include
+		fi
+		eend $?
+	fi
 
-	# Move libGL and others from /usr/lib to /usr/lib/opengl/blah/lib
-	# because user can eselect desired GL provider.
-	ebegin "Moving libGL and friends for dynamic switching"
-		local x
-		local gl_dir="/usr/$(get_libdir)/opengl/${OPENGL_DIR}/"
-		dodir ${gl_dir}/{lib,extensions,include/GL}
-		for x in "${ED}"/usr/$(get_libdir)/libEGL.{la,a,so*}; do
-			if [ -f ${x} -o -L ${x} ]; then
-				mv -f "${x}" "${ED}${gl_dir}"/lib \
-					|| die "Failed to move ${x}"
-			fi
-		done
-		for x in "${ED}"/usr/include/EGL; do
-			if [ -d ${x} ]; then
-				mv -f "${x}" "${ED}${gl_dir}"/include \
-					|| die "Failed to move ${x}"
-			fi
-		done
-	eend $?
+	if use openmax; then
+		echo "XDG_DATA_DIRS=\"${EPREFIX}/usr/share/mesa/xdg\"" > "${T}/99mesaxdgomx"
+		doenvd "${T}"/99mesaxdgomx
+		keepdir /usr/share/mesa/xdg
+	fi
 }
 
 multilib_src_install_all() {
 	prune_libtool_files --all
 	einstalldocs
+
+	if use !bindist; then
+		dodoc docs/patents.txt
+	fi
+
+	# Install config file for eselect mesa
+	insinto /usr/share/mesa
+	newins "${FILESDIR}/eselect-mesa.conf.9.2" eselect-mesa.conf
+}
+
+multilib_src_test() {
+	if use llvm; then
+		local llvm_tests='lp_test_arit lp_test_arit lp_test_blend lp_test_blend lp_test_conv lp_test_conv lp_test_format lp_test_format lp_test_printf lp_test_printf'
+		pushd src/gallium/drivers/llvmpipe >/dev/null || die
+		emake ${llvm_tests}
+		pax-mark m ${llvm_tests}
+		popd >/dev/null || die
+	fi
+	emake check
 }
 
 pkg_postinst() {
@@ -355,6 +401,15 @@ pkg_postinst() {
 		eselect opencl set --use-old ${PN}
 	fi
 
+	# run omxregister-bellagio to make the OpenMAX drivers known system-wide
+	if use openmax; then
+		ebegin "Registering OpenMAX drivers"
+		BELLAGIO_SEARCH_PATH="${EPREFIX}/usr/$(get_libdir)/libomxil-bellagio0" \
+			OMX_BELLAGIO_REGISTRY=${EPREFIX}/usr/share/mesa/xdg/.omxregister \
+			omxregister-bellagio
+		eend $?
+	fi
+
 	# warn about patent encumbered texture-float
 	if use !bindist; then
 		elog "USE=\"bindist\" was not set. Potentially patent encumbered code was"
@@ -365,6 +420,12 @@ pkg_postinst() {
 		elog "Note that in order to have full S3TC support, it is necessary to install"
 		elog "media-libs/libtxc_dxtn as well. This may be necessary to get nice"
 		elog "textures in some apps, and some others even require this to run."
+	fi
+}
+
+pkg_prerm() {
+	if use openmax; then
+		rm "${EPREFIX}"/usr/share/mesa/xdg/.omxregister
 	fi
 }
 

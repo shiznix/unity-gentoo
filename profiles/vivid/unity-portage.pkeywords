@@ -4,18 +4,17 @@
 
 ## Other packages keyword unmasking ##
 app-admin/cgmanager
-app-admin/eselect-opengl
+# move app-admin/eselect-opengl app-eselect/eselect-opengl
+app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
 ~app-emulation/emul-linux-x86-opengl-20140508-r1
+~app-i18n/fcitx-4.2.8.5
 ~dev-dotnet/libgdiplus-2.10.9
 ~dev-libs/libgcrypt-1.6.1
 dev-libs/libindicate
 dev-libs/libindicate-qt
 ~dev-libs/nss-3.17.4
-~dev-libs/userspace-rcu-0.8.4
 ~dev-util/gtk-builder-convert-2.24.25
-~dev-util/lttng-tools-2.5.0
-~dev-util/lttng-ust-2.5.0
 dev-python/configparser
 dev-python/fixtures
 ~dev-python/oauthlib-0.6.3
@@ -25,6 +24,7 @@ dev-python/fixtures
 ~media-libs/giflib-4.2.3
 ~media-libs/glm-0.9.5.1
 ~media-libs/harfbuzz-0.9.35
+sys-devel/gcc:4.9
 sys-kernel/ubuntu-sources
 sys-libs/db:5.1
 ~sys-libs/libnih-1.0.3

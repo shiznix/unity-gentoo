@@ -39,9 +39,10 @@ src_prepare() {
 	epatch "${FILESDIR}/sandbox_violations_fix.diff"
 
 	if ! use help || has nodoc ${FEATURES}; then
-		epatch "${FILESDIR}/indicator-session_remove-help_saucy.patch"
+		sed -n '/indicator.help/{s|^|//|};p' \
+			-i src/service.c
 	else
-		sed -e 's:Ubuntu Help:Unity Help:g' \
+		sed -e 's:menu, help_label:menu, _("Unity Help"):g' \
 			-i src/service.c
 		sed -e 's:yelp:yelp help\:ubuntu-help:g' \
 			-i src/backend-dbus/actions.c

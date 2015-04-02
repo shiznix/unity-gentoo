@@ -8,13 +8,14 @@ XORG_DRI=dri
 URELEASE="vivid"
 inherit autotools base linux-info xorg-2 ubuntu-versionator
 
+MY_PV="${PV}"
 MY_PN="xserver-xorg-video-intel"
 UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
 UVER="1~exp${UVER}"
 UVER_SUFFIX="build1"
 
 DESCRIPTION="X.Org driver for Intel cards"
-SRC_URI="${UURL}/${MY_PN}_${PV}-${UVER}.tar.gz
+SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 	${UURL}/${MY_PN}_${PV}-${UVER}${UVER_SUFFIX}.diff.gz"
 
 #KEYWORDS="~amd64 ~x86 ~amd64-fbsd -x86-fbsd"
@@ -49,7 +50,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
         if use mir; then
-		epatch -p1 "${WORKDIR}/${MY_PN}_${MY_PV}-${UVER_PREFIX}${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+		epatch -p1 "${WORKDIR}/${MY_PN}_${MY_PV}-${UVER}${UVER_SUFFIX}.diff"	# This needs to be applied for the debian/ directory to be present #
 		for patch in $(cat "${S}/debian/patches/series" | grep -v \# ); do
 			PATCHES+=( "${S}/debian/patches/${patch}" )
 		done

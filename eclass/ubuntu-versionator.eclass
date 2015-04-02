@@ -19,6 +19,7 @@
 # If this occurs, the ebuild should be named package-3.6.0a_p0_p02
 
 
+inherit toolchain-funcs
 EXPORT_FUNCTIONS pkg_setup pkg_postinst
 
 #---------------------------------------------------------------------------------------------------------------------------------#
@@ -129,6 +130,17 @@ ubuntu-versionator_pkg_setup() {
 			die "'${PROFILE_RELEASE}' profile detected, please run 'emerge unity-base/unity-build-env:0/${PROFILE_RELEASE}' to setup package masking"
                 export UNITY_BUILD_OK=1
         fi
+
+	# Minimum system-wide GCC version required #
+	[[ "${PROFILE_RELEASE}" == utopic ]] && GCC_MINIMUM="4.8"
+	[[ "${PROFILE_RELEASE}" == vivid ]] && GCC_MINIMUM="4.9"
+	GCC_MINIMUM_MAJOR="${GCC_MINIMUM%%.*}"
+	GCC_MINIMUM_MINOR="${GCC_MINIMUM##*.}"
+
+	if [[ $(gcc-major-version) -lt "${GCC_MINIMUM_MAJOR}" ]] || \
+		( [[ $(gcc-major-version) -eq "${GCC_MINIMUM_MAJOR}" && $(gcc-minor-version) -lt "${GCC_MINIMUM_MINOR}" ]] ); then
+			die "The selected '${PROFILE_RELEASE}' profile requires your system be built using >=sys-devel/gcc:${GCC_MINIMUM}, please consult the output of 'gcc-config -l'"
+	fi
 }
 
 # @FUNCTION: ubuntu-versionator_pkg_postinst

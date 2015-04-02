@@ -91,7 +91,7 @@ src_prepare() {
 	sed -e 's:xubuntu:xunity:g' \
 		-i debian/65compiz_profile-on-session || die
 
-	# Don't let compiz install /etc/compizconfig/config, violates sandbox and we install it from "${WORKDIR}/debian/config" anyway #
+	# Don't let compiz install /etc/compizconfig/config, violates sandbox and we install it from "${WORKDIR}/debian/compizconfig" anyway #
 	sed '/add_subdirectory (config)/d' \
 		-i compizconfig/libcompizconfig/CMakeLists.txt || die
 
@@ -196,8 +196,8 @@ src_install() {
 
 		# Unity Compiz profile configuration file #
 		insinto /etc/compizconfig
+		newins debian/compizconfig config
 		doins debian/unity.ini
-		doins debian/config
 
 		# Compiz profile upgrade helper files for ensuring smooth upgrades from older configuration files #
 		insinto /etc/compizconfig/upgrades/

@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 PYTHON_DEPEND="2:2.7"
 
-inherit autotools eutils python
+inherit autotools autotools-multilib eutils python
 
 DESCRIPTION="Linux Trace Toolkit - UST library"
 HOMEPAGE="http://lttng.org"
@@ -17,7 +17,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE="examples"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/userspace-rcu"
+DEPEND="dev-libs/userspace-rcu[${MULTILIB_USEDEP}]"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
@@ -30,6 +30,6 @@ src_prepare() {
 }
 
 src_install() {
-	emake DESTDIR="${ED}" install
+	autotools-multilib_src_install
 	prune_libtool_files --modules
 }

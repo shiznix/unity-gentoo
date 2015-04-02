@@ -49,13 +49,6 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 	unity-indicators/indicator-application
 	x11-themes/ubuntu-wallpapers"
 
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 && $(gcc-micro-version) -lt 3 ) ]]; then
-		die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
-	fi
-}
-
 src_prepare() {
 	epatch -p1 "${FILESDIR}/spawn_indicators.patch"
 

@@ -5,7 +5,7 @@
 EAPI=5
 
 URELEASE="vivid"
-inherit cmake-utils ubuntu-versionator
+inherit cmake-multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -16,37 +16,30 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3 MIT"
-SLOT="0/26"
+SLOT="0/30"	# Taken from /usr/lib/libmirserver.so.*
 #KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-DEPEND="<dev-cpp/gflags-2.1
-	dev-cpp/glog
-	dev-libs/boost:=
-	dev-libs/libhybris
-	dev-libs/protobuf:=
-	dev-util/android-headers
-	>=dev-util/lttng-tools-2.1.1[ust]
+# >=cmake-3.1.0 has syntax problems with $<TARGET_OBJECTS:src> in CMakeLists.txt files not expanding correctly #
+DEPEND="!!media-libs/mesa-mir
+	<dev-cpp/gflags-2.1.1[${MULTILIB_USEDEP}]
+	dev-cpp/glog[${MULTILIB_USEDEP}]
+	dev-libs/boost:=[${MULTILIB_USEDEP}]
+	dev-libs/libhybris[${MULTILIB_USEDEP}]
+	dev-libs/protobuf:=[${MULTILIB_USEDEP}]
+	<=dev-util/cmake-3.0.2
+	dev-util/android-headers[${MULTILIB_USEDEP}]
+	>=dev-util/lttng-tools-2.1.1[ust,${MULTILIB_USEDEP}]
 	dev-util/umockdev
-	<media-libs/glm-0.9.5.1
-	media-libs/mesa[egl,gbm,gles2,mir]
-	>=sys-devel/gcc-4.7.3
+	>=media-libs/glm-0.9.5.1
+	media-libs/mesa[egl,gbm,gles2,${MULTILIB_USEDEP}]
 	virtual/libudev
-	x11-libs/libdrm
-	x11-libs/libxkbcommon
+	x11-libs/libdrm[${MULTILIB_USEDEP}]
+	x11-libs/libxkbcommon[${MULTILIB_USEDEP}]
 	test? ( dev-cpp/gtest )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	if [[ $(gcc-major-version) -lt 4 ]] || \
-		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
-			( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
-				die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
-	fi
-}
 
 src_prepare() {
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
@@ -57,16 +50,25 @@ src_prepare() {
                 -i CMakeLists.txt || die
 }
 
-src_configure() {
+multilib_src_configure() {
+	# Tell cmake's 'find_library' function to find 32bit versions of libs when we compile for 32bit #
+	if [[ ${ABI} == x86 ]]; then
+		local mycmakeargs="${mycmakeargs}
+			-DCMAKE_PREFIX_PATH=/usr/lib32"
+	fi
+
 	# Disable gtest discovery tests as does not work #
 	#   cmake/src/mir/mir_discover_gtest_tests.cpp:89: std::string {anonymous}::elide_string_left(const string&, std::size_t): Assertion `max_size >= 3' failed #
 	local mycmakeargs="${mycmakeargs}
 		-DMIR_ENABLE_TESTS=OFF
-		-DDISABLE_GTEST_TEST_DISCOVERY=ON"
+		-DDISABLE_GTEST_TEST_DISCOVERY=ON
+		-DMIR_RUN_ACCEPTANCE_TESTS=OFF
+		-DMIR_RUN_INTEGRATION_TESTS=OFF
+		-DMIR_PLATFORM=mesa;android"
 	cmake-utils_src_configure
 }
 
-src_install() {
+multilib_src_install_all() {
 	cmake-utils_src_install
 	dodoc HACKING.md README.md COPYING.GPL COPYING.LGPL doc/*.md
 }

@@ -6,8 +6,8 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 PYTHON_COMPAT=( python{3_3,3_4} )
-VALA_MIN_API_VERSION="0.22"
-VALA_MAX_API_VERSION="0.22"
+VALA_MIN_API_VERSION="0.26"
+VALA_MAX_API_VERSION="0.26"
 
 URELEASE="vivid"
 inherit autotools eutils flag-o-matic gnome2 python-r1 ubuntu-versionator vala
@@ -28,6 +28,7 @@ RESTRICT="mirror"
 RDEPEND="gnome-extra/gucharmap
 	gnome-base/gnome-desktop:3="
 DEPEND="${RDEPEND}
+	>=app-i18n/fcitx-4.2.8.5
 	app-i18n/ibus[vala]
 	>=dev-libs/glib-2.37
 	dev-libs/libappindicator

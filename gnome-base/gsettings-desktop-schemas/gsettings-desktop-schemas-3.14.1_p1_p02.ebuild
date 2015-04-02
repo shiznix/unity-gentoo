@@ -45,20 +45,17 @@ src_prepare() {
 	gnome2_src_prepare
 
 	# Set Ambiance as the default window theme #
-	sed -e 's:Adwaita:Ambiance:' \
-		-i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in \
+	sed -e '/gtk-theme/{n;s/Adwaita/Ambiance/}' \
+		-i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in  \
 			schemas/org.gnome.desktop.interface.gschema.xml.in.in
+
 	# Set Ubuntu-mono-dark as the default icon theme #
-	sed -e "s:'gnome':'ubuntu-mono-dark':" \
+	sed -e '/icon-theme/{n;s/Adwaita/ubuntu-mono-dark/}' \
 		-i schemas/org.gnome.desktop.interface.gschema.xml.in.in
 
 	# Set default Ubuntu release backgrounds #
-	sed -e "s:themes/Adwaita/backgrounds/adwaita-timed.xml:backgrounds/contest/trusty.xml:" \
+	sed -e "s:backgrounds/gnome/adwaita-timed.xml:backgrounds/contest/${URELEASE}.xml:" \
 		-i schemas/org.gnome.desktop.background.gschema.xml.in.in
-
-	# Set window controls buttons on the left side of the titlebar by default as in native Unity #
-	sed -s "s:\:minimize,maximize,close:close,minimize,maximize\::" \
-		-i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in
 }
 
 src_configure() {

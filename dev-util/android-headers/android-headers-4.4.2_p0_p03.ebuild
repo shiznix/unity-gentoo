@@ -6,7 +6,7 @@ EAPI=5
 GCONF_DEBUG="yes"
 
 URELEASE="vivid"
-inherit base eutils ubuntu-versionator
+inherit base eutils multilib multilib-minimal ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 UVER_PREFIX="2"
@@ -24,7 +24,6 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}-${UVER_PREFIX}"
 
-
 src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
@@ -40,10 +39,13 @@ src_compile() {
 	:
 }
 
-src_install() {
+src_install(){
 	insinto /usr/include/android
 	doins -r *
 
-	insinto "/usr/$(get_libdir)/pkgconfig"
-	doins "${WORKDIR}/debian/android-headers.pc"
+	multilib_src_install() {
+		insinto "/usr/$(get_libdir)/pkgconfig"
+		doins "${WORKDIR}/debian/android-headers.pc"
+	}
+	multilib_foreach_abi multilib_src_install
 }

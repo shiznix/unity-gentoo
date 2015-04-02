@@ -93,10 +93,6 @@ DEPEND="dev-libs/boost
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 	python-single-r1_pkg_setup
-	if [[ $(gcc-major-version) -lt 4 ]] || \
-		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 8 ]] ); then
-			die "${P} requires an active >=gcc-4.8, please consult the output of 'gcc-config -l'"
-	fi
 }
 
 src_prepare() {
@@ -115,11 +111,18 @@ src_prepare() {
 
 	base_src_prepare
 
+	# Setup Unity side launcher default applications #
+	sed \
+		-e '/amazon/d' \
+		-e '/software-center/d' \
+		-e 's:nautilus.desktop:org.gnome.Nautilus.desktop:' \
+			-i com.canonical.Unity.gschema.xml || die
+
 	sed -e "s:/desktop:/org/unity/desktop:g" \
-		-i "com.canonical.Unity.gschema.xml" || die
+		-i com.canonical.Unity.gschema.xml || die
 
 	sed -e "s:Ubuntu Desktop:Unity Gentoo Desktop:g" \
-		-i "panel/PanelMenuView.cpp" || die
+		-i panel/PanelMenuView.cpp || die
 
 	# Remove testsuite cmake installation #
 	sed -e '/python setup.py install/d' \

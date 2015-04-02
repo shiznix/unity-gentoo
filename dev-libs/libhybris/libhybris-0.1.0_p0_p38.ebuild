@@ -5,7 +5,7 @@
 EAPI=5
 
 URELEASE="vivid"
-inherit autotools base ubuntu-versionator
+inherit autotools autotools-multilib base multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libh/${PN}"
 UVER_PREFIX="+git20131207+e452e83"
@@ -21,53 +21,56 @@ SLOT="0"
 IUSE="wayland"
 RESTRICT="mirror"
 
-DEPEND="dev-cpp/gflags
-	dev-cpp/glog
-	dev-libs/wayland
-	dev-util/android-headers
-	media-libs/mesa
+DEPEND="dev-cpp/gflags[${MULTILIB_USEDEP}]
+	dev-cpp/glog[${MULTILIB_USEDEP}]
+	dev-libs/wayland[${MULTILIB_USEDEP}]
+	dev-util/android-headers[${MULTILIB_USEDEP}]
+	media-libs/mesa[${MULTILIB_USEDEP}]
 	sys-apps/dbus"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}/hybris"
 MAKEOPTS="-j1"
 
 src_prepare() {
 	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	cd "${WORKDIR}"
+	for patch in $(cat "debian/patches/series" | grep -v \# ); do
+		epatch "debian/patches/${patch}"
 	done
-	base_src_prepare
 
-	cd "${S}/hybris"
+	cd "${S}"
 	eautoreconf
+	ln -s /usr/include/android include/android	# ./configure usually does this, but pushd/popd used by multilib breaks it
 }
 
 src_configure() {
-	cd "${S}/hybris"
 	# Wayland is non-optional #
-	econf \
+	local myeconfargs=(
 		--enable-arch=x86 \
 		--enable-wayland \
 		--with-android-headers=/usr/include/android
+	)
+	autotools-multilib_src_configure
 }
 
 src_compile() {
-	cd "${S}/hybris"
-	emake
+	autotools-multilib_src_compile
 }
 
 src_install() {
-	cd "${S}/hybris"
-	emake DESTDIR="${ED}" install
+	autotools-multilib_src_install
 	prune_libtool_files --modules
 
-	# Remove unused and colliding files #
-	rm -rfv "${ED}"usr/$(get_libdir)/pkgconfig/{wayland*,gles*,egl}.pc
-	find "${ED}"usr/include \( ! -path "*include/hybris*" ! -path "*usr/include" \) -type d \
-		-exec rm -rfv {} + || die
+	multilib_src_install() {
+		# Remove unused and colliding files #
+		rm -rfv "${ED}"usr/$(get_libdir)/pkgconfig/{wayland*,gles*,egl}.pc
+		find "${ED}"usr/include \( ! -path "*include/hybris*" ! -path "*usr/include" \) -type d \
+			-exec rm -rfv {} + || die
 
-	# Install EGL libraries into correct path #
-	dodir /usr/$(get_libdir)/libhybris-egl
-	mv -f "${ED}"usr/$(get_libdir)/lib{EGL*,GLES*,wayland-egl*} \
-		"${ED}"usr/$(get_libdir)/libhybris-egl || die
+		# Install EGL libraries into correct path #
+		dodir /usr/$(get_libdir)/libhybris-egl
+		mv -f "${ED}"usr/$(get_libdir)/lib{EGL*,GLES*,wayland-egl*} \
+			"${ED}"usr/$(get_libdir)/libhybris-egl || die
+	}
+	multilib_foreach_abi multilib_src_install
 }

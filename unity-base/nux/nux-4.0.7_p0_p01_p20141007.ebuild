@@ -49,13 +49,6 @@ DEPEND="app-i18n/ibus
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	if [[ ( $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ) ]]; then
-		die "${P} requires an active >=gcc-4.7, please consult the output of 'gcc-config -l'"
-	fi
-}
-
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "debian/patches/series" | grep -v '#'); do

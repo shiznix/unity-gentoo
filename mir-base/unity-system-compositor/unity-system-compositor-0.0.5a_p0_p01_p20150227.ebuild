@@ -23,8 +23,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/boost:=
 	dev-libs/protobuf
-	media-libs/mesa[gles2,mir]
-	media-libs/mesa-mir[gles2,mir]
+	media-libs/mesa[egl,gbm,gles2]
 	mir-base/mir:=
 	x11-base/xorg-server[mir]"
 
@@ -32,7 +31,6 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-	epatch -p1 "${FILESDIR}/stdcerr_iostream-fix.diff"
 }
 
 src_install() {

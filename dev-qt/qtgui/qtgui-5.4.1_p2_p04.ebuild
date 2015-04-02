@@ -83,9 +83,6 @@ PDEPEND="
 
 S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"
-PATCHES+=(
-	"${FILESDIR}/${P}-bigendian.patch" # bug 538570
-)
 
 QT5_TARGET_SUBDIRS=(
 	src/gui

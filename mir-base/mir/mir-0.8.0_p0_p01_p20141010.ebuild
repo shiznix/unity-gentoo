@@ -31,22 +31,12 @@ DEPEND="<dev-cpp/gflags-2.1
 	dev-util/umockdev
 	<media-libs/glm-0.9.5.1
 	media-libs/mesa[egl,gbm,gles2,mir]
-	>=sys-devel/gcc-4.7.3
 	virtual/libudev
 	x11-libs/libdrm
 	x11-libs/libxkbcommon
 	test? ( dev-cpp/gtest )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	if [[ $(gcc-major-version) -lt 4 ]] || \
-		( [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]] ) || \
-			( [[ $(gcc-version) == "4.7" && $(gcc-micro-version) -lt 3 ]] ); then
-				die "${P} requires an active >=gcc-4.7.3, please consult the output of 'gcc-config -l'"
-	fi
-}
 
 src_prepare() {
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #

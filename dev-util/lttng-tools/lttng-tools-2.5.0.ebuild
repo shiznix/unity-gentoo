@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit eutils linux-info
+inherit autotools-multilib eutils linux-info
 
 DESCRIPTION="Linux Trace Toolkit - next generation"
 HOMEPAGE="http://lttng.org"
@@ -16,9 +16,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+ust"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/userspace-rcu
-	dev-libs/popt
-	ust? ( dev-util/lttng-ust )
+DEPEND="dev-libs/userspace-rcu[${MULTILIB_USEDEP}]
+	dev-libs/popt[${MULTILIB_USEDEP}]
+	ust? ( dev-util/lttng-ust[${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
 
@@ -31,10 +31,13 @@ pkg_pretend() {
 }
 
 src_configure() {
-	econf $(use_enable ust lttng-ust)
+        local myeconfargs=(
+		$(use_enable ust lttng-ust)
+	)
+	autotools-multilib_src_configure
 }
 
 src_install() {
-	emake DESTDIR="${ED}" install
+	autotools-multilib_src_install
 	prune_libtool_files --modules
 }

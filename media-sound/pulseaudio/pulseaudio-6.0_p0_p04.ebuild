@@ -234,7 +234,9 @@ multilib_src_configure() {
 			--disable-bluez4
 			--disable-bluez5
 			--disable-udev
-			--disable-systemd
+			--disable-systemd-daemon
+			--disable-systemd-login
+			--disable-systemd-journal
 			--disable-openssl
 			--disable-orc
 			--disable-webrtc-aec

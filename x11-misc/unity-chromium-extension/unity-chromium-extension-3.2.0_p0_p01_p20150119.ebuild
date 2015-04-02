@@ -5,7 +5,7 @@
 EAPI=5
 
 URELEASE="vivid"
-inherit autotools eutils multilib ubuntu-versionator
+inherit eutils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -28,15 +28,11 @@ DEPEND="${RDEPEND}
 # Webapp integration doesn't work for www-client/google-chrome #
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+QT5_BUILD_DIR="${S}"
 
 src_prepare() {
-	epatch "${FILESDIR}/strlen_fix.diff"
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	cp debian/unity-webapps.pem .
-	eautoreconf
-}
 
-src_install() {
-	emake DESTDIR="${D}" install
-	prune_libtool_files --modules
+	qt5-build_src_prepare
 }

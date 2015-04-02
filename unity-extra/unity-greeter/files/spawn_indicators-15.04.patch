@@ -1,0 +1,12 @@
+diff -urN unity-greeter-15.04.3/src/unity-greeter.vala unity-greeter-15.04.3-patched/src/unity-greeter.vala
+--- unity-greeter-15.04.3/src/unity-greeter.vala	2014-12-08 06:37:59.000000000 +1030
++++ unity-greeter-15.04.3-patched/src/unity-greeter.vala	2015-03-27 19:47:38.937973300 +1030
+@@ -574,7 +574,7 @@
+             {
+                 string[] argv;
+ 
+-                Shell.parse_argv ("upstart --user --startup-event indicator-services-start", out argv);
++                Shell.parse_argv ("unity-greeter-indicators-start", out argv);
+                 Process.spawn_async (null,
+                                      argv,
+                                      null,

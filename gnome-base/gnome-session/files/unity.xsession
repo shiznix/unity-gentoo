@@ -87,5 +87,6 @@ else
                 echo "WARNING: User is not part of the 'plugdev' group"
                 echo "Some devices and indicators may fail to function"
         fi
+        export XDG_CURRENT_DESKTOP=Unity
         exec dbus-launch --exit-with-session gnome-session --session=unity
 fi
