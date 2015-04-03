@@ -158,6 +158,7 @@ src_prepare() {
 	# Apply our patches
 	EPATCH_SUFFIX="patch" \
 	EPATCH_FORCE="yes" \
+	EPATCH_EXCLUDE="8002_jemalloc_configure_unbashify.patch" \
 	epatch "${WORKDIR}/firefox"
 
 	epatch "${FILESDIR}"/${PN}-35.0-gmp-clearkey-sprintf.patch
