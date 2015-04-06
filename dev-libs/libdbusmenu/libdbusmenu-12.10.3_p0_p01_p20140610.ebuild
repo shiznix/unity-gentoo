@@ -16,9 +16,9 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="LGPL-3"
-SLOT="3/4.0.12"	# Takes *.so version
+SLOT="0/4.0.12"	# Takes *.so version
 KEYWORDS="~amd64 ~x86"
-IUSE="debug gtk +introspection"	# We force 'gtk' and 'introspection', but keep these in IUSE for main portage tree ebuilds
+IUSE="debug gtk3 +introspection"	# We force building both GTK2, GTK3, and 'introspection', but keep these in IUSE for main portage tree ebuilds
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

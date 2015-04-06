@@ -21,7 +21,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=[gtk]"
+RDEPEND="dev-libs/libdbusmenu:=[gtk3]"
 DEPEND="${RDEPEND}
 	>=dev-libs/glib-2.38
 	x11-libs/libX11
