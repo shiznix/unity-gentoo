@@ -72,7 +72,6 @@ src_prepare() {
 src_configure() {
 	gnome2_src_configure \
 		--enable-indicator \
-		--with-gtkver=3 \
 		--disable-more-warnings \
 		--disable-static \
 		--localstatedir=/var \

@@ -42,6 +42,7 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 	>=app-eselect/eselect-lightdm-0.1
 	>=gnome-base/gsettings-desktop-schemas-3.8
 	media-fonts/ubuntu-font-family
+	sys-auth/polkit-pkla-compat
 	unity-base/unity-language-pack
 	unity-indicators/indicator-session
 	unity-indicators/indicator-datetime
@@ -86,8 +87,8 @@ src_install() {
                 newins "${FILESDIR}/gentoo_cof.png" cof.png
         fi
 
-	insinto /usr/share/polkit-1/rules.d/
-	newins "${FILESDIR}/50-unity-greeter.rules" 50-unity-greeter.rules || die
+	insinto /var/lib/polkit-1/localauthority/10-vendor.d/
+	doins debian/unity-greeter.pkla
 
 	exeinto /usr/bin
 	doexe "${FILESDIR}/unity-greeter-indicators-start"
