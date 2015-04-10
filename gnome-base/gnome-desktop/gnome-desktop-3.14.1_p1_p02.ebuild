@@ -15,7 +15,7 @@ UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
 DESCRIPTION="Libraries for the gnome desktop that are not part of the UI patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-desktop"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="3/8" # subslot = libgnome-desktop-3 soname version
@@ -60,12 +60,12 @@ DEPEND="${COMMON_DEPEND}
 src_prepare() {
 	sed -i '/ubuntu_language.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/ubuntu_language_list_from_SUPPORTED.patch/d' "${WORKDIR}/debian/patches/series" || die
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 	base_src_prepare
 
-        eautoreconf
+	eautoreconf
 	gnome2_src_prepare
 }
 

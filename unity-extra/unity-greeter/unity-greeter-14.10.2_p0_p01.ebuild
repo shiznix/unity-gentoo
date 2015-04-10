@@ -86,10 +86,10 @@ src_install() {
 	rm -rf "${ED}usr/share/unity-greeter/logo.png"
 
 	# Gentoo logo for multi monitor usage #
-        if use branding; then
-                insinto /usr/share/unity-greeter/
-                newins "${FILESDIR}/gentoo_cof.png" cof.png
-        fi
+	if use branding; then
+		insinto /usr/share/unity-greeter/
+		newins "${FILESDIR}/gentoo_cof.png" cof.png
+	fi
 
 	insinto /usr/share/unity-greeter/
 	newins "${FILESDIR}/gentoo_badge.png" gentoo_badge.png

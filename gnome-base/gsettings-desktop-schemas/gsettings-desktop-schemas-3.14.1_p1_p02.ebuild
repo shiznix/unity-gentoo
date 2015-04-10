@@ -13,7 +13,7 @@ UURL="mirror://ubuntu/pool/main/g/${PN}"
 DESCRIPTION="Collection of GSettings schemas for GNOME desktop"
 HOMEPAGE="http://www.gnome.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
@@ -36,12 +36,13 @@ DEPEND="${RDEPEND}
 "
 
 src_prepare() {
+	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	PATCHES+=( "${FILESDIR}/nautilus_show_desktop_icons.diff" )
+	base_src_prepare
 
-        base_src_prepare
 	gnome2_src_prepare
 
 	# Set Ambiance as the default window theme #

@@ -23,8 +23,8 @@ RESTRICT="mirror"
 DEPEND="dev-python/u1db
 	dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
-        dev-qt/qtnetwork:5
-        dev-qt/qtsql:5[sqlite]"
+	dev-qt/qtnetwork:5
+	dev-qt/qtsql:5[sqlite]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qmlplugindump

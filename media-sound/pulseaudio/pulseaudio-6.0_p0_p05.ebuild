@@ -13,7 +13,7 @@ DESCRIPTION="A networked sound server with an advanced plugin system patched for
 HOMEPAGE="http://www.pulseaudio.org/"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-       ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 # libpulse-simple and libpulse link to libpulse-core; this is daemon's
 # library and can link to gdbm and other GPL-only libraries. In this
 # cases, we have a fully GPL-2 package. Leaving the rest of the

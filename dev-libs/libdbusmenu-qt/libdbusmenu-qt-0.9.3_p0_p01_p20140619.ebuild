@@ -44,39 +44,38 @@ src_configure() {
 	)
 
 	# Build QT4 support #
-        cd "${WORKDIR}"
-        cp -rf "${S}" "${S}-build_qt4"
+	cd "${WORKDIR}"
+	cp -rf "${S}" "${S}-build_qt4"
 	mycmakeargs+=( "-DUSE_QT4=ON" )
-        BUILD_DIR="${S}-build_qt4" cmake-utils_src_configure
+	BUILD_DIR="${S}-build_qt4" cmake-utils_src_configure
 
-        # Build QT5 support #
-        if use qt5; then
-                cd "${WORKDIR}"
-                cp -rf "${S}" "${S}-build_qt5"
+	# Build QT5 support #
+	if use qt5; then
+		cd "${WORKDIR}"
+		cp -rf "${S}" "${S}-build_qt5"
 		mycmakeargs+=( "-DUSE_QT5=ON" )
-                BUILD_DIR="${S}-build_qt5" cmake-utils_src_configure
-        fi
-
+		BUILD_DIR="${S}-build_qt5" cmake-utils_src_configure
+	fi
 }
 
 src_compile() {
-        # Build QT4 support #
-        BUILD_DIR="${S}-build_qt4" cmake-utils_src_compile
+	# Build QT4 support #
+	BUILD_DIR="${S}-build_qt4" cmake-utils_src_compile
 
-        # Build QT5 support #
-        if use qt5; then
-                BUILD_DIR="${S}-build_qt5" cmake-utils_src_compile
-        fi
+	# Build QT5 support #
+	if use qt5; then
+		BUILD_DIR="${S}-build_qt5" cmake-utils_src_compile
+	fi
 }
 
 src_install() {
-        # Build QT4 support #
-        BUILD_DIR="${S}-build_qt4" cmake-utils_src_install
+	# Build QT4 support #
+	BUILD_DIR="${S}-build_qt4" cmake-utils_src_install
 
-        # Build QT5 support #
-        if use qt5; then
-                BUILD_DIR="${S}-build_qt5" cmake-utils_src_install
-        fi
+	# Build QT5 support #
+	if use qt5; then
+		BUILD_DIR="${S}-build_qt5" cmake-utils_src_install
+	fi
 }
 
 src_test() {

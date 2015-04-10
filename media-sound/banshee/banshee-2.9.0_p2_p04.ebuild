@@ -3,13 +3,13 @@
 # $Header: $
 
 EAPI=5
-inherit base eutils autotools mono fdo-mime gnome2-utils versionator ubuntu-versionator
+inherit base eutils autotools mono-env fdo-mime gnome2-utils versionator ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/b/${PN}"
 URELEASE="utopic"
 UVER_PREFIX="+really2.6.2"
 
-DESCRIPTION="Import, organize, play, and share your music using a simple and powerful interface (patched for Unity)"
+DESCRIPTION="Import, organize, play, and share your music (patched for Unity)"
 HOMEPAGE="http://banshee.fm/"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"

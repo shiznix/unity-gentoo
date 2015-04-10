@@ -14,7 +14,7 @@ UURL="mirror://ubuntu/pool/main/n/${PN}"
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Nautilus"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"
@@ -82,11 +82,11 @@ PDEPEND="
 
 src_prepare() {
 	# Ubuntu patchset #
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-        base_src_prepare
-        eautoreconf
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	base_src_prepare
+	eautoreconf
 
 	if use previewer; then
 		DOC_CONTENTS="nautilus uses gnome-extra/sushi to preview media files.

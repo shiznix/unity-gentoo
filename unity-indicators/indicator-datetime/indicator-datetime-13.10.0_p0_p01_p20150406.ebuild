@@ -15,7 +15,7 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	 ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -67,8 +67,8 @@ src_configure() {
 }
 
 pkg_preinst() {
-        gnome2_schemas_savelist
-        gnome2_icon_savelist
+	gnome2_schemas_savelist
+	gnome2_icon_savelist
 }
 
 src_install() {
@@ -83,11 +83,11 @@ src_install() {
 }
 
 pkg_postinst() {
-        gnome2_schemas_update
-        gnome2_icon_cache_update
+	gnome2_schemas_update
+	gnome2_icon_cache_update
 }
 
 pkg_postrm() {
-        gnome2_schemas_update
-        gnome2_icon_cache_update
+	gnome2_schemas_update
+	gnome2_icon_cache_update
 }

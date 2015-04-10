@@ -18,7 +18,7 @@ UURL="mirror://ubuntu/pool/main/n/${GNOME_ORG_MODULE}"
 DESCRIPTION="GNOME applet for NetworkManager"
 HOMEPAGE="http://projects.gnome.org/NetworkManager/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -56,11 +56,11 @@ DEPEND="${RDEPEND}
 "
 
 src_prepare() {
-        # Ubuntu patchset #
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-        base_src_prepare
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	base_src_prepare
 
 	sed -e "s:-Werror::g" \
                 -i "configure" || die
@@ -82,30 +82,30 @@ src_configure() {
 }
 
 src_install() {
-        gnome2_src_install
+gnome2_src_install
 
-        insinto /usr/share/icons/hicolor/22x22/apps
-        doins "${WORKDIR}"/debian/icons/22/*.png
-        dosym nm-signal-00.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-none.png
-        dosym nm-signal-00-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-none-secure.png
-        dosym nm-signal-25.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-low.png
-        dosym nm-signal-25-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-low-secure.png
-        dosym nm-signal-50.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-medium.png
-        dosym nm-signal-50-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-medium-secure.png
-        dosym nm-signal-75.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-high.png
-        dosym nm-signal-75-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-high-secure.png
-        dosym nm-signal-100.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
-        dosym nm-signal-100-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
+	insinto /usr/share/icons/hicolor/22x22/apps
+	doins "${WORKDIR}"/debian/icons/22/*.png
+	dosym nm-signal-00.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-none.png
+	dosym nm-signal-00-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-none-secure.png
+	dosym nm-signal-25.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-low.png
+	dosym nm-signal-25-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-low-secure.png
+	dosym nm-signal-50.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-medium.png
+	dosym nm-signal-50-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-medium-secure.png
+	dosym nm-signal-75.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-high.png
+	dosym nm-signal-75-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-high-secure.png
+	dosym nm-signal-100.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
+	dosym nm-signal-100-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
 }
 
 pkg_preinst() {

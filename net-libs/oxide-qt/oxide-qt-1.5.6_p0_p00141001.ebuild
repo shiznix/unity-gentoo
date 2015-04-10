@@ -53,8 +53,7 @@ pkg_pretend() {
 	else
 		CHECKREQS_DISK_BUILD="3G"
 	fi
-
-        check-reqs_pkg_setup
+	check-reqs_pkg_setup
 }
 
 pkg_setup() {

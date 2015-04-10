@@ -12,7 +12,7 @@ URELEASE="utopic"
 DESCRIPTION="pidgin-libnotify provides popups for pidgin via a libnotify interface"
 HOMEPAGE="http://gaim-libnotify.sourceforge.net/"
 SRC_URI="${UURL}/${PN}_${PV}.orig.tar.gz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -30,9 +30,9 @@ src_prepare() {
 	# EPATCH_FORCE=yes EPATCH_SUFFIX=diff epatch "${WORKDIR}"/debian/patches
 	# epatch "${FILESDIR}"/pidgin-libnotify-0.14-libnotify-0.7.patch
 	# sed -i -e '/CFLAGS/s:-g3::' configure || die
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 	base_src_prepare
 	eautoreconf
 }

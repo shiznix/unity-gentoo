@@ -25,4 +25,3 @@ DEPEND="test? ( dev-cpp/gtest )
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
-

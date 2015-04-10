@@ -31,10 +31,10 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 	base_src_prepare
 	eautoreconf
 }

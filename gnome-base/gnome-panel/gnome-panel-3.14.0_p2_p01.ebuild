@@ -14,7 +14,7 @@ UURL="mirror://ubuntu/pool/universe/g/${PN}"
 DESCRIPTION="The GNOME panel patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="0"
@@ -62,9 +62,9 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	sed -i '/ubuntu_language.patch/d' "${WORKDIR}/debian/patches/series" || die
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 	base_src_prepare
 
 	eautoreconf

@@ -29,7 +29,6 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-
 src_install() {
 	cmake-utils_src_install
 

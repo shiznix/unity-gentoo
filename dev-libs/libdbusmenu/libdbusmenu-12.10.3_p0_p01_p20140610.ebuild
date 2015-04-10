@@ -32,10 +32,10 @@ RDEPEND=">=dev-libs/glib-2.35.4:2
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}
-	dev-libs/gobject-introspection
 	app-text/gnome-doc-utils
+	dev-libs/gobject-introspection
 	dev-util/intltool
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	$(vala_depend)"
 
 MAKEOPTS="${MAKEOPTS} -j1"

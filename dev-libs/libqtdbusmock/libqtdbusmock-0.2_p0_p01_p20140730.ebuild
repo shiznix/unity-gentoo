@@ -22,13 +22,11 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-DEPEND="
-	dev-cpp/gmock
+DEPEND="dev-cpp/gmock
 	dev-libs/libqtdbustest
-	net-misc/networkmanager
-"
+	net-misc/networkmanager"
 
 src_prepare() {
-        # disable build of tests
-        sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
+	# disable build of tests
+	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
 }

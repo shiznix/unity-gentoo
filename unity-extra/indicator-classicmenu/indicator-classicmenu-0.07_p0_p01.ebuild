@@ -29,8 +29,8 @@ RDEPEND="dev-libs/glib:2
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}
 	dev-util/intltool
-	dev-util/pkgconfig
-	sys-devel/gettext"
+	sys-devel/gettext
+	virtual/pkgconfig"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 

@@ -10,7 +10,7 @@ inherit cmake-utils gnome2-utils ubuntu-versionator
 UURL="mirror://ubuntu/pool/universe/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
-DESCRIPTION="Content sharing/picking infrastructure and service, designed to allow apps to securely and efficiently exchange content"
+DESCRIPTION="Content sharing/picking service to allow apps to exchange content"
 HOMEPAGE="https://launchpad.net/content-hub"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
@@ -49,4 +49,3 @@ pkg_postinst() {
 pkg_postrm() {
 	gnome2_schemas_update
 }
-

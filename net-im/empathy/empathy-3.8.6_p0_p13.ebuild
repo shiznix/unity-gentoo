@@ -15,7 +15,7 @@ URELEASE="utopic"
 DESCRIPTION="Telepathy instant messaging and video/audio call client for GNOME patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Empathy"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2 CC-BY-SA-3.0 FDL-1.3 LGPL-2.1"
 SLOT="0"
@@ -107,14 +107,14 @@ pkg_setup() {
 }
 
 src_prepare() {
-        # Ubuntu patchset #
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-        base_src_prepare
-        vala_src_prepare
-        export VALA_API_GEN="$VAPIGEN"
-        eautoreconf
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	base_src_prepare
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
+	eautoreconf
 }
 
 src_configure() {

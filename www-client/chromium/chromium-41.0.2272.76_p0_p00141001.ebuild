@@ -12,7 +12,6 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
 inherit base chromium eutils flag-o-matic multilib multiprocessing pax-utils \
 	portability python-any-r1 readme.gentoo toolchain-funcs ubuntu-versionator versionator virtualx
 
-
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 

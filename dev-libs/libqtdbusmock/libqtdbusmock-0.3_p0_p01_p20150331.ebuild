@@ -27,6 +27,6 @@ DEPEND="dev-cpp/gmock
 	net-misc/networkmanager"
 
 src_prepare() {
-        # disable build of tests
-        sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
+	# disable build of tests
+	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
 }

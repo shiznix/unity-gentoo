@@ -33,7 +33,6 @@ DEPEND="dev-libs/glib:2
 
 S="${WORKDIR}/${MY_PN}-${PV}${UVER_PREFIX}"
 
-
 src_install() {
 	cmake-utils_src_install
 

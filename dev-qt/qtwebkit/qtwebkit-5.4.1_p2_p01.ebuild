@@ -6,7 +6,7 @@ EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="vivid"
-inherit autotools eutils python-any-r1 qt5-build ubuntu-versionator
+inherit eutils python-any-r1 qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
 UVER_PREFIX="+dfsg"

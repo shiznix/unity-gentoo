@@ -45,9 +45,9 @@ src_prepare() {
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	export CMAKE_BUILD_TYPE=none
 
-        # Disable -Werror #
-        sed -e 's:-Werror::g' \
-                -i CMakeLists.txt || die
+	# Disable -Werror #
+	sed -e 's:-Werror::g' \
+		-i CMakeLists.txt || die
 
 	# Fix libdrm include path #
 	#  Source typo(?) /usr/include/drm/drm.h on Ubuntu is a base kernel header, yet other functions in cursor.cpp use libdrm headers #

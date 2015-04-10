@@ -36,9 +36,9 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-        vala_src_prepare
+	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
-        autotools-utils_src_prepare
+	autotools-utils_src_prepare
 }
 
 src_configure() {

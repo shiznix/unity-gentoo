@@ -30,7 +30,6 @@ RDEPEND="dev-libs/glib:2
 DEPEND="${RDEPEND}
 	dev-libs/libunity-webapps
 	dev-util/intltool
-	dev-util/pkgconfig
 	gnome-base/gsettings-desktop-schemas
 	gnome-base/nautilus
 	sys-devel/gettext
@@ -46,6 +45,7 @@ DEPEND="${RDEPEND}
 	unity-indicators/indicator-sound
 	unity-lenses/unity-lens-applications
 	unity-lenses/unity-lens-files
+	virtual/pkgconfig
 	x11-misc/notify-osd
 	${PYTHON_DEPS}"
 

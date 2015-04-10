@@ -16,7 +16,7 @@ URELEASE="utopic"
 DESCRIPTION="LightDM KDE greeter patched for unity desktop"
 HOMEPAGE="https://launchpad.net/lightdm"
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
-        ${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-3"
 KEYWORDS="amd64 ~arm ~ppc x86"
@@ -25,12 +25,10 @@ IUSE="debug"
 
 RESTRICT="mirror"
 
-DEPEND="
-	x11-libs/libX11
+DEPEND="x11-libs/libX11
 	dev-qt/qtdeclarative:4
 	>=x11-misc/lightdm-1.3.2[qt4]
-	kde-base/kdelibs:4
-"
+	kde-base/kdelibs:4"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${PN/-kde}-0.3.2.1	# Incorrect versioning from upstream in tarball

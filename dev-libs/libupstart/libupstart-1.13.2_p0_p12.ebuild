@@ -23,7 +23,7 @@ RESTRICT="mirror"
 
 DEPEND="sys-devel/gettext
 	sys-libs/libnih[dbus]
-	dev-util/pkgconfig"
+	virtual/pkgconfig"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 

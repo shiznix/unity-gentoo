@@ -51,9 +51,8 @@ src_prepare() {
 }
 
 src_configure() {
-        local mycmakeargs="${mycmakeargs}
-                -DVALA_COMPILER=$VALAC
-                -DVAPI_GEN=$VAPIGEN"
-        cmake-utils_src_configure
+	local mycmakeargs="${mycmakeargs}
+		-DVALA_COMPILER=$VALAC
+		-DVAPI_GEN=$VAPIGEN"
+	cmake-utils_src_configure
 }
-

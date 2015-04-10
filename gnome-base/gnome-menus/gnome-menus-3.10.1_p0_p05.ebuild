@@ -13,7 +13,7 @@ UURL="mirror://ubuntu/pool/main/g/${PN}"
 DESCRIPTION="The GNOME menu system, implementing the F.D.O cross-desktop spec, patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+ LGPL-2+"
 SLOT="3"
@@ -38,7 +38,7 @@ src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
 	done
-        eautoreconf
+	eautoreconf
 
 	gnome2_src_prepare
 

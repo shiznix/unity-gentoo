@@ -42,7 +42,7 @@ src_prepare() {
 	vala_src_prepare
 	eautoreconf
 }
- 
+
 src_configure() {
 	python_copy_sources
 	configuration() {
@@ -51,14 +51,14 @@ src_configure() {
 	}
 	python_foreach_impl run_in_build_dir configuration
 }
- 
+
 src_compile() {
 	compilation() {
 		emake || die
 	}
 	python_foreach_impl run_in_build_dir compilation
 }
- 
+
 src_install() {
 	installation() {
 		rm -rf "${D}usr/doc"

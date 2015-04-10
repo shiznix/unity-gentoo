@@ -20,7 +20,7 @@ URELEASE="utopic-updates"
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 # NOTE: This gtk+ has multi-gdk-backend support, see:
 #  * http://blogs.gnome.org/kris/2010/12/29/gdk-3-0-on-mac-os-x/
@@ -113,11 +113,11 @@ strip_builddir() {
 }
 
 src_prepare() {
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-
-        base_src_prepare
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	base_src_prepare
 	eautoreconf
 
 	# -O3 and company cause random crashes in applications. Bug #133469

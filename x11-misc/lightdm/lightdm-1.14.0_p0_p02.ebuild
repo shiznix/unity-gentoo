@@ -17,9 +17,9 @@ LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
 
-IUSE_LIGHTDM_GREETERS="gtk kde razor"
+IUSE_LIGHTDM_GREETERS="gtk kde"
 for greeters in ${IUSE_LIGHTDM_GREETERS}; do
-        IUSE+=" lightdm_greeters_${greeters}"
+	IUSE+=" lightdm_greeters_${greeters}"
 done
 
 # add and enable 'unity' greeter by default
@@ -56,17 +56,14 @@ DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig"
 PDEPEND="lightdm_greeters_gtk? ( x11-misc/lightdm-gtk-greeter )
 	lightdm_greeters_kde? ( x11-misc/lightdm-kde )
-	lightdm_greeters_razor? ( razorqt-base/razorqt-lightdm-greeter )
 	lightdm_greeters_unity? ( unity-extra/unity-greeter )"
 DOCS=( NEWS )
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
-        if [ -z "${LIGHTDM_GREETERS}" ]; then
-		ewarn " "
-                ewarn "At least one GREETER should be set in /etc/make.conf"
-		ewarn " "
-        fi
+	if [ -z "${LIGHTDM_GREETERS}" ]; then
+		ewarn "At least one GREETER should be set in /etc/make.conf"
+	fi
 }
 
 src_prepare() {
@@ -138,20 +135,20 @@ src_install() {
 	doins "${FILESDIR}"/Xsession
 	fperms +x /usr/libexec/${PN}/Xsession
 
-        # wrapper to start greeter session
-        # fixes problems with additional (2nd) nm-applet and
-        # setting icon themes in Unity desktop
-        doins "${FILESDIR}"/lightdm-greeter-wrapper
-        fperms +x /usr/libexec/${PN}/lightdm-greeter-wrapper
+	# wrapper to start greeter session
+	# fixes problems with additional (2nd) nm-applet and
+	# setting icon themes in Unity desktop
+	doins "${FILESDIR}"/lightdm-greeter-wrapper
+	fperms +x /usr/libexec/${PN}/lightdm-greeter-wrapper
 
-        # script makes lightdm multi monitor sessions aware
-        # and enable first display as primary output
-        # all other monitors are aranged right of it in a row
-        #
-        # on 'unity-greeter' the login prompt will follow the mouse cursor
-        #
-        doins "${FILESDIR}"/lightdm-greeter-display-setup
-        fperms +x /usr/libexec/${PN}/lightdm-greeter-display-setup
+	# script makes lightdm multi monitor sessions aware
+	# and enable first display as primary output
+	# all other monitors are aranged right of it in a row
+	#
+	# on 'unity-greeter' the login prompt will follow the mouse cursor
+	#
+	doins "${FILESDIR}"/lightdm-greeter-display-setup
+	fperms +x /usr/libexec/${PN}/lightdm-greeter-display-setup
 
 	# install guest-account script
 	insinto /usr/bin
@@ -161,14 +158,14 @@ src_install() {
 	# Create GSettings defaults directory
 	insinto /etc/guest-session/gsettings/
 
-        # Install systemd tmpfiles.d file
-        insinto /usr/lib/tmpfiles.d
-        newins "${FILESDIR}"/${PN}.tmpfiles.d ${PN}.conf || die
+	# Install systemd tmpfiles.d file
+	insinto /usr/lib/tmpfiles.d
+	newins "${FILESDIR}"/${PN}.tmpfiles.d ${PN}.conf || die
 
-        # Install PolicyKit rules from Fedora which allow the lightdm user to access
-        # the systemd-logind, consolekit, and upower DBus interfaces
-        insinto /usr/share/polkit-1/rules.d
-        newins "${FILESDIR}"/${PN}.rules ${PN}.rules || die
+	# Install PolicyKit rules from Fedora which allow the lightdm user to access
+	# the systemd-logind, consolekit, and upower DBus interfaces
+	insinto /usr/share/polkit-1/rules.d
+	newins "${FILESDIR}"/${PN}.rules ${PN}.rules || die
 
 	prune_libtool_files --all
 	rm -rf "${ED}"/etc/init
@@ -185,7 +182,7 @@ src_install() {
 }
 
 pkg_postinst() {
-        elog "'guest session' is disabled by default."
-        elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
-        elog "or run '/usr/libexec/lightdm/lightdm-set-defaults --allow-guest=true'"
+	elog "'guest session' is disabled by default."
+	elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
+	elog "or run '/usr/libexec/lightdm/lightdm-set-defaults --allow-guest=true'"
 }

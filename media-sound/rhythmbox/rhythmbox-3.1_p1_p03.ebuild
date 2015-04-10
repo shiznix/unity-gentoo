@@ -16,7 +16,7 @@ UURL="mirror://ubuntu/pool/main/r/${PN}"
 DESCRIPTION="Music management and playback software for GNOME patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Rhythmbox"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"

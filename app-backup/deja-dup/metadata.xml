@@ -9,4 +9,7 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="nautilus">Build gnome-base/nautilus extension</flag>
+	</use>
 </pkgmetadata>

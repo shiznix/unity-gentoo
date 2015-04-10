@@ -19,7 +19,6 @@ RDEPEND="app-admin/eselect"
 S="${FILESDIR}"
 
 src_install() {
-        insinto /usr/share/eselect/modules
-        newins "${FILESDIR}"/${P}.eselect lightdm.eselect
+	insinto /usr/share/eselect/modules
+	newins "${FILESDIR}"/${P}.eselect lightdm.eselect
 }
-

@@ -15,7 +15,7 @@ DESCRIPTION="Google C++ Testing Framework"
 HOMEPAGE="http://code.google.com/p/googletest/"
 #SRC_URI="http://googletest.googlecode.com/files/${P}.zip"
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="BSD"
 SLOT="0"

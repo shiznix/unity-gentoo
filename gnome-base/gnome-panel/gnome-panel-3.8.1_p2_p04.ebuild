@@ -14,7 +14,7 @@ URELEASE="utopic"
 DESCRIPTION="The GNOME panel patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
 
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="0"
@@ -62,40 +62,10 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	sed -i '/ubuntu_language.patch/d' "${WORKDIR}/debian/patches/series" || die
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		 PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 	base_src_prepare
-
-	# Upstream patches committed to master
-	# Fix launcher icon animation ending with black artifact
-# series: 90-remove_artifact_on_icon_animation.patch
-#	epatch "${FILESDIR}/${P}-fix-animation.patch"
-
-	# Fix build error due to missing gweather-xml.h
-# series: drop-gweather-xml-include.patch
-#	epatch "${FILESDIR}/${P}-gweather-include.patch"
-
-	# Apply style after realize
-# fixed in gnome 3.8
-#	epatch "${FILESDIR}/gnome-panel-3.6.2-fix-black.patch"
-
-	# Drop support for commandline-based calendar/tasks applications
-# series: git-build-with-gnome-desktop38-part3.patch
-#	epatch "${FILESDIR}/${P}-drop-commandline.patch"
-
-	# Resurrect function gnome_desktop_prepend_terminal_to_vector
-# series: git-build-with-gnome-desktop38-part1.patch
-#	epatch "${FILESDIR}/${P}-resurrect-function.patch"
-
-	# Rename helper function
-# series: git-build-with-gnome-desktop38-part2.patch
-#	epatch "${FILESDIR}/${P}-rename-function.patch"
-
-	# Use the generic marshaller
-# gnome 3.8 some files are missing to aplly the patch. Is it still needed?
-#	epatch "${FILESDIR}/gnome-panel-3.6.2-generic-marshaller.patch"
 
 	eautoreconf
 	gnome2_src_prepare

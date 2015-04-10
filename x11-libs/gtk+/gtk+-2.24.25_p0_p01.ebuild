@@ -18,7 +18,7 @@ DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="LGPL-2+"
 SLOT="2"
@@ -112,12 +112,12 @@ set_gtk2_confdir() {
 }
 
 src_prepare() {
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 	base_src_prepare
-        epatch "${FILESDIR}/fix-ubuntumenuproxy-build.patch"
+	epatch "${FILESDIR}/fix-ubuntumenuproxy-build.patch"
 
 	# Fix building due to moved definition, upstream bug #704766
 	epatch "${FILESDIR}"/${PN}-2.24.20-darwin-quartz-pasteboard.patch

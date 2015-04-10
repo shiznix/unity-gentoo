@@ -26,10 +26,10 @@ DEPEND=">=dev-qt/qtcore-${PV}:5[debug=]
 S="${WORKDIR}"
 
 src_prepare() {
-        # Ubuntu patchset #
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 	qt5-build_src_prepare
 	perl -w /usr/$(get_libdir)/qt5/bin/syncqt.pl -version 5.0.0
 }

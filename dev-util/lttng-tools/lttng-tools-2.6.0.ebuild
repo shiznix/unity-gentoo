@@ -18,8 +18,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/userspace-rcu[${MULTILIB_USEDEP}]
 	dev-libs/popt[${MULTILIB_USEDEP}]
-	ust? ( dev-util/lttng-ust[${MULTILIB_USEDEP}] )
-"
+	ust? ( dev-util/lttng-ust[${MULTILIB_USEDEP}] )"
 RDEPEND="${DEPEND}"
 
 pkg_pretend() {
@@ -31,7 +30,7 @@ pkg_pretend() {
 }
 
 src_configure() {
-        local myeconfargs=(
+	local myeconfargs=(
 		$(use_enable ust lttng-ust)
 	)
 	autotools-multilib_src_configure

@@ -594,7 +594,6 @@ setvar language-pack-zu-base		14.04+20140410
 setvar language-pack-gnome-zu		14.04+20140410
 setvar language-pack-gnome-zu-base	14.04+20140410
 
-
 ## Only languages that are listed in /usr/portage/profiles/desc/linguas.desc are supported ##
 IUSE_LINGUAS="aa af am an ar as ast az be be@latin bem ber
 bg bn bo br bs ca ca@valencia crh cs csb cv cy da de dv dz el

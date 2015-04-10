@@ -97,7 +97,7 @@ src_prepare() {
 	# Silence errors due to weird checks for libX11
 	sed -e 's/\(PANGO_PACKAGES="\)pangox/\1/' -i configure.ac configure || die
 
-        eautoreconf
+	eautoreconf
 	gnome2_src_prepare
 }
 

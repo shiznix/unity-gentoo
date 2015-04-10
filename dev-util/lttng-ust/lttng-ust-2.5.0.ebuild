@@ -3,9 +3,9 @@
 # $Header: $
 
 EAPI=5
-PYTHON_DEPEND="2:2.7"
+PYTHON_COMPAT=( python2_7 )
 
-inherit autotools autotools-multilib eutils python
+inherit autotools autotools-multilib eutils python-single-r1
 
 DESCRIPTION="Linux Trace Toolkit - UST library"
 HOMEPAGE="http://lttng.org"
@@ -21,7 +21,7 @@ DEPEND="dev-libs/userspace-rcu[${MULTILIB_USEDEP}]"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	python_convert_shebangs -r 2 .
+	python_fix_shebang .
 
 	if ! use examples; then
 		sed -i -e '/SUBDIRS/s:examples::' doc/Makefile.am || die

@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -64,8 +64,8 @@ src_prepare() {
 src_install() {
 	# copy sources into place #
 	dodir /usr/src
-	cp -a ${S} ${D}/usr/src/${PN}-${MY_PV}-${UVER} || die
-	cd ${D}/usr/src/${PN}-${MY_PV}-${UVER}
+	cp -a "${S}" "${D}/usr/src/${PN}-${MY_PV}-${UVER}" || die
+	cd "${D}/usr/src/${PN}-${MY_PV}-${UVER}"
 
 	# prepare for real-world use and 3rd-party module building #
 	make mrproper || die
@@ -74,7 +74,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	[ ! -e ${ROOT}usr/src/linux ] && \
-		ln -s ${PN}-${MY_PV}-${UVER} ${ROOT}usr/src/linux
+	[ ! -e "${ROOT}usr/src/linux" ] && \
+		ln -s "${PN}-${MY_PV}-${UVER}" "${ROOT}usr/src/linux"
 	elog "Changelog can be found in /usr/src/linux/debian/changelog"
 }

@@ -24,7 +24,6 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}-${UVER_PREFIX}"
 
-
 src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )

@@ -68,8 +68,8 @@ COMMONDEPEND="!!x11-wm/compiz
 	${PYTHON_DEPS}"
 
 DEPEND="${COMMONDEPEND}
-	dev-util/pkgconfig
 	sys-devel/gettext
+	virtual/pkgconfig
 	x11-proto/damageproto
 	x11-proto/xineramaproto"
 

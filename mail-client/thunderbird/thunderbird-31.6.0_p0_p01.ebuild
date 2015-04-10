@@ -144,9 +144,9 @@ src_unpack() {
 
 src_prepare() {
 	# Ubuntu global menu patch + native notification #
-        PATCHES+=( "${WORKDIR}/debian/patches/unity-menubar.patch"
-                   "${WORKDIR}/debian/patches/revert-removal-of-native-notifications.patch" )
-        base_src_prepare
+	PATCHES+=( "${WORKDIR}/debian/patches/unity-menubar.patch"
+			"${WORKDIR}/debian/patches/revert-removal-of-native-notifications.patch" )
+	base_src_prepare
 
 	# Apply our Thunderbird patchset
 	EPATCH_SUFFIX="patch" \

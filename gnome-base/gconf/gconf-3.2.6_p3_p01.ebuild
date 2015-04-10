@@ -17,7 +17,7 @@ UURL="mirror://ubuntu/pool/main/g/${PN}"
 DESCRIPTION="GNOME configuration system and daemon patched for the Unity desktop"
 HOMEPAGE="http://projects.gnome.org/gconf/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-       ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="LGPL-2+"
 SLOT="2"
@@ -57,12 +57,13 @@ pkg_setup() {
 }
 
 src_prepare() {
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-        base_src_prepare
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	base_src_prepare
 
-        gnome2_src_prepare
+	gnome2_src_prepare
 
 	# Do not start gconfd when installing schemas, fix bug #238276, upstream #631983
 	epatch "${FILESDIR}/${PN}-2.24.0-no-gconfd.patch"

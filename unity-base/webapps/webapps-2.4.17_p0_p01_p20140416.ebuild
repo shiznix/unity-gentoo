@@ -83,7 +83,6 @@ done
 SRC_URI="${SRC_URI_array[@]}"
 S="${WORKDIR}"
 
-
 src_prepare() {
 	for i in ${packages[@]}; do
 		unset _rel

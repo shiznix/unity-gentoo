@@ -21,13 +21,13 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND=">=x11-themes/gnome-icon-theme-3.8
+RDEPEND="x11-themes/gnome-icon-theme
 	x11-themes/hicolor-icon-theme"
 
 DEPEND="${RDEPEND}
-	>=dev-util/intltool-0.35
-	>=dev-util/pkgconfig-0.19
-	>=sys-devel/gettext-0.15"
+	dev-util/intltool
+	sys-devel/gettext
+	virtual/pkgconfig"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

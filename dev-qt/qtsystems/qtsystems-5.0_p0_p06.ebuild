@@ -32,12 +32,10 @@ S="${WORKDIR}"
 QT5_BUILD_DIR="${S}"
 
 src_prepare() {
-        # Ubuntu patchset #
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
-
-        qt5-build_src_prepare
-
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	qt5-build_src_prepare
 	perl -w /usr/$(get_libdir)/qt5/bin/syncqt.pl -version 5.2.0
 }

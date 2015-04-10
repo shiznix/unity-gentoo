@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnome-extra/nm-applet/nm-applet-0.9.8.4.ebuild,v 1.2 2013/11/20 13:15:49 leio Exp $
+# $Header: $
 
 EAPI=5
 GCONF_DEBUG="no"
@@ -18,7 +18,7 @@ URELEASE="utopic"
 DESCRIPTION="GNOME applet for NetworkManager"
 HOMEPAGE="http://projects.gnome.org/NetworkManager/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -82,30 +82,30 @@ src_configure() {
 }
 
 src_install() {
-        gnome2_src_install
+	gnome2_src_install
 
-        insinto /usr/share/icons/hicolor/22x22/apps
-        doins "${WORKDIR}"/debian/icons/22/*.png
-        dosym nm-signal-00.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-none.png
-        dosym nm-signal-00-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-none-secure.png
-        dosym nm-signal-25.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-low.png
-        dosym nm-signal-25-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-low-secure.png
-        dosym nm-signal-50.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-medium.png
-        dosym nm-signal-50-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-medium-secure.png
-        dosym nm-signal-75.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-high.png
-        dosym nm-signal-75-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-high-secure.png
-        dosym nm-signal-100.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
-        dosym nm-signal-100-secure.png \
-                /usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
+	insinto /usr/share/icons/hicolor/22x22/apps
+	doins "${WORKDIR}"/debian/icons/22/*.png
+	dosym nm-signal-00.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-none.png
+	dosym nm-signal-00-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-none-secure.png
+	dosym nm-signal-25.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-low.png
+	dosym nm-signal-25-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-low-secure.png
+	dosym nm-signal-50.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-medium.png
+	dosym nm-signal-50-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-medium-secure.png
+	dosym nm-signal-75.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-high.png
+	dosym nm-signal-75-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-high-secure.png
+	dosym nm-signal-100.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
+	dosym nm-signal-100-secure.png \
+		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
 }
 
 pkg_preinst() {

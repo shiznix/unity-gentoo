@@ -67,8 +67,8 @@ src_configure() {
 }
 
 pkg_preinst() {
-        gnome2_schemas_savelist
-        gnome2_icon_savelist
+gnome2_schemas_savelist
+gnome2_icon_savelist
 }
 
 src_install() {
@@ -83,11 +83,11 @@ src_install() {
 }
 
 pkg_postinst() {
-        gnome2_schemas_update
-        gnome2_icon_cache_update
+	gnome2_schemas_update
+	gnome2_icon_cache_update
 }
 
 pkg_postrm() {
-        gnome2_schemas_update
-        gnome2_icon_cache_update
+	gnome2_schemas_update
+	gnome2_icon_cache_update
 }

@@ -25,6 +25,5 @@ RDEPEND="net-misc/freerdp
 	 sys-apps/remote-login-service"
 
 src_prepare() {
-        epatch "${FILESDIR}"/0001_Fix_locale_file.patch
+	epatch "${FILESDIR}"/0001_Fix_locale_file.patch
 }
-

@@ -11,7 +11,7 @@ URELEASE="utopic"
 
 DESCRIPTION="The QML and Quick modules for the Qt5 framework"
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}.orig.tar.xz
-        ${UURL}/${QT5_MODULE}-opensource-src_${PV}-${UVER}.debian.tar.xz"
+	${UURL}/${QT5_MODULE}-opensource-src_${PV}-${UVER}.debian.tar.xz"
 
 KEYWORDS="~amd64 ~x86"
 IUSE="gles2 localstorage +widgets xml"
@@ -32,10 +32,10 @@ S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"
 
 src_prepare() {
-        # Ubuntu patchset #
-        for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-                PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-        done
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
 
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
