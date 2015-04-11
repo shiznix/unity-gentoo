@@ -16,15 +16,13 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-DEPEND="
-	dev-cpp/gmock
+DEPEND="dev-cpp/gmock
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
-	dev-qt/qttest:5
-"
+	dev-qt/qttest:5"

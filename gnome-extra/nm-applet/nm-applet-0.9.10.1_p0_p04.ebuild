@@ -23,7 +23,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2+"
 SLOT="0"
 IUSE="bluetooth gconf +introspection modemmanager systemd"
-#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+#KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 RDEPEND="
