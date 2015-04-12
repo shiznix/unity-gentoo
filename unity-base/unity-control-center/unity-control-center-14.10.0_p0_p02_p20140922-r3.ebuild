@@ -24,7 +24,7 @@ EBZR_REVISION="12798"
 LICENSE="GPL-2+"
 SLOT="0"
 IUSE="+cups +gnome-online-accounts +i18n v4l"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # False positives caused by nested configure scripts

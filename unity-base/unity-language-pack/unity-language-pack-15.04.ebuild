@@ -655,7 +655,6 @@ src_install() {
 					-type f \! -iname '*indicator-*' \
 					-type f \! -iname '*libdbusmenu*' \
 					-type f \! -iname '*signon*' \
-					-type f \! -iname '*ubuntu-sso-client*' \
 					-type f \! -iname '*unity*' \
 						-delete || die
 

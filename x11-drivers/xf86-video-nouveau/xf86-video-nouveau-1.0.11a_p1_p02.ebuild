@@ -18,7 +18,7 @@ HOMEPAGE="http://nouveau.freedesktop.org/"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 	${UURL}/${MY_PN}_${PV}-${UVER}${UVER_SUFFIX}.diff.gz"
 
-#KEYWORDS="amd64 ppc ~ppc64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="glamor mir"
 RESTRICT="mirror strip"
 

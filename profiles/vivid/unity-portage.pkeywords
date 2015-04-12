@@ -63,7 +63,6 @@ dev-libs/libubuntu-app-launch **
 dev-libs/properties-cpp **
 dev-libs/ubuntu-download-manager **
 dev-python/autopilot **
-dev-python/lazr-restfulclient **
 dev-python/python-testscenarios **
 dev-python/u1db **
 dev-qt/designer:5 **
@@ -144,7 +143,6 @@ unity-base/signon-keyring-extension **
 unity-base/signon-plugin-oauth2 **
 unity-base/signon-ui **
 unity-base/ubuntu-docs **
-unity-base/ubuntu-sso-client **   
 unity-base/unity **
 unity-base/unity-control-center **
 unity-base/unity-gtk-module **

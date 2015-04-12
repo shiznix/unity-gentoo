@@ -31,7 +31,7 @@ RDEPEND="
 	dev-qt/qt3d
 	>=dev-qt/qtcore-${PV}:5[debug=,icu]
 	>=dev-qt/qtgui-${PV}:5[debug=,xcb]
-	>=dev-qt/qtlocation-5.2.1:5[debug=]
+	>=dev-qt/qtlocation-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
 	>=dev-qt/qtprintsupport-${PV}:5[debug=]
 	>=dev-qt/qtsensors-${PV}:5[debug=]

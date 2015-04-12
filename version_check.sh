@@ -24,7 +24,6 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'libupstart-app-launch'`" ]; then treepackname="${packname}"; packname="upstart-app-launch"
 	elif [ -n "`echo "${packbasename}" | grep 'libXfixes'`" ]; then treepackname="${packname}"; packname="libxfixes"
 	elif [ -n "`echo "${packbasename}" | grep 'libXi'`" ]; then treepackname="${packname}"; packname="libxi"
-	elif [ -n "`echo "${packbasename}" | grep 'lazr-restfulclient'`" ]; then treepackname="${packname}"; packname="lazr.restfulclient"
 	elif [ -n "`echo "${packbasename}" | grep 'mesa-mir'`" ]; then treepackname="${packname}"; packname="mesa"
 	elif [ -n "`echo "${packbasename}" | grep 'nm-applet'`" ]; then treepackname="${packname}"; packname="network-manager-applet"
 	elif [ -n "`echo "${packbasename}" | grep 'qt3d'`" ]; then treepackname="${packname}"; packname="qt3d-opensource-src"

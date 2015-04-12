@@ -7,7 +7,7 @@ EAPI="5"
 URELEASE="vivid"
 inherit autotools base bash-completion-r1 eutils flag-o-matic linux-info readme.gentoo systemd user versionator udev multilib-minimal ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/p/${PN}"
+UURL="mirror://ubuntu/pool/main/p/${PN}"
 
 DESCRIPTION="A networked sound server with an advanced plugin system patched for the Unity desktop"
 HOMEPAGE="http://www.pulseaudio.org/"
@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 # GPL-forcing USE flags for those who use them.
 LICENSE="!gdbm? ( LGPL-2.1 ) gdbm? ( GPL-2 )"
 SLOT="0"
-#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-linux ~x86-linux"
+#KEYWORDS="~amd64 ~x86"
 # +alsa-plugin as discussed in bug #519530
 IUSE="+alsa +alsa-plugin +asyncns bluetooth +caps dbus doc equalizer +gdbm +glib
 	gnome gtk ipv6 jack libsamplerate lirc native-headset neon ofono-headset

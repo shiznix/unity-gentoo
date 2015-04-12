@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 	${UURL}/${MY_PN}_${PV}-${UVER}.diff.gz"
 HOMEPAGE="http://www.x.org/wiki/ati/"
 
-#KEYWORDS="~alpha amd64 ~ia64 ppc ppc64 ~sparc ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="+glamor mir udev"
 RESTRICT="mirror strip"
 

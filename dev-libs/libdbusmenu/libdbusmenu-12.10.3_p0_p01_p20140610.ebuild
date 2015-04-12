@@ -23,18 +23,16 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-RDEPEND=">=dev-libs/glib-2.35.4:2
+DEPEND="app-text/gnome-doc-utils
 	dev-libs/dbus-glib
-	dev-libs/json-glib
+	dev-libs/glib:2
+	dev-libs/gobject-introspection
 	dev-libs/libxml2:2
 	dev-util/gtk-doc
+	dev-util/intltool
 	sys-apps/dbus
 	x11-libs/gtk+:2
-	x11-libs/gtk+:3"
-DEPEND="${RDEPEND}
-	app-text/gnome-doc-utils
-	dev-libs/gobject-introspection
-	dev-util/intltool
+	x11-libs/gtk+:3
 	virtual/pkgconfig
 	$(vala_depend)"
 

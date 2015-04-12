@@ -62,16 +62,16 @@ COMMONDEPEND="!!x11-wm/compiz
 	>=x11-libs/startup-notification-0.7
 	>=x11-wm/metacity-3.12
 	kde? ( >=kde-base/kwin-4.11.1 )
-	test? ( dev-cpp/gtest
-		dev-cpp/gmock
-		sys-apps/xorg-gtest )
 	${PYTHON_DEPS}"
 
 DEPEND="${COMMONDEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig
 	x11-proto/damageproto
-	x11-proto/xineramaproto"
+	x11-proto/xineramaproto
+	test? ( dev-cpp/gtest
+		dev-cpp/gmock
+		sys-apps/xorg-gtest )"
 
 RDEPEND="${COMMONDEPEND}
 	dev-libs/protobuf:=

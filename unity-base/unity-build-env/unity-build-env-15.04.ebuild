@@ -10,6 +10,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 URELEASE="vivid"
 UVER=
 
+LICENSE="GPL-2"
 SLOT="0/${URELEASE}"
 KEYWORDS="amd64 x86"
 IUSE=""

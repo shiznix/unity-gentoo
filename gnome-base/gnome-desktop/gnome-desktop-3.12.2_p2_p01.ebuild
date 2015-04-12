@@ -10,7 +10,7 @@ inherit autotools base gnome2 ubuntu-versionator
 
 MY_PN="${PN}3"
 MY_P="${MY_PN}_${PV}"
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${MY_PN}"
+UURL="mirror://ubuntu/pool/main/g/${MY_PN}"
 
 DESCRIPTION="Libraries for the gnome desktop that are not part of the UI patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-desktop"
@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="3/8" # subslot = libgnome-desktop-3 soname version
 IUSE="+introspection"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~arm-linux ~x86-linux ~x86-solaris"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # cairo[X] needed for gnome-bg

@@ -9,4 +9,8 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="doctool">Install g-ir-doc-tool for generating documentation
+			from introspected data</flag>
+	</use>
 </pkgmetadata>

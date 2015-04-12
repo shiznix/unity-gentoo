@@ -9,7 +9,7 @@ GCONF_DEBUG="no"
 URELEASE="vivid"
 inherit autotools base eutils gnome2 systemd virtualx ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/g/${PN}"
+UURL="mirror://ubuntu/pool/main/g/${PN}"
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org"

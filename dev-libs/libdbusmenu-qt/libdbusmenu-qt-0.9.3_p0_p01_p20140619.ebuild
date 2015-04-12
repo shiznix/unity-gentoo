@@ -14,7 +14,7 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 DESCRIPTION="A library providing Qt implementation of DBusMenu specification"
 HOMEPAGE="https://launchpad.net/libdbusmenu-qt/"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
-KEYWORDS="amd64 ~arm ppc ppc64 x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64 ~x86"
 
 LICENSE="LGPL-2"
 SLOT="0"

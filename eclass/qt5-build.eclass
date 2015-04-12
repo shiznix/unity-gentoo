@@ -19,16 +19,8 @@ esac
 
 inherit eutils flag-o-matic multilib toolchain-funcs virtualx
 
-## Only set LICENSE for QT suite of core packages so other packages can use eclass ##
-if [[ -n ${QT5_MODULE} ]]; then
-	QT5_MINOR_VERSION=${PV#*.}
-	QT5_MINOR_VERSION=${QT5_MINOR_VERSION%%.*}
-	if [[ ${QT5_MINOR_VERSION} -ge 4 ]]; then
-        	LICENSE="|| ( LGPL-2.1 LGPL-3 )" 
-	else
-        	LICENSE="|| ( LGPL-2.1 GPL-3 )"
-	fi
-fi
+## Default LICENSE if not set to be that of QT suite of core packages ##
+: ${LICENSE:="|| ( LGPL-2.1 LGPL-3 )"}
 
 HOMEPAGE="https://www.qt.io/ https://qt-project.org/"
 SLOT="5"
@@ -83,8 +75,8 @@ DEPEND="
 "
 if [[ ${PN} != qttest ]]; then
 	if [[ ${QT5_MODULE} == qtbase ]]; then
-		DEPEND+=" test? ( ~dev-qt/qttest-${PV}[debug=] )"
-	else
+#		DEPEND+=" test? ( ~dev-qt/qttest-${PV}[debug=] )"
+#	else
 		DEPEND+=" test? ( >=dev-qt/qttest-${PV}:5[debug=] )"
 	fi
 fi

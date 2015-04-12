@@ -10,6 +10,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 URELEASE="utopic"
 UVER=
 
+LICENSE="GPL-2"
 SLOT="0/${URELEASE}"
 KEYWORDS="amd64 x86"
 IUSE=""

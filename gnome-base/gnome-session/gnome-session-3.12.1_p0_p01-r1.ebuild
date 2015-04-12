@@ -21,7 +21,7 @@ SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.12/${PN}-${PV}.tar.xz
 
 LICENSE="GPL-2 LGPL-2 FDL-1.1"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc elibc_FreeBSD gconf ipv6 systemd"
 RESTRICT="mirror"
 

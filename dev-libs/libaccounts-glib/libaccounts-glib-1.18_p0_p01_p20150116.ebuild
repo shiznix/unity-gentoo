@@ -21,14 +21,13 @@ SLOT="0/0.1.3"
 IUSE="debug"
 RESTRICT="mirror"
 
-RDEPEND="dev-db/sqlite:3
+DEPEND="dev-db/sqlite:3
 	>=dev-libs/check-0.9.10
 	dev-libs/dbus-glib
-	>=dev-libs/glib-2.34
-	>=dev-libs/gobject-introspection-1.34.2
+	dev-libs/glib:2
+	dev-libs/gobject-introspection
 	dev-libs/libxml2
-	dev-util/gtk-doc"
-DEPEND="${RDEPEND}
+	dev-util/gtk-doc
 	${PYTHON_DEPS}"
 
 MAKEOPTS="${MAKEOPTS} -j1"

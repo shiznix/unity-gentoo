@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 
 LICENSE="GPL-3+"
 SLOT="0"
-#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="doc +introspection systemd vala"
 REQUIRED_USE="vala? ( introspection )"
 RESTRICT="mirror"

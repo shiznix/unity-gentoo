@@ -15,7 +15,7 @@ HOMEPAGE="http://git.gnome.org/browse/gnome-disk-utility"
 LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE="avahi doc gnome-keyring"
-KEYWORDS="alpha amd64 arm ia64 ~mips ppc ppc64 sh sparc x86"
+KEYWORDS="~amd64 ~x86"
 
 CDEPEND="
 	>=dev-libs/glib-2.22:2
