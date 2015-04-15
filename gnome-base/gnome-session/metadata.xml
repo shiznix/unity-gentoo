@@ -9,4 +9,8 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="gconf">Optional support for <pkg>gnome-base/gconf</pkg>
+			configuration storage system</flag>
+	</use>
 </pkgmetadata>

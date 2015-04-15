@@ -7,7 +7,7 @@ GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
 URELEASE="utopic"
-inherit autotools base eutils gnome2 systemd virtualx ubuntu-versionator
+inherit autotools base eutils gnome2 systemd udev virtualx ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 

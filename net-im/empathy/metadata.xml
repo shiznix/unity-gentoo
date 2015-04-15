@@ -9,4 +9,13 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="geoloc">Enable geolocation support through
+			<pkg>app-misc/geoclue</pkg></flag>
+		<flag name="gnome-online-accounts">Enable using
+			<pkg>net-libs/gnome-online-accounts</pkg> for authorization (e.g.
+			for Google Talk)</flag>
+		<flag name="map">Enable world map support through
+		<pkg>media-libs/libchamplain</pkg></flag>
+	</use>
 </pkgmetadata>

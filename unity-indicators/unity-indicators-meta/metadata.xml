@@ -13,6 +13,7 @@
 		<flag name="battery">Battery power indicator</flag>
 		<flag name="bluetooth">Bluetooth settings and transfers indicator</flag>
 		<flag name="datetime">Date, time and calendar indicator</flag>
+		<flag name="keyboard">Keyboard layout indicator</flag>
 		<flag name="paste">Copy/Paste clipboard indicator</flag>
 		<flag name="sensors">Hardware sensors indicator such as CPU temp</flag>
 		<flag name="session">Session management indicator</flag>

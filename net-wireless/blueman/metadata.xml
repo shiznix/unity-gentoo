@@ -9,4 +9,8 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="gconf">Enable the GConf configuration backend</flag>
+		<flag name="network">Add functionality to setup (host) PAN connections using either <pkg>net-dns/dnsmasq</pkg> or <pkg>net-misc/dhcp</pkg></flag>
+	</use>
 </pkgmetadata>

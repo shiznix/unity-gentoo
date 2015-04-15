@@ -66,6 +66,8 @@ gnome-base/gnome-session::gentoo
 
 # Compiz needs patched gnome-settings-daemon to display desktop, see runtime error below...
 # GLib-GIO-ERROR **: Settings schema 'org.gnome.settings-daemon.plugins.media-keys' does not contain a key named 'terminal'
+# unity-settings-daemon needs patched gnome-settings-daemon, see runtime error below...
+# GLib-GIO-ERROR **: Settings schema 'org.gnome.settings-daemon.plugins.power' does not contain a key named 'percentage-low'
 gnome-base/gnome-settings-daemon::gentoo
 
 gnome-base/gsettings-desktop-schemas::gentoo

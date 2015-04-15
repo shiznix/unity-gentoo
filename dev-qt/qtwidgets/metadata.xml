@@ -9,4 +9,7 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="gles2">Use OpenGL ES 2.0 instead of desktop OpenGL</flag>
+	</use>
 </pkgmetadata>

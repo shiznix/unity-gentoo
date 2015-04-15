@@ -9,4 +9,8 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="qml">Build QML/QtQuick bindings and imports</flag>
+		<flag name="widgets">Build the QtMultimediaWidgets module</flag>
+	</use>
 </pkgmetadata>

@@ -9,4 +9,8 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="gtk3">Enable support for GTK+3</flag>
+		<flag name="introspection">Use <pkg>dev-libs/gobject-introspection</pkg> for introspection</flag>
+	</use>
 </pkgmetadata>

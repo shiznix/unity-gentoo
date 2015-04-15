@@ -9,4 +9,7 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="designer">Build plugin for <pkg>dev-qt/designer</pkg></flag>
+	</use>
 </pkgmetadata>
