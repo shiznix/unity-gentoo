@@ -18,7 +18,6 @@
 		<flag name="sensors">Hardware sensors indicator such as CPU temp</flag>
 		<flag name="session">Session management indicator</flag>
 		<flag name="sound">Audio control and application launching indicator</flag>
-		<flag name="sync">Multiple cloud based services indicator</flag>
 		<flag name="weather">Weather indicator</flag>
 	</use>
 </pkgmetadata>

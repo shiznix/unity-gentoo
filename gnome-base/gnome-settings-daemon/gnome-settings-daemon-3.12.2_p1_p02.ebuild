@@ -109,7 +109,7 @@ src_prepare() {
 
 	# Backport Upower-0.99 support from Vivid Vervet #
 	pushd "${WORKDIR}"
-		epatch "${FILESDIR}/gnome-settings-daemon_3.12.2-1ubuntu2_3.12.2-1ubuntu4.diff"
+		epatch "${FILESDIR}/gnome-settings-daemon_3.12.2-1ubuntu2_3.12.2-1ubuntu4.diff.gz"
 	popd
 
 	# Disable selected patches #

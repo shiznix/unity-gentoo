@@ -23,6 +23,7 @@ dev-python/fixtures
 ~media-libs/giflib-4.2.3
 ~media-libs/glm-0.9.5.1
 ~media-libs/harfbuzz-0.9.35
+sys-devel/automake:1.14
 sys-devel/gcc:4.9
 sys-kernel/ubuntu-sources
 sys-libs/db:5.1
@@ -39,6 +40,7 @@ x11-proto/glproto
 
 ## Overlay missing keyword unmasking ##
 app-accessibility/onboard **
+app-accessibility/unity-voice **
 app-backup/deja-dup **
 dev-cpp/gflags **
 dev-cpp/gmock **

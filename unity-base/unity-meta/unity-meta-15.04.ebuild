@@ -23,10 +23,10 @@ DEPEND="app-backup/deja-dup[nautilus]
 	gnome-extra/activity-log-manager
 	gnome-extra/nm-applet
 	net-libs/telepathy-indicator
-	unity-base/unity-control-center
 	unity-base/hud
 	unity-base/unity
 	unity-base/unity-build-env
+	unity-base/unity-control-center
 	unity-extra/unity-tweak-tool
 	unity-indicators/unity-indicators-meta
 	unity-lenses/unity-lens-meta

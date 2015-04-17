@@ -60,7 +60,6 @@ DEPEND="dev-libs/boost
 	gnome-base/gnome-menus:3
 	gnome-base/gnome-session
 	gnome-base/gsettings-desktop-schemas
-	gnome-base/libgdu
 	>=gnome-extra/polkit-gnome-0.105-r9
 	media-libs/clutter-gtk:1.0
 	media-libs/glew

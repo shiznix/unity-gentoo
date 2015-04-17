@@ -9,7 +9,8 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
-        <use>                                                                                                                                                                                         
-		<flag name="mir">Enable Mir display server support</flag>                                                                                                                             
+        <use>
+		<flag name="glamor">Enable Glamor OpenGL 2D acceleration</flag>
+		<flag name="mir">Enable Mir display server support</flag>
         </use>
 </pkgmetadata>

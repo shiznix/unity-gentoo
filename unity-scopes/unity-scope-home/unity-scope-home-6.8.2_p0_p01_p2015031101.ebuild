@@ -7,7 +7,7 @@ EAPI=5
 URELEASE="vivid"
 inherit autotools eutils ubuntu-versionator vala virtualx
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/u/${PN}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Home scope that aggregates results from multiple scopes for the Unity desktop"

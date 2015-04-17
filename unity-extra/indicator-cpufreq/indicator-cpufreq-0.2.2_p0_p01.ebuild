@@ -5,10 +5,10 @@
 EAPI=5
 PYTHON_COMPAT=( python{3_3,3_4} )
 
+URELEASE="utopic"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/i/${PN}"
-URELEASE="utopic"
+UURL="mirror://ubuntu/pool/universe/i/${PN}"
 
 DESCRIPTION="CPU frequency scaling indicator for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/classicmenu-indicator"
@@ -18,6 +18,7 @@ SRC_URI="${UURL}/${PN}_${PV}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
 	dev-libs/libappindicator

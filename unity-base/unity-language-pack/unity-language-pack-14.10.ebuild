@@ -10,7 +10,8 @@ inherit ubuntu-versionator
 DESCRIPTION="Language translations pack for Unity desktop"
 HOMEPAGE="https://translations.launchpad.net/ubuntu"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/l"	# Mirrors are too unpredictable #
+UURL="mirror://ubuntu/pool/main/l"
+#UURL="http://archive.ubuntu.com/ubuntu/pool/main/l"	# Mirrors can be unpredictable #
 UVER=
 
 LICENSE="GPL-3"

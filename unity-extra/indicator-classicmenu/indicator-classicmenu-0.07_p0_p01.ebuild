@@ -6,11 +6,11 @@ EAPI=5
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
+URELEASE="utopic"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 MY_PN="classicmenu-indicator"
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/c/${MY_PN}"
-URELEASE="utopic"
+UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
 
 DESCRIPTION="Indicator to provide the main menu of Gnome2/Gnome Classic for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/classicmenu-indicator"
@@ -20,6 +20,7 @@ SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
 	dev-libs/libappindicator

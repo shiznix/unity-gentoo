@@ -8,7 +8,8 @@ URELEASE="utopic"
 inherit eutils gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+14.04.${PVR_MICRO}"
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors are too unpredictable #
+#UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors can be unpredictable #
+UURL="mirror://ubuntu/pool/universe/u"
 
 DESCRIPTION="WebApps: Complete set of Apps for the Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-applications"
