@@ -14,6 +14,7 @@ app-text/gtkspell vala
 dev-lang/python sqlite
 dev-libs/folks vala
 dev-libs/glib utils
+dev-libs/libdbusmenu gtk3
 dev-libs/keybinder python
 dev-libs/libgdata gnome
 dev-libs/libpeas -python_targets_python3_4			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_3" as set by /usr/portage/profiles/base/make.defaults
