@@ -111,6 +111,7 @@ RDEPEND="${RDEPEND}
 		bluetooth? ( net-wireless/bluez:= )
 	)
 "
+RESTRICT="mirror"
 
 pkg_pretend() {
 	CONFIG_CHECK="~HIGH_RES_TIMERS"

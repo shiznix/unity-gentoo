@@ -5,12 +5,12 @@
 EAPI=5
 ETYPE="sources"
 
-URELEASE="utopic-security"
+URELEASE="vivid"
 inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
 MY_PV="${PV}"
-BASE_PV="3.16.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
+BASE_PV="3.19.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
 UURL="mirror://ubuntu/pool/main/l/${MY_PN}"
 
 DESCRIPTION="Ubuntu patched kernel sources"

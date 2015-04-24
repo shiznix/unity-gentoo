@@ -4,9 +4,9 @@
 >=sys-apps/kmod-19
 
 # xapian-1.3 is the development release which appends it's version to all includes/libs (see related b.g.o #480470)
-# xapian-bindings-1.2.17 is not yet stable (see related b.g.o #506974) and xapian{-bindings} versions must match
->dev-libs/xapian-1.2.14
->dev-libs/xapian-bindings-1.2.14
+#   xapian{-bindings} versions must match
+>=dev-libs/xapian-1.3
+>=dev-libs/xapian-bindings-1.3
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
