@@ -40,8 +40,8 @@ MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="vivid"
-UVER_PREFIX="+build2"
+URELEASE="vivid-security"
+UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 # No longer optional -- MOZCONFIG_OPTIONAL_JIT="enabled"
 
