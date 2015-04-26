@@ -111,7 +111,6 @@ gnome-base/gsettings-desktop-schemas **
 gnome-base/nautilus **
 gnome-base/gnome-session **
 gnome-extra/activity-log-manager **
-gnome-extra/zeitgeist **
 gnome-extra/nm-applet **
 mail-client/thunderbird **
 media-gfx/thumbnailer **

@@ -75,7 +75,6 @@ gnome-base/nautilus::gentoo
 gnome-extra/activity-log-manager::gentoo
 gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
-gnome-extra/zeitgeist::gentoo
 
 mail-client/thunderbird::gentoo
 media-libs/mesa::gentoo
