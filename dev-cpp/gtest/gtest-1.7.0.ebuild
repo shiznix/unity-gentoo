@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 inherit eutils python-single-r1 autotools-multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER="3"
 
 DESCRIPTION="Google C++ Testing Framework"

@@ -12,7 +12,7 @@ UURL="mirror://ubuntu/pool/main/x/${PN}"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
 SLOT="0/${PV}"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
@@ -21,7 +21,7 @@ IUSE="${IUSE_SERVERS} glamor ipv6 minimal mir nptl selinux +suid systemd tslib +
 RESTRICT="mirror"
 
 CDEPEND=">=app-eselect/eselect-opengl-1.3.0
-	dev-libs/openssl
+	dev-libs/openssl:0
 	media-libs/freetype
 	>=x11-apps/iceauth-1.0.2
 	>=x11-apps/rgb-1.0.3

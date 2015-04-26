@@ -7,7 +7,7 @@ EAPI=5
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="+14.04.20140304"
 
 DESCRIPTION="Allow applications to export actions in various forms to the Unity Shell"

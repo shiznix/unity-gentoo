@@ -8,7 +8,7 @@ GNOME2_LA_PUNT="yes"
 inherit ubuntu-versionator eutils
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 
 DESCRIPTION="Configuration files to bring up a session with a browser to configure the UCCS service."
 HOMEPAGE="https://launchpad.net/lightdm-remote-session-uccsconfigure"

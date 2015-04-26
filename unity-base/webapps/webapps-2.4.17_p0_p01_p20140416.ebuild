@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="utopic"
+URELEASE="vivid"
 inherit eutils gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+14.04.${PVR_MICRO}"

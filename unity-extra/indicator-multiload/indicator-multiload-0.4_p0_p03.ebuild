@@ -9,7 +9,7 @@ GCONF_DEBUG="yes"
 inherit gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/i/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 
 DESCRIPTION="Graphical system load indicator for CPU, ram, etc. used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-multiload"
@@ -21,12 +21,11 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libappindicator:=
-	gnome-extra/gnome-system-monitor"
-
+RDEPEND="gnome-extra/gnome-system-monitor"
 DEPEND="${RDEPEND}
-	>=dev-libs/glib-2.28.0
-	dev-libs/libdbusmenu
+	dev-libs/glib:2
+	dev-libs/libappindicator:=
+	dev-libs/libdbusmenu:=
 	dev-libs/libindicate[gtk,introspection]
 	gnome-base/dconf
 	gnome-base/libgtop

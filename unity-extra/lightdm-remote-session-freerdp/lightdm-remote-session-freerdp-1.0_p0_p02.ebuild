@@ -8,7 +8,7 @@ GNOME2_LA_PUNT="yes"
 inherit ubuntu-versionator eutils
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 
 DESCRIPTION="Configuration and a script to do a remote session using FreeRDP."
 HOMEPAGE="https://launchpad.net/lightdm-remote-session-freerdp"

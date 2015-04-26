@@ -16,13 +16,12 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libappindicator:="
-DEPEND="${RDEPEND}
-	dev-libs/libdbusmenu
+DEPEND="dev-libs/libappindicator:=
+	dev-libs/libdbusmenu:=
 	dev-libs/libindicate-qt"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

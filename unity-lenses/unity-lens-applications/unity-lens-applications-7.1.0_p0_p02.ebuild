@@ -9,7 +9,7 @@ GCONF_DEBUG="yes"
 inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="+13.10.20131011"
 
 DESCRIPTION="Application lens for the Unity desktop"
@@ -22,16 +22,15 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/dee:=
+DEPEND="dev-libs/dee:=
 	dev-libs/libcolumbus:=
-	dev-libs/libunity:="
-DEPEND="${RDEPEND}
+	dev-libs/libunity:=
 	dev-libs/libzeitgeist
 	<dev-libs/xapian-1.3
-	>=gnome-base/gnome-menus-3.8.0:3
-	>=gnome-extra/zeitgeist-0.9.14[datahub,fts]
+	gnome-base/gnome-menus:3
+	gnome-extra/zeitgeist[datahub,fts]
 	sys-libs/db:5.1
-	>=unity-base/unity-7.1.0
+	unity-base/unity
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

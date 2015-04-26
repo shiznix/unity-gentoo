@@ -17,13 +17,12 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=[gtk3]"
-DEPEND="${RDEPEND}
-	>=dev-libs/glib-2.38
+DEPEND="dev-libs/glib:2
+	dev-libs/libdbusmenu:=[gtk3]
 	x11-libs/libX11
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3

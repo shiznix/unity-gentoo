@@ -18,16 +18,15 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="LGPL-2.1 LGPL-3"
 SLOT="3/1.0.0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=
-	dev-libs/libindicator:3="
-DEPEND="${RDEPEND}
-	dev-dotnet/gtk-sharp:2
+DEPEND="dev-dotnet/gtk-sharp:2
 	dev-libs/dbus-glib
 	dev-libs/glib:2
+	dev-libs/libdbusmenu:=
+	dev-libs/libindicator:3=
 	dev-libs/xapian-bindings[python]
 	dev-perl/XML-LibXML
 	dev-python/dbus-python[${PYTHON_USEDEP}]

@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -37,5 +37,5 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	qt5-build_src_prepare
-	perl -w /usr/$(get_libdir)/qt5/bin/syncqt.pl -version 5.2.0
+	perl -w /usr/$(get_libdir)/qt5/bin/syncqt.pl -version 5.4.0
 }

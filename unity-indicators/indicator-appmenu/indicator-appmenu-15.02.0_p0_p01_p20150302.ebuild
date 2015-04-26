@@ -18,16 +18,15 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=
-	unity-base/bamf:="
-DEPEND="${RDEPEND}
-	dev-libs/libappindicator
+DEPEND="dev-libs/libdbusmenu:=
+	dev-libs/libappindicator:3=
 	dev-libs/libindicate-qt
-	>=x11-libs/gtk+-3.5.12:3
+	unity-base/bamf:=
+	x11-libs/gtk+:3
 	x11-libs/libwnck:1
 	x11-libs/libwnck:3"
 

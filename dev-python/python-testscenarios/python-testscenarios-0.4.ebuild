@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/p/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER="3"
 
 DESCRIPTION="Python unittest extension for running tests in different scenarios"

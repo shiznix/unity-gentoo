@@ -7,7 +7,7 @@ EAPI=5
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="+14.04.20140317"
 
 DESCRIPTION="Qt binding and QML plugin for Dee for the Unity desktop"

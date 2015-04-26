@@ -5,7 +5,7 @@
 EAPI=5
 PYTHON_COMPAT=( python{3_3,3_4} )
 
-URELEASE="utopic"
+URELEASE="vivid"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/i/${PN}"

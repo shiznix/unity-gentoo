@@ -6,7 +6,7 @@ EAPI="4"
 
 inherit eutils ubuntu-versionator
 
-URELEASE="utopic"
+URELEASE="vivid"
 UVER="1.2"
 
 DESCRIPTION="A VNC server for real X displays"

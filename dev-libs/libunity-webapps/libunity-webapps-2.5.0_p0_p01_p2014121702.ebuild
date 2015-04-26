@@ -18,20 +18,19 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0/0.0.0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=
-	dev-libs/libunity:="
-DEPEND="${RDEPEND}
-	app-admin/packagekit-base
+DEPEND="app-admin/packagekit-base
 	app-misc/geoclue:0
 	dev-db/sqlite:3
 	>=dev-libs/glib-2.32.3:2
 	dev-libs/gobject-introspection
 	dev-libs/json-glib
+	dev-libs/libdbusmenu:=
 	dev-libs/libindicate[gtk,introspection]
+	dev-libs/libunity:=
 	dev-util/intltool
 	net-libs/libsoup
 	net-libs/telepathy-glib

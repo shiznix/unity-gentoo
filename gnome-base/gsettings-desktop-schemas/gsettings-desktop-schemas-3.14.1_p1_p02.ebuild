@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="LGPL-2.1+"
 SLOT="0"
 IUSE="+introspection"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
 	>=dev-libs/glib-2.31:2

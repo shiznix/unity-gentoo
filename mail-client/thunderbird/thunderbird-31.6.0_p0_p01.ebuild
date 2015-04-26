@@ -33,21 +33,21 @@ EMVER="1.7.2"
 # We don't use the http mirror because it deletes old tarballs.
 MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
 MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
+MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="vivid"
 inherit base flag-o-matic toolchain-funcs mozconfig-v5.31 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
 UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/t/${PN}"
-MOZCONFIG_OPTIONAL_JIT="enabled"
 
 DESCRIPTION="Thunderbird Mail Client"
 HOMEPAGE="http://www.mozilla.com/en-US/thunderbird/"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist crypt ldap +lightning +minimal mozdom selinux"
+IUSE="bindist crypt hardened ldap +lightning +minimal mozdom selinux"
 RESTRICT="mirror"
 
 PATCH="thunderbird-31.0-patches-0.1"

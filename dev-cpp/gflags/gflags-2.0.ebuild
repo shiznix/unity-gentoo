@@ -4,14 +4,14 @@
 
 EAPI=5
 
-URELEASE="utopic"
-inherit ubuntu-versionator
+URELEASE="vivid"
+inherit autotools-multilib ubuntu-versionator
 
-UVER="2.1"
+UVER="2.1build1"
 
 DESCRIPTION="Google's C++ argument parsing library"
 HOMEPAGE="http://code.google.com/p/gflags/"
-SRC_URI="http://gflags.googlecode.com/files/${P}.tar.gz"
+SRC_URI="http://gflags.googlecode.com/files/${PN}-${PV}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -19,11 +19,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE="static-libs"
 
 src_configure() {
-	econf $(use_enable static-libs static)
+	local myeconfargs=(
+		$(use_enable static-libs static)
+	)
+	autotools-multilib_src_configure
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die
+	autotools-multilib_src_install
 
 	rm -rf "${ED}"/usr/share/doc/*
 	dodoc AUTHORS ChangeLog NEWS README

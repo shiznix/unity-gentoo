@@ -6,15 +6,15 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="vivid"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libt/${PN}"
-UVER=
-URELEASE="utopic"
+UVER="build1"
 
 DESCRIPTION="GTK+3 timezone map widget used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libtimezonemap"
-SRC_URI="${UURL}/${MY_P}.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0/1.0.0"
@@ -27,6 +27,8 @@ DEPEND="dev-libs/glib:2
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3"
+
+S="${WORKDIR}/${PN}-${PV}${UVER}"
 
 src_prepare() {
 	eautoreconf

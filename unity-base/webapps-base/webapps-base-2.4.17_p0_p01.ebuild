@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 inherit autotools gnome2-utils python-r1 ubuntu-versionator
 
 MY_PN="webapps-applications"
-URELEASE="utopic"
+URELEASE="vivid"
 UURL="mirror://ubuntu/pool/main/w/${MY_PN}"
 UVER_PREFIX="+14.04.20140416"
 

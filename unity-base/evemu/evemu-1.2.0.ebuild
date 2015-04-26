@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 inherit autotools base eutils python-single-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/e/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER="2"
 
 DESCRIPTION="Event Emulation for the uTouch Stack"

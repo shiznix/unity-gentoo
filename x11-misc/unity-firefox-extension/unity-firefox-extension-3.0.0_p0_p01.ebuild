@@ -7,7 +7,7 @@ EAPI=5
 inherit autotools base eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="+14.04.20140416"
 
 DESCRIPTION="Firefox extension for Unity desktop integration"

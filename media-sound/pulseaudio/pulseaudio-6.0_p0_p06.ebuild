@@ -20,17 +20,18 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 # GPL-forcing USE flags for those who use them.
 LICENSE="!gdbm? ( LGPL-2.1 ) gdbm? ( GPL-2 )"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 # +alsa-plugin as discussed in bug #519530
 IUSE="+alsa +alsa-plugin +asyncns bluetooth +caps dbus doc equalizer +gdbm +glib
 	gnome gtk ipv6 jack libsamplerate lirc native-headset neon ofono-headset
-	+orc oss qt4 realtime ssl systemd system-wide tcpd test +udev
+	+orc oss qt4 realtime selinux ssl systemd system-wide tcpd test +udev
 	+webrtc-aec +X xen zeroconf"
 
 # See "*** BLUEZ support not found (requires D-Bus)" in configure.ac
 REQUIRED_USE="bluetooth? ( dbus )
 		ofono-headset? ( bluetooth )
-		native-headset? ( bluetooth )"
+		native-headset? ( bluetooth )
+		udev? ( || ( alsa oss ) )"
 
 # libpcre needed in some cases, bug #472228
 RDEPEND="
@@ -68,8 +69,8 @@ RDEPEND="
 	realtime? ( sys-auth/rtkit )
 	equalizer? ( sci-libs/fftw:3.0 )
 	ofono-headset? ( >=net-misc/ofono-1.13 )
-	orc? ( >=dev-lang/orc-0.4.9 )
-	ssl? ( dev-libs/openssl )
+	orc? ( >=dev-lang/orc-0.4.15 )
+	ssl? ( dev-libs/openssl:0 )
 	>=media-libs/speex-1.2_rc1
 	gdbm? ( sys-libs/gdbm )
 	webrtc-aec? ( media-libs/webrtc-audio-processing )
@@ -79,6 +80,7 @@ RDEPEND="
 	abi_x86_32? ( !<=app-emulation/emul-linux-x86-soundlibs-20131008-r1
 		!app-emulation/emul-linux-x86-soundlibs[-abi_x86_32(-)] )
 	dev-libs/libltdl:0
+	selinux? ( sec-policy/selinux-pulseaudio )
 "
 # it's a valid RDEPEND, libltdl.so is used for native abi
 
@@ -130,6 +132,7 @@ pkg_pretend() {
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 	linux-info_pkg_setup
+	gnome2_environment_reset #543364
 
 	enewgroup audio 18 # Just make sure it exists
 
@@ -174,10 +177,14 @@ multilib_src_configure() {
 	fi
 
 	if use bluetooth; then
-		if has_version '<net-wireless/bluez-5'; then
-			myconf+=( --disable-bluez5 --enable-bluez4 )
-		else
-			myconf+=( --enable-bluez5 --disable-bluez4 )
+		if multilib_is_native_abi; then
+			if has_version '<net-wireless/bluez-5'; then
+				myconf+=( --disable-bluez5 --enable-bluez4 )
+			else
+				myconf+=( --enable-bluez5 --disable-bluez4
+					$(use_enable native-headset bluez5-native-headset)
+					$(use_enable ofono-headset bluez5-ofono-headset) )
+			fi
 		fi
 	else
 		myconf+=( --disable-bluez5 --disable-bluez4 )
@@ -210,8 +217,6 @@ multilib_src_configure() {
 		$(use_enable ssl openssl)
 		$(use_enable webrtc-aec)
 		$(use_enable xen)
-		$(use_enable native-headset bluez5-native-headset)
-		$(use_enable ofono-headset bluez5-ofono-headset)
 		$(use_with caps)
 		$(use_with equalizer fftw)
 		--disable-adrian-aec
@@ -235,9 +240,6 @@ multilib_src_configure() {
 			--disable-bluez4
 			--disable-bluez5
 			--disable-udev
-			--disable-systemd-daemon
-			--disable-systemd-login
-			--disable-systemd-journal
 			--disable-openssl
 			--disable-orc
 			--disable-webrtc-aec
@@ -353,14 +355,15 @@ multilib_src_install_all() {
 
 pkg_postinst() {
 	if use system-wide; then
-		elog "PulseAudio in Gentoo can use a system-wide pulseaudio daemon."
-		elog "This support is enabled by starting the pulseaudio init.d ."
-		elog "To be able to access that you need to be in the group pulse-access."
-		elog "If you choose to use this feature, please make sure that you"
-		elog "really want to run PulseAudio this way:"
-		elog "   http://pulseaudio.org/wiki/WhatIsWrongWithSystemMode"
-		elog "For more information about system-wide support, please refer to:"
-		elog "	 http://pulseaudio.org/wiki/SystemWideInstance"
+		elog "You have enabled the 'system-wide' USE flag for pulseaudio."
+		elog "This mode should only be used on headless servers, embedded systems,"
+		elog "or thin clients. It will usually require manual configuration, and is"
+		elog "incompatible with many expected pulseaudio features."
+		elog "On normal desktop systems, system-wide mode is STRONGLY DISCOURAGED."
+		elog "For more information, see"
+		elog "    http://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/WhatIsWrongWithSystemWide/"
+		elog "    http://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/SystemWide/"
+		elog "    https://wiki.gentoo.org/wiki/PulseAudio#Headless_server"
 		if use gnome ; then
 			elog
 			elog "By enabling gnome USE flag, you enabled gconf support. Please note"

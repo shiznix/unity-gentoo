@@ -7,7 +7,7 @@ GTESTVER="1.6.0"
 
 inherit cmake-utils ubuntu-versionator
 
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="+14.04.20140303"
 UURL="mirror://ubuntu/pool/main/x/${PN}"
 

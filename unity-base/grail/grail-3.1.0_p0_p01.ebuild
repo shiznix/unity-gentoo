@@ -7,7 +7,7 @@ EAPI=4
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="daily13.06.05"
 
 DESCRIPTION="An implementation of the GRAIL (Gesture Recognition And Instantiation Library) interface"

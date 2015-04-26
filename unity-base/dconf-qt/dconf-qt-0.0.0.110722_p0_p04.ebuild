@@ -9,7 +9,7 @@ GCONF_DEBUG="yes"
 inherit base gnome2 cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 
 DESCRIPTION="Dconf Qt bindings for the Unity desktop"
 HOMEPAGE="https://launchpad.net/dconf-qt"

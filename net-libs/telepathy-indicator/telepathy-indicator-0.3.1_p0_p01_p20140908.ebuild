@@ -6,11 +6,11 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-URELEASE="utopic"
+URELEASE="vivid"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="Desktop service to integrate Telepathy with the messaging menu used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/telepathy-indicator"
@@ -22,11 +22,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libunity:="
-DEPEND="${RDEPEND}
-	dev-libs/libappindicator
+DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk3]
 	dev-libs/libindicate-qt
+	dev-libs/libunity:=
 	net-libs/telepathy-glib
 	unity-indicators/indicator-messages"
 

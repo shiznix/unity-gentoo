@@ -5,11 +5,11 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
-URELEASE="utopic"
+URELEASE="vivid"
 inherit autotools base eutils autotools python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"

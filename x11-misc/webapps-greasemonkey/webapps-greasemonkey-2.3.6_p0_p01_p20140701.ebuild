@@ -4,11 +4,11 @@
 
 EAPI=5
 
-URELEASE="utopic"
+URELEASE="vivid"
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/w/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="WebApps: Websites integration Firefox plug-in for Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-greasemonkey"

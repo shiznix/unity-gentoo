@@ -7,7 +7,7 @@ EAPI=4
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/f/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="daily13.06.05"
 
 DESCRIPTION="uTouch Frame Library"

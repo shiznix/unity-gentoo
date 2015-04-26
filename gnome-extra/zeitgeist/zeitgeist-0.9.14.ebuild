@@ -7,11 +7,11 @@ EAPI=5
 AUTOTOOLS_AUTORECONF=true
 PYTHON_COMPAT=( python{2_6,2_7} )
 
+URELEASE="vivid"
 inherit autotools-utils base bash-completion-r1 eutils python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/z/${PN}"
-URELEASE="utopic"
-UVER="2.2ubuntu2"
+UVER="2.2ubuntu3"
 
 DESCRIPTION="Service to log activities and present to other apps patched for the Unity desktop"
 HOMEPAGE="http://launchpad.net/zeitgeist/"

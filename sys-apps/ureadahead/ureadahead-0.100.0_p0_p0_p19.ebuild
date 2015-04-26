@@ -17,15 +17,15 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="sys-libs/libnih
 	sys-apps/util-linux
 	>=sys-fs/e2fsprogs-1.41
-	|| ( sys-kernel/ubuntu-sources
-		sys-kernel/zen-sources )"
+	|| ( sys-kernel/ubuntu-sources:*
+		sys-kernel/zen-sources:* )"
 DEPEND="${RDEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig"

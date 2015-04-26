@@ -16,13 +16,12 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:="
-DEPEND="${RDEPEND}
-	dev-libs/glib:2
+DEPEND="dev-libs/glib:2
+	dev-libs/libdbusmenu:=
 	dev-libs/libubuntu-app-launch
 	sys-apps/dbus
 	test? ( dev-util/dbus-test-runner )"

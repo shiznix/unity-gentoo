@@ -9,7 +9,7 @@ GCONF_DEBUG="yes"
 inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="~+14.10.20140814"
 
 DESCRIPTION="Online account plugin for unity-control-center used by the Unity desktop"
@@ -22,22 +22,20 @@ IUSE=""
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libaccounts-glib:=
-	dev-libs/libsignon-glib:=
-	net-im/pidgin[-eds,dbus,gadu,groupwise,idn,meanwhile,networkmanager,sasl,silc,zephyr]
+RDEPEND="net-im/pidgin[-eds,dbus,gadu,groupwise,idn,meanwhile,networkmanager,sasl,silc,zephyr]
 	net-im/telepathy-logger
 	net-irc/telepathy-idle
 	net-voip/telepathy-gabble
 	net-voip/telepathy-haze
 	net-voip/telepathy-rakia
-	>=net-voip/telepathy-salut-0.8.1
+	net-voip/telepathy-salut
 	unity-base/signon-ui"
-DEPEND=">=dev-libs/libaccounts-glib-1.10
-	>=dev-libs/libsignon-glib-1.8
+DEPEND="dev-libs/libaccounts-glib:=
+	dev-libs/libsignon-glib:=
 	dev-libs/libxml2:2
 	dev-libs/libxslt
-	>=dev-util/intltool-0.40.1
-	>=sys-devel/gettext-0.17
+	dev-util/intltool
+	sys-devel/gettext
 	virtual/pkgconfig
 	x11-libs/gtk+:3
 	x11-proto/xproto

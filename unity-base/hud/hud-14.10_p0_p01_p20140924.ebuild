@@ -7,11 +7,11 @@ GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="utopic"
+URELEASE="vivid"
 inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/h/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"
@@ -23,29 +23,28 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-RDEPEND="app-accessibility/unity-voice:=
-	dev-libs/libdbusmenu:=
-	unity-base/bamf:="
-DEPEND="${RDEPEND}
+DEPEND="app-accessibility/pocketsphinx[${PYTHON_USEDEP}]
+	app-accessibility/unity-voice:=
 	dev-cpp/gmock
 	dev-db/sqlite:3
 	dev-libs/dee[${PYTHON_USEDEP}]
-	>=dev-libs/glib-2.35.4[${PYTHON_USEDEP}]
+	dev-libs/glib:2[${PYTHON_USEDEP}]
+	dev-libs/libdbusmenu:=
+	dev-libs/libdbusmenu-qt[qt5]
 	dev-libs/libqtdbusmock
 	dev-perl/XML-Parser
-	gnome-base/dconf
-	sys-libs/libnih[dbus]
-	x11-libs/gtk+:3
-	x11-libs/pango
-	app-accessibility/pocketsphinx[${PYTHON_USEDEP}]
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtsql:5
 	dev-qt/qttest:5
-	>=x11-libs/dee-qt-3.3[qt5]
+	gnome-base/dconf
+	sys-libs/libnih[dbus]
+	unity-base/bamf:=
+	x11-libs/dee-qt[qt5]
 	x11-libs/gsettings-qt
-	dev-libs/libdbusmenu-qt[qt5]
+	x11-libs/gtk+:3
+	x11-libs/pango
 	$(vala_depend)
 	test? ( dev-util/dbus-test-runner )"
 

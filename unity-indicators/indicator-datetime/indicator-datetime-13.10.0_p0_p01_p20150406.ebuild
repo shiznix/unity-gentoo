@@ -19,22 +19,20 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=
-	dev-libs/libtimezonemap:=
-	unity-base/unity-language-pack
-	unity-indicators/ido:="
-DEPEND="dev-libs/libappindicator
-	dev-libs/libdbusmenu
+RDEPEND="unity-base/unity-language-pack"
+DEPEND="${RDEPEND}
+	dev-libs/libappindicator:=
+	dev-libs/libdbusmenu:=
 	dev-libs/libindicate-qt
-	dev-libs/libtimezonemap
+	dev-libs/libtimezonemap:=
 	dev-libs/properties-cpp
-	>=gnome-extra/evolution-data-server-3.8
+	gnome-extra/evolution-data-server
 	net-misc/url-dispatcher
-	unity-indicators/ido
+	unity-indicators/ido:=
 	unity-base/unity-control-center
 	>=x11-libs/libnotify-0.7.6"
 

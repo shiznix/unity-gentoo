@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
 	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 DESCRIPTION="WebKit rendering library for the Qt5 framework"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 # TODO: qttestlib, geolocation, orientation/sensors
 
@@ -33,10 +33,9 @@ RDEPEND="
 	>=dev-qt/qtgui-${PV}:5[debug=,xcb]
 	>=dev-qt/qtlocation-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
-	>=dev-qt/qtprintsupport-${PV}:5[debug=]
 	>=dev-qt/qtsensors-${PV}:5[debug=]
 	>=dev-qt/qtsql-${PV}:5[debug=]
-	>=dev-qt/qttest-${PV}:5[debug=]
+	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	media-libs/fontconfig:1.0
 	media-libs/libpng:0=
 	sys-libs/zlib
@@ -57,6 +56,7 @@ RDEPEND="
 	)
 	multimedia? ( >=dev-qt/qtmultimedia-${PV}:5[debug=,widgets] )
 	opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
+	printsupport? ( >=dev-qt/qtprintsupport-${PV}:5[debug=] )
 	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )
 	udev? ( virtual/udev )
 	webp? ( media-libs/libwebp:0= )
@@ -66,7 +66,8 @@ DEPEND="${RDEPEND}
 	dev-lang/ruby
 	dev-util/gperf
 	sys-devel/bison
-	sys-devel/flex"
+	sys-devel/flex
+	virtual/rubygems"
 
 S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"

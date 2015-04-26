@@ -7,7 +7,7 @@ EAPI=5
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="+14.04.20140115"
 
 DESCRIPTION="Miscellaneous modules for the Unity desktop"

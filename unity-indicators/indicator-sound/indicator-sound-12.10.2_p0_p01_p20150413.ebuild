@@ -18,22 +18,22 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=
-	sys-auth/polkit-pkla-compat
-	unity-base/bamf:=
-	unity-base/gsettings-ubuntu-touch-schemas
-	unity-indicators/ido:="
+RDEPEND="sys-auth/polkit-pkla-compat
+	unity-base/gsettings-ubuntu-touch-schemas"
 DEPEND="${RDEPEND}
 	dev-libs/libappindicator
 	dev-libs/libgee:0
 	dev-libs/libindicate-qt
-	>=x11-libs/libnotify-0.7.6
+	dev-libs/libdbusmenu:=
 	media-sound/pulseaudio
 	net-misc/url-dispatcher
+	unity-base/bamf:=
+	unity-indicators/ido:=
+	>=x11-libs/libnotify-0.7.6
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

@@ -22,55 +22,46 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc +branding pch test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-RDEPEND="dev-libs/dee:=
-	dev-libs/libdbusmenu:=
-	dev-libs/libunity-misc:=
-	gnome-base/gnome-desktop:3=
-	media-libs/glew:=
-	unity-base/bamf:=
-	unity-base/compiz:=
-	unity-base/nux:=[debug?]
-	unity-base/gsettings-ubuntu-touch-schemas
+RDEPEND="unity-base/gsettings-ubuntu-touch-schemas
 	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
 	x11-themes/gtk-engines-murrine
 	x11-themes/unity-asset-pool"
-DEPEND="dev-libs/boost
-	dev-libs/dee
+DEPEND="dev-libs/boost:=
+	dev-libs/dee:=
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
-	dev-libs/libdbusmenu
+	dev-libs/libdbusmenu:=
 	dev-libs/libindicate[gtk,introspection]
 	dev-libs/libindicate-qt
 	dev-libs/libindicator
 	dev-libs/libunity
-	dev-libs/libunity-misc
+	dev-libs/libunity-misc:=
 	dev-libs/libupstart
 	dev-libs/xpathselect
 	dev-python/gconf-python
-	>=gnome-base/gconf-3.2.5
+	gnome-base/gconf
 	app-text/yelp-tools
-	gnome-base/gnome-desktop:3
+	gnome-base/gnome-desktop:3=
 	gnome-base/gnome-menus:3
 	gnome-base/gnome-session
 	gnome-base/gsettings-desktop-schemas
-	>=gnome-extra/polkit-gnome-0.105-r9
+	gnome-extra/polkit-gnome:0
 	media-libs/clutter-gtk:1.0
-	media-libs/glew
+	media-libs/glew:=
 	sys-apps/dbus
 	sys-auth/pambase
-	>=sys-devel/gcc-4.8
 	sys-libs/libnih[dbus]
-	unity-base/bamf
-	unity-base/compiz
+	unity-base/bamf:=
+	unity-base/compiz:=
 	unity-base/dconf-qt
-	unity-base/nux[debug?]
+	unity-base/nux:=[debug?]
 	unity-base/overlay-scrollbar
 	unity-base/unity-control-center
 	unity-base/unity-settings-daemon

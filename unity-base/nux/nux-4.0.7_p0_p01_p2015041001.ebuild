@@ -18,11 +18,10 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0/4"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug doc examples test"
 RESTRICT="mirror"
 
-RDEPEND="media-libs/glew:="
 DEPEND="app-i18n/ibus
 	dev-cpp/gtest
 	dev-libs/boost
@@ -30,7 +29,7 @@ DEPEND="app-i18n/ibus
 	dev-libs/libpcre
 	dev-libs/libsigc++:2
 	gnome-base/gnome-common
-	media-libs/glew
+	media-libs/glew:=
 	media-libs/libpng:0
 	sys-apps/pciutils
 	>=sys-devel/gcc-4.7

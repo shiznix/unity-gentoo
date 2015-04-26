@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="4"
 IUSE="debug"
 RESTRICT="mirror"

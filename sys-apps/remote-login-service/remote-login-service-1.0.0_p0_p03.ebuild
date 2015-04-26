@@ -8,7 +8,7 @@ GNOME2_LA_PUNT="yes"
 inherit eutils autotools ubuntu-versionator base
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 
 DESCRIPTION="A service that lists remote logins."
 HOMEPAGE="https://launchpad.net/remote-login-service"

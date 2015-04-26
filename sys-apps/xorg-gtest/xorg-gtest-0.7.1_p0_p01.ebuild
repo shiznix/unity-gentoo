@@ -7,7 +7,7 @@ EAPI=5
 inherit autotools base ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/x/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 
 DESCRIPTION="X.Org dummy testing environment for Google Test"
 HOMEPAGE="https://launchpad.net/xorg-gtest"

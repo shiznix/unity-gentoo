@@ -27,8 +27,8 @@ SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN
 
 LICENSE="BSD"
 SLOT="0"
-#KEYWORDS="~amd64 ~arm ~x86"
-IUSE="bindist cups gnome gnome-keyring kerberos neon pic pulseaudio selinux +tcmalloc widevine"
+KEYWORDS="~amd64 ~arm ~x86"
+IUSE="bindist cups gnome gnome-keyring hidpi kerberos neon pic pulseaudio selinux +tcmalloc widevine"
 RESTRICT="!bindist? ( bindist )
 	mirror"
 
@@ -266,10 +266,10 @@ src_prepare() {
 		'third_party/libjingle' \
 		'third_party/libphonenumber' \
 		'third_party/libsrtp' \
+		'third_party/libudev' \
 		'third_party/libusb' \
 		'third_party/libvpx' \
 		'third_party/libvpx/source/libvpx/third_party/x86inc' \
-		'third_party/libwebm' \
 		'third_party/libxml/chromium' \
 		'third_party/libXNVCtrl' \
 		'third_party/libyuv' \
@@ -283,6 +283,8 @@ src_prepare() {
 		'third_party/opus' \
 		'third_party/ots' \
 		'third_party/pdfium' \
+		'third_party/pdfium/third_party/bigint' \
+		'third_party/pdfium/third_party/freetype' \
 		'third_party/pdfium/third_party/logging.h' \
 		'third_party/pdfium/third_party/macros.h' \
 		'third_party/pdfium/third_party/numerics' \
@@ -387,6 +389,7 @@ src_configure() {
 		$(gyp_use gnome use_gconf)
 		$(gyp_use gnome-keyring use_gnome_keyring)
 		$(gyp_use gnome-keyring linux_link_gnome_keyring)
+		$(gyp_use hidpi enable_hidpi)
 		$(gyp_use kerberos)
 		$(gyp_use pulseaudio)
 		$(gyp_use tcmalloc use_allocator tcmalloc none)"
@@ -596,6 +599,7 @@ src_install() {
 	popd
 
 	insinto "${CHROMIUM_HOME}"
+	doins out/Release/*.bin || die
 	doins out/Release/*.pak || die
 
 	doins -r out/Release/locales || die
@@ -606,7 +610,6 @@ src_install() {
 
 	doexe out/Release/libffmpegsumo.so || die
 	doexe out/Release/libpdf.so || die
-
 	if use widevine; then
 		doexe out/Release/libwidevinecdmadapter.so || die
 	fi

@@ -77,7 +77,8 @@ if [[ ${PN} != qttest ]]; then
 	if [[ ${QT5_MODULE} == qtbase ]]; then
 #		DEPEND+=" test? ( ~dev-qt/qttest-${PV}[debug=] )"
 #	else
-		DEPEND+=" test? ( >=dev-qt/qttest-${PV}:5[debug=] )"
+		MY_PV="${PV%%_p*}"	# Strip off Ubuntu specific patchlevel versioning strings
+		DEPEND+=" test? ( >=dev-qt/qttest-${MY_PV}:5[debug=] )"
 	fi
 fi
 

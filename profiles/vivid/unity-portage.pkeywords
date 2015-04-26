@@ -113,6 +113,7 @@ gnome-base/gnome-session **
 gnome-extra/activity-log-manager **
 gnome-extra/zeitgeist **
 gnome-extra/nm-applet **
+mail-client/thunderbird **
 media-gfx/thumbnailer **
 media-libs/mesa **
 media-libs/mesa-mir **

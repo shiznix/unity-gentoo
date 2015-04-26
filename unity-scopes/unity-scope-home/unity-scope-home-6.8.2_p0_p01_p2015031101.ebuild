@@ -16,17 +16,15 @@ SRC_URI="${UURL}/${PN}_${PV}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/dee:=
-	dev-libs/libunity:="
-DEPEND="dev-libs/dee
+DEPEND="dev-libs/dee:=
 	dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libgee
-	dev-libs/libunity
+	dev-libs/libunity:=
 	net-libs/libsoup-gnome
 	net-libs/liboauth
 	sys-apps/util-linux

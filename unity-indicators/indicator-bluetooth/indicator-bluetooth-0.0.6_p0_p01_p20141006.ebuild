@@ -8,11 +8,11 @@ GCONF_DEBUG="yes"
 VALA_MIN_API_VERSION="0.22"
 VALA_MAX_API_VERSION="0.22"
 
-URELEASE="utopic"
+URELEASE="vivid"
 inherit autotools base bzr eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="System bluetooth indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-bluetooth"
@@ -29,15 +29,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/libdbusmenu:=
-	unity-indicators/ido:="
-DEPEND="${RDEPEND}
-	dev-libs/glib
-	dev-libs/libappindicator
-	dev-libs/libindicator
+DEPEND="dev-libs/glib:2
+	dev-libs/libappindicator:=
+	dev-libs/libdbusmenu:=
+	dev-libs/libindicator:3=
 	gnome-base/dconf
 	net-misc/url-dispatcher
 	unity-base/unity-control-center
+	unity-indicators/ido:=
 	x11-libs/gtk+:3
 	$(vala_depend)"
 

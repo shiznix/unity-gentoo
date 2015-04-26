@@ -4,9 +4,9 @@
 
 EAPI=5
 
+URELEASE="vivid"
 inherit cmake-utils ubuntu-versionator
 
-URELEASE="utopic"
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 UVER_PREFIX="+14.04.20140305"
 

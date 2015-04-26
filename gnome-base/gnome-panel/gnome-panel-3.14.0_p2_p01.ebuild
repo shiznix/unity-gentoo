@@ -20,7 +20,7 @@ LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="0"
 IUSE="eds +introspection networkmanager"
 # Odd behaviour w.r.t. panels: https://bugzilla.gnome.org/show_bug.cgi?id=631553
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 RDEPEND="!<gnome-base/gnome-session-3.8

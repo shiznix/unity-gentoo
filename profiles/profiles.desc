@@ -1,5 +1,2 @@
-amd64   utopic/amd64    stable
-x86     utopic/x86      stable
-
-amd64	vivid/amd64	dev
-x86	vivid/x86	dev
+amd64	vivid/amd64	stable
+x86	vivid/x86	stable

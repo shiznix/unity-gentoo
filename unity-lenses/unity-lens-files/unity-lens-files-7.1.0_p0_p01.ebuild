@@ -9,7 +9,7 @@ GCONF_DEBUG="yes"
 inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="utopic"
+URELEASE="vivid"
 UVER_PREFIX="+13.10.20130920"
 
 DESCRIPTION="File lens for the Unity desktop"
@@ -29,7 +29,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libgee
 	dev-libs/libzeitgeist
 	>=gnome-extra/zeitgeist-0.9.14[datahub,fts]
-	>=unity-base/unity-7.1.0
+	unity-base/unity
 	unity-lenses/unity-lens-applications
 	$(vala_depend)"
 

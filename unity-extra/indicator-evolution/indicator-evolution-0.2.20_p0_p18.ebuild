@@ -19,20 +19,19 @@ SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/dee:=
+DEPEND="dev-libs/dee:=
+	dev-libs/glib:2
 	dev-libs/libdbusmenu:=
-	dev-libs/libunity:="
-DEPEND="${RDEPEND}
-	>=dev-libs/glib-2.31.8
+	dev-libs/libunity:=
 	dev-libs/libappindicator
 	dev-libs/libindicate[gtk,introspection]
 	gnome-base/gconf
-	>=gnome-extra/evolution-data-server-3.8
-	>=mail-client/evolution-3.8
+	gnome-extra/evolution-data-server
+	mail-client/evolution
 	media-libs/libcanberra
 	unity-indicators/indicator-messages
 	x11-libs/libnotify"

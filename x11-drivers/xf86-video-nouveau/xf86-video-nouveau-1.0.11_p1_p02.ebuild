@@ -4,28 +4,31 @@
 
 EAPI=5
 XORG_DRI="always"
+
+URELEASE="vivid"
 inherit base xorg-2 ubuntu-versionator
 
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-nouveau"
 UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
-URELEASE="utopic"
+UVER_SUFFIX="build1"
 
 DESCRIPTION="Accelerated Open Source driver for nVidia cards"
 HOMEPAGE="http://nouveau.freedesktop.org/"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
-	${UURL}/${MY_PN}_${PV}-${UVER}.diff.gz"
+	${UURL}/${MY_PN}_${PV}-${UVER}${UVER_SUFFIX}.diff.gz"
 
 KEYWORDS="~amd64 ~x86"
-IUSE="mir"
+IUSE="glamor mir"
 RESTRICT="mirror strip"
 
-RDEPEND=">=x11-libs/libdrm-2.4.34[video_cards_nouveau]"
+RDEPEND=">=x11-libs/libdrm-2.4.34[video_cards_nouveau]
+	x11-base/xorg-server[glamor?]"
 DEPEND="${RDEPEND}"
 
-#PATCHES=(
-#	"${FILESDIR}/${PN}-${MY_PV}-immintrin-include.patch"
-#)
+PATCHES=(
+	"${FILESDIR}"/${P}-glamor-automagic.patch
+)
 
 src_prepare() {
 	if use mir; then
@@ -35,4 +38,9 @@ src_prepare() {
 		done
 		base_src_prepare
 	fi
+}
+
+src_configure() {
+	XORG_CONFIGURE_OPTIONS="$(use_enable glamor)"
+	xorg-2_src_configure
 }

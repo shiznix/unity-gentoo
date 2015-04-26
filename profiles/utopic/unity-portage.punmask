@@ -1,8 +1,0 @@
-# Unmask packages masked by main portage tree #
-x11-misc/lightdm::unity-gentoo
-
-# Override specific packages masked by mass overlay gnome-*/*14* version masking (is there a better wildcard masking pattern?) #
-gnome-base/orbit::gentoo
-gnome-extra/gnome-integration-spotify::gentoo
-gnome-extra/libgsf::gentoo
-
