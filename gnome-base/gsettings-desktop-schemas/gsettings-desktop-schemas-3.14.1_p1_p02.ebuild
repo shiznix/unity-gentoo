@@ -20,20 +20,16 @@ SLOT="0"
 IUSE="+introspection"
 KEYWORDS="~amd64 ~x86"
 
-RDEPEND="
-	>=dev-libs/glib-2.31:2
-	introspection? ( >=dev-libs/gobject-introspection-1.31.0 )
-	>=x11-themes/gnome-backgrounds-3.8.1
+RDEPEND="dev-libs/glib:2
+	introspection? ( dev-libs/gobject-introspection )
+	x11-themes/gnome-backgrounds
 	x11-themes/gtk-engines-unico
 	x11-themes/ubuntu-themes
-	x11-themes/ubuntu-wallpapers
-	!<gnome-base/gdm-3.8
-"
+	x11-themes/ubuntu-wallpapers"
 DEPEND="${RDEPEND}
-	>=dev-util/intltool-0.40
+	dev-util/intltool
 	sys-devel/gettext
-	virtual/pkgconfig
-"
+	virtual/pkgconfig"
 
 src_prepare() {
 	# Ubuntu patchset #

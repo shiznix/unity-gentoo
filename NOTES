@@ -52,7 +52,6 @@ x11-drivers/xf86-video-ati		# Provides Mir display server support with 'mir' use
 x11-drivers/xf86-video-intel		# Provides Mir display server support with 'mir' useflag and patch
 x11-drivers/xf86-video-nouveau		# Provides Mir display server support with 'mir' useflag and patch
 x11-libs/gtk+				# Needed for global appmenu
-x11-themes/gtk-engines-unico		# Patched to work with Unity's default theme (Unity fails to start otherwise)
 x11-wm/metacity				# Patched to support compiz window decoration
 
 
