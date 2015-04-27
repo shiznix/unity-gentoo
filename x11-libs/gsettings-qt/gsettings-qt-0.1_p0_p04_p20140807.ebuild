@@ -28,6 +28,11 @@ DEPEND="dev-qt/qtcore:5
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	gnome2_environment_reset
+}
+
 src_prepare() {
 	qt5-build_src_prepare
 
@@ -48,7 +53,6 @@ src_install() {
 	# 'make install' needs to be run in a virtual Xserver so that qmlplugindump's #
 	#       qmltypes generation can successfully spawn dbus #
 	pushd ${QT5_BUILD_DIR}
-		addpredict $XDG_RUNTIME_DIR/dconf
 		Xemake INSTALL_ROOT="${ED}" install
 	popd
 }

@@ -54,7 +54,8 @@ KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
 IUSE="bindist hardened +minimal pgo selinux +gmp-autoupdate test"
-RESTRICT="mirror"
+RESTRICT="!bindist? ( bindist )
+	mirror"
 
 # More URIs appended below...
 SRC_URI="${SRC_URI}
@@ -68,7 +69,7 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 # Mesa 7.10 needed for WebGL + bugfixes
 RDEPEND="
 	>=dev-libs/nss-3.17.4
-	>=dev-libs/nspr-4.10.7
+	>=dev-libs/nspr-4.10.8
 	selinux? ( sec-policy/selinux-mozilla )"
 
 DEPEND="${RDEPEND}
@@ -156,12 +157,13 @@ src_prepare() {
 	base_src_prepare
 
 	# Apply our patches
+	EPATCH_EXCLUDE="8002_jemalloc_configure_unbashify.patch" \
 	EPATCH_SUFFIX="patch" \
 	EPATCH_FORCE="yes" \
-	EPATCH_EXCLUDE="8002_jemalloc_configure_unbashify.patch" \
 	epatch "${WORKDIR}/firefox"
 
 	epatch "${FILESDIR}"/${PN}-35.0-gmp-clearkey-sprintf.patch
+	epatch "${FILESDIR}"/${PN}-37.0-jemalloc_configure_unbashify.patch
 
 	# Allow user to apply any additional patches without modifing ebuild
 	epatch_user
@@ -237,11 +239,8 @@ src_configure() {
 	# Other ff-specific settings
 	mozconfig_annotate '' --with-default-mozilla-five-home=${MOZILLA_FIVE_HOME}
 
-	# Force jit
+	# force jit
 	mozconfig_annotate '' --enable-ion
-	# Force jit simulators for mips and arm
-	use arm && mozconfig_annotate '' --enable-arm-simulator
-	use mips && mozconfig_annotate '' --enable-mips-simulator
 
 	# Allow for a proper pgo build
 	if use pgo; then
@@ -369,11 +368,7 @@ src_install() {
 	fi
 
 	# Required in order to use plugins and even run firefox on hardened.
-#	if use jit; then
-		pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/{firefox,firefox-bin,plugin-container}
-#	else
-#		pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/plugin-container
-#	fi
+	pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/{firefox,firefox-bin,plugin-container}
 
 	if use minimal; then
 		rm -r "${ED}"/usr/include "${ED}${MOZILLA_FIVE_HOME}"/{idl,include,lib,sdk} \

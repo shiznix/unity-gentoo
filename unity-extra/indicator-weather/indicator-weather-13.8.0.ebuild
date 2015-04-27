@@ -37,6 +37,7 @@ DEPEND="dev-libs/libappindicator
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
+	gnome2_environment_reset
 	python-single-r1_pkg_setup
 }
 
@@ -47,15 +48,6 @@ src_prepare() {
 	# Make desktop file compliant #
 	sed -e 's:\(False\):\L\1:g' \
 		-i indicator-weather.desktop.in
-}
-
-src_compile() {
-	# Unable to reproduce but can still happen on some systems #
-	#  Maybe some imported python lib from python-distutils-extra causing issue ? #
-	addpredict /root/.cache/dconf/user	# FIXME
-	addpredict /root/.config/dconf/user	# FIXME
-
-	distutils-r1_src_compile
 }
 
 src_install() {

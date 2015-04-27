@@ -82,6 +82,7 @@ DEPEND="dev-libs/boost:=
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
+	gnome2_environment_reset
 	python-single-r1_pkg_setup
 }
 
@@ -187,7 +188,6 @@ src_test() {
 
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
-		addpredict /root/.gconf		 	# FIXME
 		addpredict /usr/share/glib-2.0/schemas/	# FIXME
 		emake DESTDIR="${D}" install
 	popd

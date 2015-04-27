@@ -51,6 +51,11 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/utt"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	gnome2_environment_reset
+}
+
 src_prepare() {
 	# Make Unity Tweak Tool appear in unity-control-center #
 	sed -e 's:Categories=.*:Categories=Settings;X-GNOME-Settings-Panel;X-GNOME-PersonalSettings;X-Unity-Settings-Panel;:' \
@@ -64,13 +69,6 @@ src_prepare() {
 
 	# Fix show/hide mounted drive icons (LP# 1372046) #
 	epatch -p1 "${FILESDIR}/show-hide_mounted_drive_icons.diff"
-}
-
-src_compile() {
-	## Sandbox violations caused when dev-python/python-distutils-extra's build system tries to start an Xsession and fails but as part ##
-	##  of that also tries to start /usr/libexec/dconf-service if it's not already running which causes dconf sandbox violations ##
-		addpredict $XDG_RUNTIME_DIR/dconf
-		distutils-r1_src_compile
 }
 
 src_install() {

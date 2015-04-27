@@ -40,6 +40,11 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	gnome2_environment_reset
+}
+
 src_prepare() {
 	export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qdoc
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
@@ -61,7 +66,6 @@ src_test() {
 src_install() {
 	# 'make install' needs to be run in a virtual Xserver so that qmlplugindump's #
 	#	qmltypes generation can successfully spawn dbus #
-	addpredict $XDG_RUNTIME_DIR/dconf
 	Xemake INSTALL_ROOT="${ED}" install
 
 	use examples || \

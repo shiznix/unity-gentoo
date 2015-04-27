@@ -79,6 +79,11 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/mesa-progs
 	x11-apps/xvinfo"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	gnome2_environment_reset
+}
+
 src_prepare() {
 	# Ubuntu patchset #
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
@@ -165,7 +170,6 @@ src_compile() {
 src_install() {
 	installation() {
 		pushd ${CMAKE_BUILD_DIR}
-			addpredict /root/.gconf/
 			addpredict /usr/share/glib-2.0/schemas/
 			emake DESTDIR="${ED}" install
 
