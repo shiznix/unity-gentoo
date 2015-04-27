@@ -40,9 +40,10 @@ src_prepare() {
 }
 
 src_install() {
-	# Needs to be run in a virtual Xserver so that qmlplugindump's #
+	# 'make install' needs to be run in a virtual Xserver so that qmlplugindump's #
 	#	qmltypes generation can successfully spawn dbus #
 	pushd ${QT5_BUILD_DIR}
+		addpredict $XDG_RUNTIME_DIR/dconf
 		Xemake INSTALL_ROOT="${ED}" install
 	popd
 }
