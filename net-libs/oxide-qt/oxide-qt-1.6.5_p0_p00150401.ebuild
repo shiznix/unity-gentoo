@@ -5,11 +5,10 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="vivid"
+URELEASE="vivid-security"
 inherit base check-reqs cmake-utils python-single-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
-
 DESCRIPTION="Web browser engine library for Qt"
 HOMEPAGE="https://launchpad.net/oxide"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
