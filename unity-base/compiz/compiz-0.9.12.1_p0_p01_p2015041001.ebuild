@@ -64,7 +64,9 @@ COMMONDEPEND="!!x11-wm/compiz
 	kde? ( >=kde-base/kwin-4.11.1 )
 	${PYTHON_DEPS}"
 
+# >=cmake-3.2 has problems invoking distutils setup.py correctly, leading to fatal build errors #
 DEPEND="${COMMONDEPEND}
+	<=dev-util/cmake-3.1.0
 	sys-devel/gettext
 	virtual/pkgconfig
 	x11-proto/damageproto
