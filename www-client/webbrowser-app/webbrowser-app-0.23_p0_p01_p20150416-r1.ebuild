@@ -22,8 +22,11 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="net-libs/oxide-qt"
-DEPEND="dev-libs/glib
+RDEPEND="dev-qt/qtquickcontrols:5[widgets]
+	net-libs/oxide-qt
+	x11-themes/ubuntu-themes"
+DEPEND="${RDEPEND}
+	dev-libs/glib
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtdeclarative:5[widgets]
@@ -45,4 +48,6 @@ src_install() {
 	cmake-utils_src_install
 	dosym /usr/share/qtdeclarative5-ubuntu-web-plugin/assets/multi_selection_handle\@20.png \
 		/usr/$(get_libdir)/qt5/qml/Ubuntu/Components/Extras/Browser/assets/multi_selection_handle.png
+	dosym /usr/share/qtdeclarative5-ubuntu-web-plugin/assets/multi_selection_handle\@20.png \
+		/usr/$(get_libdir)/qt5/qml/Ubuntu/Web/assets/multi_selection_handle.png
 }

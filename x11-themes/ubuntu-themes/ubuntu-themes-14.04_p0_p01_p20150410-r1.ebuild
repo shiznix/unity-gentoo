@@ -7,7 +7,7 @@ GCONF_DEBUG="yes"
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="vivid"
-inherit eutils gnome2 python-r1 ubuntu-versionator
+inherit eutils gnome2-utils python-single-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -19,42 +19,41 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3 CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="phone"
+IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="!x11-themes/light-themes
-	>=x11-themes/hicolor-icon-theme-0.10"
+	x11-themes/hicolor-icon-theme"
 DEPEND="${RDEPEND}
-	>=x11-misc/icon-naming-utils-0.8.7
-	>=dev-util/intltool-0.40
+	x11-misc/icon-naming-utils
+	dev-util/intltool
 	sys-devel/gettext
 	virtual/pkgconfig"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-src_prepare() {
-	python_export_best
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
 }
 
-src_configure() {
-	:
-}
+src_configure() { :; }
 
 src_compile() {
 	emake
 }
 
 src_install() {
-	dodir /usr/share/icons/
+	## Install icons ##
 	insinto /usr/share/icons
 	doins -r LoginIcons ubuntu-mono-dark ubuntu-mono-light
 
-	dodir /usr/share/themes/
-	insinto /usr/share/themes
-	doins -r Ambiance Radiance
+	insinto /usr/share/icons/suru
+	doins -r suru-icons/*
 
-	use phone && \
-		doins -r ubuntu-mobile
+	## Install themes ##
+	insinto /usr/share/themes
+	doins -r Ambiance Radiance ubuntu-mobile
 
 	## Remove broken symlinks ##
 	find -L "${ED}" -type l -exec rm {} +
