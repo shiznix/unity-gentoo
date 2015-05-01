@@ -44,7 +44,7 @@ RDEPEND="
 	evdev? ( sys-libs/mtdev )
 	gles2? ( media-libs/mesa[gles2] )
 	gtkstyle? (
-		x11-libs/cairo[-qt4]
+		>=x11-libs/cairo-1.14.2
 		x11-libs/gtk+:2
 	)
 	harfbuzz? ( >=media-libs/harfbuzz-0.9.32:= )
