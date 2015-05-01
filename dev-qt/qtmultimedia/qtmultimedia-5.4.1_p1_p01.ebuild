@@ -4,18 +4,18 @@
 
 EAPI=5
 
-inherit qt5-build
+URELEASE="vivid"
+inherit eutils qt5-build ubuntu-versionator
+
+UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
+SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
+	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 DESCRIPTION="The Multimedia module for the Qt5 framework"
-
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~x86"
-:
-fi
+KEYWORDS="~amd64 ~x86"
 
 IUSE="alsa +gstreamer openal +opengl pulseaudio qml widgets"
+RESTRICT="mirror"
 
 # "widgets? ( qtgui[opengl=] )" because of bug 518542 comment 2
 RDEPEND="
@@ -43,7 +43,16 @@ DEPEND="${RDEPEND}
 	x11-proto/videoproto
 "
 
+S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
+QT5_BUILD_DIR="${S}"
+export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qmake
+
 src_prepare() {
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+
 	qt_use_compile_test alsa
 	qt_use_compile_test gstreamer
 	qt_use_compile_test openal
