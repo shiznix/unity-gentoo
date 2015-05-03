@@ -58,7 +58,7 @@ COMMON_DEPEND="dev-libs/glib:2
 
 	colord? ( x11-misc/colord:= )
 	cups? ( net-print/cups[dbus] )
-	fcitx? ( app-i18n/fcitx )
+	fcitx? ( app-i18n/fcitx-configtool )
 	i18n? ( app-i18n/ibus )
 	input_devices_wacom? (
 		dev-libs/libwacom
