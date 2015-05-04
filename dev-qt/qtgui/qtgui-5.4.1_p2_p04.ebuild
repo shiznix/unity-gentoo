@@ -16,16 +16,9 @@ DESCRIPTION="The GUI module and platform plugins for the Qt5 toolkit"
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
 	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 RESTRICT="mirror"
-
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~x86"
-:
-fi
+KEYWORDS="~amd64 ~x86"
 
 # TODO: directfb, linuxfb, offscreen
-
 IUSE="accessibility egl eglfs evdev +gif gles2 gtkstyle harfbuzz ibus jpeg kms +opengl +png udev +xcb"
 REQUIRED_USE="
 	egl? ( evdev opengl )
