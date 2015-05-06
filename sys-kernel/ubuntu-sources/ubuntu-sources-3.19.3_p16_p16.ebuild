@@ -5,20 +5,21 @@
 EAPI=5
 ETYPE="sources"
 
-URELEASE="vivid"
+URELEASE="vivid-security"
 inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
 MY_PV="${PV}"
 BASE_PV="3.19.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
+KCONFIG_URELEASE="utopic"
 UURL="mirror://ubuntu/pool/main/l/${MY_PN}"
 
 DESCRIPTION="Ubuntu patched kernel sources"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/linux"
 SRC_URI="${UURL}/${MY_PN}_${BASE_PV}.orig.tar.gz
 	${UURL}/${MY_PN}_${BASE_PV}-${UVER}.diff.gz
-	amd64? ( http://kernel.ubuntu.com/~kernel-ppa/configs/trusty/amd64-config.flavour.generic )
-	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/trusty/i386-config.flavour.generic )"
+	amd64? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/amd64-config.flavour.generic )
+	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/i386-config.flavour.generic )"
 LICENSE="GPL-2"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
@@ -76,5 +77,5 @@ src_install() {
 pkg_postinst() {
 	[ ! -e "${ROOT}usr/src/linux" ] && \
 		ln -s "${PN}-${MY_PV}-${UVER}" "${ROOT}usr/src/linux"
-	elog "Changelog can be found in /usr/src/linux/debian/changelog"
+	elog "Changelog can be found in /usr/src/linux/debian.master/changelog"
 }
