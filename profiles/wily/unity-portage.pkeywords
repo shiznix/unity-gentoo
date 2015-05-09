@@ -1,4 +1,4 @@
-## A set of packages that require keyword unmasking for Unity (Utopic Unicorn) installation ##
+## A set of packages that require keyword unmasking for Unity installation ##
 
 */*::unity-gentoo
 
@@ -103,7 +103,6 @@ dev-util/android-headers **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
 gnome-base/gconf **
-gnome-base/gnome-control-center **
 gnome-base/gnome-desktop **
 gnome-base/gnome-menus **
 gnome-base/gnome-panel **
