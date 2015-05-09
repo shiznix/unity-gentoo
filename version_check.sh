@@ -40,7 +40,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="vivid vivid-security vivid-updates"
+RELEASES="vivid vivid-security vivid-updates wily wily-security wily-updates"
 SOURCES="main universe"
 
 sources_download() {

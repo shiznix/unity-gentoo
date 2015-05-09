@@ -1,0 +1,5 @@
+# Unmask packages masked by overlay #
+dev-qt/*::unity-gentoo
+
+# Unmask packages masked by main portage tree #
+x11-misc/lightdm::unity-gentoo

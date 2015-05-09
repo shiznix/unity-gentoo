@@ -35,6 +35,7 @@ export VALA_USE_DEPEND="vapigen"
 [[ "${URELEASE}" == *trusty* ]] && UVER_RELEASE="14.04"
 [[ "${URELEASE}" == *utopic* ]] && UVER_RELEASE="14.10"
 [[ "${URELEASE}" == *vivid* ]] && UVER_RELEASE="15.04"
+[[ "${URELEASE}" == *wily* ]] && UVER_RELEASE="15.10"
 
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
@@ -134,6 +135,7 @@ ubuntu-versionator_pkg_setup() {
 	# Minimum system-wide GCC version required #
 	[[ "${PROFILE_RELEASE}" == utopic ]] && GCC_MINIMUM="4.8"
 	[[ "${PROFILE_RELEASE}" == vivid ]] && GCC_MINIMUM="4.9"
+	[[ "${PROFILE_RELEASE}" == wily ]] && GCC_MINIMUM="4.9"
 	GCC_MINIMUM_MAJOR="${GCC_MINIMUM%%.*}"
 	GCC_MINIMUM_MINOR="${GCC_MINIMUM##*.}"
 
