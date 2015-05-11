@@ -5,18 +5,17 @@
 EAPI=5
 XORG_DRI=dri
 
-URELEASE="vivid"
+URELEASE="vivid-updates"
 inherit autotools base linux-info xorg-2 ubuntu-versionator
 
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-intel"
 UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
 UVER="1~exp${UVER}"
-UVER_SUFFIX="build1"
 
 DESCRIPTION="X.Org driver for Intel cards"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
-	${UURL}/${MY_PN}_${PV}-${UVER}${UVER_SUFFIX}.diff.gz"
+	${UURL}/${MY_PN}_${PV}-${UVER}.diff.gz"
 
 KEYWORDS="~amd64 ~x86 ~amd64-fbsd -x86-fbsd"
 IUSE="debug mir +sna +udev uxa xvmc"

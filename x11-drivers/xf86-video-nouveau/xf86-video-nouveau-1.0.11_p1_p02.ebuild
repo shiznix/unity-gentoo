@@ -6,7 +6,7 @@ EAPI=5
 XORG_DRI="always"
 
 URELEASE="vivid"
-inherit base xorg-2 ubuntu-versionator
+inherit base eutils xorg-2 ubuntu-versionator
 
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-nouveau"
@@ -27,16 +27,17 @@ RDEPEND=">=x11-libs/libdrm-2.4.34[video_cards_nouveau]
 DEPEND="${RDEPEND}"
 
 PATCHES=(
-	"${FILESDIR}"/${P}-glamor-automagic.patch
+	"${FILESDIR}"/${PN}-${PV}-glamor-automagic.patch
 )
 
 src_prepare() {
 	if use mir; then
-		epatch -p1 "${WORKDIR}/${MY_PN}_${MY_PV}-${UVER}.diff"  # This needs to be applied for the debian/ directory to be present #
+		epatch -p1 "${WORKDIR}/${MY_PN}_${MY_PV}-${UVER}${UVER_SUFFIX}.diff"  # This needs to be applied for the debian/ directory to be present #
 		for patch in $(cat "${S}/debian/patches/series" | grep -v \# ); do
 			PATCHES+=( "${S}/debian/patches/${patch}" )
 		done
 		base_src_prepare
+		eautoreconf
 	fi
 }
 
