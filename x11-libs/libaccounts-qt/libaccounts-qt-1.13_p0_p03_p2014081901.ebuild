@@ -44,7 +44,8 @@ src_configure() {
 		cd "${WORKDIR}"
 		cp -rf "${S}" "${S}"-build_qt5
 		pushd "${S}"-build_qt5
-			/usr/$(get_libdir)/qt5/bin/qmake PREFIX=/usr
+			export QT_SELECT=5
+			qmake PREFIX=/usr
 		popd
 	fi
 
@@ -52,6 +53,7 @@ src_configure() {
 	cd "${WORKDIR}"
 	cp -rf "${S}" "${S}"-build_qt4
 	pushd "${S}"-build_qt4
+		export QT_SELECT=4
 		qmake PREFIX=/usr
 	popd
 }
@@ -60,12 +62,14 @@ src_compile() {
 	# Build QT5 support #
 	if use qt5; then
 		pushd "${S}"-build_qt5
+			export QT_SELECT=5
 			emake
 		popd
 	fi
 
 	# Build QT4 support #
 	pushd "${S}"-build_qt4
+		export QT_SELECT=4
 		emake
 	popd
 }
@@ -74,12 +78,14 @@ src_install() {
 	# Install QT5 support #
 	if use qt5; then
 		pushd "${S}"-build_qt5
+			export QT_SELECT=5
 			qt4-r2_src_install
 		popd
 	fi
 
 	# Install QT4 support #
 	pushd "${S}"-build_qt4
+		export QT_SELECT=4
 		qt4-r2_src_install
 	popd
 }

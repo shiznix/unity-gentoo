@@ -92,8 +92,6 @@ src_prepare() {
 }
 
 src_configure() {
-	# hack setting moc-5 version as long as 'qtchooser' not available
-	MOC5=/usr/$(get_libdir)/qt5/bin/moc \
 	econf \
 		--localstatedir=/var \
 		--disable-static \

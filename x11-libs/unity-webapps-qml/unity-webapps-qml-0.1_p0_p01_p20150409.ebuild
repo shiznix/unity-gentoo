@@ -38,7 +38,7 @@ DEPEND="${RDEPEND}
 
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
 QT5_BUILD_DIR="${S}"
-export PATH="${PATH}:/usr/$(get_libdir)/qt5/bin"
+export QT_SELECT=5
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup

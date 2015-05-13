@@ -44,7 +44,7 @@ DEPEND="dev-libs/expat
 	x11-libs/libX11
 	x11-libs/pango"
 
-export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qmake
+export QT_SELECT=5
 
 pkg_pretend() {
 	if use debug; then

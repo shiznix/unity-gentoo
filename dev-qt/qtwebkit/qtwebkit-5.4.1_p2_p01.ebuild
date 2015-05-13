@@ -71,7 +71,7 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"
-export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qmake
+export QT_SELECT=5
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup

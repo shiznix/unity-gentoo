@@ -39,6 +39,7 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
+export QT_SELECT=5
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
@@ -46,7 +47,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	export PATH="/usr/$(get_libdir)/qt5/bin:${PATH}"	# Need to see QT5's qdoc
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 
 	# Don't install autopilot python testsuite files, they require dpkg to run tests #

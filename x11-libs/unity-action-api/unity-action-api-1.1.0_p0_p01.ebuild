@@ -26,4 +26,4 @@ DEPEND="dev-libs/glib
 	unity-base/hud"
 
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
-export PATH="${PATH}:/usr/$(get_libdir)/qt5/bin"
+export QT_SELECT=5

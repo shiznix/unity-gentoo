@@ -19,10 +19,10 @@ esac
 
 inherit eutils flag-o-matic multilib toolchain-funcs virtualx
 
-## Default LICENSE if not set to be that of QT suite of core packages ##
+## Default LICENSE (if not set) to be that of QT suite of core packages ##
 : ${LICENSE:="|| ( LGPL-2.1 LGPL-3 )"}
 
-HOMEPAGE="https://www.qt.io/ https://qt-project.org/"
+HOMEPAGE="https://www.qt.io/"
 SLOT="5"
 
 # @ECLASS-VARIABLE: QT5_MODULE
@@ -59,8 +59,9 @@ case ${PV} in
 esac
 
 EGIT_REPO_URI=(
-	"git://gitorious.org/qt/${QT5_MODULE}.git"
-	"https://git.gitorious.org/qt/${QT5_MODULE}.git"
+	"git://code.qt.io/qt/${QT5_MODULE}.git"
+	"https://code.qt.io/git/qt/${QT5_MODULE}.git"
+	"https://github.com/qtproject/${QT5_MODULE}.git"
 )
 [[ ${QT5_BUILD_TYPE} == live ]] && inherit git-r3
 
@@ -81,11 +82,9 @@ if [[ ${PN} != qttest ]]; then
 		DEPEND+=" test? ( >=dev-qt/qttest-${MY_PV}:5[debug=] )"
 	fi
 fi
-
-## Don't force installation of unstable Qt4, only pull in dev-qt/qtchooser once qt-4.8.6:4 goes stable ##
-#RDEPEND="
-#	dev-qt/qtchooser
-#"
+RDEPEND="
+	dev-qt/qtchooser
+"
 
 EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
 
@@ -390,6 +389,7 @@ qt_use_disable_mod() {
 # Prepares the environment for building Qt.
 qt5_prepare_env() {
 	# setup installation directories
+	# note: keep paths in sync with qmake-utils.eclass
 	QT5_PREFIX=${EPREFIX}/usr
 	QT5_HEADERDIR=${QT5_PREFIX}/include/qt5
 	QT5_LIBDIR=${QT5_PREFIX}/$(get_libdir)
@@ -470,7 +470,7 @@ qt5_symlink_tools_to_build_dir() {
 # Runs ./configure for modules belonging to qtbase.
 qt5_base_configure() {
 	# setup toolchain variables used by configure
-	tc-export CC CXX RANLIB STRIP
+	tc-export AR CC CXX OBJDUMP RANLIB STRIP
 	export LD="$(tc-getCXX)"
 
 	# configure arguments
@@ -535,17 +535,18 @@ qt5_base_configure() {
 		-no-libpng -no-libjpeg
 		-no-freetype -no-harfbuzz
 		-no-openssl
+		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-libproxy)
 		-no-xinput2 -no-xcb-xlib
 
 		# always enable glib event loop support
 		-glib
 
 		# disable everything to prevent automagic deps (part 2)
-#		-no-pulseaudio -no-alsa		# Invalid switches for Qt-5.3
+#		-no-pulseaudio -no-alsa		## Invalid switches for Qt-5.3
 
-		# disable gtkstyle because it adds qt4 include paths to the compiler
-		# command line if x11-libs/cairo is built with USE=qt4 (bug 433826)
-#		-no-gtkstyle	# We use x11-libs/cairo[-qt4] for dev-qt/qtgui[gtkstyle]
+		# override in qtgui and qtwidgets where x11-libs/cairo[qt4] is blocked
+		# to avoid adding qt4 include paths (bug 433826)
+#		-no-gtkstyle
 
 		# exclude examples and tests from default build
 		-nomake examples
@@ -568,7 +569,7 @@ qt5_base_configure() {
 		-iconv
 
 		# disable everything to prevent automagic deps (part 3)
-#		-no-cups -no-evdev -no-icu -no-fontconfig -no-dbus	# If dbus is disabled for qtcore then qtnetwork fails to build
+#		-no-cups -no-evdev -no-icu -no-fontconfig -no-dbus	## If dbus is disabled for qtcore then qtnetwork fails to build
 		-no-cups -no-evdev -no-icu -no-fontconfig
 
 		# don't strip
