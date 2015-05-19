@@ -7,6 +7,9 @@
 
 	* 'glxgears' kills Mir session and so crashes X
 
+- Webapps plugin is broken for chromium so it will not prompt for webapp installation on sites such as Gmail, Youtube or Facebook
+	* Use Firefox if you want webapps to work
+
 - Window control buttons can no longer currently be configured to be on the right using dconf/unity-tweak-tool
 	* Possibly due to changes in >=gtk-3.10 GtkHeaderBar client side decorations and ubuntu-themes
 

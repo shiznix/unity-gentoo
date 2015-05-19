@@ -183,14 +183,12 @@ version_check_other_releases() {
 				done
 			done
 			index=0
-
 			while [ "$index" -lt ${#upstream_versions[@]} ]; do
-				upstream_versions_namespace_stripped=$(echo ${upstream_versions[$index]} | sed 's/.*-\(.*[0-9].[0-9].*\)/\1/p' | sed 's/[ 	]//g')
-				local_versions_whitespace_stripped=$(echo ${local_versions[@]} | sed 's/[ 	]//g')
+				upstream_versions_namespace_stripped=$(echo ${upstream_versions[$index]} | awk 'match($0, /-([0-9].*)/, a) {print a[1]}' | sed 's/[	]//g')
+				local_versions_whitespace_stripped=$(echo ${local_versions[@]} | sed 's/[	]//g')
 				compare_versions_stripped=$(echo ${local_versions_whitespace_stripped} | grep "${upstream_versions_namespace_stripped}")
 				upstream_release=$(echo ${upstream_versions[$index]} | awk '{print $3}')
-				if [ -n "${compare_versions_stripped}" ] || [ -n "$(echo ${upstream_versions[$index]} | grep "none available")" ] || \
-					[ -n "$(echo ${local_versions[@]} | grep ${upstream_release}-updates)" ]; then
+				if [ -n "${compare_versions_stripped}" ] || [ -n "$(echo ${upstream_versions[$index]} | grep "none available")" ]; then
 					echo -e "${upstream_versions[$index]}"
 				elif [ -n "${URELEASE}" ]; then
 					echo -e "\033[1;31m${upstream_versions[$index]}\033[0m"

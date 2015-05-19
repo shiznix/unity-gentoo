@@ -54,6 +54,16 @@ x11-drivers/xf86-video-nouveau		# Provides Mir display server support with 'mir'
 x11-libs/gtk+				# Needed for global appmenu
 x11-wm/metacity				# Patched to support compiz window decoration
 
+* By design, some indicators or their features will not appear until they meet certain criteria
+	- indicator-messages	# Won't appear until a messaging type application is run first (eg. empathy, evolution (via indicator-evolution), pidgin, webapp)
+	- indicator-keyboard	# Won't appear until at least one input source is specified and 'Show current input source in menu bar' is checked in System Settings > Text Entry
+	- indicator-session	# Won't show username until 'Show my login in menu bar' is checked in System Settings > User Accounts
+					and then only if user has been added to /etc/passwd using useradd's '--comment' GECOS field
+
+* Unity user specific settings locations
+	- Dconf registry accessible via gsettings or dconf-editor
+	- ~/.{cache,config,local}/...
+	- /var/lib/AccountsService/users/<user>
 
 * Empathy and message indicator integration
 	- To reset all empathy accounts and configurations:
