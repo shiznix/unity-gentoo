@@ -222,6 +222,9 @@ src_install() {
 	insinto /etc/xdg/autostart
 	doins "${FILESDIR}/unity-panel-service.desktop"
 
+	exeinto /etc/X11/xinit/xinitrc.d/
+	doexe "${FILESDIR}/99ibus-service"
+
 	insinto /usr/share/dbus-1/services/
 	doins "${FILESDIR}/com.canonical.Unity.Panel.Service.Desktop.service"
 	doins "${FILESDIR}/com.canonical.Unity.Panel.Service.LockScreen.service"
