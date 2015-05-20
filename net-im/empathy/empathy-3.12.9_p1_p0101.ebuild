@@ -8,7 +8,7 @@ GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python2_7 python3_{3,4} )
 WANT_AUTOMAKE=1.14
 
-URELEASE="vivid"
+URELEASE="vivid-updates"
 inherit autotools base gnome2 python-any-r1 virtualx ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/e/${PN}"

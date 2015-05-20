@@ -101,8 +101,8 @@ upstream_version_check() {
 		upstream_version=
 		upstream_version=`grep -A6 "Package: ${packname}$" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A6 "Package: ${packname}$" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A6 "Package: ${packname}" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A6 "Package: ${packname}" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A6 "Package: ${packname}$" /tmp/Sources-main-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+		[[ -z "${upstream_version}" ]] && upstream_version=`grep -A6 "Package: ${packname}$" /tmp/Sources-universe-$1 2> /dev/null | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 		[ -n "${upstream_version}" ] && [ -z "${CHANGES}" ] && [ -z "${checkmsg_supress}" ] && \
 			echo -e "\nChecking ${packname}  ::  $1"
 	fi

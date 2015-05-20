@@ -35,7 +35,7 @@ MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
 MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="vivid"
+URELEASE="vivid-security"
 inherit base flag-o-matic toolchain-funcs mozconfig-v5.31 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
 UVER_PREFIX="+build1"
