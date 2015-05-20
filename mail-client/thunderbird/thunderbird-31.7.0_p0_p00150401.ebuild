@@ -28,7 +28,7 @@ fi
 MOZ_P="${PN}-${MOZ_PV}"
 
 # Enigmail version
-EMVER="1.7.2"
+EMVER="1.8.1"
 # Upstream ftp release URI that's used by mozlinguas.eclass
 # We don't use the http mirror because it deletes old tarballs.
 MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
