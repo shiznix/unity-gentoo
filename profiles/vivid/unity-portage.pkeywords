@@ -8,6 +8,7 @@ app-admin/cgmanager
 app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
 ~app-i18n/fcitx-4.2.8.5
+~dev-libs/json-c-0.12
 ~dev-dotnet/libgdiplus-2.10.9
 ~dev-libs/libgcrypt-1.6.1
 dev-libs/libindicate

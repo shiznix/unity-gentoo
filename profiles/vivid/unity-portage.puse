@@ -9,6 +9,7 @@ app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
 app-crypt/libsecret crypt vala
+app-i18n/fcitx -autostart
 app-i18n/ibus dconf python -gconf vala
 app-text/gtkspell vala
 dev-lang/python sqlite

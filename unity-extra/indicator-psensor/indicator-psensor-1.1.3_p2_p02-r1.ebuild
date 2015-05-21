@@ -24,7 +24,7 @@ IUSE="hddtemp nls"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/glib:2
-	<dev-libs/json-c-0.12
+	>=dev-libs/json-c-0.12
 	dev-libs/libappindicator
 	dev-libs/libatasmart
 	dev-libs/libunity
