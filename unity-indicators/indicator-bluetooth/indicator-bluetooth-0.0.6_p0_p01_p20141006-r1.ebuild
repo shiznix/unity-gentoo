@@ -29,7 +29,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-libs/glib:2
+RDEPEND=">=net-wireless/bluez-5
+	media-sound/pulseaudio[bluetooth]"
+DEPEND="${RDEPEND}
+	dev-libs/glib:2
 	dev-libs/libappindicator:=
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicator:3=
