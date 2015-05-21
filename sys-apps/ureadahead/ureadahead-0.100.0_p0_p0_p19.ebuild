@@ -34,7 +34,7 @@ CONFIG_CHECK="~FTRACE ~DEBUG_FS"
 
 src_prepare() {
 	# Ubuntu patchset #
-	epatch -p1 "${WORKDIR}/${PN}_${PV}-16.diff" || die
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff" || die
 	eautoreconf
 }
 
