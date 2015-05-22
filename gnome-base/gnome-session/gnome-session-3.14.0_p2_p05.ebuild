@@ -5,7 +5,7 @@
 EAPI=5
 GCONF_DEBUG="yes"
 
-URELEASE="vivid"
+URELEASE="vivid-updates"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 MY_P="${PN}_${PV}"
@@ -16,7 +16,7 @@ UURL="mirror://ubuntu/pool/main/g/${PN}"
 DESCRIPTION="Gnome session manager patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-session"
 SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.14/${PN}-${PV}.tar.xz
-	${UURL}/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.xz"
 
 LICENSE="GPL-2 LGPL-2 FDL-1.1"
 SLOT="0"

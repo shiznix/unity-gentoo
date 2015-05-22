@@ -6,7 +6,7 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-URELEASE="vivid"
+URELEASE="vivid-updates"
 inherit autotools eutils gnome2 systemd vala ubuntu-versionator base
 
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
