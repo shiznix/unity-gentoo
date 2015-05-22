@@ -51,6 +51,7 @@ media-libs/mesa-mir egl gbm gles2
 media-plugins/alsa-plugins pulseaudio
 media-plugins/gst-plugins-meta ffmpeg
 media-sound/rhythmbox zeitgeist
+media-sound/pulseaudio bluetooth
 media-video/ffmpeg opus
 net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
 net-libs/libgadu gnutls
