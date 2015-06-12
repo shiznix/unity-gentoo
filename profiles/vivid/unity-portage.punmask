@@ -3,3 +3,6 @@ dev-qt/*::unity-gentoo
 
 # Unmask packages masked by main portage tree #
 x11-misc/lightdm::unity-gentoo
+
+dev-libs/glib::unity-gentoo
+dev-util/gdbus-codegen::unity-gentoo
