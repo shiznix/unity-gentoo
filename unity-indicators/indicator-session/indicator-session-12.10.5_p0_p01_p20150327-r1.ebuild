@@ -47,10 +47,6 @@ src_prepare() {
 		sed -e 's:yelp:yelp help\:ubuntu-help:g' \
 			-i src/backend-dbus/actions.c
 	fi
-
-	# Make indicator start using XDG autostart #
-	sed -e '/NotShowIn=/d' \
-		-i data/indicator-session.desktop.in
 }
 
 src_install() {
@@ -59,9 +55,6 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
-
-	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
-	rm -rf "${ED}usr/share/upstart"
 }
 
 pkg_preinst() {

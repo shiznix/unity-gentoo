@@ -26,7 +26,7 @@ IUSE="doc debug examples +icu static-libs test"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
-	dev-libs/icu"
+	dev-libs/icu:="
 DEPEND="${RDEPEND}
 	dev-util/gtk-doc
 	test? ( dev-util/dbus-test-runner )

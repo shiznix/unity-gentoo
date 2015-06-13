@@ -17,8 +17,6 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'indicator-classicmenu'`" ]; then treepackname="${packname}"; packname="classicmenu-indicator"
 	elif [ -n "`echo "${packbasename}" | grep 'indicator-evolution'`" ]; then treepackname="${packname}"; packname="evolution-indicator"
 	elif [ -n "`echo "${packbasename}" | grep 'indicator-psensor'`" ]; then treepackname="${packname}"; packname="psensor"
-	elif [ -n "`echo "${packbasename}" | grep 'libupstart-[0-9]'`" ]; then treepackname="${packname}"; packname="upstart"
-	elif [ -n "`echo "${packbasename}" | grep 'libupstart-app-launch'`" ]; then treepackname="${packname}"; packname="upstart-app-launch"
 	elif [ -n "`echo "${packbasename}" | grep 'libXfixes'`" ]; then treepackname="${packname}"; packname="libxfixes"
 	elif [ -n "`echo "${packbasename}" | grep 'libXi'`" ]; then treepackname="${packname}"; packname="libxi"
 	elif [ -n "`echo "${packbasename}" | grep 'nm-applet'`" ]; then treepackname="${packname}"; packname="network-manager-applet"

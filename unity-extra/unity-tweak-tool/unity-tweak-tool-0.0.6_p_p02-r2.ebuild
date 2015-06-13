@@ -75,7 +75,7 @@ src_install() {
 	distutils-r1_src_install
 
 	exeinto /etc/X11/xinit/xinitrc.d
-	doexe "${FILESDIR}/99-xcursor-theme"
+	doexe "${FILESDIR}/95-xcursor-theme"
 }
 
 pkg_preinst() {

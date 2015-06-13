@@ -22,8 +22,8 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/glib:2
 	dev-libs/libdbusmenu:=
-	dev-libs/libubuntu-app-launch
 	sys-apps/dbus
+	sys-apps/ubuntu-app-launch
 	test? ( dev-util/dbus-test-runner )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

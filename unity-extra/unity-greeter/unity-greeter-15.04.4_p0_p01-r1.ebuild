@@ -51,8 +51,6 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 	x11-themes/ubuntu-wallpapers"
 
 src_prepare() {
-	epatch -p1 "${FILESDIR}/spawn_indicators-15.04.patch"
-
 	# patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
                   "${S}"/src/unity-greeter.vala || die
@@ -89,9 +87,6 @@ src_install() {
 
 	insinto /var/lib/polkit-1/localauthority/10-vendor.d/
 	doins debian/unity-greeter.pkla
-
-	exeinto /usr/bin
-	doexe "${FILESDIR}/unity-greeter-indicators-start"
 }
 
 pkg_preinst() {

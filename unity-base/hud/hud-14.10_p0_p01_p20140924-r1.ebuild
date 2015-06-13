@@ -58,15 +58,12 @@ pkg_setup() {
 src_prepare() {
 	vala_src_prepare
 
+	sed -e 's/SESSION=ubuntu)/SESSION=unity)/g' \
+		-i data/hud.conf.in
+
 	# Stop cmake doing the job of distutils #
 	sed -e '/add_subdirectory(hudkeywords)/d' \
 		-i tools/CMakeLists.txt
-
-	# Window-stack-bridge service must be running for hud-service to return search results #
-	sed -e "/@pkglibexecdir@\/hud-service/i \
-		trap 'kill $\(jobs -pr\)' SIGINT SIGTERM EXIT\n \
-		@pkglibexecdir@\/window-stack-bridge &" \
-			-i data/dbus-activation-hack.sh.in || die
 
 	# disable build of tests
 	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
@@ -94,10 +91,6 @@ src_install() {
 		distutils-r1_src_install
 		python_fix_shebang "${ED}"
 	popd
-
-	# Remove upstart jobs as we use xsession based scripts in /etc/X11/xinit/xinitrc.d/ #
-	# /usr/libexec/hud/hud-service is started by dbus anyway, so only needed for lack of dbus support in upstart #
-	rm -rf "${ED}usr/share/upstart"
 }
 
 pkg_preinst() {

@@ -20,8 +20,8 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-libs/glib
-	dev-libs/libupstart-app-launch
+DEPEND="!dev-libs/libupstart-app-launch
+	dev-libs/glib:2
 	dev-libs/ubuntu-download-manager
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
@@ -31,9 +31,9 @@ DEPEND="dev-libs/glib
 	dev-qt/qdoc:5
 	dev-util/dbus-test-runner
 	dev-util/lcov
+	sys-apps/ubuntu-app-launch
 	sys-libs/libnih[dbus]
-	x11-libs/gsettings-qt
-"
+	x11-libs/gsettings-qt"
 
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
 export QT_SELECT=5

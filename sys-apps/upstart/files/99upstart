@@ -1,0 +1,6 @@
+if [ "x$DESKTOP_SESSION" = "xunity" ]; then
+	export XDG_CONFIG_DIRS="/usr/share/upstart/xdg:/etc/xdg"
+	export SESSIONTYPE=gnome-session	# Set for gnome-session.conf upstart job to start
+	export XDG_CURRENT_DESKTOP="Unity"	# Needs to be manually set for 'startx' to work
+	exec /usr/bin/upstart --user
+fi

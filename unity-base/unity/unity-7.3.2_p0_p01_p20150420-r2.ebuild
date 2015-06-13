@@ -43,7 +43,6 @@ DEPEND="dev-libs/boost:=
 	dev-libs/libindicator
 	dev-libs/libunity
 	dev-libs/libunity-misc:=
-	dev-libs/libupstart
 	dev-libs/xpathselect
 	dev-python/gconf-python
 	gnome-base/gconf
@@ -56,6 +55,7 @@ DEPEND="dev-libs/boost:=
 	media-libs/clutter-gtk:1.0
 	media-libs/glew:=
 	sys-apps/dbus
+	sys-apps/upstart
 	sys-auth/pambase
 	sys-libs/libnih[dbus]
 	unity-base/bamf:=
@@ -140,6 +140,11 @@ src_prepare() {
 	# Include directly iostream needed for std::cout #
 	sed -e 's/.*<fstream>.*/#include <iostream>\n&/' \
 		-i unity-shared/DebugDBusInterface.cpp
+
+	# DESKTOP_SESSION and SESSION is 'unity' not 'ubuntu' #
+	sed -e 's:SESSION=ubuntu:SESSION=unity:g' \
+		-e 's:ubuntu.session:unity.session:g' \
+			-i {debian/unity7.conf,services/unity-panel-service.conf.in}
 }
 
 src_configure() {
@@ -216,18 +221,11 @@ src_install() {
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
 
-	# Remove upstart jobs as we use xsession based scripts in /etc/X11/xinit/xinitrc.d/ #
-	rm -rf "${ED}usr/share/upstart"
-
-	insinto /etc/xdg/autostart
-	doins "${FILESDIR}/unity-panel-service.desktop"
+	insinto /usr/share/upstart/sessions
+	doins debian/unity7.conf
 
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe "${FILESDIR}/99ibus-service"
-
-	insinto /usr/share/dbus-1/services/
-	doins "${FILESDIR}/com.canonical.Unity.Panel.Service.Desktop.service"
-	doins "${FILESDIR}/com.canonical.Unity.Panel.Service.LockScreen.service"
 
 	# Allow zeitgeist-fts to find KDE *.desktop files, so that KDE applications show in Dash 'Recently Used' #
 	#  (refer https://developer.gnome.org/gio/2.33/gio-Desktop-file-based-GAppInfo.html#g-desktop-app-info-new)

@@ -1,16 +1,16 @@
 #!/bin/sh
 # Unity Xsession starter, based on Xsession shipped by x11-apps/xinit-1.0.5-r1
 
-userresources=$HOME/.Xresources 
-usermodmap=$HOME/.Xmodmap 
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
 userxkbmap=$HOME/.Xkbmap
 
-sysresources=/etc/X11/Xresources 
-sysmodmap=/etc/X11/Xmodmap 
+sysresources=/etc/X11/Xresources
+sysmodmap=/etc/X11/Xmodmap
 sysxkbmap=/etc/X11/Xkbmap
 
-rh6sysresources=/etc/X11/xinit/Xresources 
-rh6sysmodmap=/etc/X11/xinit/Xmodmap 
+rh6sysresources=/etc/X11/xinit/Xresources
+rh6sysmodmap=/etc/X11/xinit/Xmodmap
 
 
 # merge in defaults
@@ -87,6 +87,5 @@ else
                 echo "WARNING: User is not part of the 'plugdev' group"
                 echo "Some devices and indicators may fail to function"
         fi
-        export XDG_CURRENT_DESKTOP=Unity
-        exec dbus-launch --exit-with-session gnome-session --session=unity
+        ## All good, we need not execute anything here as upstart will start the session for us ##
 fi

@@ -150,6 +150,10 @@ src_install() {
 	# Enables and fills $DESKTOP_SESSION variable for sessions started using 'startx'
 	exeinto /etc/X11/xinit/xinitrc.d/
 	newexe "${FILESDIR}/05-unity-desktop-session" 05-unity-desktop-session
+
+	# Start gnome-session using upstart #
+	insinto /usr/share/upstart/sessions
+	newins "${WORKDIR}/debian/gnome-session-bin.user-session.upstart" gnome-session.conf
 }
 
 pkg_postinst() {
