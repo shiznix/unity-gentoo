@@ -5,7 +5,7 @@
 EAPI=5
 ETYPE="sources"
 
-URELEASE="vivid-updates"
+URELEASE="vivid-security"
 inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"

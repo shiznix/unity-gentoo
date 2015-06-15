@@ -6,7 +6,7 @@ EAPI=5
 
 QT5_MODULE="qtbase"
 
-URELEASE="vivid"
+URELEASE="vivid-security"
 inherit qt5-build ubuntu-versionator eutils
 
 UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"

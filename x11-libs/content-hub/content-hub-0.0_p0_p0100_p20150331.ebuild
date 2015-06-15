@@ -4,15 +4,16 @@
 
 EAPI=5
 
-URELEASE="vivid"
-inherit cmake-utils gnome2-utils ubuntu-versionator
+URELEASE="vivid-security"
+inherit base cmake-utils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Content sharing/picking service to allow apps to exchange content"
 HOMEPAGE="https://launchpad.net/content-hub"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -32,11 +33,21 @@ DEPEND="!dev-libs/libupstart-app-launch
 	dev-util/dbus-test-runner
 	dev-util/lcov
 	sys-apps/ubuntu-app-launch
+	>=sys-libs/libapparmor-2.9.1
 	sys-libs/libnih[dbus]
-	x11-libs/gsettings-qt"
+	x11-libs/gsettings-qt
+	x11-libs/libnotify"
 
 S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
 export QT_SELECT=5
+
+src_prepare() {
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	base_src_prepare
+}
 
 pkg_preinst() {
 	gnome2_schemas_savelist

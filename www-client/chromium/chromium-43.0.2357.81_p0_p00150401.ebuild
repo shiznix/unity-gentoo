@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/www-client/chromium/chromium-39.0.2171.65.ebuild,v 1.3 2014/11/21 14:04:25 ago Exp $
+# $Header: $
 
 EAPI=5
 PYTHON_COMPAT=( python{2_6,2_7} )
@@ -9,27 +9,26 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
 	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt_BR pt_PT ro ru sk sl sr
 	sv sw ta te th tr uk vi zh_CN zh_TW"
 
-URELEASE="vivid"
-inherit base chromium eutils flag-o-matic multilib multiprocessing pax-utils \
+URELEASE="vivid-security"
+inherit base check-reqs chromium eutils flag-o-matic multilib multiprocessing pax-utils \
 	portability python-any-r1 readme.gentoo toolchain-funcs ubuntu-versionator versionator virtualx
 
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1134"
+UVER_SUFFIX=".1170"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
 SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}.tar.xz
-	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.debian.tar.xz
-	test? ( https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}-testdata.tar.xz )"
+	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.debian.tar.xz"
 
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
-IUSE="bindist cups gnome gnome-keyring hidpi kerberos neon pic pulseaudio selinux +tcmalloc widevine"
-RESTRICT="!bindist? ( bindist )
+IUSE="cups gnome gnome-keyring hidpi kerberos neon pic +proprietary-codecs pulseaudio selinux +tcmalloc widevine"
+RESTRICT="proprietary-codecs? ( bindist )
 	mirror"
 
 # Native Client binaries are compiled with different set of flags, bug #452066.
@@ -42,10 +41,7 @@ QA_PRESTRIPPED=".*\.nexe"
 RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	app-arch/bzip2:=
 	app-arch/snappy:=
-	cups? (
-		dev-libs/libgcrypt:0=
-		>=net-print/cups-1.3.11:=
-	)
+	cups? ( >=net-print/cups-1.3.11:= )
 	>=dev-libs/elfutils-0.149
 	dev-libs/expat:=
 	dev-libs/glib:=
@@ -68,6 +64,7 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	>=media-libs/libjpeg-turbo-1.2.0-r1:=
 	media-libs/libpng:0=
 	>=media-libs/libwebp-0.4.0:=
+	>=media-libs/libvpx-1.4.0:=
 	media-libs/speex:=
 	pulseaudio? ( media-sound/pulseaudio:= )
 	sys-apps/dbus:=
@@ -155,7 +152,7 @@ are not displayed properly:
 Depending on your desktop environment, you may need
 to install additional packages to get icons on the Downloads page.
 
-For KDE, the required package is kde-base/oxygen-icons.
+For KDE, the required package is kde-apps/oxygen-icons.
 
 For other desktop environments, try one of the following:
 - x11-themes/gnome-icon-theme
@@ -167,6 +164,15 @@ pkg_pretend() {
 		[[ $(gcc-major-version)$(gcc-minor-version) -lt 48 ]]; then
 		die 'At least gcc 4.8 is required, see bugs: #535730, #525374, #518668.'
 	fi
+
+	# Check build requirements, bug #541816 .
+	CHECKREQS_DISK_BUILD="5G"
+	eshopts_push -s extglob
+	if is-flagq '-g?(gdb)?([1-9])'; then
+		CHECKREQS_DISK_BUILD="25G"
+	fi
+	eshopts_pop
+	check-reqs_pkg_pretend
 }
 
 pkg_setup() {
@@ -183,12 +189,6 @@ pkg_setup() {
 	python-any-r1_pkg_setup
 
 	chromium_suid_sandbox_check_kernel_config
-
-	if use bindist; then
-		elog "bindist enabled: H.264 video support will be disabled."
-	else
-		elog "bindist disabled: Resulting binaries may not be legal to re-distribute."
-	fi
 }
 
 src_prepare() {
@@ -207,7 +207,7 @@ src_prepare() {
 	# fi
 
 	epatch "${FILESDIR}/${PN}-system-jinja-r7.patch"
-	epatch "${FILESDIR}/${PN}-cups-r0.patch"
+	epatch "${FILESDIR}/${PN}-system-libvpx-r0.patch"
 
 	if use widevine; then
 		local WIDEVINE_VERSION="$(< "${ROOT}/usr/$(get_libdir)/chromium-browser/widevine.version")"
@@ -242,6 +242,7 @@ src_prepare() {
 		'net/third_party/mozilla_security_manager' \
 		'net/third_party/nss' \
 		'third_party/WebKit' \
+		'third_party/analytics' \
 		'third_party/angle' \
 		'third_party/angle/src/third_party/compiler' \
 		'third_party/brotli' \
@@ -250,7 +251,7 @@ src_prepare() {
 		'third_party/cros_system_api' \
 		'third_party/cython/python_flags.py' \
 		'third_party/dom_distiller_js' \
-		'third_party/dom_distiller_js/package/proto_gen/third_party/dom_distiller_js' \
+		'third_party/dom_distiller_js/dist/proto_gen/third_party/dom_distiller_js' \
 		'third_party/ffmpeg' \
 		'third_party/fips181' \
 		'third_party/flot' \
@@ -265,11 +266,10 @@ src_prepare() {
 		'third_party/libaddressinput' \
 		'third_party/libjingle' \
 		'third_party/libphonenumber' \
+		'third_party/libsecret' \
 		'third_party/libsrtp' \
 		'third_party/libudev' \
 		'third_party/libusb' \
-		'third_party/libvpx' \
-		'third_party/libvpx/source/libvpx/third_party/x86inc' \
 		'third_party/libxml/chromium' \
 		'third_party/libXNVCtrl' \
 		'third_party/libyuv' \
@@ -277,18 +277,16 @@ src_prepare() {
 		'third_party/lzma_sdk' \
 		'third_party/mesa' \
 		'third_party/modp_b64' \
+		'third_party/mojo' \
 		'third_party/mt19937ar' \
 		'third_party/npapi' \
 		'third_party/openmax_dl' \
 		'third_party/opus' \
 		'third_party/ots' \
 		'third_party/pdfium' \
+		'third_party/pdfium/third_party/base' \
 		'third_party/pdfium/third_party/bigint' \
 		'third_party/pdfium/third_party/freetype' \
-		'third_party/pdfium/third_party/logging.h' \
-		'third_party/pdfium/third_party/macros.h' \
-		'third_party/pdfium/third_party/numerics' \
-		'third_party/pdfium/third_party/template_util.h' \
 		'third_party/polymer' \
 		'third_party/protobuf' \
 		'third_party/qcms' \
@@ -298,7 +296,6 @@ src_prepare() {
 		'third_party/smhasher' \
 		'third_party/sqlite' \
 		'third_party/tcmalloc' \
-		'third_party/tlslite' \
 		'third_party/trace-viewer' \
 		'third_party/trace-viewer/third_party/components/polymer' \
 		'third_party/trace-viewer/third_party/d3' \
@@ -308,6 +305,7 @@ src_prepare() {
 		'third_party/trace-viewer/third_party/tvcm/third_party/beautifulsoup/polymer_soup.py' \
 		'third_party/undoview' \
 		'third_party/usrsctp' \
+		'third_party/web-animations-js' \
 		'third_party/webdriver' \
 		'third_party/webrtc' \
 		'third_party/widevine' \
@@ -347,7 +345,6 @@ src_configure() {
 	# Use system-provided libraries.
 	# TODO: use_system_hunspell (upstream changes needed).
 	# TODO: use_system_libsrtp (bug #459932).
-	# TODO: use_system_libvpx (http://crbug.com/347823).
 	# TODO: use_system_libusb (http://crbug.com/266149).
 	# TODO: use_system_opus (https://code.google.com/p/webrtc/issues/detail?id=3077).
 	# TODO: use_system_protobuf (bug #525560).
@@ -363,6 +360,7 @@ src_configure() {
 		-Duse_system_libjpeg=1
 		-Duse_system_libpng=1
 		-Duse_system_libwebp=1
+		-Duse_system_libvpx=1
 		-Duse_system_libxml=1
 		-Duse_system_libxslt=1
 		-Duse_system_minizip=1
@@ -410,24 +408,23 @@ src_configure() {
 	myconf+="
 		-Dlogging_like_official_build=1"
 
+	if [[ $(tc-getCC) == *clang* ]]; then
+		myconf+=" -Dclang=1"
+	else
+		myconf+=" -Dclang=0"
+	fi
+
 	# Never use bundled gold binary. Disable gold linker flags for now.
 	# Do not use bundled clang.
 	myconf+="
-		-Dclang=0
+		-Dclang_use_chrome_plugins=0
 		-Dhost_clang=0
 		-Dlinux_use_bundled_binutils=0
 		-Dlinux_use_bundled_gold=0
 		-Dlinux_use_gold_flags=0"
 
-	# Always support proprietary codecs.
-	myconf+=" -Dproprietary_codecs=1"
-
-	ffmpeg_branding="Chromium"
-	if ! use bindist; then
-		# Enable H.264 support in bundled ffmpeg.
-		ffmpeg_branding="Chrome"
-	fi
-	myconf+=" -Dffmpeg_branding=${ffmpeg_branding}"
+	ffmpeg_branding="$(usex proprietary-codecs Chrome Chromium)"
+	myconf+=" -Dproprietary_codecs=1 -Dffmpeg_branding=${ffmpeg_branding}"
 
 	# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys .
 	# Note: these are for Gentoo use ONLY. For your own distribution,
@@ -486,6 +483,11 @@ src_configure() {
 		# Prevent linker from running out of address space, bug #471810 .
 		if use x86; then
 			filter-flags "-g*"
+		fi
+
+		# Prevent libvpx build failures. Bug 530248, 544702, 546984.
+		if [[ ${myarch} == amd64 || ${myarch} == x86 ]]; then
+			filter-flags -mno-mmx -mno-sse2 -mno-ssse3 -mno-sse4.1 -mno-avx2
 		fi
 	fi
 
@@ -609,7 +611,6 @@ src_install() {
 	newman out/Release/chrome.1 chromium-browser${CHROMIUM_SUFFIX}.1 || die
 
 	doexe out/Release/libffmpegsumo.so || die
-	doexe out/Release/libpdf.so || die
 	if use widevine; then
 		doexe out/Release/libwidevinecdmadapter.so || die
 	fi

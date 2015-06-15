@@ -17,6 +17,7 @@
 >=app-accessibility/at-spi2-atk-2.16::gentoo
 >=app-accessibility/at-spi2-core-2.16::gentoo
 >=app-accessibility/orca-3.16::gentoo
+>=app-arch/file-roller-3.16::gentoo
 >=app-cdr/brasero-3.16::gentoo
 >=app-editors/gedit-3.16::gentoo
 >=app-text/evince-3.16::gentoo

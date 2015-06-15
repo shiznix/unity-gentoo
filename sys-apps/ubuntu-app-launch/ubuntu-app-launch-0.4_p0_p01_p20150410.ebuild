@@ -7,8 +7,8 @@ EAPI=5
 URELEASE="vivid"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${MY_PN}"
-UVER_PREFIX="+14.10.${PVR_MICRO}"
+UURL="mirror://ubuntu/pool/main/u/${PN}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Session init system job for launching applications"
 HOMEPAGE="https://launchpad.net/ubuntu-app-launch"
