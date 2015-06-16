@@ -37,19 +37,7 @@ MAKEOPTS="-j1"
 
 src_prepare() {
 	epatch "${FILESDIR}/sandbox_violations_fix.diff"
-
-	# Make indicator start using XDG autostart #
-	sed -e '/NotShowIn=/d' \
-		-i data/indicator-power.desktop.in
-
 	cmake-utils_src_prepare
-}
-
-src_install() {
-	cmake-utils_src_install
-
-	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
-	rm -rf "${ED}usr/share/upstart"
 }
 
 pkg_preinst() {

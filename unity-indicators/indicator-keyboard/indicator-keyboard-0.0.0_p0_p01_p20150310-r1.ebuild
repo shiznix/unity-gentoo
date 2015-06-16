@@ -74,9 +74,6 @@ src_install() {
 	}
 	python_foreach_impl run_in_build_dir installation
 
-	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
-	rm -rf "${ED}usr/share/upstart"
-
 	prune_libtool_files --modules
 }
 

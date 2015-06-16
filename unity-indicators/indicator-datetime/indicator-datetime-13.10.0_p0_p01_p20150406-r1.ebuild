@@ -51,10 +51,6 @@ src_prepare() {
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
-
-	# Make indicator start using XDG autostart #
-	sed -e '/NotShowIn=/d' \
-		-i data/indicator-datetime.desktop.in
 }
 
 src_configure() {
@@ -75,9 +71,6 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
-
-	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
-	rm -rf "${ED}usr/share/upstart"
 }
 
 pkg_postinst() {

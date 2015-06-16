@@ -38,10 +38,3 @@ src_prepare() {
 	# disable build of tests
 	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
 }
-
-src_install() {
-	cmake-utils_src_install
-
-	# Remove upstart jobs, the service starts fine when triggered on dbus #
-	rm -rf "${ED}usr/share/upstart"
-}

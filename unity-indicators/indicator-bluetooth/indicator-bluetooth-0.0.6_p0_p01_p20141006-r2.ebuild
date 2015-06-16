@@ -62,7 +62,4 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
-
-	# Remove upstart jobs as we use /etc/xdg/autostart/*.desktop files #
-	rm -rf "${ED}usr/share/upstart"
 }

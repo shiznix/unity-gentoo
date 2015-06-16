@@ -27,21 +27,18 @@ DEPEND="dev-libs/libappindicator:=
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	# Fix desktop file installation location #
+	sed 's:$(pkgdatadir)/upstart/xdg/autostart:$(datadir)/upstart/xdg/autostart:g' \
+		-i data/upstart/Makefile.am
+
 	eautoreconf
 	append-cflags -Wno-error
-
-	# Make indicator start using XDG autostart #
-	sed -e '/NotShowIn=/d' \
-		-i data/indicator-application.desktop.in
 
 	# Show systray icons even if they report themselves as 'Passive' #
 	epatch -p1 "${FILESDIR}/sni-systray_show-passive.diff"
 }
 
 src_install() {
-	emake DESTDIR="${D}" install
+	emake DESTDIR="${ED}" install
 	prune_libtool_files --modules
-
-	# Remove upstart jobs as we use XDG autostart desktop files to spawn indicators #
-	rm -rf "${ED}usr/share/upstart"
 }

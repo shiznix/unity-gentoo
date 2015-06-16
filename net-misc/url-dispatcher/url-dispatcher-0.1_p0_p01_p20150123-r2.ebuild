@@ -27,16 +27,3 @@ DEPEND="dev-libs/glib:2
 	test? ( dev-util/dbus-test-runner )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
-src_install() {
-	cmake-utils_src_install
-
-	# Remove upstart jobs as we use xsession based scripts in /etc/X11/xinit/xinitrc.d/ #
-	rm -rf "${ED}usr/share/upstart"
-
-	# url-dispatcher service must be started via dbus or process will zombie #
-	insinto /etc/xdg/autostart
-	doins "${FILESDIR}/url-dispatcher.desktop"
-	insinto /usr/share/dbus-1/services/
-	doins "${FILESDIR}/com.canonical.URLDispatcher.service"
-}

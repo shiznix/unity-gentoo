@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=URL Dispatcher Service
-Exec=dbus-send --session --dest="com.canonical.URLDispatcher" /com/canonical/URLDispatcher com.canonical.URLDispatcher
-OnlyShowIn=Unity;
-NoDisplay=true
-StartupNotify=false
-Terminal=false
-AutostartCondition=GNOME3 unless-session gnome

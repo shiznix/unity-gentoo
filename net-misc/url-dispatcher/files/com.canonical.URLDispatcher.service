@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=com.canonical.URLDispatcher
-Exec=/usr/libexec/url-dispatcher/url-dispatcher
