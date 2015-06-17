@@ -69,7 +69,7 @@ multilib_src_configure() {
 		-DDISABLE_GTEST_TEST_DISCOVERY=ON
 		-DMIR_RUN_ACCEPTANCE_TESTS=OFF
 		-DMIR_RUN_INTEGRATION_TESTS=OFF
-		-DMIR_PLATFORM=mesa;android"
+		-DMIR_PLATFORM=mesa"
 	cmake-utils_src_configure
 }
 

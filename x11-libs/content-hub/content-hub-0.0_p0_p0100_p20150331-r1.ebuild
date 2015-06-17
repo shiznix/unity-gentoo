@@ -23,7 +23,6 @@ RESTRICT="mirror"
 
 DEPEND="!dev-libs/libupstart-app-launch
 	dev-libs/glib:2
-	dev-libs/ubuntu-download-manager
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtdbus:5
@@ -32,6 +31,7 @@ DEPEND="!dev-libs/libupstart-app-launch
 	dev-qt/qdoc:5
 	dev-util/dbus-test-runner
 	dev-util/lcov
+	net-libs/ubuntu-download-manager
 	sys-apps/ubuntu-app-launch
 	>=sys-libs/libapparmor-2.9.1
 	sys-libs/libnih[dbus]

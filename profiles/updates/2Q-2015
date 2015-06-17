@@ -1,3 +1,5 @@
 move app-admin/eselect-opengl app-eselect/eselect-opengl
 move dev-libs/libubuntu-app-launch sys-apps/ubuntu-app-launch
 move dev-libs/libupstart sys-apps/upstart
+move dev-libs/ubuntu-download-manager net-libs/ubuntu-download-manager
+move dev-libs/ubuntu-geoip net-libs/ubuntu-geoip

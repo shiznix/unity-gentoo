@@ -17,32 +17,34 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
-RESTRICT="mirror test"
+IUSE="doc test"
+RESTRICT="mirror"
 
-COMMON_DEPEND="
+DEPEND="dev-cpp/glog
+	dev-cpp/gmock
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtsql:5
 	dev-qt/qttest:5
 	dev-qt/qtsystems:5
-"
-
-RDEPEND="
-	>=dev-libs/boost-1.55.0
 	sys-apps/dbus
-"
-DEPEND="${COMMON_DEPEND}
-	dev-cpp/glog
-	sys-libs/libnih
-"
+	sys-libs/libnih"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+export QT_SELECT=5
 
 src_prepare() {
-	epatch -p1 "${FILESDIR}/fix-qml-path.patch"
-	epatch -p1 "${FILESDIR}/fix-pkgconfig-install-dir.patch"
+	use test || \
+		sed -e '/add_subdirectory(tests)/d' \
+			-i CMakeLists.txt
+	use doc || \
+		sed -e '/add_subdirectory(docs)/d' \
+			-i CMakeLists.txt
+}
 
-	cmake-utils_src_prepare
+src_configure() {
+	mycmakeargs="${mycmakeargs}
+		-DCMAKE_INSTALL_LIBEXECDIR=/usr/lib"
+	cmake-utils_src_configure
 }

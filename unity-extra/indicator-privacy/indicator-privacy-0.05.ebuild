@@ -16,11 +16,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 RDEPEND="dev-libs/libappindicator
-	dev-libs/ubuntu-geoip
 	dev-libs/glib:2
 	dev-python/pygobject:3
 	dev-python/pyxdg
 	gnome-extra/zeitgeist
+	net-libs/ubuntu-geoip
 	x11-libs/gtk+:3[introspection]"
 DEPEND="${RDEPEND}"
 RESTRICT="mirror"
