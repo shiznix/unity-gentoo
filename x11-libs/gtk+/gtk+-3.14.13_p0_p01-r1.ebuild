@@ -23,7 +23,7 @@ HOMEPAGE="http://www.gtk.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
-IUSE="aqua broadway cloudprint colord cups examples +introspection test vim-syntax wayland X xinerama"
+IUSE="aqua broadway cloudprint colord cups examples +introspection mir test vim-syntax wayland X xinerama"
 REQUIRED_USE="
 	|| ( aqua wayland X )
 	xinerama? ( X )"
@@ -50,6 +50,7 @@ COMMON_DEPEND="
 	colord? ( >=x11-misc/colord-0.1.9:0=[${MULTILIB_USEDEP}] )
 	cups? ( >=net-print/cups-1.2[${MULTILIB_USEDEP}] )
 	introspection? ( >=dev-libs/gobject-introspection-1.39:= )
+	mir? ( mir-base/mir )
 	wayland? (
 		>=dev-libs/wayland-1.5.91[${MULTILIB_USEDEP}]
 		media-libs/mesa[wayland,${MULTILIB_USEDEP}]
@@ -161,6 +162,7 @@ multilib_src_configure() {
 		$(use_enable colord) \
 		$(use_enable cups cups auto) \
 		$(multilib_native_use_enable introspection) \
+		$(use_enable mir mir-backend) \
 		$(use_enable wayland wayland-backend) \
 		$(use_enable X x11-backend) \
 		$(use_enable X xcomposite) \

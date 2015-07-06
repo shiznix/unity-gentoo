@@ -126,18 +126,11 @@ src_install() {
 
 	insinto /etc/${PN}/${PN}.conf.d
 	doins "${FILESDIR}"/50-display-setup.conf
-	doins "${FILESDIR}"/50-greeter-wrapper.conf
 	doins "${FILESDIR}"/50-session-wrapper.conf
 
-	insinto /usr/libexec/${PN}
-	doins "${FILESDIR}"/Xsession
-	fperms +x /usr/libexec/${PN}/Xsession
-
-	# wrapper to start greeter session
-	# fixes problems with additional (2nd) nm-applet and
-	# setting icon themes in Unity desktop
-	doins "${FILESDIR}"/lightdm-greeter-wrapper
-	fperms +x /usr/libexec/${PN}/lightdm-greeter-wrapper
+	exeinto /usr/libexec/${PN}
+	doexe debian/lightdm-greeter-session
+	doexe "${FILESDIR}"/Xsession
 
 	# script makes lightdm multi monitor sessions aware
 	# and enable first display as primary output
@@ -145,8 +138,7 @@ src_install() {
 	#
 	# on 'unity-greeter' the login prompt will follow the mouse cursor
 	#
-	doins "${FILESDIR}"/lightdm-greeter-display-setup
-	fperms +x /usr/libexec/${PN}/lightdm-greeter-display-setup
+	doexe "${FILESDIR}"/lightdm-greeter-display-setup
 
 	# install guest-account script
 	insinto /usr/bin

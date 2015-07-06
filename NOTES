@@ -51,7 +51,8 @@ x11-base/xorg-server			# Provides Xmir patch
 x11-drivers/xf86-video-ati		# Provides Mir display server support with 'mir' useflag and patch
 x11-drivers/xf86-video-intel		# Provides Mir display server support with 'mir' useflag and patch
 x11-drivers/xf86-video-nouveau		# Provides Mir display server support with 'mir' useflag and patch
-x11-libs/gtk+				# Needed for global appmenu
+x11-libs/gtk+				# Needed for global appmenu + native Mir display server support
+x11-misc/lightdm			# Custom fixes for Xsession profile sourcing and multi-monitor display
 x11-wm/metacity				# Patched to support compiz window decoration
 
 * By design, some indicators or their features will not appear until they meet certain criteria
