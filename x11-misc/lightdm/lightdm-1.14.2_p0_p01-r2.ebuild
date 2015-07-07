@@ -125,11 +125,12 @@ src_install() {
 	doins "${FILESDIR}"/${PN}.conf
 
 	insinto /etc/${PN}/${PN}.conf.d
-	doins "${FILESDIR}"/50-display-setup.conf
-	doins "${FILESDIR}"/50-session-wrapper.conf
+	doins "${FILESDIR}"/50-display-setup.conf		# Executes lightdm-greeter-display-setup
+	doins "${FILESDIR}"/50-session-wrapper.conf		# Executes custom Xsession
+	doins debian/50-greeter-wrapper.conf			# Executes lightdm-greeter-session
 
-	exeinto /usr/libexec/${PN}
-	doexe debian/lightdm-greeter-session
+	exeinto /usr/lib/${PN}
+	doexe debian/lightdm-greeter-session			# Handle extraneous dbus processes (eliminates 2nd nm-applet icon)
 	doexe "${FILESDIR}"/Xsession
 
 	# script makes lightdm multi monitor sessions aware
@@ -138,7 +139,7 @@ src_install() {
 	#
 	# on 'unity-greeter' the login prompt will follow the mouse cursor
 	#
-	doexe "${FILESDIR}"/lightdm-greeter-display-setup
+	doexe "${FILESDIR}"/lightdm-greeter-display-setup	# Handle multi-monitor setups
 
 	# install guest-account script
 	insinto /usr/bin
@@ -174,5 +175,4 @@ src_install() {
 pkg_postinst() {
 	elog "'guest session' is disabled by default."
 	elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
-	elog "or run '/usr/libexec/lightdm/lightdm-set-defaults --allow-guest=true'"
 }
