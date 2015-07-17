@@ -16,7 +16,7 @@ GCONF_DEBUG="yes"
 # pkg-config
 GNOME2_LA_PUNT="yes"
 
-URELEASE="vivid"
+URELEASE="vivid-updates"
 inherit autotools base bash-completion-r1 gnome2 libtool eutils flag-o-matic multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator
 
 MY_P="${PN}2.0_${PV}"

@@ -1,13 +1,13 @@
 ## Global masks ##
 
-# Latest stable kmod-19 requires unstable >sys-apps/systemd-217 #
->=sys-apps/kmod-19
-
 # xapian-1.3 is the development release which appends it's version to all includes/libs (see related b.g.o #480470)
 #   xapian{-bindings} versions must match
 >=dev-libs/xapian-1.3
 >=dev-libs/xapian-bindings-1.3
 
+# dev-libs/boost and dev-util/boost-build versions are kept in line with Unity's as needed for gmock/gtest tests and others to build
+>=dev-libs/boost-1.56
+>=dev-util/boost-build-1.56
 
 # mask gnome-3.16 packages #
 =gnome-*/*-*16*::gentoo

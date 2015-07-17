@@ -6,7 +6,7 @@ EAPI=5
 inherit base eutils autotools mono-env fdo-mime gnome2-utils versionator ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/b/${PN}"
-URELEASE="vivid"
+URELEASE="vivid-updates"
 UVER_PREFIX="+really2.6.2"
 
 DESCRIPTION="Import, organize, play, and share your music (patched for Unity)"
