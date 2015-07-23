@@ -48,10 +48,11 @@ KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
 IUSE="bindist crypt hardened ldap +lightning +minimal mozdom selinux"
-RESTRICT="mirror"
+RESTRICT="!bindist? ( bindist )
+	mirror"
 
 PATCH="thunderbird-31.0-patches-0.1"
-PATCHFF="firefox-31.0-patches-0.2"
+PATCHFF="firefox-31.0-patches-0.3"
 
 SRC_URI="${SRC_URI}
 	${MOZ_FTP_URI}${MOZ_PV}/source/${MOZ_P}.source.tar.bz2
@@ -71,8 +72,8 @@ SRC_URI="${SRC_URI}
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 CDEPEND="
-	>=dev-libs/nss-3.17.1
-	>=dev-libs/nspr-4.10.6
+	>=dev-libs/nss-3.19.2
+	>=dev-libs/nspr-4.10.8
 	!x11-plugins/enigmail
 	crypt?  ( || (
 		( >=app-crypt/gnupg-2.0
@@ -148,6 +149,9 @@ src_prepare() {
 			"${WORKDIR}/debian/patches/revert-removal-of-native-notifications.patch" )
 	base_src_prepare
 
+	has_version ">=media-libs/freetype-2.6" && \
+		epatch -p1 "${FILESDIR}/freetype-2.6_build-fix.patch"
+
 	# Apply our Thunderbird patchset
 	EPATCH_SUFFIX="patch" \
 	EPATCH_FORCE="yes" \
@@ -158,6 +162,9 @@ src_prepare() {
 	EPATCH_SUFFIX="patch" \
 	EPATCH_FORCE="yes" \
 	epatch "${WORKDIR}/firefox"
+	if [[ $(gcc-major-version) -ge 5 ]]; then
+		epatch "${FILESDIR}/thunderbird-31.7.0-gcc5-1.patch"
+	fi
 	popd &>/dev/null || die
 
 	# Ensure that are plugins dir is enabled as default
