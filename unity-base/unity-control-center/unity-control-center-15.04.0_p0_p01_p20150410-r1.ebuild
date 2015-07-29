@@ -100,9 +100,7 @@ RDEPEND="${COMMON_DEPEND}
 	>=sys-apps/accountsservice-0.6.30
 	x11-themes/gnome-icon-theme-symbolic
 	>=gnome-extra/gnome-color-manager-3
-	cups? (
-		|| ( >=app-admin/system-config-printer-gnome-1.3.5
-                        app-admin/system-config-printer )
+	cups? ( app-admin/system-config-printer
 		net-print/cups-pk-helper )
 	unity-base/unity-settings-daemon[input_devices_wacom]
 
