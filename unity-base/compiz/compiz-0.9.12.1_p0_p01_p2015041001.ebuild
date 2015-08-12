@@ -65,7 +65,6 @@ COMMONDEPEND="!!x11-wm/compiz
 	${PYTHON_DEPS}"
 
 DEPEND="${COMMONDEPEND}
-	>=dev-util/cmake-3.2.2
 	sys-devel/gettext
 	virtual/pkgconfig
 	x11-proto/damageproto

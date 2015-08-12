@@ -21,14 +21,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-# >=cmake-3.1.0 has syntax problems with $<TARGET_OBJECTS:src> in CMakeLists.txt files not expanding correctly #
 DEPEND="!!media-libs/mesa-mir
 	<dev-cpp/gflags-2.1.1[${MULTILIB_USEDEP}]
 	dev-cpp/glog[${MULTILIB_USEDEP}]
 	dev-libs/boost:=[${MULTILIB_USEDEP}]
 	dev-libs/libhybris[${MULTILIB_USEDEP}]
 	dev-libs/protobuf:=[${MULTILIB_USEDEP}]
-	<=dev-util/cmake-3.0.2
 	dev-util/android-headers[${MULTILIB_USEDEP}]
 	>=dev-util/lttng-tools-2.1.1[ust,${MULTILIB_USEDEP}]
 	dev-util/umockdev
