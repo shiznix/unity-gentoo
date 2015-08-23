@@ -21,7 +21,7 @@ IUSE="debug +plugins"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/expat
-	dev-libs/glib
+	dev-libs/glib:2
 	dev-libs/nspr
 	dev-libs/nss
 	dev-qt/qtcore:5[debug?]

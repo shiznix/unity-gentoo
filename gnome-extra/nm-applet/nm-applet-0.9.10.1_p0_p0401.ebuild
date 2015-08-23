@@ -1,13 +1,13 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnome-extra/nm-applet/nm-applet-0.9.8.4.ebuild,v 1.2 2013/11/20 13:15:49 leio Exp $
+# $Header: $
 
 EAPI=5
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 GNOME_ORG_MODULE="network-manager-applet"
 
-URELEASE="vivid"
+URELEASE="vivid-updates"
 inherit autotools base eutils gnome2 ubuntu-versionator
 
 MY_P="${GNOME_ORG_MODULE}_${PV}"
