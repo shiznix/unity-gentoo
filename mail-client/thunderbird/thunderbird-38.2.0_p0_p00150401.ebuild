@@ -5,21 +5,20 @@
 EAPI=5
 WANT_AUTOCONF="2.1"
 MOZ_ESR=""
-MOZ_LIGHTNING_VER="3.3"
-#MOZ_LIGHTNING_GDATA_VER="2.6.3"
-MOZ_LIGHTNING_GDATA_VER="1.0.3"
+MOZ_LIGHTNING_VER="4.0.2"
+MOZ_LIGHTNING_GDATA_VER="1.9"
 
 # This list can be updated using scripts/get_langs.sh from the mozilla overlay
-MOZ_LANGS=(ar ast be bg bn-BD br ca cs da de el en en-GB en-US es-AR
-es-ES et eu fi fr fy-NL ga-IE gd gl he hr hu hy-AM id is it ja ko lt nb-NO
-nl nn-NO pa-IN pl pt-BR pt-PT rm ro ru si sk sl sq sr sv-SE ta-LK tr uk vi
-zh-CN zh-TW )
+MOZ_LANGS=(ar ast be bg bn-BD br ca cs cy da de el en en-GB en-US es-AR
+es-ES et eu fi fr fy-NL ga-IE gd gl he hr hsb hu hy-AM id is it ja ko lt
+nb-NO nl nn-NO pa-IN pl pt-BR pt-PT rm ro ru si sk sl sq sr sv-SE ta-LK tr
+uk vi zh-CN zh-TW )
 
 # Taken from ubuntu-versionator.eclass
 MY_PV="${PV%%[a-z]_p*}"
 MY_PV="${MY_PV%%_p*}"
 
-# Convert the ebuild version to th firefox-24.0-patches-0.4.tar.xze upstream mozilla version, used by mozlinguas
+# Convert the ebuild version to the upstream mozilla version, used by mozlinguas
 MOZ_PV="${MY_PV/_beta/b}"
 # ESR releases have slightly version numbers
 if [[ ${MOZ_ESR} == 1 ]]; then
@@ -28,15 +27,17 @@ fi
 MOZ_P="${PN}-${MOZ_PV}"
 
 # Enigmail version
-EMVER="1.8.1"
-# Upstream ftp release URI that's used by mozlinguas.eclass
-# We don't use the http mirror because it deletes old tarballs.
-MOZ_FTP_URI="ftp://ftp.mozilla.org/pub/${PN}/releases/"
-MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases/"
+EMVER="1.8.2"
+
+# Patches
+PATCH="thunderbird-38.0-patches-0.1"
+PATCHFF="firefox-38.0-patches-0.3"
+
+MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="vivid-security"
-inherit base flag-o-matic toolchain-funcs mozconfig-v5.31 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
+inherit base flag-o-matic toolchain-funcs mozconfig-v6.38 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
 UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/t/${PN}"
@@ -51,23 +52,14 @@ IUSE="bindist crypt hardened ldap +lightning +minimal mozdom selinux"
 RESTRICT="!bindist? ( bindist )
 	mirror"
 
-PATCH="thunderbird-31.0-patches-0.1"
-PATCHFF="firefox-31.0-patches-0.3"
-
+PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/{${PATCH},${PATCHFF}}.tar.xz )
 SRC_URI="${SRC_URI}
-	${MOZ_FTP_URI}${MOZ_PV}/source/${MOZ_P}.source.tar.bz2
-	${MOZ_HTTP_URI}${MOZ_PV}/source/${MOZ_P}.source.tar.bz2
+	${MOZ_HTTP_URI}/${MOZ_PV}/source/${MOZ_P}.source.tar.bz2
+	${MOZ_HTTP_URI/${PN}/calendar/lightning}/${MOZ_LIGHTNING_VER}/linux/lightning.xpi -> lightning-${MOZ_LIGHTNING_VER}.xpi
+	lightning? ( https://dev.gentoo.org/~axs/distfiles/gdata-provider-${MOZ_LIGHTNING_GDATA_VER}.tar.xz )
 	crypt? ( http://www.enigmail.net/download/source/enigmail-${EMVER}.tar.gz )
-	lightning? (
-		${MOZ_HTTP_URI/${PN}/calendar/lightning}${MOZ_LIGHTNING_VER}/linux/lightning.xpi -> lightning-${MOZ_LIGHTNING_VER}.xpi
-		http://dev.gentoo.org/~axs/distfiles/gdata-provider-${MOZ_LIGHTNING_GDATA_VER}.tar.xz
-	)
-	http://dev.gentoo.org/~anarchy/mozilla/patchsets/${PATCH}.tar.xz
-	http://dev.gentoo.org/~anarchy/mozilla/patchsets/${PATCHFF}.tar.xz
-	http://dev.gentoo.org/~axs/distfiles/${PATCH}.tar.xz
-	http://dev.gentoo.org/~axs/distfiles/${PATCHFF}.tar.xz
-	http://dev.gentoo.org/~polynomial-c/mozilla/patchsets/${PATCH}.tar.xz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${PATCH_URIS[@]}
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
@@ -137,20 +129,15 @@ src_unpack() {
 	# Unpack language packs
 	mozlinguas_src_unpack
 
-	# Unpack lightning for calendar locales
-	if use lightning ; then
-		xpi_unpack lightning-${MOZ_LIGHTNING_VER}.xpi
-	fi
+	xpi_unpack lightning-${MOZ_LIGHTNING_VER}.xpi
+	# this version of gdata-provider is a .tar.xz , no xpi needed
+	#use lightning && xpi_unpack gdata-provider-${MOZ_LIGHTNING_GDATA_VER}.xpi
 }
 
 src_prepare() {
-	# Ubuntu global menu patch + native notification #
-	PATCHES+=( "${WORKDIR}/debian/patches/unity-menubar.patch"
-			"${WORKDIR}/debian/patches/revert-removal-of-native-notifications.patch" )
+	# Ubuntu global menu patch #
+	PATCHES+=( "${WORKDIR}/debian/patches/unity-menubar.patch" )
 	base_src_prepare
-
-	has_version ">=media-libs/freetype-2.6" && \
-		epatch -p1 "${FILESDIR}/freetype-2.6_build-fix.patch"
 
 	# Apply our Thunderbird patchset
 	EPATCH_SUFFIX="patch" \
@@ -162,9 +149,6 @@ src_prepare() {
 	EPATCH_SUFFIX="patch" \
 	EPATCH_FORCE="yes" \
 	epatch "${WORKDIR}/firefox"
-	if [[ $(gcc-major-version) -ge 5 ]]; then
-		epatch "${FILESDIR}/thunderbird-31.7.0-gcc5-1.patch"
-	fi
 	popd &>/dev/null || die
 
 	# Ensure that are plugins dir is enabled as default
@@ -189,6 +173,9 @@ src_prepare() {
 		edos2unix "${file}"
 	done
 
+	# Allow user to apply any additional patches without modifing ebuild
+	epatch_user
+
 	# Confirm the version of lightning being grabbed for langpacks is the same
 	# as that used in thunderbird
 	local THIS_MOZ_LIGHTNING_VER=$(python "${S}"/calendar/lightning/build/makeversion.py ${PV})
@@ -197,9 +184,6 @@ src_prepare() {
 		eqawarn "in thunderbird.  Please update MOZ_LIGHTNING_VER in the ebuild from ${MOZ_LIGHTNING_VER}"
 		eqawarn "to ${THIS_MOZ_LIGHTNING_VER}"
 	fi
-
-	# Allow user to apply any additional patches without modifing ebuild
-	epatch_user
 
 	eautoreconf
 	# Ensure we run eautoreconf in mozilla to regenerate configure
@@ -230,13 +214,15 @@ src_configure() {
 
 	mozconfig_annotate '' --enable-extensions="${MEXTENSIONS}"
 	mozconfig_annotate '' --disable-mailnews
+	mozconfig_annotate '' --enable-calendar
 
 	# Other tb-specific settings
 	mozconfig_annotate '' --with-default-mozilla-five-home=${MOZILLA_FIVE_HOME}
 	mozconfig_annotate '' --with-user-appdir=.thunderbird
 
-	mozconfig_use_enable lightning calendar
 	mozconfig_use_enable ldap
+
+	mozlinguas_mozconfig
 
 	# Bug #72667
 	if use mozdom; then
@@ -260,10 +246,6 @@ src_configure() {
 
 	if [[ $(gcc-major-version) -lt 4 ]]; then
 		append-cxxflags -fno-stack-protector
-	elif [[ $(gcc-major-version) -gt 4 || $(gcc-minor-version) -gt 3 ]]; then
-		if use amd64 || use x86; then
-			append-flags -mno-avx
-		fi
 	fi
 
 	if use crypt; then
@@ -299,12 +281,12 @@ src_install() {
 
 	# Copy our preference before omnijar is created.
 	cp "${FILESDIR}"/thunderbird-gentoo-default-prefs-1.js-1 \
-		"${BUILD_OBJ_DIR}/mozilla/dist/bin/defaults/pref/all-gentoo.js" \
+		"${BUILD_OBJ_DIR}/dist/bin/defaults/pref/all-gentoo.js" \
 		|| die
 
 	# Set default path to search for dictionaries.
 	echo "pref(\"spellchecker.dictionary_path\", ${DICTPATH});" \
-		>> "${BUILD_OBJ_DIR}/mozilla/dist/bin/defaults/pref/all-gentoo.js" \
+		>> "${BUILD_OBJ_DIR}/dist/bin/defaults/pref/all-gentoo.js" \
 		|| die
 
 	# Pax mark xpcshell for hardened support, only used for startupcache creation.
@@ -328,6 +310,31 @@ src_install() {
 			"${ED}"/usr/share/applications/${PN}.desktop
 	fi
 
+	local emid
+	# stage extra locales for lightning and install over existing
+	mozlinguas_xpistage_langpacks "${BUILD_OBJ_DIR}"/dist/xpi-stage/lightning \
+		"${WORKDIR}"/lightning-${MOZ_LIGHTNING_VER} lightning calendar
+
+	emid='{e2fda1a4-762b-4020-b5ad-a41df1933103}'
+	mkdir -p "${T}/${emid}" || die
+	cp -RLp -t "${T}/${emid}" "${BUILD_OBJ_DIR}"/dist/xpi-stage/lightning/* || die
+	insinto ${MOZILLA_FIVE_HOME}/distribution/extensions
+	doins -r "${T}/${emid}"
+
+	if use lightning; then
+		# move lightning out of distribution/extensions and into extensions for app-global install
+		mv "${ED}"/${MOZILLA_FIVE_HOME}/{distribution,}/extensions/${emid} || die
+
+		# stage extra locales for gdata-provider and install app-global
+		mozlinguas_xpistage_langpacks "${BUILD_OBJ_DIR}"/dist/xpi-stage/gdata-provider \
+			"${WORKDIR}"/gdata-provider-${MOZ_LIGHTNING_GDATA_VER}
+		emid='{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}'
+		mkdir -p "${T}/${emid}" || die
+		cp -RLp -t "${T}/${emid}" "${BUILD_OBJ_DIR}"/dist/xpi-stage/gdata-provider/* || die
+		insinto ${MOZILLA_FIVE_HOME}/extensions
+		doins -r "${T}/${emid}"
+	fi
+
 	if use crypt ; then
 		local enigmail_xpipath="${WORKDIR}/enigmail/build"
 		cd "${T}" || die
@@ -335,61 +342,11 @@ src_install() {
 		emid=$(sed -n '/<em:id>/!d; s/.*\({.*}\).*/\1/; p; q' install.rdf)
 
 		dodir ${MOZILLA_FIVE_HOME}/extensions/${emid} || die
-		cd "${D}"${MOZILLA_FIVE_HOME}/extensions/${emid} || die
+		cd "${ED}"${MOZILLA_FIVE_HOME}/extensions/${emid} || die
 		unzip "${enigmail_xpipath}"/enigmail*.xpi || die
 	fi
 
-	if use lightning ; then
-		local l c
-		mozlinguas_export
-
-		emid="{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}"
-		# just for ESR31, install custom-rolled gdata-provider
-		cd "${WORKDIR}/gdata-provider-${MOZ_LIGHTNING_GDATA_VER}" || die
-		insinto ${MOZILLA_FIVE_HOME}/extensions/${emid}
-		if [[ -e chrome.manifest.original ]]; then
-			cp chrome.manifest.original chrome.manifest || die
-		fi
-		doins -r chrome.manifest components defaults modules install.rdf
-		cd "${WORKDIR}/gdata-provider-${MOZ_LIGHTNING_GDATA_VER}/chrome" || die
-		insinto ${MOZILLA_FIVE_HOME}/extensions/${emid}/chrome
-		doins -r gdata-provider gdata-provider-en-US
-		# Install locales for gdata-provider -- each locale is a directory tree
-		for l in "${mozlinguas[@]}"; do if [[ -d gdata-provider-${l} ]]; then
-			doins -r gdata-provider-${l}
-			echo "locale gdata-provider ${l} chrome/gdata-provider-${l}/locale/${l}/" \
-				>> "${ED}"/${MOZILLA_FIVE_HOME}/extensions/${emid}/chrome.manifest \
-				|| die "Error adding gdata-provider-${l} to chrome.manifest"
-		else
-			ewarn "Sorry, but lightning gdata-provider in ${P} does not support the ${l} locale"
-		fi; done
-
-		emid="{e2fda1a4-762b-4020-b5ad-a41df1933103}"
-		dodir ${MOZILLA_FIVE_HOME}/extensions/${emid}
-		cd "${ED}"${MOZILLA_FIVE_HOME}/extensions/${emid} || die
-		unzip "${BUILD_OBJ_DIR}"/mozilla/dist/xpi-stage/lightning-*.xpi || die
-		# Install locales for lightning - each locale is a jar file
-		insinto ${MOZILLA_FIVE_HOME}/extensions/${emid}/chrome
-		cd "${WORKDIR}"/lightning-${MOZ_LIGHTNING_VER}/chrome || die
-		for l in "${mozlinguas[@]}"; do if [[ -e calendar-${l}.jar ]]; then
-			for c in calendar lightning; do
-				doins ${c}-${l}.jar
-				echo "locale ${c} $l jar:chrome/${c}-${l}.jar!/locale/${l}/${c}/" \
-					>> "${ED}"/${MOZILLA_FIVE_HOME}/extensions/${emid}/chrome.manifest \
-					|| die "Error adding ${c}-${l} to chrome.manifest"
-			done
-		else
-			ewarn "Sorry, but lightning calendar in ${P} does not support the ${l} locale"
-		fi; done
-
-		# Fix mimetype so it shows up as a calendar application in GNOME 3
-		# This requires that the .desktop file was already installed earlier
-		sed -e "s:^\(MimeType=\):\1text/calendar;:" \
-			-e "s:^\(Categories=\):\1Calendar;:" \
-			-i "${ED}"/usr/share/applications/${PN}.desktop || die
-	fi
-
-	# Required in order for jit to work on hardened, for mozilla-31
+	# Required in order for jit to work on hardened, for mozilla-31 and above
 	use jit && pax-mark pm "${ED}"${MOZILLA_FIVE_HOME}/{thunderbird,thunderbird-bin}
 
 	# Plugin-container needs to be pax-marked for hardened to ensure plugins such as flash
@@ -417,4 +374,11 @@ pkg_postinst() {
 	elog "If you experience problems with plugins please issue the"
 	elog "following command : rm \${HOME}/.thunderbird/*/extensions.sqlite ,"
 	elog "then restart thunderbird"
+	if ! use lightning; then
+		elog
+		elog "If calendar fails to show up in extensions please open config editor"
+		elog "and set extensions.lastAppVersion to 38.0.0 to force a reload. If this"
+		elog "fails to show the calendar extension after restarting with above change"
+		elog "please file a bug report."
+	fi
 }
