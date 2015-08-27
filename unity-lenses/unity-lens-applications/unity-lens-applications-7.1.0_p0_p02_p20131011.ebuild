@@ -6,11 +6,11 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="vivid"
 inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="vivid"
-UVER_PREFIX="+13.10.20131011"
+UVER_PREFIX="+13.10.${PVR_MICRO}"
 
 DESCRIPTION="Application lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-applications"

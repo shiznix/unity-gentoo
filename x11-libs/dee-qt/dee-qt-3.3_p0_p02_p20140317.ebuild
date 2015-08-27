@@ -4,20 +4,22 @@
 
 EAPI=5
 
+URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-URELEASE="vivid"
-UVER_PREFIX="+14.04.20140317"
+#UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+14.04.${PVR_MICRO}"
+UVER_SUFFIX="~gcc5.1"
 
 DESCRIPTION="Qt binding and QML plugin for Dee for the Unity desktop"
 HOMEPAGE="http://unity.ubuntu.com/"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+#KEYWORDS="~x86 ~amd64"
 IUSE="qt5"
 RESTRICT="mirror"
 
