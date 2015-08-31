@@ -9,8 +9,7 @@ inherit distutils-r1 eutils ubuntu-versionator
 
 URELEASE="trusty"
 UVER_PREFIX="+13.10.20130723"
-#UURL="http://archive.ubuntu.com/ubuntu/pool/main/u"	# Mirrors can be unpredictable #
-UURL="mirror://ubuntu/pool/main/u"
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/u"	# Mirrors can be unpredictable #
 
 DESCRIPTION="Online scopes for the Unity Dash"
 HOMEPAGE="https://launchpad.net/onehundredscopes"

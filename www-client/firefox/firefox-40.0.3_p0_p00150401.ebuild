@@ -39,7 +39,7 @@ MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="vivid-security"
-UVER_PREFIX="+build4"
+UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 
 inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.40 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
@@ -81,7 +81,7 @@ DEPEND="${RDEPEND}
 if [[ ${PV} =~ alpha ]]; then
 	CHANGESET="8a3042764de7"
 	SRC_URI="${SRC_URI}
-		http://dev.gentoo.org/~nirbheek/mozilla/firefox/firefox-${MOZ_PV}_${CHANGESET}.source.tar.bz2"
+		https://dev.gentoo.org/~nirbheek/mozilla/firefox/firefox-${MOZ_PV}_${CHANGESET}.source.tar.bz2"
 	S="${WORKDIR}/mozilla-aurora-${CHANGESET}"
 elif [[ ${PV} =~ beta ]]; then
 	S="${WORKDIR}/mozilla-release"
@@ -157,7 +157,7 @@ src_prepare() {
 	EPATCH_EXCLUDE="8010_bug114311-freetype26.patch" \
 	epatch "${WORKDIR}/firefox"
 	epatch "${FILESDIR}"/${PN}-38-hppa-js-syntax-error.patch #556196
-
+	epatch "${FILESDIR}"/${PN}-38-dont-hardcode-libc-soname.patch #557956
 	# Allow user to apply any additional patches without modifing ebuild
 	epatch_user
 
