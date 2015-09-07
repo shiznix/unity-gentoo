@@ -72,6 +72,8 @@ x11-wm/metacity				# Patched to support compiz window decoration
 		rm -rfv ~/.local/share/telepathy
 		rm -rfv ~/.config/libaccounts-glib
 		rm -rfv ~/.config/Empathy
+		rm -rfv ~/.cache/folks
+		rm -rfv ~/.local/share/folks
 	- To debug signond, edit /etc/signond.conf and change 'LoggingLevel=...'
 	- To debug signon-ui:
 		killall signon-ui

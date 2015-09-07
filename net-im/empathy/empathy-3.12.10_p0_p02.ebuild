@@ -61,7 +61,7 @@ COMMON_DEPEND="
 	x11-libs/libX11
 
 	geoloc? (
-		>=app-misc/geoclue-1.99.3:2.0
+		>=app-misc/geoclue-2.1:2.0
 		>=sci-geosciences/geocode-glib-3.10 )
 	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.5.1[uoa] )
 	map? (
@@ -101,9 +101,16 @@ PDEPEND=">=net-im/telepathy-mission-control-5.14"
 
 pkg_setup() {
 	python-any-r1_pkg_setup
+	export PYTHONIOENCODING=UTF-8 # See bug 489774
 }
 
 src_prepare() {
+	# Disable selected patches #
+	sed \
+		`# Supposedly to "Add Unity support to show file transfer progress in the launcher" but does not work #` \
+		`#  causes empathy process to hang, no chat windows displayed and consumes 100% CPU #` \
+			-e 's:41_unity_launcher_progress.patch:#41_unity_launcher_progress.patch:g' \
+				-i "${WORKDIR}/debian/patches/series"
 	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
@@ -125,6 +132,7 @@ src_configure() {
 		--enable-gst-1.0 \
 		$(use_enable debug) \
 		$(use_enable geoloc geocode) \
+		$(use_enable geoloc location) \
 		$(use_enable gnome-online-accounts goa) \
 		$(use_enable map) \
 		$(use_enable spell) \
