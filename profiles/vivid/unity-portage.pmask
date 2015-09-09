@@ -34,7 +34,6 @@
 
 >=mail-client/evolution-3.16::gentoo
 >=media-gfx/eog-3.16::gentoo
->=media-libs/clutter-1.22::gentoo
 >=media-video/cheese-3.16::gentoo
 >=media-video/totem-3.16::gentoo
 >=net-misc/vinagre-3.16::gentoo
