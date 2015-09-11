@@ -6,5 +6,3 @@ x11-misc/lightdm::unity-gentoo
 
 dev-libs/glib::unity-gentoo
 dev-util/gdbus-codegen::unity-gentoo
-
-=gnome-extra/evolution-data-server-3.16*

@@ -22,6 +22,7 @@
 >=app-editors/gedit-3.16::gentoo
 >=app-text/evince-3.16::gentoo
 >=dev-cpp/gtkmm-3.16::gentoo
+>=dev-libs/folks-0.11::gentoo
 >=dev-libs/libgweather-3.16::gentoo
 >=dev-python/pyatspi-2.16::gentoo
 >=dev-python/pygobject-3.16::gentoo
