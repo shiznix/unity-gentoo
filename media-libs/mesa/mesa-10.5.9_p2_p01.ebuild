@@ -6,18 +6,19 @@ EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="vivid"
+URELEASE="vivid-updates"
 inherit base autotools eutils multilib multilib-minimal flag-o-matic \
 	python-any-r1 pax-utils ubuntu-versionator
 
 OPENGL_DIR="xorg-x11"
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
+UVER_SUFFIX="~vivid2"
 
 DESCRIPTION="OpenGL-like graphic library for Linux"
 HOMEPAGE="http://mesa3d.sourceforge.net/"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.diff.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -33,7 +34,7 @@ for card in ${VIDEO_CARDS}; do
 done
 
 IUSE="${IUSE_VIDEO_CARDS}
-	bindist +classic d3d9 debug +dri3 +egl +gallium gbm gles1 gles2 +llvm mir
+	bindist +classic d3d9 debug +dri3 +egl +gallium +gbm gles1 gles2 +llvm mir
 	+nptl opencl osmesa pax_kernel openmax pic selinux +udev vaapi vdpau
 	wayland xvmc xa kernel_FreeBSD"
 
@@ -58,14 +59,14 @@ REQUIRED_USE="
 	video_cards_radeon? ( || ( classic gallium ) )
 	video_cards_r100?   ( classic )
 	video_cards_r200?   ( classic )
-	video_cards_r300?   ( gallium )
+	video_cards_r300?   ( gallium llvm )
 	video_cards_r600?   ( gallium )
 	video_cards_radeonsi?   ( gallium llvm )
 	video_cards_vmware? ( gallium )
 	${PYTHON_REQUIRED_USE}
 "
 
-LIBDRM_DEPSTRING=">=x11-libs/libdrm-2.4.57"
+LIBDRM_DEPSTRING=">=x11-libs/libdrm-2.4.60"
 # keep correct libdrm and dri2proto dep
 # keep blocks in rdepend for binpkg
 RDEPEND="
@@ -85,12 +86,9 @@ RDEPEND="
 	>=x11-libs/libXext-1.3.2:=[${MULTILIB_USEDEP}]
 	>=x11-libs/libXxf86vm-1.1.3:=[${MULTILIB_USEDEP}]
 	>=x11-libs/libxcb-1.9.3:=[${MULTILIB_USEDEP}]
+	x11-libs/libXfixes:=[${MULTILIB_USEDEP}]
 	llvm? (
 		video_cards_radeonsi? ( || (
-			>=dev-libs/elfutils-0.155-r1:=[${MULTILIB_USEDEP}]
-			>=dev-libs/libelf-0.8.13-r2:=[${MULTILIB_USEDEP}]
-			) )
-		video_cards_r600? ( || (
 			>=dev-libs/elfutils-0.155-r1:=[${MULTILIB_USEDEP}]
 			>=dev-libs/libelf-0.8.13-r2:=[${MULTILIB_USEDEP}]
 			) )
@@ -140,9 +138,6 @@ DEPEND="${RDEPEND}
 				>=sys-devel/clang-3.4.2:=[${MULTILIB_USEDEP}]
 				>=sys-devel/gcc-4.6
 	)
-	sys-devel/bison
-	sys-devel/flex
-	$(python_gen_any_dep ">=dev-python/mako-0.7.3[\${PYTHON_USEDEP}]")
 	sys-devel/gettext
 	virtual/pkgconfig
 	>=x11-proto/dri2proto-2.8-r1:=[${MULTILIB_USEDEP}]
@@ -178,7 +173,7 @@ pkg_setup() {
 
 src_prepare() {
 	# Ubuntu patchset #
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}${UVER_SUFFIX}.diff"	# This needs to be applied for the debian/ directory to be present #
 	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
 		epatch -p1 "${S}/debian/patches/${patch}" || die;
 	done
@@ -274,7 +269,7 @@ multilib_src_configure() {
 		"
 	fi
 
-	# on abi_x86_32 hardened we need to have asm disable  
+	# on abi_x86_32 hardened we need to have asm disable
 	if [[ ${ABI} == x86* ]] && use pic; then
 		myconf+=" --disable-asm"
 	fi
@@ -287,7 +282,6 @@ multilib_src_configure() {
 		--enable-dri \
 		--enable-glx \
 		--enable-shared-glapi \
-		--disable-shader-cache \
 		$(use_enable !bindist texture-float) \
 		$(use_enable d3d9 nine) \
 		$(use_enable debug) \

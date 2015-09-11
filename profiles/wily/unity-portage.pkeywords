@@ -33,6 +33,7 @@ sys-libs/db:5.1
 ~x11-base/xorg-drivers-1.17
 x11-libs/cairo
 x11-proto/glproto
+~x11-libs/libdrm-2.4.64
 ~x11-libs/libnotify-0.7.6
 ~x11-libs/libxkbcommon-0.4.1
 ~x11-proto/fontsproto-2.1.3

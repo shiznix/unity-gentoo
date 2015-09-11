@@ -6,7 +6,7 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-URELEASE="vivid"
+URELEASE="vivid-updates"
 inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
