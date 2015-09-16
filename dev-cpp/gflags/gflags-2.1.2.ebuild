@@ -7,7 +7,7 @@ EAPI=5
 URELEASE="wily"
 inherit autotools-multilib ubuntu-versionator
 
-UVER_SUFFIX="~gcc5.1ubuntu1"
+UVER="3"
 
 DESCRIPTION="Google's C++ argument parsing library"
 HOMEPAGE="http://code.google.com/p/gflags/"

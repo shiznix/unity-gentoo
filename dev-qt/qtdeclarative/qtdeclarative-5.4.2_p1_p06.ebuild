@@ -11,7 +11,7 @@ UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
 
 DESCRIPTION="The QML and Quick modules for the Qt5 framework"
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}.orig.tar.xz
-	${UURL}/${QT5_MODULE}-opensource-src_${PV}-${UVER}.debian.tar.gz"
+	${UURL}/${QT5_MODULE}-opensource-src_${PV}-${UVER}.debian.tar.xz"
 
 #KEYWORDS="~amd64 ~x86"
 IUSE="gles2 localstorage +widgets +xml"

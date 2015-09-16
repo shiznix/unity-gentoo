@@ -11,10 +11,11 @@ inherit autotools base linux-info xorg-2 ubuntu-versionator
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-intel"
 UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
+UVER_PREFIX="+git${PVR_MICRO}"
 
 DESCRIPTION="X.Org driver for Intel cards"
-SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
-	${UURL}/${MY_PN}_${PV}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_PN}_${PV}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_PN}_${PV}${UVER_PREFIX}-${UVER}.diff.gz"
 
 #KEYWORDS="~amd64 ~x86 ~amd64-fbsd -x86-fbsd"
 IUSE="debug mir +sna +udev uxa xvmc"
