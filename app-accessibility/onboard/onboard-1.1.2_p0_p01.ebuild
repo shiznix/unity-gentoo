@@ -32,6 +32,7 @@ RDEPEND="app-accessibility/at-spi2-core
 	dev-libs/libappindicator
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/pycairo[${PYTHON_USEDEP}]
+	dev-python/python-distutils-extra[${PYTHON_USEDEP}]
 	gnome-base/dconf
 	gnome-extra/mousetweaks
 	media-libs/libcanberra
