@@ -18,9 +18,9 @@ SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtdeclarative-${PV}:5[debug=]
-	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]"
+DEPEND=">=dev-qt/qtcore-${PV}:5
+	>=dev-qt/qtdeclarative-${PV}:5
+	>=dev-qt/qtxmlpatterns-${PV}:5"
 
 S="${WORKDIR}"
 

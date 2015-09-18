@@ -21,9 +21,9 @@ fi
 IUSE="gles2"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
-	>=dev-qt/qtgui-${PV}[debug=,opengl]
-	~dev-qt/qtwidgets-${PV}[debug=]
+	~dev-qt/qtcore-${PV}
+	>=dev-qt/qtgui-${PV}[opengl]
+	~dev-qt/qtwidgets-${PV}
 	virtual/opengl
 "
 RDEPEND="${DEPEND}"

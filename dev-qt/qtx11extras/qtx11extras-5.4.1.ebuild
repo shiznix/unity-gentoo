@@ -18,8 +18,8 @@ fi
 IUSE=""
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
-	>=dev-qt/qtgui-${PV}[debug=,xcb]
-	~dev-qt/qtwidgets-${PV}[debug=]
+	~dev-qt/qtcore-${PV}
+	>=dev-qt/qtgui-${PV}[xcb]
+	~dev-qt/qtwidgets-${PV}
 "
 DEPEND="${RDEPEND}"

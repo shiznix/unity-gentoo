@@ -19,16 +19,16 @@ else
 fi
 
 # keep IUSE defaults in sync with qtgui
-IUSE="cups +opengl"
+IUSE="cups gles2"
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
-	>=dev-qt/qtgui-${PV}[debug=,opengl=]
-	~dev-qt/qtwidgets-${PV}[debug=,opengl=]
+	~dev-qt/qtcore-${PV}
+	>=dev-qt/qtgui-${PV}[gles2=]
+	~dev-qt/qtwidgets-${PV}[gles2=]
 	cups? ( >=net-print/cups-1.4 )
 "
 DEPEND="${RDEPEND}
-	test? ( ~dev-qt/qtnetwork-${PV}[debug=] )
+	test? ( ~dev-qt/qtnetwork-${PV} )
 "
 
 QT5_TARGET_SUBDIRS=(

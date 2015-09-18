@@ -20,7 +20,7 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
+	~dev-qt/qtcore-${PV}
 "
 RDEPEND="${DEPEND}"
 

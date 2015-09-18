@@ -18,9 +18,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtdeclarative-${PV}:5[debug=]
-	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]"
+DEPEND=">=dev-qt/qtcore-${PV}:5
+	>=dev-qt/qtdeclarative-${PV}:5
+	>=dev-qt/qtxmlpatterns-${PV}:5"
 
 S="${WORKDIR}"
 

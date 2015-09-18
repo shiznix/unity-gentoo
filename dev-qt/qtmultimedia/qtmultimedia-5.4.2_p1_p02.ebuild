@@ -4,15 +4,15 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit eutils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
-	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.gz"
 
 DESCRIPTION="The Multimedia module for the Qt5 framework"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 
 IUSE="alsa +gstreamer openal +opengl pulseaudio qml widgets"
 RESTRICT="mirror"
@@ -34,8 +34,8 @@ RDEPEND="
 		openal? ( media-libs/openal )
 	)
 	widgets? (
-		>=dev-qt/qtgui-${PV}:5[opengl=]
-		>=dev-qt/qtwidgets-${PV}:5[opengl=]
+		>=dev-qt/qtgui-${PV}:5
+		>=dev-qt/qtwidgets-${PV}:5
 		opengl? ( >=dev-qt/qtopengl-${PV}:5 )
 	)
 "

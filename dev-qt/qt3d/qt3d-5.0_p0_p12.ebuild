@@ -15,16 +15,16 @@ SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
 
 DESCRIPTION="Qt 3D QML module"
 #KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="gles2"
 RESTRICT="mirror"
 
-DEPEND=">=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtdeclarative-${PV}:5[debug=]
-	>=dev-qt/qtgui-${PV}:5[debug=,opengl]
-	>=dev-qt/qtnetwork-${PV}:5[debug=]
-	>=dev-qt/qtopengl-${PV}:5[debug=]
-	>=dev-qt/qtwidgets-${PV}:5[debug=]
-	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]"
+DEPEND=">=dev-qt/qtcore-${PV}:5
+	>=dev-qt/qtdeclarative-${PV}:5
+	>=dev-qt/qtgui-${PV}:5[gles2=]
+	>=dev-qt/qtnetwork-${PV}:5
+	>=dev-qt/qtopengl-${PV}:5
+	>=dev-qt/qtwidgets-${PV}:5
+	>=dev-qt/qtxmlpatterns-${PV}:5"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}"

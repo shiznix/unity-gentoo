@@ -18,10 +18,10 @@ fi
 IUSE="scripttools"
 
 DEPEND="
-	>=dev-qt/qtcore-${PV}:5[debug=]
+	>=dev-qt/qtcore-${PV}:5
 	scripttools? (
-		>=dev-qt/qtgui-${PV}:5[debug=]
-		>=dev-qt/qtwidgets-${PV}:5[debug=]
+		>=dev-qt/qtgui-${PV}:5
+		>=dev-qt/qtwidgets-${PV}:5
 	)
 "
 RDEPEND="${DEPEND}"

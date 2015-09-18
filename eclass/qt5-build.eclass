@@ -20,7 +20,12 @@ esac
 inherit eutils flag-o-matic multilib toolchain-funcs virtualx
 
 ## Default LICENSE (if not set) to be that of QT suite of core packages ##
-: ${LICENSE:="|| ( LGPL-2.1 LGPL-3 )"}
+: ${LICENSE:="|| ( LGPL-2.1 LGPL-3 ) FDL-1.3"}
+
+if [[ ${QT5_MODULE} == qtbase ]]; then
+	QT5_MINOR_VERSION=${PV#*.}
+	QT5_MINOR_VERSION=${QT5_MINOR_VERSION%%.*}
+fi
 
 HOMEPAGE="https://www.qt.io/"
 SLOT="5"
@@ -38,19 +43,19 @@ case ${PV} in
 		EGIT_BRANCH="dev"
 		;;
 	5.?.9999)
-		# git stable branches (5.x)
+		# git stable branch
 		QT5_BUILD_TYPE="live"
 		EGIT_BRANCH=${PV%.9999}
 		;;
 	*_alpha*|*_beta*|*_rc*)
-		# development releases
+		# development release
 		QT5_BUILD_TYPE="release"
 		MY_P=${QT5_MODULE}-opensource-src-${PV/_/-}
 		SRC_URI="http://download.qt.io/development_releases/qt/${PV%.*}/${PV/_/-}/submodules/${MY_P}.tar.xz"
 		S=${WORKDIR}/${MY_P}
 		;;
 	*)
-		# official stable releases
+		# official stable release
 		QT5_BUILD_TYPE="release"
 		MY_P=${QT5_MODULE}-opensource-src-${PV}
 		SRC_URI="http://download.qt.io/official_releases/qt/${PV%.*}/${PV}/submodules/${MY_P}.tar.xz"
@@ -76,10 +81,10 @@ DEPEND="
 "
 if [[ ${PN} != qttest ]]; then
 	if [[ ${QT5_MODULE} == qtbase ]]; then
-#		DEPEND+=" test? ( ~dev-qt/qttest-${PV}[debug=] )"
+#		DEPEND+=" test? ( ~dev-qt/qttest-${PV} )"
 #	else
 		MY_PV="${PV%%_p*}"	# Strip off Ubuntu specific patchlevel versioning strings
-		DEPEND+=" test? ( >=dev-qt/qttest-${MY_PV}:5[debug=] )"
+		DEPEND+=" test? ( >=dev-qt/qttest-${MY_PV}:5 )"
 	fi
 fi
 RDEPEND="
@@ -195,6 +200,10 @@ qt5-build_src_prepare() {
 		find config.tests/unix -name '*.test' -type f \
 			-execdir sed -i -e '/bin\/qmake/ s/-nocache //' '{}' + \
 			|| die "sed failed (config.tests)"
+
+		# Don't add -O3 to CXXFLAGS (bug 549140)
+		sed -i -e '/CONFIG\s*+=/ s/optimize_full//' \
+			src/{corelib/corelib,gui/gui}.pro || die "sed failed (optimize_full)"
 	fi
 
 	# apply patches
@@ -225,10 +234,10 @@ qt5-build_src_compile() {
 # @DESCRIPTION:
 # Runs tests in the target directories.
 qt5-build_src_test() {
-	echo ">>> Test phase [QtTest]: ${CATEGORY}/${PF}"
+	# disable broken cmake tests (bug 474004)
+	local myqmakeargs=("${myqmakeargs[@]}" -after SUBDIRS-=cmake SUBDIRS-=installed_cmake)
 
-	# '-after SUBDIRS-=...' disables broken cmake tests (bug 474004)
-	qt5_foreach_target_subdir qt5_qmake -after SUBDIRS-=cmake SUBDIRS-=installed_cmake
+	qt5_foreach_target_subdir qt5_qmake
 	qt5_foreach_target_subdir emake
 
 	# create a custom testrunner script that correctly sets
@@ -323,18 +332,17 @@ qt5-build_pkg_postrm() {
 ######  Public helpers  ######
 
 # @FUNCTION: qt_use
-# @USAGE: <flag> [feature] [enableopt]
+# @USAGE: <flag> [feature] [enableval]
 # @DESCRIPTION:
 # <flag> is the name of a flag in IUSE.
 #
-# Echoes "-${enableopt}-${feature}" if <flag> is enabled, or "-no-${feature}"
-# if it is disabled. If [feature] is not specified, it defaults to the value
-# of <flag>. If [enableopt] is not specified, the whole "-${enableopt}" prefix
-# is omitted.
+# Outputs "-${enableval}-${feature}" if <flag> is enabled, "-no-${feature}"
+# otherwise. If [feature] is not specified, <flag> is used in its place.
+# If [enableval] is not specified, the "-${enableval}" prefix is omitted.
 qt_use() {
 	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
 
-	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
+	usex "$1" "${3:+-$3}-${2:-$1}" "-no-${2:-$1}"
 }
 
 # @FUNCTION: qt_use_compile_test
@@ -492,8 +500,9 @@ qt5_base_configure() {
 		-examplesdir "${QT5_EXAMPLESDIR}"
 		-testsdir "${QT5_TESTSDIR}"
 
-		# debug/release
-		$(use debug && echo -debug || echo -release)
+		# configure in release mode by default,
+		# override via the CONFIG qmake variable
+		-release
 		-no-separate-debug-info
 
 		# licensing stuff
@@ -519,15 +528,23 @@ qt5_base_configure() {
 		# obsolete flag, does nothing
 		#-qml-debug
 
+		# instruction set support
+		$(is-flagq -mno-sse2    && echo -no-sse2)
+		$(is-flagq -mno-sse3    && echo -no-sse3)
+		$(is-flagq -mno-ssse3   && echo -no-ssse3)
+		$(is-flagq -mno-sse4.1  && echo -no-sse4.1)
+		$(is-flagq -mno-sse4.2  && echo -no-sse4.2)
+		$(is-flagq -mno-avx     && echo -no-avx)
+		$(is-flagq -mno-avx2    && echo -no-avx2)
+		$(is-flagq -mno-dsp     && echo -no-mips_dsp)
+		$(is-flagq -mno-dspr2   && echo -no-mips_dspr2)
+
 		# use pkg-config to detect include and library paths
 		-pkg-config
 
 		# prefer system libraries (only common deps here)
 		-system-zlib
 		-system-pcre
-
-		# don't specify -no-gif because there is no way to override it later
-		#-no-gif
 
 		# disable everything to prevent automagic deps (part 1)
 		-no-mtdev
@@ -536,17 +553,21 @@ qt5_base_configure() {
 		-no-freetype -no-harfbuzz
 		-no-openssl
 		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-libproxy)
+		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-xkbcommon-{x11,evdev})
 		-no-xinput2 -no-xcb-xlib
+
+		# don't specify -no-gif because there is no way to override it later
+		#-no-gif
 
 		# always enable glib event loop support
 		-glib
 
 		# disable everything to prevent automagic deps (part 2)
-#		-no-pulseaudio -no-alsa		## Invalid switches for Qt-5.3
+		-no-pulseaudio -no-alsa
 
 		# override in qtgui and qtwidgets where x11-libs/cairo[qt4] is blocked
 		# to avoid adding qt4 include paths (bug 433826)
-#		-no-gtkstyle
+		-no-gtkstyle
 
 		# exclude examples and tests from default build
 		-nomake examples
@@ -554,7 +575,7 @@ qt5_base_configure() {
 		-no-compile-examples
 
 		# disable rpath on non-prefix (bugs 380415 and 417169)
-		$(use prefix || echo -no-rpath)
+		$(usex prefix '' -no-rpath)
 
 		# print verbose information about each configure test
 		-verbose
@@ -569,8 +590,10 @@ qt5_base_configure() {
 		-iconv
 
 		# disable everything to prevent automagic deps (part 3)
-#		-no-cups -no-evdev -no-icu -no-fontconfig -no-dbus	## If dbus is disabled for qtcore then qtnetwork fails to build
-		-no-cups -no-evdev -no-icu -no-fontconfig
+		-no-cups -no-evdev
+		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-tslib)
+		-no-icu -no-fontconfig
+		-no-dbus
 
 		# don't strip
 		-no-strip
@@ -606,8 +629,15 @@ qt5_base_configure() {
 		# typedef qreal to double (warning: changing this flag breaks the ABI)
 		-qreal double
 
-		# disable opengl and egl by default, override in qtgui and qtopengl
+		# disable OpenGL and EGL support by default, override in qtgui,
+		# qtopengl, qtprintsupport and qtwidgets
 		-no-opengl -no-egl
+
+		# disable libinput-based generic plugin by default, override in qtgui
+		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-libinput)
+
+		# disable gstreamer by default, override in qtmultimedia
+		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-gstreamer)
 
 		# use upstream default
 		#-no-system-proxies
@@ -642,6 +672,9 @@ qt5_qmake() {
 	fi
 
 	"${qmakepath}"/qmake \
+		"${projectdir}" \
+		CONFIG+=$(usex debug debug release) \
+		CONFIG-=$(usex debug release debug) \
 		QMAKE_AR="$(tc-getAR) cqs" \
 		QMAKE_CC="$(tc-getCC)" \
 		QMAKE_LINK_C="$(tc-getCC)" \
@@ -661,9 +694,8 @@ qt5_qmake() {
 		QMAKE_LFLAGS="${LDFLAGS}" \
 		QMAKE_LFLAGS_RELEASE= \
 		QMAKE_LFLAGS_DEBUG= \
-		"${projectdir}" \
-		"$@" \
-		|| die "qmake failed (${projectdir})"
+		"${myqmakeargs[@]}" \
+		|| die "qmake failed (${projectdir#${S}/})"
 }
 
 # @FUNCTION: qt5_install_module_qconfigs

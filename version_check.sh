@@ -24,6 +24,7 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'qtdeclarative'`" ]; then treepackname="${packname}"; packname="qtdeclarative-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtfeedback'`" ]; then treepackname="${packname}"; packname="qtfeedback-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtgui'`" ]; then treepackname="${packname}"; packname="qtbase-opensource-src"
+	elif [ -n "`echo "${packbasename}" | grep 'qtmultimedia'`" ]; then treepackname="${packname}"; packname="qtmultimedia-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtpim'`" ]; then treepackname="${packname}"; packname="qtpim-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtwebkit'`" ]; then treepackname="${packname}"; packname="qtwebkit-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'telepathy-mission-control'`" ]; then treepackname="${packname}"; packname="telepathy-mission-control-5"

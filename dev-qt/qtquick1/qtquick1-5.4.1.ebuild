@@ -18,19 +18,19 @@ fi
 IUSE="designer +opengl webkit xml"
 
 DEPEND="
-	>=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtgui-${PV}:5[debug=]
-	>=dev-qt/qtnetwork-${PV}:5[debug=]
-	>=dev-qt/qtscript-${PV}:5[debug=]
-	>=dev-qt/qtsql-${PV}:5[debug=]
-	>=dev-qt/qtwidgets-${PV}:5[debug=]
+	>=dev-qt/qtcore-${PV}:5
+	>=dev-qt/qtgui-${PV}:5
+	>=dev-qt/qtnetwork-${PV}:5
+	>=dev-qt/qtscript-${PV}:5
+	>=dev-qt/qtsql-${PV}:5
+	>=dev-qt/qtwidgets-${PV}:5
 	designer? (
-		>=dev-qt/designer-${PV}:5[debug=]
-		>=dev-qt/qtdeclarative-${PV}:5[debug=]
+		>=dev-qt/designer-${PV}:5
+		>=dev-qt/qtdeclarative-${PV}:5
 	)
-	opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
-	webkit? ( >=dev-qt/qtwebkit-${PV}:5[debug=] )
-	xml? ( >=dev-qt/qtxmlpatterns-${PV}:5[debug=] )
+	opengl? ( >=dev-qt/qtopengl-${PV}:5 )
+	webkit? ( >=dev-qt/qtwebkit-${PV}:5 )
+	xml? ( >=dev-qt/qtxmlpatterns-${PV}:5 )
 "
 RDEPEND="${DEPEND}"
 

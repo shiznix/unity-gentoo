@@ -18,13 +18,13 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtdeclarative-${PV}:5[debug=]
-	>=dev-qt/qtgui-${PV}:5[debug=,opengl]
-	>=dev-qt/qtnetwork-${PV}:5[debug=]
-	>=dev-qt/qtopengl-${PV}:5[debug=]
-	>=dev-qt/qtwidgets-${PV}:5[debug=]
-	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]"
+DEPEND=">=dev-qt/qtcore-${PV}:5
+	>=dev-qt/qtdeclarative-${PV}:5
+	>=dev-qt/qtgui-${PV}:5[opengl]
+	>=dev-qt/qtnetwork-${PV}:5
+	>=dev-qt/qtopengl-${PV}:5
+	>=dev-qt/qtwidgets-${PV}:5
+	>=dev-qt/qtxmlpatterns-${PV}:5"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}"

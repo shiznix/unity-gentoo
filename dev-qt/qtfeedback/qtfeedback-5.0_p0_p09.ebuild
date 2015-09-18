@@ -17,11 +17,11 @@ SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-DEPEND=">=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtdeclarative-${PV}:5[debug=]
-	>=dev-qt/qtmultimedia-${PV}:5[debug=]
-	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]
-	test? ( >=dev-qt/qtgui-${PV}:5[debug=] )"
+DEPEND=">=dev-qt/qtcore-${PV}:5
+	>=dev-qt/qtdeclarative-${PV}:5
+	>=dev-qt/qtmultimedia-${PV}:5
+	>=dev-qt/qtxmlpatterns-${PV}:5
+	test? ( >=dev-qt/qtgui-${PV}:5 )"
 
 S="${WORKDIR}"
 
