@@ -8,8 +8,8 @@ URELEASE="wily"
 inherit eutils gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
-#UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors can be unpredictable #
-UURL="mirror://ubuntu/pool/universe/u"
+UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"
+#UURL="mirror://ubuntu/pool/universe/u"		# Mirrors can be unpredictable #
 
 DESCRIPTION="WebApps: Complete set of Apps for the Unity desktop"
 HOMEPAGE="https://launchpad.net/webapps-applications"
