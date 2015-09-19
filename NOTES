@@ -134,7 +134,7 @@ x11-wm/metacity				# Patched to support compiz window decoration
 				- Insert check in media-libs/mesa ebuild that dies with message if mesa is trying to build with mir enabled before mir-base/mir is installed
 
 * Ubuntu use the 'upstart' init system to start desktop services (systemd init is used for boot services only), notes below:
-	* '/usr/bin/upstart --user' should set the $UPSTART_SESSION env variable
+	* '/usr/bin/upstart --user' sets the $UPSTART_SESSION env variable
 		- $UPSTART_SESSION env variable will only be set (inherited from upstart process) if the desktop session is a child process of the parent 'upstart' process
 			ie. Upstart cannot be started within the desktop session, upstart needs to be the process that starts the desktop session
 	* /usr/bin/initctl needs the $UPSTART_SESSION env variable set for it's many jobs to execute correctly
