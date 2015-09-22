@@ -35,6 +35,7 @@ DEPEND="${COMMON_DEPEND}
 S="${WORKDIR}/${PN}-${PV}"
 
 src_prepare() {
+	# Ubuntu patchset #
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
 	done

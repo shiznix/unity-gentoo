@@ -37,7 +37,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"
 
 	use doc || \
 		sed -e '/doc\/doc.pri/d' \

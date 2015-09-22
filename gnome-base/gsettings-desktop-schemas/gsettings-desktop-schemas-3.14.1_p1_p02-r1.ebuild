@@ -36,7 +36,6 @@ src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
-	PATCHES+=( "${FILESDIR}/nautilus_show_desktop_icons.diff" )
 	base_src_prepare
 
 	gnome2_src_prepare
@@ -52,6 +51,10 @@ src_prepare() {
 
 	# Set default Ubuntu release backgrounds #
 	sed -e "s:backgrounds/gnome/adwaita-timed.xml:backgrounds/contest/${URELEASE}.xml:" \
+		-i schemas/org.gnome.desktop.background.gschema.xml.in.in
+
+	# Ensure nautilus shows desktop icons by default #
+	sed -e '/show-desktop-icons/{n;s/false/true/}' \
 		-i schemas/org.gnome.desktop.background.gschema.xml.in.in
 }
 

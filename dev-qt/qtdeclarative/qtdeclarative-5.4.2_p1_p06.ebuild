@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}.orig.tar.xz
 	${UURL}/${QT5_MODULE}-opensource-src_${PV}-${UVER}.debian.tar.xz"
 
 #KEYWORDS="~amd64 ~x86"
-IUSE="gles2 localstorage +widgets +xml"
+IUSE="gles2 +jit localstorage +widgets +xml"
 
 # qtgui[gles2=] is needed because of bug 504322
 DEPEND="

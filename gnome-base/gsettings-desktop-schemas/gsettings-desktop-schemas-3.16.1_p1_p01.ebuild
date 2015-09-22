@@ -36,23 +36,26 @@ src_prepare() {
 	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
-	PATCHES+=( "${FILESDIR}/nautilus_show_desktop_icons.diff" )
 	base_src_prepare
 
 	gnome2_src_prepare
 
 	# Set Ambiance as the default window theme #
 	sed -e '/gtk-theme/{n;s/Adwaita/Ambiance/}' \
-		-i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in.in  \
-			schemas/org.gnome.desktop.interface.gschema.xml.in.in
+		-i schemas/org.gnome.desktop.wm.preferences.gschema.xml.in  \
+			schemas/org.gnome.desktop.interface.gschema.xml.in
 
 	# Set Ubuntu-mono-dark as the default icon theme #
 	sed -e '/icon-theme/{n;s/Adwaita/ubuntu-mono-dark/}' \
-		-i schemas/org.gnome.desktop.interface.gschema.xml.in.in
+		-i schemas/org.gnome.desktop.interface.gschema.xml.in
 
 	# Set default Ubuntu release backgrounds #
 	sed -e "s:backgrounds/gnome/adwaita-timed.xml:backgrounds/contest/${URELEASE}.xml:" \
-		-i schemas/org.gnome.desktop.background.gschema.xml.in.in
+		-i schemas/org.gnome.desktop.background.gschema.xml.in
+
+	# Ensure nautilus shows desktop icons by default #
+	sed -e '/show-desktop-icons/{n;s/false/true/}' \
+		-i schemas/org.gnome.desktop.background.gschema.xml.in
 }
 
 src_configure() {

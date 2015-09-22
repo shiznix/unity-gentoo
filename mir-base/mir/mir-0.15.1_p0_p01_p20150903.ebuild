@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3 MIT"
-SLOT="0/30"	# Taken from /usr/lib/libmirserver.so.*
+SLOT="0/33"	# Taken from /usr/lib/libmirserver.so.*
 #KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
@@ -50,7 +50,7 @@ src_prepare() {
 	# Fix libdrm include path #
 	#  Source typo(?) /usr/include/drm/drm.h on Ubuntu is a base kernel header, yet other functions in cursor.cpp use libdrm headers #
 	sed -e 's:drm/drm.h:drm.h:g' \
-		-i src/platforms/mesa/server/cursor.cpp
+		-i src/platforms/mesa/server/kms/cursor.cpp
 }
 
 multilib_src_configure() {
@@ -60,14 +60,11 @@ multilib_src_configure() {
 			-DCMAKE_PREFIX_PATH=/usr/lib32"
 	fi
 
-	# Disable gtest discovery tests as does not work #
-	#   cmake/src/mir/mir_discover_gtest_tests.cpp:89: std::string {anonymous}::elide_string_left(const string&, std::size_t): Assertion `max_size >= 3' failed #
 	local mycmakeargs="${mycmakeargs}
 		-DMIR_ENABLE_TESTS=OFF
-		-DDISABLE_GTEST_TEST_DISCOVERY=ON
 		-DMIR_RUN_ACCEPTANCE_TESTS=OFF
 		-DMIR_RUN_INTEGRATION_TESTS=OFF
-		-DMIR_PLATFORM=mesa"
+		-DMIR_PLATFORM=mesa-kms;mesa-x11"
 	cmake-utils_src_configure
 }
 

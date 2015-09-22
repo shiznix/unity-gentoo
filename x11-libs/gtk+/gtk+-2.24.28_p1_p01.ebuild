@@ -40,7 +40,7 @@ COMMON_DEPEND="
 	x11-misc/shared-mime-info
 
 	cups? ( >=net-print/cups-1.7.1-r2:=[${MULTILIB_USEDEP}] )
-	introspection? ( >=dev-libs/gobject-introspection-0.9.3 )
+	introspection? ( >=dev-libs/gobject-introspection-0.9.3:= )
 	!aqua? (
 		>=x11-libs/cairo-1.12.14-r4:=[X]
 		>=x11-libs/gdk-pixbuf-2.30.7:2[X]
@@ -78,6 +78,7 @@ DEPEND="${COMMON_DEPEND}
 # Add blocker against old gtk-builder-convert to be sure we maintain both
 # in sync.
 RDEPEND="${COMMON_DEPEND}
+	>=dev-util/gtk-update-icon-cache-2
 	!<gnome-base/gail-1000
 	!<dev-util/gtk-builder-convert-${PV}
 	!<x11-libs/vte-0.28.2-r201:0
@@ -86,7 +87,11 @@ RDEPEND="${COMMON_DEPEND}
 		!app-emulation/emul-linux-x86-gtklibs[-abi_x86_32(-)]
 	)
 "
-PDEPEND="vim-syntax? ( app-vim/gtk-syntax )"
+# librsvg for svg icons (PDEPEND to avoid circular dep), bug #547710
+PDEPEND="
+	gnome-base/librsvg[${MULTILIB_USEDEP}]
+	vim-syntax? ( app-vim/gtk-syntax )
+"
 
 DISABLE_AUTOFORMATTING="yes"
 DOC_CONTENTS="To make the gtk2 file chooser use 'current directory' mode by default,
@@ -128,6 +133,9 @@ src_prepare() {
 
 	# Fix tests running when building out of sources, bug #510596, upstream bug #730319
 	epatch "${FILESDIR}"/${PN}-2.24.24-out-of-source.patch
+
+	# Rely on split gtk-update-icon-cache package, bug #528810
+	epatch "${FILESDIR}"/${PN}-2.24.27-update-icon-cache.patch
 
 	# marshalers code was pre-generated with glib-2.31, upstream bug #662109
 	rm -v gdk/gdkmarshalers.c gtk/gtkmarshal.c gtk/gtkmarshalers.c \
@@ -215,18 +223,24 @@ multilib_src_test() {
 multilib_src_install() {
 	gnome2_src_install
 
-	# add -framework Carbon to the .pc files
-	if use aqua ; then
-		for i in gtk+-2.0.pc gtk+-quartz-2.0.pc gtk+-unix-print-2.0.pc; do
-			sed -e "s:Libs\: :Libs\: -framework Carbon :" \
-				-i "${ED%/}"/usr/$(get_libdir)/pkgconfig/$i || die "sed failed"
-		done
-	fi
+	# add -framework Carbon to the .pc files, bug #????
+	# FIXME: Is this still needed? Any reference to try to upstream it?
+#	if use aqua ; then
+#		for i in gtk+-2.0.pc gtk+-quartz-2.0.pc gtk+-unix-print-2.0.pc; do
+#			sed -e "s:Libs\: :Libs\: -framework Carbon :" \
+#				-i "${ED%/}"/usr/$(get_libdir)/pkgconfig/$i || die "sed failed"
+#		done
+#	fi
 }
 
 multilib_src_install_all() {
 	# see bug #133241
+	# Also set more default variables in sync with gtk3 and other distributions
 	echo 'gtk-fallback-icon-theme = "gnome"' > "${T}/gtkrc"
+	echo 'gtk-theme-name = "Adwaita"' >> "${T}/gtkrc"
+	echo 'gtk-icon-theme-name = "gnome"' >> "${T}/gtkrc"
+	echo 'gtk-cursor-theme-name = "Adwaita"' >> "${T}/gtkrc"
+
 	insinto /usr/share/gtk-2.0
 	doins "${T}"/gtkrc
 

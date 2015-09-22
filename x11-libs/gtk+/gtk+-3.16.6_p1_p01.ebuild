@@ -35,12 +35,12 @@ RESTRICT="mirror"
 # NOTE: cairo[svg] dep is due to bug 291283 (not patched to avoid eautoreconf)
 # Use gtk+:2 for gtk-update-icon-cache
 COMMON_DEPEND="
-	>=dev-libs/atk-2.12[introspection?,${MULTILIB_USEDEP}]
-	>=dev-libs/glib-2.41.2:2[${MULTILIB_USEDEP}]
+	>=dev-libs/atk-2.15[introspection?,${MULTILIB_USEDEP}]
+	>=dev-libs/glib-2.43.4:2[${MULTILIB_USEDEP}]
 	media-libs/fontconfig[${MULTILIB_USEDEP}]
-	>=x11-libs/cairo-1.12[aqua?,glib,svg,X?,${MULTILIB_USEDEP}]
+	>=media-libs/libepoxy-1.0[${MULTILIB_USEDEP}]
+	>=x11-libs/cairo-1.14[aqua?,glib,svg,X?,${MULTILIB_USEDEP}]
 	>=x11-libs/gdk-pixbuf-2.30:2[introspection?,X?,${MULTILIB_USEDEP}]
-	>=x11-libs/gtk+-2.24:2[${MULTILIB_USEDEP}]
 	>=x11-libs/pango-1.36.7[introspection?,${MULTILIB_USEDEP}]
 	x11-misc/shared-mime-info
 
@@ -50,7 +50,7 @@ COMMON_DEPEND="
 	colord? ( >=x11-misc/colord-0.1.9:0=[${MULTILIB_USEDEP}] )
 	cups? ( >=net-print/cups-1.2[${MULTILIB_USEDEP}] )
 	introspection? ( >=dev-libs/gobject-introspection-1.39:= )
-	mir? ( mir-base/mir )
+	mir? ( mir-base/mir:= )
 	wayland? (
 		>=dev-libs/wayland-1.5.91[${MULTILIB_USEDEP}]
 		media-libs/mesa[wayland,${MULTILIB_USEDEP}]
@@ -77,7 +77,7 @@ DEPEND="${COMMON_DEPEND}
 	dev-libs/gobject-introspection-common
 	>=dev-util/gdbus-codegen-2.38.2
 	>=dev-util/gtk-doc-am-1.20
-	sys-devel/gettext
+	>=sys-devel/gettext-0.18.3[${MULTILIB_USEDEP}]
 	virtual/pkgconfig[${MULTILIB_USEDEP}]
 	X? (
 		x11-proto/xextproto[${MULTILIB_USEDEP}]
@@ -89,12 +89,14 @@ DEPEND="${COMMON_DEPEND}
 	test? (
 		media-fonts/font-misc-misc
 		media-fonts/font-cursor-misc )
+	examples? ( media-libs/libcanberra[gtk3] )
 "
 # gtk+-3.2.2 breaks Alt key handling in <=x11-libs/vte-0.30.1:2.90
 # gtk+-3.3.18 breaks scrolling in <=x11-libs/vte-0.31.0:2.90
 # >=xorg-server-1.11.4 needed for
-#  http://mail.gnome.org/archives/desktop-devel-list/2012-March/msg00024.html
+#  https://mail.gnome.org/archives/desktop-devel-list/2012-March/msg00024.html
 RDEPEND="${COMMON_DEPEND}
+	>=dev-util/gtk-update-icon-cache-3
 	!<gnome-base/gail-1000
 	!<x11-libs/vte-0.31.0:2.90
 	>=x11-themes/adwaita-icon-theme-3.14
@@ -104,7 +106,11 @@ RDEPEND="${COMMON_DEPEND}
 		!app-emulation/emul-linux-x86-gtklibs[-abi_x86_32(-)]
 	)
 "
-PDEPEND="vim-syntax? ( app-vim/gtk-syntax )"
+# librsvg for svg icons (PDEPEND to avoid circular dep), bug #547710
+PDEPEND="
+	gnome-base/librsvg[${MULTILIB_USEDEP}]
+	vim-syntax? ( app-vim/gtk-syntax )
+"
 
 MULTILIB_CHOST_TOOLS=(
 	/usr/bin/gtk-query-immodules-3.0
@@ -126,9 +132,6 @@ src_prepare() {
 	done
 	base_src_prepare
 
-	# https://bugzilla.gnome.org/show_bug.cgi?id=738835
-	epatch "${FILESDIR}"/${PN}-non-bash-support.patch
-
 	# -O3 and company cause random crashes in applications. Bug #133469
 	replace-flags -O3 -O2
 	strip-flags
@@ -136,7 +139,10 @@ src_prepare() {
 	if ! use test ; then
 		# don't waste time building tests
 		strip_builddir SRC_SUBDIRS testsuite Makefile.{am,in}
-		strip_builddir SRC_SUBDIRS tests Makefile.{am,in}
+
+		# the tests dir needs to be build now because since commit
+		# 7ff3c6df80185e165e3bf6aa31bd014d1f8bf224 tests/gtkgears.o needs to be there
+		# strip_builddir SRC_SUBDIRS tests Makefile.{am,in}
 	fi
 
 	if ! use examples; then
@@ -144,6 +150,9 @@ src_prepare() {
 		strip_builddir SRC_SUBDIRS demos Makefile.{am,in}
 		strip_builddir SRC_SUBDIRS examples Makefile.{am,in}
 	fi
+
+	# gtk-update-icon-cache is installed by dev-util/gtk-update-icon-cache 
+	epatch "${FILESDIR}"/${PN}-3.16.2-remove_update-icon-cache.patch
 
 	epatch_user
 
@@ -173,7 +182,6 @@ multilib_src_configure() {
 		$(use_enable xinerama) \
 		--disable-papi \
 		--enable-man \
-		--enable-gtk2-dependency \
 		--with-xml-catalog="${EPREFIX}"/etc/xml/catalog \
 		--libdir="${EPREFIX}"/usr/$(get_libdir) \
 		CUPS_CONFIG="${EPREFIX}/usr/bin/${CHOST}-cups-config"
@@ -199,7 +207,7 @@ multilib_src_test() {
 multilib_src_install() {
 	gnome2_src_install
 
-	# add -framework Carbon to the .pc files, bug #????
+	# add -framework Carbon to the .pc files, bug #???
 	if use aqua ; then
 		for i in gtk+-3.0.pc gtk+-quartz-3.0.pc gtk+-unix-print-3.0.pc; do
 			sed -e "s:Libs\: :Libs\: -framework Carbon :" \

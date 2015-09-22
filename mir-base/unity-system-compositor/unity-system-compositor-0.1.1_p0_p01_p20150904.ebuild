@@ -3,9 +3,10 @@
 # $Header: $
 
 EAPI=5
+PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
-inherit cmake-utils ubuntu-versionator
+inherit cmake-utils python-single-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -25,12 +26,19 @@ DEPEND="dev-libs/boost:=
 	dev-libs/protobuf
 	media-libs/mesa[egl,gbm,gles2]
 	mir-base/mir:=
+	virtual/python-imaging[${PYTHON_USEDEP}]
 	x11-base/xorg-server[mir]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	python_fix_shebang .
 }
 
 src_install() {

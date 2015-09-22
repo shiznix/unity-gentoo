@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 WANT_AUTOMAKE=1.12
 
 URELEASE="wily"
-inherit vala autotools base eutils python-r1 ubuntu-versionator
+inherit vala autotools base eutils flag-o-matic python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libs/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
@@ -40,6 +40,7 @@ MAKEOPTS="${MAKEOPTS} -j1"
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
 	vala_src_prepare
+	append-cflags -Wno-error
 	eautoreconf
 }
 

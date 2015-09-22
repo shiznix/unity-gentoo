@@ -4,6 +4,8 @@
 
 EAPI=5
 PYTHON_COMPAT=( python{3_3,3_4} )
+VALA_MIN_API_VERSION="0.28"
+VALA_MAX_API_VERSION="0.28"
 
 URELEASE="wily"
 inherit autotools distutils-r1 ubuntu-versionator vala
@@ -13,7 +15,8 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Ubuntu mobile platform package management framework"
 HOMEPAGE="https://launchpad.net/click"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -30,7 +33,9 @@ DEPEND="dev-libs/glib:2
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	mv "${WORKDIR}/debian" "${S}/"      # aclocal executes 'get-version' from source tree requiring existence of debian/Changelog
 	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
 

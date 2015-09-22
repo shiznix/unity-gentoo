@@ -5,7 +5,7 @@
 EAPI=5
 
 URELEASE="wily"
-inherit autotools base eutils ubuntu-versionator
+inherit autotools base eutils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -20,9 +20,9 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
+# GTK3 support no longer needed, from Changelog: "* Drop overlay-scrollbar-gtk3 - this is no longer needed with GTK 3.16" #
 DEPEND="gnome-base/dconf
-	x11-libs/gtk+:2
-	>=x11-libs/gtk+-3.8:3"
+	x11-libs/gtk+:2"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
@@ -31,51 +31,27 @@ src_prepare() {
 }
 
 src_configure() {
-	# Build GTK2 support #
-	[[ -d build-gtk2 ]] || mkdir build-gtk2
-	pushd build-gtk2
-	../configure --prefix=/usr \
-		--disable-static \
-		--disable-tests \
-		--with-gtk=2 || die
-	popd
-
-	# Build GTK3 support #
-	[[ -d build-gtk3 ]] || mkdir build-gtk3
-	pushd build-gtk3
-	../configure --prefix=/usr \
-		--disable-static \
-		--disable-tests \
-		--with-gtk=3 || die
-	popd
-}
-
-src_compile() {
-	# Build GTK2 support #
-	pushd build-gtk2
-	emake || die
-	popd
-
-	# Build GTK3 support #
-	pushd build-gtk3
-	emake || die
-	popd
+	econf --disable-static \
+		--disable-tests
 }
 
 src_install() {
-	# Install GTK2 support #
-	pushd build-gtk2
-	emake DESTDIR="${D}" install || die
-	popd
-
-	# Install GTK3 support #
-	pushd build-gtk3
-	emake DESTDIR="${D}" install || die
-	popd
+	emake DESTDIR="${ED}" install || die
 
 	rm -rf "${D}usr/etc" &> /dev/null
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe data/81overlay-scrollbar
 
 	prune_libtool_files --modules
+}
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+pkg_postinst() {
+	gnome2_schemas_update
+	ubuntu-versionator_pkg_postinst
+}
+pkg_postrm() {
+	gnome2_schemas_update
 }

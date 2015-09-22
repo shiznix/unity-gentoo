@@ -73,7 +73,6 @@ CDEPEND=">=app-eselect/eselect-opengl-1.3.0
 		>=x11-libs/libXext-1.0.5
 		>=media-libs/mesa-10.3.4-r1[nptl=]
 	)
-	mir? ( mir-base/mir:= )
 	tslib? ( >=x11-libs/tslib-1.0 )
 	udev? ( >=virtual/udev-150 )
 	unwind? ( sys-libs/libunwind )
@@ -123,7 +122,7 @@ DEPEND="${CDEPEND}
 			)
 		)
 	)
-	mir? ( mir-base/mir )
+	mir? ( mir-base/mir:= )
 	!minimal? (
 		>=x11-proto/xf86driproto-2.1.0
 		>=x11-proto/dri2proto-2.8

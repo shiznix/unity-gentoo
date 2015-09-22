@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=5
+CMAKE_BUILD_TYPE=Release
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -28,6 +29,7 @@ DEPEND="dev-libs/glib:2
 	media-libs/gst-plugins-good:1.0
 	media-libs/libexif
 	net-libs/libsoup:2.4
+	unity-base/unity-api
 	x11-libs/gdk-pixbuf
 	x11-misc/shared-mime-info"
 
