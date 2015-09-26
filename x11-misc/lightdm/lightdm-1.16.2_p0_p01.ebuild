@@ -5,7 +5,7 @@
 EAPI=5
 
 URELEASE="wily"
-inherit base eutils pam readme.gentoo ubuntu-versionator user autotools systemd
+inherit autotools base eutils pam readme.gentoo systemd user ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
 
@@ -29,7 +29,7 @@ RESTRICT="mirror"
 COMMON_DEPEND="dev-libs/glib:2
 	dev-libs/libxml2
 	sys-apps/accountsservice
-	virtual/pam
+	sys-libs/pam[audit]
 	x11-libs/libX11
 	>=x11-libs/libxklavier-5
 	introspection? ( >=dev-libs/gobject-introspection-1 )
@@ -53,7 +53,8 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/intltool
 	gnome-base/gnome-common
 	sys-devel/gettext
-	virtual/pkgconfig"
+	virtual/pkgconfig
+	$(vala_depend)"
 PDEPEND="lightdm_greeters_gtk? ( x11-misc/lightdm-gtk-greeter )
 	lightdm_greeters_kde? ( x11-misc/lightdm-kde )
 	lightdm_greeters_unity? ( unity-extra/unity-greeter )"
@@ -80,6 +81,8 @@ src_prepare() {
 
 	epatch_user
 	base_src_prepare
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 
 	# Remove bogus Makefile statement. This needs to go upstream
 	sed -i /"@YELP_HELP_RULES@"/d help/Makefile.am || die
@@ -92,9 +95,13 @@ src_prepare() {
 }
 
 src_configure() {
+	# sys-libs/pam[audit] must be installed and '--enable-audit' specified or else build will fail #
+	#  session-child.c:420:26: error: ‘AUDIT_USER_LOGIN’ undeclared (first use in this function)  #
 	econf \
 		--localstatedir=/var \
 		--disable-static \
+		--enable-audit \
+		--enable-vala \
 		$(use_enable introspection) \
 		$(use_enable qt4 liblightdm-qt) \
 		$(use_enable qt5 liblightdm-qt5) \

@@ -8,11 +8,11 @@ CMAKE_BUILD_TYPE=none
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/t/${PN}"
+UURL="mirror://ubuntu/pool/universe/p/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
-DESCRIPTION="Ubuntu's thumbnailer service"
-HOMEPAGE="https://launchpad.net/thumbnailer"
+DESCRIPTION="Cache of key-value pairs with persistent storage for C++11"
+HOMEPAGE="https://launchpad.net/persistent-cache-cpp"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-3"
@@ -21,24 +21,16 @@ SLOT="0"
 IUSE="doc"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/glib:2
-	dev-libs/libxml2
-	dev-libs/persistent-cache-cpp
-	dev-qt/qtcore:5
-	dev-qt/qtdeclarative:5
-	media-libs/gst-plugins-base:1.0
-	media-libs/gst-plugins-good:1.0
-	media-libs/libexif
-	net-libs/libsoup:2.4
-	unity-base/unity-api
-	x11-libs/gdk-pixbuf
-	x11-misc/shared-mime-info
+DEPEND="dev-libs/boost:=
+	dev-libs/leveldb
+	dev-util/cmake-extras
 	doc? ( app-doc/doxygen )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	use doc || \
-		sed -e '/add_subdirectory(doc)/d' \
-			-i CMakeLists.txt
+		sed -e '/doc\/html/d' \
+			-e '/share\/doc/d' \
+				-i CMakeLists.txt
 }

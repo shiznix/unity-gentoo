@@ -180,7 +180,7 @@ src_install() {
 			# Keybinding files #
 			insinto /usr/share/gnome-control-center/keybindings
 			doins gtk/gnome/*.xml
-		popd ${CMAKE_BUILD_DIR}
+		popd &> /dev/null
 	}
 	python_foreach_impl run_in_build_dir installation
 
@@ -220,13 +220,7 @@ src_install() {
 		# Script for resetting all of Compiz's settings #
 		exeinto /usr/bin
 		doexe "${FILESDIR}/compiz.reset"
-
-		# Script for migrating GConf settings to GSettings #
-		insinto /usr/lib/compiz/
-		doins postinst/migration-scripts/02_migrate_to_gsettings.py
-		insinto /etc/xdg/autostart/
-		doins "${FILESDIR}/compiz-migrate-to-dconf.desktop"
-	popd ${CMAKE_USE_DIR}
+	popd &> /dev/null
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #

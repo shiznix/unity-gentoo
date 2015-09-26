@@ -132,7 +132,7 @@ DEPEND="${COMMON_DEPEND}
 # Needed for autoreconf
 #	gnome-base/gnome-common
 
-S="${WORKDIR}/${P}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 #src_unpack() {
 #	bzr_src_unpack
@@ -173,6 +173,9 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+
+	# Remove libgnome-bluetooth files as these are provided by net-wireless/gnome-bluetooth #
+	rm -rf ${ED}usr/$(get_libdir)/libgnome-bluetooth.so*
 
 	# Add Region and Language locale support #
 	#  Unable to use Unity's language-selector as it needs a complete apt/dpkg enabled system #

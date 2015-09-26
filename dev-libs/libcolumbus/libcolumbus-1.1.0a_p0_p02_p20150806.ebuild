@@ -30,6 +30,10 @@ DEPEND="dev-cpp/sparsehash
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	# Revert GCC5 only code so packages using other gcc versions are still able to link properly (eg. unity-base/hud) #
+	sed -e 's:asUtf8\[abi\:cxx11\]:asUtf8:g' \
+		-i src/libcolumbus.map
+
 	# Let cmake find python (Gentoo does not install a custom python3.pc pkgconfig file like Ubuntu does) #
 	epatch -p1 "${FILESDIR}/cmake_find-python.diff"
 	sed -e 's:PYTHONLIBS_INCLUDE_DIRS:PYTHON_INCLUDE_DIRS:g' \

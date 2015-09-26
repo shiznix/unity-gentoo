@@ -60,6 +60,7 @@ dev-libs/libhybris **
 dev-libs/libqtdbusmock **
 dev-libs/libsignon-glib **
 dev-libs/libunity-webapps **
+dev-libs/persistent-cache-cpp **
 dev-libs/properties-cpp **
 dev-libs/ubuntu-download-manager **
 dev-python/autopilot **
@@ -98,6 +99,7 @@ dev-qt/qtx11extras:5 **
 dev-qt/qtxml:5 **
 dev-qt/qtxmlpatterns:5 **
 dev-util/android-headers **
+dev-util/cmake-extras **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
 gnome-base/gconf **
@@ -145,6 +147,7 @@ unity-base/signon-plugin-oauth2 **
 unity-base/signon-ui **
 unity-base/ubuntu-docs **
 unity-base/unity **
+unity-base/unity-api **
 unity-base/unity-control-center **
 unity-base/unity-gtk-module **
 unity-base/unity-language-pack **

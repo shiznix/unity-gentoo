@@ -30,7 +30,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libindicate-qt
 	dev-libs/libtimezonemap:=
 	dev-libs/properties-cpp
-	gnome-extra/evolution-data-server
+	gnome-extra/evolution-data-server:=
 	net-misc/url-dispatcher
 	unity-indicators/ido:=
 	unity-base/unity-control-center

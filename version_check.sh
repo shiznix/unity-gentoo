@@ -45,13 +45,15 @@ SOURCES="main universe"
 sources_download() {
 	# Look for /tmp/Sources-* files older than 24 hours #
 	#  If found then delete them ready for fresh ones to be fetched #
-	[[ -n $(find /tmp -type f -ctime 1 2> /dev/null | grep Sources-) ]] && rm /tmp/Sources-* 2> /dev/null
+	#   Use 'find -mmin +1440' as 'find -mtime +1' has strange rounding where it won't return results until file is at least 2 days old #
+	[[ -n $(find /tmp -type f -mmin +1440 2> /dev/null | grep Sources-) ]] && rm /tmp/Sources-* 2> /dev/null
 	for get_release in ${RELEASES}; do
 		for source in ${SOURCES}; do
 			if [ ! -f /tmp/Sources-${source}-${get_release} ]; then
 				echo
 				wget http://archive.ubuntu.com/ubuntu/dists/${get_release}/${source}/source/Sources.bz2 -O /tmp/Sources-${source}-${get_release}.bz2
 				bunzip2 /tmp/Sources-${source}-${get_release}.bz2
+				touch /tmp/Sources-${source}-${get_release}
 			fi
 		done
 	done

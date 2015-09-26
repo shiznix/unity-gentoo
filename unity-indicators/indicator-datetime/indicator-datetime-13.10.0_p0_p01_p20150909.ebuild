@@ -30,7 +30,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libindicate-qt
 	dev-libs/libtimezonemap:=
 	dev-libs/properties-cpp
-	gnome-extra/evolution-data-server
+	gnome-extra/evolution-data-server:=
 	net-misc/url-dispatcher
 	unity-indicators/ido:=
 	unity-base/unity-control-center
@@ -46,8 +46,8 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/sandbox_violations_fix.diff"
 
 	# Make indicator-datetime compatiable with systemd's timezone changes #
-	epatch -p1 "${FILESDIR}/get-timezone-from-systemd-timedatectl-14.10.diff"
-	epatch -p1 "${FILESDIR}/systemd-timezone-nullptr-check.diff"
+#	epatch -p1 "${FILESDIR}/get-timezone-from-systemd-timedatectl-14.10.diff"
+#	epatch -p1 "${FILESDIR}/systemd-timezone-nullptr-check.diff"
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

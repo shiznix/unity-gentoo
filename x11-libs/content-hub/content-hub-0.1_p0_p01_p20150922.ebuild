@@ -3,9 +3,10 @@
 # $Header: $
 
 EAPI=5
+VIRTUALX_REQUIRED="always"
 
 URELEASE="wily"
-inherit base cmake-utils gnome2-utils ubuntu-versionator
+inherit base cmake-utils gnome2-utils ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/universe/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -46,6 +47,12 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
+}
+
+src_compile() {
+	# 'make' needs to be run in a virtual Xserver so that qmlplugindump's #
+	#       qmltypes generation can successfully spawn dbus #
+	VIRTUALX_COMMAND=cmake-utils_src_compile virtualmake
 }
 
 pkg_preinst() {

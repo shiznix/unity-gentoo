@@ -13,7 +13,7 @@ inherit autotools base eutils gnome2 python-r1 systemd udev virtualx ubuntu-vers
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"
-HOMEPAGE="http://www.gnome.org"
+HOMEPAGE="https://git.gnome.org/browse/gnome-settings-daemon"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
@@ -29,11 +29,11 @@ REQUIRED_USE="
 RESTRICT="mirror"
 
 COMMON_DEPEND="
-	>=dev-libs/glib-2.37.7:2
+	>=dev-libs/glib-2.37.7:2[dbus]
 	dev-libs/libappindicator:=
-	>=x11-libs/gtk+-3.7.8:3
+	>=x11-libs/gtk+-3.15.3:3
 	>=gnome-base/gnome-desktop-3.11.1:3=
-	>=gnome-base/gsettings-desktop-schemas-3.9.91.1
+	>=gnome-base/gsettings-desktop-schemas-3.15.4
 	>=gnome-base/librsvg-2.36.2
 	media-fonts/cantarell
 	media-libs/fontconfig
@@ -108,7 +108,7 @@ src_prepare() {
 		epatch "${FILESDIR}"/${PN}-3.7.90-short-touchpad-timeout.patch
 
 	# Make colord and wacom optional; requires eautoreconf
-	epatch "${FILESDIR}/${PN}-3.14.0-optional.patch"
+	epatch "${FILESDIR}/${PN}-3.16.0-optional.patch"
 
 	# Disable selected patches #
 	sed \
@@ -162,7 +162,7 @@ pkg_postinst() {
 	if ! systemd_is_booted; then
 		ewarn "${PN} needs Systemd to be *running* for working"
 		ewarn "properly. Please follow the this guide to migrate:"
-		ewarn "http://wiki.gentoo.org/wiki/Systemd"
+		ewarn "https://wiki.gentoo.org/wiki/Systemd"
 	fi
 
 	if use openrc-force; then
