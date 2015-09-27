@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="vivid-security"
 inherit autotools eutils multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/w/${PN}"

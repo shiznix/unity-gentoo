@@ -60,6 +60,7 @@ net-libs/libproxy -kde
 net-libs/gnome-online-accounts uoa
 net-misc/openssh -bindist
 sys-apps/systemd pam
+sys-libs/pam audit
 sys-libs/talloc python
 sys-libs/zlib minizip
 unity-base/unity-settings-daemon input_devices_wacom	# Wacom/colord/bluetooth is no longer optional for 'unity-base/unity-control-center'

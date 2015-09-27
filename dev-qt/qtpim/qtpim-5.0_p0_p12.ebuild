@@ -12,7 +12,7 @@ UVER_PREFIX="~git20140515~29475884"
 
 DESCRIPTION="Qt PIM module, Organizer library"
 SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.gz"
+	${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 #KEYWORDS="~amd64 ~x86"
 IUSE=""

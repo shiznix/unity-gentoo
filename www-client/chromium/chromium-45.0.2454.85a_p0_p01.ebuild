@@ -9,7 +9,7 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
 	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt_BR pt_PT ro ru sk sl sr
 	sv sw ta te th tr uk vi zh_CN zh_TW"
 
-URELEASE="vivid-security"
+URELEASE="wily"
 inherit base check-reqs chromium eutils flag-o-matic multilib multiprocessing pax-utils \
 	portability python-any-r1 readme.gentoo toolchain-funcs ubuntu-versionator versionator virtualx
 
@@ -17,7 +17,7 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1177"
+UVER_SUFFIX=".1198"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -45,6 +45,7 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	>=dev-libs/elfutils-0.149
 	dev-libs/expat:=
 	dev-libs/glib:=
+	>=dev-libs/icu-55.1:=
 	>=dev-libs/jsoncpp-0.5.0-r1:=
 	>=dev-libs/libevent-1.4.13:=
 	dev-libs/libxml2:=[icu]
@@ -63,7 +64,6 @@ RDEPEND=">=app-accessibility/speech-dispatcher-0.8:=
 	>=media-libs/libjpeg-turbo-1.2.0-r1:=
 	media-libs/libpng:0=
 	>=media-libs/libwebp-0.4.0:=
-	>=media-libs/libvpx-1.4.0:=[postproc]
 	media-libs/speex:=
 	pulseaudio? ( media-sound/pulseaudio:= )
 	sys-apps/dbus:=
@@ -204,6 +204,7 @@ src_prepare() {
 	# fi
 
 	epatch "${FILESDIR}/${PN}-system-jinja-r7.patch"
+	epatch "${FILESDIR}/${PN}-tracing-r0.patch"
 
 	epatch_user
 
@@ -245,10 +246,10 @@ src_prepare() {
 		'third_party/google_input_tools/third_party/closure_library/third_party/closure' \
 		'third_party/hunspell' \
 		'third_party/iccjpeg' \
-		'third_party/icu' \
 		'third_party/jstemplate' \
 		'third_party/khronos' \
 		'third_party/leveldatabase' \
+		'third_party/libXNVCtrl' \
 		'third_party/libaddressinput' \
 		'third_party/libjingle' \
 		'third_party/libphonenumber' \
@@ -256,8 +257,9 @@ src_prepare() {
 		'third_party/libsrtp' \
 		'third_party/libudev' \
 		'third_party/libusb' \
+		'third_party/libvpx' \
+		'third_party/libvpx/source/libvpx/third_party/x86inc' \
 		'third_party/libxml/chromium' \
-		'third_party/libXNVCtrl' \
 		'third_party/libyuv' \
 		'third_party/lss' \
 		'third_party/lzma_sdk' \
@@ -270,9 +272,14 @@ src_prepare() {
 		'third_party/opus' \
 		'third_party/ots' \
 		'third_party/pdfium' \
+		'third_party/pdfium/third_party/agg23' \
 		'third_party/pdfium/third_party/base' \
 		'third_party/pdfium/third_party/bigint' \
 		'third_party/pdfium/third_party/freetype' \
+		'third_party/pdfium/third_party/lcms2-2.6' \
+		'third_party/pdfium/third_party/libjpeg' \
+		'third_party/pdfium/third_party/libopenjpeg20' \
+		'third_party/pdfium/third_party/zlib_v128' \
 		'third_party/polymer' \
 		'third_party/protobuf' \
 		'third_party/qcms' \
@@ -283,15 +290,14 @@ src_prepare() {
 		'third_party/sqlite' \
 		'third_party/tcmalloc' \
 		'third_party/trace-viewer' \
-		'third_party/trace-viewer/third_party/components/polymer' \
-		'third_party/trace-viewer/third_party/d3' \
-		'third_party/trace-viewer/third_party/gl-matrix' \
-		'third_party/trace-viewer/third_party/jszip' \
-		'third_party/trace-viewer/third_party/tvcm' \
-		'third_party/trace-viewer/third_party/tvcm/third_party/beautifulsoup/polymer_soup.py' \
-		'third_party/trace-viewer/third_party/tvcm/third_party/rcssmin' \
-		'third_party/trace-viewer/third_party/tvcm/third_party/rjsmin' \
-		'third_party/undoview' \
+		'third_party/trace-viewer/tracing/third_party/components/polymer' \
+		'third_party/trace-viewer/tracing/third_party/d3' \
+		'third_party/trace-viewer/tracing/third_party/gl-matrix' \
+		'third_party/trace-viewer/tracing/third_party/jszip' \
+		'third_party/trace-viewer/tracing/third_party/tvcm' \
+		'third_party/trace-viewer/tracing/third_party/tvcm/third_party/beautifulsoup/polymer_soup.py' \
+		'third_party/trace-viewer/tracing/third_party/tvcm/third_party/rcssmin' \
+		'third_party/trace-viewer/tracing/third_party/tvcm/third_party/rjsmin' \
 		'third_party/usrsctp' \
 		'third_party/web-animations-js' \
 		'third_party/webdriver' \
@@ -301,7 +307,6 @@ src_prepare() {
 		'third_party/zlib/google' \
 		'url/third_party/mozilla' \
 		'v8/src/third_party/fdlibm' \
-		'v8/src/third_party/kernel' \
 		'v8/src/third_party/valgrind' \
 		--do-remove || die
 }
@@ -332,9 +337,9 @@ src_configure() {
 
 	# Use system-provided libraries.
 	# TODO: use_system_hunspell (upstream changes needed).
-	# TODO: use_system_icu (needs http://bugs.icu-project.org/trac/ticket/11358)
 	# TODO: use_system_libsrtp (bug #459932).
 	# TODO: use_system_libusb (http://crbug.com/266149).
+	# TODO: use_system_libvpx (http://crbug.com/494939).
 	# TODO: use_system_opus (https://code.google.com/p/webrtc/issues/detail?id=3077).
 	# TODO: use_system_protobuf (bug #525560).
 	# TODO: use_system_ssl (http://crbug.com/58087).
@@ -343,12 +348,12 @@ src_configure() {
 		-Duse_system_bzip2=1
 		-Duse_system_flac=1
 		-Duse_system_harfbuzz=1
+		-Duse_system_icu=1
 		-Duse_system_jsoncpp=1
 		-Duse_system_libevent=1
 		-Duse_system_libjpeg=1
 		-Duse_system_libpng=1
 		-Duse_system_libwebp=1
-		-Duse_system_libvpx=1
 		-Duse_system_libxml=1
 		-Duse_system_libxslt=1
 		-Duse_system_minizip=1
@@ -476,7 +481,7 @@ src_configure() {
 
 		# Prevent libvpx build failures. Bug 530248, 544702, 546984.
 		if [[ ${myarch} == amd64 || ${myarch} == x86 ]]; then
-			filter-flags -mno-mmx -mno-sse2 -mno-ssse3 -mno-sse4.1 -mno-avx2
+			filter-flags -mno-mmx -mno-sse2 -mno-ssse3 -mno-sse4.1 -mno-avx -mno-avx2
 		fi
 	fi
 

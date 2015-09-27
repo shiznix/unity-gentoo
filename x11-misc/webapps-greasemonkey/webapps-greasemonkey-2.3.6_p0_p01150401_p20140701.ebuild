@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="vivid-security"
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/w/${PN}"

@@ -5,7 +5,7 @@
 EAPI=5
 XORG_DOC=doc
 
-URELEASE="vivid"
+URELEASE="vivid-updates"
 inherit autotools base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/x/${PN}"

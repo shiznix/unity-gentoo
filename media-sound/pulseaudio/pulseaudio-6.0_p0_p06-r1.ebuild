@@ -99,7 +99,7 @@ DEPEND="${RDEPEND}
 "
 # This is a PDEPEND to avoid a circular dep
 PDEPEND="alsa? ( alsa-plugin? (
-	>=media-plugins/alsa-plugins-1.0.27-r1[pulseaudio]
+	>=media-plugins/alsa-plugins-1.0.27-r1[pulseaudio,${MULTILIB_USEDEP}]
 ) )"
 
 # alsa-utils dep is for the alsasound init.d script (see bug #155707)
@@ -386,5 +386,12 @@ pkg_postinst() {
 	if use libsamplerate; then
 		elog "The libsamplerate based resamplers are now deprecated, because they offer no"
 		elog "particular advantage over speex. Upstream suggests disabling them."
+	fi
+
+	# Needed for pulseaudio-6.0 update from older versions
+	if use udev; then
+		if ! version_is_at_least 6.0 ${REPLACING_VERSIONS}; then
+			udevadm control --reload && udevadm trigger
+		fi
 	fi
 }
