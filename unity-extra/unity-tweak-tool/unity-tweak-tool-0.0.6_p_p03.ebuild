@@ -49,7 +49,7 @@ DEPEND="${RDEPEND}
 	x11-misc/notify-osd
 	${PYTHON_DEPS}"
 
-S="${WORKDIR}/utt"
+S="${WORKDIR}/${PN}-${PV}${UVER}"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
