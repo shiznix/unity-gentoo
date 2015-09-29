@@ -29,7 +29,7 @@ DEPEND="dev-libs/dee:=
 	<dev-libs/xapian-1.3
 	gnome-base/gnome-menus:3
 	gnome-extra/zeitgeist[datahub,fts]
-	sys-libs/db:5.1
+	sys-libs/db:5.3
 	unity-base/unity
 	$(vala_depend)"
 
@@ -40,11 +40,11 @@ src_prepare() {
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 	# Alter source to work with Gentoo's sys-libs/db slots #
-	sed -e 's:"db.h":"db5.1/db.h":g' \
+	sed -e 's:"db.h":"db5.3/db.h":g' \
 		-i configure || die
-	sed -e 's:-ldb$:-ldb-5.1:g' \
+	sed -e 's:-ldb$:-ldb-5.3:g' \
 		-i src/* || die
-	sed -e 's:<db.h>:<db5.1/db.h>:g' \
+	sed -e 's:<db.h>:<db5.3/db.h>:g' \
 		-i src/* || die
 }
 

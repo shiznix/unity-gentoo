@@ -28,6 +28,7 @@ dev-python/fixtures
 sys-devel/automake:1.14
 sys-devel/gcc:4.9
 sys-libs/db:5.1
+sys-libs/db:5.3
 ~x11-apps/xinit-1.3.4
 ~x11-base/xorg-drivers-1.17
 x11-libs/cairo
@@ -57,6 +58,7 @@ dev-libs/libcolumbus **
 dev-libs/libdbusmenu **
 dev-libs/libhybris **
 dev-libs/libqtdbusmock **
+dev-libs/libqtdbustest **
 dev-libs/libsignon-glib **
 dev-libs/libunity-webapps **
 dev-libs/persistent-cache-cpp **
@@ -153,6 +155,7 @@ unity-base/unity-gtk-module **
 unity-base/unity-language-pack **
 unity-base/unity-settings-daemon **
 unity-base/webapps **
+unity-base/webapps-base **
 unity-extra/indicator-psensor **
 unity-extra/unity-greeter **
 unity-extra/indicator-evolution **
@@ -163,12 +166,14 @@ unity-indicators/ido **
 unity-indicators/indicator-applet **
 unity-indicators/indicator-application **
 unity-indicators/indicator-appmenu **
+unity-indicators/indicator-bluetooth **
 unity-indicators/indicator-datetime **
 unity-indicators/indicator-keyboard **
 unity-indicators/indicator-messages **
 unity-indicators/indicator-power **
 unity-indicators/indicator-session **
 unity-indicators/indicator-sound **
+unity-lenses/unity-lens-applications **
 unity-lenses/unity-lens-music **
 unity-scopes/unity-scope-home **
 www-client/webbrowser-app **
@@ -180,12 +185,14 @@ x11-drivers/xf86-video-intel **
 x11-drivers/xf86-video-nouveau **
 x11-libs/accounts-qml-module **
 x11-libs/content-hub **
+x11-libs/dee-qt **
 x11-libs/gsettings-qt **
 x11-libs/gtk+:2 **
 x11-libs/gtk+:3 **
 x11-libs/libaccounts-qt **
 x11-libs/u1db-qt **
 x11-libs/ubuntu-ui-toolkit **
+x11-libs/unity-action-api **
 x11-libs/unity-webapps-qml **
 x11-misc/appmenu-qt5 **
 x11-misc/webapps-greasemonkey **

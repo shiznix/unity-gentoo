@@ -43,7 +43,7 @@ DEPEND="${RDEPEND}
 	x11-libs/gtk+:3
 	$(vala_depend)"
 
-S="${WORKDIR}/${P}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 #src_unpack() {
 #	bzr_src_unpack

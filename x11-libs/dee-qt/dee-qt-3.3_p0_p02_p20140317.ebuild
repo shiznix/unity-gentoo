@@ -31,9 +31,9 @@ RDEPEND=">=dev-libs/dee-1.2.7
 		dev-qt/qtdeclarative:5 )"
 DEPEND="${RDEPEND}"
 
-S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-PATCHES=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
+PATCHES=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff" )
 
 src_prepare() {
 	# Correct library installation path #
