@@ -7,7 +7,7 @@ GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
 URELEASE="wily"
-inherit autotools base bzr eutils gnome2 ubuntu-versionator vala
+inherit autotools base eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -15,11 +15,6 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
-#SRC_URI=
-
-#EBZR_PROJECT="${PN}"
-#EBZR_REPO_URI="lp:~robert-ancell/${PN}/bluez5"
-#EBZR_REVISION="12798"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -134,13 +129,7 @@ DEPEND="${COMMON_DEPEND}
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-#src_unpack() {
-#	bzr_src_unpack
-#}
-
 src_prepare() {
-#	bzr_src_prepare
-
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel.patch"
 
@@ -174,8 +163,8 @@ src_install() {
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
 
-	# Remove libgnome-bluetooth files as these are provided by net-wireless/gnome-bluetooth #
-	rm -rf ${ED}usr/$(get_libdir)/libgnome-bluetooth.so*
+	# Remove libgnome-bluetooth.so symlink as is provided by net-wireless/gnome-bluetooth #
+	rm "${ED}usr/$(get_libdir)/libgnome-bluetooth.so"
 
 	# Add Region and Language locale support #
 	#  Unable to use Unity's language-selector as it needs a complete apt/dpkg enabled system #
