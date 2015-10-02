@@ -23,7 +23,7 @@ MY_P="${PN}2.0_${PV}"
 #S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/g/${PN}2.0"
-UVER="1"
+UVER="2"
 
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/glib"

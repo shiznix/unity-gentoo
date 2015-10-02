@@ -9,7 +9,7 @@ VALA_MIN_API_VERSION="0.22"
 VALA_MAX_API_VERSION="0.22"
 
 URELEASE="wily"
-inherit autotools base bzr eutils gnome2 ubuntu-versionator vala
+inherit autotools base eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -17,11 +17,6 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 DESCRIPTION="System bluetooth indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-bluetooth"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
-#SRC_URI=
-
-#EBZR_PROJECT="${PN}"
-#EBZR_REPO_URI="lp:~robert-ancell/${PN}/bluez5"
-#EBZR_REVISION="88"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -45,12 +40,7 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-#src_unpack() {
-#	bzr_src_unpack
-#}
-
 src_prepare() {
-#	bzr_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
