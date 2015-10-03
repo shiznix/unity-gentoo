@@ -47,6 +47,7 @@ dev-cpp/gflags **
 dev-cpp/gmock **
 dev-cpp/gtest **
 dev-libs/dee **
+dev-libs/dbus-cpp **
 dev-libs/libaccounts-glib **
 dev-libs/libdbusmenu-qt **
 dev-libs/libtimezonemap **
@@ -62,7 +63,9 @@ dev-libs/libqtdbustest **
 dev-libs/libsignon-glib **
 dev-libs/libunity-webapps **
 dev-libs/persistent-cache-cpp **
+dev-libs/process-cpp **
 dev-libs/properties-cpp **
+dev-libs/trust-store **
 dev-libs/ubuntu-download-manager **
 dev-python/autopilot **
 dev-python/python-testscenarios **
@@ -114,6 +117,7 @@ gnome-base/gnome-session **
 gnome-extra/activity-log-manager **
 gnome-extra/nm-applet **
 mail-client/thunderbird **
+media-gfx/shotwell **
 media-gfx/thumbnailer **
 media-libs/mesa **
 media-libs/mesa-mir **
@@ -128,6 +132,7 @@ net-libs/account-plugins **
 net-libs/gnome-online-accounts **
 net-libs/oxide-qt **
 net-libs/telepathy-indicator **
+net-libs/ubuntuone-credentials **
 net-misc/url-dispatcher **
 sys-apps/accountsservice **
 sys-apps/click **
@@ -148,6 +153,8 @@ unity-base/signon-keyring-extension **
 unity-base/signon-plugin-oauth2 **
 unity-base/signon-ui **
 unity-base/ubuntu-docs **
+unity-base/ubuntu-system-settings **
+unity-base/ubuntu-system-settings-online-accounts **
 unity-base/unity **
 unity-base/unity-api **
 unity-base/unity-control-center **

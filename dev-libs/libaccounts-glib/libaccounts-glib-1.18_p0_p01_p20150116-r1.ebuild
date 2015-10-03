@@ -42,7 +42,8 @@ src_prepare() {
 src_configure() {
 	python_copy_sources
 	configuration() {
-		econf $(use_enable debug) || die
+		econf --disable-wal \
+			$(use_enable debug) || die
 	}
 	python_foreach_impl run_in_build_dir configuration
 }

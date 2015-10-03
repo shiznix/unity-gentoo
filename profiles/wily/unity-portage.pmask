@@ -85,6 +85,7 @@ gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
 
 mail-client/thunderbird::gentoo
+media-gfx/shotwell::gentoo
 media-libs/mesa::gentoo
 media-sound/pulseaudio::gentoo
 media-sound/rhythmbox::gentoo

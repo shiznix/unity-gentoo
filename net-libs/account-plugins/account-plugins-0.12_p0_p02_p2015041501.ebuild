@@ -31,6 +31,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libxslt
 	>=dev-util/intltool-0.40.1
 	>=sys-devel/gettext-0.17
+	unity-base/ubuntu-system-settings-online-accounts
 	unity-base/gnome-control-center-signon
 	virtual/pkgconfig
 	x11-proto/xproto
@@ -61,4 +62,11 @@ src_configure() {
 		--with-linkedin-consumer-secret="BazRki2LE8eZtcqh" \
 		--with-instagram-client-id="01c3df41a2274a14882adea8e8ebbd46" \
 		--with-instagram-client-secret="4751ccdc39c648719ea83cfb1c866c26"
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+
+	# Remove Facebook as an instant messenger service. Facebook no longer provides this API to applications #
+	rm "${ED}/usr/share/accounts/services/facebook-im.service"
 }
