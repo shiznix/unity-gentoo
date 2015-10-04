@@ -1,3 +1,6 @@
+- Mir display server completely broken:
+	* Opens to a black screen with seemingly no fatal errors in /var/log/lightdm/unity-system-compositor.log
+
 - Lightdm unity-greeter login screen shows an all black network notification bubble (see LP# 1473269)
 
 - OpenGL applications segfault and cause Xsession to be killed in a Mir session as follows:

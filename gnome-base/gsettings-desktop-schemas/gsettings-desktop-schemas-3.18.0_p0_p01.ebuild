@@ -51,8 +51,7 @@ src_prepare() {
 		-i schemas/org.gnome.desktop.interface.gschema.xml.in
 
 	# Set default Ubuntu release backgrounds #
-#	sed -e "s:backgrounds/gnome/adwaita-timed.xml:backgrounds/contest/${URELEASE}.xml:" \
-	sed -e "s:backgrounds/gnome/adwaita-timed.xml:backgrounds/contest/vivid.xml:" \
+	sed -e "s:backgrounds/gnome/adwaita-timed.xml:backgrounds/contest/${URELEASE}.xml:" \
 		-i schemas/org.gnome.desktop.background.gschema.xml.in
 
 	# Ensure nautilus shows desktop icons by default #

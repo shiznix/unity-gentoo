@@ -159,10 +159,11 @@ pkg_pretend() {
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
-	if use mir; then
-		PATCHES+=( "${S}/debian/patches/xmir.patch" )
-		base_src_prepare
-	fi
+	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
+		PATCHES+=( "${S}/debian/patches/${patch}" )
+	done
+	base_src_prepare
+
 	eautoreconf
 }
 
