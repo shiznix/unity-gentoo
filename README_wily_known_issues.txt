@@ -1,5 +1,7 @@
 - Mir display server completely broken:
 	* Opens to a black screen with seemingly no fatal errors in /var/log/lightdm/unity-system-compositor.log
+	* Likely due to new code re-write in Xmir, tracking bugs here ->
+		https://bugs.launchpad.net/ubuntu/+source/xorg-server/+bugs?field.tag=xmir
 
 - Lightdm unity-greeter login screen shows an all black network notification bubble (see LP# 1473269)
 
