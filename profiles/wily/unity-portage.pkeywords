@@ -106,6 +106,7 @@ dev-util/cmake-extras **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
 gnome-base/gconf **
+gnome-base/gnome-core-apps **
 gnome-base/gnome-desktop **
 gnome-base/gnome-menus **
 gnome-base/gnome-panel **
