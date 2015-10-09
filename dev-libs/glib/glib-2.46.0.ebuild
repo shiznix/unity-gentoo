@@ -100,6 +100,10 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# Fix glib applications segfaulting with the error: #
+	#  GLib-GIO:ERROR: g_menu_exporter_menu_items_changed: assertion failed: (position + removed <= g_sequence_get_length (menu->item_links)) #
+	epatch -p1 "${FILESDIR}/0001-Revert-list-store-Fix-a-parameter-check.patch"
+
 	# Prevent build failure in stage3 where pkgconfig is not available, bug #481056
 	mv -f "${WORKDIR}"/pkg-config-*/pkg.m4 "${S}"/m4macros/ || die
 

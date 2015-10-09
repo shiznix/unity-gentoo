@@ -1,0 +1,75 @@
+From 2d7817887a9f0624f73492d04b2a992545f0beb9 Mon Sep 17 00:00:00 2001
+From: Matthias Clasen <mclasen@redhat.com>
+Date: Wed, 23 Sep 2015 18:55:28 -0400
+Subject: [PATCH] Revert "list store: Fix a parameter check"
+
+This reverts commit d28639507db2029b8f184a5d93e9d8c28acc1955.
+
+This wasn't meant to go in.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=755496
+---
+ glib/gsequence.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
+
+diff --git a/glib/gsequence.c b/glib/gsequence.c
+index 75c1f76..76e24e7 100644
+--- a/glib/gsequence.c
++++ b/glib/gsequence.c
+@@ -139,8 +139,7 @@ static GSequenceNode *node_find_closest  (GSequenceNode            *haystack,
+                                           GSequenceNode            *needle,
+                                           GSequenceNode            *end,
+                                           GSequenceIterCompareFunc  cmp,
+-                                          gpointer                  user_data,
+-                                          gboolean                  return_match);
++                                          gpointer                  user_data);
+ static gint           node_get_length    (GSequenceNode            *node);
+ static void           node_free          (GSequenceNode            *node,
+                                           GSequence                *seq);
+@@ -1080,7 +1079,7 @@ g_sequence_search_iter (GSequence                *seq,
+   dummy = g_sequence_append (tmp_seq, data);
+ 
+   node = node_find_closest (seq->end_node, dummy,
+-                            seq->end_node, iter_cmp, cmp_data, TRUE);
++                            seq->end_node, iter_cmp, cmp_data);
+ 
+   g_sequence_free (tmp_seq);
+ 
+@@ -1734,8 +1733,7 @@ node_find_closest (GSequenceNode            *haystack,
+                    GSequenceNode            *needle,
+                    GSequenceNode            *end,
+                    GSequenceIterCompareFunc  iter_cmp,
+-                   gpointer                  cmp_data,
+-                   gboolean                  return_match)
++                   gpointer                  cmp_data)
+ {
+   GSequenceNode *best;
+   gint c;
+@@ -1765,12 +1763,10 @@ node_find_closest (GSequenceNode            *haystack,
+     }
+   while (haystack != NULL);
+ 
+-  /* If the best node is smaller than the data, then move one step
+-   * to the right to make sure the best one is strictly bigger than the data.
+-   * We do return the last exact match or the node after it, depending on
+-   * the return_match argument.
++  /* If the best node is smaller or equal to the data, then move one step
++   * to the right to make sure the best one is strictly bigger than the data
+    */
+-  if (best != end && (c < 0 || (c == 0 && !return_match)))
++  if (best != end && c <= 0)
+     best = node_get_next (best);
+ 
+   return best;
+@@ -1992,7 +1988,7 @@ node_insert_sorted (GSequenceNode            *node,
+ {
+   GSequenceNode *closest;
+ 
+-  closest = node_find_closest (node, new, end, iter_cmp, cmp_data, FALSE);
++  closest = node_find_closest (node, new, end, iter_cmp, cmp_data);
+ 
+   node_unlink (new);
+ 
+-- 
+2.5.0
+
