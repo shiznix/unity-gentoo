@@ -86,6 +86,7 @@ dev-qt/qtmultimedia:5 **
 dev-qt/qtnetwork:5 **
 dev-qt/qtopengl:5 **
 dev-qt/qtpim:5 **
+dev-qt/qtpositioning:5 **
 dev-qt/qtprintsupport:5 **
 dev-qt/qtquick1:5 **
 dev-qt/qtquickcontrols:5 **

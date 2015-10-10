@@ -32,8 +32,8 @@ RDEPEND="
 	dev-qt/qt3d
 	>=dev-qt/qtcore-${PV}:5[icu]
 	>=dev-qt/qtgui-${PV}:5
-	>=dev-qt/qtlocation-${PV}:5
 	>=dev-qt/qtnetwork-${PV}:5
+	>=dev-qt/qtpositioning-${PV}:5
 	>=dev-qt/qtsensors-${PV}:5
 	>=dev-qt/qtsql-${PV}:5
 	>=dev-qt/qtwidgets-${PV}:5

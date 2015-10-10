@@ -9,4 +9,8 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="geoclue">Use enhanced location information from <pkg>app-misc/geoclue</pkg></flag>
+		<flag name="qml">Build QML bindings</flag>
+	</use>
 </pkgmetadata>

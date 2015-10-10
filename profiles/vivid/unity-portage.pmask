@@ -87,6 +87,7 @@ dev-qt/qtmultimedia:5::gentoo
 dev-qt/qtnetwork:5::gentoo
 dev-qt/qtopengl:5::gentoo
 dev-qt/qtpim:5::gentoo
+dev-qt/qtpositioning:5::gentoo
 dev-qt/qtprintsupport:5::gentoo
 dev-qt/qtquick1:5::gentoo
 dev-qt/qtquickcontrols:5::gentoo

@@ -30,6 +30,7 @@ DEPEND="dev-libs/expat
 	dev-qt/qtdeclarative:5[debug?]
 	dev-qt/qtlocation:5[debug?]
 	dev-qt/qtnetwork:5[debug?]
+	dev-qt/qtpositioning:5[debug?]
 	dev-qt/qttest:5[debug?]
 	dev-util/ninja
 	media-libs/alsa-lib
