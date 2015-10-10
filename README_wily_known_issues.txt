@@ -5,13 +5,6 @@
 
 - Lightdm unity-greeter login screen shows an all black network notification bubble (see LP# 1473269)
 
-- OpenGL applications segfault and cause Xsession to be killed in a Mir session as follows:
-	* Mir enabled lightdm is unable to start a Gnome session
-		- It does successfully launch Gnome session if Seat type is set to 'xlocal' instead of 'unity' in /etc/lightdm/lightdm.conf.d/10-unity-system-compositor.conf
-	* Chromium segfaults in a Mir session when it's hardware acceleration is enabled (see LP# 1420959)
-		 [ERROR:sync_control_vsync_provider.cc] glXGetSyncValuesOML should not return TRUE with a media stream counter of 0.
-	* 'glxgears' kills Mir session and so crashes X
-
 - Webapps plugin is broken for chromium since Vivid release, browser will not prompt for webapp installation on sites such as Gmail, Youtube or Facebook
 	* Use Firefox if you want webapps to work
 

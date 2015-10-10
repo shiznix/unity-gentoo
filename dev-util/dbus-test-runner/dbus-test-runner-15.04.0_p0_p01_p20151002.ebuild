@@ -8,7 +8,7 @@ URELEASE="wily"
 inherit autotools flag-o-matic ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-UVER_PREFIX="+15.04.${PVR_MICRO}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Run executables under a new DBus session for testing"
 HOMEPAGE="https://launchpad.net/dbus-test-runner"
