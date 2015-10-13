@@ -100,6 +100,10 @@ src_prepare() {
 	# Make colord and wacom optional; requires eautoreconf
 	epatch "${FILESDIR}/${PN}-optional-color-wacom.patch"
 
+	# Correct path to unity-settings-daemon executable in upstart files #
+	sed -e 's:/usr/lib/unity-settings-daemon:/usr/libexec:g' \
+		-i debian/unity-settings-daemon.user-session.{desktop,upstart}
+
 	eautoreconf
 	gnome2_src_prepare
 }
@@ -143,6 +147,12 @@ src_install() {
 
 	dodir /usr/share/hwdata
 	dosym /usr/share/libgnome-desktop-3.0/pnp.ids /usr/share/hwdata/pnp.ids
+
+	# Install upstart files #
+	insinto /usr/share/upstart/xdg/autostart
+	newins debian/unity-settings-daemon.user-session.desktop unity-settings-daemon.desktop
+	insinto /usr/share/upstart/sessions/
+	newins debian/unity-settings-daemon.user-session.upstart unity-settings-daemon.conf
 
 	prune_libtool_files --modules
 }

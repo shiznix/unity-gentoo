@@ -90,8 +90,7 @@ src_prepare() {
 		-e 's:session=ubuntu:session=unity:g' \
 			-i data/ubuntu.desktop.in || die
 	sed -e 's:Ubuntu:Unity:g' \
-		-e 's:unity-settings-daemon;:unity-settings-daemon;compiz;:' \
-			-i data/ubuntu.session.desktop.in.in || die
+		-i data/ubuntu.session.desktop.in.in || die
 
 	# Silence errors due to weird checks for libX11
 	sed -e 's/\(PANGO_PACKAGES="\)pangox/\1/' -i configure.ac configure || die
