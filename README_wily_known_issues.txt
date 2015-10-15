@@ -1,3 +1,5 @@
+- Lockscreen fails to function when onscreen reader (orca) is activated Super+Alt+S (broken since Trusty, see LP# 1310404)
+
 - Mir display server completely broken:
 	* Opens to a black screen with seemingly no fatal errors in /var/log/lightdm/unity-system-compositor.log
 	* Likely due to new code re-write in Xmir, tracking bugs here ->

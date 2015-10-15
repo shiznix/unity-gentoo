@@ -3,10 +3,18 @@
 # $Header: $
 
 EAPI=4
-inherit gnome.org versionator ubuntu-versionator
+
+URELEASE="vivid"
+inherit autotools base ubuntu-versionator
+
+MY_PN="policykit-1-gnome"
+UURL="mirror://ubuntu/pool/main/p/${MY_PN}"
 
 DESCRIPTION="A dbus session bus service that is used to bring up authentication dialogs"
 HOMEPAGE="http://www.freedesktop.org/wiki/Software/PolicyKit"
+SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.xz
+	${UURL}/${MY_PN}_${PV}-${UVER}.debian.tar.xz"
+
 LICENSE="LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
@@ -24,6 +32,16 @@ DEPEND="${RDEPEND}
 
 DOCS=( AUTHORS HACKING NEWS README TODO )
 
+src_prepare() {
+	# Ubuntu patchset #
+	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
+		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
+	done
+	base_src_prepare
+	eautoreconf
+}
+
+
 src_install() {
 	default
 
@@ -36,8 +54,7 @@ src_install() {
 	Type=Application
 	Categories=
 	NoDisplay=true
-	OnlyShowIn=Gnome;XFCE;Unity
-	X-GNOME-AutoRestart=true
+	NotShowIn=MATE;KDE;
 	AutostartCondition=GNOME3 unless-session gnome
 	EOF
 

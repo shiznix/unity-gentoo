@@ -60,13 +60,8 @@ src_prepare() {
 		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
 	done
 	base_src_prepare
-
-	# 'auth_self' property does not work properly and can nuisance prompt user for such strange things as changing volume or wallpaper #
-	#	Allow the user to change his/her own settings #
-	sed -e 's:auth_self:yes:g' \
-		-i data/org.freedesktop.accounts.policy.in
-
 	eautoreconf
+
 	use vala && vala_src_prepare
 	gnome2_src_prepare
 }

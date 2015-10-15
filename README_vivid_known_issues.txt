@@ -1,3 +1,5 @@
+- Lockscreen fails to function when onscreen reader (orca) is activated Super+Alt+S (broken since Trusty, see LP# 1310404)
+
 - OpenGL applications segfault and cause Xsession to be killed in a Mir session as follows:
 	* Mir enabled lightdm is unable to start a Gnome session
 		- It does successfully launch Gnome session if Seat type is set to 'xlocal' instead of 'unity' in /etc/lightdm/lightdm.conf.d/10-unity-system-compositor.conf
