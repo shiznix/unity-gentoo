@@ -8,7 +8,7 @@ GCONF_DEBUG="yes"
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit base cmake-utils distutils-r1 eutils gnome2 pam toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
@@ -22,18 +22,20 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="doc +branding pch test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-RDEPEND="unity-base/gsettings-ubuntu-touch-schemas
+RDEPEND="sys-auth/polkit-pkla-compat
+	unity-base/gsettings-ubuntu-touch-schemas
 	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
 	x11-themes/gtk-engines-murrine
 	x11-themes/unity-asset-pool"
-DEPEND="dev-libs/boost:=
+DEPEND="${RDEPEND}
+	dev-libs/boost:=
 	dev-libs/dee:=
 	dev-libs/dbus-glib
 	dev-libs/libappindicator
@@ -236,6 +238,11 @@ src_install() {
 	# Clean up pam file installation as used in lockscreen (LP# 1305440) #
 	rm "${ED}etc/pam.d/${PN}"
 	pamd_mimic system-local-login ${PN} auth account session
+
+	# Set base desktop user privileges #
+	insinto /var/lib/polkit-1/localauthority/10-vendor.d
+	doins "${FILESDIR}/com.ubuntu.desktop.pkla"
+	fowners root:polkitd /var/lib/polkit-1/localauthority/10-vendor.d/com.ubuntu.desktop.pkla
 }
 
 pkg_postinst() {

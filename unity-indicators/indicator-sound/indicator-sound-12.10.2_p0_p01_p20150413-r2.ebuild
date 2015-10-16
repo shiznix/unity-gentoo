@@ -52,6 +52,11 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
+src_install() {
+	cmake-utils_src_install
+	find "${ED}" -name "*.pkla" -exec chown root:polkitd {} \;
+}
+
 pkg_preinst() {
 	gnome2_schemas_savelist
 	gnome2_icon_savelist

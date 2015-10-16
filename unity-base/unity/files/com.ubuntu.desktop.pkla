@@ -1,0 +1,34 @@
+[Mounting, checking, etc. of internal drives]
+Identity=unix-user:*
+Action=org.freedesktop.udisks.filesystem-*;org.freedesktop.udisks.drive-ata-smart*;org.freedesktop.udisks2.filesystem-mount-system;org.freedesktop.udisks2.encrypted-unlock-system;org.freedesktop.udisks2.filesystem-fstab;
+ResultActive=yes
+
+[Change CPU Frequency scaling]
+Identity=unix-user:*
+Action=org.gnome.cpufreqselector;org.mate.cpufreqselector
+ResultActive=yes
+
+[Setting the clock]
+Identity=unix-user:*
+Action=org.gnome.clockapplet.mechanism.*;org.gnome.controlcenter.datetime.configure;org.kde.kcontrol.kcmclock.save;org.freedesktop.timedate1.set-time;org.freedesktop.timedate1.set-timezone;org.freedesktop.timedate1.set-local-rtc;org.freedesktop.timedate1.set-ntp;com.canonical.controlcenter.datetime.configure;org.mate.settingsdaemon.datetimemechanism.settime
+ResultActive=yes
+
+[Adding or changing system-wide NetworkManager connections]
+Identity=unix-group:admin
+Action=org.freedesktop.NetworkManager.settings.modify.system
+ResultActive=yes
+
+[Printer administration]
+Identity=unix-group:lpadmin;unix-group:admin
+Action=org.opensuse.cupspkhelper.mechanism.*
+ResultActive=yes
+
+[Disable hibernate by default in upower]
+Identity=unix-user:*
+Action=org.freedesktop.upower.hibernate
+ResultActive=no
+
+[Disable hibernate by default in logind]
+Identity=unix-user:*
+Action=org.freedesktop.login1.hibernate;org.freedesktop.login1.handle-hibernate-key;org.freedesktop.login1;org.freedesktop.login1.hibernate-multiple-sessions;org.freedesktop.login1.hibernate-ignore-inhibit
+ResultActive=no

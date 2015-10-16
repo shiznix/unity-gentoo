@@ -22,7 +22,8 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 RDEPEND="sys-auth/polkit-pkla-compat"
-DEPEND="gnome-base/dconf
+DEPEND="${RDEPEND}
+	gnome-base/dconf
 	sys-devel/gettext
 	>=dev-util/intltool-0.40
 	virtual/pkgconfig"
@@ -36,6 +37,11 @@ src_prepare() {
 
 src_configure() {
 	econf --localstatedir=/var
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	find "${ED}" -name "*.pkla" -exec chown root:polkitd {} \;
 }
 
 pkg_preinst() {

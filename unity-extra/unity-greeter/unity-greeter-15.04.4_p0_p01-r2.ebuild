@@ -85,8 +85,10 @@ src_install() {
 		newins "${FILESDIR}/gentoo_cof.png" cof.png
 	fi
 
-	insinto /var/lib/polkit-1/localauthority/10-vendor.d/
+	# Install polkit privileges config #
+	insinto /var/lib/polkit-1/localauthority/10-vendor.d
 	doins debian/unity-greeter.pkla
+	fowners root:polkitd /var/lib/polkit-1/localauthority/10-vendor.d/unity-greeter.pkla
 }
 
 pkg_preinst() {
