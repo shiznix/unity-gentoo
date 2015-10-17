@@ -129,6 +129,9 @@ src_test() {
 src_install() {
 	use previewer && readme.gentoo_create_doc
 	gnome2_src_install
+
+	insinto /usr/share/applications/
+	doins "${WORKDIR}"/debian/*.desktop
 }
 
 pkg_postinst() {

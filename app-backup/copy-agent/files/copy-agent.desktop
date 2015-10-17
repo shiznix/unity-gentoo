@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Copy Agent
+GenericName=Copy Agent
+Comment=Barracuda Copy Agent
+Exec=/opt/copy-agent/CopyAgent
+Icon=/usr/share/pixmaps/copy-agent.png
+NoDisplay=false
+Path=/opt/copy-agent
+Terminal=false
+Type=Application
+Categories=Network;
+Version=1.0
