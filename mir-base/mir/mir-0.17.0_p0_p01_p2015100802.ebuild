@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3 MIT"
-SLOT="0/33"	# Taken from /usr/lib/libmirserver.so.*
+SLOT="0/35"	# Taken from /usr/lib/libmirserver.so.*
 #KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
@@ -26,6 +26,7 @@ DEPEND="!!media-libs/mesa-mir
 	dev-cpp/glog[${MULTILIB_USEDEP}]
 	dev-libs/boost:=[${MULTILIB_USEDEP}]
 	dev-libs/libhybris[${MULTILIB_USEDEP}]
+	dev-libs/libinput[${MULTILIB_USEDEP}]
 	dev-libs/protobuf:=[${MULTILIB_USEDEP}]
 	dev-util/android-headers[${MULTILIB_USEDEP}]
 	>=dev-util/lttng-tools-2.1.1[ust,${MULTILIB_USEDEP}]

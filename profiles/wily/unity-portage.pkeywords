@@ -57,6 +57,7 @@ dev-libs/libappindicator **
 dev-libs/libcolumbus **
 dev-libs/libdbusmenu **
 dev-libs/libhybris **
+dev-libs/libinput **
 dev-libs/libqtdbusmock **
 dev-libs/libqtdbustest **
 dev-libs/libsignon-glib **

@@ -5,11 +5,11 @@
 EAPI=5
 PYTHON_COMPAT=( python{3_3,3_4} )
 
-URELEASE="vivid"
+URELEASE="vivid-security"
 inherit autotools distutils-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
-UVER=
+UVER="ubuntu0.2"
 
 DESCRIPTION="Ubuntu mobile platform package management framework"
 HOMEPAGE="https://launchpad.net/click"
