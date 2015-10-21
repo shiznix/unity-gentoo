@@ -21,7 +21,7 @@ UVER_SUFFIX=".1183"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
-SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}.tar.xz
+SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}-lite.tar.xz
 	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.debian.tar.xz"
 
 LICENSE="BSD hotwording? ( no-source-code )"
