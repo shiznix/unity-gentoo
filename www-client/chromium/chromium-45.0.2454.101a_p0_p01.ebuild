@@ -17,11 +17,11 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1198"
+UVER_SUFFIX=".1201"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
-SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}.tar.xz
+SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}-lite.tar.xz
 	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.debian.tar.xz"
 
 LICENSE="BSD hotwording? ( no-source-code )"
@@ -205,6 +205,7 @@ src_prepare() {
 
 	epatch "${FILESDIR}/${PN}-system-jinja-r7.patch"
 	epatch "${FILESDIR}/${PN}-tracing-r0.patch"
+	epatch "${FILESDIR}/boring-ssl_build-fix.diff"
 
 	epatch_user
 
@@ -486,17 +487,19 @@ src_configure() {
 	fi
 
 	# Make sure the build system will use the right tools, bug #340795.
-	tc-export AR CC CXX RANLIB
+	tc-export AR CC CXX NM
 
 	# Tools for building programs to be executed on the build system, bug #410883.
-	export AR_host=$(tc-getBUILD_AR)
-	export CC_host=$(tc-getBUILD_CC)
-	export CXX_host=$(tc-getBUILD_CXX)
-	export LD_host=${CXX_host}
+	if tc-is-cross-compiler; then
+		export AR_host=$(tc-getBUILD_AR)
+		export CC_host=$(tc-getBUILD_CC)
+		export CXX_host=$(tc-getBUILD_CXX)
+		export NM_host=$(tc-getBUILD_NM)
+	fi
 
 	# Bug 491582.
 	export TMPDIR="${WORKDIR}/temp"
-	mkdir -m 755 "${TMPDIR}" || die
+	mkdir -p -m 755 "${TMPDIR}" || die
 
 	local build_ffmpeg_args=""
 	if use pic && [[ "${ffmpeg_target_arch}" == "ia32" ]]; then

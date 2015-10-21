@@ -31,7 +31,7 @@ EMVER="1.8.2"
 
 # Patches
 PATCH="thunderbird-38.0-patches-0.1"
-PATCHFF="firefox-38.0-patches-0.3"
+PATCHFF="firefox-38.0-patches-04"
 
 MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_JIT="enabled"
@@ -59,7 +59,7 @@ SRC_URI="${SRC_URI}
 	lightning? ( https://dev.gentoo.org/~axs/distfiles/gdata-provider-${MOZ_LIGHTNING_GDATA_VER}.tar.xz )
 	crypt? ( http://www.enigmail.net/download/source/enigmail-${EMVER}.tar.gz )
 	${PATCH_URIS[@]}
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
@@ -259,7 +259,7 @@ src_compile() {
 	mkdir -p "${BUILD_OBJ_DIR}" && cd "${BUILD_OBJ_DIR}" || die
 
 	CC="$(tc-getCC)" CXX="$(tc-getCXX)" LD="$(tc-getLD)" \
-	MOZ_MAKE_FLAGS="${MAKEOPTS}" SHELL="${SHELL}" \
+	MOZ_MAKE_FLAGS="${MAKEOPTS}" SHELL="${SHELL:-${EPREFIX%/}/bin/bash}" \
 	emake -f "${S}"/client.mk
 
 	# Only build enigmail extension if crypt enabled.
