@@ -24,13 +24,13 @@ DEPEND="dev-libs/expat
 	dev-libs/glib:2
 	dev-libs/nspr
 	dev-libs/nss
-	dev-qt/qtcore:5[debug?]
-	dev-qt/qtgui:5[debug?]
-	dev-qt/qtdbus:5[debug?]
-	dev-qt/qtdeclarative:5[debug?]
-	dev-qt/qtnetwork:5[debug?]
-	dev-qt/qtpositioning:5[debug?]
-	dev-qt/qttest:5[debug?]
+	dev-qt/qtcore:5
+	dev-qt/qtgui:5
+	dev-qt/qtdbus:5
+	dev-qt/qtdeclarative:5
+	dev-qt/qtnetwork:5
+	dev-qt/qtpositioning:5
+	dev-qt/qttest:5
 	dev-util/ninja
 	media-libs/alsa-lib
 	media-libs/fontconfig
