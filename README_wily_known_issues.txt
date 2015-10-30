@@ -5,8 +5,6 @@
 	* Likely due to new code re-write in Xmir, tracking bugs here ->
 		https://bugs.launchpad.net/ubuntu/+source/xorg-server/+bugs?field.tag=xmir
 
-- Lightdm unity-greeter login screen shows an all black network notification bubble (see LP# 1473269)
-
 - Webapps plugin is broken for chromium since Vivid release, browser will not prompt for webapp installation on sites such as Gmail, Youtube or Facebook
 	* Use Firefox if you want webapps to work
 
