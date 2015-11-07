@@ -22,7 +22,7 @@ IUSE="test"
 RESTRICT="mirror"
 
 DEPEND="!!media-libs/mesa-mir
-	<dev-cpp/gflags-2.1.1[${MULTILIB_USEDEP}]
+	>=dev-cpp/gflags-2.1.2[${MULTILIB_USEDEP}]
 	dev-cpp/glog[${MULTILIB_USEDEP}]
 	dev-libs/boost:=[${MULTILIB_USEDEP}]
 	dev-libs/libhybris[${MULTILIB_USEDEP}]

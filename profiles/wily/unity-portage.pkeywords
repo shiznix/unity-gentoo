@@ -4,16 +4,15 @@
 
 ## Other packages keyword unmasking ##
 app-admin/cgmanager
-# move app-admin/eselect-opengl app-eselect/eselect-opengl
 app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
 ~app-i18n/fcitx-4.2.8.5
-~dev-libs/json-c-0.12
+~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
+~dev-libs/json-c-0.12
 ~dev-libs/libgcrypt-1.6.1
 dev-libs/libindicate
 dev-libs/libindicate-qt
-~dev-libs/nss-3.18.1
 dev-python/configparser
 dev-python/fixtures
 ~dev-python/python-prctl-1.5.0
