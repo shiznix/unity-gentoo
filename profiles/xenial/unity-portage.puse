@@ -1,4 +1,4 @@
-*/* -consolekit -packagekit -tracker systemd zeitgeist
+*/* -consolekit -packagekit -tracker networkmanager systemd zeitgeist
 */*::unity-gentoo qml qt5 vala
 
 
