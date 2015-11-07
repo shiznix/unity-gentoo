@@ -26,7 +26,10 @@ dev-libs/gobject-introspection-common	# See glib reason above
 dev-libs/libappindicator		# See "Using portage tree libindicate packages" item above
 dev-libs/libdbusmenu			# See "Using portage tree libindicate packages" item above
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
+dev-libs/libinput			# Needs to be multilib aware to install with multilib mir-base/mir
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
+dev-util/lttng-tools			# Needs to be multilib aware to install with multilib mir-base/mir
+dev-util/lttng-ust			# (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-core-apps		# Included to pull in lower versions of empathy, gnome-menus and nautilus
 gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
@@ -47,6 +50,7 @@ net-im/empathy				# Integrates with Unity online accounts, associated plugins an
 net-im/telepathy-mission-control	# Enables Ubuntu libaccounts-sso integration
 net-libs/gnome-online-accounts		# Allow access to Gnome Online Accounts (GOA) via Ubuntu Online Accounts (UOA)
 sys-apps/accountsservice		# Requires patching for SetInputSources as needed by unity-indicators/indicator-keyboard and u-c-c text entry settings
+sys-kernel/ubuntu-sources		# Patched with Ubuntu's complete kernel patchset to add support for sys-apps/ureadahead
 www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 www-client/firefox			# Requires patching for webapps browser plugin and global appmenu
 x11-base/xorg-server			# Provides Xmir patch

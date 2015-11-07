@@ -5,11 +5,11 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
+URELEASE="wily"
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/p/${PN}"
-URELEASE="vivid"
-UVER="3"
+UVER="4"
 
 DESCRIPTION="Python unittest extension for running tests in different scenarios"
 HOMEPAGE="https://launchpad.net/testscenarios"

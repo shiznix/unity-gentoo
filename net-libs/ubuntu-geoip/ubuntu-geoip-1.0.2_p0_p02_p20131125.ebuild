@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit autotools flag-o-matic gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"

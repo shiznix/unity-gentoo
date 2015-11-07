@@ -6,10 +6,10 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="wily"
 inherit gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/i/${PN}"
-URELEASE="vivid"
 
 DESCRIPTION="Graphical system load indicator for CPU, ram, etc. used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-multiload"

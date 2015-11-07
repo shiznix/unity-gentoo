@@ -4,11 +4,11 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Music lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-music"

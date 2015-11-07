@@ -6,7 +6,7 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"

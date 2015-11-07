@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="wayland"
 RESTRICT="mirror"
 
@@ -30,7 +30,7 @@ DEPEND="dev-cpp/gflags[${MULTILIB_USEDEP}]
 	sys-apps/dbus"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}/hybris"
-MAKEOPTS="-j1"
+MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	# Ubuntu patchset #

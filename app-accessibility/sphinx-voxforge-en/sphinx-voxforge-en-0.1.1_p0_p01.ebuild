@@ -5,7 +5,7 @@
 EAPI=4
 GCONF_DEBUG="yes"
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"

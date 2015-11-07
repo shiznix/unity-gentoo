@@ -4,11 +4,11 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit base autotools eutils flag-o-matic ubuntu-versionator vala virtualx
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Library to pass menu structure across DBus"
 HOMEPAGE="https://launchpad.net/dbusmenu"

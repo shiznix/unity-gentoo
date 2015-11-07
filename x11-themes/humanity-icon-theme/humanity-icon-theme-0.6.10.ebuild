@@ -14,7 +14,7 @@ SRC_URI="mirror://ubuntu/pool/main/h/${PN}/${MY_P}.tar.gz"
 
 LICENSE="CC-BY-SA-3.0"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

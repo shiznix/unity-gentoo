@@ -6,10 +6,10 @@ EAPI=5
 PYTHON_COMPAT=( python{3_3,3_4} )
 DISTUTILS_SINGLE_IMPL=1
 
+URELEASE="wily"
 inherit distutils-r1 eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="vivid"
 UVER_PREFIX="+14.04.20140318"
 
 DESCRIPTION="Photo lens for the Unity desktop"

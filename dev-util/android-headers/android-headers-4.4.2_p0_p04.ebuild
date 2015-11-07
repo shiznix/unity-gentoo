@@ -5,7 +5,7 @@
 EAPI=5
 GCONF_DEBUG="yes"
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit base eutils multilib multilib-minimal ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"

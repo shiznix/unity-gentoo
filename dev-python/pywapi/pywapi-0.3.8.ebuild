@@ -5,10 +5,10 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
+URELEASE="wily"
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
-URELEASE="vivid"
 UVER="1"
 
 DESCRIPTION="Python wrapper around different weather APIs"

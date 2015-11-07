@@ -4,7 +4,7 @@
 
 EAPI=4
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit autotools base ubuntu-versionator
 
 MY_PN="policykit-1-gnome"

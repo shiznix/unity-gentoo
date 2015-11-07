@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc examples test"
 RESTRICT="mirror"
 
@@ -40,6 +40,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
 export QT_SELECT=5
+unset QT_QPA_PLATFORMTHEME
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
@@ -64,9 +65,7 @@ src_test() {
 }
 
 src_install() {
-	# 'make install' needs to be run in a virtual Xserver so that qmlplugindump's #
-	#	qmltypes generation can successfully spawn dbus #
-	Xemake INSTALL_ROOT="${ED}" install
+	qt5-build_src_install
 
 	use examples || \
 		rm -rf "${ED}usr/lib/ubuntu-ui-toolkit/examples" \

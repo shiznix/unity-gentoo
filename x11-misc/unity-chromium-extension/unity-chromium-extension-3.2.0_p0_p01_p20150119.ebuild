@@ -4,11 +4,11 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit eutils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Chromium extension: Unity Integration"
 HOMEPAGE="https://launchpad.net/unity-chromium-extension"

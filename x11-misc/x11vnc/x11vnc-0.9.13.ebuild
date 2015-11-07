@@ -6,12 +6,12 @@ EAPI="4"
 
 inherit eutils ubuntu-versionator
 
-URELEASE="vivid"
-UVER="1.2"
+URELEASE="wily"
+UVER="1.2build1"
 
 DESCRIPTION="A VNC server for real X displays"
 HOMEPAGE="http://www.karlrunge.com/x11vnc/"
-SRC_URI="mirror://sourceforge/libvncserver/${P}.tar.gz"
+SRC_URI="mirror://sourceforge/libvncserver/${PN}-${PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

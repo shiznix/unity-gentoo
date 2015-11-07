@@ -14,7 +14,7 @@ HOMEPAGE="https://launchpad.net/ubuntu-wallpapers"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="CC-BY-SA-3.0"
-#KEYWORDS="amd64 x86"
+KEYWORDS="amd64 x86"
 SLOT="0"
 IUSE=""
 RESTRICT="mirror"

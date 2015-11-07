@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3 LGPL-3 MIT"
 SLOT="0/35"	# Taken from /usr/lib/libmirserver.so.*
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
@@ -29,7 +29,7 @@ DEPEND="!!media-libs/mesa-mir
 	dev-libs/libinput[${MULTILIB_USEDEP}]
 	dev-libs/protobuf:=[${MULTILIB_USEDEP}]
 	dev-util/android-headers[${MULTILIB_USEDEP}]
-	>=dev-util/lttng-tools-2.1.1[ust,${MULTILIB_USEDEP}]
+	dev-util/lttng-tools[ust,${MULTILIB_USEDEP}]
 	dev-util/umockdev
 	>=media-libs/glm-0.9.5.1
 	media-libs/mesa[egl,gbm,gles2,${MULTILIB_USEDEP}]

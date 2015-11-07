@@ -6,10 +6,10 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="wily"
 inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-URELEASE="vivid"
 UVER_PREFIX="+13.10.20130920"
 
 DESCRIPTION="File lens for the Unity desktop"

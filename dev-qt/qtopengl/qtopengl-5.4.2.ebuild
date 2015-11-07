@@ -14,7 +14,7 @@ DESCRIPTION="OpenGL support library for the Qt5 framework (deprecated)"
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	#KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~amd64 ~x86"
 :
 fi
 

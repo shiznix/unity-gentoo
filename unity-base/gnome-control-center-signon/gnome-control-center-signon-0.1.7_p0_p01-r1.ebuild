@@ -6,10 +6,10 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="wily"
 inherit autotools eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-URELEASE="vivid"
 UVER_PREFIX="~+14.10.20140814"
 
 DESCRIPTION="Online account plugin for unity-control-center used by the Unity desktop"

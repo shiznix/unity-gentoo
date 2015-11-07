@@ -5,11 +5,11 @@
 EAPI=4
 GCONF_DEBUG="yes"
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit eutils gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Unity desktop icon theme"
 HOMEPAGE="https://launchpad.net/unity-asset-pool"

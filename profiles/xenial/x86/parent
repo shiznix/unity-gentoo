@@ -1,0 +1,5 @@
+gentoo:default/linux/x86/13.0
+gentoo:targets/desktop/gnome
+gentoo:targets/systemd
+gentoo:arch/x86
+unity-gentoo:xenial/base

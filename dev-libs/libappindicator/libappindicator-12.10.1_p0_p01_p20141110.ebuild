@@ -7,11 +7,11 @@ PYTHON_COMPAT=( python2_7 )
 VALA_MIN_API_VERSION="0.22"
 VALA_MAX_API_VERSION="0.22"
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/liba/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libappindicator"

@@ -4,11 +4,11 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit autotools eutils ubuntu-versionator vala virtualx
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Home scope that aggregates results from multiple scopes for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-scope-home"

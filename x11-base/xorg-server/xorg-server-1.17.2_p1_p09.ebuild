@@ -12,7 +12,7 @@ UURL="mirror://ubuntu/pool/main/x/${PN}"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
 SLOT="0/${PV}"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 

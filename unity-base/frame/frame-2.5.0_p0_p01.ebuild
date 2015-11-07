@@ -2,12 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
+URELEASE="wily"
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/f/${PN}"
-URELEASE="vivid"
 UVER_PREFIX="daily13.06.05"
 
 DESCRIPTION="uTouch Frame Library"

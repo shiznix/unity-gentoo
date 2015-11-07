@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit autotools eutils ubuntu-versionator
 
 MY_P="${PN}_${PV}"

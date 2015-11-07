@@ -6,10 +6,10 @@ EAPI=4
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
+URELEASE="wily"
 inherit base gnome2 cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
-URELEASE="vivid"
 
 DESCRIPTION="Dconf Qt bindings for the Unity desktop"
 HOMEPAGE="https://launchpad.net/dconf-qt"

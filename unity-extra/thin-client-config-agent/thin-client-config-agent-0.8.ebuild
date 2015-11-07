@@ -6,7 +6,7 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_3,3_4} )
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit ubuntu-versionator distutils-r1
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"

@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit versionator eutils autotools toolchain-funcs multilib flag-o-matic ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libn/${PN}"

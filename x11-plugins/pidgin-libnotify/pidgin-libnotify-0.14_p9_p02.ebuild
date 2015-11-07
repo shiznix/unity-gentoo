@@ -4,10 +4,10 @@
 
 EAPI=5
 
+URELEASE="wily"
 inherit autotools base eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/p/${PN}"
-URELEASE="vivid"
 
 DESCRIPTION="pidgin-libnotify provides popups for pidgin via a libnotify interface"
 HOMEPAGE="http://gaim-libnotify.sourceforge.net/"

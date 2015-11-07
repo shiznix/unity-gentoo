@@ -3,10 +3,9 @@
 # $Header: $
 
 EAPI=5
-VIRTUALX_REQUIRED="always"
 
 URELEASE="wily"
-inherit base gnome2-utils qt5-build ubuntu-versionator virtualx
+inherit base gnome2-utils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
@@ -19,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 RESTRICT="mirror"
 
@@ -30,6 +29,7 @@ DEPEND="dev-qt/qtcore:5
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
+unset QT_QPA_PLATFORMTHEME
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
@@ -43,14 +43,6 @@ src_prepare() {
 		sed -e '/doc\/doc.pri/d' \
 			-i accounts-qml-module.pro
 	qt5-build_src_prepare
-}
-
-src_install() {
-	# 'make install' needs to be run in a virtual Xserver so that qmlplugindump's #
-	#	qmltypes generation can successfully spawn dbus #
-	pushd ${QT5_BUILD_DIR}
-		Xemake INSTALL_ROOT="${ED}" install
-	popd
 }
 
 pkg_preinst() {

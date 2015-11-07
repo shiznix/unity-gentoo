@@ -6,11 +6,11 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="vivid"
+URELEASE="wily"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/g/${PN}"
-UVER="4"
+UVER="5"
 
 DESCRIPTION="A PyGTK+ based advanced clipboard manager"
 HOMEPAGE="http://launchpad.net/glipper"
