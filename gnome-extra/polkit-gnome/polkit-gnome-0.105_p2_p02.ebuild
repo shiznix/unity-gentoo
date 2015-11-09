@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 URELEASE="wily"
 inherit autotools base ubuntu-versionator
@@ -27,6 +27,7 @@ RDEPEND=">=dev-libs/glib-2.30
 	!lxde-base/lxpolkit"
 DEPEND="${RDEPEND}
 	dev-util/intltool
+	gnome-base/gnome-common
 	virtual/pkgconfig
 	sys-devel/gettext"
 
