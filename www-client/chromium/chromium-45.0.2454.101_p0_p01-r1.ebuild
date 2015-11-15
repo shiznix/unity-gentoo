@@ -206,6 +206,7 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-system-jinja-r7.patch"
 	epatch "${FILESDIR}/${PN}-tracing-r0.patch"
 	epatch "${FILESDIR}/boring-ssl_build-fix.diff"
+	epatch "${FILESDIR}/${PN}-system-icu_print-preview-fix.diff"
 
 	epatch_user
 

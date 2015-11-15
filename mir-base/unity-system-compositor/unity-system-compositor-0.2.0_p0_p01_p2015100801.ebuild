@@ -26,7 +26,7 @@ DEPEND="dev-libs/boost:=
 	dev-libs/protobuf
 	media-libs/mesa[egl,gbm,gles2]
 	mir-base/mir:=
-	virtual/python-imaging[${PYTHON_USEDEP}]
+	dev-python/pillow[${PYTHON_USEDEP}]
 	x11-base/xorg-server[mir]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

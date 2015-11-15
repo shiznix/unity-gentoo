@@ -5,7 +5,7 @@
 EAPI=5
 ETYPE="sources"
 
-URELEASE="wily-updates"
+URELEASE="wily-security"
 inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
