@@ -25,4 +25,5 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 DEPEND="dev-cpp/gmock
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
-	dev-qt/qttest:5"
+	dev-qt/qttest:5
+	dev-util/cmake-extras"
