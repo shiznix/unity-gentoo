@@ -31,6 +31,7 @@ DEPEND="dev-libs/dee:=
 	dev-libs/libindicate[gtk,introspection]
 	gnome-base/gconf
 	gnome-extra/evolution-data-server
+	gnome-extra/gtkhtml
 	mail-client/evolution
 	media-libs/libcanberra
 	unity-indicators/indicator-messages
