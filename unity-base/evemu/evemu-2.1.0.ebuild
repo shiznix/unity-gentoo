@@ -22,6 +22,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
+DEPEND="
+	dev-libs/libevdev
+"
+
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
