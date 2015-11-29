@@ -22,6 +22,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/boost
 	dev-libs/glib:2
+	dev-qt/qtdeclarative
 	test? ( dev-util/cppcheck )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
