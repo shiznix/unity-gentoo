@@ -6,7 +6,7 @@ EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit base autotools eutils multilib multilib-minimal flag-o-matic \
 	python-any-r1 pax-utils ubuntu-versionator
 
@@ -185,6 +185,10 @@ src_prepare() {
 	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
 		epatch -p1 "${S}/debian/patches/${patch}" || die;
 	done
+
+	# Fix upstream changes to Mir that haven't been made in Mesa yet #
+#	sed -e 's:mir-client-platform-mesa-dev:mir-client-platform-mesa:g' \
+#		-i configure.ac
 
 	# fix for hardened pax_kernel, bug 240956
 	epatch "${FILESDIR}"/glx_ro_text_segm.patch

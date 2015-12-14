@@ -8,7 +8,7 @@ GCONF_DEBUG="no"
 PYTHON_COMPAT=( python{3_3,3_4} )
 PYTHON_REQ_USE="xml"
 
-URELEASE="wily"
+URELEASE="wily-updates"
 inherit autotools base eutils gnome2 python-single-r1 multilib ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"

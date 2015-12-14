@@ -4,6 +4,12 @@
 	* Opens to a black screen with seemingly no fatal errors in /var/log/lightdm/unity-system-compositor.log
 	* Likely due to new code re-write in Xmir, tracking bugs here ->
 		https://bugs.launchpad.net/ubuntu/+source/xorg-server/+bugs?field.tag=xmir
+	* >=mir-0.17.0+15.10.20151008.2-0ubuntu1 now breaks building mesa-11.0.2-1ubuntu4:
+		/var/tmp/portage/media-libs/mesa-11.0.2_p1_p04/work/mesa-11.0.2/src/egl/drivers/dri2/platform_mir.c: In function ‘create_gbm_bo_from_buffer’:
+		/var/tmp/portage/media-libs/mesa-11.0.2_p1_p04/work/mesa-11.0.2/src/egl/drivers/dri2/platform_mir.c:167:21: error: dereferencing pointer to incomplete type
+			data.fd = package->fd[0];
+					 ^
+	 - Only solution is to use Xenial version of media-libs/mesa
 
 - Webapps plugin is broken for chromium since Vivid release, browser will not prompt for webapp installation on sites such as Gmail, Youtube or Facebook
 	* Use Firefox if you want webapps to work
