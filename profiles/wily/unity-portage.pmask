@@ -13,12 +13,6 @@
 >=dev-libs/boost-1.56
 >=dev-util/boost-build-1.56
 
-# Mask >=networkmanager-1.0.6 and associated plugins as Ubuntu nm-applet network indicator development lags and hasn't reached 1.0.6 yet
->=net-misc/networkmanager-1.0.6
->=net-misc/networkmanager-openswan-1.0.6
->=net-misc/networkmanager-openvpn-1.0.6
->=net-misc/networkmanager-pptp-1.0.6
->=net-misc/networkmanager-vpnc-1.0.6
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
