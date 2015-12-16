@@ -27,6 +27,10 @@ DEPEND="dev-cpp/gmock
 	net-misc/networkmanager"
 
 src_prepare() {
-	# disable build of tests
-	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
+	# Include missing glib-2.0 header files for building with >=networkmanager-1.0.6 #
+	sed -e 's:NetworkManager REQUIRED:NetworkManager REQUIRED glib-2.0 REQUIRED:g' \
+		-i CMakeLists.txt
+
+	# Disable build of tests #
+	sed '/add_subdirectory(tests)/d' -i CMakeLists.txt || die
 }
