@@ -51,11 +51,6 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${PN}-${PV}${UVER}"
 
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	gnome2_environment_reset
-}
-
 src_prepare() {
 	# Make Unity Tweak Tool appear in unity-control-center #
 	sed -e 's:Categories=.*:Categories=Settings;X-GNOME-Settings-Panel;X-GNOME-PersonalSettings;X-Unity-Settings-Panel;:' \
