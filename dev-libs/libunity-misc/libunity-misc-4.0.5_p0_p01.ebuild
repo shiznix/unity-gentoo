@@ -5,7 +5,7 @@
 EAPI=5
 
 URELEASE="wily"
-inherit autotools eutils ubuntu-versionator
+inherit autotools eutils flag-o-matic ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
 UVER_PREFIX="+14.04.20140115"

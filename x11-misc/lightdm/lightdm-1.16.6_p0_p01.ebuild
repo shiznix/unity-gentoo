@@ -183,6 +183,11 @@ src_install() {
 }
 
 pkg_postinst() {
+	if use mir; then
+		elog "'mir' useflag is enabled. If lightdm should fail to work, first try disabling the use of Mir display server"
+		elog " by setting 'type=unity;xlocal' to 'type=xlocal' in /etc/lightdm/lightdm.conf.d/10-unity-system-compositor.conf"
+		elog
+	fi
 	elog "'guest session' is disabled by default."
 	elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
 }
