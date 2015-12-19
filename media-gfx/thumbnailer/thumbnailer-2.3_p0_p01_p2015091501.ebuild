@@ -41,4 +41,9 @@ src_prepare() {
 	use doc || \
 		sed -e '/add_subdirectory(doc)/d' \
 			-i CMakeLists.txt
+
+	# Be friendly to new glibc-2.22 fcntl2.h changes (man open) - requires file mode argument #
+	has_version ">=sys-libs/glibc-2.22" && \
+		sed -e 's:O_TMPFILE |:O_TMPFILE, S_IRWXU |:g' \
+			-i src/service/handler.cpp
 }
