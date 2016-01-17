@@ -14,6 +14,9 @@
 - Webapps plugin is broken for chromium since Vivid release, browser will not prompt for webapp installation on sites such as Gmail, Youtube or Facebook
 	* Use Firefox if you want webapps to work
 
+- Webapps plugins for >=www-client/firefox-43 stops working as Firefox now require addon signing and so disable the webapps plugins as their signature cannot be verified
+	* In Firefox's addressbar type 'about:config' and set 'xpinstall.signatures.required' from 'true' to 'false'. Plugins should now be enabled in 'Tools > Addons' after restarting Firefox
+
 - Window control buttons can no longer currently be configured to be on the right using dconf/unity-tweak-tool
 	* Possibly due to changes in >=gtk-3.10 GtkHeaderBar client side decorations and ubuntu-themes
 
