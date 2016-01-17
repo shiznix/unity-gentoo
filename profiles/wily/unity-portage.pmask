@@ -13,6 +13,31 @@
 >=dev-libs/boost-1.56
 >=dev-util/boost-build-1.56
 
+# mask gnome-3.18 packages
+=gnome-*/*-*18*::gentoo
+=*/gnome*-*18*::gentoo
+>=app-accessibility/at-spi2-atk-2.18::gentoo
+>=app-accessibility/at-spi2-core-2.18::gentoo
+>=app-accessibility/orca-3.18.0::gentoo
+>=app-arch/file-roller-3.18.0::gentoo
+>=app-cdr/brasero-3.18.0::gentoo
+>=app-editors/gedit-3.18.0::gentoo
+>=app-text/evince-3.18.0::gentoo
+>=dev-cpp/gtkmm-3.18.0::gentoo
+>=dev-libs/libgweather-3.18.0::gentoo
+>=dev-python/pyatspi-2.18.0::gentoo
+>=dev-python/pygobject-3.18.0::gentoo
+>=mail-client/evolution-3.18.0::gentoo
+>=media-gfx/eog-3.18.0::gentoo
+>=media-libs/clutter-1.24.0::gentoo
+>=media-video/cheese-3.18.0::gentoo
+>=media-video/totem-3.18::gentoo
+>=net-misc/vinagre-3.18::gentoo
+>=sys-apps/baobab-3.18.0::gentoo
+>=www-client/epiphany-3.18.0::gentoo
+>=x11-libs/gtksourceview-3.18.0::gentoo
+>=x11-wm/mutter-3.18.0::gentoo
+
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
