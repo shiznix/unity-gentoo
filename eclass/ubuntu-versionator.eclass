@@ -135,7 +135,7 @@ ubuntu-versionator_pkg_setup() {
 	# Minimum system-wide GCC version required #
 	[[ "${PROFILE_RELEASE}" == utopic ]] && GCC_MINIMUM="4.8"
 	[[ "${PROFILE_RELEASE}" == vivid ]] && GCC_MINIMUM="4.9"
-	[[ "${PROFILE_RELEASE}" == wily ]] && GCC_MINIMUM="4.9"
+	[[ "${PROFILE_RELEASE}" == wily ]] && GCC_MINIMUM="5.3"
 	GCC_MINIMUM_MAJOR="${GCC_MINIMUM%%.*}"
 	GCC_MINIMUM_MINOR="${GCC_MINIMUM##*.}"
 

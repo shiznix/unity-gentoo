@@ -22,6 +22,7 @@ IUSE="doc"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/glib:2
+	dev-libs/leveldb
 	dev-libs/libxml2
 	dev-libs/persistent-cache-cpp
 	dev-qt/qtcore:5
