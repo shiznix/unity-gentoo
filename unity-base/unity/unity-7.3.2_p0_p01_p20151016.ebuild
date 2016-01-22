@@ -38,11 +38,14 @@ DEPEND="${RDEPEND}
 	dev-libs/boost:=
 	dev-libs/dee:=
 	dev-libs/dbus-glib
+	dev-libs/icu:=
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu:=
+	dev-libs/libffi
 	dev-libs/libindicate[gtk,introspection]
 	dev-libs/libindicate-qt
 	dev-libs/libindicator
+	dev-libs/libsigc++:2
 	dev-libs/libunity
 	dev-libs/libunity-misc:=
 	dev-libs/xpathselect
