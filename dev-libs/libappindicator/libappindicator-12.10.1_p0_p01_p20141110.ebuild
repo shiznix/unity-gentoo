@@ -52,9 +52,9 @@ src_prepare () {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
 
 	# The /usr/lib/cli location for Mono bindings is specific to Ubuntu
-	sed -e 's|assemblydir = $(libdir)/cli/appindicator-sharp-0.1|assemblydir = $(libdir)/appindicator-sharp-0.1|' \
+	sed -e 's:assemblydir = $(libdir)/cli/appindicator-sharp-0.1:assemblydir = $(libdir)/appindicator-sharp-0.1:' \
 		-i bindings/mono/Makefile.am
-	sed -e 's|assemblies_dir=${libdir}/cli/appindicator-sharp-0.1|assemblies_dir=${libdir}/appindicator-sharp-0.1|' \
+	sed -e 's:assemblies_dir=${libdir}/cli/appindicator-sharp-0.1:assemblies_dir=${libdir}/appindicator-sharp-0.1:' \
 		-i bindings/mono/appindicator-sharp-0.1.pc.in
 
 	# Disabled, vala error -> see launchpad
@@ -62,6 +62,7 @@ src_prepare () {
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
+	export CSC="/usr/bin/mcs"	# Mono-4* (needed for gcc5) has removed gmcs to be now mcs
 	eautoreconf
 }
 
