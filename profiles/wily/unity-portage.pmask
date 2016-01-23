@@ -9,10 +9,6 @@
 >=dev-libs/xapian-1.3
 >=dev-libs/xapian-bindings-1.3
 
-# dev-libs/boost and dev-util/boost-build versions are kept in line with Unity's as needed for gmock/gtest tests and others to build
->=dev-libs/boost-1.56
->=dev-util/boost-build-1.56
-
 # mask gnome-3.18 packages
 =gnome-*/*-*18*::gentoo
 =*/gnome*-*18*::gentoo

@@ -9,7 +9,9 @@ app-eselect/eselect-opengl
 ~app-i18n/fcitx-4.2.8.5
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
-~dev-lang/mono-4.0.5.1	# Version needed to compile using gcc:5
+~dev-lang/mono-4.0.5.1		# Version needed to compile using gcc:5
+=dev-libs/boost-1.58*		# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
+=dev-util/boost-build-1.58*
 ~dev-libs/json-c-0.12
 ~dev-libs/libgcrypt-1.6.1
 dev-libs/libindicate

@@ -23,6 +23,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-cpp/glog
 	dev-cpp/gmock
+	dev-libs/boost:=
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtnetwork:5
