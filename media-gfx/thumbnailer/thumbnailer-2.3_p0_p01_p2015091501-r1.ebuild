@@ -49,3 +49,15 @@ src_prepare() {
 		sed -e 's:O_TMPFILE |:O_TMPFILE, S_IRWXU |:g' \
 			-i src/service/handler.cpp
 }
+
+src_configure() {
+	mycmakeargs+=(-DCMAKE_INSTALL_SYSCONFDIR=/etc)
+	cmake-utils_src_configure
+}
+
+src_install() {
+	cmake-utils_src_install
+
+	# Delete some files that are only useful on Ubuntu
+	rm -rf "${ED}"etc/apport
+}

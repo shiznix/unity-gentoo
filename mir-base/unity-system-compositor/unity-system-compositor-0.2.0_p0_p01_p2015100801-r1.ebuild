@@ -41,6 +41,11 @@ src_prepare() {
 	python_fix_shebang .
 }
 
+src_configure() {
+	local mycmakeargs+=( "-DCMAKE_INSTALL_SYSCONFDIR=/etc" )
+	cmake-utils_src_configure
+}
+
 src_install() {
 	cmake-utils_src_install
 

@@ -30,10 +30,8 @@ COMMON_DEPEND="
 	unity-base/unity-control-center
 	x11-libs/gtk+:3
 	x11-libs/libnotify
-
 	app-backup/duplicity
 	dev-libs/dbus-glib
-
 	nautilus? ( gnome-base/nautilus )"
 RDEPEND="${COMMON_DEPEND}
 	gnome-base/gvfs[fuse]"
@@ -51,8 +49,8 @@ src_prepare() {
 }
 
 src_configure() {
-	local mycmakeargs="${mycmakeargs}
+	mycmakeargs+=(-DCMAKE_INSTALL_SYSCONFDIR=/etc
 		-DVALA_COMPILER=$VALAC
-		-DVAPI_GEN=$VAPIGEN"
+		-DVAPI_GEN=$VAPIGEN)
 	cmake-utils_src_configure
 }
