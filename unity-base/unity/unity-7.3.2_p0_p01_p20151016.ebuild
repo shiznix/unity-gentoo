@@ -45,7 +45,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libindicate[gtk,introspection]
 	dev-libs/libindicate-qt
 	dev-libs/libindicator
-	dev-libs/libsigc++:2
+	<dev-libs/libsigc++-2.6:2
 	dev-libs/libunity
 	dev-libs/libunity-misc:=
 	dev-libs/xpathselect
