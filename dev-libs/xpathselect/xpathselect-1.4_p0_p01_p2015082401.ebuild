@@ -35,9 +35,7 @@ src_prepare() {
 
 src_configure() {
 	use test && \
-		local mycmakeargs="${mycmakeargs}
-				-DGTEST_ROOT_DIR="${WORKDIR}/gtest-${GTESTVER}"
-				-DGTEST_SRC_DIR="${WORKDIR}/gtest-${GTESTVER}/src/"
-				"
+		mycmakeargs+=(-DGTEST_ROOT_DIR="${WORKDIR}/gtest-${GTESTVER}"
+				-DGTEST_SRC_DIR="${WORKDIR}/gtest-${GTESTVER}/src/")
 	cmake-utils_src_configure
 }

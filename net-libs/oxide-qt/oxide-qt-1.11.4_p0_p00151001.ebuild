@@ -77,12 +77,10 @@ src_prepare() {
 }
 
 src_configure() {
-	local mycmakeargs="${mycmakeargs}
-		-DENABLE_PROPRIETARY_CODECS=1"
+	mycmakeargs+=(-DENABLE_PROPRIETARY_CODECS=1)
 
 	if use plugins; then
-		mycmakeargs="${mycmakeargs}
-		    -DENABLE_PLUGINS=1"
+		mycmakeargs+=(-DENABLE_PLUGINS=1)
 	fi
 
 	if use debug; then

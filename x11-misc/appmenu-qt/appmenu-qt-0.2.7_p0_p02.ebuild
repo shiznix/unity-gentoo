@@ -30,7 +30,6 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 DOCS=( NEWS README )
 
 src_configure() {
-	local mycmakeargs=(${mycmakeargs}
-		-DUSE_QT4=true)
+	mycmakeargs+=(-DUSE_QT4=true)
 	cmake-utils_src_configure
 }

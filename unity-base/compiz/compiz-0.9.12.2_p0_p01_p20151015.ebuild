@@ -119,13 +119,12 @@ src_prepare() {
 
 src_configure() {
 	use kde && \
-		mycmakeargs="${mycmakeargs} -DUSE_KDE4=ON" || \
-		mycmakeargs="${mycmakeargs} -DUSE_KDE4=OFF"
+		mycmakeargs+=(-DUSE_KDE4=ON) || \
+		mycmakeargs+=(-DUSE_KDE4=OFF)
 	use test && \
-		mycmakeargs="${mycmakeargs} -DCOMPIZ_BUILD_TESTING=ON" || \
-		mycmakeargs="${mycmakeargs} -DCOMPIZ_BUILD_TESTING=OFF"
-
-	mycmakeargs="${mycmakeargs}
+		mycmakeargs+=(-DCOMPIZ_BUILD_TESTING=ON) || \
+		mycmakeargs+=(-DCOMPIZ_BUILD_TESTING=OFF)
+	mycmakeargs+=(
 		-DCMAKE_INSTALL_PREFIX="/usr"
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR="/etc/gconf/schemas"
 		-DCOMPIZ_DISABLE_GCONF_SCHEMAS_INSTALL=TRUE
@@ -134,8 +133,7 @@ src_configure() {
 		-DUSE_GCONF=OFF
 		-DUSE_GSETTINGS=ON
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF
-		-DCOMPIZ_DEFAULT_PLUGINS="ccp"
-		"
+		-DCOMPIZ_DEFAULT_PLUGINS="ccp")
 	configuration() {
 		cmake-utils_src_configure
 	}

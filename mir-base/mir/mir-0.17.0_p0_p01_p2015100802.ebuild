@@ -59,15 +59,13 @@ src_prepare() {
 multilib_src_configure() {
 	# Tell cmake's 'find_library' function to find 32bit versions of libs when we compile for 32bit #
 	if [[ ${ABI} == x86 ]]; then
-		local mycmakeargs="${mycmakeargs}
-			-DCMAKE_PREFIX_PATH=/usr/lib32"
+		mycmakeargs+=(-DCMAKE_PREFIX_PATH=/usr/lib32)
 	fi
 
-	local mycmakeargs="${mycmakeargs}
-		-DMIR_ENABLE_TESTS=OFF
+	mycmakeargs+=(-DMIR_ENABLE_TESTS=OFF
 		-DMIR_RUN_ACCEPTANCE_TESTS=OFF
 		-DMIR_RUN_INTEGRATION_TESTS=OFF
-		-DMIR_PLATFORM=mesa-kms;mesa-x11"
+		-DMIR_PLATFORM="mesa-kms;mesa-x11")
 	cmake-utils_src_configure
 }
 

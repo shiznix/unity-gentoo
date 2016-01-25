@@ -37,22 +37,20 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 DOCS=( NEWS README )
 
 src_configure() {
-	local mycmakeargs=(
-		$(cmake-utils_use_build test TESTS)
-		$(cmake-utils_use_with doc)
-	)
+	mycmakeargs+=( $(cmake-utils_use_build test TESTS)
+			$(cmake-utils_use_with doc) )
 
 	# Build QT4 support #
 	cd "${WORKDIR}"
 	cp -rf "${S}" "${S}-build_qt4"
-	mycmakeargs+=( "-DUSE_QT4=ON" )
+	mycmakeargs+=(-DUSE_QT4=ON)
 	BUILD_DIR="${S}-build_qt4" cmake-utils_src_configure
 
 	# Build QT5 support #
 	if use qt5; then
 		cd "${WORKDIR}"
 		cp -rf "${S}" "${S}-build_qt5"
-		mycmakeargs+=( "-DUSE_QT5=ON" )
+		mycmakeargs+=(-DUSE_QT5=ON)
 		BUILD_DIR="${S}-build_qt5" cmake-utils_src_configure
 	fi
 }

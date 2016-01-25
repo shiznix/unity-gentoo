@@ -154,29 +154,26 @@ src_prepare() {
 
 src_configure() {
 	if use test; then
-		mycmakeargs="${mycmakeargs}
-			-DBUILD_XORG_GTEST=ON
-			-DCOMPIZ_BUILD_TESTING=ON"
+		mycmakeargs+=(-DBUILD_XORG_GTEST=ON
+			-DCOMPIZ_BUILD_TESTING=ON)
 	else
-		mycmakeargs="${mycmakeargs}
-			-DBUILD_XORG_GTEST=OFF
-			-DCOMPIZ_BUILD_TESTING=OFF"
+		mycmakeargs+=(-DBUILD_XORG_GTEST=OFF
+			-DCOMPIZ_BUILD_TESTING=OFF)
 	fi
 
 	if use pch; then
-		mycmakeargs="${mycmakeargs} -Duse_pch=ON"
+		mycmakeargs+=(-Duse_pch=ON)
 	else
-		mycmakeargs="${mycmakeargs} -Duse_pch=OFF"
+		mycmakeargs+=(-Duse_pch=OFF)
 	fi
 
-	mycmakeargs="${mycmakeargs}
-		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
+	mycmakeargs+=(-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_PLUGIN_INSTALL_TYPE=package
 		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
 		-DUSE_GSETTINGS=TRUE
 		-DCMAKE_INSTALL_PREFIX=/usr
-		-DCMAKE_SYSCONFDIR=/etc"
+		-DCMAKE_SYSCONFDIR=/etc)
 	cmake-utils_src_configure || die
 }
 

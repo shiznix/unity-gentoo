@@ -38,9 +38,8 @@ src_prepare() {
 }
 
 src_configure() {
-	mycmakeargs="${mycmakeargs}
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DIMPORT_INSTALL_DIR=lib/qt/imports/QConf \
-		-DCMAKE_BUILD_TYPE=Release"
+	mycmakeargs+=(-DCMAKE_INSTALL_PREFIX=/usr
+		-DIMPORT_INSTALL_DIR=lib/qt/imports/QConf
+		-DCMAKE_BUILD_TYPE=Release)
 	cmake-utils_src_configure
 }

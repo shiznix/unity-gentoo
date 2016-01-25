@@ -42,7 +42,7 @@ src_prepare() {
 }
 
 src_configure() {
-	local mycmakeargs+=( "-DCMAKE_INSTALL_SYSCONFDIR=/etc" )
+	mycmakeargs+=(-DCMAKE_INSTALL_SYSCONFDIR=/etc)
 	cmake-utils_src_configure
 }
 

@@ -70,11 +70,10 @@ src_prepare() {
 }
 
 src_configure() {
-	local mycmakeargs="${mycmakeargs}
-			$(cmake-utils_use_enable test TESTS)
+	mycmakeargs+=($(cmake-utils_use_enable test TESTS)
 			-DVALA_COMPILER=$(type -P valac-0.20)
 			-DVAPI_GEN=$(type -P vapigen-0.20)
-			-DCMAKE_INSTALL_DATADIR=/usr/share"
+			-DCMAKE_INSTALL_DATADIR=/usr/share)
 	cmake-utils_src_configure
 }
 

@@ -45,18 +45,13 @@ src_prepare() {
 	# Fix schema errors and sandbox violations #
 	epatch -p1 "${FILESDIR}/sandbox_violations_fix.diff"
 
-	# Make indicator-datetime compatiable with systemd's timezone changes #
-#	epatch -p1 "${FILESDIR}/get-timezone-from-systemd-timedatectl-14.10.diff"
-#	epatch -p1 "${FILESDIR}/systemd-timezone-nullptr-check.diff"
-
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 }
 
 src_configure() {
-	local mycmakeargs="${mycmakeargs}
-		-DVALA_COMPILER=$VALAC
-		-DVAPI_GEN=$VAPIGEN"
+	mycmakeargs+=(-DVALA_COMPILER=$VALAC
+		-DVAPI_GEN=$VAPIGEN)
 	cmake-utils_src_configure
 }
 

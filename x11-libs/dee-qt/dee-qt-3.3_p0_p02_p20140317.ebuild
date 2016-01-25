@@ -46,22 +46,20 @@ src_configure() {
 	# Build QT4 support #
 	cd "${WORKDIR}"
 	cp -rf "${S}" "${S}-build_qt4"
-	mycmakeargs="${mycmakeargs} \
-		-DWITHQT5=0 \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DIMPORT_INSTALL_DIR=lib/qt/imports/dee \
-		-DCMAKE_BUILD_TYPE=Release"
+	mycmakeargs+=(-DWITHQT5=0
+		-DCMAKE_INSTALL_PREFIX=/usr
+		-DIMPORT_INSTALL_DIR=lib/qt/imports/dee
+		-DCMAKE_BUILD_TYPE=Release)
 	BUILD_DIR="${S}-build_qt4" cmake-utils_src_configure
 
 	# Build QT5 support #
 	if use qt5; then
 		cd "${WORKDIR}"
 		cp -rf "${S}" "${S}-build_qt5"
-		mycmakeargs="${mycmakeargs} \
-			-DWITHQT5=1 \
-			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DIMPORT_INSTALL_DIR=lib/qt/imports/dee \
-			-DCMAKE_BUILD_TYPE=Release"
+		mycmakeargs+=(-DWITHQT5=1
+			-DCMAKE_INSTALL_PREFIX=/usr
+			-DIMPORT_INSTALL_DIR=lib/qt/imports/dee
+			-DCMAKE_BUILD_TYPE=Release)
 		BUILD_DIR="${S}-build_qt5" cmake-utils_src_configure
 	fi
 }

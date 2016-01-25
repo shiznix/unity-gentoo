@@ -48,9 +48,7 @@ src_prepare() {
 
 src_configure() {
 	configuration() {
-		mycmakeargs="${mycmakeargs}
-			-DPYTHONDIR="$(python_get_sitedir)"
-			"
+		mycmakeargs+=(-DPYTHONDIR="$(python_get_sitedir)")
 		cmake-utils_src_configure
 	}
 	python_foreach_impl run_in_build_dir configuration

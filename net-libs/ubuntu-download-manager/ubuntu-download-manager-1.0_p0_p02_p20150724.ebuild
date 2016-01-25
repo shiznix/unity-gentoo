@@ -46,7 +46,6 @@ src_prepare() {
 }
 
 src_configure() {
-	mycmakeargs="${mycmakeargs}
-		-DCMAKE_INSTALL_LIBEXECDIR=/usr/lib"
+	mycmakeargs+=(-DCMAKE_INSTALL_LIBEXECDIR=/usr/lib)
 	cmake-utils_src_configure
 }
