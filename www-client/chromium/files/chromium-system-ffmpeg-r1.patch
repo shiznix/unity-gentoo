@@ -1,21 +1,17 @@
-diff --git a/media/ffmpeg/ffmpeg_common.h b/media/ffmpeg/ffmpeg_common.h
-index 677bd76..23a21f8 100644
---- a/media/ffmpeg/ffmpeg_common.h
-+++ b/media/ffmpeg/ffmpeg_common.h
-@@ -19,20 +19,12 @@
+--- a/media/ffmpeg/ffmpeg_common.h	2015-11-27 12:01:56.155462264 +0000
++++ b/media/ffmpeg/ffmpeg_common.h	2015-11-27 12:03:03.348846300 +0000
+@@ -19,10 +19,6 @@
  
  // Include FFmpeg header files.
  extern "C" {
 -// Disable deprecated features which result in spammy compile warnings.  This
--// list of defines must mirror those in the 'defines' section of the ffmpeg.gyp
--// file or the headers below will generate different structures.
--#define FF_API_PIX_FMT_DESC 0
--#define FF_API_OLD_DECODE_AUDIO 0
--#define FF_API_DESTRUCT_PACKET 0
--#define FF_API_GET_BUFFER 0
- 
- // Temporarily disable possible loss of data warning.
- // TODO(scherkus): fix and upstream the compiler warnings.
+-// list of defines must mirror those in the 'defines' section of BUILD.gn file &
+-// ffmpeg.gyp file or the headers below will generate different structures!
+-#define FF_API_CONVERGENCE_DURATION 0
+ // Upstream libavcodec/utils.c still uses the deprecated
+ // av_dup_packet(), causing deprecation warnings.
+ // The normal fix for such things is to disable the feature as below,
+@@ -36,7 +32,6 @@
  MSVC_PUSH_DISABLE_WARNING(4244);
  #include <libavcodec/avcodec.h>
  #include <libavformat/avformat.h>
