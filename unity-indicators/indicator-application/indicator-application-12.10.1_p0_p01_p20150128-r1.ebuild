@@ -34,8 +34,13 @@ src_prepare() {
 	eautoreconf
 	append-cflags -Wno-error
 
-	# Show systray icons even if they report themselves as 'Passive' #
-	epatch -p1 "${FILESDIR}/sni-systray_show-passive.diff"
+	# src/application-service-appstore.c uses 'app->status = APP_INDICATOR_STATUS_PASSIVE' to remove the app from panel #
+	#	However some SNI tray icons always report their status as 'Passive' and so never show up, or get removed when they shouldn't be
+	#	Examples are:
+	#	KTorrent (never shows up)
+	#	Quassel (disappears when disconnected from it's core)
+	#	  Quassel also requires patching to have a complete base set of SNI items (profiles/${URELEASE}/patches/net-irc/quassel/SNI-systray_fix.patch)
+	epatch -p1 "${FILESDIR}/sni-systray_show-passive_v2.diff"
 }
 
 src_install() {

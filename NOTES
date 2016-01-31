@@ -120,6 +120,13 @@ x11-wm/metacity				# Patched to support compiz window decoration
 	- Check ~/.xsession-errors and syslog
 	- gsettings get org.compiz.core:/org/compiz/profiles/unity/plugins/core/ active-plugins
 
+* Debugging top panel systray/indicator icons and menus
+	- In desktop user's xterm, issue the following command:
+		killall indicator-application-service; G_MESSAGES_DEBUG=all /usr/libexec/indicator-application/indicator-application-service
+	- Get list of currently running indicators with the following command:
+		dbus-send --type=method_call --print-reply --dest=com.canonical.indicator.application \
+			/com/canonical/indicator/application/service com.canonical.indicator.application.service.GetApplications
+
 * Ubuntu Single Signon
 	- Check ~/.cache/sso/sso-client*.log
 

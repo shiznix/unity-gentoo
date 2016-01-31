@@ -1,0 +1,21 @@
+diff -urN indicator-application-12.10.1+15.04.20150128/src/application-service-appstore.c indicator-application-12.10.1+15.04.20150128-patched/src/application-service-appstore.c
+--- indicator-application-12.10.1+15.04.20150128/src/application-service-appstore.c	2015-01-29 07:43:10.000000000 +1030
++++ indicator-application-12.10.1+15.04.20150128-patched/src/application-service-appstore.c	2016-02-01 07:39:24.397568958 +1030
+@@ -792,7 +792,7 @@
+ 	g_debug("Application proxy destroyed '%s'", app->id);
+ 
+ 	/* Remove from the panel */
+-	app->status = APP_INDICATOR_STATUS_PASSIVE;
++	app->status = 9;
+ 	apply_status(app);
+ 
+ 	/* Destroy the data */
+@@ -846,7 +846,7 @@
+ 
+ 	visible_state_t goal_state = VISIBLE_STATE_HIDDEN;
+ 
+-	if (app->status != APP_INDICATOR_STATUS_PASSIVE) {
++	if (app->status != 9) {
+ 		goal_state = VISIBLE_STATE_SHOWN;
+ 	}
+ 
