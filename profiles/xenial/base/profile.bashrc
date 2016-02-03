@@ -1,9 +1,10 @@
 if [[ ${EBUILD_PHASE} == "setup" ]] ; then
-	CURRENT_PROFILE=$(eselect --brief profile show)
+	CURRENT_PROFILE=$(readlink /etc/portage/make.profile)
+
 	if [ -z "$(echo ${CURRENT_PROFILE} | grep unity-gentoo)" ]; then
 		die "Invalid profile detected, please select a 'unity-gentoo' profile for your architecture shown in 'eselect profile list'"
 	else
-		PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | sed -n 's/.*:\(.*\)\/.*/\1/p')
+		PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-1)}')
 	fi
 
 	if [ "$(eval echo \${UNITY_DEVELOPMENT_${PROFILE_RELEASE}})" != "yes" ]; then
