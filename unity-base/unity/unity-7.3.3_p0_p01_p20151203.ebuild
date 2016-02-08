@@ -8,7 +8,7 @@ GCONF_DEBUG="yes"
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="wily"
+URELEASE="wily-updates"
 inherit base cmake-utils distutils-r1 eutils gnome2 pam toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"

@@ -11,8 +11,8 @@ UURL="mirror://ubuntu/pool/main/l/${PN}"
 
 DESCRIPTION="A lightweight display manager"
 HOMEPAGE="https://launchpad.net/lightdm"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}-${UVER}.tar.gz"
+#	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -69,7 +69,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+#	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die

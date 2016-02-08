@@ -6,7 +6,7 @@ EAPI=5
 GCONF_DEBUG="no"
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="wily"
+URELEASE="wily-updates"
 inherit base gnome2 cmake-utils eutils python-r1 ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"

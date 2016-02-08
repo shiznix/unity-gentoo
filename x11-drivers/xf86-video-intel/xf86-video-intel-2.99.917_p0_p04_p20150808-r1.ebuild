@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_PN}_${PV}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_PN}_${PV}${UVER_PREFIX}-${UVER}.diff.gz"
 
 KEYWORDS="~amd64 ~x86 ~amd64-fbsd -x86-fbsd"
-IUSE="debug mir +sna +udev uxa xvmc"
+IUSE="debug +dri3 mir +sna +udev uxa xvmc"
 RESTRICT="mirror strip"
 
 REQUIRED_USE="
@@ -63,19 +63,18 @@ src_prepare() {
 src_configure() {
 	XORG_CONFIGURE_OPTIONS=(
 		$(use_enable debug)
-		$(use_enable dri)
+		$(use_enable dri3)
 		$(use_enable sna)
-		$(use_enable uxa)
 		$(use_enable udev)
+		$(use_enable uxa)
 		$(use_enable xvmc)
-		--disable-dri3
 	)
 	xorg-2_src_configure
 }
 
 pkg_postinst() {
 	if linux_config_exists \
-		&& ! linux_chkconfig_present DRM_I915_KMS; then
+		kernel_is -lt 4 3 && ! linux_chkconfig_present DRM_I915_KMS; then
 		echo
 		ewarn "This driver requires KMS support in your kernel"
 		ewarn "  Device Drivers --->"
@@ -85,5 +84,12 @@ pkg_postinst() {
 		ewarn "	      i915 driver"
 		ewarn "      [*]       Enable modesetting on intel by default"
 		echo
+	fi
+	if use dri3; then
+		elog "You have 'dri3' use enabled"
+		elog "To enable DRI3 you will need to create a 'Device' section"
+		elog "in /etc/X11/xorg.conf.d/*.conf file and add the line:"
+		elog "  Option      \"DRI\"    \"3\""
+		elog "Without this line, the driver will default to DRI2"
 	fi
 }
