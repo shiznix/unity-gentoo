@@ -180,3 +180,9 @@ unix:abstract=/com/ubuntu/upstart-session/1000/6350
 	- Note that no other file after '99upstart' in alphanumerical order will be parsed
 * Upstart processes it's *.conf files in /usr/share/upstart/sessions/
 * Upstart job /usr/share/upstart/sessions/gnome-session.conf starts 'gnome-session --session=$DESKTOP_SESSION'
+
+
+## Compiz performance settings for 'ccsm' ##
+Click on "OpenGL" and set "Texture Filter" to Fast.
+Make sure "Sync to V blank" is selected, that Texture Compression is NOT selected, and make sure Frame Buffer, Vertex Buffer, and Always Use Buffer Swapping ARE all selected.
+Scroll down to "Image Loading" and make sure all options (jpeg, png, svg, and text) ARE selected.
