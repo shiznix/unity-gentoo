@@ -39,7 +39,7 @@ MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="wily-security"
-UVER_PREFIX="+build3"
+UVER_PREFIX="+build2"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 
 inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.44 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
