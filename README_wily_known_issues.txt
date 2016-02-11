@@ -1,3 +1,7 @@
+- Unity via unity-base/unity-settings-daemon strips the 'grp' option for XKB keyboard layouts (see LP# 1315867 and overlay issue #133)
+	* This can lead to problems trying to use group keyboard layout(s)/variant(s) customised key+combo switching
+		Based on bug, requires upstream to patch support into unity-settings-daemon,unity,compiz and unity-control-center
+
 - Certain QT5 applications in Gentoo require QT_QPA_PLATFORMTHEME environment variable to be unset (usually set to 'appmenu-qt5' by /etc/profile.d/appmenu-qt5.sh)
 	Otherwise the application's GUI windows refuses to show with the following hang error:
 		GLib-GObject-WARNING **: cannot register existing type 'GdkDisplayManager'
