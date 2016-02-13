@@ -35,11 +35,12 @@ PATCH="${PN}-44.0-patches-0.4"
 MOZ_HTTP_URI="http://archive.mozilla.org/pub/${PN}/releases"
 
 MOZCONFIG_OPTIONAL_GTK3=1
+MOZCONFIG_OPTIONAL_QT5=1
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="wily-security"
-UVER_PREFIX="+build2"
+UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/f/${PN}"
 
 inherit base check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.44 multilib pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
@@ -147,6 +148,7 @@ src_prepare() {
 	EPATCH_SUFFIX="patch" \
 	EPATCH_FORCE="yes" \
 	epatch "${WORKDIR}/firefox"
+	epatch "${FILESDIR}"/${PN}-44-qt-widget-fix.patch
 
 	# Allow user to apply any additional patches without modifing ebuild
 	epatch_user
@@ -219,8 +221,7 @@ src_configure() {
 	# Add full relro support for hardened
 	use hardened && append-ldflags "-Wl,-z,relro,-z,now"
 
-	# EGL use flag removed for now, as build failures ensue with firefox-44
-	#use egl && mozconfig_annotate 'Enable EGL as GL provider' --with-gl-provider=EGL
+	use egl && mozconfig_annotate 'Enable EGL as GL provider' --with-gl-provider=EGL
 
 	# Setup api key for location services
 	echo -n "${_google_api_key}" > "${S}"/google-api-key
