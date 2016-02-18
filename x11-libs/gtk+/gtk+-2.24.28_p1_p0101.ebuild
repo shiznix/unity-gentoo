@@ -6,7 +6,7 @@ EAPI="5"
 GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes"
 
-URELEASE="wily"
+URELEASE="wily-security"
 inherit base autotools eutils flag-o-matic gnome2 multilib virtualx readme.gentoo multilib-minimal ubuntu-versionator
 
 MY_PN="gtk+2.0"
