@@ -46,20 +46,17 @@ RDEPEND="
 	>=virtual/libiconv-0-r1[${MULTILIB_USEDEP}]
 	>=virtual/libffi-3.0.13-r1[${MULTILIB_USEDEP}]
 	>=sys-libs/zlib-1.2.8-r1[${MULTILIB_USEDEP}]
-	|| (
-		>=dev-libs/elfutils-0.142
-		>=dev-libs/libelf-0.8.12
-		>=sys-freebsd/freebsd-lib-9.2_rc1
-		)
 	selinux? ( >=sys-libs/libselinux-2.2.2-r5[${MULTILIB_USEDEP}] )
 	xattr? ( >=sys-apps/attr-2.4.47-r1[${MULTILIB_USEDEP}] )
 	fam? ( >=virtual/fam-0-r1[${MULTILIB_USEDEP}] )
 	utils? (
 		${PYTHON_DEPS}
-		>=dev-util/gdbus-codegen-${PV}[${PYTHON_USEDEP}] )
-	abi_x86_32? (
-		!<=app-emulation/emul-linux-x86-baselibs-20130224-r9
-		!app-emulation/emul-linux-x86-baselibs[-abi_x86_32(-)]
+		>=dev-util/gdbus-codegen-${PV}[${PYTHON_USEDEP}]
+		|| (
+			>=dev-libs/elfutils-0.142
+			>=dev-libs/libelf-0.8.12
+			>=sys-freebsd/freebsd-lib-9.2_rc1
+		)
 	)
 "
 DEPEND="${RDEPEND}
@@ -86,6 +83,10 @@ PDEPEND="!<gnome-base/gvfs-1.6.4-r990
 # dconf is needed to be able to save settings, bug #498436
 # Earlier versions of gvfs do not work with glib
 
+MULTILIB_CHOST_TOOLS=(
+	/usr/bin/gio-querymodules
+)
+
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 	if use kernel_linux ; then
@@ -93,7 +94,6 @@ pkg_setup() {
 		if use test; then
 			CONFIG_CHECK="~IPV6"
 			WARNING_IPV6="Your kernel needs IPV6 support for running some tests, skipping them."
-			export IPV6_DISABLED="yes"
 		fi
 		linux-info_pkg_setup
 	fi
@@ -104,18 +104,12 @@ src_prepare() {
 	mv -f "${WORKDIR}"/pkg-config-*/pkg.m4 "${S}"/m4macros/ || die
 
 	if use test; then
-		# Do not try to remove files on live filesystem, upstream bug #619274
-		sed 's:^\(.*"/desktop-app-info/delete".*\):/*\1*/:' \
-			-i "${S}"/gio/tests/desktop-app-info.c || die "sed failed"
-
 		# Disable tests requiring dev-util/desktop-file-utils when not installed, bug #286629, upstream bug #629163
 		if ! has_version dev-util/desktop-file-utils ; then
 			ewarn "Some tests will be skipped due dev-util/desktop-file-utils not being present on your system,"
 			ewarn "think on installing it to get these tests run."
 			sed -i -e "/appinfo\/associations/d" gio/tests/appinfo.c || die
-			sed -i -e "/desktop-app-info\/default/d" gio/tests/desktop-app-info.c || die
-			sed -i -e "/desktop-app-info\/fallback/d" gio/tests/desktop-app-info.c || die
-			sed -i -e "/desktop-app-info\/lastused/d" gio/tests/desktop-app-info.c || die
+			sed -i -e "/g_test_add_func/d" gio/tests/desktop-app-info.c || die
 		fi
 
 		# gdesktopappinfo requires existing terminal (gnome-terminal or any
@@ -141,17 +135,12 @@ src_prepare() {
 		fi
 
 		# Some tests need ipv6, upstream bug #667468
-		if [[ -n "${IPV6_DISABLED}" ]]; then
-			sed -i -e "/socket\/ipv6_sync/d" gio/tests/socket.c || die
-			sed -i -e "/socket\/ipv6_async/d" gio/tests/socket.c || die
-			sed -i -e "/socket\/ipv6_v4mapped/d" gio/tests/socket.c || die
+		# https://bugs.gentoo.org/show_bug.cgi?id=508752
+		if [[ ! -f /proc/net/if_net6 ]]; then
+			sed -i -e "/gdbus\/peer-to-peer/d" gio/tests/gdbus-peer.c || die
+			sed -i -e "/gdbus\/delayed-message-processing/d" gio/tests/gdbus-peer.c || die
+			sed -i -e "/gdbus\/nonce-tcp/d" gio/tests/gdbus-peer.c || die
 		fi
-
-		# Test relies on /usr/bin/true, but we have /bin/true, upstream bug #698655
-		sed -i -e "s:/usr/bin/true:/bin/true:" gio/tests/desktop-app-info.c || die
-
-		# thread test fails, upstream bug #679306
-		epatch "${FILESDIR}/${PN}-2.34.0-testsuite-skip-thread4.patch"
 
 		# This test is prone to fail, bug #504024, upstream bug #723719
 		sed -i -e '/gdbus-close-pending/d' gio/tests/Makefile.am || die
@@ -161,15 +150,14 @@ src_prepare() {
 	fi
 
 	# gdbus-codegen is a separate package
-	epatch "${FILESDIR}/${PN}-2.40.0-external-gdbus-codegen.patch"
+	epatch "${FILESDIR}"/${PN}-2.40.0-external-gdbus-codegen.patch
+
+	# Patch memory leak in gbusproxy (https://bugzilla.gnome.org/show_bug.cgi?id=758641) #
+	epatch -p1 "${FILESDIR}/gdbusproxy-memleak_fix.diff"
 
 	# leave python shebang alone
 	sed -e '/${PYTHON}/d' \
 		-i glib/Makefile.{am,in} || die
-
-	# Gentoo handles completions in a different directory
-	sed -i "s|^completiondir =.*|completiondir = $(get_bashcompdir)|" \
-		gio/Makefile.am || die
 
 	epatch_user
 
@@ -194,6 +182,19 @@ multilib_src_configure() {
 		export LIBFFI_LIBS="-lffi"
 	fi
 
+	# These configure tests don't work when cross-compiling.
+	if tc-is-cross-compiler ; then
+		# https://bugzilla.gnome.org/show_bug.cgi?id=756473
+		case ${CHOST} in
+		hppa*|metag*) export glib_cv_stack_grows=yes ;;
+		*)            export glib_cv_stack_grows=no ;;
+		esac
+		# https://bugzilla.gnome.org/show_bug.cgi?id=756474
+		export glib_cv_uscore=no
+		# https://bugzilla.gnome.org/show_bug.cgi?id=756475
+		export ac_cv_func_posix_get{pwuid,grgid}_r=yes
+	fi
+
 	local myconf
 
 	case "${CHOST}" in
@@ -201,10 +202,9 @@ multilib_src_configure() {
 		*)        myconf="${myconf} --with-threads=posix" ;;
 	esac
 
-	# Only used by the gresource bin
-	multilib_is_native_abi || myconf="${myconf} --disable-libelf"
-
-	# Always use internal libpcre, bug #254659
+	# FIXME: Always use internal libpcre, bug #254659
+	# (maybe consider going back to system lib)
+	# libelf used only by the gresource bin
 	ECONF_SOURCE="${S}" gnome2_src_configure ${myconf} \
 		$(use_enable xattr) \
 		$(use_enable fam) \
@@ -212,6 +212,7 @@ multilib_src_configure() {
 		$(use_enable static-libs static) \
 		$(use_enable systemtap dtrace) \
 		$(use_enable systemtap systemtap) \
+		$(multilib_native_use_enable utils libelf) \
 		--disable-compile-warnings \
 		--enable-man \
 		--with-pcre=internal \
@@ -226,11 +227,9 @@ multilib_src_configure() {
 }
 
 multilib_src_test() {
-	unset DBUS_SESSION_BUS_ADDRESS
 	export XDG_CONFIG_DIRS=/etc/xdg
 	export XDG_DATA_DIRS=/usr/local/share:/usr/share
 	export G_DBUS_COOKIE_SHA1_KEYRING_DIR="${T}/temp"
-	unset GSETTINGS_BACKEND # bug 352451
 	export LC_TIME=C # bug #411967
 	python_export_best
 
@@ -249,7 +248,8 @@ multilib_src_test() {
 }
 
 multilib_src_install() {
-	gnome2_src_install
+	gnome2_src_install completiondir="$(get_bashcompdir)"
+	keepdir /usr/$(get_libdir)/gio/modules
 }
 
 multilib_src_install_all() {
@@ -270,13 +270,61 @@ multilib_src_install_all() {
 	rm -rf "${ED}/usr/share/gdb/" "${ED}/usr/share/glib-2.0/gdb/"
 }
 
+pkg_preinst() {
+	gnome2_pkg_preinst
+
+	# Make gschemas.compiled belong to glib alone
+	local cache="usr/share/glib-2.0/schemas/gschemas.compiled"
+
+	if [[ -e ${EROOT}${cache} ]]; then
+		cp "${EROOT}"${cache} "${ED}"/${cache} || die
+	else
+		touch "${ED}"/${cache} || die
+	fi
+
+	multilib_pkg_preinst() {
+		# Make giomodule.cache belong to glib alone
+		local cache="usr/$(get_libdir)/gio/giomodule.cache"
+
+		if [[ -e ${EROOT}${cache} ]]; then
+			cp "${EROOT}"${cache} "${ED}"/${cache} || die
+		else
+			touch "${ED}"/${cache} || die
+		fi
+	}
+
+	multilib_foreach_abi multilib_pkg_preinst
+}
+
 pkg_postinst() {
+	# force (re)generation of gschemas.compiled
+	GNOME2_ECLASS_GLIB_SCHEMAS="force"
+
 	gnome2_pkg_postinst
+
+	multilib_pkg_postinst() {
+		gnome2_giomodule_cache_update \
+			|| die "Update GIO modules cache failed (for ${ABI})"
+	}
+	multilib_foreach_abi multilib_pkg_postinst
+
 	if has_version '<x11-libs/gtk+-3.0.12:3'; then
 		# To have a clear upgrade path for gtk+-3.0.x users, have to resort to
 		# a warning instead of a blocker
 		ewarn
 		ewarn "Using <gtk+-3.0.12:3 with ${P} results in frequent crashes."
 		ewarn "You should upgrade to a newer version of gtk+:3 immediately."
+	fi
+}
+
+pkg_postrm() {
+	gnome2_pkg_postrm
+
+	if [[ -z ${REPLACED_BY_VERSION} ]]; then
+		multilib_pkg_postrm() {
+			rm -f "${EROOT}"usr/$(get_libdir)/gio/giomodule.cache
+		}
+		multilib_foreach_abi multilib_pkg_postrm
+		rm -f "${EROOT}"usr/share/glib-2.0/schemas/gschemas.compiled
 	fi
 }
