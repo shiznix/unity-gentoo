@@ -1,0 +1,21 @@
+diff -urN mesa-11.1.1/src/glsl/nir/nir_lower_vec_to_movs.c mesa-11.1.1-patched/src/glsl/nir/nir_lower_vec_to_movs.c
+--- mesa-11.1.1/src/glsl/nir/nir_lower_vec_to_movs.c	2016-01-08 02:47:53.000000000 +1030
++++ mesa-11.1.1-patched/src/glsl/nir/nir_lower_vec_to_movs.c	2016-02-18 07:16:45.114133871 +1030
+@@ -83,6 +83,8 @@
+       }
+    }
+ 
++   unsigned channels_handled = mov->dest.write_mask;
++
+    /* In some situations (if the vecN is involved in a phi-web), we can end
+     * up with a mov from a register to itself.  Some of those channels may end
+     * up doing nothing and there's no reason to have them as part of the mov.
+@@ -103,7 +105,7 @@
+       ralloc_free(mov);
+    }
+ 
+-   return mov->dest.write_mask;
++   return channels_handled;
+ }
+ 
+ static bool

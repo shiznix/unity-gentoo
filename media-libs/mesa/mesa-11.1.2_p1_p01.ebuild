@@ -186,12 +186,11 @@ src_prepare() {
 		epatch -p1 "${S}/debian/patches/${patch}" || die;
 	done
 
-	# Fix upstream changes to Mir that haven't been made in Mesa yet #
-#	sed -e 's:mir-client-platform-mesa-dev:mir-client-platform-mesa:g' \
-#		-i configure.ac
-
 	# fix for hardened pax_kernel, bug 240956
 	epatch "${FILESDIR}"/glx_ro_text_segm.patch
+
+	# Fix segfaulting in some applications using hardware acceleration (eg. Firefox b.g.o #574912) #
+	epatch -p1 "${FILESDIR}/glsl-nir-assert_fix.diff"
 
 	base_src_prepare
 	eautoreconf
