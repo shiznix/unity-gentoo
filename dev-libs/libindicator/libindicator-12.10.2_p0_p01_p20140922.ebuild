@@ -39,7 +39,7 @@ MAKEOPTS="${MAKEOPTS} -j1"
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
 
-	# Fix bad spacing typo #
+	# Make configure.ac compatible with >=pkgconfig-0.29 (fix bad spacing) #
 	sed -e 's:LIBINDICATOR_LIBS+="$LIBM":LIBINDICATOR_LIBS+=" $LIBM":g' \
 		-i configure.ac
 	eautoreconf
