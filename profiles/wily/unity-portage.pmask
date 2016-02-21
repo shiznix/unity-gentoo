@@ -19,6 +19,7 @@
 >=app-cdr/brasero-3.18.0::gentoo
 >=app-editors/gedit-3.18.0::gentoo
 >=app-text/evince-3.18.0::gentoo
+>=app-text/yelp-tools-3.18.0::gentoo
 >=dev-cpp/gtkmm-3.18.0::gentoo
 >=dev-libs/libgweather-3.18.0::gentoo
 >=dev-python/pyatspi-2.18.0::gentoo
