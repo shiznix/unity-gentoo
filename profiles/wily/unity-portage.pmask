@@ -26,7 +26,6 @@
 >=dev-python/pygobject-3.18.0::gentoo
 >=mail-client/evolution-3.18.0::gentoo
 >=media-gfx/eog-3.18.0::gentoo
->=media-libs/clutter-1.24.0::gentoo
 >=media-video/cheese-3.18.0::gentoo
 >=media-video/totem-3.18::gentoo
 >=net-misc/vinagre-3.18::gentoo
@@ -34,6 +33,7 @@
 >=www-client/epiphany-3.18.0::gentoo
 >=x11-libs/gtksourceview-3.18.0::gentoo
 >=x11-wm/mutter-3.18.0::gentoo
+>=media-plugins/grilo-plugins-0.2.17::gentoo
 
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
