@@ -65,6 +65,7 @@ sys-libs/talloc python
 sys-libs/zlib minizip
 unity-base/unity-settings-daemon input_devices_wacom	# Wacom/colord/bluetooth is no longer optional for 'unity-base/unity-control-center'
 virtual/notification-daemon -gnome	# Needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
+www-client/firefox -gstreamer-0 -qt5
 x11-base/xorg-server dmx xvfb
 x11-libs/libdrm libkms
 x11-libs/libxcb xkb
