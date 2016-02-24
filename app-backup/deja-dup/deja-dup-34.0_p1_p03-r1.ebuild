@@ -3,8 +3,6 @@
 # $Header: $
 
 EAPI=5
-#VALA_MIN_API_VERSION="0.22"
-#VALA_MAX_API_VERSION="0.22"
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator vala

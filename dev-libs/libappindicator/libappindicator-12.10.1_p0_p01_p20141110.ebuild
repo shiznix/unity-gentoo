@@ -4,8 +4,6 @@
 
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
-VALA_MIN_API_VERSION="0.22"
-VALA_MAX_API_VERSION="0.22"
 
 URELEASE="wily"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala

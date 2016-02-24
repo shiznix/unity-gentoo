@@ -5,8 +5,6 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
-VALA_MIN_API_VERSION="0.22"
-VALA_MAX_API_VERSION="0.22"
 
 URELEASE="wily"
 inherit autotools base eutils gnome2 ubuntu-versionator vala
