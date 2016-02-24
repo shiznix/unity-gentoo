@@ -5,8 +5,8 @@
 EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
-VALA_MIN_API_VERSION="0.24"
-VALA_MAX_API_VERSION="0.24"
+VALA_MIN_API_VERSION="0.26"
+VALA_MAX_API_VERSION="0.26"
 
 URELEASE="wily"
 inherit autotools flag-o-matic gnome2 ubuntu-versionator base vala
