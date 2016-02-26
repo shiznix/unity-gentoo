@@ -1,5 +1,12 @@
 ## Global masks ##
 
+# unity-base/unity will only build with <dev-libs/libsigc++-2.6 + mask all other packages that require >=dev-libs/libsigc++-2.6
+>=dev-cpp/atkmm-2.24
+>=dev-cpp/cairomm-1.12
+>=dev-cpp/glibmm-2.46
+>=dev-cpp/pangomm-2.38
+>=dev-libs/libsigc++-2.6
+
 # >=sys-auth/polkit-0.113 causes a strange race condition where user session authentication is lost from systemd
 #   End result is polkit-gnome auth dialog keeps popping up for such basic tasks as changing volume, logout or reboot
 >=sys-auth/polkit-0.113
