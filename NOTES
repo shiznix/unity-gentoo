@@ -183,6 +183,8 @@ unix:abstract=/com/ubuntu/upstart-session/1000/6350
 
 
 ## Compiz performance settings for 'ccsm' ##
-Click on "OpenGL" and set "Texture Filter" to Fast.
-Make sure "Sync to V blank" is selected, that Texture Compression is NOT selected, and make sure Frame Buffer, Vertex Buffer, and Always Use Buffer Swapping ARE all selected.
-Scroll down to "Image Loading" and make sure all options (jpeg, png, svg, and text) ARE selected.
+ Click on "OpenGL" and set "Texture Filter" to Fast.
+ Make sure "Sync to V blank" is selected, that Texture Compression is NOT selected, and make sure Frame Buffer, Vertex Buffer, and Always Use Buffer Swapping ARE all selected.
+ Scroll down to "Image Loading" and make sure all options (jpeg, png, svg, and text) ARE selected.
+ * Some applications such as Steam or Chromium with hardware acceleration enabled may lose window focus particularly after unminising the window or waking from screen lock/blank
+	- Enabling the 'Keep previews' option under 'Compiz Workarounds' fixes this issue
