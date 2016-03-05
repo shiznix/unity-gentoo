@@ -29,6 +29,12 @@ pkg_pretend() {
 	fi
 }
 
+src_prepare() {
+	# Enable building with gcc:5 #
+	epatch -p1 "${FILESDIR}/multiple_defs-gcc5.diff"
+	autotools-multilib_src_prepare
+}
+
 src_configure() {
 	local myeconfargs=(
 		$(use_enable ust lttng-ust)
