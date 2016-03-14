@@ -42,6 +42,7 @@ RDEPEND="
 	>=dev-libs/json-glib-0.7.6
 	>=dev-libs/libgee-0.8.5:0.8
 	>=dev-libs/libxml2-2.6.32:2
+	>=dev-libs/libsignon-glib-1.12
 	>=dev-util/desktop-file-utils-0.13
 	gnome-base/dconf
 	>=media-libs/gexiv2-0.4.90
