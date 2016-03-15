@@ -71,8 +71,8 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs+=($(cmake-utils_use_enable test TESTS)
-			-DVALA_COMPILER=$(type -P valac-0.20)
-			-DVAPI_GEN=$(type -P vapigen-0.20)
+			-DVALA_COMPILER=$(type -P valac-${VALA_MIN_API_VERSION})
+			-DVAPI_GEN=$(type -P vapigen-${VALA_MIN_API_VERSION})
 			-DCMAKE_INSTALL_DATADIR=/usr/share)
 	cmake-utils_src_configure
 }
