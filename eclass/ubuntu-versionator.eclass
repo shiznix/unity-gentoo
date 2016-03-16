@@ -61,7 +61,7 @@ PVR_PL_MINOR="${PVR_PL_MINOR%%-r*}"	# Strip revision strings
 	char=2
 	index=1
 	strlength="${#PVR_PL_MINOR}"
-	while [ "${PVR_PL_MINOR}" != "" ]; do
+	while [ "${PVR_PL_MINOR}" != "" ]; do	# Iterate through all chars loading every 2 chars into an array element
 		strtmp="${PVR_PL_MINOR:0:$char}"
 		if [ "${strlength}" -ge 6 ]; then	# Don't strip zeros from 3rd number field, this is the Ubuntu OS release #
 			if [ "${index}" != 3 ]; then
@@ -81,7 +81,7 @@ PVR_PL_MINOR="${PVR_PL_MINOR_tmp// /.}"
 PVR_PL_MICRO="${PVR_ARRAY[3]}"
 PVR_PL_MICRO="${PVR_PL_MICRO%*_}"
 PVR_PL_MICRO="${PVR_PL_MICRO%%-r*}"	# Strip revision strings
-	[[ -n "${strarray[@]}" ]] && unset strarray[@]
+	[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
 	char=2
 	index=1
 	strlength="${#PVR_PL_MICRO}"

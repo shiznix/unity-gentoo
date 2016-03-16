@@ -39,7 +39,7 @@ MOZCONFIG_OPTIONAL_JIT="enabled"
 URELEASE="wily-security"
 inherit base flag-o-matic toolchain-funcs mozconfig-v6.38 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
-UVER_PREFIX="+build2"
+UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/t/${PN}"
 
 DESCRIPTION="Thunderbird Mail Client"
@@ -64,7 +64,7 @@ SRC_URI="${SRC_URI}
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 CDEPEND="
-	>=dev-libs/nss-3.19.2
+	>=dev-libs/nss-3.21
 	>=dev-libs/nspr-4.10.10
 	!x11-plugins/enigmail
 	crypt?  ( || (

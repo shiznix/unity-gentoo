@@ -32,21 +32,25 @@ REQUIRED_USE="
 	ipod? ( udev )
 	mtp? ( udev )
 	dbus? ( python )
-	python? ( ^^ ( $(python_gen_useflags '*') ) )
 	webkit? ( python )
+	python? ( ^^ ( $(python_gen_useflags '*') ) )
 "
+
+# Tests failing for years without upstream caring at all
+# upstream bug #688745
+RESTRICT="test"
 
 # FIXME: double check what to do with fm-radio plugin
 # webkit-gtk-1.10 is needed because it uses gstreamer-1.0
 COMMON_DEPEND="
-	>=dev-libs/glib-2.34.0:2
+	>=dev-libs/glib-2.34:2
 	>=dev-libs/libxml2-2.7.8:2
-	>=x11-libs/gtk+-3.6:3[introspection]
-	>=x11-libs/gdk-pixbuf-2.18.0:2
-	>=dev-libs/gobject-introspection-0.10.0
+	>=x11-libs/gtk+-3.6:3[X,introspection]
+	>=x11-libs/gdk-pixbuf-2.18:2
+	>=dev-libs/gobject-introspection-0.10
 	>=dev-libs/libpeas-0.7.3[gtk,python?]
-	>=dev-libs/totem-pl-parser-3.2.0
-	>=net-libs/libsoup-2.34.0:2.4
+	>=dev-libs/totem-pl-parser-3.2
+	>=net-libs/libsoup-2.34:2.4
 	media-libs/gst-plugins-base:1.0[introspection]
 	media-libs/gstreamer:1.0[introspection]
 	>=sys-libs/tdb-1.2.6
@@ -62,9 +66,9 @@ COMMON_DEPEND="
 	daap? (
 		>=net-libs/libdmapsharing-2.9.19:3.0
 		media-plugins/gst-plugins-soup:1.0 )
+	libsecret? ( >=app-crypt/libsecret-0.18 )
 	html? ( >=net-libs/webkit-gtk-1.10:3 )
 	libnotify? ( >=x11-libs/libnotify-0.7.0 )
-	libsecret? ( >=app-crypt/libsecret-0.14 )
 	lirc? ( app-misc/lirc )
 	python? ( >=dev-python/pygobject-3.0:3[${PYTHON_USEDEP}] )
 	udev? (
@@ -86,22 +90,23 @@ RDEPEND="${COMMON_DEPEND}
 		>=media-libs/grilo-0.2:0.2
 		>=media-plugins/grilo-plugins-0.2:0.2[upnp-av] )
 	python? (
+		>=dev-libs/libpeas-0.7.3[${PYTHON_USEDEP}]
 		x11-libs/gdk-pixbuf:2[introspection]
 		x11-libs/gtk+:3[introspection]
 		x11-libs/pango[introspection]
 
 		dbus? ( sys-apps/dbus )
-		libsecret? ( >=app-crypt/libsecret-0.14[introspection] )
+		libsecret? ( >=app-crypt/libsecret-0.18[introspection] )
 		webkit? (
 			dev-python/mako[${PYTHON_USEDEP}]
 			>=net-libs/webkit-gtk-1.10:3[introspection] ) )
 "
 DEPEND="${COMMON_DEPEND}
-	>=app-text/gnome-doc-utils-0.9.1
+	virtual/pkgconfig
 	app-text/yelp-tools
 	dev-util/gtk-doc-am
 	>=dev-util/intltool-0.35
-	virtual/pkgconfig
+	>=app-text/gnome-doc-utils-0.9.1
 	test? ( dev-libs/check )
 "
 
@@ -120,7 +125,7 @@ src_prepare() {
 	DOCS="AUTHORS ChangeLog DOCUMENTERS INTERNALS \
 		MAINTAINERS MAINTAINERS.old NEWS README THANKS"
 
-	rm -v lib/rb-marshal.{c,h} || die
+	rm -v lib/rb-marshal.{c,h} || die # upstream bug 737831
 
 	gnome2_src_prepare
 }
@@ -133,7 +138,7 @@ src_configure() {
 	# checks are broken, so don't enable it
 	gnome2_src_configure \
 		MOZILLA_PLUGINDIR=/usr/$(get_libdir)/nsbrowser/plugins \
-		VALAC=$(type -P valac-0.14) \
+		VALAC=$(type -P true) \
 		--enable-mmkeys \
 		--disable-more-warnings \
 		--disable-static \
@@ -165,7 +170,7 @@ src_install() {
 src_test() {
 	unset SESSION_MANAGER
 	unset DBUS_SESSION_BUS_ADDRESS
-	Xemake check || die "test failed"
+	Xemake check
 }
 
 pkg_preinst() { gnome2_icon_savelist; }

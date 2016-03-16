@@ -16,14 +16,13 @@ GCONF_DEBUG="yes"
 # pkg-config
 GNOME2_LA_PUNT="yes"
 
-URELEASE="wily"
+URELEASE="wily-updates"
 inherit autotools base bash-completion-r1 gnome2 libtool eutils flag-o-matic multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator
 
 MY_P="${PN}2.0_${PV}"
 #S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://ubuntu/pool/main/g/${PN}2.0"
-UVER="1"
 
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/glib"
