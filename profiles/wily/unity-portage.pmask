@@ -20,6 +20,7 @@
 >=app-accessibility/orca-3.18.0::gentoo
 >=app-arch/file-roller-3.18.0::gentoo
 >=app-cdr/brasero-3.18.0::gentoo
+>=app-crypt/gcr-3.18.0::gentoo
 >=app-editors/gedit-3.18.0::gentoo
 >=app-text/evince-3.18.0::gentoo
 >=app-text/yelp-tools-3.18.0::gentoo
