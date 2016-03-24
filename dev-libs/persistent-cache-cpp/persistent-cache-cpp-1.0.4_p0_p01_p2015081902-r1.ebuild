@@ -29,6 +29,13 @@ DEPEND="dev-libs/boost:=
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	# Make the library shared instead of static #
+	#	This has wider implications when fixing GCC breaking C++11 ABI compatibility #
+	#		as rebuild tools such as revdep-rebuild will only work with shared objects #
+	#	eg. undefined reference to `core::PersistentCacheStats::cache_path[abi:cxx11]()const
+	sed -e 's:STATIC:SHARED:g' \
+		-i src/core/CMakeLists.txt
+
 	use doc || \
 		sed -e '/doc\/html/d' \
 			-e '/share\/doc/d' \
