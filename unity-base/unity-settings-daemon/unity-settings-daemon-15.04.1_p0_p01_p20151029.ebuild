@@ -40,6 +40,7 @@ COMMON_DEPEND="dev-libs/glib:2
 	sys-apps/accountsservice
 	sys-apps/systemd
 	>=sys-power/upower-0.99:=
+	x11-apps/xinput
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
 	x11-libs/libnotify:=
