@@ -2,5 +2,4 @@
 * Audit DEPEND and RDEPEND lists
 * Convert all ebuilds to EAPI=6 and remove use of base.eclass ('base_src_prepare' gets replaced with either 'default_src_prepare' or 'eapply "${PATCHES[@]}"')
 * Fix cat|grep of patches/series files to just grep directly
-* Fix ebuild headers to new git format and update Copyright year
 * Update PYTHON_COMPAT to support python 3.4 and 3.5

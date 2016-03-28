@@ -1,6 +1,6 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 EAPI="5"
 GCONF_DEBUG="no"
@@ -11,7 +11,7 @@ inherit autotools gnome2 ubuntu-versionator
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
-DESCRIPTION="GSettings deskop-wide schemas for the Unity desktop"
+DESCRIPTION="GSettings desktop-wide schemas for the Unity desktop"
 HOMEPAGE="https://launchpad.net/gsettings-ubuntu-touch-schemas"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
