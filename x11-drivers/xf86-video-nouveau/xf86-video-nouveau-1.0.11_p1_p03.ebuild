@@ -32,10 +32,7 @@ PATCHES=(
 src_prepare() {
 	if use mir; then
 		epatch -p1 "${WORKDIR}/${MY_PN}_${MY_PV}-${UVER}${UVER_SUFFIX}.diff"  # This needs to be applied for the debian/ directory to be present #
-		for patch in $(cat "${S}/debian/patches/series" | grep -v \# ); do
-			PATCHES+=( "${S}/debian/patches/${patch}" )
-		done
-		base_src_prepare
+		ubuntu-versionator_src_prepare
 		eautoreconf
 	fi
 }

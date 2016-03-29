@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 GCONF_DEBUG="yes"
 
 URELEASE="wily"
-inherit base eutils multilib multilib-minimal ubuntu-versionator
+inherit eutils multilib multilib-minimal ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 UVER_PREFIX="2"
@@ -25,10 +25,7 @@ RESTRICT="mirror"
 S="${WORKDIR}/${PN}-${PV}-${UVER_PREFIX}"
 
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 }
 
 src_configure() {

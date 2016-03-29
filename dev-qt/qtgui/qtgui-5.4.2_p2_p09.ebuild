@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 QT5_MODULE="qtbase"
 
@@ -22,16 +22,13 @@ KEYWORDS="~amd64 ~x86"
 # TODO: directfb, linuxfb, offscreen
 IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtkstyle
 	+harfbuzz ibus jpeg +png +udev +xcb"
-REQUIRED_USE="
-	|| ( eglfs xcb )
+REQUIRED_USE="|| ( eglfs xcb )
 	accessibility? ( dbus xcb )
 	egl? ( evdev )
 	eglfs? ( egl )
-	ibus? ( dbus )
-"
+	ibus? ( dbus )"
 
-RDEPEND="
-	dev-libs/glib:2
+RDEPEND="dev-libs/glib:2
 	~dev-qt/qtcore-${PV}
 	media-libs/fontconfig
 	media-libs/freetype:2
@@ -62,15 +59,12 @@ RDEPEND="
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
 		x11-libs/xcb-util-wm
-	)
-"
+	)"
 DEPEND="${RDEPEND}
 	evdev? ( sys-kernel/linux-headers )
-	udev? ( sys-kernel/linux-headers )
-"
+	udev? ( sys-kernel/linux-headers )"
 PDEPEND="
-	ibus? ( app-i18n/ibus )
-"
+	ibus? ( app-i18n/ibus )"
 
 S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"
@@ -122,10 +116,7 @@ QT5_GENTOO_CONFIG=(
 )
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	ubuntu-versionator_src_prepare
 
 	# egl_x11 is activated when both egl and xcb are enabled
 	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)

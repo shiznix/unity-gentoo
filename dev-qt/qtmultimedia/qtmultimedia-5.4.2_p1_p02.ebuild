@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit eutils qt5-build ubuntu-versionator
@@ -18,8 +18,7 @@ IUSE="alsa +gstreamer openal +opengl pulseaudio qml widgets"
 RESTRICT="mirror"
 
 # "widgets? ( qtgui[opengl=] )" because of bug 518542 comment 2
-RDEPEND="
-	>=dev-qt/qtcore-${PV}:5
+RDEPEND=">=dev-qt/qtcore-${PV}:5
 	>=dev-qt/qtgui-${PV}:5
 	>=dev-qt/qtnetwork-${PV}:5
 	alsa? ( media-libs/alsa-lib )
@@ -37,21 +36,16 @@ RDEPEND="
 		>=dev-qt/qtgui-${PV}:5
 		>=dev-qt/qtwidgets-${PV}:5
 		opengl? ( >=dev-qt/qtopengl-${PV}:5 )
-	)
-"
+	)"
 DEPEND="${RDEPEND}
-	x11-proto/videoproto
-"
+	x11-proto/videoproto"
 
 S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"
 QT_SELECT=5
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	ubuntu-versionator_src_prepare
 
 	qt_use_compile_test alsa
 	qt_use_compile_test gstreamer

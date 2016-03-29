@@ -50,10 +50,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
-	for patch in $(cat "debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 

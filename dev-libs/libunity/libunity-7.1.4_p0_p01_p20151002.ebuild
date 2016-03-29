@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
 URELEASE="wily"
-inherit autotools base eutils autotools python-r1 ubuntu-versionator vala
+inherit autotools eutils python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -33,10 +33,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
-	for patch in $(cat "debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit qt5-build ubuntu-versionator eutils
@@ -32,10 +32,7 @@ S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	ubuntu-versionator_src_prepare
 	use jit || epatch "${FILESDIR}"/${PN}-5.4.2-disable-jit.patch
 
 	use localstorage || sed -i -e '/localstorage/d' \

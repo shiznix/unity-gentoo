@@ -24,8 +24,7 @@ KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="
 	input_devices_wacom? ( udev )
 	smartcard? ( udev )
-	test? ( ${PYTHON_REQUIRED_USE} )
-"
+	test? ( ${PYTHON_REQUIRED_USE} )"
 RESTRICT="mirror"
 
 COMMON_DEPEND="
@@ -68,8 +67,7 @@ COMMON_DEPEND="
 	networkmanager? ( >=net-misc/networkmanager-0.9.9.1 )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
 	udev? ( virtual/libgudev:= )
-	wayland? ( dev-libs/wayland )
-"
+	wayland? ( dev-libs/wayland )"
 # Themes needed by g-s-d, gnome-shell, gtk+:3 apps to work properly
 # <gnome-color-manager-3.1.1 has file collisions with g-s-d-3.1.x
 # <gnome-power-manager-3.1.3 has file collisions with g-s-d-3.1.x
@@ -82,8 +80,7 @@ RDEPEND="${COMMON_DEPEND}
 	>=x11-themes/gnome-icon-theme-symbolic-2.91
 	!<gnome-base/gnome-control-center-2.22
 	!<gnome-extra/gnome-color-manager-3.1.1
-	!<gnome-extra/gnome-power-manager-3.1.3
-"
+	!<gnome-extra/gnome-power-manager-3.1.3"
 # xproto-7.0.15 needed for power plugin
 DEPEND="${COMMON_DEPEND}
 	cups? ( sys-apps/sed )
@@ -96,10 +93,16 @@ DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 	x11-proto/inputproto
 	x11-proto/xf86miscproto
-	>=x11-proto/xproto-7.0.15
-"
+	>=x11-proto/xproto-7.0.15"
 
 src_prepare() {
+	# Disable selected patches #
+	sed \
+		`# Fix desktop icons disappearing after a time and causing compiz freezing windows (see LP#1170483) ` \
+			-e 's:revert_background_dropping.patch:#revert_background_dropping.patch:g' \
+				-i "${WORKDIR}/debian/patches/series"
+	ubuntu-versionator_src_prepare
+
 	# https://bugzilla.gnome.org/show_bug.cgi?id=621836
 	# Apparently this change severely affects touchpad usability for some
 	# people, so revert it if USE=short-touchpad-timeout.
@@ -109,18 +112,6 @@ src_prepare() {
 
 	# Make colord and wacom optional; requires eautoreconf
 	epatch "${FILESDIR}/${PN}-3.16.0-optional.patch"
-
-	# Disable selected patches #
-	sed \
-		`# Fix desktop icons disappearing after a time and causing compiz freezing windows (see LP#1170483) ` \
-			-e 's:revert_background_dropping.patch:#revert_background_dropping.patch:g' \
-				-i "${WORKDIR}/debian/patches/series"
-
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
 
 	# Stop gnome-settings-daemon from being used in a Unity session #
 	sed -e 's:Unity;::' \

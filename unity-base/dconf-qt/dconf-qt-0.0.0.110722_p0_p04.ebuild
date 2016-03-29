@@ -2,12 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
 URELEASE="wily"
-inherit base gnome2 cmake-utils ubuntu-versionator
+inherit gnome2 cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
 
@@ -31,10 +31,8 @@ DEPEND="${RDEPEND}"
 S="${WORKDIR}/lib${PN}-0.0.0"
 
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
+	cmake-utils_src_prepare
 }
 
 src_configure() {

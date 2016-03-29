@@ -145,6 +145,34 @@ ubuntu-versionator_pkg_setup() {
 	fi
 }
 
+# @FUNCTION: ubuntu-versionator_src_prepare
+# @DESCRIPTION:
+# Apply common src_prepare tasks such as patching
+ubuntu-versionator_src_prepare() {
+	# Apply Ubuntu patchset if one is present #
+	[[ -f "${WORKDIR}/debian/patches/series" ]] && UPATCH_DIR="${WORKDIR}/debian/patches"
+	[[ -f "debian/patches/series" ]] && UPATCH_DIR="debian/patches"
+	if [ -d "${UPATCH_DIR}" ]; then
+		for patch in $(grep -v \# "${UPATCH_DIR}/series"); do
+			PATCHES+=( "${UPATCH_DIR}/${patch}" )
+		done
+		[[ ${PATCHES[@]} ]] && einfo "  <-- Ubuntu patchset -->"
+		# Many eclasses (cmake-utils,distutils-r1,qt5-build) apply their own 'default' command for EAPI=6 or 'epatch ${PATCHES[@]}' command for EAPI <6 so let them #
+		#	'declare' checks to see if any of those functions are set/inherited and only apply 'default' if they are not
+		if [ "${EAPI}" -ge 6 ]; then
+			[[ $(declare -Ff cmake-utils_src_prepare) ]] || \
+			[[ $(declare -Ff distutils-r1_src_prepare) ]] || \
+			[[ $(declare -Ff qt5-build_src_prepare) ]] || \
+				default
+		else
+			# Only apply base_src_prepare if EAPI<6 and have inherited base.eclass #
+			# 	(use 'base' eclass while 'autotools','gnome2','kde-4','qt4-r2' and 'readme.gentoo' block EAPI6 upgrade) #
+			[[ $(declare -Ff base_src_prepare) ]] && \
+				base_src_prepare
+		fi
+	fi
+}
+
 # @FUNCTION: ubuntu-versionator_pkg_postinst
 # @DESCRIPTION:
 # Re-create bamf.index and trigger re-profile of ureadahead if installed

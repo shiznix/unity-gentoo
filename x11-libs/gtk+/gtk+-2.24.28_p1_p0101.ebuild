@@ -2,12 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="5"
+EAPI=5
 GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes"
 
 URELEASE="wily-security"
-inherit base autotools eutils flag-o-matic gnome2 multilib virtualx readme.gentoo multilib-minimal ubuntu-versionator
+inherit autotools base eutils flag-o-matic gnome2 multilib virtualx readme.gentoo multilib-minimal ubuntu-versionator
 
 MY_PN="gtk+2.0"
 MY_P="${MY_PN}_${PV}"
@@ -123,12 +123,7 @@ src_prepare() {
 		`# Disabled so as not to break /usr/bin/gtk-query-immodules-2.0 for multilib` \
 			-e 's:098_multiarch_module_path.patch:#098_multiarch_module_path.patch:g' \
 				-i "${WORKDIR}/debian/patches/series"
-
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}/fix-ubuntumenuproxy-build.patch"
 
 	# Fix tests running when building out of sources, bug #510596, upstream bug #730319

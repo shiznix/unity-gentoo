@@ -27,28 +27,24 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/GConf-${PV}"
 
-RDEPEND="
-	${PYTHON_DEPS}
+RDEPEND="${PYTHON_DEPS}
 	>=dev-libs/glib-2.31:2[${MULTILIB_USEDEP}]
 	>=dev-libs/dbus-glib-0.74:=[${MULTILIB_USEDEP}]
 	>=sys-apps/dbus-1:=[${MULTILIB_USEDEP}]
 	>=dev-libs/libxml2-2:2[${MULTILIB_USEDEP}]
 	introspection? ( >=dev-libs/gobject-introspection-0.9.5:= )
 	ldap? ( net-nds/openldap:=[${MULTILIB_USEDEP}] )
-	policykit? ( sys-auth/polkit:= )
-"
+	policykit? ( sys-auth/polkit:= )"
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
 	dev-util/gtk-doc-am
 	>=dev-util/intltool-0.35
-	virtual/pkgconfig[${MULTILIB_USEDEP}]
-"
+	virtual/pkgconfig[${MULTILIB_USEDEP}]"
 RDEPEND="${RDEPEND}
 	abi_x86_32? (
 		!<=app-emulation/emul-linux-x86-gtklibs-20140508-r1
 		!app-emulation/emul-linux-x86-gtklibs[-abi_x86_32(-)]
 	)"
-
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 pkg_setup() {
@@ -57,13 +53,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
-
-	gnome2_src_prepare
+	ubuntu-versionator_src_prepare
 
 	# Do not start gconfd when installing schemas, fix bug #238276, upstream #631983
 	epatch "${FILESDIR}/${PN}-2.24.0-no-gconfd.patch"

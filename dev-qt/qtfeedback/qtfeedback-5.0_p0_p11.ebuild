@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
-inherit base qt5-build ubuntu-versionator virtualx
+inherit qt5-build ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/q/${PN}-opensource-src"
 UVER_PREFIX="~git20130529"
@@ -26,10 +26,7 @@ DEPEND=">=dev-qt/qtcore-${PV}:5
 S="${WORKDIR}"
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	ubuntu-versionator_src_prepare
 	qt5-build_src_prepare
 	perl -w /usr/$(get_libdir)/qt5/bin/syncqt.pl -version 5.0.0
 }

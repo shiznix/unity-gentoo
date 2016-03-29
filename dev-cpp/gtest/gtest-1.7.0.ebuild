@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="5"
+EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
@@ -38,10 +38,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-
+	ubuntu-versionator_src_prepare
 	sed -i -e "s|/tmp|${T}|g" test/gtest-filepath_test.cc || die
 	sed -i -r \
 		-e '/^install-(data|exec)-local:/s|^.*$|&\ndisabled-&|' \

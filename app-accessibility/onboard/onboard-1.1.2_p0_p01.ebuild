@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{3_3,3_4} )
 DISTUTILS_SINGLE_IMPL=1
 
@@ -50,10 +50,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	ubuntu-versionator_src_prepare
 	distutils-r1_src_prepare
 }
 

@@ -1,19 +1,19 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 # @ECLASS: qt5-build.eclass
 # @MAINTAINER:
-# Qt herd <qt@gentoo.org>
+# qt@gentoo.org
 # @AUTHOR:
 # Davide Pesavento <pesa@gentoo.org>
 # @BLURB: Eclass for Qt5 split ebuilds.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt5.
-# Requires EAPI 5.
+# Requires EAPI 5 or 6.
 
 case ${EAPI} in
-	5)	: ;;
+	5|6)    : ;;
 	*)	die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
@@ -207,8 +207,12 @@ qt5-build_src_prepare() {
 	fi
 
 	# apply patches
-	[[ ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
-	epatch_user
+	if [[ ${EAPI} == 5 ]]; then
+		[[ ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
+		epatch_user
+	else
+		default
+	fi
 }
 
 # @FUNCTION: qt5-build_src_configure
@@ -528,16 +532,16 @@ qt5_base_configure() {
 		# obsolete flag, does nothing
 		#-qml-debug
 
-		# instruction set support
-		$(is-flagq -mno-sse2    && echo -no-sse2)
-		$(is-flagq -mno-sse3    && echo -no-sse3)
-		$(is-flagq -mno-ssse3   && echo -no-ssse3)
-		$(is-flagq -mno-sse4.1  && echo -no-sse4.1)
-		$(is-flagq -mno-sse4.2  && echo -no-sse4.2)
-		$(is-flagq -mno-avx     && echo -no-avx)
-		$(is-flagq -mno-avx2    && echo -no-avx2)
-		$(is-flagq -mno-dsp     && echo -no-mips_dsp)
-		$(is-flagq -mno-dspr2   && echo -no-mips_dspr2)
+		# extended instruction sets support
+		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-sse2   && echo -no-sse2)
+		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-sse3   && echo -no-sse3)
+		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-ssse3  && echo -no-ssse3)
+		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-sse4.1 && echo -no-sse4.1)
+		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-sse4.2 && echo -no-sse4.2)
+		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-avx    && echo -no-avx)
+		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-avx2   && echo -no-avx2)
+		$(is-flagq -mno-dsp   && echo -no-mips_dsp)
+		$(is-flagq -mno-dspr2 && echo -no-mips_dspr2)
 
 		# use pkg-config to detect include and library paths
 		-pkg-config

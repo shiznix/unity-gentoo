@@ -165,12 +165,7 @@ src_prepare() {
 		`# Don't break Xorg server's setxkbmap functionality` \
 		-e 's:190_cache-xkbcomp_output_for_fast_start_up:#190_cache-xkbcomp_output_for_fast_start_up:g' \
 			-i "${S}/debian/patches/series"
-
-	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${S}/debian/patches/${patch}" )
-	done
-	base_src_prepare
-
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 

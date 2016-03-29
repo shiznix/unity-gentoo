@@ -14,8 +14,7 @@ UURL="mirror://ubuntu/pool/universe/p/${MY_PN}"
 
 DESCRIPTION="Indicator for monitoring hardware temperature used by the Unity desktop"
 HOMEPAGE="http://wpitchoune.net/psensor"
-SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
-	${UURL}/${MY_PN}_${PV}-${UVER}.debian.tar.xz"
+SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -41,14 +40,6 @@ DEPEND="dev-libs/glib:2
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 MAKEOPTS="${MAKEOPTS} -j1"
-
-src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
-}
 
 src_configure() {
 	econf \

@@ -34,8 +34,7 @@ for x in ${CORE_SUPPORTED_LANGUAGES}; do
 	IUSE+="linguas_${x} "
 done
 
-RDEPEND="
-	app-text/gnome-doc-utils
+RDEPEND="app-text/gnome-doc-utils
 	>=dev-db/sqlite-3.5.9:3
 	>=dev-libs/dbus-glib-0.80
 	>=dev-libs/glib-2.30.0:2
@@ -61,7 +60,6 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	$(vala_depend)
 	>=sys-devel/m4-1.4.13"
-
 DOCS=( AUTHORS MAINTAINERS NEWS README THANKS )
 
 # This probably comes from libraries that
@@ -84,18 +82,12 @@ src_prepare() {
 	sed \
 		-e 's|CFLAGS :|CFLAGS +|g' \
 		-i plugins/Makefile.plugin.mk || die
-
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 }
 
 src_configure() {
 	./configure \
-		${G2CONF} \
-		|| die
+		${G2CONF} || die
 }
 
 src_compile() {

@@ -18,7 +18,7 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
-RESTRICT="mirror"
+RESTRICT="mirror test"
 
 DEPEND="dev-util/valgrind
 	x11-base/xorg-server
@@ -28,11 +28,7 @@ DEPEND="dev-util/valgrind
 	doc? ( app-doc/doxygen )"
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 

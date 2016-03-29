@@ -8,7 +8,7 @@ GCONF_DEBUG="no"
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
-inherit gnome2 python-any-r1 ubuntu-versionator base
+inherit base gnome2 python-any-r1 ubuntu-versionator
 
 DESCRIPTION="An account manager and channel dispatcher for the Telepathy framework patched for the Unity desktop"
 HOMEPAGE="http://cgit.freedesktop.org/telepathy/telepathy-mission-control/"
@@ -47,11 +47,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 }
 
 src_configure() {

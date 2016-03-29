@@ -47,26 +47,20 @@ RDEPEND="!<gnome-base/gnome-session-3.8
 
 	eds? ( >=gnome-extra/evolution-data-server-3.5.3:= )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.5 )
-	networkmanager? ( >=net-misc/networkmanager-0.6.7 )
-"
+	networkmanager? ( >=net-misc/networkmanager-0.6.7 )"
 DEPEND="${RDEPEND}
 	app-text/docbook-xml-dtd:4.1.2
 	>=dev-lang/perl-5
 	dev-util/gtk-doc-am
 	>=dev-util/intltool-0.40
-	virtual/pkgconfig
-"
+	virtual/pkgconfig"
 # eautoreconf needs
 #	dev-libs/gobject-introspection-common
 #	gnome-base/gnome-common
 
 src_prepare() {
 	sed -i '/ubuntu_language.patch/d' "${WORKDIR}/debian/patches/series" || die
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
-
+	ubuntu-versionator_src_prepare
 	eautoreconf
 	gnome2_src_prepare
 }

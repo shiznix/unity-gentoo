@@ -26,8 +26,7 @@ IUSE="bluetooth +introspection modemmanager systemd"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-RDEPEND="
-	app-crypt/libsecret
+RDEPEND="app-crypt/libsecret
 	>=dev-libs/glib-2.32:2[dbus]
 	>=dev-libs/dbus-glib-0.88
 	dev-libs/libappindicator:=
@@ -45,20 +44,13 @@ RDEPEND="
 	modemmanager? ( >=net-misc/modemmanager-0.7.990 )
 	virtual/freedesktop-icon-theme
 	virtual/notification-daemon
-	virtual/libgudev:=
-"
+	virtual/libgudev:="
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
-	>=dev-util/intltool-0.50.1
-"
+	>=dev-util/intltool-0.50.1"
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
-
+	ubuntu-versionator_src_prepare
 	sed -e "s:-Werror::g" \
                 -i "configure" || die
 

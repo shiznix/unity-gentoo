@@ -18,6 +18,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="nls debug"
+RESTRICT="mirror"
 
 RDEPEND=">=x11-libs/libnotify-0.3.2
 	net-im/pidgin[gtk]
@@ -27,13 +28,7 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 src_prepare() {
-	# EPATCH_FORCE=yes EPATCH_SUFFIX=diff epatch "${WORKDIR}"/debian/patches
-	# epatch "${FILESDIR}"/pidgin-libnotify-0.14-libnotify-0.7.patch
-	# sed -i -e '/CFLAGS/s:-g3::' configure || die
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 

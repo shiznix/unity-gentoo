@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
-inherit autotools base ubuntu-versionator
+inherit autotools ubuntu-versionator
 
 MY_PN="policykit-1-gnome"
 UURL="mirror://ubuntu/pool/main/p/${MY_PN}"
@@ -34,11 +34,7 @@ DEPEND="${RDEPEND}
 DOCS=( AUTHORS HACKING NEWS README TODO )
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 

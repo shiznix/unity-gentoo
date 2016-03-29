@@ -126,11 +126,7 @@ strip_builddir() {
 }
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 
 	# -O3 and company cause random crashes in applications. Bug #133469
 	replace-flags -O3 -O2

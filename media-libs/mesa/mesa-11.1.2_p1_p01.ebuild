@@ -7,7 +7,7 @@ EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="xenial"
-inherit base autotools eutils multilib multilib-minimal flag-o-matic \
+inherit autotools eutils multilib multilib-minimal flag-o-matic \
 	python-any-r1 pax-utils ubuntu-versionator
 
 OPENGL_DIR="xorg-x11"
@@ -180,11 +180,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Ubuntu patchset #
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
-		epatch -p1 "${S}/debian/patches/${patch}" || die;
-	done
+	ubuntu-versionator_src_prepare
 
 	# fix for hardened pax_kernel, bug 240956
 	epatch "${FILESDIR}"/glx_ro_text_segm.patch

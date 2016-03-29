@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
@@ -74,23 +74,17 @@ S="${WORKDIR}/${QT5_MODULE}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"
 export QT_SELECT=5
 
-PATCHES=(
-	"${FILESDIR}/${PN}-5.4.2-system-leveldb.patch"
-)
-
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 	python-any-r1_pkg_setup
 }
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	ubuntu-versionator_src_prepare
 
 	# ensure bundled library cannot be used
 	rm -r Source/ThirdParty/leveldb || die
+	epatch "${FILESDIR}/${PN}-5.4.2-system-leveldb.patch"
 
 	# bug 466216
 	sed -i -e '/CONFIG +=/s/rpath//' \

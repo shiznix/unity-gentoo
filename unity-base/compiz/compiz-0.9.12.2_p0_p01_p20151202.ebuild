@@ -85,12 +85,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Ubuntu patchset #
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
-	for patch in $(cat "${S}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${S}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 
 	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
 	sed -e 's:xubuntu:xunity:g' \

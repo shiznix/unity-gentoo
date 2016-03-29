@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="5"
+EAPI=5
 
 URELEASE="wily"
 inherit autotools base bash-completion-r1 eutils flag-o-matic gnome2-utils linux-info readme.gentoo systemd user versionator udev multilib-minimal ubuntu-versionator
@@ -144,11 +144,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
+
 	# Skip test that cannot work with sandbox, bug #501846
 	sed -i -e '/lock-autospawn-test/d' src/Makefile.am || die
 

@@ -33,13 +33,12 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}/hybris"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	# Ubuntu patchset #
-	cd "${WORKDIR}"
-	for patch in $(cat "debian/patches/series" | grep -v \# ); do
-		epatch "debian/patches/${patch}"
-	done
-
-	cd "${S}"
+	# Ubuntu patchset recreated here due to odd ${S} path #
+	pushd "${WORKDIR}"
+		for patch in $(grep -v \# "debian/patches/series"); do
+			epatch "debian/patches/${patch}"
+		done
+	popd
 	eautoreconf
 	ln -s /usr/include/android include/android	# ./configure usually does this, but pushd/popd used by multilib breaks it
 }

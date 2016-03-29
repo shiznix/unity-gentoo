@@ -34,9 +34,5 @@ RDEPEND="${DEPEND}"
 S=${WORKDIR}/${PN/-kde}-0.3.2.1	# Incorrect versioning from upstream in tarball
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 }

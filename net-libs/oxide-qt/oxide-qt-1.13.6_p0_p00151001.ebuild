@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily-security"
-inherit base check-reqs cmake-utils python-single-r1 ubuntu-versionator
+inherit check-reqs cmake-utils python-single-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
 DESCRIPTION="Web browser engine library for Qt"
@@ -62,18 +62,13 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-
+	ubuntu-versionator_src_prepare
+	cmake-utils_src_prepare
 	epatch "${FILESDIR}/${PN}-1.2.5-remove-_FORTIFY_SOURCE-warning.patch"
 
 	# Fix sandbox violation #
 	sed -e "s:\${CMAKE_INSTALL_PREFIX}:${ED}\${CMAKE_INSTALL_PREFIX}:g" \
 		-i qt/CMakeLists.txt || die
-
-	base_src_prepare
 }
 
 src_configure() {

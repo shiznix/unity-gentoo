@@ -6,7 +6,7 @@ EAPI=5
 GCONF_DEBUG="no"
 
 URELEASE="wily"
-inherit autotools gnome2 ubuntu-versionator
+inherit autotools base gnome2 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
 
@@ -35,12 +35,8 @@ DEPEND="${COMMON_DEPEND}
 S="${WORKDIR}/${PN}-${PV}"
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
-	done
+	ubuntu-versionator_src_prepare
 	eautoreconf
-
 	gnome2_src_prepare
 
 	# Don't show KDE standalone settings desktop files in GNOME others menu

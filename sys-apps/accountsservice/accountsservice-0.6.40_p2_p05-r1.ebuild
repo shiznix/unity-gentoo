@@ -7,7 +7,7 @@ GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
 URELEASE="wily"
-inherit autotools eutils gnome2 systemd vala ubuntu-versionator base
+inherit autotools base eutils gnome2 systemd vala ubuntu-versionator
 
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
@@ -56,10 +56,7 @@ src_prepare() {
 	sed -i '/2001-filtering_out_users.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/2002-disable_systemd.patch/d' "${WORKDIR}/debian/patches/series" || die
 
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	eautoreconf
 
 	use vala && vala_src_prepare

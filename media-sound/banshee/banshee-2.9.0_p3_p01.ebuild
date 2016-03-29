@@ -81,15 +81,9 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-2.6.2"
 
 src_prepare () {
-	# Ubuntu patchset #
-
 	# remove dedirection over ubuntu servers since it doesn't work any more
 	sed -i '/Change-Amazon-redirect-url/d' "${WORKDIR}/debian/patches/series" || die
-
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 
 	DOCS="AUTHORS ChangeLog HACKING NEWS README"
 

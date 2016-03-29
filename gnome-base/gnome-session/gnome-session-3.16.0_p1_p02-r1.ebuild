@@ -6,7 +6,7 @@ EAPI=5
 GCONF_DEBUG="yes"
 
 URELEASE="wily"
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit autotools base eutils gnome2 ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -51,8 +51,7 @@ COMMON_DEPEND="
 	x11-apps/xdpyinfo
 
 	gconf? ( >=gnome-base/gconf-2:2 )
-	systemd? ( >=sys-apps/systemd-183:0= )
-"
+	systemd? ( >=sys-apps/systemd-183:0= )"
 # Pure-runtime deps from the session files should *NOT* be added here
 # Otherwise, things like gdm pull in gnome-shell
 # gnome-themes-standard is needed for the failwhale dialog themeing
@@ -62,8 +61,7 @@ RDEPEND="${COMMON_DEPEND}
 	>=gnome-base/gsettings-desktop-schemas-0.1.7
 	>=x11-themes/gnome-themes-standard-2.91.92
 	sys-apps/dbus[X]
-	!systemd? ( sys-auth/consolekit )
-"
+	!systemd? ( sys-auth/consolekit )"
 DEPEND="${COMMON_DEPEND}
 	>=dev-lang/perl-5
 	>=sys-devel/gettext-0.10.40
@@ -74,16 +72,12 @@ DEPEND="${COMMON_DEPEND}
 	!<gnome-base/gdm-2.20.4
 	doc? (
 		app-text/xmlto
-		dev-libs/libxslt )
-"
+		dev-libs/libxslt )"
 # gnome-common needed for eautoreconf
 # gnome-base/gdm does not provide gnome.desktop anymore
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		epatch -p1 "${WORKDIR}/debian/patches/${patch}" || die;
-	done
+	ubuntu-versionator_src_prepare
 
 	# Desktop Session is named 'unity' #
 	sed -e 's:Ubuntu:Unity:g' \

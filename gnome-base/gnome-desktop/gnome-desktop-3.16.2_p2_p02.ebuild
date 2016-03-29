@@ -36,11 +36,9 @@ COMMON_DEPEND="
 	x11-libs/libX11
 	x11-misc/xkeyboard-config
 	>=gnome-base/gsettings-desktop-schemas-3.5.91
-	introspection? ( >=dev-libs/gobject-introspection-0.9.7 )
-"
+	introspection? ( >=dev-libs/gobject-introspection-0.9.7 )"
 RDEPEND="${COMMON_DEPEND}
-	!<gnome-base/gnome-desktop-2.32.1-r1:2[doc]
-"
+	!<gnome-base/gnome-desktop-2.32.1-r1:2[doc]"
 DEPEND="${COMMON_DEPEND}
 	app-text/docbook-xml-dtd:4.1.2
 	dev-util/gdbus-codegen
@@ -50,21 +48,18 @@ DEPEND="${COMMON_DEPEND}
 	x11-proto/xproto
 	>=x11-proto/randrproto-1.2
 	virtual/pkgconfig
-	gnome-extra/yelp
-"
+	gnome-extra/yelp"
 
 # Includes X11/Xatom.h in libgnome-desktop/gnome-bg.c which comes from xproto
 # Includes X11/extensions/Xrandr.h that includes randr.h from randrproto (and
 # eventually libXrandr shouldn't RDEPEND on randrproto)
 
 src_prepare() {
+	# Disable language patches #
 	sed -i '/ubuntu_language.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/ubuntu_language_list_from_SUPPORTED.patch/d' "${WORKDIR}/debian/patches/series" || die
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
 
+	ubuntu-versionator_src_prepare
 	eautoreconf
 	gnome2_src_prepare
 }

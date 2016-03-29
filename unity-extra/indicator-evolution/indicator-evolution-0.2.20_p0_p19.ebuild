@@ -40,10 +40,7 @@ DEPEND="dev-libs/dee:=
 S="${WORKDIR}/${MY_PN}-${PV}"
 
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 

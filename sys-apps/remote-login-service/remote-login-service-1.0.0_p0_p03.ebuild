@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=5
 GNOME2_LA_PUNT="yes"
 
-inherit eutils autotools ubuntu-versionator base
+inherit autotools base eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"
 URELEASE="vivid"
@@ -30,13 +30,9 @@ RDEPEND=">=net-misc/networkmanager-0.9.7
 	unity-extra/thin-client-config-agent"
 
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
+	ubuntu-versionator_src_prepare
 
 	# remove 'dbustest1-dev' dependency
 	sed -i -e '/^PKG_CHECK_MODULES(TEST, dbustest-1)/d' configure.ac
-
 	eautoreconf
-	base_src_prepare
 }

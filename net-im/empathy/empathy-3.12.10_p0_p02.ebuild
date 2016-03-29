@@ -111,11 +111,7 @@ src_prepare() {
 		`#  causes empathy process to hang, no chat windows displayed and consumes 100% CPU #` \
 			-e 's:41_unity_launcher_progress.patch:#41_unity_launcher_progress.patch:g' \
 				-i "${WORKDIR}/debian/patches/series"
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf

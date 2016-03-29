@@ -13,8 +13,7 @@ UVER_SUFFIX="~gcc5.1"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -45,12 +44,6 @@ src_prepare() {
 
 	# Let portage strip the files #
 	sed -e 's:CONFIG         +=:CONFIG += nostrip:g' -i "${S}/common-project-config.pri" || die
-
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
 
 	use debug && \
 		for file in $(grep -r debug * | grep \\.pro | awk -F: '{print $1}' | uniq); do

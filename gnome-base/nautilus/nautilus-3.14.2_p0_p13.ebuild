@@ -48,8 +48,7 @@ COMMON_DEPEND="
 	exif? ( >=media-libs/libexif-0.6.20 )
 	introspection? ( >=dev-libs/gobject-introspection-0.6.4 )
 	tracker? ( >=app-misc/tracker-0.16:= )
-	xmp? ( >=media-libs/exempi-2.1.0 )
-"
+	xmp? ( >=media-libs/exempi-2.1.0 )"
 DEPEND="${COMMON_DEPEND}
 	>=dev-lang/perl-5
 	>=dev-util/gdbus-codegen-2.33
@@ -58,12 +57,10 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig
 	x11-proto/xproto
-	dev-libs/libzeitgeist
-"
+	dev-libs/libzeitgeist"
 RDEPEND="${COMMON_DEPEND}
 	packagekit? ( app-admin/packagekit-base )
-	sendto? ( !<gnome-extra/nautilus-sendto-3.0.1 )
-"
+	sendto? ( !<gnome-extra/nautilus-sendto-3.0.1 )"
 
 # For eautoreconf
 #	gnome-base/gnome-common
@@ -76,16 +73,11 @@ PDEPEND="
 	tracker? ( >=gnome-extra/nautilus-tracker-tags-0.12 )
 	previewer? ( >=gnome-extra/sushi-0.1.9 )
 	sendto? ( >=gnome-extra/nautilus-sendto-3.0.1 )
-	>=gnome-base/gvfs-1.14[gtk]
-"
+	>=gnome-base/gvfs-1.14[gtk]"
 # Need gvfs[gtk] for recent:/// support
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v '#'); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	eautoreconf
 
 	if use previewer; then
@@ -96,7 +88,7 @@ src_prepare() {
 
 	# Restore the nautilus-2.x Delete shortcut (Ctrl+Delete will still work);
 	# bug #393663
-#	epatch "${FILESDIR}/${PN}-3.5.91-delete.patch"	# Handled by Ubuntu's '14_bring_del_instead_ctrl_del.patch'
+#	epatch "${FILESDIR}/${PN}-3.5.91-delete.patch"	# Disabled as handled by Ubuntu's '14_bring_del_instead_ctrl_del.patch'
 
 	# Remove -D*DEPRECATED flags. Don't leave this for eclass! (bug #448822)
 	sed -e 's/DISABLE_DEPRECATED_CFLAGS=.*/DISABLE_DEPRECATED_CFLAGS=/' \

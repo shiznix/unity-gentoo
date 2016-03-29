@@ -34,10 +34,7 @@ DEPEND="dev-libs/glib:2
 	$(vala_depend)"
 
 src_prepare() {
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 
 	# Install docs in /usr/share/doc #
 	sed -e "s:\${prefix}/doc/alm:/usr/share/doc/${P}:g" \

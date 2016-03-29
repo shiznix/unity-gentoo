@@ -33,8 +33,7 @@ REQUIRED_USE="
 	mtp? ( udev )
 	dbus? ( python )
 	webkit? ( python )
-	python? ( ^^ ( $(python_gen_useflags '*') ) )
-"
+	python? ( ^^ ( $(python_gen_useflags '*') ) )"
 
 # Tests failing for years without upstream caring at all
 # upstream bug #688745
@@ -75,8 +74,7 @@ COMMON_DEPEND="
 		virtual/libgudev:=
 		ipod? ( >=media-libs/libgpod-0.7.92[udev] )
 		mtp? ( >=media-libs/libmtp-0.3 ) )
-	zeitgeist? ( gnome-extra/zeitgeist )
-"
+	zeitgeist? ( gnome-extra/zeitgeist )"
 RDEPEND="${COMMON_DEPEND}
 	media-plugins/gst-plugins-soup:1.0
 	media-plugins/gst-plugins-libmms:1.0
@@ -99,16 +97,14 @@ RDEPEND="${COMMON_DEPEND}
 		libsecret? ( >=app-crypt/libsecret-0.18[introspection] )
 		webkit? (
 			dev-python/mako[${PYTHON_USEDEP}]
-			>=net-libs/webkit-gtk-1.10:3[introspection] ) )
-"
+			>=net-libs/webkit-gtk-1.10:3[introspection] ) )"
 DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 	app-text/yelp-tools
 	dev-util/gtk-doc-am
 	>=dev-util/intltool-0.35
 	>=app-text/gnome-doc-utils-0.9.1
-	test? ( dev-libs/check )
-"
+	test? ( dev-libs/check )"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
@@ -116,11 +112,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Ubuntu patchset #
-	for patch in $(cat "${WORKDIR}/debian/patches/series" | grep -v \# ); do
-		PATCHES+=( "${WORKDIR}/debian/patches/${patch}" )
-	done
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 	eautoreconf
 	DOCS="AUTHORS ChangeLog DOCUMENTERS INTERNALS \
 		MAINTAINERS MAINTAINERS.old NEWS README THANKS"
