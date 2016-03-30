@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit autotools eutils ubuntu-versionator
@@ -27,6 +27,7 @@ DEPEND="dev-libs/libindicator:3
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# some API is declared as deprecated in gtk+ 3.10
 	epatch "${FILESDIR}/remove_GTK_DISABLE_DEPRECATED.patch"
 

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils gnome2-utils ubuntu-versionator
@@ -35,6 +35,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# Fix schema errors and sandbox violations #
 	epatch "${FILESDIR}/sandbox_violations_fix.diff"
 
@@ -47,6 +48,7 @@ src_prepare() {
 		sed -e 's:yelp:yelp help\:ubuntu-help:g' \
 			-i src/backend-dbus/actions.c
 	fi
+	cmake-utils_src_prepare
 }
 
 src_install() {

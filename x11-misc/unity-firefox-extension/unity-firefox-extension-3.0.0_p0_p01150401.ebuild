@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="vivid-security"
-inherit autotools base eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 UVER_PREFIX="+14.04.20140416"
@@ -27,6 +27,7 @@ DEPEND="dev-libs/libunity-webapps
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	pushd libufe-xidgetter/
 		eautoreconf
 	popd

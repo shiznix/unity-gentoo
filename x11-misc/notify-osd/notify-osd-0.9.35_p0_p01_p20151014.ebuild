@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit autotools gnome2-utils multilib savedconfig ubuntu-versionator
@@ -41,6 +41,7 @@ DOCS=( AUTHORS ChangeLog NEWS README TODO )
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	sed -i -e 's:noinst_PROG:check_PROG:' tests/Makefile.am || die
 	restore_config src/{bubble,defaults,dnd}.c #428134
 	eautoreconf

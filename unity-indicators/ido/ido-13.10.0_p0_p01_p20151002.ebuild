@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit autotools eutils flag-o-matic gnome2 ubuntu-versionator vala
+inherit autotools eutils flag-o-matic ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -31,7 +29,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
-
+	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 

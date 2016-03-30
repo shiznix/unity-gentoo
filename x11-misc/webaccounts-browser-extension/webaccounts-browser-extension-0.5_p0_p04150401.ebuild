@@ -40,6 +40,11 @@ pkg_setup() {
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	sed \
+		-e 's:fix-libtool-check.diff:#fix-libtool-check.diff:g' \
+			-i "${WORKDIR}/debian/patches/series"
+	ubuntu-versionator_src_prepare
+
 	cp "debian/webaccounts.pem" .
 	eautoreconf
 }

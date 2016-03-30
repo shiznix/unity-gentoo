@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit autotools eutils flag-o-matic ubuntu-versionator
@@ -30,7 +30,7 @@ src_prepare() {
 	# Fix desktop file installation location #
 	sed 's:$(pkgdatadir)/upstart/xdg/autostart:$(datadir)/upstart/xdg/autostart:g' \
 		-i data/upstart/Makefile.am
-
+	ubuntu-versionator_src_prepare
 	eautoreconf
 	append-cflags -Wno-error
 

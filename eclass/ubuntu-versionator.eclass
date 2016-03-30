@@ -157,19 +157,19 @@ ubuntu-versionator_src_prepare() {
 			PATCHES+=( "${UPATCH_DIR}/${patch}" )
 		done
 		[[ ${PATCHES[@]} ]] && einfo "  <-- Ubuntu patchset -->"
-		# Many eclasses (cmake-utils,distutils-r1,qt5-build) apply their own 'default' command for EAPI=6 or 'epatch ${PATCHES[@]}' command for EAPI <6 so let them #
-		#	'declare' checks to see if any of those functions are set/inherited and only apply 'default' if they are not
-		if [ "${EAPI}" -ge 6 ]; then
-			[[ $(declare -Ff cmake-utils_src_prepare) ]] || \
-			[[ $(declare -Ff distutils-r1_src_prepare) ]] || \
-			[[ $(declare -Ff qt5-build_src_prepare) ]] || \
-				default
-		else
-			# Only apply base_src_prepare if EAPI<6 and have inherited base.eclass #
-			# 	(use 'base' eclass while 'autotools','gnome2','kde-4','qt4-r2' and 'readme.gentoo' block EAPI6 upgrade) #
-			[[ $(declare -Ff base_src_prepare) ]] && \
-				base_src_prepare
-		fi
+	fi
+	# Many eclasses (cmake-utils,distutils-r1,qt5-build) apply their own 'default' command for EAPI=6 or 'epatch ${PATCHES[@]}' command for EAPI <6 so let them #
+	#	'declare' checks to see if any of those functions are set/inherited and only apply 'default' if they are not
+	if [ "${EAPI}" -ge 6 ]; then
+		[[ $(declare -Ff cmake-utils_src_prepare) ]] || \
+		[[ $(declare -Ff distutils-r1_src_prepare) ]] || \
+		[[ $(declare -Ff qt5-build_src_prepare) ]] || \
+			default
+	else
+		# Only apply base_src_prepare if EAPI<6 and have inherited base.eclass #
+		# 	(use 'base' eclass while 'autotools-utils','gnome2','kde-4','qt4-r2','readme.gentoo','xorg-2(autotools-utils)' block EAPI6 upgrade) #
+		[[ $(declare -Ff base_src_prepare) ]] && \
+			base_src_prepare
 	fi
 }
 

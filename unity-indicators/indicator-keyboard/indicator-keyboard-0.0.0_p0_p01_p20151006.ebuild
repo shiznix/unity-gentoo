@@ -2,15 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 PYTHON_COMPAT=( python{3_3,3_4} )
 VALA_MIN_API_VERSION="0.26"
 VALA_MAX_API_VERSION="0.26"
 
 URELEASE="wily"
-inherit autotools eutils flag-o-matic gnome2 python-r1 ubuntu-versionator vala
+inherit autotools eutils flag-o-matic gnome2-utils python-r1 ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -48,6 +46,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
@@ -56,7 +55,7 @@ src_prepare() {
 src_configure() {
 	python_copy_sources
 	configuration() {
-		gnome2_src_configure
+		econf
 	}
 	python_foreach_impl run_in_build_dir configuration
 }

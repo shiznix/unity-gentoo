@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit autotools base eutils gnome2 systemd vala ubuntu-versionator
+inherit autotools eutils gnome2-utils systemd vala ubuntu-versionator
 
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
@@ -60,19 +58,17 @@ src_prepare() {
 	eautoreconf
 
 	use vala && vala_src_prepare
-	gnome2_src_prepare
 }
 
 src_configure() {
 	DOCS="AUTHORS NEWS README TODO"
-	G2CONF="${G2CONF}
-		--disable-static
-		--disable-more-warnings
-		--localstatedir="${EPREFIX}"/var
-		--docdir="${EPREFIX}"/usr/share/doc/${PF}
-		$(use_enable doc docbook-docs)
-		$(use_enable introspection)
-		$(use_enable systemd)
-		$(systemd_with_unitdir)"
-	gnome2_src_configure
+	econf \
+		--disable-static \
+		--disable-more-warnings \
+		--localstatedir="${EPREFIX}/var" \
+		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
+		$(use_enable doc docbook-docs) \
+		$(use_enable introspection) \
+		$(use_enable systemd) \
+		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
 }

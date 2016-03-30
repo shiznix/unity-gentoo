@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily-updates"
-inherit autotools base eutils pam readme.gentoo systemd user ubuntu-versionator vala
+inherit autotools eutils pam readme.gentoo-r1 systemd user ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
 
@@ -70,6 +70,7 @@ pkg_setup() {
 
 src_prepare() {
 #	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	ubuntu-versionator_src_prepare
 
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
@@ -82,8 +83,6 @@ src_prepare() {
 	# as the regular GSettings override files.
 	epatch "${FILESDIR}"/guest-session-add-default-gsettings-support_1.11.5.patch
 
-	epatch_user
-	base_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 

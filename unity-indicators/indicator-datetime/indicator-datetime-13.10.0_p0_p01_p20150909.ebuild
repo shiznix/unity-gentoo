@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils gnome2-utils ubuntu-versionator vala
@@ -39,12 +39,14 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
+	ubuntu-versionator_src_prepare
 
 	# Fix schema errors and sandbox violations #
 	epatch -p1 "${FILESDIR}/sandbox_violations_fix.diff"
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
+	cmake-utils_src_prepare
 }
 
 src_configure() {

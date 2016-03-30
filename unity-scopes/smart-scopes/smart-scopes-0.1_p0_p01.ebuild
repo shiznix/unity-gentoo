@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{3_3,3_4} )
 
 inherit distutils-r1 eutils ubuntu-versionator
@@ -75,6 +75,7 @@ SRC_URI="${SRC_URI_array[@]}"
 S="${WORKDIR}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	for i in ${packages[@]}; do
 		eval "_name=${i}; _ver=\${_ver_${i//-/_}}; _rel=\${_rel_${i//-/_}}"
 		pushd "${S}/unity-scope-${_name}-${_ver}"
