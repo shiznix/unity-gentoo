@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils virtualx ubuntu-versionator
@@ -37,9 +37,8 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 DOCS=( NEWS README )
 
 src_configure() {
-	mycmakeargs+=( $(cmake-utils_use_build test TESTS)
-			$(cmake-utils_use_with doc) )
-
+	mycmakeargs+=( -DBUILD_TESTS="$(usex test)"
+			-DWITH_DOC="$(usex doc)" )
 	# Build QT4 support #
 	cd "${WORKDIR}"
 	cp -rf "${S}" "${S}-build_qt4"

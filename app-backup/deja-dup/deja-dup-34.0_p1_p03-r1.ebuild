@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator vala
@@ -42,8 +42,10 @@ DEPEND="${COMMON_DEPEND}
 	$(vala_depend)"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
+	cmake-utils_src_prepare
 }
 
 src_configure() {

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit eutils qt5-build ubuntu-versionator
@@ -32,7 +32,7 @@ QT5_BUILD_DIR="${S}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	ubuntu-versionator_src_prepare
 	cp debian/unity-webapps.pem .
-
 	qt5-build_src_prepare
 }

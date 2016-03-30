@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-inherit libtool python-single-r1
+inherit libtool python-single-r1 ubuntu-versionator
 
 DESCRIPTION="Google's C++ mocking framework"
 HOMEPAGE="http://code.google.com/p/googlemock/"
@@ -28,6 +28,7 @@ src_unpack() {
 }
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	sed -i -r \
 		-e '/^install-(data|exec)-local:/s|^.*$|&\ndisabled-&|' \
 		Makefile.in

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 GTESTVER="1.7.0"
 
 URELEASE="wily"
@@ -28,9 +28,11 @@ DEPEND="test? ( dev-cpp/gtest )
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	! use test && \
 		sed -e '/add_subdirectory(test)/d' \
 			-i CMakeLists.txt
+	cmake-utils_src_prepare
 }
 
 src_configure() {

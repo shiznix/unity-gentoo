@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 CMAKE_BUILD_TYPE=none
 
 URELEASE="wily"
@@ -29,6 +29,7 @@ DEPEND="dev-libs/boost:=
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# Make the library shared instead of static #
 	#	This has wider implications when fixing GCC breaking C++11 ABI compatibility #
 	#		as rebuild tools such as revdep-rebuild will only work with shared objects #
@@ -40,4 +41,5 @@ src_prepare() {
 		sed -e '/doc\/html/d' \
 			-e '/share\/doc/d' \
 				-i CMakeLists.txt
+	cmake-utils_src_prepare
 }

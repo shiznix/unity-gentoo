@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit base eutils gnome2 ubuntu-versionator
+inherit eutils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/m/${PN}"
 
@@ -55,22 +53,36 @@ DEPEND="${RDEPEND}
 	x11-proto/xextproto
 	x11-proto/xproto"
 
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	DOCS="AUTHORS ChangeLog HACKING NEWS README *.txt doc/*.txt"
-	G2CONF="${G2CONF}
-		--disable-static
-		--enable-canberra
-		--enable-compositor
-		--enable-render
-		--enable-shape
-		--enable-sm
-		--enable-startup-notification
-		--enable-xsync
-		$(use_enable xinerama)"
-}
-
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	gnome2_src_prepare
+}
+
+src_configure() {
+	econf ${myconf} \
+		--disable-static \
+		--enable-canberra \
+		--enable-compositor \
+		--enable-render \
+		--enable-sm \
+		--enable-startup-notification \
+		$(use_enable xinerama)
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	dodoc AUTHORS ChangeLog HACKING NEWS README *.txt doc/*.txt
+	prune_libtool_files --modules
+}
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+	ubuntu-versionator_pkg_postinst
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
 }

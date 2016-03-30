@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
-inherit base gnome2-utils qt5-build ubuntu-versionator
+inherit gnome2-utils qt5-build ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
@@ -31,13 +31,9 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"
 unset QT_QPA_PLATFORMTHEME
 
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	gnome2_environment_reset
-}
-
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"
+	ubuntu-versionator_src_prepare
 
 	use doc || \
 		sed -e '/doc\/doc.pri/d' \

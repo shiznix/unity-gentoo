@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit autotools eutils flag-o-matic ubuntu-versionator
@@ -21,13 +21,14 @@ IUSE="doc"
 RESTRICT="mirror"
 
 DEPEND="x11-libs/gtk+:3
-	>=x11-libs/libXfixes-5.0a
+	x11-libs/libXfixes
 	dev-util/gtk-doc-am
 	dev-util/gtk-doc"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}/libunity-misc-4.0.5b-deprecated-api.patch"
 
 	# Make docs optional #

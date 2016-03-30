@@ -2,8 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GCONF_DEBUG="yes"
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"

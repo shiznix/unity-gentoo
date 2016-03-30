@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libt/${PN}"
 UVER=
@@ -32,5 +30,6 @@ DEPEND="dev-libs/glib:2
 S="${WORKDIR}/${PN}-${PV}${UVER}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }

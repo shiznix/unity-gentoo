@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit ubuntu-versionator
@@ -29,7 +29,7 @@ src_install() {
 	emake DESTDIR="${D}" install || die
 
 	# Source: debian/notify-osd-icons.links
-	local path=/usr/share/notify-osd/icons/gnome/scalable/status
+	local path=/usr/share/notify-osd/icons/Humanity/scalable/status
 	dosym notification-battery-000.svg ${path}/notification-battery-empty.svg
 	dosym notification-battery-020.svg ${path}/notification-battery-low.svg
 }

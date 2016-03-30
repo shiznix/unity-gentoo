@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit autotools eutils ubuntu-versionator
@@ -38,6 +38,7 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
+	ubuntu-versionator_src_prepare
 
 	# Make configure.ac compatible with >=pkgconfig-0.29 (fix bad spacing) #
 	sed -e 's:LIBINDICATOR_LIBS+="$LIBM":LIBINDICATOR_LIBS+=" $LIBM":g' \

@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libu/${PN}"
 UVER_PREFIX="~+${UVER_RELEASE}.${PVR_MICRO}"
@@ -25,7 +23,7 @@ RESTRICT="mirror"
 DEPEND="app-admin/packagekit-base
 	app-misc/geoclue:0
 	dev-db/sqlite:3
-	>=dev-libs/glib-2.32.3:2
+	dev-libs/glib:2
 	dev-libs/gobject-introspection
 	dev-libs/json-glib
 	dev-libs/libdbusmenu:=
@@ -42,6 +40,7 @@ DEPEND="app-admin/packagekit-base
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 
@@ -52,7 +51,7 @@ src_configure() {
 }
 
 src_install() {
-	gnome2_src_install
+	emake DESTDIR="${ED}" install
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
@@ -65,9 +64,20 @@ src_install() {
 	EOF
 }
 
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+
 pkg_postinst() {
-	elog
+	gnome2_schemas_update
 	elog "Unity webapps will only currently work if your default browser"
 	elog "is set to either Firefox or Chromium"
-	elog
+}
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
 }

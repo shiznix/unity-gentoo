@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{3_3,3_4} )
 
 URELEASE="wily"
@@ -30,6 +30,7 @@ DEPEND="dev-cpp/sparsehash
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# Let cmake find python (Gentoo does not install a custom python3.pc pkgconfig file like Ubuntu does) #
 	epatch -p1 "${FILESDIR}/cmake_find-python.diff"
 	sed -e 's:PYTHONLIBS_INCLUDE_DIRS:PYTHON_INCLUDE_DIRS:g' \

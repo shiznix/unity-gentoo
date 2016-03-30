@@ -167,7 +167,7 @@ ubuntu-versionator_src_prepare() {
 			default
 	else
 		# Only apply base_src_prepare if EAPI<6 and have inherited base.eclass #
-		# 	(use 'base' eclass while 'autotools-utils','gnome2','kde-4','qt4-r2','readme.gentoo','xorg-2(autotools-utils)' block EAPI6 upgrade) #
+		# 	(use 'base' eclass while 'autotools-{multilib,utils}','gnome2','kde-4','qt4-r2','readme.gentoo','xorg-2(autotools-utils)' block EAPI6 upgrade) #
 		[[ $(declare -Ff base_src_prepare) ]] && \
 			base_src_prepare
 	fi

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
 URELEASE="wily"
@@ -31,10 +31,10 @@ DEPEND="dev-db/sqlite:3
 	${PYTHON_DEPS}"
 
 MAKEOPTS="${MAKEOPTS} -j1"
-
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	eautoreconf
 	append-cflags -Wno-error
 }

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -28,6 +28,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	use doc || \
 		sed -i 's:add_subdirectory(doc)::g' \
 			-i CMakeLists.txt
@@ -43,4 +44,5 @@ src_prepare() {
 	# Disable '-Werror' #
 	sed -e 's/-Werror//g' \
 		-i CMakeLists.txt
+	cmake-utils_src_prepare
 }

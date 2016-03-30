@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -34,4 +34,6 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${FILESDIR}/stdcerr_iostream-fix.diff"
+	ubuntu-versionator_src_prepare
+	cmake-utils_src_prepare
 }

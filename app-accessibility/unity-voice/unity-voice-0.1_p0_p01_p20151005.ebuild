@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -35,6 +35,8 @@ DEPEND="${RDEPEND}
 	media-sound/pulseaudio"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# disable build of tests
 	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
+	cmake-utils_src_prepare
 }

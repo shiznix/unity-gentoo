@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -21,7 +21,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-libs/glib
+DEPEND="dev-libs/glib:2
 	dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
 	unity-base/hud"

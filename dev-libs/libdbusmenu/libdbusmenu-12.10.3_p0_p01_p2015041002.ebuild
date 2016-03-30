@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
-inherit base autotools eutils flag-o-matic ubuntu-versionator vala virtualx
+inherit autotools eutils flag-o-matic ubuntu-versionator vala virtualx
 
 UURL="mirror://ubuntu/pool/main/libd/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
@@ -21,8 +21,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug gtk3 +introspection"	# We force building both GTK2, GTK3, and 'introspection', but keep these in IUSE for main portage tree ebuilds
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
 DEPEND="app-text/gnome-doc-utils
 	dev-libs/dbus-glib
 	dev-libs/glib:2
@@ -36,18 +34,18 @@ DEPEND="app-text/gnome-doc-utils
 	virtual/pkgconfig
 	$(vala_depend)"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	PATCHES+=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
-	base_src_prepare
+	ubuntu-versionator_src_prepare
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 
 	# fix for automake-1.13
 	sed -i -e 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/' configure.ac || die
-
 	eautoreconf
 }
 

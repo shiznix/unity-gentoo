@@ -2,12 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 WANT_AUTOMAKE=1.12
 
 URELEASE="wily"
-inherit vala autotools base eutils flag-o-matic python-r1 ubuntu-versionator
+inherit vala autotools eutils flag-o-matic python-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libs/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
@@ -39,6 +39,7 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
+	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	append-cflags -Wno-error
 	eautoreconf

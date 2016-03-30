@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="vivid-security"
-inherit autotools eutils multilib ubuntu-versionator
+inherit autotools eutils gnome2-utils multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/w/${PN}"
 
@@ -40,11 +40,9 @@ pkg_setup() {
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
-	sed \
-		-e 's:fix-libtool-check.diff:#fix-libtool-check.diff:g' \
-			-i "${WORKDIR}/debian/patches/series"
+	sed -e 's:fix-libtool-check.diff:#fix-libtool-check.diff:g' \
+		-i debian/patches/series
 	ubuntu-versionator_src_prepare
-
 	cp "debian/webaccounts.pem" .
 	eautoreconf
 }
@@ -90,4 +88,16 @@ pkg_postinst() {
 		elog "for your convenience should you choose to use it"
 		elog
 	fi
+}
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
 }
