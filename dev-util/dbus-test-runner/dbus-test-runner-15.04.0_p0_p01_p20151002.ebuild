@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit autotools flag-o-matic ubuntu-versionator
@@ -29,6 +29,7 @@ DEPEND="${RDEPEND}
 	test? ( dev-util/bustle )"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	eautoreconf
 	append-flags -Wno-error
 }

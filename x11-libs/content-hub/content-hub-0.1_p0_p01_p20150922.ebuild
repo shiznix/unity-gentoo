@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-#VIRTUALX_REQUIRED="always"
+EAPI=6
 
 URELEASE="wily"
-inherit base cmake-utils gnome2-utils ubuntu-versionator
+inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"

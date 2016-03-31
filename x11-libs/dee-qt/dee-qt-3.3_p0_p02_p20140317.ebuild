@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -36,6 +36,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 PATCHES=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff" )
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# Correct library installation path #
 	sed -e 's:LIBRARY DESTINATION lib/\${CMAKE_LIBRARY_ARCHITECTURE}:LIBRARY DESTINATION lib\${CMAKE_LIBRARY_ARCHITECTURE}:' \
 		-i CMakeLists.txt
