@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit base gnome2 ubuntu-versionator
+inherit gnome2-utils ubuntu-versionator
 
 MY_PN="psensor"
 UURL="mirror://ubuntu/pool/universe/p/${MY_PN}"

@@ -2,12 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_3,3_4} )
 
 URELEASE="wily"
-inherit ubuntu-versionator distutils-r1
+inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/t/${PN}"
 UVER=
@@ -27,7 +27,7 @@ DEPEND="dev-python/pyflakes[${PYTHON_USEDEP}]
 	dev-python/http-parser
 	${PYTHON_DEPS}"
 
-python_install_all() {
+src_install() {
 	distutils-r1_src_install
 
 	exeinto /usr/bin

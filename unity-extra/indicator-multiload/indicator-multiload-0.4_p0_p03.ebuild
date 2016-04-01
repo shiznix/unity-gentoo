@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit gnome2 ubuntu-versionator
+inherit gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/i/${PN}"
 
@@ -31,3 +29,17 @@ DEPEND="${RDEPEND}
 	gnome-base/libgtop
 	x11-libs/cairo
 	x11-libs/gtk+:3"
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+	ubuntu-versionator_pkg_postinst
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
+}
+

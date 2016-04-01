@@ -2,8 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-
+EAPI=6
 PYTHON_COMPAT=( python{3_3,3_4} )
 
 inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
@@ -52,6 +51,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# Make Unity Tweak Tool appear in unity-control-center #
 	sed -e 's:Categories=.*:Categories=Settings;X-GNOME-Settings-Panel;X-GNOME-PersonalSettings;X-Unity-Settings-Panel;:' \
 		-e 's:Exec=.*:Exec=unity-tweak-tool:' \
@@ -64,6 +64,7 @@ src_prepare() {
 
 	# Fix show/hide mounted drive icons (LP# 1372046) #
 	epatch -p1 "${FILESDIR}/show-hide_mounted_drive_icons.diff"
+	distutils-r1_src_prepare
 }
 
 src_install() {

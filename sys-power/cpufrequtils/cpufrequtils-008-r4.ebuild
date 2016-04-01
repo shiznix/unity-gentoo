@@ -2,18 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=6
 
-inherit eutils toolchain-funcs multilib systemd
+inherit eutils toolchain-funcs multilib systemd ubuntu-versionator
 
 DESCRIPTION="Userspace utilities for the Linux kernel cpufreq subsystem"
 HOMEPAGE="http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils.html"
-SRC_URI="mirror://kernel/linux/utils/kernel/cpufreq/${P}.tar.bz2"
+SRC_URI="mirror://kernel/linux/utils/kernel/cpufreq/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug nls"
+RESTRICT="mirror"
 
 DEPEND="nls? ( virtual/libintl )"
 RDEPEND=""
@@ -21,6 +22,7 @@ RDEPEND=""
 ft() { use $1 && echo true || echo false ; }
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}"/${PN}-007-build.patch
 	epatch "${FILESDIR}"/${PN}-007-nls.patch #205576 #292246
 	epatch "${FILESDIR}"/${PN}-008-remove-pipe-from-CFLAGS.patch #362523

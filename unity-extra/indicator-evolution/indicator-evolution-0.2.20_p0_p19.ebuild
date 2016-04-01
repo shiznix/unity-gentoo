@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit autotools base gnome2 ubuntu-versionator
+inherit autotools gnome2-utils ubuntu-versionator
 
 MY_PN="evolution-indicator"
 UURL="mirror://ubuntu/pool/main/e/${MY_PN}"
@@ -45,5 +43,19 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --disable-static
+	econf --disable-static \
+		--disable-schemas-install
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	prune_libtool_files --modules
+}
+
+pkg_preinst() {
+	gnome2_gconf_savelist
+}
+
+pkg_postinst() {
+	gnome2_gconf_install
 }

@@ -2,8 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
@@ -40,6 +39,8 @@ src_install() {
 
 	dodir /etc
 	mv -vf "${ED}"/usr/share/gconf "${ED}"/etc
+
+	prune_libtool_files --modules
 }
 
 pkg_preinst() {

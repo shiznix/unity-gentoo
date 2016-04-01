@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{3_3,3_4} )
 
 URELEASE="wily"
@@ -33,9 +33,11 @@ DEPEND="${RDEPEND}
 	${PYTHON_DEPS}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# Allow users to use the indicator #
 	sed -e 's:auth_admin_keep:yes:' \
 		-i indicator_cpufreq/com.ubuntu.indicatorcpufreq.policy.in
+	distutils-r1_src_prepare
 }
 
 src_install() {

@@ -2,14 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 VALA_MIN_API_VERSION="0.26"
 VALA_MAX_API_VERSION="0.26"
 
 URELEASE="wily"
-inherit autotools flag-o-matic gnome2 ubuntu-versionator base vala
+inherit autotools flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 
@@ -51,6 +49,7 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 	x11-themes/ubuntu-wallpapers"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
                   "${S}"/src/unity-greeter.vala || die
@@ -59,18 +58,16 @@ src_prepare() {
 	sed -i -e "s:case \"ubuntu:case \"unity:" "${S}"/src/session-list.vala || die
 
 	vala_src_prepare
-	base_src_prepare
 	append-cflags -Wno-error
 	eautoreconf
 }
 
 src_configure() {
-	econf \
-		$(use_enable nls)
+	econf $(use_enable nls)
 }
 
 src_install() {
-	gnome2_src_install
+	emake DESTDIR="${ED}" install
 
 	# Remove all installed language files as they can be incomplete #
 	# due to being provided by Ubuntu's language-pack packages #
@@ -89,6 +86,8 @@ src_install() {
 	insinto /var/lib/polkit-1/localauthority/10-vendor.d
 	doins debian/unity-greeter.pkla
 	fowners root:polkitd /var/lib/polkit-1/localauthority/10-vendor.d/unity-greeter.pkla
+
+	prune_libtool_files --modules
 }
 
 pkg_preinst() {
@@ -98,7 +97,6 @@ pkg_preinst() {
 pkg_postinst() {
 	gnome2_schemas_update
 
-	elog
 	elog "Setting ${PN} as default greeter of LightDM."
 	"${ROOT}"/usr/bin/eselect lightdm set unity-greeter
 
@@ -113,11 +111,9 @@ pkg_postinst() {
 
 pkg_postrm() {
 	if [ -e /usr/libexec/lightdm/lightdm-set-defaults ]; then
-		elog
 		elog "Removing ${PN} as default greeter of LightDM"
 		/usr/libexec/lightdm/lightdm-set-defaults --remove --greeter=${PN}
 		/usr/libexec/lightdm/lightdm-set-defaults --remove --session=unity
 	fi
-
 	gnome2_schemas_update
 }

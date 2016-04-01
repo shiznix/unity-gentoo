@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
@@ -14,7 +14,7 @@ DISTUTILS_SINGLE_IMPL=1
 
 inherit distutils-r1 eutils gnome2-utils ubuntu-versionator
 
-#URELEASE="trusty"	# Was dropped from Raring for being buggy, uncomment when it rejoins #
+#URELEASE="wily"	# Was dropped from Raring for being buggy, uncomment when it rejoins #
 UVER=
 
 DESCRIPTION="Weather indicator used by the Unity desktop"
@@ -37,17 +37,18 @@ DEPEND="dev-libs/libappindicator
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
-	gnome2_environment_reset
 	python-single-r1_pkg_setup
 }
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	sed -e 's:share/common-licenses:portage/licenses:g' \
 		-i bin/indicator-weather
 
 	# Make desktop file compliant #
 	sed -e 's:\(False\):\L\1:g' \
 		-i indicator-weather.desktop.in
+	distutils-r1_src_prepare
 }
 
 src_install() {
