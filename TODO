@@ -1,4 +1,3 @@
 * USE="doc debug mono tests"
 * Audit DEPEND and RDEPEND lists
 * Convert all ebuilds to EAPI=6 and remove use of base.eclass ('autotools-utils','gnome2','kde-4' and 'qt4-r2' block EAPI6 upgrade)
-* Update PYTHON_COMPAT to support python 3.4 and 3.5
