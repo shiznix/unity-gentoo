@@ -52,8 +52,8 @@ sources_download() {
 		for source in ${SOURCES}; do
 			if [ ! -f /tmp/Sources-${source}-${get_release} ]; then
 				echo
-				wget http://archive.ubuntu.com/ubuntu/dists/${get_release}/${source}/source/Sources.bz2 -O /tmp/Sources-${source}-${get_release}.bz2
-				bunzip2 /tmp/Sources-${source}-${get_release}.bz2
+				wget http://archive.ubuntu.com/ubuntu/dists/${get_release}/${source}/source/Sources.gz -O /tmp/Sources-${source}-${get_release}.gz || exit 1
+				gunzip -v /tmp/Sources-${source}-${get_release}.gz || exit 1
 				touch /tmp/Sources-${source}-${get_release}
 			fi
 		done
