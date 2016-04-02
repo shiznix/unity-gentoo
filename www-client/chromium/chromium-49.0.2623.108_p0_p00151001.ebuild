@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
@@ -10,14 +10,14 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
 	sv sw ta te th tr uk vi zh_CN zh_TW"
 
 URELEASE="wily-security"
-inherit base check-reqs chromium eutils flag-o-matic multilib multiprocessing pax-utils \
-	portability python-any-r1 readme.gentoo toolchain-funcs ubuntu-versionator versionator virtualx
+inherit check-reqs chromium eutils flag-o-matic multilib multiprocessing pax-utils \
+	portability python-any-r1 readme.gentoo-r1 toolchain-funcs ubuntu-versionator versionator virtualx
 
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1222"
+UVER_SUFFIX=".1223"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -210,7 +210,7 @@ src_prepare() {
 	epatch "${FILESDIR}/chromium-whitelist-arm64-syscalls.patch"
 	epatch "${FILESDIR}/chromium-arm64-align-stack-16-bytes.patch"
 
-	epatch_user
+	eapply_user
 
 	local conditional_bundled_libraries=""
 	if ! use system-ffmpeg; then
