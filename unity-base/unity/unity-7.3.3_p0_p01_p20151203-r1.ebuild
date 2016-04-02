@@ -229,8 +229,9 @@ src_install() {
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe "${FILESDIR}/99ibus-service"
 
-	# Allow zeitgeist-fts to find KDE *.desktop files, so that KDE applications show in Dash 'Recently Used' #
-	#  (refer https://developer.gnome.org/gio/2.33/gio-Desktop-file-based-GAppInfo.html#g-desktop-app-info-new)
+	# Allow zeitgeist-fts to find KDE *.desktop files, so that KDE applications show in Dash 'Recently Used' (see LP# 1251915) #
+	#  (refer https://developer.gnome.org/gio/stable/gio-Desktop-file-based-GAppInfo.html#g-desktop-app-info-new)
+	#	This has the unwanted side effect of creating duplicate entries for KDE applications in the Search and Applications lense #
 	dosym /usr/share/applications/kde4/ /usr/share/kde4/applications
 	insinto /etc/X11/xinit/xinitrc.d
 	doins "${FILESDIR}/15-xdg-data-kde"
