@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-PYTHON_COMPAT=( python{3_3,3_4} )
+PYTHON_COMPAT=( python{3_4,3_5} )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="wily"
@@ -22,7 +22,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 # Let people emerge this by default, bug #472932
-IUSE+=" python_single_target_python3_3 +python_single_target_python3_4"
+IUSE+=" +python_single_target_python3_4 python_single_target_python3_5"
 
 RESTRICT="mirror"
 

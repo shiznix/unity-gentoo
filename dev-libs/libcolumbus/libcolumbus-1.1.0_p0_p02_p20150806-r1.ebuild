@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-PYTHON_COMPAT=( python{3_3,3_4} )
+PYTHON_COMPAT=( python{3_4,3_5} )
 
 URELEASE="wily"
 inherit cmake-utils eutils python-r1 ubuntu-versionator

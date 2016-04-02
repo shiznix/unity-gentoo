@@ -5,7 +5,7 @@
 EAPI=5
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python2_7 python3_{3,4} )
+PYTHON_COMPAT=( python2_7 python{3_4,3_5} )
 WANT_AUTOMAKE=1.14
 
 URELEASE="wily"

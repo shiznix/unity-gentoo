@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=5
-PYTHON_COMPAT=( python{3_3,3_4} )
+PYTHON_COMPAT=( python{3_4,3_5} )
 VALA_MIN_API_VERSION="0.28"
 VALA_MAX_API_VERSION="0.28"
 
