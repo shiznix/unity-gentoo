@@ -36,7 +36,7 @@ export VALA_USE_DEPEND="vapigen"
 [[ "${URELEASE}" == *utopic* ]] && UVER_RELEASE="14.10"
 [[ "${URELEASE}" == *vivid* ]] && UVER_RELEASE="15.04"
 [[ "${URELEASE}" == *wily* ]] && UVER_RELEASE="15.10"
-
+[[ "${URELEASE}" == *xenial* ]] && UVER_RELEASE="16.04"
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
 PV="${PV%%[a-z]*}"	# For package-3.6.0a
@@ -114,17 +114,18 @@ ubuntu-versionator_pkg_setup() {
 	debug-print-function ${FUNCNAME} "$@"
 
         # Use a profile to set things like make.defaults and use.mask only, and to fill $SUBSLOT for unity-base/unity-build-env:0/${SUBSLOT}
-        # unity-base/unity-build-env creates symlinks to /etc/portage/package.*
+        # unity-base/unity-build-env creates symlinks in /etc/portage/package.{keywords,mask,use}/unity-portage.{keywords,mask,use}
+	#	pointing to overlay's profiles/<release>/unity-portage.{keywords,mask,use}
         #   This allows masking category/package::gentoo and overriding IUSE in /etc/portage/make.conf, which cannot be done in profiles/
         #   Using profiles/ also sets a sane base set of USE flags by all profiles inheriting the Gentoo 'desktop' profile
 
         if [ -z "${UNITY_BUILD_OK}" ]; then     # Creates a oneshot so it only checks on the 1st package in the emerge list
-                CURRENT_PROFILE=$(eselect --brief profile show)
+		CURRENT_PROFILE=$(readlink /etc/portage/make.profile)
 
                 if [ -z "$(echo ${CURRENT_PROFILE} | grep unity-gentoo)" ]; then
                         die "Invalid profile detected, please select a 'unity-gentoo' profile for your architecture shown in 'eselect profile list'"
                 else
-                        PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | sed -n 's/.*:\(.*\)\/.*/\1/p')
+			PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-1)}')
                 fi
 
                 has_version unity-base/unity-build-env:0/${PROFILE_RELEASE} || \
