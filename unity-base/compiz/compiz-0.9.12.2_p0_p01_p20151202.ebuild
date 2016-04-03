@@ -2,12 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GCONF_DEBUG="no"
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily-updates"
-inherit base gnome2 cmake-utils eutils python-r1 ubuntu-versionator xdummy
+inherit gnome2-utils cmake-utils eutils python-r1 ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -79,11 +78,6 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/mesa-progs
 	x11-apps/xvinfo"
 
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	gnome2_environment_reset
-}
-
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
@@ -111,6 +105,7 @@ src_prepare() {
 	# Need to do a 'python_foreach_impl' run from python-r1 eclass to workaround corrupt generated python shebang for /usr/bin/ccsm #
 	#  Due to the way CMake invokes distutils setup.py, shebang will be inherited from the sandbox leading to runtime failure #
 	python_copy_sources
+	cmake-utils_src_prepare
 }
 
 src_configure() {

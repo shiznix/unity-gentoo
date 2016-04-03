@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
-inherit autotools base eutils gnome2-utils ubuntu-versionator
+inherit autotools eutils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -27,6 +27,7 @@ DEPEND="gnome-base/dconf
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 

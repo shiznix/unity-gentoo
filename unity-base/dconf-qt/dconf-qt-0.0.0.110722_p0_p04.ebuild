@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit gnome2 cmake-utils ubuntu-versionator
+inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/d/${PN}"
 
@@ -22,7 +20,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND=">=dev-libs/glib-2.32.3
+RDEPEND="dev-libs/glib:2
 	dev-qt/qtcore:4
 	dev-qt/qtdeclarative:4
 	gnome-base/dconf"

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python3_4 )
 
 URELEASE="wily"
@@ -50,6 +50,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	sed -e "s:lib/python3/dist-packages:lib/${EPYTHON}/dist-packages:g" \
 		-i "tests/autopilot/autopilot.pro"
 	qt5-build_src_prepare

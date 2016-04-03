@@ -2,8 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
@@ -56,6 +55,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	vala_src_prepare
 
 	sed -e 's/SESSION=ubuntu)/SESSION=unity)/g' \
@@ -67,13 +67,15 @@ src_prepare() {
 
 	# disable build of tests
 	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
+
+	cmake-utils_src_prepare
 }
 
 src_configure() {
-	mycmakeargs+=($(cmake-utils_use_enable test TESTS)
+	mycmakeargs+=( -DENABLE_TESTS="$(usex test)"
 			-DVALA_COMPILER=$(type -P valac-${VALA_MIN_API_VERSION})
 			-DVAPI_GEN=$(type -P vapigen-${VALA_MIN_API_VERSION})
-			-DCMAKE_INSTALL_DATADIR=/usr/share)
+			-DCMAKE_INSTALL_DATADIR=/usr/share )
 	cmake-utils_src_configure
 }
 

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -38,8 +38,10 @@ DEPEND="dev-libs/glib:2
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# Disable apt package manager dependency #
 	sed -i 's:add_subdirectory(system-update)::g' \
 		-i plugins/CMakeLists.txt \
 		-i tests/plugins/CMakeLists.txt
+	cmake-utils_src_prepare
 }

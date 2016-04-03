@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
@@ -30,12 +30,8 @@ DEPEND="dev-libs/glib:2
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	python_export_best
-}
-
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}/unity-gtk-module-0.0.0+14.04-deprecated-api.patch"
 	eautoreconf
 }

@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
-inherit autotools base eutils python-single-r1 ubuntu-versionator
+inherit autotools eutils python-single-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/e/${PN}"
 UVER="1build1"
@@ -19,10 +19,12 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="test"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/libevdev"
+DEPEND="app-text/asciidoc
+	app-text/xmlto
+	dev-libs/libevdev"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
@@ -35,6 +37,11 @@ pkg_setup() {
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eautoreconf
+}
+
+src_configure() {
+	econf --enable-static=no \
+		$(use_enable test tests)
 }
 
 src_install() {

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Merge this to setup the Unity desktop build environment package.{keywords,mask,use} files"
 HOMEPAGE="http://unity.ubuntu.com/"

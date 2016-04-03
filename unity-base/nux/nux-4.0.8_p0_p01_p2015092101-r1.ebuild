@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
-inherit autotools base eutils ubuntu-versionator xdummy
+inherit autotools eutils ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/n/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"

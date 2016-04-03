@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit qt5-build ubuntu-versionator
@@ -30,9 +30,10 @@ DEPEND="${RDEPEND}"
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	qt5-build_src_prepare
+	ubuntu-versionator_src_prepare
 	sed -e "s:-Werror::g" \
 		-i "common-project-config.pri" || die
+	qt5-build_src_prepare
 }
 
 src_install() {

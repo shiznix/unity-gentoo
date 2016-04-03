@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
-inherit autotools eutils ubuntu-versionator vala xdummy python-single-r1
+inherit autotools eutils python-single-r1 ubuntu-versionator vala xdummy
 
 UURL="mirror://ubuntu/pool/main/b/${PN}"
 UVER_PREFIX="~bzr0+${UVER_RELEASE}.${PVR_MICRO}"
@@ -37,8 +37,14 @@ DEPEND="dev-libs/gobject-introspection
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
+
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	ubuntu-versionator_src_prepare
 
 	# workaround launchpad bug #1186915
 	epatch "${FILESDIR}"/${PN}-0.5.0-remove-desktop-fullname.patch

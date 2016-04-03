@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -26,4 +26,4 @@ DEPEND="dev-libs/boost
 	test? ( dev-util/cppcheck )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-export PATH="${PATH}:/usr/$(get_libdir)/qt5/bin"
+export QT_SELECT=5

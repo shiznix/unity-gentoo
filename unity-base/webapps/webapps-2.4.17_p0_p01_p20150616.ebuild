@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit eutils gnome2-utils ubuntu-versionator
@@ -85,6 +85,7 @@ SRC_URI="${SRC_URI_array[@]}"
 S="${WORKDIR}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	for i in ${packages[@]}; do
 		unset _rel
 		eval "_name=${i}; _ver=\${_ver_${i//-/_}}; _rel=\${_rel_${i//-/_}}"

@@ -2,14 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="wily-updates"
-inherit base cmake-utils distutils-r1 eutils gnome2 pam toolchain-funcs ubuntu-versionator xdummy
+inherit cmake-utils distutils-r1 eutils gnome2-utils pam toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -23,7 +21,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc +branding pch test"
+IUSE="debug doc +branding pch test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
@@ -87,7 +85,6 @@ DEPEND="${RDEPEND}
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
-	gnome2_environment_reset
 	python-single-r1_pkg_setup
 }
 
@@ -99,13 +96,11 @@ src_prepare() {
 	else
 		PATCHES+=( "${FILESDIR}/unity-7.1.0_remove-gtest-dep.diff" )
 	fi
-
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	ubuntu-versionator_src_prepare
 
 	# Taken from http://ppa.launchpad.net/timekiller/unity-systrayfix/ubuntu/pool/main/u/unity/ #
 	epatch -p1 "${FILESDIR}/systray-fix_saucy.diff"
-
-	base_src_prepare
 
 	# Setup Unity side launcher default applications #
 	sed \
@@ -150,6 +145,8 @@ src_prepare() {
 	sed -e 's:SESSION=ubuntu:SESSION=unity:g' \
 		-e 's:ubuntu.session:unity.session:g' \
 			-i {debian/unity7.conf,services/unity-panel-service.conf.in}
+
+	cmake-utils_src_prepare
 }
 
 src_configure() {
@@ -246,8 +243,12 @@ src_install() {
 	fowners root:polkitd /var/lib/polkit-1/localauthority/10-vendor.d/com.ubuntu.desktop.pkla
 }
 
+pkg_preinst() {
+        gnome2_schemas_savelist
+}
+
 pkg_postinst() {
-	elog
+	gnome2_schemas_update
 	elog "If you use a custom ~/.xinitrc to startx"
 	elog "then you should add the following to the top of your ~/.xinitrc file"
 	elog "to ensure all needed services are started:"
@@ -265,7 +266,6 @@ pkg_postinst() {
 	elog
 	elog "If you would like to use Unity's icons and themes"
 	elog "select the Ambiance theme in 'System Settings > Appearance'"
-	elog
 
 	if use test; then
 		elog "To run autopilot tests, do the following:"
@@ -273,6 +273,8 @@ pkg_postinst() {
 		elog "and run 'autopilot run unity'"
 		elog
 	fi
+}
 
-	gnome2_pkg_postinst
+pkg_postrm() {
+	gnome2_schemas_update
 }
