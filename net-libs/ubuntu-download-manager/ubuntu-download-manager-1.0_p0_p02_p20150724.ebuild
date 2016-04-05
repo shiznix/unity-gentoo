@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -37,12 +37,14 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 export QT_SELECT=5
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	use test || \
 		sed -e '/add_subdirectory(tests)/d' \
 			-i CMakeLists.txt
 	use doc || \
 		sed -e '/add_subdirectory(docs)/d' \
 			-i CMakeLists.txt
+	cmake-utils_src_prepare
 }
 
 src_configure() {

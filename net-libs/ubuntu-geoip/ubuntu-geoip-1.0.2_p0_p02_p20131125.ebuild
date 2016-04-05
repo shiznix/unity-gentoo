@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit autotools flag-o-matic gnome2-utils ubuntu-versionator
@@ -23,6 +23,7 @@ RESTRICT="mirror"
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	append-cflags -Wno-error=deprecated-declarations
 	eautoreconf
 }

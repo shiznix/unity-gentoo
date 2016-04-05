@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
-inherit autotools base ubuntu-versionator
+inherit autotools ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/x/${PN}"
 

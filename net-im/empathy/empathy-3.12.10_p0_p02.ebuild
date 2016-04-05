@@ -2,14 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GCONF_DEBUG="no"
-GNOME2_LA_PUNT="yes"
+EAPI=6
 PYTHON_COMPAT=( python2_7 python{3_4,3_5} )
 WANT_AUTOMAKE=1.14
 
 URELEASE="wily"
-inherit autotools base gnome2 python-any-r1 virtualx ubuntu-versionator vala
+inherit autotools gnome2-utils python-any-r1 virtualx ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/e/${PN}"
 
@@ -119,7 +117,7 @@ src_prepare() {
 
 src_configure() {
 	DOCS="CONTRIBUTORS AUTHORS ChangeLog NEWS README"
-	gnome2_src_configure \
+	econf
 		--disable-Werror \
 		--disable-coding-style-checks \
 		--disable-static \
@@ -139,4 +137,25 @@ src_configure() {
 
 src_test() {
 	dbus-launch Xemake check #504516
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	dodoc CONTRIBUTORS AUTHORS ChangeLog NEWS README
+}
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+	gnome2_icon_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+	gnome2_icon_cache_update
+	ubuntu-versionator_pkg_postinst
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
+	gnome2_icon_cache_update
 }

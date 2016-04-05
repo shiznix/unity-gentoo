@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
@@ -24,9 +24,9 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/boost:=
 	dev-libs/protobuf
-	media-libs/mesa[egl,gbm,gles2]
+	media-libs/mesa[egl,gbm]
 	mir-base/mir:=
-	dev-python/pillow[${PYTHON_USEDEP}]
+	<=dev-python/pillow-2.8.1[${PYTHON_USEDEP}]
 	x11-base/xorg-server[mir]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
@@ -37,8 +37,10 @@ pkg_setup() {
 }
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	python_fix_shebang .
+	cmake-utils_src_prepare
 }
 
 src_configure() {

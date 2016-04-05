@@ -19,12 +19,10 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc +perl python static-libs"
-
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RDEPEND="perl? ( dev-lang/perl:= )
 	python? ( ${PYTHON_DEPS} )"
-
 DEPEND="${RDEPEND}
 	sys-devel/autoconf-archive
 	sys-devel/bison

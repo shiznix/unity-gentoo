@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE="static-libs"
 
-DEPEND=">=sys-kernel/linux-headers-2.6.31"
+DEPEND="sys-kernel/linux-headers"
 
 src_configure() {
 	local myeconfargs=(

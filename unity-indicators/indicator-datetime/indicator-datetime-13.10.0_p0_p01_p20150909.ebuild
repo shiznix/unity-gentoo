@@ -55,11 +55,6 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
-pkg_preinst() {
-	gnome2_schemas_savelist
-	gnome2_icon_savelist
-}
-
 src_install() {
 	cmake-utils_src_install
 
@@ -68,6 +63,10 @@ src_install() {
 	rm -rf "${ED}usr/share/locale"
 }
 
+pkg_preinst() {
+        gnome2_schemas_savelist
+        gnome2_icon_savelist
+}
 pkg_postinst() {
 	gnome2_schemas_update
 	gnome2_icon_cache_update

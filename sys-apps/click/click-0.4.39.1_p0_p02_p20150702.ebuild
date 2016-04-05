@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
 VALA_MIN_API_VERSION="0.28"
 VALA_MAX_API_VERSION="0.28"
@@ -34,6 +34,8 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	mv "${WORKDIR}/debian" "${S}/"      # aclocal executes 'get-version' from source tree requiring existence of debian/Changelog
+	ubuntu-versionator_src_prepare
+	distutils-r1_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf

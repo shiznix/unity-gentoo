@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 ETYPE="sources"
 
 URELEASE="wily-security"
@@ -48,6 +48,7 @@ src_unpack() {
 }
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# Ubuntu patchset (don't use epatch so we can easily see what files get patched) #
 	cat "${WORKDIR}/${MY_PN}_${BASE_PV}-${UVER}.diff" | patch -p1 || die
 

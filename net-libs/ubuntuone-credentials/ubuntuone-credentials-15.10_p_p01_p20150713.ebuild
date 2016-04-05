@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
@@ -30,3 +30,12 @@ DEPEND="dev-qt/qtcore:5
 	x11-libs/libaccounts-qt[qt5]"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}${UVER}${UVER_SUFFIX}"
+unset QT_QPA_PLATFORMTHEME
+
+src_prepare() {
+	ubuntu-versionator_src_prepare
+	# Fix sandbox violation #
+	sed -e "s:\${CMAKE_INSTALL_PREFIX}:${ED}\${CMAKE_INSTALL_PREFIX}:g" \
+		-i qml-credentials-service/CMakeLists.txt || die
+	cmake-utils_src_prepare
+}

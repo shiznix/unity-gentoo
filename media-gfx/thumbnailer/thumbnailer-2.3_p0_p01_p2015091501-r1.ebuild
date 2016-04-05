@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 CMAKE_BUILD_TYPE=none
 
 URELEASE="wily"
@@ -40,6 +40,7 @@ DEPEND="dev-libs/boost:=
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	use doc || \
 		sed -e '/add_subdirectory(doc)/d' \
 			-i CMakeLists.txt
@@ -48,6 +49,8 @@ src_prepare() {
 	has_version ">=sys-libs/glibc-2.22" && \
 		sed -e 's:O_TMPFILE |:O_TMPFILE, S_IRWXU |:g' \
 			-i src/service/handler.cpp
+
+	cmake-utils_src_prepare
 }
 
 src_configure() {

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit versionator eutils autotools toolchain-funcs multilib flag-o-matic ubuntu-versionator
@@ -26,6 +26,7 @@ DEPEND="sys-devel/gettext
 RESTRICT="mirror"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	epatch "${FILESDIR}"/${PN}-1.0.3-optional-dbus.patch
 	eautoreconf

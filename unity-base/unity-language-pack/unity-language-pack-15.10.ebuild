@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit ubuntu-versionator
@@ -628,7 +628,7 @@ for TARBALL_LANG in ${TARBALL_LANGS}; do
 		for i in ${packages[@]}; do
 			eval "_name=${i}; _ver=\${_ver_${i//-/_}}"
 			if [[ ${_name} == *-${TARBALL_LANG}* ]]; then
-				SRC_URI_array+=( linguas_${TARBALL_LANG}? \( ${UURL}/${_name}/${_name}_${_ver}.tar.gz \) )
+				SRC_URI_array+=( "linguas_${TARBALL_LANG}?" \( ${UURL}/${_name}/${_name}_${_ver}.tar.gz \) )
 			fi
 		done
 	fi
@@ -637,6 +637,7 @@ SRC_URI="${SRC_URI_array[@]}"
 S="${WORKDIR}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	if [ -z "${LINGUAS}" ]; then
 		die "At least one LINGUA must be set in /etc/make.conf"
 	fi

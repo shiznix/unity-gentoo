@@ -2,10 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
+EAPI=6
 
-inherit autotools base eutils ubuntu-versionator
+inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"
 URELEASE="vivid"
@@ -25,13 +24,12 @@ DEPEND="dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libgcrypt"
 
-RDEPEND=">=net-misc/networkmanager-0.9.7
-	>=net-libs/libsoup-2.40
+RDEPEND="net-misc/networkmanager
+	net-libs/libsoup
 	unity-extra/thin-client-config-agent"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-
 	# remove 'dbustest1-dev' dependency
 	sed -i -e '/^PKG_CHECK_MODULES(TEST, dbustest-1)/d' configure.ac
 	eautoreconf

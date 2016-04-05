@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit autotools eutils ubuntu-versionator
@@ -28,6 +28,7 @@ S="${WORKDIR}/${PN}-${PV}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 

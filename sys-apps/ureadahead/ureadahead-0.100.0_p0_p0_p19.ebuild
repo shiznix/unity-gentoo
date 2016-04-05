@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit autotools eutils linux-info systemd ubuntu-versionator
@@ -23,7 +23,7 @@ RESTRICT="mirror"
 
 RDEPEND="sys-libs/libnih
 	sys-apps/util-linux
-	>=sys-fs/e2fsprogs-1.41
+	sys-fs/e2fsprogs
 	|| ( sys-kernel/ubuntu-sources:*
 		sys-kernel/zen-sources:* )"
 DEPEND="${RDEPEND}
@@ -35,6 +35,7 @@ CONFIG_CHECK="~FTRACE ~DEBUG_FS"
 src_prepare() {
 	# Ubuntu patchset #
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff" || die
+	ubuntu-versionator_src_prepare
 	eautoreconf
 }
 

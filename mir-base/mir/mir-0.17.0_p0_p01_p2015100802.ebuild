@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
 inherit cmake-multilib ubuntu-versionator
@@ -32,7 +32,7 @@ DEPEND="!!media-libs/mesa-mir
 	dev-util/lttng-tools[ust,${MULTILIB_USEDEP}]
 	dev-util/umockdev
 	>=media-libs/glm-0.9.5.1
-	media-libs/mesa[egl,gbm,gles2,${MULTILIB_USEDEP}]
+	media-libs/mesa[egl,gbm,${MULTILIB_USEDEP}]
 	virtual/libudev
 	x11-libs/libdrm[${MULTILIB_USEDEP}]
 	x11-libs/libxkbcommon[${MULTILIB_USEDEP}]
@@ -42,6 +42,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	ubuntu-versionator_src_prepare
 
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	export CMAKE_BUILD_TYPE=none
@@ -54,6 +55,8 @@ src_prepare() {
 	#  Source typo(?) /usr/include/drm/drm.h on Ubuntu is a base kernel header, yet other functions in cursor.cpp use libdrm headers #
 	sed -e 's:drm/drm.h:drm.h:g' \
 		-i src/platforms/mesa/server/kms/cursor.cpp
+
+	cmake-utils_src_prepare
 }
 
 multilib_src_configure() {
