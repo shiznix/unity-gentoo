@@ -144,12 +144,19 @@ ubuntu-versionator_pkg_setup() {
 		( [[ $(gcc-major-version) -eq "${GCC_MINIMUM_MAJOR}" && $(gcc-minor-version) -lt "${GCC_MINIMUM_MINOR}" ]] ); then
 			die "The selected '${PROFILE_RELEASE}' profile requires your system be built using >=sys-devel/gcc:${GCC_MINIMUM}, please consult the output of 'gcc-config -l'"
 	fi
+
+	# Disable ld.gold linker if selected as it causes undefined reference linking failures (see net-libs/ubuntu-download-manager linking with sys-libs/libnih) #
+	#	This type of build failure is intended by upstream (see https://sourceware.org/bugzilla/show_bug.cgi?id=10238)
+	[[ "$(readlink -f /usr/bin/ld | awk -F/ '{print $NF}')" != "ld.bfd" ]] && \
+		die "The selected 'ld' library linker must be set to 'ld.bfd' due to link failures using other experimental linkers, as root do 'binutils-config --linker ld.bfd'"
 }
 
 # @FUNCTION: ubuntu-versionator_src_prepare
 # @DESCRIPTION:
 # Apply common src_prepare tasks such as patching
 ubuntu-versionator_src_prepare() {
+	debug-print-function ${FUNCNAME} "$@"
+
 	# Apply Ubuntu patchset if one is present #
 	[[ -f "${WORKDIR}/debian/patches/series" ]] && UPATCH_DIR="${WORKDIR}/debian/patches"
 	[[ -f "debian/patches/series" ]] && UPATCH_DIR="debian/patches"
