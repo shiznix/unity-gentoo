@@ -1,0 +1,2 @@
+## lttng-{tools,ust} invoked by source will cause build to fail in sandbox (lttng-sessiond timeout), there appears to be no workaround at present other than to completely disable sandbox ##
+x11-libs/content-hub no-sandbox

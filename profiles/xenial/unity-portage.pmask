@@ -67,7 +67,6 @@ dev-qt/qtxml:5::gentoo
 dev-qt/qtxmlpatterns:5::gentoo
 
 gnome-base/gconf::gentoo
-gnome-base/gnome-core-apps::gentoo
 gnome-base/gnome-desktop::gentoo
 gnome-base/gnome-menus:3::gentoo
 gnome-base/gnome-session::gentoo

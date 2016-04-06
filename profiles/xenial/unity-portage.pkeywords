@@ -20,7 +20,7 @@ dev-python/configparser
 dev-python/fixtures
 ~dev-python/python-prctl-1.5.0
 ~dev-util/gtk-builder-convert-2.24.25
-~dev-util/umockdev-0.8.2
+dev-util/umockdev
 ~gnome-extra/zeitgeist-0.9.15
 ~media-libs/libepoxy-1.2
 ~media-libs/giflib-4.2.3
