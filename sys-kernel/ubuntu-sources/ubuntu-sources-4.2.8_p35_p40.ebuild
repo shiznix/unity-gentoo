@@ -44,10 +44,10 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
-	epatch_user
 }
 
 src_prepare() {
+	eapply_user
 	ubuntu-versionator_src_prepare
 	# Ubuntu patchset (don't use epatch so we can easily see what files get patched) #
 	cat "${WORKDIR}/${MY_PN}_${BASE_PV}-${UVER}.diff" | patch -p1 || die
