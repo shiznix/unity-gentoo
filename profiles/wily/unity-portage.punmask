@@ -11,3 +11,4 @@ dev-util/gdbus-codegen::unity-gentoo
 =gnome-base/gnome-mime-data-2.18*::gentoo
 =gnome-base/libgnomeprint-2.18*::gentoo
 =gnome-base/libgnomeprintui-2.18*::gentoo
+=net-wireless/gnome-bluetooth-3.18*::gentoo

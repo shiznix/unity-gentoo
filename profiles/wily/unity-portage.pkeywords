@@ -16,6 +16,7 @@ app-eselect/eselect-opengl
 ~dev-libs/libgcrypt-1.6.1
 dev-libs/libindicate
 dev-libs/libindicate-qt
+~dev-util/umockdev-0.8.11
 dev-python/configparser
 dev-python/fixtures
 ~dev-python/python-prctl-1.5.0
