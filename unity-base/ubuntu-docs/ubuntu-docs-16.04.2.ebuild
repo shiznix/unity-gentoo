@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit autotools eutils gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.tar.xz"
 
 LICENSE="CC-BY-SA-3.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 # This ebuild does not install any binaries
 RESTRICT="binchecks mirror strip"

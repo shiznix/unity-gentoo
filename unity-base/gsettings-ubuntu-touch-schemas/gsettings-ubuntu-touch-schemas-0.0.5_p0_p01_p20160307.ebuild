@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit autotools gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE=""
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 RDEPEND="sys-auth/polkit-pkla-compat"
