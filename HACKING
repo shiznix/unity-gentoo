@@ -5,3 +5,4 @@
 * Any ebuild that installs *.desktop file(s) AND specifies pkg_postinst(), must specify ubuntu-versionator_pkg_postinst
 	within pkg_postinst() {...} so that /usr/share/applications/bamf-2.index remains up-to-date
 * Custom patches for packages that we only wish to patch and not maintain, are placed in profiles/<release>/patches/<category>/<packname>-<version>/some.patch
+* When creating or bumping ebuilds that are also maintained within the main portage tree, try to keep it as identical to the portage tree ebuild as possible

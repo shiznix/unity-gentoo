@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="wily-security"
+URELEASE="xenial"
 inherit check-reqs cmake-utils python-single-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/o/${PN}"
