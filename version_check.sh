@@ -234,10 +234,27 @@ uver() {
 	## Major version field ##
 	PVR_PL_MAJOR="${PVR_ARRAY[1]}"
 	PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"
+	# Support floating point version numbers in major version field (eg. libnih-1.0.3_p0403_p01.ebuild becomes libnih-1.0.3-4.3ubuntu1)
+	if [ "${#PVR_PL_MAJOR}" -gt 1 ]; then
+		PVR_PL_MAJOR="${PVR_PL_MAJOR%%-r*}"	# Strip revision strings
+		char=2
+		index=1
+		strlength="${#PVR_PL_MAJOR}"
+		while [ "${PVR_PL_MAJOR}" != "" ]; do	# Iterate through all chars loading every 2 chars into an array element
+			strtmp="${PVR_PL_MAJOR:0:$char}"
+			strtmp="${strtmp#0}"
+			strarray+=( "${strtmp}" )
+			PVR_PL_MAJOR="${PVR_PL_MAJOR:$char}"
+			((index++))
+		done
+		PVR_PL_MAJOR_tmp="${strarray[@]}"
+		PVR_PL_MAJOR="${PVR_PL_MAJOR_tmp// /.}"
+	fi
 
 	## Minor version field ##
 	PVR_PL_MINOR="${PVR_ARRAY[2]}"
 	PVR_PL_MINOR="${PVR_PL_MINOR%*_}"
+	[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
 	char=2
 	index=1
 	strlength="${#PVR_PL_MINOR}"
@@ -261,7 +278,7 @@ uver() {
 	PVR_PL_MICRO="${PVR_ARRAY[3]}"
 	PVR_PL_MICRO="${PVR_PL_MICRO%*_}"
 	if [ -n "${PVR_PL_MICRO}" ]; then
-		[[ -n "${strarray[@]}" ]] && unset strarray[@]
+		[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
 		char=2
 		index=1
 		strlength="${#PVR_PL_MICRO}"
@@ -286,7 +303,7 @@ uver() {
 	else
 		UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 	fi
-	[[ -n "${strarray[@]}" ]] && unset strarray[@]
+	[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
 }
 
 while (( "$#" )); do
