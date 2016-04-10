@@ -38,6 +38,10 @@ src_install() {
 		dosym "${REPO_ROOT}/profiles/${PROFILE_RELEASE}/env/${envconf}" \
 			"/etc/portage/env/${envconf}" || die
 	done
+
+	# Old mono deps. have the potential to fail as >=dev-lang/mono-4.0.5 needed for gcc:5 migration #
+	#       removes /usr/bin/gmcs to now be /usr/bin/mcs most of these small mono projects seem to be suffering from bitrot #
+	dosym /usr/bin/mcs /usr/bin/gmcs        # Is there a better alternative?
 }
 
 pkg_postinst() {
