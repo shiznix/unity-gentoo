@@ -9,12 +9,12 @@ URELEASE="wily"
 inherit autotools eutils python-single-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/e/${PN}"
-UVER="1build1"
+UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
 
 DESCRIPTION="Event Emulation for the uTouch Stack"
 HOMEPAGE="https://launchpad.net/evemu"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"

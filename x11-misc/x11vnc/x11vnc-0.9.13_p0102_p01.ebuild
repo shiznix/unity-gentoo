@@ -2,12 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="4"
+EAPI=6
 
 inherit eutils ubuntu-versionator
 
 URELEASE="wily"
-UVER="1.2build1"
+UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
 
 DESCRIPTION="A VNC server for real X displays"
 HOMEPAGE="http://www.karlrunge.com/x11vnc/"
@@ -51,6 +51,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}"/${P}-warnings.patch
 
 	# Correct hard coded local prefix in Xdummy #

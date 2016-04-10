@@ -32,7 +32,7 @@ DEPEND="!!media-libs/mesa-mir
 	dev-util/lttng-tools[ust,${MULTILIB_USEDEP}]
 	dev-util/umockdev
 	>=media-libs/glm-0.9.5.1
-	media-libs/mesa[egl,gbm,${MULTILIB_USEDEP}]
+	media-libs/mesa[egl,gbm,gles2,${MULTILIB_USEDEP}]
 	virtual/libudev
 	x11-libs/libdrm[${MULTILIB_USEDEP}]
 	x11-libs/libxkbcommon[${MULTILIB_USEDEP}]

@@ -7,7 +7,7 @@ EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="xenial"
-inherit autotools eutils multilib multilib-minimal flag-o-matic \
+inherit autotools base eutils multilib multilib-minimal flag-o-matic \
 	python-any-r1 pax-utils ubuntu-versionator
 
 OPENGL_DIR="xorg-x11"
@@ -189,7 +189,6 @@ src_prepare() {
 	# Fix segfaulting in some applications using hardware acceleration (eg. Firefox b.g.o #574912) #
 	epatch -p1 "${FILESDIR}/glsl-nir-assert_fix.diff"
 
-	base_src_prepare
 	eautoreconf
 }
 

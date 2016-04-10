@@ -5,11 +5,11 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/g/${PN}"
-UVER="5"
+UVER="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="A PyGTK+ based advanced clipboard manager"
 HOMEPAGE="http://launchpad.net/glipper"
@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

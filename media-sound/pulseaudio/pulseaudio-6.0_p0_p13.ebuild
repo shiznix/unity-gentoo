@@ -2,10 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
-inherit autotools base bash-completion-r1 eutils flag-o-matic gnome2-utils linux-info readme.gentoo systemd user versionator udev multilib-minimal ubuntu-versionator
+inherit autotools bash-completion-r1 eutils flag-o-matic gnome2-utils linux-info readme.gentoo-r1 \
+		systemd user versionator udev multilib-minimal ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/p/${PN}"
 DESCRIPTION="A networked sound server with an advanced plugin system patched for the Unity desktop"
@@ -158,7 +159,7 @@ src_prepare() {
 	# Fix module-zeroconf-publish crashes, bug #504612 (from 'master')
 	#epatch "${FILESDIR}"/${P}-zeroconf-crash-{1,2,3}.patch
 
-	epatch_user
+	eapply_user
 	eautoreconf
 }
 

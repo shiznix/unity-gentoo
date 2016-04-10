@@ -9,11 +9,11 @@ URELEASE="wily"
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/p/${PN}"
-UVER="1"
+UVER="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="Python wrapper around different weather APIs"
 HOMEPAGE="https://launchpad.net/python-weather-api"
-SRC_URI="https://launchpad.net/python-weather-api/trunk/0.3.8/+download/${P}.tar.gz"
+SRC_URI="https://launchpad.net/python-weather-api/trunk/${PV}/+download/${PN}-${PV}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"

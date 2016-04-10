@@ -5,21 +5,20 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit eutils python-single-r1 autotools-multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/g/${PN}"
-UVER="4"
 
 DESCRIPTION="Google C++ Testing Framework"
 HOMEPAGE="http://code.google.com/p/googletest/"
 #SRC_URI="http://googletest.googlecode.com/files/${P}.zip"
 SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
-	${UURL}/${MY_P}-${UVER}.debian.tar.gz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="examples static-libs"
 RESTRICT="mirror"
 

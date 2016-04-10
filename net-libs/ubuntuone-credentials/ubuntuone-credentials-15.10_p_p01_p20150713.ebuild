@@ -8,12 +8,12 @@ URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER="+${UVER_RELEASE}.${PVR_MICRO}ubuntu${PVR_PL_MINOR}"
 UVER_SUFFIX="~gcc5.1"
 
 DESCRIPTION="Ubuntu One authentication library"
 HOMEPAGE="https://launchpad.net/ubuntuone-credentials"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}${UVER}${UVER_SUFFIX}.tar.xz"
+SRC_URI="${UURL}/${MY_P}${UVER}${UVER_SUFFIX}.tar.xz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"

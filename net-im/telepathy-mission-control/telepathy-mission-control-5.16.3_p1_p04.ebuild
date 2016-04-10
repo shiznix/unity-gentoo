@@ -2,13 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="5"
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="no"
+EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="wily"
-inherit base gnome2 python-any-r1 ubuntu-versionator
+inherit gnome2-utils python-any-r1 ubuntu-versionator
 
 DESCRIPTION="An account manager and channel dispatcher for the Telepathy framework patched for the Unity desktop"
 HOMEPAGE="http://cgit.freedesktop.org/telepathy/telepathy-mission-control/"
@@ -52,11 +50,16 @@ src_prepare() {
 
 src_configure() {
 	# creds is not available
-	gnome2_src_configure \
+	econf \
 		--disable-static \
 		--enable-libaccounts-sso \
 		$(use_enable debug) \
 		$(use_with networkmanager connectivity nm) \
 		$(use_enable upower) \
 		$(use systemd && echo "--disable-upower")
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	prune_libtool_files --modules
 }

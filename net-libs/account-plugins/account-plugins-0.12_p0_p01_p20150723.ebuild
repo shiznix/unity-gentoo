@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="5"
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=6
 
 URELEASE="wily"
-inherit autotools eutils gnome2 ubuntu-versionator vala
+inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -41,6 +39,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	eautoreconf
 }
@@ -61,4 +60,9 @@ src_configure() {
 		--with-linkedin-consumer-secret="BazRki2LE8eZtcqh" \
 		--with-instagram-client-id="01c3df41a2274a14882adea8e8ebbd46" \
 		--with-instagram-client-secret="4751ccdc39c648719ea83cfb1c866c26"
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	prune_libtool_files --modules
 }

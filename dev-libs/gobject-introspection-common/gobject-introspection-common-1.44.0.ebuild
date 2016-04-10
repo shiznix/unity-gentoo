@@ -8,7 +8,7 @@ GNOME_ORG_MODULE="gobject-introspection"
 URELEASE="wily"
 inherit ubuntu-versionator gnome.org
 
-UVER="1"
+UVER="-1"
 
 DESCRIPTION="Build infrastructure for GObject Introspection"
 HOMEPAGE="http://live.gnome.org/GObjectIntrospection/"

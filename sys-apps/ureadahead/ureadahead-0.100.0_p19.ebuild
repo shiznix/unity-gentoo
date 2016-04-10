@@ -8,12 +8,12 @@ URELEASE="wily"
 inherit autotools eutils linux-info systemd ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
-UVER="19"
+UVER="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="Ureadahead - Read files in advance during boot"
 HOMEPAGE="https://launchpad.net/ureadahead"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.diff.gz"
+	${UURL}/${MY_P}${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -34,7 +34,7 @@ CONFIG_CHECK="~FTRACE ~DEBUG_FS"
 
 src_prepare() {
 	# Ubuntu patchset #
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff" || die
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER}.diff" || die
 	ubuntu-versionator_src_prepare
 	eautoreconf
 }

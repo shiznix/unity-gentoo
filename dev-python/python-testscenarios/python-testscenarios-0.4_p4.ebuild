@@ -9,7 +9,7 @@ URELEASE="wily"
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/p/${PN}"
-UVER="4"
+UVER="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="Python unittest extension for running tests in different scenarios"
 HOMEPAGE="https://launchpad.net/testscenarios"

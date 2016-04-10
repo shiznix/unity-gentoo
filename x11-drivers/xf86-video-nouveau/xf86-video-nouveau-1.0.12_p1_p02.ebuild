@@ -11,12 +11,12 @@ inherit base eutils xorg-2 ubuntu-versionator
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-nouveau"
 UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
-UVER="1build2"
+UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
 
 DESCRIPTION="Accelerated Open Source driver for nVidia cards"
 HOMEPAGE="http://nouveau.freedesktop.org/"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
-	${UURL}/${MY_PN}_${PV}-${UVER}.diff.gz"
+	${UURL}/${MY_PN}_${PV}${UVER}.diff.gz"
 
 #KEYWORDS="~amd64 ~x86"
 IUSE="mir"

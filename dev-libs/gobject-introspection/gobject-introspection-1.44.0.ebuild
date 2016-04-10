@@ -9,7 +9,7 @@ PYTHON_REQ_USE="xml"
 URELEASE="wily"
 inherit eutils gnome2-utils python-single-r1 toolchain-funcs ubuntu-versionator
 
-UVER="1"
+UVER="-1"
 
 DESCRIPTION="Introspection infrastructure for generating gobject library bindings for various languages"
 HOMEPAGE="http://live.gnome.org/GObjectIntrospection/"

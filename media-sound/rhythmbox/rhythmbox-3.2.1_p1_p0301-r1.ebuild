@@ -2,14 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="no"
+EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
 PYTHON_REQ_USE="xml"
 
 URELEASE="wily-updates"
-inherit autotools base eutils gnome2 python-single-r1 multilib ubuntu-versionator virtualx
+inherit autotools eutils gnome2-utils python-single-r1 multilib ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/r/${PN}"
 
@@ -118,8 +116,6 @@ src_prepare() {
 		MAINTAINERS MAINTAINERS.old NEWS README THANKS"
 
 	rm -v lib/rb-marshal.{c,h} || die # upstream bug 737831
-
-	gnome2_src_prepare
 }
 
 src_configure() {
@@ -128,7 +124,7 @@ src_configure() {
 
 	# --enable-vala just installs the sample vala plugin, and the configure
 	# checks are broken, so don't enable it
-	gnome2_src_configure \
+	econf \
 		MOZILLA_PLUGINDIR=/usr/$(get_libdir)/nsbrowser/plugins \
 		VALAC=$(type -P true) \
 		--enable-mmkeys \
@@ -152,11 +148,16 @@ src_configure() {
 }
 
 src_install() {
-	gnome2_src_install
+	emake DESTDIR="${ED}" install
 
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+
+	dodoc AUTHORS ChangeLog DOCUMENTERS INTERNALS \
+		MAINTAINERS MAINTAINERS.old NEWS README THANKS
+
+	prune_libtool_files --modules
 }
 
 src_test() {

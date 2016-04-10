@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="wily"
-inherit base eutils autotools mono-env fdo-mime gnome2-utils versionator ubuntu-versionator
+inherit eutils autotools mono-env fdo-mime gnome2-utils versionator ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/universe/b/${PN}"
 UVER_PREFIX="+really2.6.2"
@@ -14,26 +14,24 @@ DESCRIPTION="Import, organize, play, and share your music (patched for Unity)"
 HOMEPAGE="http://banshee.fm/"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
-
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+aac +cdda +bpm daap doc +encode ipod karma mtp test udev +web youtube"
 RESTRICT="mirror"
 
-RDEPEND="
-	>=dev-lang/mono-2.4.3
+RDEPEND="dev-lang/mono
 	gnome-base/gnome-settings-daemon
 	sys-apps/dbus
-	>=dev-dotnet/gtk-sharp-2.12:2
-	>=dev-dotnet/notify-sharp-0.4.0_pre20080912-r1
+	dev-dotnet/gtk-sharp:2
+	dev-dotnet/notify-sharp
 	media-libs/gstreamer:1.0
 	media-libs/gst-plugins-base:1.0
 	media-libs/gst-plugins-bad:1.0
 	media-libs/gst-plugins-good:1.0
 	media-libs/gst-plugins-ugly:1.0
 	media-plugins/gst-plugins-meta:1.0
-	>=dev-dotnet/gconf-sharp-2.24.0:2
+	dev-dotnet/gconf-sharp:2
 	cdda? (
 		|| (
 			media-plugins/gst-plugins-cdparanoia:1.0
@@ -43,30 +41,30 @@ RDEPEND="
 	media-libs/musicbrainz:3
 	dev-dotnet/dbus-sharp
 	dev-dotnet/dbus-sharp-glib
-	>=dev-dotnet/mono-addins-0.6.2[gtk]
-	>=dev-dotnet/taglib-sharp-2.0.3.7
-	>=dev-db/sqlite-3.4:3
-	karma? ( >=media-libs/libkarma-0.1.0-r1 )
+	dev-dotnet/mono-addins[gtk]
+	dev-dotnet/taglib-sharp
+	dev-db/sqlite:3
+	karma? ( media-libs/libkarma )
 	aac? ( media-plugins/gst-plugins-faad:1.0 )
 	bpm? ( media-plugins/gst-plugins-soundtouch:1.0 )
-	daap? (	>=dev-dotnet/mono-zeroconf-0.8.0-r1 )
+	daap? (	dev-dotnet/mono-zeroconf )
 	doc? (
-		>=app-text/gnome-doc-utils-0.17.3
+		app-text/gnome-doc-utils
 	)
 	encode? (
 		media-plugins/gst-plugins-lame:1.0
 		media-plugins/gst-plugins-taglib:1.0
 	)
-	ipod? ( >=media-libs/libgpod-0.8.2[mono] )
+	ipod? ( media-libs/libgpod[mono] )
 	mtp? (
-		>=media-libs/libmtp-0.3.0
+		media-libs/libmtp
 	)
 	web? (
-		>=net-libs/webkit-gtk-1.2.2:2
-		>=net-libs/libsoup-gnome-2.26:2.4
+		net-libs/webkit-gtk:2
+		net-libs/libsoup-gnome:2.4
 	)
 	youtube? (
-		>=dev-dotnet/google-gdata-sharp-1.4
+		dev-dotnet/google-gdata-sharp
 	)
 	udev? (
 		app-misc/media-player-info
@@ -74,8 +72,7 @@ RDEPEND="
 		dev-dotnet/gkeyfile-sharp
 		dev-dotnet/gtk-sharp-beans
 		dev-dotnet/gio-sharp
-	)
-"
+	)"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 S="${WORKDIR}/${PN}-2.6.2"
