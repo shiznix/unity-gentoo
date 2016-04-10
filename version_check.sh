@@ -82,7 +82,7 @@ local_version_check() {
 			packbasename=`echo "${packbasename}" | \
 				sed -e 's:-r[0-9].*$::g' \
 					-e 's:[a-z]$::'`	# Strip off trailing letter and revision suffixes from ${PV}
-				current=`echo "${packbasename}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}"`
+				current=`echo "${packbasename}${UVER_PREFIX}${UVER}${UVER_SUFFIX}"`
 		else
 			current=`echo "${packbasename}" | \
 				sed -e 's:-r[0-9].*$::g' \
@@ -301,7 +301,8 @@ uver() {
 	if [ "${packname}" = "linux" ]; then
 		UVER="${PVR_PL_MAJOR}.${PVR_PL_MINOR}"
 	else
-		UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
+		[[ -z ${UVER} ]] && \
+			UVER="-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 	fi
 	[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
 }
