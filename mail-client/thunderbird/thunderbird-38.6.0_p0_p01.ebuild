@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 WANT_AUTOCONF="2.1"
 MOZ_ESR=""
 MOZ_LIGHTNING_VER="4.0.5"
@@ -36,8 +36,8 @@ PATCHFF="firefox-38.0-patches-05"
 MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="wily-security"
-inherit base flag-o-matic toolchain-funcs mozconfig-v6.38 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
+URELEASE="xenial"
+inherit flag-o-matic toolchain-funcs mozconfig-v6.38 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
 UVER_PREFIX="+build1"
 UURL="mirror://ubuntu/pool/main/t/${PN}"
@@ -137,9 +137,10 @@ src_unpack() {
 }
 
 src_prepare() {
-	# Ubuntu global menu patch #
-	PATCHES+=( "${WORKDIR}/debian/patches/unity-menubar.patch" )
-	base_src_prepare
+	# Only apply Ubuntu global menu patch #
+	sed -e '/unity-menubar/!d' \
+		-i "${WORKDIR}/debian/patches/series"
+	ubuntu-versionator_src_prepare
 
 	# Apply our Thunderbird patchset
 	EPATCH_SUFFIX="patch" \
@@ -178,7 +179,7 @@ src_prepare() {
 	done
 
 	# Allow user to apply any additional patches without modifing ebuild
-	epatch_user
+	eapply_user
 
 	# Confirm the version of lightning being grabbed for langpacks is the same
 	# as that used in thunderbird

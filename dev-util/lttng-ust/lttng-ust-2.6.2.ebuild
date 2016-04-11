@@ -29,7 +29,9 @@ src_prepare() {
 	eautoreconf
 }
 
-src_install() {
-	autotools-multilib_src_install
-	prune_libtool_files --modules
+src_configure() {
+	local myeconfargs=(
+		--enable-static=no
+	)
+	autotools-multilib_src_configure
 }

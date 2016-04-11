@@ -6,22 +6,24 @@ EAPI=6
 VALA_MIN_API_VERSION="0.26"
 VALA_MAX_API_VERSION="0.26"
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit eutils gnome2-utils multilib toolchain-funcs vala ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/s/${PN}"
+UVER_PREFIX="+git${PVR_MICRO}.r1.f2fb1f7"
+
 DESCRIPTION="Open source photo manager for GNOME patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Shotwell"
-
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}-${UVER}.debian.tar.xz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz
 	http://pkgs.fedoraproject.org/cgit/shotwell.git/plain/shotwell.1
 	http://pkgs.fedoraproject.org/cgit/shotwell.git/plain/shotwell-icons.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="amd64 x86"
+#KEYWORDS="amd64 x86"
 IUSE=""
+RESTRICT="mirror"
 
 CORE_SUPPORTED_LANGUAGES="
 	af ar as ast bg bn bn_IN ca cs da de el en_GB eo es et eu fi fr gd gl gu he

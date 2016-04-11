@@ -4,20 +4,19 @@
 
 EAPI=6
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit eutils multilib multilib-minimal ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
-UVER_PREFIX="2"
 
 DESCRIPTION="Android Platform Headers from AOSP releases"
 HOMEPAGE="https://source.android.com/"
-SRC_URI="${UURL}/${MY_P}-${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER_PREFIX}-${UVER}.debian.tar.xz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+#KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
