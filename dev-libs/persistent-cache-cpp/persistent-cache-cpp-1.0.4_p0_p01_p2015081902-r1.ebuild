@@ -8,7 +8,7 @@ CMAKE_BUILD_TYPE=none
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/p/${PN}"
+UURL="mirror://unity/pool/universe/p/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Cache of key-value pairs with persistent storage for C++11"

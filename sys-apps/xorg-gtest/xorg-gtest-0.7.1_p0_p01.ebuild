@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/x/${PN}"
+UURL="mirror://unity/pool/main/x/${PN}"
 
 DESCRIPTION="X.Org dummy testing environment for Google Test"
 HOMEPAGE="https://launchpad.net/xorg-gtest"

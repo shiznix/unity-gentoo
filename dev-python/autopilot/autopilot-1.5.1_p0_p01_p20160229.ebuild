@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{3_4,3_5} )
 URELEASE="xenial"
 inherit distutils-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/a/${PN}"
+UURL="mirror://unity/pool/universe/a/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Utility to write and run integration tests easily"

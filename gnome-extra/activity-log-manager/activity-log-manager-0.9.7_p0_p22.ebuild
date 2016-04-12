@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/a/${PN}"
+UURL="mirror://unity/pool/main/a/${PN}"
 
 DESCRIPTION="Blacklist configuration user interface for Zeitgeist"
 HOMEPAGE="https://launchpad.net/activity-log-manager"

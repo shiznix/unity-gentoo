@@ -9,7 +9,7 @@ GCONF_DEBUG="no"
 URELEASE="xenial"
 inherit autotools base eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity Settings Daemon"

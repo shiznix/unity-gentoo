@@ -9,7 +9,7 @@ WANT_AUTOMAKE=1.12
 URELEASE="xenial"
 inherit vala autotools eutils flag-o-matic python-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libs/${PN}"
+UURL="mirror://unity/pool/main/libs/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="GObject introspection data for the Signon library for the Unity desktop"

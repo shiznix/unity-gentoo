@@ -9,7 +9,7 @@ PYTHON_REQ_USE="xml"
 URELEASE="xenial"
 inherit autotools eutils gnome2-utils python-single-r1 multilib ubuntu-versionator virtualx
 
-UURL="mirror://ubuntu/pool/main/r/${PN}"
+UURL="mirror://unity/pool/main/r/${PN}"
 
 DESCRIPTION="Music management and playback software for GNOME patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Rhythmbox"

@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="wily"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/liba/${PN}"
+UURL="mirror://unity/pool/main/liba/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Application indicators used by the Unity desktop"

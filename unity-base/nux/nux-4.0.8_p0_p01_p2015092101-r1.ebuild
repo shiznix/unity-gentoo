@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils ubuntu-versionator xdummy
 
-UURL="mirror://ubuntu/pool/main/n/${PN}"
+UURL="mirror://unity/pool/main/n/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"

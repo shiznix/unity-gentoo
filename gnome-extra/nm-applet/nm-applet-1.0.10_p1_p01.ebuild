@@ -13,7 +13,7 @@ inherit autotools base eutils gnome2 ubuntu-versionator
 MY_P="${GNOME_ORG_MODULE}_${PV}"
 S="${WORKDIR}/${GNOME_ORG_MODULE}-${PV}"
 
-UURL="mirror://ubuntu/pool/main/n/${GNOME_ORG_MODULE}"
+UURL="mirror://unity/pool/main/n/${GNOME_ORG_MODULE}"
 
 DESCRIPTION="GNOME applet for NetworkManager"
 HOMEPAGE="http://projects.gnome.org/NetworkManager/"

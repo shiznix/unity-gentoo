@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/d/${PN}"
+UURL="mirror://unity/pool/main/d/${PN}"
 
 DESCRIPTION="Dconf Qt bindings for the Unity desktop"
 HOMEPAGE="https://launchpad.net/dconf-qt"

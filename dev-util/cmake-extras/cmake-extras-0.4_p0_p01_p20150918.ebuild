@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/c/${PN}"
+UURL="mirror://unity/pool/universe/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Extra CMake utility modules"

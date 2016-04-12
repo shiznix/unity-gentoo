@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="wily"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/g/${PN}"
+UURL="mirror://unity/pool/universe/g/${PN}"
 UVER="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="A PyGTK+ based advanced clipboard manager"

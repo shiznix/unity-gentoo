@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools gnome2-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="GSettings desktop-wide schemas for the Unity desktop"

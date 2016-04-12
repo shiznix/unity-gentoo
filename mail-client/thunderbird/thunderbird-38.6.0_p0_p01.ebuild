@@ -40,7 +40,7 @@ URELEASE="xenial"
 inherit flag-o-matic toolchain-funcs mozconfig-v6.38 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
 UVER_PREFIX="+build1"
-UURL="mirror://ubuntu/pool/main/t/${PN}"
+UURL="mirror://unity/pool/main/t/${PN}"
 
 DESCRIPTION="Thunderbird Mail Client"
 HOMEPAGE="http://www.mozilla.com/en-US/thunderbird/"

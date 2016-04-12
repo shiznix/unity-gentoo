@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="vivid"
 inherit qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/q/${PN}-opensource-src"
+UURL="mirror://unity/pool/universe/q/${PN}-opensource-src"
 UVER_PREFIX="~git20141206~44f70d99"
 
 SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz

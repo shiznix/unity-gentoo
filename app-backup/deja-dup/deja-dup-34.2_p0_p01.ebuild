@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/d/${PN}"
+UURL="mirror://unity/pool/main/d/${PN}"
 
 DESCRIPTION="Simple backup tool using duplicity back-end"
 HOMEPAGE="https://launchpad.net/deja-dup/"

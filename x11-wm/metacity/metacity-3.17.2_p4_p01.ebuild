@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit eutils gnome2-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/m/${PN}"
+UURL="mirror://unity/pool/main/m/${PN}"
 
 DESCRIPTION="GNOME default window manager"
 HOMEPAGE="http://blogs.gnome.org/metacity/"

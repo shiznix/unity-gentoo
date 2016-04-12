@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="wily"
 inherit cmake-utils python-single-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/u/${PN}"
+UURL="mirror://unity/pool/universe/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Compositor for Mir display server that switches graphics and input between running sessions"

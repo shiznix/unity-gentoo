@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit autotools bash-completion-r1 eutils flag-o-matic gnome2-utils linux-info systemd user versionator udev multilib-minimal ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/p/${PN}"
+UURL="mirror://unity/pool/main/p/${PN}"
 DESCRIPTION="A networked sound server with an advanced plugin system patched for the Unity desktop"
 HOMEPAGE="http://www.pulseaudio.org/"
 

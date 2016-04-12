@@ -9,7 +9,7 @@ GCONF_DEBUG="yes"
 URELEASE="xenial"
 inherit autotools base eutils gnome2 ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity Desktop Configuration Tool"

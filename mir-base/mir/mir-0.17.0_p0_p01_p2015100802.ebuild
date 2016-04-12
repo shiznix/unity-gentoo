@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit cmake-multilib ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/m/${PN}"
+UURL="mirror://unity/pool/main/m/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Mir is a display server technology"

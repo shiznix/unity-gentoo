@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/n/${PN}"
+UURL="mirror://unity/pool/main/n/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Icons for on-screen-display notification agent"

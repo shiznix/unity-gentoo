@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit eutils qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/u/${PN}"
+UURL="mirror://unity/pool/universe/u/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Chromium extension: Unity Integration"

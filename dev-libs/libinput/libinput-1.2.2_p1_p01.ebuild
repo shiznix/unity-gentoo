@@ -7,7 +7,7 @@ EAPI=5
 URELEASE="xenial"
 inherit autotools-multilib base eutils udev ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libi/${PN}"
+UURL="mirror://unity/pool/main/libi/${PN}"
 
 DESCRIPTION="Library to handle input devices in Wayland"
 HOMEPAGE="http://www.freedesktop.org/wiki/Software/libinput/"

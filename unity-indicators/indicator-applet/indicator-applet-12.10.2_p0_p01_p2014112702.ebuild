@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/i/${PN}"
+UURL="mirror://unity/pool/universe/i/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Gnome panel indicator for the Unity desktop"

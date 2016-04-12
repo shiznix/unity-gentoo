@@ -9,7 +9,7 @@ DISTUTILS_SINGLE_IMPL=1
 URELEASE="wily"
 inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/h/${PN}"
+UURL="mirror://unity/pool/main/h/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Backend for the Unity HUD"

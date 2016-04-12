@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit eutils multilib multilib-minimal ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/a/${PN}"
+UURL="mirror://unity/pool/main/a/${PN}"
 UVER_PREFIX="2"
 
 DESCRIPTION="Android Platform Headers from AOSP releases"

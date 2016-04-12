@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/d/${PN}"
+UURL="mirror://unity/pool/main/d/${PN}"
 
 DESCRIPTION="Dbus-binding leveraging C++-11"
 HOMEPAGE="http://launchpad.net/dbus-cpp"

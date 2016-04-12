@@ -9,7 +9,7 @@ DISTUTILS_SINGLE_IMPL=1
 URELEASE="xenial"
 inherit distutils-r1 cmake-utils ubuntu-versionator	# Inheritance order important
 
-UURL="mirror://ubuntu/pool/main/w/${PN}"
+UURL="mirror://unity/pool/main/w/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity webapps browser application"

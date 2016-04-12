@@ -7,7 +7,7 @@ EAPI=5
 URELEASE="xenial"
 inherit eutils qt4-r2 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/liba/${PN}"
+UURL="mirror://unity/pool/main/liba/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="QT library for Single Sign On framework for the Unity desktop"

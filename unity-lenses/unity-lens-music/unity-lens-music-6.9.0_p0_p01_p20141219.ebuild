@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Music lens for the Unity desktop"

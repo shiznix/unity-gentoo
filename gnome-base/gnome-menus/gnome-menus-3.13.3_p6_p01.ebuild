@@ -8,7 +8,7 @@ GCONF_DEBUG="no"
 URELEASE="wily"
 inherit autotools base gnome2 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 
 DESCRIPTION="The GNOME menu system, implementing the F.D.O cross-desktop spec, patched for the Unity desktop"
 HOMEPAGE="http://www.gnome.org"

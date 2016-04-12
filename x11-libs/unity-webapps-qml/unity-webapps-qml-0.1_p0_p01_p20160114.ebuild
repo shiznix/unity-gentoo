@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="xenial"
 inherit python-any-r1 qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity Webapps QML component"

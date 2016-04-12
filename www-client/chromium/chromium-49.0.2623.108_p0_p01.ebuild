@@ -16,7 +16,7 @@ inherit check-reqs chromium eutils flag-o-matic multilib multiprocessing pax-uti
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
-UURL="mirror://ubuntu/pool/universe/c/${MY_PN}"
+UURL="mirror://unity/pool/universe/c/${MY_PN}"
 UVER_SUFFIX=".1233"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"

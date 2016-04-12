@@ -11,7 +11,7 @@ inherit autotools base eutils gnome2 ubuntu-versionator
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 
 DESCRIPTION="Gnome session manager patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-session"

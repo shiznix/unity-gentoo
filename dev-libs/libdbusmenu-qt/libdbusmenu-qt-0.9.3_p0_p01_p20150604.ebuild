@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit cmake-utils virtualx ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libd/${PN}"
+UURL="mirror://unity/pool/main/libd/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="A library providing Qt implementation of DBusMenu specification"

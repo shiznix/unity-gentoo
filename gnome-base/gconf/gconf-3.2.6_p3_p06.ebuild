@@ -12,7 +12,7 @@ PYTHON_REQ_USE="xml"
 URELEASE="xenial"
 inherit base eutils gnome2 multilib-minimal python-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 
 DESCRIPTION="GNOME configuration system and daemon patched for the Unity desktop"
 HOMEPAGE="http://projects.gnome.org/gconf/"

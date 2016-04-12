@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libq/${PN}"
+UURL="mirror://unity/pool/main/libq/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Library to facilitate testing DBus interactions in Qt applications"

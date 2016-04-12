@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/u/${PN}"
+UURL="mirror://unity/pool/universe/u/${PN}"
 UVER="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Ubuntu One authentication library"

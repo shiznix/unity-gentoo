@@ -9,7 +9,7 @@ DISTUTILS_SINGLE_IMPL=1
 URELEASE="xenial"
 inherit cmake-utils distutils-r1 eutils gnome2-utils pam toolchain-funcs ubuntu-versionator xdummy
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="The Ubuntu Unity Desktop"

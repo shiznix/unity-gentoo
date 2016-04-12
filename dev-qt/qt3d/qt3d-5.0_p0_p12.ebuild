@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
+UURL="mirror://unity/pool/main/q/${QT5_MODULE}-opensource-src"
 UVER_PREFIX="~git20130731"
 
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz

@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Qml bindings for GSettings."

@@ -22,7 +22,7 @@ inherit autotools base bash-completion-r1 gnome2 libtool eutils flag-o-matic mul
 MY_P="${PN}2.0_${PV}"
 #S="${WORKDIR}/${PN}-${PV}"
 
-UURL="mirror://ubuntu/pool/main/g/${PN}2.0"
+UURL="mirror://unity/pool/main/g/${PN}2.0"
 
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/glib"

@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit gnome2-utils qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/a/${PN}"
+UURL="mirror://unity/pool/main/a/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Expose Unity Online Accounts API to QML applications"

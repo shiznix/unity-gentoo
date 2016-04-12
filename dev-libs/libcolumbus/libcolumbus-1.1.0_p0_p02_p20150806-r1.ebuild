@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{3_4,3_5} )
 URELEASE="wily"
 inherit cmake-utils eutils python-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libc/${PN}"
+UURL="mirror://unity/pool/main/libc/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Error tolerant matching engine used by the Unity desktop"

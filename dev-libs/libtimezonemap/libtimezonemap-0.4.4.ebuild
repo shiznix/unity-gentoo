@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils gnome2-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libt/${PN}"
+UURL="mirror://unity/pool/main/libt/${PN}"
 UVER=
 
 DESCRIPTION="GTK+3 timezone map widget used by the Unity desktop"

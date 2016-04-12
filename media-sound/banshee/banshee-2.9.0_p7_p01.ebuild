@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit eutils autotools mono-env fdo-mime gnome2-utils versionator ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/b/${PN}"
+UURL="mirror://unity/pool/universe/b/${PN}"
 UVER_PREFIX="+really2.6.2"
 
 DESCRIPTION="Import, organize, play, and share your music (patched for Unity)"

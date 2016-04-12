@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="wily"
 inherit autotools eutils python-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="GTK+ module for exporting old-style menus as GMenuModels"

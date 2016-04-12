@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/t/${PN}"
+UURL="mirror://unity/pool/main/t/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="API for creating, reading, updating and deleting trust requests answered by users"

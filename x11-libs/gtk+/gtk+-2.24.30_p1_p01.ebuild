@@ -13,7 +13,7 @@ MY_PN="gtk+2.0"
 MY_P="${MY_PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="mirror://ubuntu/pool/main/g/${MY_PN}"
+UURL="mirror://unity/pool/main/g/${MY_PN}"
 
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"

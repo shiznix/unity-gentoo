@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils flag-o-matic gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/i/${PN}"
+UURL="mirror://unity/pool/main/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Indicator that collects messages that need a response used by the Unity desktop"

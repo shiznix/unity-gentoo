@@ -9,7 +9,7 @@ URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
-UURL="mirror://ubuntu/pool/main/x/${PN}"
+UURL="mirror://unity/pool/main/x/${PN}"
 
 DESCRIPTION="Select objects in an object tree using XPath queries"
 HOMEPAGE="https://launchpad.net/xpathselect"

@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 URELEASE="wily"
 inherit distutils-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/p/${PN}"
+UURL="mirror://unity/pool/main/p/${PN}"
 UVER="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="A library to manipulate gettext files (po and mo files)"

@@ -8,7 +8,7 @@ XORG_DOC=doc
 URELEASE="xenial"
 inherit autotools base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/x/${PN}"
+UURL="mirror://unity/pool/main/x/${PN}"
 
 DESCRIPTION="X.Org X servers patched for the Unity desktop"
 SLOT="0/${PV}"

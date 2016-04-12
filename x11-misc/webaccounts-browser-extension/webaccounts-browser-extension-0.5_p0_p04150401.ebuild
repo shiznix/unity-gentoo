@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="vivid-security"
 inherit autotools eutils gnome2-utils multilib ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/w/${PN}"
+UURL="mirror://unity/pool/main/w/${PN}"
 
 DESCRIPTION="Ubuntu Online Accounts browser extension"
 HOMEPAGE="https://launchpad.net/online-accounts-browser-extension"

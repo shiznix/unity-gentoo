@@ -10,7 +10,7 @@ inherit autotools base gnome2 ubuntu-versionator
 
 MY_PN="${PN}3"
 MY_P="${MY_PN}_${PV}"
-UURL="mirror://ubuntu/pool/main/g/${MY_PN}"
+UURL="mirror://unity/pool/main/g/${MY_PN}"
 
 DESCRIPTION="Libraries for the gnome desktop that are not part of the UI patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-desktop"

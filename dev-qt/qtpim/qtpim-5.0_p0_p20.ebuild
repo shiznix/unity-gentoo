@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/q/${PN}-opensource-src"
+UURL="mirror://unity/pool/main/q/${PN}-opensource-src"
 UVER_PREFIX="~git20140515~29475884"
 
 DESCRIPTION="Qt PIM module, Organizer library"

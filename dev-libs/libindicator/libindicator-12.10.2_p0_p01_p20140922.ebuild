@@ -10,7 +10,7 @@ inherit autotools eutils ubuntu-versionator
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="mirror://ubuntu/pool/main/libi/${PN}"
+UURL="mirror://unity/pool/main/libi/${PN}"
 UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="A set of symbols and convenience functions that all indicators would like to use"

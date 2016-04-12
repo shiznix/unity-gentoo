@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="wily"
 inherit autotools eutils python-single-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/e/${PN}"
+UURL="mirror://unity/pool/universe/e/${PN}"
 UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
 
 DESCRIPTION="Event Emulation for the uTouch Stack"

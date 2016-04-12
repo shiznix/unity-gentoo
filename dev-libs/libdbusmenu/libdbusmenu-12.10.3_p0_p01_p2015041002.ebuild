@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils flag-o-matic ubuntu-versionator vala virtualx
 
-UURL="mirror://ubuntu/pool/main/libd/${PN}"
+UURL="mirror://unity/pool/main/libd/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Library to pass menu structure across DBus"

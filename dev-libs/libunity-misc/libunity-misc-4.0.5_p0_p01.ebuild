@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libu/${PN}"
+UURL="mirror://unity/pool/main/libu/${PN}"
 UVER_PREFIX="+14.04.20140115"
 
 DESCRIPTION="Miscellaneous modules for the Unity desktop"

@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily-updates"
 inherit autotools eutils pam readme.gentoo-r1 systemd user ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/l/${PN}"
+UURL="mirror://unity/pool/main/l/${PN}"
 
 DESCRIPTION="A lightweight display manager"
 HOMEPAGE="https://launchpad.net/lightdm"

@@ -8,7 +8,7 @@ CMAKE_BUILD_TYPE=none
 URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/t/${PN}"
+UURL="mirror://unity/pool/universe/t/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Ubuntu's thumbnailer service"

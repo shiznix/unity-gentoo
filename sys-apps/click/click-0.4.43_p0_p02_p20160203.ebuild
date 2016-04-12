@@ -10,7 +10,7 @@ VALA_MAX_API_VERSION="0.28"
 URELEASE="xenial"
 inherit autotools distutils-r1 ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/c/${PN}"
+UURL="mirror://unity/pool/main/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Ubuntu mobile platform package management framework"

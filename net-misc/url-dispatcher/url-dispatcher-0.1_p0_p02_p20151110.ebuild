@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Service to allow sending of URLs and get handlers started, used by the Unity desktop"

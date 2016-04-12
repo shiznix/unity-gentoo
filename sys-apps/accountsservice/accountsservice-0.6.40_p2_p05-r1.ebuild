@@ -10,7 +10,7 @@ inherit autotools eutils gnome2-utils systemd vala ubuntu-versionator
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
 
-UURL="mirror://ubuntu/pool/main/a/${PN}"
+UURL="mirror://unity/pool/main/a/${PN}"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"

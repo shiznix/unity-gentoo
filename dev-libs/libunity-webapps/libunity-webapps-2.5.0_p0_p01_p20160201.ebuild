@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit autotools eutils gnome2-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libu/${PN}"
+UURL="mirror://unity/pool/main/libu/${PN}"
 UVER_PREFIX="~+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Webapps integration with the Unity desktop"

@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/d/${PN}"
+UURL="mirror://unity/pool/main/d/${PN}"
 UVER_PREFIX="+15.10.${PVR_MICRO}"
 
 DESCRIPTION="Dbus-binding leveraging C++-11"

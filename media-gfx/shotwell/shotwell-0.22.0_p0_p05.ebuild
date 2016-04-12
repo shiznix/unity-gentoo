@@ -9,7 +9,7 @@ VALA_MAX_API_VERSION="0.26"
 URELEASE="wily"
 inherit eutils gnome2-utils multilib toolchain-funcs vala ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/s/${PN}"
+UURL="mirror://unity/pool/main/s/${PN}"
 DESCRIPTION="Open source photo manager for GNOME patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Shotwell"
 

@@ -10,7 +10,7 @@ UVER=
 
 DESCRIPTION="A nice and well polished icon theme"
 HOMEPAGE="https://launchpad.net/human-icon-theme"
-SRC_URI="mirror://ubuntu/pool/main/h/${PN}/${MY_P}.tar.gz"
+SRC_URI="mirror://unity/pool/main/h/${PN}/${MY_P}.tar.gz"
 
 LICENSE="CC-BY-SA-3.0"
 SLOT="0"

@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/p/${PN}"
+UURL="mirror://unity/pool/main/p/${PN}"
 
 DESCRIPTION="C++11 library for handling processes"
 HOMEPAGE="http://launchpad.net/process-cpp"

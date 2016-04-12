@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools flag-o-matic ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/d/${PN}"
+UURL="mirror://unity/pool/main/d/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Run executables under a new DBus session for testing"

@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="wily-updates"
 inherit gnome2-utils cmake-utils eutils python-r1 ubuntu-versionator xdummy
 
-UURL="mirror://ubuntu/pool/main/c/${PN}"
+UURL="mirror://unity/pool/main/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"

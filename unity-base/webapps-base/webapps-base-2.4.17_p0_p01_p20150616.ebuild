@@ -9,7 +9,7 @@ URELEASE="wily"
 inherit autotools gnome2-utils python-r1 ubuntu-versionator
 
 MY_PN="webapps-applications"
-UURL="mirror://ubuntu/pool/main/w/${MY_PN}"
+UURL="mirror://unity/pool/main/w/${MY_PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="WebApps: Initial set of Apps for the Unity desktop"

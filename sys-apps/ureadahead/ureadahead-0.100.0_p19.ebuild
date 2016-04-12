@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils linux-info systemd ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="Ureadahead - Read files in advance during boot"

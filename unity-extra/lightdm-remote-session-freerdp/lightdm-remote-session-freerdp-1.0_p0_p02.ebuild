@@ -7,7 +7,7 @@ GNOME2_LA_PUNT="yes"
 
 inherit ubuntu-versionator eutils
 
-UURL="mirror://ubuntu/pool/main/l/${PN}"
+UURL="mirror://unity/pool/main/l/${PN}"
 URELEASE="vivid"
 
 DESCRIPTION="Configuration and a script to do a remote session using FreeRDP."

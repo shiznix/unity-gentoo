@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit autotools eutils ubuntu-versionator vala virtualx
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Home scope that aggregates results from multiple scopes for the Unity desktop"

@@ -9,7 +9,7 @@ DISTUTILS_SINGLE_IMPL=1
 URELEASE="wily"
 inherit distutils-r1 eutils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+14.04.20140318"
 
 DESCRIPTION="Photo lens for the Unity desktop"

@@ -8,7 +8,7 @@ URELEASE="wily"
 inherit autotools gnome2-utils ubuntu-versionator
 
 MY_PN="evolution-indicator"
-UURL="mirror://ubuntu/pool/main/e/${MY_PN}"
+UURL="mirror://unity/pool/main/e/${MY_PN}"
 
 DESCRIPTION="Indicator for the Evolution mail client used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/evolution-indicator"

@@ -10,7 +10,7 @@ PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 URELEASE="xenial"
 inherit autotools base eutils gnome2 python-r1 systemd udev virtualx ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-settings-daemon"

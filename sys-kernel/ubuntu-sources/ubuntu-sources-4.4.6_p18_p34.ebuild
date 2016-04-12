@@ -12,7 +12,7 @@ MY_PN="linux"
 MY_PV="${PV}"
 BASE_PV="4.4.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
 KCONFIG_URELEASE="utopic"
-UURL="mirror://ubuntu/pool/main/l/${MY_PN}"
+UURL="mirror://unity/pool/main/l/${MY_PN}"
 
 DESCRIPTION="Ubuntu patched kernel sources"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/linux"

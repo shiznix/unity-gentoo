@@ -8,7 +8,7 @@ GCONF_DEBUG="yes"
 URELEASE="wily"
 inherit eutils gnome2 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Unity desktop icon theme"

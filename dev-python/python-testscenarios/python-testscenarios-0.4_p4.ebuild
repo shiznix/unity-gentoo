@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="wily"
 inherit distutils-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/p/${PN}"
+UURL="mirror://unity/pool/main/p/${PN}"
 UVER="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="Python unittest extension for running tests in different scenarios"

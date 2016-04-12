@@ -7,7 +7,7 @@ EAPI=5
 URELEASE="wily"
 inherit autotools autotools-multilib base multilib ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libh/${PN}"
+UURL="mirror://unity/pool/main/libh/${PN}"
 UVER_PREFIX="+git20131207+e452e83"
 UVER_SUFFIX="~gcc5.1"
 

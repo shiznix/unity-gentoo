@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 
 DESCRIPTION="Ubuntu wallpapers"
 HOMEPAGE="https://launchpad.net/ubuntu-wallpapers"

@@ -6,7 +6,7 @@ EAPI=6
 
 inherit autotools eutils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/r/${PN}"
+UURL="mirror://unity/pool/main/r/${PN}"
 URELEASE="vivid"
 
 DESCRIPTION="A service that lists remote logins."

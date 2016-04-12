@@ -10,8 +10,7 @@ inherit ubuntu-versionator
 DESCRIPTION="Language translations pack for Unity desktop"
 HOMEPAGE="https://translations.launchpad.net/ubuntu"
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/l"
-#UURL="mirror://ubuntu/pool/main/l"	# Mirrors can be unpredictable #
+UURL="mirror://unity/pool/main/l"
 UVER=
 
 LICENSE="GPL-3"

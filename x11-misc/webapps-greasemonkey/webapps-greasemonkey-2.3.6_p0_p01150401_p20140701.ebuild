@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="vivid-security"
 inherit ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/w/${PN}"
+UURL="mirror://unity/pool/main/w/${PN}"
 UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="WebApps: Websites integration Firefox plug-in for Unity desktop"

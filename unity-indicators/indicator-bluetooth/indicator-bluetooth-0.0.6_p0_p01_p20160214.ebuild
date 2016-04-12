@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/i/${PN}"
+UURL="mirror://unity/pool/main/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="System bluetooth indicator used by the Unity desktop"

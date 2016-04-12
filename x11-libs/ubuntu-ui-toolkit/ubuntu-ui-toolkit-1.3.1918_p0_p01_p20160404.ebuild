@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit gnome2-utils qt5-build ubuntu-versionator virtualx
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Qt Components for the Unity desktop - QML plugin"

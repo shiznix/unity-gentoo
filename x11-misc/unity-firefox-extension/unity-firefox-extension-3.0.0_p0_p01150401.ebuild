@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="vivid-security"
 inherit autotools eutils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+14.04.20140416"
 
 DESCRIPTION="Firefox extension for Unity desktop integration"

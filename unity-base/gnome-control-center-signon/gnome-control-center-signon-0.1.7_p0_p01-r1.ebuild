@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 UVER_PREFIX="~+14.10.20140814"
 
 DESCRIPTION="Online account plugin for unity-control-center used by the Unity desktop"

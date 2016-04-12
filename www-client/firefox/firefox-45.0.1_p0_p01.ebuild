@@ -40,7 +40,7 @@ MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="xenial"
 UVER_PREFIX="+build1"
-UURL="mirror://ubuntu/pool/main/f/${PN}"
+UURL="mirror://unity/pool/main/f/${PN}"
 
 inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.45 pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
 

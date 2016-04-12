@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/a/${PN}"
+UURL="mirror://unity/pool/main/a/${PN}"
 UVER_PREFIX="+14.04.20140305"
 
 DESCRIPTION="Application menu module for Qt"

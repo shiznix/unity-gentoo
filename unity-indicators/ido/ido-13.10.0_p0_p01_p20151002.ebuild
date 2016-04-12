@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils flag-o-matic ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/i/${PN}"
+UURL="mirror://unity/pool/main/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"

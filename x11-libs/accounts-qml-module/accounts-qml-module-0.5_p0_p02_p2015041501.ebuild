@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit gnome2-utils qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/a/${PN}"
+UURL="mirror://unity/pool/main/a/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 UVER_SUFFIX="~gcc5.1"
 

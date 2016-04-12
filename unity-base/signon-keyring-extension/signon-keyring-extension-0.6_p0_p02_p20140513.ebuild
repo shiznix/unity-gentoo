@@ -7,7 +7,7 @@ EAPI=5
 URELEASE="wily"
 inherit base qt4-r2 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/s/${PN}"
+UURL="mirror://unity/pool/main/s/${PN}"
 UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="GNOME keyring extension for signond used by the Unity desktop"

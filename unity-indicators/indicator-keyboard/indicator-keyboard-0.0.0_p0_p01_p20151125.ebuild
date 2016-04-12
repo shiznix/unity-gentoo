@@ -10,7 +10,7 @@ VALA_MAX_API_VERSION="0.26"
 URELEASE="xenial"
 inherit autotools eutils flag-o-matic gnome2-utils python-r1 ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/i/${PN}"
+UURL="mirror://unity/pool/main/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Keyboard indicator used by the Unity desktop"

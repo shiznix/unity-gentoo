@@ -10,7 +10,7 @@ inherit base eutils xorg-2 ubuntu-versionator
 
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-nouveau"
-UURL="mirror://ubuntu/pool/main/x/${MY_PN}"
+UURL="mirror://unity/pool/main/x/${MY_PN}"
 UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
 
 DESCRIPTION="Accelerated Open Source driver for nVidia cards"

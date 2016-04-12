@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{3_4,3_5} )
 URELEASE="wily"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/i/${PN}"
+UURL="mirror://unity/pool/universe/i/${PN}"
 
 DESCRIPTION="CPU frequency scaling indicator for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/classicmenu-indicator"

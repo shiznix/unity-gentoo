@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit autotools eutils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 
 DESCRIPTION="Desktop services daemon used by the Unity desktop"
 HOMEPAGE="http://upstart.ubuntu.com/"

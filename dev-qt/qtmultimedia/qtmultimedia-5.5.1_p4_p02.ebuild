@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit eutils qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
+UURL="mirror://unity/pool/main/q/${QT5_MODULE}-opensource-src"
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
 	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 

@@ -9,7 +9,7 @@ QT5_MODULE="qtbase"
 URELEASE="wily"
 inherit qt5-build ubuntu-versionator eutils
 
-UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
+UURL="mirror://unity/pool/main/q/${QT5_MODULE}-opensource-src"
 UVER_PREFIX="+dfsg"
 
 DESCRIPTION="The GUI module and platform plugins for the Qt5 toolkit"

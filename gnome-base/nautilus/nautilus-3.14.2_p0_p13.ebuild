@@ -9,7 +9,7 @@ GCONF_DEBUG="no"
 URELEASE="wily-updates"
 inherit autotools base eutils gnome2 readme.gentoo virtualx ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/n/${PN}"
+UURL="mirror://unity/pool/main/n/${PN}"
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Nautilus"

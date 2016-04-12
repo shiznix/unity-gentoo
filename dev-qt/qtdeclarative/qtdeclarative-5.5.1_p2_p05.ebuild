@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit qt5-build ubuntu-versionator eutils
 
-UURL="mirror://ubuntu/pool/main/q/${QT5_MODULE}-opensource-src"
+UURL="mirror://unity/pool/main/q/${QT5_MODULE}-opensource-src"
 
 DESCRIPTION="The QML and Quick modules for the Qt5 framework"
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}.orig.tar.xz

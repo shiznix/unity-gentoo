@@ -9,7 +9,7 @@ GCONF_DEBUG="no"
 URELEASE="xenial"
 inherit autotools base eutils gnome2 readme.gentoo virtualx ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/n/${PN}"
+UURL="mirror://unity/pool/main/n/${PN}"
 UVER_PREFIX=".is.3.14.3"
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"

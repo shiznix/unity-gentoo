@@ -7,7 +7,7 @@ EAPI=5
 URELEASE="wily"
 inherit eutils qt4-r2 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/liba/${PN}"
+UURL="mirror://unity/pool/main/liba/${PN}"
 #UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 UVER_PREFIX="+14.10.${PVR_MICRO}"
 UVER_SUFFIX="~gcc5.1"

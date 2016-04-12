@@ -12,7 +12,7 @@ KDE_LINGUAS="cs da de el es et fi fr ga hu it ja km lt nds nl pl pt pt_BR ro sk 
 URELEASE="wily"
 inherit base kde4-base ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/l/${PN}"
+UURL="mirror://unity/pool/universe/l/${PN}"
 
 DESCRIPTION="LightDM KDE greeter patched for unity desktop"
 HOMEPAGE="https://launchpad.net/lightdm"

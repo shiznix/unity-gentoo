@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/d/${PN}"
+UURL="mirror://unity/pool/main/d/${PN}"
 #UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 UVER_PREFIX="+14.04.${PVR_MICRO}"
 UVER_SUFFIX="~gcc5.1"

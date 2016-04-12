@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 UVER_PREFIX="+14.10.${PVR_MICRO}"
 UVER_SUFFIX="~gcc5.1"
 

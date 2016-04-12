@@ -9,7 +9,7 @@ VALA_MAX_API_VERSION="0.26"
 URELEASE="wily"
 inherit autotools flag-o-matic gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 
 DESCRIPTION="The greeter (login screen) application for Unity. It is implemented as a LightDM greeter."
 HOMEPAGE="https://launchpad.net/unity-greeter"

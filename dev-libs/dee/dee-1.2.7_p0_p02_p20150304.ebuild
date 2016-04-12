@@ -12,7 +12,7 @@ inherit autotools-utils eutils python-r1 ubuntu-versionator vala
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="mirror://ubuntu/pool/main/d/${PN}"
+UURL="mirror://unity/pool/main/d/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Provide objects allowing to create Model-View-Controller type programs across DBus"

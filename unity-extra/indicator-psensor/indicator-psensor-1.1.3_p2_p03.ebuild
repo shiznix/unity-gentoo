@@ -8,7 +8,7 @@ URELEASE="xenial"
 inherit gnome2-utils ubuntu-versionator
 
 MY_PN="psensor"
-UURL="mirror://ubuntu/pool/universe/p/${MY_PN}"
+UURL="mirror://unity/pool/universe/p/${MY_PN}"
 
 DESCRIPTION="Indicator for monitoring hardware temperature used by the Unity desktop"
 HOMEPAGE="http://wpitchoune.net/psensor"

@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{3_4,3_5} )
 URELEASE="xenial"
 inherit autotools eutils python-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"

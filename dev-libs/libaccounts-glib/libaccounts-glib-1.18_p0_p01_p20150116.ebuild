@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 URELEASE="wily"
 inherit autotools flag-o-matic python-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/liba/${PN}"
+UURL="mirror://unity/pool/main/liba/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Library for single signon for the Unity desktop"

@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools flag-o-matic gnome2-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/u/${PN}"
+UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+14.04.${PVR_MICRO}"
 
 DESCRIPTION="A GeoClue provider for Ubuntu GeoIP server"

@@ -7,7 +7,7 @@ EAPI=5
 URELEASE="xenial"
 inherit autotools autotools-multilib base multilib ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libh/${PN}"
+UURL="mirror://unity/pool/main/libh/${PN}"
 UVER_PREFIX="+git20151016+6d424c9"
 
 DESCRIPTION="Allows to run bionic-based HW adaptations in glibc systems"

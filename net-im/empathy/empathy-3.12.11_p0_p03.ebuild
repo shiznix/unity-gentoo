@@ -9,7 +9,7 @@ WANT_AUTOMAKE=1.14
 URELEASE="xenial"
 inherit autotools gnome2-utils python-any-r1 virtualx ubuntu-versionator vala
 
-UURL="mirror://ubuntu/pool/universe/e/${PN}"
+UURL="mirror://unity/pool/universe/e/${PN}"
 
 DESCRIPTION="Telepathy instant messaging and video/audio call client for GNOME patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Empathy"

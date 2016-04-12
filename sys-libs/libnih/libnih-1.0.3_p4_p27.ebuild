@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit versionator eutils autotools toolchain-funcs multilib flag-o-matic ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/libn/${PN}"
+UURL="mirror://unity/pool/main/libn/${PN}"
 
 DESCRIPTION="Light-weight 'standard library' of C functions"
 HOMEPAGE="https://launchpad.net/libnih"

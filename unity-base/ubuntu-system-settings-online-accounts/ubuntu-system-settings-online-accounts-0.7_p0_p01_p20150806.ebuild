@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_4 )
 URELEASE="wily"
 inherit python-single-r1 qt5-build ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/universe/u/${PN}"
+UURL="mirror://unity/pool/universe/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Online Accounts setup for Ubuntu Touch"

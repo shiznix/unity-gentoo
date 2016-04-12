@@ -8,7 +8,7 @@ URELEASE="wily"
 inherit autotools ubuntu-versionator
 
 MY_PN="policykit-1-gnome"
-UURL="mirror://ubuntu/pool/main/p/${MY_PN}"
+UURL="mirror://unity/pool/main/p/${MY_PN}"
 
 DESCRIPTION="A dbus session bus service that is used to bring up authentication dialogs"
 HOMEPAGE="http://www.freedesktop.org/wiki/Software/PolicyKit"

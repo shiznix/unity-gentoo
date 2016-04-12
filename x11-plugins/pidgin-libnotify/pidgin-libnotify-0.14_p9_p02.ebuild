@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="wily"
 inherit autotools eutils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/p/${PN}"
+UURL="mirror://unity/pool/main/p/${PN}"
 
 DESCRIPTION="pidgin-libnotify provides popups for pidgin via a libnotify interface"
 HOMEPAGE="http://gaim-libnotify.sourceforge.net/"

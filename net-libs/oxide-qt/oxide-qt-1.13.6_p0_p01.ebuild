@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="xenial"
 inherit check-reqs cmake-utils python-single-r1 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/o/${PN}"
+UURL="mirror://unity/pool/main/o/${PN}"
 DESCRIPTION="Web browser engine library for Qt"
 HOMEPAGE="https://launchpad.net/oxide"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz

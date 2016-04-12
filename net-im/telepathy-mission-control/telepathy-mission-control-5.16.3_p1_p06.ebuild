@@ -11,7 +11,7 @@ inherit gnome2-utils python-any-r1 ubuntu-versionator
 DESCRIPTION="An account manager and channel dispatcher for the Telepathy framework patched for the Unity desktop"
 HOMEPAGE="http://cgit.freedesktop.org/telepathy/telepathy-mission-control/"
 
-UURL="mirror://ubuntu/pool/main/t/${PN}-5"
+UURL="mirror://unity/pool/main/t/${PN}-5"
 
 SRC_URI="${UURL}/${PN}-5_${PV}.orig.tar.gz
 	${UURL}/${PN}-5_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"

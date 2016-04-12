@@ -8,7 +8,7 @@ GCONF_DEBUG="no"
 URELEASE="wily"
 inherit base gnome2 ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 
 DESCRIPTION="Collection of GSettings schemas for GNOME desktop"
 HOMEPAGE="http://www.gnome.org/"

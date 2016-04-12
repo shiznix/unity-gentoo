@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 URELEASE="xenial"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala xdummy
 
-UURL="mirror://ubuntu/pool/main/b/${PN}"
+UURL="mirror://unity/pool/main/b/${PN}"
 UVER_PREFIX="~bzr0+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="BAMF Application Matching Framework"

@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="xenial"
 inherit eutils multilib multilib-minimal ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/a/${PN}"
+UURL="mirror://unity/pool/main/a/${PN}"
 
 DESCRIPTION="Android Platform Headers from AOSP releases"
 HOMEPAGE="https://source.android.com/"

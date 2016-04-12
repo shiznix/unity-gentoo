@@ -9,7 +9,7 @@ VALA_MAX_API_VERSION="0.26"
 URELEASE="xenial"
 inherit eutils gnome2-utils multilib toolchain-funcs vala ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/s/${PN}"
+UURL="mirror://unity/pool/main/s/${PN}"
 UVER_PREFIX="+git${PVR_MICRO}.r1.f2fb1f7"
 
 DESCRIPTION="Open source photo manager for GNOME patched for the Unity desktop"

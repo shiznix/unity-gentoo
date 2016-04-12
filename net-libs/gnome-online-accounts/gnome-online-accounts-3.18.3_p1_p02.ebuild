@@ -8,7 +8,7 @@ GCONF_DEBUG="yes"
 URELEASE="xenial"
 inherit autotools gnome2-utils ubuntu-versionator
 
-UURL="mirror://ubuntu/pool/main/g/${PN}"
+UURL="mirror://unity/pool/main/g/${PN}"
 
 DESCRIPTION="GNOME framework for accessing online accounts"
 HOMEPAGE="https://wiki.gnome.org/GnomeOnlineAccounts"
