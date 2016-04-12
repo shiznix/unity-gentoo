@@ -52,6 +52,7 @@ net-im/telepathy-mission-control	# Enables Ubuntu libaccounts-sso integration
 net-libs/gnome-online-accounts		# Allow access to Gnome Online Accounts (GOA) via Ubuntu Online Accounts (UOA)
 sys-apps/accountsservice		# Requires patching for SetInputSources as needed by unity-indicators/indicator-keyboard and u-c-c text entry settings
 sys-kernel/ubuntu-sources		# Patched with Ubuntu's complete kernel patchset to add support for sys-apps/ureadahead
+sys-libs/mtdev				# Needs to be multilib aware to install with multilib dev-libs/libinput (mir-base/mir)
 www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 www-client/firefox			# Requires patching for webapps browser plugin and global appmenu
 x11-base/xorg-server			# Provides Xmir patch
