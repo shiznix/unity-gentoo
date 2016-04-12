@@ -12,6 +12,32 @@
 >=dev-libs/xapian-1.3
 >=dev-libs/xapian-bindings-1.3
 
+# mask gnome-3.20 packages
+=*/gnome*-*20*::gentoo
+# >=app-accessibility/at-spi2-atk-2.18::gentoo
+# >=app-accessibility/at-spi2-core-2.18::gentoo
+>=app-accessibility/orca-3.20.0::gentoo
+>=app-arch/file-roller-3.20.0::gentoo
+>=app-cdr/brasero-3.20.0::gentoo
+>=app-crypt/gcr-3.20.0::gentoo
+>=app-editors/gedit-3.20.0::gentoo
+>=app-text/evince-3.20.0::gentoo
+>=app-text/yelp-tools-3.20.0::gentoo
+>=dev-cpp/gtkmm-3.20.0::gentoo
+>=dev-libs/libgweather-3.20.0::gentoo
+# >=dev-python/pyatspi-2.18.0::gentoo
+>=dev-python/pygobject-3.20.0::gentoo
+>=mail-client/evolution-3.20.0::gentoo
+>=media-gfx/eog-3.20.0::gentoo
+>=media-video/cheese-3.20.0::gentoo
+>=media-video/totem-3.20::gentoo
+>=net-misc/vinagre-3.20::gentoo
+>=sys-apps/baobab-3.20.0::gentoo
+>=www-client/epiphany-3.20.0::gentoo
+>=x11-libs/gtksourceview-3.20.0::gentoo
+>=x11-wm/mutter-3.20.0::gentoo
+# >=media-plugins/grilo-plugins-0.2.16::gentoo
+
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
