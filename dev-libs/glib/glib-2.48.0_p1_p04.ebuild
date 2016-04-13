@@ -20,6 +20,7 @@ URELEASE="xenial"
 inherit autotools base bash-completion-r1 gnome2 libtool eutils flag-o-matic multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator
 
 MY_P="${PN}2.0_${PV}"
+MY_PV="${PV}"
 #S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://unity/pool/main/g/${PN}2.0"
@@ -133,7 +134,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PN}-2.40.0-external-gdbus-codegen.patch
 
 	# missing from 2.48.0 tarball, should be fixed in 2.48.1; bug #578238
-	cp "${FILESDIR}"/${P}-gobject.stp.in gobject/gobject.stp.in || die
+	cp "${FILESDIR}"/${PN}-${MY_PV}-gobject.stp.in gobject/gobject.stp.in || die
 
 	# Leave python shebang alone - handled by python_replicate_script
 	# We could call python_setup and give configure a valid --with-python

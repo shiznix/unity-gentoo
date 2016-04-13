@@ -24,7 +24,7 @@ RESTRICT="mirror"
 DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
 	unity-base/signon[qt5]
-	x11-libs/libaccounts-qt[qt5]"
+	x11-libs/libaccounts-qt"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 QT5_BUILD_DIR="${S}"

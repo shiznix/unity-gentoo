@@ -1,3 +1,9 @@
 * USE="doc debug mono tests"
 * Audit DEPEND and RDEPEND lists
-* Convert all ebuilds to EAPI=6 and remove use of base.eclass ('autotools-utils','gnome2','kde-4' and 'qt4-r2' block EAPI6 upgrade)
+* Convert all ebuilds to EAPI=6 and remove use of base.eclass
+	('autotools-{multilib,utils}','gnome2','kde-4' and 'qt4-r2' block EAPI6 upgrade)
+* Swap around ebuild naming convention so that for example:
+	trust-store-2.0.0_p0_p01_p2015083103
+  becomes
+	trust-store-2.0.0_p2015083103_p0_p01
+  In this way progressive version bumps will always be seen by emerge as upgrades

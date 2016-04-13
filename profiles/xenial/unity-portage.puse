@@ -37,12 +37,6 @@ dev-qt/qtsql:5 sqlite
 dev-qt/qtwebkit:4 icu
 dev-qt/qtwebkit:5 icu qml libxml2 multimedia webp widgets xslt -gstreamer -gstreamer010
 dev-qt/qt-mobility organizer
-
-# >=dev-libs/glib-2.46 causes gnome-keyring-daemon secrets failure (refer issue #135 and https://bugzilla.gnome.org/show_bug.cgi?id=756059) #
-#	Temporarily workaround pam login breaking gnome-keyring secrets initialisation inside desktop session #
-gnome-base/gnome-keyring -pam
-sys-auth/pambase -gnome-keyring
-
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 gnome-extra/nm-applet -bluetooth	# Bluetooth relies on old bluez-4 to build, which we no longer use

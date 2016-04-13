@@ -34,7 +34,7 @@ DEPEND="dev-libs/glib:2
 	unity-base/signon[qt5]
 	unity-base/signon-ui
 	unity-base/ubuntu-system-settings
-	x11-libs/libaccounts-qt[qt5]
+	x11-libs/libaccounts-qt
 	x11-libs/libnotify
 	x11-libs/ubuntu-ui-toolkit"
 

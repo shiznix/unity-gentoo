@@ -26,7 +26,7 @@ DEPEND=">=dev-qt/qtcore-${PV}:5
 	>=dev-qt/qtxmlpatterns-${PV}:5"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${PN}-opensource-src-${PV}"
 QT5_BUILD_DIR="${S}"
 
 src_prepare() {

@@ -17,14 +17,16 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="MIT"
 SLOT="0/10"
 #KEYWORDS="~amd64 ~x86"
-IUSE="test"
+IUSE="input_devices_wacom test"
 # Tests require write access to udev rules directory which is a no-no for live system.
 # Other tests are just about logs, exported symbols and autotest of the test library.
 RESTRICT="mirror test"
 
 RDEPEND="dev-libs/libevdev[${MULTILIB_USEDEP}]
+	dev-libs/libwacom[${MULTILIB_USEDEP}]
 	sys-libs/mtdev[${MULTILIB_USEDEP}]
-	virtual/libudev"
+	virtual/libudev
+	input_devices_wacom? ( dev-libs/libwacom[${MULTILIB_USEDEP}] )"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 #	test? (
@@ -44,6 +46,7 @@ src_configure() {
 		econf \
 			--disable-documentation \
 			--disable-event-gui \
+			$(use_enable input_devices_wacom libwacom) \
 			$(use_enable test tests) \
 			--with-udev-dir="$(get_udevdir)"
 	)

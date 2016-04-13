@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-CMAKE_BUILD_TYPE=none
+CMAKE_BUILD_TYPE=release
 
 URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
@@ -54,7 +54,7 @@ src_prepare() {
 }
 
 src_configure() {
-	mycmakeargs+=(-DCMAKE_INSTALL_SYSCONFDIR=/etc)
+	mycmakeargs+=( -DCMAKE_INSTALL_SYSCONFDIR=/etc )
 	cmake-utils_src_configure
 }
 

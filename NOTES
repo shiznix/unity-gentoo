@@ -27,6 +27,7 @@ dev-libs/libappindicator		# See "Using portage tree libindicate packages" item a
 dev-libs/libdbusmenu			# See "Using portage tree libindicate packages" item above
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 dev-libs/libinput			# Needs to be multilib aware to install with multilib mir-base/mir
+dev-libs/libwacom			# Needs to be multilib aware to install with multilib dev-libs/libinput (mir-base/mir)
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 dev-util/lttng-tools			# Needs to be multilib aware to install with multilib mir-base/mir
 dev-util/lttng-ust			# (see above)
@@ -56,6 +57,7 @@ sys-libs/mtdev				# Needs to be multilib aware to install with multilib dev-libs
 www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 www-client/firefox			# Requires patching for webapps browser plugin and global appmenu
 x11-base/xorg-server			# Provides Xmir patch
+x11-base/xorg-drivers			# DEPEND blocking versions incompatible with overlay versions (!<x11-drivers/xf86-video-intel-2.99.917_p20160122)
 x11-drivers/xf86-video-ati		# Provides Mir display server support with 'mir' useflag and patch
 x11-drivers/xf86-video-intel		# Provides Mir display server support with 'mir' useflag and patch
 x11-drivers/xf86-video-nouveau		# Provides Mir display server support with 'mir' useflag and patch

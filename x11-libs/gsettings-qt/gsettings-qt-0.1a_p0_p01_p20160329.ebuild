@@ -24,7 +24,7 @@ DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
 	>=dev-libs/glib-2.38.1"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 QT5_BUILD_DIR="${S}"
 unset QT_QPA_PLATFORMTHEME
 

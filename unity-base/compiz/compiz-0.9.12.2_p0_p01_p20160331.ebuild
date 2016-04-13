@@ -36,7 +36,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	dev-libs/protobuf[${PYTHON_USEDEP}]
 	dev-python/python-distutils-extra[${PYTHON_USEDEP}]
 	dev-python/pyrex[${PYTHON_USEDEP}]
-	gnome-base/gconf[${PYTHON_USEDEP}]
+	gnome-base/gconf
 	>=gnome-base/gsettings-desktop-schemas-3.8
 	>=gnome-base/librsvg-2.14.0:2
 	media-libs/glew

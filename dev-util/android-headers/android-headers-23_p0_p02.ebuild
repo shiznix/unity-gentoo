@@ -12,7 +12,7 @@ UURL="mirror://unity/pool/main/a/${PN}"
 DESCRIPTION="Android Platform Headers from AOSP releases"
 HOMEPAGE="https://source.android.com/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER_PREFIX}${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -20,7 +20,7 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}-${UVER_PREFIX}"
+S="${WORKDIR}/${PN}-${PV}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

@@ -1,8 +1,6 @@
-# Unmask packages masked by overlay #
-dev-qt/*::unity-gentoo
-
-# Unmask packages masked by main portage tree #
-x11-misc/lightdm::unity-gentoo
-
-dev-libs/glib::unity-gentoo
-dev-util/gdbus-codegen::unity-gentoo
+# Unmask those gnome packages inadvertently masked globablly in package.mask #
+=app-text/gnome-doc-utils-0.20*::gentoo
+=gnome-base/gnome-mime-data-2.20*::gentoo
+=gnome-base/libgnomeprint-2.20*::gentoo
+=gnome-base/libgnomeprintui-2.20*::gentoo
+gnome-extra/gnome-integration-spotify
