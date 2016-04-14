@@ -77,6 +77,8 @@ PDEPEND="
 	>=gnome-base/gvfs-1.14[gtk]"
 # Need gvfs[gtk] for recent:/// support
 
+S="${WORKDIR}/${PN}-3.14.3"
+
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eautoreconf

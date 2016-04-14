@@ -5,11 +5,19 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
+URELEASE="wily"
 inherit libtool python-single-r1 ubuntu-versionator
 
-DESCRIPTION="Google's C++ mocking framework"
+MY_PN="google-mock"
+MY_PV="${PV}"
+UURL="mirror://unity/pool/universe/g/${MY_PN}"
+UVER="-${PVR_MICRO}"
+UVER_SUFFIX="-${PVR_PL_MINOR}"
+
+DESCRIPTION="Google's C++ mocking framework patched for the Unity desktop"
 HOMEPAGE="http://code.google.com/p/googlemock/"
-SRC_URI="http://googlemock.googlecode.com/files/${P}.zip"
+SRC_URI="${UURL}/${MY_PN}_${PV}${UVER}.orig.tar.bz2
+	${UURL}/${MY_PN}_${PV}${UVER}${UVER_SUFFIX}.debian.tar.xz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -20,6 +28,9 @@ RDEPEND="=dev-cpp/gtest-${PV}*"
 DEPEND="${RDEPEND}
 	app-arch/unzip
 	${PYTHON_DEPS}"
+RESTRICT="mirror"
+
+S="${WORKDIR}/${MY_PN}-${MY_PV}${UVER}"
 
 src_unpack() {
 	default
@@ -31,7 +42,7 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	sed -i -r \
 		-e '/^install-(data|exec)-local:/s|^.*$|&\ndisabled-&|' \
-		Makefile.in
+			Makefile.in
 	elibtoolize
 }
 

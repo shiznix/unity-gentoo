@@ -32,7 +32,7 @@ DEPEND="dev-cpp/glog
 	sys-apps/dbus
 	sys-libs/libnih"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 export QT_SELECT=5
 
 src_prepare() {

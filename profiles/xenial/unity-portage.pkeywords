@@ -49,7 +49,6 @@ x11-proto/glproto
 app-accessibility/onboard **
 app-accessibility/unity-voice **
 app-backup/deja-dup **
-dev-cpp/gflags **
 dev-cpp/gmock **
 dev-cpp/gtest **
 dev-libs/dee **

@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-CMAKE_BUILD_TYPE=release
+CMAKE_BUILD_TYPE=none
 
 URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
@@ -50,11 +50,19 @@ src_prepare() {
 		sed -e 's:O_TMPFILE |:O_TMPFILE, S_IRWXU |:g' \
 			-i src/service/handler.cpp
 
+	# Tests are totally broken and don't even pass the configure phase #
+	#	Incorrect use of CMAKE_LIBRARY_ARCHITECTURE means the variable is never fulfilled
+	#		tests/qml/CMakeLists.txt:12 (if):
+	#			if given arguments:
+	# 				"STREQUAL" "powerpc-linux-gnu" "OR" "STREQUAL" "s390x-linux-gnu"
+	#					Unknown arguments specified
+	sed -e 's:add_subdirectory(tests):#add_subdirectory(tests):g' \
+		-i CMakeLists.txt
 	cmake-utils_src_prepare
 }
 
 src_configure() {
-	mycmakeargs+=( -DCMAKE_INSTALL_SYSCONFDIR=/etc )
+	mycmakeargs+=(-DCMAKE_INSTALL_SYSCONFDIR=/etc)
 	cmake-utils_src_configure
 }
 

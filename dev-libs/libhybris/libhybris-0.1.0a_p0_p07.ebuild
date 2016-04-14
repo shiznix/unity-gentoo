@@ -7,6 +7,7 @@ EAPI=5
 URELEASE="xenial"
 inherit autotools autotools-multilib base multilib ubuntu-versionator
 
+MY_PV="${PV}"
 UURL="mirror://unity/pool/main/libh/${PN}"
 UVER_PREFIX="+git20151016+6d424c9"
 
@@ -18,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="LGPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="wayland"
+IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-cpp/gflags[${MULTILIB_USEDEP}]
@@ -28,18 +29,14 @@ DEPEND="dev-cpp/gflags[${MULTILIB_USEDEP}]
 	media-libs/mesa[${MULTILIB_USEDEP}]
 	sys-apps/dbus"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}/hybris"
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	# Ubuntu patchset recreated here due to odd ${S} path #
-	pushd "${WORKDIR}"
-		for patch in $(grep -v \# "debian/patches/series"); do
-			epatch "debian/patches/${patch}"
-		done
-	popd
+	ubuntu-versionator_src_prepare
+	mv ${PN}-${MY_PV}${UVER_PREFIX}/hybris/* "${WORKDIR}"
+	rm -rf ${PN}-${MY_PV}${UVER_PREFIX}
 	eautoreconf
-	ln -s /usr/include/android include/android	# ./configure usually does this, but pushd/popd used by multilib breaks it
 }
 
 src_configure() {
@@ -47,12 +44,14 @@ src_configure() {
 	local myeconfargs=(
 		--enable-arch=x86 \
 		--enable-wayland \
-		--with-android-headers=/usr/include/android
+		--with-android-headers=/usr/include/android-latest
 	)
 	autotools-multilib_src_configure
+	econf "${myeconfargs[@]}"	# Non-multilib ./configure run for 'make && make clean' command below
 }
 
 src_compile() {
+	make && make clean	# Generate needed headers (egl/platforms/common/wayland-android-client-protocol.h)
 	autotools-multilib_src_compile
 }
 

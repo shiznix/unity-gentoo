@@ -24,7 +24,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/boost:=
 	dev-libs/protobuf
-	media-libs/mesa[egl,gbm]
+	media-libs/mesa[egl,gbm,gles2]
 	mir-base/mir:=
 	<=dev-python/pillow-2.8.1[${PYTHON_USEDEP}]
 	x11-base/xorg-server[mir]"
@@ -44,7 +44,12 @@ src_prepare() {
 }
 
 src_configure() {
-	mycmakeargs+=(-DCMAKE_INSTALL_SYSCONFDIR=/etc)
+	# Disable tests as they fail to build #
+	#	tests/unit-tests/test_mir_input_configuration.cpp:65:104
+	#	required from here /usr/lib/gcc/x86_64-pc-linux-gnu/5.3.0/include/g++-v5/ext/new_allocator.h:120:4:
+	#	error: invalid new-expression of abstract class type ‘testing::NiceMock<{anonymous}::MockInputDeviceHub>’
+	mycmakeargs+=( -DCMAKE_INSTALL_SYSCONFDIR=/etc
+			-DMIR_ENABLE_TESTS=OFF )
 	cmake-utils_src_configure
 }
 

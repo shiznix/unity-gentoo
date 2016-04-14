@@ -5,7 +5,7 @@
 EAPI=6
 
 URELEASE="xenial"
-inherit eutils multilib multilib-minimal ubuntu-versionator
+inherit eutils multilib multilib-minimal ubuntu-versionator versionator
 
 UURL="mirror://unity/pool/main/a/${PN}"
 
@@ -38,9 +38,12 @@ src_install(){
 	insinto /usr/include/android
 	doins -r *
 
+	# Need to fudge in the current headers version so dev-libs/libhybris knows which version to use #
+	dosym /usr/include/android/$(get_version_component_range 1) /usr/include/android-latest
+
 	multilib_src_install() {
 		insinto "/usr/$(get_libdir)/pkgconfig"
-		doins "${WORKDIR}/debian/android-headers.pc"
+		doins "${WORKDIR}"/debian/android-headers*pc
 	}
 	multilib_foreach_abi multilib_src_install
 }

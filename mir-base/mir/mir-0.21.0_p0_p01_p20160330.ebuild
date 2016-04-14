@@ -38,7 +38,7 @@ DEPEND="!!media-libs/mesa-mir
 	x11-libs/libxkbcommon[${MULTILIB_USEDEP}]
 	test? ( dev-cpp/gtest )"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #

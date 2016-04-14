@@ -35,7 +35,7 @@ DEPEND="dev-libs/gobject-introspection
 	x11-libs/libXfixes
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
