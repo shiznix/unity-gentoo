@@ -34,7 +34,7 @@ DEPEND="${RDEPEND}
 	unity-base/unity-control-center
 	>=x11-libs/libnotify-0.7.6"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {

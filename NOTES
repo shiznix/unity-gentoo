@@ -28,6 +28,7 @@ dev-libs/libdbusmenu			# See "Using portage tree libindicate packages" item abov
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 dev-libs/libinput			# Needs to be multilib aware to install with multilib mir-base/mir
 dev-libs/libwacom			# Needs to be multilib aware to install with multilib dev-libs/libinput (mir-base/mir)
+dev-qt/qt:5				# Many large Ubuntu fixes/patchsets for QML desktop and EGL for Mir
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 dev-util/lttng-tools			# Needs to be multilib aware to install with multilib mir-base/mir
 dev-util/lttng-ust			# (see above)

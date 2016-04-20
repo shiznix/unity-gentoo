@@ -20,7 +20,7 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
+	>=dev-qt/qtcore-${PV}:5
 	>=sys-apps/dbus-1.4.20
 	sys-libs/zlib
 "

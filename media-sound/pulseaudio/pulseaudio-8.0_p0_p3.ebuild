@@ -214,6 +214,7 @@ multilib_src_configure() {
 		$(use_with caps)
 		$(use_with equalizer fftw)
 		--disable-adrian-aec
+		--disable-android-hal
 		--disable-esound
 		--localstatedir="${EPREFIX}"/var
 		--with-udev-rules-dir="${EPREFIX}/$(get_udevdir)"/rules.d

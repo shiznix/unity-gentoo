@@ -37,3 +37,8 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	cmake-utils_src_prepare
 }
+
+src_configure() {
+	mycmakeargs+=(-DTRUST_STORE_VERSION_MAJOR=2)
+	cmake-utils_src_configure
+}

@@ -18,7 +18,7 @@ fi
 IUSE=""
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}
+	>=dev-qt/qtcore-${PV}:5
 	>=dev-qt/qtgui-${PV}[xcb]
 	~dev-qt/qtwidgets-${PV}
 "

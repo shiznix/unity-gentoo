@@ -23,6 +23,7 @@ local_to_upstream_packnames() {
 	elif [ -n "`echo "${packbasename}" | grep 'nm-applet'`" ]; then treepackname="${packname}"; packname="network-manager-applet"
 	elif [ -n "`echo "${packbasename}" | grep 'polkit-gnome'`" ]; then treepackname="${packname}"; packname="policykit-1-gnome"
 	elif [ -n "`echo "${packbasename}" | grep 'qt3d'`" ]; then treepackname="${packname}"; packname="qt3d-opensource-src"
+	elif [ -n "`echo "${packbasename}" | grep 'qtcore'`" ]; then treepackname="${packname}"; packname="qtbase-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtdeclarative'`" ]; then treepackname="${packname}"; packname="qtdeclarative-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtfeedback'`" ]; then treepackname="${packname}"; packname="qtfeedback-opensource-src"
 	elif [ -n "`echo "${packbasename}" | grep 'qtgui'`" ]; then treepackname="${packname}"; packname="qtbase-opensource-src"

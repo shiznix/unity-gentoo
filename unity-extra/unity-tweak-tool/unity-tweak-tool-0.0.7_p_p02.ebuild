@@ -63,8 +63,6 @@ src_prepare() {
 	#  installs cursor themes in both /usr/share/cursors/xorg-x11/ and /usr/share/icons/ #
 	epatch -p1 "${FILESDIR}/xorg-cursor-themes-path.diff"
 
-	# Fix show/hide mounted drive icons (LP# 1372046) #
-	epatch -p1 "${FILESDIR}/show-hide_mounted_drive_icons.diff"
 	distutils-r1_src_prepare
 }
 

@@ -32,7 +32,7 @@ DEPEND="${RDEPEND}
 		gnome-extra/gnome-user-docs
 		unity-base/ubuntu-docs )"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

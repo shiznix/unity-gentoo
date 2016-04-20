@@ -25,7 +25,6 @@ DEPEND="dev-cpp/gtest
 	dev-libs/process-cpp
 	sys-apps/dbus"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {

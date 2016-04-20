@@ -21,7 +21,7 @@ fi
 IUSE=""
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}
+	>=dev-qt/qtcore-${PV}:5
 "
 DEPEND="${RDEPEND}
 	test? (

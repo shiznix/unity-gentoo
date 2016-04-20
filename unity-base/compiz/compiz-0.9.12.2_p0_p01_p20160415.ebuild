@@ -22,7 +22,7 @@ SLOT="0/${PV}"
 IUSE="+debug kde test"
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 COMMONDEPEND="!!x11-wm/compiz
 	!!x11-libs/compiz-bcop
@@ -82,6 +82,14 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 
+	# 'python-copy-sources' will not work if S="${WORKDIR}" becaues it bails if 'cp' prints anything to stderr #
+	#	(the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
+	# Workaround by changing into a re-defined "${S}" #
+	mkdir "${WORKDIR}/${P}"
+	mv "${WORKDIR}"/* "${WORKDIR}/${P}" &> /dev/null
+	export S="${WORKDIR}/${P}"
+	cd "${S}"
+
 	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
 	sed -e 's:xubuntu:xunity:g' \
 		-i debian/65compiz_profile-on-session || die
@@ -97,10 +105,6 @@ src_prepare() {
 	# Disable -Werror #
 	sed -e 's:-Werror::g' \
 		-i cmake/CompizCommon.cmake || die
-
-	# Disable gconftool-2 from being used (need to differentiate here so gsettings schemas will still be installed) #
-	sed -e 's:COMPIZ_DISABLE_SCHEMAS_INSTALL:COMPIZ_DISABLE_GCONF_SCHEMAS_INSTALL:g' \
-		-i cmake/{CompizGconf,plugin_extensions/CompizGenGconf}.cmake || die
 
 	# Need to do a 'python_foreach_impl' run from python-r1 eclass to workaround corrupt generated python shebang for /usr/bin/ccsm #
 	#  Due to the way CMake invokes distutils setup.py, shebang will be inherited from the sandbox leading to runtime failure #

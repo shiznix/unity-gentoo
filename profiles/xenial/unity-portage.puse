@@ -1,6 +1,10 @@
 */* -consolekit -packagekit -tracker networkmanager systemd zeitgeist
 */*::unity-gentoo qml qt5 vala
 
+# 'webapps' currently disabled due to broken upstream net-libs/oxide-qt #
+#       Due to this, net-libs/oxide-qt is soft-blocked when 'webapps' is disabled as oxide-qt must be uninstalled #
+unity-base/unity-meta -webapps
+
 
 ## Enabled PYTHON_SINGLE_TARGET must match state in PYTHON_TARGETS ##
 

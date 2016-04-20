@@ -29,7 +29,7 @@ REQUIRED_USE="|| ( eglfs xcb )
 	ibus? ( dbus )"
 
 RDEPEND="dev-libs/glib:2
-	~dev-qt/qtcore-${PV}
+	>=dev-qt/qtcore-${PV}:5
 	media-libs/fontconfig
 	media-libs/freetype:2
 	>=sys-libs/zlib-1.2.5

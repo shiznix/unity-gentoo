@@ -25,7 +25,7 @@ RDEPEND="dev-qt/qtfeedback:5
 	x11-libs/unity-action-api"
 DEPEND="${RDEPEND}
 	dev-libs/glib:2
-	dev-qt/qtcore:5
+	dev-qt/qtcore:5=
 	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
 	dev-qt/qtgraphicaleffects:5
@@ -37,7 +37,7 @@ DEPEND="${RDEPEND}
 	media-gfx/thumbnailer
 	doc? ( dev-qt/qdoc:5 )"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 QT5_BUILD_DIR="${S}"
 export QT_SELECT=5
 unset QT_QPA_PLATFORMTHEME

@@ -35,7 +35,7 @@ DEPEND="dev-libs/glib:2
 	sys-auth/polkit
 	sys-power/upower"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

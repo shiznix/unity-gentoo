@@ -30,6 +30,7 @@ DEPEND="${RDEPEND}
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
 	dev-qt/qttest:5
+	net-libs/oxide-qt
 	unity-base/hud
 	unity-indicators/indicator-messages
 	x11-libs/accounts-qml-module

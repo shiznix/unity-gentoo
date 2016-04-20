@@ -38,7 +38,7 @@ DEPEND="${COMMON_DEPEND}
 RESTRICT="mirror test" # virtualx.eclass: 1 of 1: FAIL: test-modules
 
 DOCS=( AUTHORS ChangeLog NEWS README TODO )
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

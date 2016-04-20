@@ -3,6 +3,8 @@
 # $Id$
 
 EAPI=6
+VALA_MIN_API_VERSION="0.26"
+VALA_MAX_API_VERSION="0.26"
 
 URELEASE="xenial"
 inherit cmake-utils gnome2-utils ubuntu-versionator vala
@@ -34,7 +36,7 @@ DEPEND="${RDEPEND}
 	>=x11-libs/libnotify-0.7.6
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {

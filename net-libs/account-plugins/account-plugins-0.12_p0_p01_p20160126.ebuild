@@ -39,7 +39,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	ubuntu-versionator
+	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	eautoreconf
 }

@@ -36,7 +36,7 @@ DEPEND="${RDEPEND}
 	dev-qt/qtwidgets:5
 	x11-libs/unity-webapps-qml"
 
-S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
+S="${WORKDIR}"
 export QT_SELECT=5
 
 pkg_setup() {

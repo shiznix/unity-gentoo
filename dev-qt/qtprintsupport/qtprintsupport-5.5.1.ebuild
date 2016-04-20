@@ -22,7 +22,7 @@ fi
 IUSE="cups gles2"
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}
+	>=dev-qt/qtcore-${PV}:5
 	>=dev-qt/qtgui-${PV}[gles2=]
 	~dev-qt/qtwidgets-${PV}[gles2=]
 	cups? ( >=net-print/cups-1.4 )

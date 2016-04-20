@@ -23,9 +23,10 @@
 					 ^
 	 - Only solution is to use Xenial version of media-libs/mesa
 
+- Webapps completely broken since Xenial, net-libs/oxide-qt to be fixed by upstream (see LP# 1332996 and LP# 1341565)
+	* No solution at this time except to totally disable webapps (unity-base/unity-meta[-webapps])
 - Webapps plugin is broken for chromium since Vivid release, browser will not prompt for webapp installation on sites such as Gmail, Youtube or Facebook
 	* Use Firefox if you want webapps to work
-
 - Webapps plugins for >=www-client/firefox-43 stops working as Firefox now require addon signing and so disable the webapps plugins as their signature cannot be verified
 	* In Firefox's addressbar type 'about:config' and set 'xpinstall.signatures.required' from 'true' to 'false'. Plugins should now be enabled in 'Tools > Addons' after restarting Firefox
 

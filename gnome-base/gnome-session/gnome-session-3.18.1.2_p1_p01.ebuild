@@ -88,21 +88,21 @@ src_prepare() {
 			-i data/ubuntu.desktop.in || die
 	sed -e 's:Ubuntu:Unity:g' \
 		-i data/ubuntu.session.desktop.in.in || die
-
-	# Silence errors due to weird checks for libX11
-	sed -e 's/\(PANGO_PACKAGES="\)pangox/\1/' -i configure.ac configure || die
-
 	eautoreconf
 	gnome2_src_prepare
 }
 
 src_configure() {
+	# 1. Avoid automagic on old upower releases
+	# 2. xsltproc is always checked due to man configure
+	#    switch, even if USE=-doc
+	# 3. Disable old gconf support as other distributions did long time
+	#    ago
 	gnome2_src_configure \
 		--disable-deprecation-flags \
-		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
+		--disable-gconf \
 		--enable-session-selector \
 		$(use_enable doc docbook-docs) \
-		$(use_enable gconf) \
 		$(use_enable ipv6) \
 		$(use_enable systemd) \
 		UPOWER_CFLAGS="" \
@@ -118,9 +118,8 @@ src_install() {
 	exeinto /etc/X11/Sessions
 	doexe "${FILESDIR}/Gnome"
 
-	dodir /usr/share/gnome/applications/
-	insinto /usr/share/gnome/applications/
-	newins "${FILESDIR}/defaults.list-r1" defaults.list
+	insinto /usr/share/applications
+	newins "${FILESDIR}/defaults.list-r3" gnome-mimeapps.list
 
 	dodir /etc/X11/xinit/xinitrc.d/
 	exeinto /etc/X11/xinit/xinitrc.d/

@@ -76,12 +76,12 @@ src_prepare() {
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
 	# Do not depend on Debian/Ubuntu specific adduser package
-	epatch "${FILESDIR}"/guest-session-cross-distro_1.12.3.patch
+# FIXME	epatch "${FILESDIR}"/guest-session-cross-distro_1.12.3.patch
 
 	# Add support for settings GSettings/dconf defaults in the guest session. Just
 	# put the files in /etc/guest-session/gsettings/. The file format is the same
 	# as the regular GSettings override files.
-	epatch "${FILESDIR}"/guest-session-add-default-gsettings-support_1.11.5.patch
+# FIXME	epatch "${FILESDIR}"/guest-session-add-default-gsettings-support_1.11.5.patch
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

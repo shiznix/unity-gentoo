@@ -5,15 +5,16 @@
 EAPI=6
 
 QT5_MODULE="qtbase"
+SLOT="5/5.4"
 
 inherit qt5-build
 
 DESCRIPTION="Cross-platform application development framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	#KEYWORDS=""
-#else
-	#KEYWORDS="~amd64 ~x86"
+	KEYWORDS=""
+else
+	KEYWORDS="~amd64 ~x86"
 :
 fi
 
@@ -43,4 +44,14 @@ src_configure() {
 		$(qt_use systemd journald)
 	)
 	qt5-build_src_configure
+}
+
+src_install() {
+	if has_version =dev-qt/qtcore-5*; then
+		elog "If after upgrading QT5, applications exhibit similar runtime failures such as:"
+		elog " undefined symbol: _ZNK..MetaObject.."
+		elog "Then it will be necessary to rebuild installed applications that use the QT5 library"
+		elog " using the following command:  revdep-rebuild --library 'libQt5Core.so'"
+	fi
+	qt5-build_src_install
 }

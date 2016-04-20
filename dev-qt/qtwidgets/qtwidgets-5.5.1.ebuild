@@ -21,7 +21,7 @@ fi
 IUSE="gles2 gtkstyle +png +xcb"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
+	>=dev-qt/qtcore-${PV}:5
 	>=dev-qt/qtgui-${PV}[gles2=,gtkstyle=,png=,xcb?]
 "
 RDEPEND="${DEPEND}"

@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_4 )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="xenial"
@@ -24,7 +24,7 @@ SLOT="0"
 IUSE="debug doc +branding pch test"
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 RDEPEND="sys-auth/polkit-pkla-compat
 	unity-base/gsettings-ubuntu-touch-schemas
@@ -83,6 +83,8 @@ DEPEND="${RDEPEND}
 		dev-util/dbus-test-runner
 		sys-apps/xorg-gtest )"
 
+MAKEOPTS="${MAKTOPTS} -j1"
+
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 	python-single-r1_pkg_setup
@@ -93,8 +95,6 @@ src_prepare() {
 		## Disable source trying to run it's own dummy-xorg-test-runner.sh script ##
 		sed -e 's:set (DUMMY_XORG_TEST_RUNNER.*:set (DUMMY_XORG_TEST_RUNNER /bin/true):g' \
 			-i tests/CMakeLists.txt
-	else
-		PATCHES+=( "${FILESDIR}/unity-7.1.0_remove-gtest-dep.diff" )
 	fi
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
@@ -116,8 +116,8 @@ src_prepare() {
 		-i panel/PanelMenuView.cpp || die
 
 	# Remove testsuite cmake installation #
-	sed -e '/python setup.py install/d' \
-			-i tests/CMakeLists.txt
+	sed -e '/setup.py install/d' \
+			-i tests/CMakeLists.txt || die "Sed failed for tests/CMakeLists.txt"
 
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	#       resulting in build failure with 'fatal error: unitycore_pch.hh: No such file or directory' #
@@ -130,32 +130,34 @@ src_prepare() {
 	sed \
 		-e 's:.*"stop", "unity-panel-service".*:        subprocess.call(["pkill -e unity-panel-service"], shell=True):' \
 		-e 's:.*"start", "unity-panel-service".*:        subprocess.call(["/usr/lib/unity/unity-panel-service"], shell=True):' \
-			-i tools/unity.cmake
+			-i tools/unity.cmake || die "Sed failed for tools/unity.cmake"
 
 	# Don't kill -9 unity-panel-service when launched using PANEL_USE_LOCAL_SERVICE env variable #
 	#  It slows down the launch of unity-panel-service in lockscreen mode #
 	sed -e '/killall -9 unity-panel-service/,+1d' \
-		-i UnityCore/DBusIndicators.cpp
+		-i UnityCore/DBusIndicators.cpp || die "Sed failed for UnityCore/DBusIndicators.cpp"
 
 	# Include directly iostream needed for std::cout #
 	sed -e 's/.*<fstream>.*/#include <iostream>\n&/' \
-		-i unity-shared/DebugDBusInterface.cpp
+		-i unity-shared/DebugDBusInterface.cpp || die "Sed failed for unity-shared/DebugDBusInterface.cpp"
 
 	# DESKTOP_SESSION and SESSION is 'unity' not 'ubuntu' #
 	sed -e 's:SESSION=ubuntu:SESSION=unity:g' \
 		-e 's:ubuntu.session:unity.session:g' \
-			-i {debian/unity7.conf,services/unity-panel-service.conf.in}
-
+			-i {debian/unity7.conf,services/unity-panel-service.conf.in} || \
+				die "Sed failed for {debian/unity7.conf,services/unity-panel-service.conf.in}"
 	cmake-utils_src_prepare
 }
 
 src_configure() {
 	if use test; then
 		mycmakeargs+=(-DBUILD_XORG_GTEST=ON
-			-DCOMPIZ_BUILD_TESTING=ON)
+			-DCOMPIZ_BUILD_TESTING=ON
+			-DENABLE_UNIT_TESTS=ON)
 	else
 		mycmakeargs+=(-DBUILD_XORG_GTEST=OFF
-			-DCOMPIZ_BUILD_TESTING=OFF)
+			-DCOMPIZ_BUILD_TESTING=OFF
+			-DENABLE_UNIT_TESTS=OFF)
 	fi
 
 	if use pch; then

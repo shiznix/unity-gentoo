@@ -57,7 +57,7 @@ LICENSE="|| ( LGPL-2.1 LGPL-3 ) FDL-1.3"
 QT5_MINOR_VERSION=$(get_version_component_range 2)
 readonly QT5_MINOR_VERSION
 
-SLOT="5"
+: ${SLOT:="5"}	# If SLOT is not set it in ebuild it will be "5" (support subslots in ebuilds)
 
 case ${PV} in
 	5.9999)
@@ -641,7 +641,11 @@ qt5_base_configure() {
 
 		# disable OpenGL and EGL support by default, override in qtgui,
 		# qtopengl, qtprintsupport and qtwidgets
-		-no-opengl -no-egl
+# Setting '-no-opengl' for qt{core,gui,declarative} will cause qtdeclarative to fail
+#	even if '-opengl' is later set as override in qtgui
+#	(due to Ubuntu patchset for qtcore re-implementing an old 5.0_beta bug)
+#		-no-opengl -no-egl
+		-no-egl
 
 		# disable libinput-based generic plugin by default, override in qtgui
 		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-libinput)

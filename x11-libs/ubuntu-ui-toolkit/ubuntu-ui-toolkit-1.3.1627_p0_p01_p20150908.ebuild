@@ -25,7 +25,7 @@ RDEPEND="dev-qt/qtfeedback:5
 	x11-libs/unity-action-api"
 DEPEND="${RDEPEND}
 	dev-libs/glib:2
-	dev-qt/qtcore:5
+	dev-qt/qtcore:5=
 	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
 	dev-qt/qtgraphicaleffects:5

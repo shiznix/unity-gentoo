@@ -30,16 +30,17 @@ DEPEND="!dev-libs/libupstart-app-launch
 	dev-qt/qdoc:5
 	dev-util/dbus-test-runner
 	dev-util/lcov
-	media-fonts/libertine
 	net-libs/ubuntu-download-manager:=
+	sys-apps/libertine
 	sys-apps/ubuntu-app-launch
 	>=sys-libs/libapparmor-2.9.1
 	sys-libs/libnih[dbus]
 	x11-libs/gsettings-qt
 	x11-libs/libnotify"
 
-S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 export QT_SELECT=5
+export QT_DEBUG_PLUGINS=1	# Uncommented to debug the inevitable QML plugins problems
 unset QT_QPA_PLATFORMTHEME
 
 pkg_preinst() {

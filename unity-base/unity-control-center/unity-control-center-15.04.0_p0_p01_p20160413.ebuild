@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+cups +gnome-online-accounts +i18n v4l"
+IUSE="+cups +gnome-online-accounts +i18n kerberos v4l"
 #KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -59,6 +59,7 @@ COMMON_DEPEND="
 	>=gnome-extra/nm-applet-0.9.7.995
 	>=net-misc/networkmanager-0.9.8[modemmanager]
 	>=net-misc/modemmanager-0.7.990
+	net-libs/geonames
 
 	virtual/libgudev
 	virtual/opengl
@@ -129,7 +130,7 @@ DEPEND="${COMMON_DEPEND}
 # Needed for autoreconf
 #	gnome-base/gnome-common
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
@@ -162,6 +163,9 @@ src_install() {
 
 	# Remove libgnome-bluetooth.so symlink as is provided by net-wireless/gnome-bluetooth #
 	rm "${ED}usr/$(get_libdir)/libgnome-bluetooth.so"
+
+	# Remove /usr/share/pixmaps/faces/ as is provided by gnome-base/gnome-control-center #
+	rm -rf "${ED}usr/share/pixmaps/faces"
 
 	# Add Region and Language locale support #
 	#  Unable to use Unity's language-selector as it needs a complete apt/dpkg enabled system #
