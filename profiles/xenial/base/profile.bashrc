@@ -13,13 +13,19 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 fi
 
 pre_src_prepare() {
-	## Mimic the function of 'epatch_user' and /etc/portage/patches/ so we can custom patch packages we don't need to maintain ##
+	## Mimic the function of epatch_user/eapply_user and /etc/portage/patches/ so we can custom patch packages we don't need to maintain ##
 	#    Most below taken from eutils.eclass #
 	local REPO_ROOT="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
 	local EPATCH_SOURCE check base=${REPO_ROOT}/profiles/${PROFILE_RELEASE}/patches
 	local applied="${T}/epatch_user.log"
 
-	for check in ${CATEGORY}/{${P}-${PR},${P},${PN}}{,:${SLOT}}; do
+	# Strip off ubuntu-versionator.eclass specific version _p* strings #
+	PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
+	PV="${PV%%[a-z]*}"	# For package-3.6.0a
+	PV="${PV%%_p*}"		# For package-3.6.0_p0_p02
+	PV="${PV%%_*}"		# For package-3.6.0_p_p02
+
+	for check in ${CATEGORY}/{${P}-${PR},${PN}-${PV},${PN}}{,:${SLOT}}; do
 		EPATCH_SOURCE=${base}/${CTARGET}/${check}
 		[[ -r ${EPATCH_SOURCE} ]] || EPATCH_SOURCE=${base}/${CHOST}/${check}
 		[[ -r ${EPATCH_SOURCE} ]] || EPATCH_SOURCE=${base}/${check}
