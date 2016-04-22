@@ -28,6 +28,7 @@ S="${WORKDIR}"
 
 RDEPEND="sys-auth/polkit-pkla-compat
 	unity-base/gsettings-ubuntu-touch-schemas
+	unity-base/session-shortcuts
 	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
 	x11-themes/gtk-engines-murrine

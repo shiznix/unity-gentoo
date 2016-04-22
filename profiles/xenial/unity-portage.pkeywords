@@ -162,6 +162,7 @@ unity-base/gsettings-ubuntu-touch-schemas **
 unity-base/hud **
 unity-base/nux **
 unity-base/overlay-scrollbar **
+unity-base/session-shortcuts **
 unity-base/signon **
 unity-base/signon-keyring-extension **
 unity-base/signon-plugin-oauth2 **
