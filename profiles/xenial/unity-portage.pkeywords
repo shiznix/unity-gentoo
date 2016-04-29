@@ -29,7 +29,7 @@ dev-util/umockdev
 ~media-libs/harfbuzz-0.9.35
 ~media-libs/libpng-1.6.18
 =media-libs/phonon-4.8*			# Phonon versions needed to compile using >=qt-5.4.2 (see https://git.reviewboard.kde.org/r/123874/)
-=media-libs/phonon-gstreamer-4.8*	
+=media-libs/phonon-gstreamer-4.8*
 sys-devel/automake:1.14
 sys-devel/gcc:5.3.0
 sys-devel/llvm:0/3.6

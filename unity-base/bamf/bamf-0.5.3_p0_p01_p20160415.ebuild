@@ -52,6 +52,10 @@ src_prepare() {
 	# removed gtester2xunit-check
 	epatch "${FILESDIR}"/${PN}-0.5.0-disable-gtester2xunit-check.patch
 
+	# Correct path to upstart's /usr/bin/initctl #
+	sed -e 's:/sbin/initctl:/usr/bin/initctl:g' \
+		-i data/bamfdaemon-dbus-runner.in
+
 	vala_src_prepare
 	export VALA_API_GEN=$VAPIGEN
 	python_fix_shebang .

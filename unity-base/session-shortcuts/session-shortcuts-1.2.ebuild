@@ -8,6 +8,7 @@ URELEASE="xenial"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/s/${PN}"
+UVER=
 
 DESCRIPTION="Allows shutdown, logout, and reboot from dash"
 HOMEPAGE="http://unity.ubuntu.com/"
