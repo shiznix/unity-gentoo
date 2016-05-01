@@ -36,7 +36,7 @@ PATCHFF="firefox-38.0-patches-05"
 MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="xenial"
+URELEASE="xenial-security"
 inherit flag-o-matic toolchain-funcs mozconfig-v6.38 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas ubuntu-versionator
 
 UVER_PREFIX="+build1"

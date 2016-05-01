@@ -14,7 +14,7 @@ PYTHON_COMPAT=( python2_7 )
 #	Often with version bumps and new Chromium releases (which oxide-qt is derived), it breaks until upstream remember to fix it again #
 #	 <--LP #1341565-->
 #	Attempt to dump the plugin types to plugins.qmltypes and install that to avoid needless calls to qmlplugindump (in progress) #
-URELEASE="xenial"
+URELEASE="xenial-security"
 inherit check-reqs cmake-utils python-single-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/o/${PN}"

@@ -31,18 +31,19 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-45.0-patches-03"
+PATCH="${PN}-46.0-patches-01"
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 
-MOZCONFIG_OPTIONAL_GTK3=1
+#MOZCONFIG_OPTIONAL_QT5=1 -- fails to build so leave it off until the code can be patched
+MOZCONFIG_OPTIONAL_GTK2=1
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="xenial"
-UVER_PREFIX="+build1"
+URELEASE="xenial-security"
+UVER_PREFIX="+build5"
 UURL="mirror://unity/pool/main/f/${PN}"
 
-inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.45 pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
+inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.46 pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
@@ -53,40 +54,24 @@ LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
 IUSE="bindist hardened +hwaccel pgo selinux +gmp-autoupdate test"
 RESTRICT="!bindist? ( bindist ) mirror"
 
-# More URIs appended below...
+PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/${PATCH}.tar.xz )
 SRC_URI="${SRC_URI}
-	http://dev.gentoo.org/~anarchy/mozilla/patchsets/${PATCH}.tar.xz
-	http://dev.gentoo.org/~axs/distfiles/${PATCH}.tar.xz
-	http://dev.gentoo.org/~polynomial-c/mozilla/patchsets/${PATCH}.tar.xz
+        ${MOZ_HTTP_URI}/${MOZ_PV}/source/firefox-${MOZ_PV}.source.tar.xz
+        ${PATCH_URIS[@]}
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 # Mesa 7.10 needed for WebGL + bugfixes
 RDEPEND="
-	>=dev-libs/nss-3.21.1
+	>=dev-libs/nss-3.22.3
 	>=dev-libs/nspr-4.12
 	selinux? ( sec-policy/selinux-mozilla )"
 
 DEPEND="${RDEPEND}
-	pgo? (
-		>=sys-devel/gcc-4.5 )
-	amd64? ( ${ASM_DEPEND}
-		virtual/opengl )
-	x86? ( ${ASM_DEPEND}
-		virtual/opengl )"
-
-# No source releases for alpha|beta
-if [[ ${PV} =~ alpha ]]; then
-	CHANGESET="8a3042764de7"
-	SRC_URI="${SRC_URI}
-		https://dev.gentoo.org/~nirbheek/mozilla/firefox/firefox-${MOZ_PV}_${CHANGESET}.source.tar.xz"
-	S="${WORKDIR}/mozilla-aurora-${CHANGESET}"
-else
-	S="${WORKDIR}/firefox-${MOZ_PV}"
-	SRC_URI="${SRC_URI}
-		${MOZ_HTTP_URI}/${MOZ_PV}/source/firefox-${MOZ_PV}.source.tar.xz"
-fi
+	pgo? ( >=sys-devel/gcc-4.5 )
+	amd64? ( ${ASM_DEPEND} virtual/opengl )
+	x86? ( ${ASM_DEPEND} virtual/opengl )"
 
 QA_PRESTRIPPED="usr/lib*/${PN}/firefox"
 
@@ -145,9 +130,6 @@ src_prepare() {
 	# Apply our patches
 	eapply "${WORKDIR}/firefox"
 
-	# Allow user to apply any additional patches without modifing ebuild
-	eapply_user
-
 	# Enable gnomebreakpad
 	if use debug ; then
 		sed -i -e "s:GNOME_DISABLE_CRASH_DIALOG=1:GNOME_DISABLE_CRASH_DIALOG=0:g" \
@@ -178,6 +160,9 @@ src_prepare() {
 	# Keep codebase the same even if not using official branding
 	sed '/^MOZ_DEV_EDITION=1/d' \
 		-i "${S}"/browser/branding/aurora/configure.sh || die
+
+	# Allow user to apply any additional patches without modifing ebuild
+	eapply_user
 
 	eautoreconf
 
@@ -216,7 +201,7 @@ src_configure() {
 	# Add full relro support for hardened
 	use hardened && append-ldflags "-Wl,-z,relro,-z,now"
 
-	# Removed, per bug 571180
+	# Only available on mozilla-overlay for experimentation -- Removed in Gentoo repo per bug 571180
 	#use egl && mozconfig_annotate 'Enable EGL as GL provider' --with-gl-provider=EGL
 
 	# Setup api key for location services
@@ -244,7 +229,6 @@ src_configure() {
 	fi
 
 	# workaround for funky/broken upstream configure...
-	SHELL="${SHELL:-${EPREFIX%/}/bin/bash}" \
 	emake -f client.mk configure
 }
 
@@ -292,17 +276,15 @@ src_install() {
 		"${BUILD_OBJ_DIR}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
 		|| die
 
+	mozconfig_install_prefs \
+		"${BUILD_OBJ_DIR}/dist/bin/browser/defaults/preferences/all-gentoo.js"
+
 	# Augment this with hwaccel prefs
 	if use hwaccel ; then
 		cat "${FILESDIR}"/gentoo-hwaccel-prefs.js-1 >> \
 		"${BUILD_OBJ_DIR}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
 		|| die
 	fi
-
-	# Set default path to search for dictionaries.
-	echo "pref(\"spellchecker.dictionary_path\", ${DICTPATH});" \
-		>> "${BUILD_OBJ_DIR}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
-		|| die
 
 	echo "pref(\"extensions.autoDisableScopes\", 3);" >> \
 		"${BUILD_OBJ_DIR}/dist/bin/browser/defaults/preferences/all-gentoo.js" \

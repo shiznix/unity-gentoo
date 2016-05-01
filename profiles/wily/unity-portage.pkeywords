@@ -14,6 +14,7 @@ app-eselect/eselect-opengl
 =dev-util/boost-build-1.58*
 ~dev-libs/json-c-0.12
 ~dev-libs/libgcrypt-1.6.1
+~dev-libs/nss-3.23
 dev-libs/libindicate
 dev-libs/libindicate-qt
 dev-util/umockdev
