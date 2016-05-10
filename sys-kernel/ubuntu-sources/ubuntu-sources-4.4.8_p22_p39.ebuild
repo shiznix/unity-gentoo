@@ -5,7 +5,7 @@
 EAPI=6
 ETYPE="sources"
 
-URELEASE="xenial"
+URELEASE="xenial-security"
 inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
