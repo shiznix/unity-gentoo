@@ -51,6 +51,20 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${PN}-${PV}${UVER}"
 
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+
+	## Cherry picked from gnome2_environment_reset() in xdg-utils.eclass ##
+	#  Sandbox violations occur when building outside of an Xsesion and XDG_RUNTIME_DIR is not defined to be in the sandbox
+	#    but build will fail with the following if XDG_CACHE_HOME is defined (see issue #125): 'ImportError: No module named 'values'
+	export XDG_RUNTIME_DIR="${T}/run"
+	mkdir -p "${XDG_RUNTIME_DIR}" || die
+	# This directory needs to be owned by the user, and chmod 0700
+	# http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+	chmod 0700 "${XDG_RUNTIME_DIR}" || die
+	unset DBUS_SESSION_BUS_ADDRESS
+}
+
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	# Make Unity Tweak Tool appear in unity-control-center #
