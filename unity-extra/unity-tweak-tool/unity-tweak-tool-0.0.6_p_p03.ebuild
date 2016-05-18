@@ -55,7 +55,7 @@ pkg_setup() {
 	ubuntu-versionator_pkg_setup
 
 	## Cherry picked from gnome2_environment_reset() in xdg-utils.eclass ##
-	#  Sandbox violations occur when building outside of an Xsesion and XDG_RUNTIME_DIR is not defined to be in the sandbox
+	#  Sandbox violations occur when building outside of an Xsession and XDG_RUNTIME_DIR is not defined to be in the sandbox
 	#    but build will fail with the following if XDG_CACHE_HOME is defined (see issue #125): 'ImportError: No module named 'values'
 	export XDG_RUNTIME_DIR="${T}/run"
 	mkdir -p "${XDG_RUNTIME_DIR}" || die
