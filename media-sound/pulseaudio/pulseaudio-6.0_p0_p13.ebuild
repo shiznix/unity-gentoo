@@ -159,6 +159,10 @@ src_prepare() {
 	# Fix module-zeroconf-publish crashes, bug #504612 (from 'master')
 	#epatch "${FILESDIR}"/${P}-zeroconf-crash-{1,2,3}.patch
 
+	# Allow dbus to work on secondary and subsequent logins from same user (refer https://bugs.freedesktop.org/show_bug.cgi?id=95470) #
+	sed -e 's:Exec=start-pulseaudio-x11:Exec=sh -c "pkill pulseaudio; start-pulseaudio-x11":' \
+		-i src/daemon/pulseaudio.desktop.in || die
+
 	eapply_user
 	eautoreconf
 }
