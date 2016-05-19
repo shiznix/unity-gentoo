@@ -217,6 +217,10 @@ src_install() {
 		insinto /usr/share/unity/icons
 		doins "${FILESDIR}/launcher_bfb.png"
 		doins "${FILESDIR}/cof.png"
+
+		# Gentoo logo on lock-srceen on multi head system
+                newins "${FILESDIR}/cof.png" lockscreen_cof.png
+
 	fi
 
 	# Remove all installed language files as they can be incomplete #
