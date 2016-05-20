@@ -5,7 +5,7 @@
 EAPI=6
 WANT_AUTOCONF="2.1"
 MOZ_ESR=""
-MOZ_LIGHTNING_VER="4.0.5"
+MOZ_LIGHTNING_VER="4.0.8"
 MOZ_LIGHTNING_GDATA_VER="1.9"
 
 # This list can be updated using scripts/get_langs.sh from the mozilla overlay
@@ -52,6 +52,8 @@ IUSE="bindist crypt hardened ldap +lightning +minimal mozdom selinux"
 RESTRICT="!bindist? ( bindist )
 	mirror"
 
+# URI for upstream lightning package (when it is available)
+#${MOZ_HTTP_URI/${PN}/calendar/lightning}/${MOZ_LIGHTNING_VER}/linux/lightning.xpi -> lightning-${MOZ_LIGHTNING_VER}.xpi
 PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/{${PATCH},${PATCHFF}}.tar.xz )
 SRC_URI="${SRC_URI}
 	${MOZ_HTTP_URI}/${MOZ_PV}/source/${MOZ_P}.source.tar.bz2
@@ -70,8 +72,9 @@ CDEPEND="
 	crypt?  ( || (
 		( >=app-crypt/gnupg-2.0
 			|| (
-				app-crypt/pinentry[gtk]
-				app-crypt/pinentry[qt4]
+				app-crypt/pinentry[gtk(-)]
+				app-crypt/pinentry[qt4(-)]
+				app-crypt/pinentry[qt5(-)]
 			)
 		)
 		=app-crypt/gnupg-1.4*

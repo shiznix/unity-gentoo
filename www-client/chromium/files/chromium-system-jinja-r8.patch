@@ -33,3 +33,15 @@
        # Web IDL lexer/parser (base parser)
        '<(DEPTH)/tools/idl_parser/idl_lexer.py',
        '<(DEPTH)/tools/idl_parser/idl_node.py',
+--- third_party/WebKit/Source/platform/inspector_protocol/protocol.gyp.orig	2016-03-23 15:10:41.522637837 +0000
++++ third_party/WebKit/Source/platform/inspector_protocol/protocol.gyp	2016-03-23 15:10:56.938953740 +0000
+@@ -6,9 +6,6 @@
+   'variables': {
+     'blink_platform_output_dir': '<(SHARED_INTERMEDIATE_DIR)/blink/platform',
+     'jinja_module_files': [
+-      # jinja2/__init__.py contains version string, so sufficient for package
+-      '<(DEPTH)/third_party/jinja2/__init__.py',
+-      '<(DEPTH)/third_party/markupsafe/__init__.py',  # jinja2 dep
+     ],
+   },
+ 
