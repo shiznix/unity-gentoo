@@ -1,0 +1,25 @@
+# -*- sh -*-
+# Xsession.d script to set the GTK_MODULES env variable to load atk
+#
+# This file is sourced by Xsession(5), not executed.
+
+add_module()
+{
+	case :$GTK_MODULES: in
+		*:$1:*)
+			;;
+		*)
+			if [ -z "$GTK_MODULES" ]
+			then
+				GTK_MODULES=$1
+			else
+				GTK_MODULES=$GTK_MODULES:$1
+			fi
+			;;
+	esac
+}
+
+add_module gail
+add_module atk-bridge
+
+export GTK_MODULES

@@ -200,6 +200,10 @@ multilib_src_install_all() {
 	doins "${FILESDIR}"/settings.ini
 
 	dodoc AUTHORS ChangeLog* HACKING NEWS* README*
+
+	# Taken from Ubuntus at-spi2-atk package, needed for gtk3 menus to work with Unitys global appmenu #
+	exeinto /etc/X11/xinit/xinitrc.d
+	doexe "${FILESDIR}/90atk-adaptor"
 }
 
 pkg_preinst() {
