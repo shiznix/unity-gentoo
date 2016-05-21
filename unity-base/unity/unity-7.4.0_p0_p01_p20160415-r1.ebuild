@@ -84,8 +84,6 @@ DEPEND="${RDEPEND}
 		dev-util/dbus-test-runner
 		sys-apps/xorg-gtest )"
 
-MAKEOPTS="${MAKTOPTS} -j1"
-
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 	python-single-r1_pkg_setup
@@ -183,6 +181,11 @@ src_compile() {
 			distutils-r1_src_compile
 		popd
 	fi
+
+	# 'make translations' is sometimes not parallel make safe #
+	pushd ${CMAKE_BUILD_DIR}
+		emake -j1 translations
+	popd
 	cmake-utils_src_compile || die
 }
 
