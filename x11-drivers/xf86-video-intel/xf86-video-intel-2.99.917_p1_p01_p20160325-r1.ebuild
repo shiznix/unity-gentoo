@@ -28,6 +28,9 @@ RDEPEND="x11-libs/libXext
 	x11-libs/libXfixes
 	>=x11-libs/pixman-0.27.1
 	>=x11-libs/libdrm-2.4.29[video_cards_intel]
+	dri3? (
+		>=x11-base/xorg-server-1.18
+	)
 	sna? (
 		>=x11-base/xorg-server-1.10
 	)
@@ -59,7 +62,9 @@ src_prepare() {
 src_configure() {
 	XORG_CONFIGURE_OPTIONS=(
 		$(use_enable debug)
+		$(use_enable dri)
 		$(use_enable dri3)
+		$(usex dri3 "--with-default-dri=3")
 		$(use_enable sna)
 		$(use_enable udev)
 		$(use_enable uxa)
@@ -80,12 +85,5 @@ pkg_postinst() {
 		ewarn "	      i915 driver"
 		ewarn "      [*]       Enable modesetting on intel by default"
 		echo
-	fi
-	if use dri3; then
-		elog "You have 'dri3' use enabled"
-		elog "To enable DRI3 you will need to create a 'Device' section"
-		elog "in /etc/X11/xorg.conf.d/*.conf file and add the line:"
-		elog "  Option      \"DRI\"    \"3\""
-		elog "Without this line, the driver will default to DRI2"
 	fi
 }
