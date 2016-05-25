@@ -1,0 +1,17 @@
+=== modified file 'data/bamfdaemon-dbus-runner.in'
+--- data/bamfdaemon-dbus-runner.in	2015-11-19 09:44:40 +0000
++++ data/bamfdaemon-dbus-runner.in	2016-05-23 17:53:24 +0000
+@@ -1,7 +1,11 @@
+ #!/bin/bash
+ 
+ if [ -n "$UPSTART_SESSION" ]; then
+-  /sbin/initctl start bamfdaemon
++  if ! (initctl status bamfdaemon | grep -q start); then
++    /sbin/initctl start bamfdaemon
++  else
++    echo "bamfdaemon job is already running..."
++  fi
+ else
+   @PKGLIBEXECDIR@/bamfdaemon
+ fi
+

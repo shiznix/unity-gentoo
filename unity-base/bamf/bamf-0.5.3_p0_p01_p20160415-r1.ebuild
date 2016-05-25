@@ -47,10 +47,13 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# workaround launchpad bug #1186915
-	epatch "${FILESDIR}"/${PN}-0.5.0-remove-desktop-fullname.patch
+	epatch "${FILESDIR}/${PN}-0.5.0-remove-desktop-fullname.patch"
 
 	# removed gtester2xunit-check
-	epatch "${FILESDIR}"/${PN}-0.5.0-disable-gtester2xunit-check.patch
+	epatch "${FILESDIR}/${PN}-0.5.0-disable-gtester2xunit-check.patch"
+
+	# Only start one instance of bamfdaemon, fixes non-working global GTK appmenus (see LP# 1532226) #
+	epatch "${FILESDIR}/gtk-appmenus-missing-fix_LP1532226.diff"
 
 	# Correct path to upstart's /usr/bin/initctl #
 	sed -e 's:/sbin/initctl:/usr/bin/initctl:g' \
