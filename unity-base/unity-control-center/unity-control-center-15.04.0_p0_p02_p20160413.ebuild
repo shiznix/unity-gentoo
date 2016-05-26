@@ -6,7 +6,7 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools base eutils gnome2 ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/u/${PN}"
