@@ -35,7 +35,7 @@
 
 - Xrandr does not work in Mir (unable to get a list of valid screen resolutions other than the one being used, screen rotate does nothing)
 
-- Ubuntu's patched Gnome packages become outdated with Gnome versions available in portage tree
+- Ubuntu's patched Gnome packages can become outdated with Gnome versions available in portage tree
   * The striving goal is to have Gnome from the portage tree and Unity desktop from the overlay able to be installed and function together side-by-side
   * Ubuntu heavily patch and fork a number of Gnome packages that are crucial to Unity's and Gnome's desktop function
   * Ubuntu's development of these packages lags greatly behind the changes Gnome upstream make, and so also lags behind what

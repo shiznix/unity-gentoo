@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-# This package is currently full of fail causing qmlplugindump build failures for other packages such as x11-libs/content-hub #
+# This package is currently full of fail causing qmlplugindump build failures for other packages such as x11-libs/content-hub when www-client/webbrowser-app is installed #
 #	(see LP# 1332996 and LP# 1341565)
 #	 <--LP#1332996-->
 #	qmlplugindump used at build time by other packages causes oxide-qt to be launched whereby it segfaults causing those builds to fail #

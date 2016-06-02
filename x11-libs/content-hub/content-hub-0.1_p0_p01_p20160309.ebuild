@@ -43,6 +43,22 @@ export QT_SELECT=5
 export QT_DEBUG_PLUGINS=1	# Uncommented to debug the inevitable QML plugins problems
 unset QT_QPA_PLATFORMTHEME
 
+pkg_setup() {
+	## This only applies on an upgrade path. On a clean system these bugs are not encountered ##
+	#	If system has www-client/webbrowser-app already installed
+	#	then x11-libs/content-hub will fail to build due to qmlplugindump LP bugs #1332996 and #1341565
+	if has_version "www-client/webbrowser-app"; then
+		eerror
+		eerror "Oops... www-client/webbrowser-app is detected as being installed on your system"
+		eerror "  Please first 'emerge -C www-client/webbrowser-app' before (re-)installing x11-libs/content-hub"
+		eerror "  www-client/webbrowser-app may be re-installed after x11-libs/content-hub has been installed"
+		eerror "  Root cause of this qmlplugindump bug is being tracked as open Ubuntu Launchpad bugs #1332996 and #1341565"
+		eerror
+		die
+	fi
+	ubuntu-versionator_pkg_setup
+}
+
 pkg_preinst() {
 	gnome2_schemas_savelist
 }
