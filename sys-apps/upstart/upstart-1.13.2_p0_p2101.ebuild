@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"

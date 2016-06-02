@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit eutils gnome2-utils python-single-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
@@ -13,7 +13,8 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Monochrome icons for the Unity desktop (default icon theme)"
 HOMEPAGE="https://launchpad.net/ubuntu-themes"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 CC-BY-SA-3.0"
 SLOT="0"
@@ -34,6 +35,11 @@ S="${WORKDIR}"
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 	python-single-r1_pkg_setup
+}
+
+src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	ubuntu-versionator_src_prepare
 }
 
 src_configure() { :; }

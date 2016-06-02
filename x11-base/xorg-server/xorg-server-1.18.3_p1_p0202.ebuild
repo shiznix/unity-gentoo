@@ -5,7 +5,7 @@
 EAPI=5
 XORG_DOC=doc
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools base xorg-2 multilib versionator flag-o-matic ubuntu-versionator
 
 UURL="mirror://unity/pool/main/x/${PN}"
