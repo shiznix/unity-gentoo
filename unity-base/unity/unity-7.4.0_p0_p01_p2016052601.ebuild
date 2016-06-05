@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python3_4 )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit cmake-utils distutils-r1 eutils gnome2-utils pam toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://unity/pool/main/u/${PN}"
@@ -244,7 +244,7 @@ src_install() {
 	doins "${FILESDIR}/15-xdg-data-kde"
 
 	# Clean up pam file installation as used in lockscreen (LP# 1305440) #
-	rm "${ED}etc/pam.d/${PN}"
+	rm -rf "${ED}usr/etc/pam.d"
 	pamd_mimic system-local-login ${PN} auth account session
 
 	# Set base desktop user privileges #

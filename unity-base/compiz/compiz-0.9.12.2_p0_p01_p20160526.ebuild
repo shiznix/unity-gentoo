@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit gnome2-utils cmake-utils eutils python-r1 ubuntu-versionator xdummy
 
 UURL="mirror://unity/pool/main/c/${PN}"
