@@ -34,5 +34,9 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 	cp debian/unity-webapps.pem .
+
+	epatch -p1 "${FILESDIR}/fix-building-with-qt5.5.patch"
+
 	qt5-build_src_prepare
 }
+
