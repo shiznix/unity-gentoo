@@ -21,6 +21,7 @@ IUSE="test"
 RESTRICT="mirror"
 
 DEPEND="test? ( dev-cpp/gtest )
+	dev-cpp/gmock
 	dev-libs/boost"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
