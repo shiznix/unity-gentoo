@@ -41,6 +41,7 @@ DEPEND="!dev-libs/libupstart-app-launch
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 export QT_SELECT=5
 export QT_DEBUG_PLUGINS=1	# Uncommented to debug the inevitable QML plugins problems
+export QML_IMPORT_TRACE=1
 unset QT_QPA_PLATFORMTHEME
 
 pkg_setup() {
