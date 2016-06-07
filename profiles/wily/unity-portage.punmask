@@ -8,6 +8,7 @@ dev-libs/glib::unity-gentoo
 dev-util/gdbus-codegen::unity-gentoo
 
 # Unmask those gnome packages inadvertently masked globablly in package.mask #
+=gnome-base/gdm-3.18*::gentoo
 =gnome-base/gnome-mime-data-2.18*::gentoo
 =gnome-base/libgnomeprint-2.18*::gentoo
 =gnome-base/libgnomeprintui-2.18*::gentoo
