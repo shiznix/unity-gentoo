@@ -40,6 +40,7 @@ COMMON_DEPEND="
 
 	>=dev-libs/libpwquality-1.2.2
 	app-admin/apg
+	app-i18n/fcitx
 	app-text/iso-codes
 	dev-libs/libpwquality
 	dev-libs/libtimezonemap
