@@ -12,9 +12,9 @@ UURL="mirror://unity/pool/main/g/${PN}"
 
 DESCRIPTION="GNOME framework for accessing online accounts"
 HOMEPAGE="https://wiki.gnome.org/GnomeOnlineAccounts"
+
 #SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
-SRC_URI="https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/${MY_P}.orig.tar.xz
-	https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/${MY_P}-${UVER}~vivid1.debian.tar.xz"
+SRC_URI="mirror://gnome/sources/gnome-online-accounts/3.16/${PN}-${PV}.tar.xz"
 
 LICENSE="LGPL-2+"
 SLOT="0/1"
