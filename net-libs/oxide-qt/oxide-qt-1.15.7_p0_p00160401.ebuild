@@ -37,6 +37,7 @@ DEPEND="dev-libs/expat
 	dev-qt/qtgui:5
 	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
+	dev-qt/qtfeedback:5
 	dev-qt/qtpositioning:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtpositioning:5
