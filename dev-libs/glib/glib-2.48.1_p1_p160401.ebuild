@@ -16,11 +16,12 @@ GCONF_DEBUG="yes"
 # pkg-config
 GNOME2_LA_PUNT="yes"
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools base bash-completion-r1 gnome2 libtool eutils flag-o-matic multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator
 
 MY_P="${PN}2.0_${PV}"
 MY_PV="${PV}"
+UVER="-1~ubuntu16.04.1"
 #S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://unity/pool/main/g/${PN}2.0"
