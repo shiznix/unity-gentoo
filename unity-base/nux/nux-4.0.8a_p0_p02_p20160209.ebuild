@@ -24,7 +24,7 @@ RESTRICT="mirror"
 
 DEPEND="app-i18n/ibus
 	dev-cpp/gtest
-	dev-libs/boost
+	dev-libs/boost:=
 	dev-libs/glib:2
 	dev-libs/libpcre
 	dev-libs/libsigc++:2

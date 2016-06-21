@@ -32,6 +32,7 @@ DEPEND="${RDEPEND}
 	media-sound/pulseaudio
 	net-misc/url-dispatcher
 	unity-base/bamf:=
+	unity-base/unity-api
 	unity-indicators/ido:=
 	>=x11-libs/libnotify-0.7.6
 	$(vala_depend)"

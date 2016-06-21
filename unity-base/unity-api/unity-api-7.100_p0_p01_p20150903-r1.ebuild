@@ -20,7 +20,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/boost
+DEPEND="dev-libs/boost:=
 	dev-libs/glib:2
 	dev-qt/qtdeclarative
 	test? ( dev-util/cppcheck )"
