@@ -1,14 +1,22 @@
 if [[ ${EBUILD_PHASE} == "setup" ]] ; then
-	CURRENT_PROFILE=$(readlink /etc/portage/make.profile)
-
+	CURRENT_PROFILE="$(readlink /etc/portage/make.profile)"
 	if [ -z "$(echo ${CURRENT_PROFILE} | grep unity-gentoo)" ]; then
 		die "Invalid profile detected, please select a 'unity-gentoo' profile for your architecture shown in 'eselect profile list'"
 	else
 		PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-1)}')
 	fi
-
 	if [ "$(eval echo \${UNITY_DEVELOPMENT_${PROFILE_RELEASE}})" != "yes" ]; then
 		die "Oops! A development profile has been detected. Set 'UNITY_DEVELOPMENT_${PROFILE_RELEASE}=yes' in make.conf if you really know how broken this profile could be"
+	fi
+
+	KEYWORD_STATE="$(emerge --info | grep ACCEPT_KEYWORDS)"
+	if [ -n "$(echo ${KEYWORD_STATE} | grep \~)" ] && \
+		[ "$(eval echo \${UNITY_GLOBAL_KEYWORD_UNMASK})" != "yes" ]; then
+			eerror "Oops! Your system has been detected as having ~arch keywords globally unmasked (${KEYWORD_STATE})"
+			eerror " To maintain build sanity for Unity it is highly recommended to *NOT* globally set your entire system to experimental"
+			eerror " To override this error message, set 'UNITY_GLOBAL_KEYWORD_UNMASK=yes' in make.conf and accept that many packages may fail to build or run correctly"
+			eerror
+			die
 	fi
 fi
 

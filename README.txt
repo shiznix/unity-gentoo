@@ -1,7 +1,7 @@
 unity-gentoo
 ============
 
-A Gentoo overlay to install the Unity desktop
+A Gentoo overlay to install the Unity desktop (requires systemd)
 
 --------------------------------------------------------------
 
