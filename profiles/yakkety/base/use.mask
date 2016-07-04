@@ -1,0 +1,2 @@
+-ayatana
+-qt5
