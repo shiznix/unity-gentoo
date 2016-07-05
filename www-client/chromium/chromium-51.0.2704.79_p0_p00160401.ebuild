@@ -17,7 +17,7 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://unity/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1237"
+UVER_SUFFIX=".1242"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -31,7 +31,8 @@ IUSE="cups gn gnome gnome-keyring gtk3 +hangouts hidpi hotwording kerberos neon 
 RESTRICT="!system-ffmpeg? ( proprietary-codecs? ( bindist ) )
 	mirror"
 
-REQUIRED_USE="gn? ( kerberos !system-ffmpeg )"
+# TODO: bootstrapped gn binary hangs when using tcmalloc with portage's sandbox.
+REQUIRED_USE="gn? ( kerberos !system-ffmpeg !tcmalloc )"
 
 # Native Client binaries are compiled with different set of flags, bug #452066.
 QA_FLAGS_IGNORED=".*\.nexe"
@@ -90,7 +91,6 @@ RDEPEND="
 		media-libs/flac:=
 		>=media-libs/harfbuzz-0.9.41:=[icu(+)]
 		>=media-libs/libjpeg-turbo-1.2.0-r1:=
-		media-libs/libpng:0=
 		>=media-libs/libwebp-0.4.0:=
 		sys-libs/zlib:=[minizip]
 	)"
@@ -201,12 +201,11 @@ pkg_setup() {
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	epatch "${FILESDIR}/${PN}-system-ffmpeg-r2.patch"
+	epatch "${FILESDIR}/${PN}-system-ffmpeg-r3.patch"
 	epatch "${FILESDIR}/${PN}-system-jinja-r8.patch"
 	epatch "${FILESDIR}/${PN}-widevine-r1.patch"
 	epatch "${FILESDIR}/${PN}-last-commit-position-r0.patch"
 	epatch "${FILESDIR}/${PN}-snapshot-toolchain-r1.patch"
-	epatch "${FILESDIR}/chromium-whitelist-arm64-syscalls.patch"
 
 	eapply_user
 
@@ -260,6 +259,7 @@ src_prepare() {
 		'third_party/analytics' \
 		'third_party/angle' \
 		'third_party/angle/src/third_party/compiler' \
+		'third_party/angle/src/third_party/libXNVCtrl' \
 		'third_party/angle/src/third_party/murmurhash' \
 		'third_party/angle/src/third_party/trace_event' \
 		'third_party/boringssl' \
@@ -294,12 +294,13 @@ src_prepare() {
 		'third_party/libaddressinput' \
 		'third_party/libjingle' \
 		'third_party/libphonenumber' \
+		'third_party/libpng' \
 		'third_party/libsecret' \
 		'third_party/libsrtp' \
 		'third_party/libudev' \
 		'third_party/libusb' \
-		'third_party/libvpx_new' \
-		'third_party/libvpx_new/source/libvpx/third_party/x86inc' \
+		'third_party/libvpx' \
+		'third_party/libvpx/source/libvpx/third_party/x86inc' \
 		'third_party/libxml/chromium' \
 		'third_party/libwebm' \
 		'third_party/libyuv' \
@@ -308,7 +309,6 @@ src_prepare() {
 		'third_party/mesa' \
 		'third_party/modp_b64' \
 		'third_party/mt19937ar' \
-		'third_party/npapi' \
 		'third_party/openh264' \
 		'third_party/openmax_dl' \
 		'third_party/opus' \
@@ -367,6 +367,7 @@ src_configure() {
 	# Use system-provided libraries.
 	# TODO: use_system_hunspell (upstream changes needed).
 	# TODO: use_system_icu (bug #576370).
+	# TODO: use_system_libpng (bug #578212).
 	# TODO: use_system_libsrtp (bug #459932).
 	# TODO: use_system_libusb (http://crbug.com/266149).
 	# TODO: use_system_libvpx (http://crbug.com/494939).
@@ -383,7 +384,6 @@ src_configure() {
 		-Duse_system_jsoncpp=1
 		-Duse_system_libevent=1
 		-Duse_system_libjpeg=1
-		-Duse_system_libpng=1
 		-Duse_system_libwebp=1
 		-Duse_system_libxml=1
 		-Duse_system_libxslt=1
@@ -420,6 +420,7 @@ src_configure() {
 		$(gyp_use widevine enable_widevine)"
 
 	myconf_gn+=" use_cups=$(usex cups true false)"
+	myconf_gn+=" use_allocator=$(usex tcmalloc \"tcmalloc\" \"none\")"
 
 	# Use explicit library dependencies instead of dlopen.
 	# This makes breakages easier to detect by revdep-rebuild.
