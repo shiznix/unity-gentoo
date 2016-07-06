@@ -21,7 +21,7 @@ SRC_URI="${UURL}/${MY_PN}_${BASE_PV}.orig.tar.gz
 	amd64? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/amd64-config.flavour.generic )
 	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/i386-config.flavour.generic )"
 LICENSE="GPL-2"
-#KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="binchecks mirror strip"
 S="${WORKDIR}/linux-$(get_version_component_range 1-2)"

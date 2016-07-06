@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+nautilus"
 RESTRICT="mirror test"
 

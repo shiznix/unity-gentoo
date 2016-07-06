@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-#KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE="doc"
 RESTRICT="mirror"
 

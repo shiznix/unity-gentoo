@@ -1,5 +1,5 @@
-amd64	wily/amd64	stable
-x86	wily/x86	stable
-
 amd64	xenial/amd64	dev
 x86	xenial/x86	dev
+
+amd64	yakkety/amd64	dev
+x86	yakkety/x86	dev

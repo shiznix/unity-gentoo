@@ -12,7 +12,7 @@ SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
 	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 DESCRIPTION="The Multimedia module for the Qt5 framework"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 IUSE="alsa +gstreamer openal +opengl pulseaudio qml widgets"
 RESTRICT="mirror"

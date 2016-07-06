@@ -16,7 +16,7 @@ DESCRIPTION="The GUI module and platform plugins for the Qt5 toolkit"
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
 	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 RESTRICT="mirror"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 # TODO: directfb, linuxfb, kms integration in eglfs
 
 # TODO: directfb, linuxfb, offscreen

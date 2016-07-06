@@ -3,8 +3,8 @@
 version_check() {
 	if [ ! -f /tmp/Sources-main-${URELEASE} ]; then
 		echo
-		wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/main/source/Sources.bz2 -O /tmp/Sources-main-${URELEASE}.bz2
-		bunzip2 /tmp/Sources-main-${URELEASE}.bz2
+		wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/main/source/Sources.gz -O /tmp/Sources-main-${URELEASE}.gz
+		gunzip /tmp/Sources-main-${URELEASE}.gz
 	fi
 	upstream_version=`grep -A2 "Package: ${_name}$" /tmp/Sources-main-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 

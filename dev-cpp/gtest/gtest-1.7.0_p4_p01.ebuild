@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 
 LICENSE="BSD"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="examples static-libs"
 RESTRICT="mirror"
 
