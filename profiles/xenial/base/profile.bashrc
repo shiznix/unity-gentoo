@@ -5,9 +5,9 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 	else
 		PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-1)}')
 	fi
-	if [ "$(eval echo \${UNITY_DEVELOPMENT_${PROFILE_RELEASE}})" != "yes" ]; then
-		die "Oops! A development profile has been detected. Set 'UNITY_DEVELOPMENT_${PROFILE_RELEASE}=yes' in make.conf if you really know how broken this profile could be"
-	fi
+#	if [ "$(eval echo \${UNITY_DEVELOPMENT_${PROFILE_RELEASE}})" != "yes" ]; then
+#		die "Oops! A development profile has been detected. Set 'UNITY_DEVELOPMENT_${PROFILE_RELEASE}=yes' in make.conf if you really know how broken this profile could be"
+#	fi
 
 	KEYWORD_STATE="$(emerge --info | grep ACCEPT_KEYWORDS)"
 	if [ -n "$(echo ${KEYWORD_STATE} | grep \~)" ] && \
