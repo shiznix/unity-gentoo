@@ -11,8 +11,8 @@ inherit multilib qt5-build
 DESCRIPTION="SQL abstraction library for the Qt5 tooolkit"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	#KEYWORDS=""
-#else
+	KEYWORDS=""
+else
 	KEYWORDS="~amd64 ~x86"
 :
 fi

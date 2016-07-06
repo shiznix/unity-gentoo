@@ -9,8 +9,8 @@ inherit qt5-build
 DESCRIPTION="Legacy declarative framework for Qt4 compatibility for building dynamic user interfaces"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	#KEYWORDS=""
-#else
+	KEYWORDS=""
+else
 	KEYWORDS="~amd64 ~x86"
 :
 fi

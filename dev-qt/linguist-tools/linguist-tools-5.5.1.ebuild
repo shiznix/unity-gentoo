@@ -11,8 +11,8 @@ inherit qt5-build
 DESCRIPTION="Tools for working with Qt translation data files"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	#KEYWORDS=""
-#else
+	KEYWORDS=""
+else
 	KEYWORDS="~amd64 ~x86"
 :
 fi

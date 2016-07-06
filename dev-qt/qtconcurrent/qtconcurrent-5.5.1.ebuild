@@ -11,8 +11,8 @@ inherit qt5-build
 DESCRIPTION="Multi-threading concurrence support library for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	#KEYWORDS=""
-#else
+	KEYWORDS=""
+else
 	KEYWORDS="~amd64 ~x86"
 :
 fi
