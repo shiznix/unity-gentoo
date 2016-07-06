@@ -124,7 +124,7 @@ DEPEND="${CDEPEND}
 				www-client/w3m )
 		)
 	)
-	mir? ( mir-base/mir:= )
+	mir? ( >=mir-base/mir-0.21:= )
 	!minimal? (
 		>=x11-proto/xf86driproto-2.1.0
 		>=x11-proto/dri2proto-2.8
