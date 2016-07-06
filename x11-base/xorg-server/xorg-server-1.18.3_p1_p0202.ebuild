@@ -203,6 +203,7 @@ src_configure() {
 		$(use_with doc xmlto)
 		$(use_with systemd systemd-daemon)
 		$(use_enable systemd systemd-logind)
+		$(use_enable mir xmir)
 		--enable-libdrm
 		--sysconfdir="${EPREFIX}"/etc/X11
 		--localstatedir="${EPREFIX}"/var
