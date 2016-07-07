@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit eutils qt5-build ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/u/${PN}"

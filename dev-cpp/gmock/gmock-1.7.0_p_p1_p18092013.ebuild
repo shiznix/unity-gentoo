@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit libtool python-single-r1 ubuntu-versionator
 
 MY_PN="google-mock"

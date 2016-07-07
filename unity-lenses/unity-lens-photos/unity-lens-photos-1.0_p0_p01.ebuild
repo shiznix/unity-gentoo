@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit distutils-r1 eutils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"

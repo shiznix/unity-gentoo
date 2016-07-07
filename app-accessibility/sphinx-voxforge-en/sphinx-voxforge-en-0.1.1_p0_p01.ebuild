@@ -5,7 +5,7 @@
 EAPI=4
 GCONF_DEBUG="yes"
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/s/${PN}"

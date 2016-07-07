@@ -5,10 +5,10 @@
 EAPI=6
 GTESTVER="1.7.0"
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+15.10.${PVR_MICRO}"
 UURL="mirror://unity/pool/main/x/${PN}"
 
 DESCRIPTION="Select objects in an object tree using XPath queries"

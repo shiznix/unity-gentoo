@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
 UURL="mirror://unity/pool/main/i/${PN}"

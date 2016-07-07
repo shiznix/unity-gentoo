@@ -9,7 +9,7 @@ KDE_SCM="git"
 EGIT_REPONAME="${PN/-kde/}"
 KDE_LINGUAS="cs da de el es et fi fr ga hu it ja km lt nds nl pl pt pt_BR ro sk sv uk"
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit base kde4-base ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/l/${PN}"

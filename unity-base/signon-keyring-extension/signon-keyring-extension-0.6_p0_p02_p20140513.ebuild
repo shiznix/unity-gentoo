@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit base qt4-r2 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/s/${PN}"

@@ -6,7 +6,7 @@ EAPI=6
 
 inherit eutils ubuntu-versionator
 
-URELEASE="wily"
+URELEASE="xenial"
 UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
 
 DESCRIPTION="A VNC server for real X displays"

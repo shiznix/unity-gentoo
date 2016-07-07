@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/d/${PN}"

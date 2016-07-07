@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit autotools eutils flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/i/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+15.10.${PVR_MICRO}"
 
 DESCRIPTION="Indicator that collects messages that need a response used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-messages"

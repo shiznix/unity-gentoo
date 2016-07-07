@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit autotools ubuntu-versionator
 
 MY_PN="policykit-1-gnome"

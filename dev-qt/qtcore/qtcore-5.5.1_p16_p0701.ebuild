@@ -7,7 +7,7 @@ EAPI=6
 QT5_MODULE="qtbase"
 SLOT="5/5.5"
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit qt5-build ubuntu-versionator
 
 UURL="mirror://unity/pool/main/q/${QT5_MODULE}-opensource-src"

@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="wily"
+URELEASE="xenial"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/n/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+15.10.${PVR_MICRO}"
 
 DESCRIPTION="Icons for on-screen-display notification agent"
 HOMEPAGE="http://launchpad.net/notify-osd"
