@@ -17,8 +17,11 @@ UURL="mirror://unity/pool/main/n/${GNOME_ORG_MODULE}"
 
 DESCRIPTION="GNOME applet for NetworkManager"
 HOMEPAGE="http://projects.gnome.org/NetworkManager/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+
+#SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+#	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+SRC_URI="mirror://gnome/sources/${GNOME_ORG_MODULE}/1.0/${GNOME_ORG_MODULE}-${PV}.tar.xz
+	https://github.com/shiznix/unity-gentoo/raw/master/files/${GNOME_ORG_MODULE}_${PV}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+"
 SLOT="0"
