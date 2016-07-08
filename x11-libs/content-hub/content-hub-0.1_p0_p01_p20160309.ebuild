@@ -20,6 +20,9 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="mirror"
 
+# x11-libs/ubuntu-ui-toolkit is added to DEPEND to ensure it gets updated and rebuilt with any QT5 update before content-hub attempts to call qmplugindump #
+#	Otherwise we get the error example "Cannot mix incompatible Qt library (version 0x50402) with this library (version 0x50501)" #
+#	In future, better QT5 dep. version handling and subslot rebuilds should handle this without needing to add indirect deps. here #
 DEPEND="!dev-libs/libupstart-app-launch
 	dev-libs/glib:2
 	dev-qt/qtcore:5
@@ -36,7 +39,8 @@ DEPEND="!dev-libs/libupstart-app-launch
 	>=sys-libs/libapparmor-2.9.1
 	sys-libs/libnih[dbus]
 	x11-libs/gsettings-qt
-	x11-libs/libnotify"
+	x11-libs/libnotify
+	x11-libs/ubuntu-ui-toolkit"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 export QT_SELECT=5
