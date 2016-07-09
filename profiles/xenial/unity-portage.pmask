@@ -49,6 +49,7 @@ dev-libs/libinput::gentoo
 dev-libs/libwacom::gentoo
 dev-util/gdbus-codegen::gentoo
 dev-util/lttng-tools::gentoo
+dev-util/lttng-ust::gentoo
 
 ## QT5 ##
 dev-qt/designer:5::gentoo
