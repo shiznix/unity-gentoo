@@ -17,11 +17,11 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Shotwell"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz
 	http://pkgs.fedoraproject.org/cgit/shotwell.git/plain/shotwell.1
-	http://pkgs.fedoraproject.org/cgit/shotwell.git/plain/shotwell-icons.tar.bz2"
+	http://pkgs.fedoraproject.org/repo/pkgs/shotwell/shotwell-icons.tar.bz2/1df95b65bb7689c10840faaa765bf931/shotwell-icons.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-#KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -86,6 +86,8 @@ src_configure() {
 }
 
 src_prepare() {
+	# patch is broken
+	sed -i '/06_uoa.patch/d' "${WORKDIR}/debian/patches/series" || die
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	sed \
