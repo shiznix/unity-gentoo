@@ -7,7 +7,7 @@ GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 GNOME_ORG_MODULE="network-manager-applet"
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools base eutils gnome2 ubuntu-versionator
 
 MY_P="${GNOME_ORG_MODULE}_${PV}"
@@ -17,15 +17,12 @@ UURL="mirror://unity/pool/main/n/${GNOME_ORG_MODULE}"
 
 DESCRIPTION="GNOME applet for NetworkManager"
 HOMEPAGE="http://projects.gnome.org/NetworkManager/"
-
-#SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-#	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
-SRC_URI="mirror://gnome/sources/${GNOME_ORG_MODULE}/1.0/${GNOME_ORG_MODULE}-${PV}.tar.xz
-	https://github.com/shiznix/unity-gentoo/raw/master/files/${GNOME_ORG_MODULE}_${PV}-${UVER}.debian.tar.xz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="bluetooth +introspection modemmanager systemd"
+IUSE="+introspection systemd"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -39,18 +36,17 @@ RDEPEND="app-crypt/libsecret
 	>=x11-libs/libnotify-0.7.0
 
 	app-text/iso-codes
-	>=net-misc/networkmanager-1.0.0[introspection?]
+	>=net-misc/networkmanager-1.2:=[introspection?]
 	net-misc/mobile-broadband-provider-info
 
-	bluetooth? ( >=net-wireless/gnome-bluetooth-2.27.6:= )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.6:= )
-	modemmanager? ( >=net-misc/modemmanager-0.7.990 )
 	virtual/freedesktop-icon-theme
 	virtual/notification-daemon
 	virtual/libgudev:="
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	>=dev-util/intltool-0.50.1"
+PDEPEND="virtual/notification-daemon" #546134
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
@@ -63,18 +59,15 @@ src_prepare() {
 
 src_configure() {
 	gnome2_src_configure \
-		--enable-indicator \
+		--with-appindicator \
 		--disable-more-warnings \
 		--disable-static \
-		--disable-migration \
 		--localstatedir=/var \
-		$(use_with bluetooth) \
-		$(use_enable introspection) \
-		$(use_with modemmanager modem-manager-1)
+		$(use_enable introspection)
 }
 
 src_install() {
-gnome2_src_install
+	gnome2_src_install
 
 	insinto /usr/share/icons/hicolor/22x22/apps
 	doins "${WORKDIR}"/debian/icons/22/*.png

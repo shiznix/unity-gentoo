@@ -38,7 +38,6 @@ dev-qt/qtwebkit:5 icu qml libxml2 multimedia webp widgets xslt -gstreamer -gstre
 dev-qt/qt-mobility organizer
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
-gnome-extra/nm-applet -bluetooth	# Bluetooth relies on old bluez-4 to build, which we no longer use
 media-libs/clutter egl
 media-libs/libmediaart -qt4 -qt5
 media-libs/gst-plugins-base theora
