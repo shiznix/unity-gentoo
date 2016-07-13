@@ -42,6 +42,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 DOCS=( NEWS README )
 
 pkg_setup() {
+	ubuntu-versionator_pkg_setup
 	MULTIBUILD_VARIANTS=( $(usex qt4 4) $(usex qt5 5) )
 }
 
@@ -94,7 +95,6 @@ src_install() {
 	}
 	multibuild_foreach_variant myinstall
 }
-
 
 src_test() {
 	mytest() {

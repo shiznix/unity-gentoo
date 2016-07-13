@@ -5,11 +5,12 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
-URELEASE="xenial"
+MY_PV="${PV}"
+URELEASE="xenial-updates"
 inherit autotools eutils python-r1 ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/libu/${PN}"
-UVER_PREFIX="+15.10.${PVR_MICRO}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"
@@ -29,10 +30,16 @@ DEPEND=">=dev-libs/dee-1.2.5:=
 	${PYTHON_DEPS}
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}/${PN}-${MY_PV}${UVER_PREFIX}"
+
+src_unpack() {
+	unpack ${A}
+	mkdir ${PN}-${PV}${UVER_PREFIX}
+	mv * ${PN}-${PV}${UVER_PREFIX} &> /dev/null
+}
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+	epatch -p1 "${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

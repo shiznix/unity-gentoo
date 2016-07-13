@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="xml"
 
 URELEASE="xenial"
-inherit eutils gnome2-utils python-single-r1 toolchain-funcs ubuntu-versionator
+inherit eutils gnome2-utils python-single-r1 toolchain-funcs versionator ubuntu-versionator
 
 UVER="-3ubuntu1"
 
@@ -20,14 +20,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE="cairo doctool test"
 
 RDEPEND=">=dev-libs/gobject-introspection-common-${PV}
-	>=dev-libs/glib-2.36:2
+	>=dev-libs/glib-2.$(get_version_component_range 2):2
 	doctool? ( dev-python/mako )
 	virtual/libffi:=
 	!<dev-lang/vala-0.20.0"
 
 # Wants real bison, not virtual/yacc
 DEPEND="${RDEPEND}
-	>=dev-util/gtk-doc-am-1.15
+	>=dev-util/gtk-doc-am-1.19
 	sys-devel/bison
 	sys-devel/flex
 	virtual/pkgconfig
@@ -57,7 +57,8 @@ src_prepare() {
 }
 src_configure(){
 	econf --disable-static \
-		YACC=$(type -p yacc) \
+		CC="$(tc-getCC)" \
+		YACC="$(type -p yacc)" \
 		$(use_with cairo) \
 		$(use_enable doctool)
 }

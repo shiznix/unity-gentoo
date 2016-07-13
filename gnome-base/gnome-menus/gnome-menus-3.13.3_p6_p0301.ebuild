@@ -5,7 +5,7 @@
 EAPI=5
 GCONF_DEBUG="no"
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools base gnome2 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"
