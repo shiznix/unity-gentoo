@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools eutils pam readme.gentoo-r1 systemd user ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/l/${PN}"
