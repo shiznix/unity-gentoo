@@ -46,7 +46,7 @@ DEPEND="app-i18n/ibus
 	test? ( dev-cpp/gmock
 		dev-cpp/gtest )"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
