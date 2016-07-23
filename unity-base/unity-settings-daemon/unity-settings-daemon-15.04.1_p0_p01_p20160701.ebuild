@@ -85,7 +85,7 @@ DEPEND="${COMMON_DEPEND}
 	x11-proto/xf86miscproto
 	x11-proto/xproto"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	# Ubuntu patchset #

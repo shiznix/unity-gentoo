@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/u/${PN}"
@@ -31,7 +31,7 @@ DEPEND="dev-libs/dee:=
 	unity-base/unity
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

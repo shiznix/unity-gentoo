@@ -149,8 +149,8 @@ src_compile() {
 	# Disable unitymtgrabhandles plugin #
 	sed -e "s:unitymtgrabhandles;::g" \
 		-i "${CMAKE_USE_DIR}/debian/unity.ini"
-	sed -e "s:unitymtgrabhandles,::g" \
-		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gconf-defaults"
+#	sed -e "s:unitymtgrabhandles,::g" \
+#		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gconf-defaults"
 	sed -e "s:'unitymtgrabhandles',::g" \
 		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gsettings-override"
 
@@ -202,9 +202,9 @@ src_install() {
 		insinto /usr/lib/compiz/migration/
 		doins postinst/convert-files/*.convert
 
-		# Default GConf settings #
-		insinto /usr/share/gconf/defaults
-		newins debian/compiz-gnome.gconf-defaults 10_compiz-gnome
+#		# Default GConf settings #
+#		insinto /usr/share/gconf/defaults
+#		newins debian/compiz-gnome.gconf-defaults 10_compiz-gnome
 
 		# Default GSettings settings #
 		insinto /usr/share/glib-2.0/schemas
@@ -220,14 +220,14 @@ src_install() {
 	rm -rf "${ED}usr/share/locale"
 
 	# Setup gconf defaults #
-	dodir /etc/gconf/2
-	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path 2> /dev/null`" ]; then
-		echo "/etc/gconf/gconf.xml.unity" >> ${D}etc/gconf/2/local-defaults.path
-	fi
-	dodir /etc/gconf/gconf.xml.unity 2> /dev/null
-	/usr/bin/update-gconf-defaults \
-		--source="${ED}usr/share/gconf/defaults" \
-			--destination="${ED}etc/gconf/gconf.xml.unity" || die
+#	dodir /etc/gconf/2
+#	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path 2> /dev/null`" ]; then
+#		echo "/etc/gconf/gconf.xml.unity" >> ${D}etc/gconf/2/local-defaults.path
+#	fi
+#	dodir /etc/gconf/gconf.xml.unity 2> /dev/null
+#	/usr/bin/update-gconf-defaults \
+#		--source="${ED}usr/share/gconf/defaults" \
+#			--destination="${ED}etc/gconf/gconf.xml.unity" || die
 }
 
 pkg_preinst() {
