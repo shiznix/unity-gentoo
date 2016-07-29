@@ -165,7 +165,7 @@ ubuntu-versionator_pkg_setup() {
 
 	# Disable ld.gold linker if selected as it causes undefined reference linking failures (see net-libs/ubuntu-download-manager linking with sys-libs/libnih) #
 	#	This type of build failure is intended by upstream (see https://sourceware.org/bugzilla/show_bug.cgi?id=10238)
-	[[ "$(readlink -f /usr/bin/ld | awk -F/ '{print $NF}')" = "ld.gold" ]] && \
+	[[ "$(ld -v | grep gold)" ]] && \
 		die "The selected 'ld' library linker must be set to 'ld.bfd' due to link failures using other experimental linkers, as root do 'binutils-config --linker ld.bfd'"
 }
 

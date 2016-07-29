@@ -1,5 +1,6 @@
 */* -consolekit -packagekit -tracker networkmanager systemd zeitgeist
 */*::unity-gentoo qml qt5 vala
+dev-qt/*::gentoo qml
 
 ## Enabled PYTHON_SINGLE_TARGET must match state in PYTHON_TARGETS ##
 

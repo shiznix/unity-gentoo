@@ -121,10 +121,6 @@ strip_builddir() {
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# Fix g-ir-scanner undefined xkb linktime references when 'mir' use enabled (creates malformed gdk/libgdk-3.la missing -lxkbcommon) #
-	sed -e 's:mirclient >= mirclient_required_version:mirclient >= mirclient_required_version xkbcommon >= 0.2.0:g' \
-		-i configure.ac
-
 	# -O3 and company cause random crashes in applications. Bug #133469
 	replace-flags -O3 -O2
 	strip-flags
