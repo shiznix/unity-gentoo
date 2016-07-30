@@ -30,7 +30,7 @@ DEPEND="dev-cpp/glog
 	dev-qt/qttest:5
 	dev-qt/qtsystems:5
 	sys-apps/dbus
-	sys-libs/libnih"
+	sys-libs/libnih[dbus]"
 
 S="${WORKDIR}"
 export QT_SELECT=5

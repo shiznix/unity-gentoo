@@ -20,6 +20,7 @@ dev-libs/libindicate-qt
 dev-python/configparser
 dev-python/fixtures
 ~dev-python/python-prctl-1.5.0
+~dev-qt/qtlocation-5.6.1
 ~dev-util/cmake-3.5.2
 ~dev-util/gtk-builder-convert-2.24.25
 dev-util/umockdev

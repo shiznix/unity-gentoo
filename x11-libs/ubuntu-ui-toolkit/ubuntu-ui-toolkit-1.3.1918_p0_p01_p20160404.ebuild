@@ -46,6 +46,9 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
 
+	# Fix build hanging when trying to build with QT-5.6 #
+	epatch -p1 "${FILESDIR}/qt-5.6_qmlplugindump-wrapper.sh-fix.diff"
+
 	# Don't install autopilot python testsuite files, they require dpkg to run tests #
 	sed -e '/autopilot/d' \
 		-i tests/tests.pro

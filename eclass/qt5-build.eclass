@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -52,12 +52,21 @@ esac
 inherit eutils flag-o-matic toolchain-funcs versionator virtualx
 
 HOMEPAGE="https://www.qt.io/"
-LICENSE="|| ( LGPL-2.1 LGPL-3 ) FDL-1.3"
 
 QT5_MINOR_VERSION=$(get_version_component_range 2)
 readonly QT5_MINOR_VERSION
 
-: ${SLOT:="5"}	# If SLOT is not set it in ebuild it will be "5" (support subslots in ebuilds)
+if [[ ${QT5_MINOR_VERSION} -ge 7 ]]; then
+	LICENSE="|| ( GPL-2 GPL-3 LGPL-3 ) FDL-1.3"
+else
+	LICENSE="|| ( LGPL-2.1 LGPL-3 ) FDL-1.3"
+fi
+
+if [[ ${QT5_MINOR_VERSION} -ge 6 ]]; then
+	SLOT=5/$(get_version_component_range 1-2)
+else
+	SLOT=5
+fi
 
 case ${PV} in
 	5.9999)
@@ -74,14 +83,19 @@ case ${PV} in
 		# development release
 		QT5_BUILD_TYPE="release"
 		MY_P=${QT5_MODULE}-opensource-src-${PV/_/-}
-		SRC_URI="http://download.qt.io/development_releases/qt/${PV%.*}/${PV/_/-}/submodules/${MY_P}.tar.xz"
+		SRC_URI="https://download.qt.io/development_releases/qt/${PV%.*}/${PV/_/-}/submodules/${MY_P}.tar.xz"
 		S=${WORKDIR}/${MY_P}
 		;;
 	*)
 		# official stable release
 		QT5_BUILD_TYPE="release"
 		MY_P=${QT5_MODULE}-opensource-src-${PV}
-		SRC_URI="http://download.qt.io/official_releases/qt/${PV%.*}/${PV}/submodules/${MY_P}.tar.xz"
+		# bug 586646
+		if [[ ${PV} = 5.6.1 ]]; then
+			SRC_URI="https://download.qt.io/official_releases/qt/${PV%.*}/${PV}-1/submodules/${MY_P}-1.tar.xz"
+		else
+			SRC_URI="https://download.qt.io/official_releases/qt/${PV%.*}/${PV}/submodules/${MY_P}.tar.xz"
+		fi
 		S=${WORKDIR}/${MY_P}
 		;;
 esac
@@ -112,10 +126,7 @@ DEPEND="
 	virtual/pkgconfig
 "
 if [[ ${PN} != qttest ]]; then
-	if [[ ${QT5_MODULE} == qtbase ]]; then
-		MY_PV="${PV%%_p*}"	# Strip off Ubuntu specific patchlevel versioning strings
-		DEPEND+=" test? ( >=dev-qt/qttest-${MY_PV}:5 )"
-	fi
+	DEPEND+=" test? ( ~dev-qt/qttest-${PV} )"
 fi
 RDEPEND="
 	dev-qt/qtchooser
@@ -130,23 +141,25 @@ EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install sr
 # @DESCRIPTION:
 # Unpacks the sources.
 qt5-build_src_unpack() {
-	local gcc_version_check_fatal=false
-	local min_gcc4_minor_version=5
-	if [[ ${QT5_MINOR_VERSION} -ge 6 ]]; then
-		gcc_version_check_fatal=true
-	fi
-	if [[ ${QT5_MINOR_VERSION} -ge 7 || ${PN} == qtwebengine ]]; then
-		min_gcc4_minor_version=7
-	fi
-	if [[ $(gcc-major-version) -lt 4 ]] || \
-	   [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt ${min_gcc4_minor_version} ]]; then
-		if ${gcc_version_check_fatal}; then
-			die "GCC version 4.${min_gcc4_minor_version} or later is required to build this package"
-		else
-			ewarn "Using a GCC version lower than 4.${min_gcc4_minor_version} is not supported"
+	if tc-is-gcc; then
+		local min_gcc4_minor_version=5
+		if [[ ${QT5_MINOR_VERSION} -ge 7 || ${PN} == qtwebengine ]]; then
+			min_gcc4_minor_version=7
+		fi
+		if [[ $(gcc-major-version) -lt 4 ]] || \
+		   [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt ${min_gcc4_minor_version} ]]; then
+			if [[ ${QT5_MINOR_VERSION} -ge 6 ]]; then
+				eerror "GCC version 4.${min_gcc4_minor_version} or later is required to build this package"
+				die "GCC 4.${min_gcc4_minor_version} or later required"
+			else
+				ewarn
+				ewarn "Using a GCC version lower than 4.${min_gcc4_minor_version} is not supported"
+				ewarn
+			fi
 		fi
 	fi
 
+	# bug 307861
 	if [[ ${PN} == qtwebengine || ${PN} == qtwebkit ]]; then
 		eshopts_push -s extglob
 		if is-flagq '-g?(gdb)?([1-9])'; then
@@ -154,7 +167,6 @@ qt5-build_src_unpack() {
 			ewarn "You have enabled debug info (probably have -g or -ggdb in your CFLAGS/CXXFLAGS)."
 			ewarn "You may experience really long compilation times and/or increased memory usage."
 			ewarn "If compilation fails, please try removing -g/-ggdb before reporting a bug."
-			ewarn "For more info check out https://bugs.gentoo.org/307861"
 			ewarn
 		fi
 		eshopts_pop
@@ -183,29 +195,27 @@ qt5-build_src_prepare() {
 		sed -i -e "/outpath\/qmake\".*\"\$MAKE\")/ s:): \
 			${MAKEOPTS} ${EXTRA_EMAKE} 'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
 			'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
-			-e '/"$CFG_RELEASE_QMAKE"/,/^\s\+fi$/ d' \
+			-e 's/\(setBootstrapVariable\s\+\|EXTRA_C\(XX\)\?FLAGS=.*\)QMAKE_C\(XX\)\?FLAGS_\(DEBUG\|RELEASE\).*/:/' \
 			configure || die "sed failed (respect env for qmake build)"
 		sed -i -e '/^CPPFLAGS\s*=/ s/-g //' \
 			qmake/Makefile.unix || die "sed failed (CPPFLAGS for qmake build)"
 
-		# Respect CXX in {bsymbolic_functions,fvisibility,precomp}.test
+		# Respect CXX in bsymbolic_functions, fvisibility, precomp, and a few other tests
 		sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
 			configure || die "sed failed (QMAKE_CONF_COMPILER)"
 
 		# Respect toolchain and flags in config.tests
 		find config.tests/unix -name '*.test' -type f -execdir \
-			sed -i -e '/bin\/qmake/ s/-nocache //' '{}' + || die
+			sed -i -e 's/-nocache //' '{}' + || die
+
+		# Don't inject -msse/-mavx/... into CXXFLAGS when detecting
+		# compiler support for extended instruction sets (bug 552942)
+		find config.tests/common -name '*.pro' -type f -execdir \
+			sed -i -e '/QMAKE_CXXFLAGS\s*+=/ d' '{}' + || die
 
 		# Don't add -O3 to CXXFLAGS (bug 549140)
 		sed -i -e '/CONFIG\s*+=/ s/optimize_full//' \
 			src/{corelib/corelib,gui/gui}.pro || die "sed failed (optimize_full)"
-
-		# Don't inject -msse/-mavx/... into CXXFLAGS when detecting
-		# compiler support for extended instruction sets (bug 552942)
-		if [[ ${QT5_MINOR_VERSION} -ge 5 ]]; then
-			find config.tests/common -name '*.pro' -type f -execdir \
-				sed -i -e '/else:QMAKE_CXXFLAGS\s*+=/ d' '{}' + || die
-		fi
 	fi
 
 	if [[ ${EAPI} == 5 ]]; then
@@ -272,7 +282,15 @@ qt5-build_src_install() {
 	if [[ ${PN} == qtcore ]]; then
 		pushd "${QT5_BUILD_DIR}" >/dev/null || die
 
-		set -- emake INSTALL_ROOT="${D}" install_{global_docs,mkspecs,qmake,syncqt}
+		local qmake_install_target=install_qmake
+		if [[ ${QT5_MINOR_VERSION} -ge 7 ]]; then
+			# qmake/qmake-aux.pro
+			qmake_install_target=sub-qmake-qmake-aux-pro-install_subtargets
+		fi
+
+		set -- emake INSTALL_ROOT="${D}" \
+			${qmake_install_target} \
+			install_{syncqt,mkspecs,global_docs}
 		einfo "Running $*"
 		"$@"
 
@@ -526,7 +544,7 @@ qt5_base_configure() {
 		-shared
 
 		# always enable large file support
-		-largefile
+		$([[ ${QT5_MINOR_VERSION} -lt 8 ]] && echo -largefile)
 
 		# disabling accessibility is not recommended by upstream, as
 		# it will break QStyle and may break other internal parts of Qt
@@ -536,26 +554,21 @@ qt5_base_configure() {
 		-no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc
 		-no-sql-psql -no-sql-sqlite -no-sql-sqlite2 -no-sql-tds
 
-		# obsolete flag, does nothing
-		#-qml-debug
+		# ensure the QML debugging support (qmltooling) is built in qtdeclarative
+		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -qml-debug)
 
-		# extended instruction sets support
-		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-sse2   && echo -no-sse2)
-		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-sse3   && echo -no-sse3)
-		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-ssse3  && echo -no-ssse3)
-		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-sse4.1 && echo -no-sse4.1)
-		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-sse4.2 && echo -no-sse4.2)
-		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-avx    && echo -no-avx)
-		$([[ ${QT5_MINOR_VERSION} -le 4 ]] && is-flagq -mno-avx2   && echo -no-avx2)
+		# MIPS DSP instruction set extensions
 		$(is-flagq -mno-dsp   && echo -no-mips_dsp)
 		$(is-flagq -mno-dspr2 && echo -no-mips_dspr2)
 
 		# use pkg-config to detect include and library paths
 		-pkg-config
 
-		# prefer system libraries (only common deps here)
+		# prefer system libraries (only common hard deps here)
 		-system-zlib
 		-system-pcre
+		# TODO after bug 581054
+		#$([[ ${QT5_MINOR_VERSION} -ge 7 ]] && echo -system-doubleconversion)
 
 		# disable everything to prevent automagic deps (part 1)
 		-no-mtdev
@@ -563,12 +576,11 @@ qt5_base_configure() {
 		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -no-syslog)
 		-no-libpng -no-libjpeg
 		-no-freetype -no-harfbuzz
-		-no-openssl
-		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-libproxy)
-		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-xkbcommon-{x11,evdev})
+		-no-openssl -no-libproxy
+		-no-xkbcommon-x11 -no-xkbcommon-evdev
 		-no-xinput2 -no-xcb-xlib
 
-		# don't specify -no-gif because there is no way to override it later
+		# cannot use -no-gif because there is no way to override it later
 		#-no-gif
 
 		# always enable glib event loop support
@@ -589,17 +601,11 @@ qt5_base_configure() {
 		# print verbose information about each configure test
 		-verbose
 
-		# obsolete flag, does nothing
-		#-nis
-
 		# always enable iconv support
 		-iconv
 
 		# disable everything to prevent automagic deps (part 3)
-		-no-cups -no-evdev
-		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-tslib)
-		-no-icu -no-fontconfig
-		-no-dbus
+		-no-cups -no-evdev -no-tslib -no-icu -no-fontconfig -no-dbus
 
 		# let portage handle stripping
 		-no-strip
@@ -622,15 +628,14 @@ qt5_base_configure() {
 		-no-xcb -no-eglfs -no-kms
 		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -no-gbm)
 		-no-directfb -no-linuxfb
-#		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -no-mirclient)
+		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -no-mirclient)
 
 		# disable undocumented X11-related flags, override in qtgui
 		# (not shown in ./configure -help output)
 		-no-xkb -no-xrender
 
 		# disable obsolete/unused X11-related flags
-		# (not shown in ./configure -help output)
-		-no-mitshm -no-xcursor -no-xfixes -no-xrandr -no-xshape -no-xsync
+		$([[ ${QT5_MINOR_VERSION} -lt 8 ]] && echo -no-mitshm -no-xcursor -no-xfixes -no-xrandr -no-xshape -no-xsync)
 
 		# always enable session management support: it doesn't need extra deps
 		# at configure time and turning it off is dangerous, see bug 518262
@@ -641,20 +646,17 @@ qt5_base_configure() {
 
 		# disable OpenGL and EGL support by default, override in qtgui,
 		# qtopengl, qtprintsupport and qtwidgets
-# Setting '-no-opengl' for qt{core,gui,declarative} will cause qtdeclarative to fail
-#	even if '-opengl' is later set as override in qtgui
-#	(due to Ubuntu patchset for qtcore re-implementing an old 5.0_beta bug)
-#		-no-opengl -no-egl
-		-no-egl
+		-no-opengl -no-egl
 
 		# disable libinput-based generic plugin by default, override in qtgui
-		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-libinput)
+		-no-libinput
 
 		# disable gstreamer by default, override in qtmultimedia
-		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-gstreamer)
+		-no-gstreamer
 
-		# use upstream default
-		#-no-system-proxies
+		# respect system proxies by default: it's the most natural
+		# setting, and it'll become the new upstream default in 5.8
+		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -system-proxies)
 
 		# do not build with -Werror
 		-no-warnings-are-errors
