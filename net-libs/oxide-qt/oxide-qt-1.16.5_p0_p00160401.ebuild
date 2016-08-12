@@ -72,13 +72,9 @@ pkg_setup() {
 }
 
 src_prepare() {
-	PATCHES+=( "${FILESDIR}/${PN}-1.2.5-remove-_FORTIFY_SOURCE-warning.patch" )
+	PATCHES+=( "${FILESDIR}/${PN}-1.16.5-remove-_FORTIFY_SOURCE-warning.patch" )
 	ubuntu-versionator_src_prepare
 	cmake-utils_src_prepare
-
-	# Fix sandbox violation #
-	sed -e "s:\${CMAKE_INSTALL_PREFIX}:${ED}\${CMAKE_INSTALL_PREFIX}:g" \
-		-i qt/CMakeLists.txt || die
 }
 
 src_configure() {

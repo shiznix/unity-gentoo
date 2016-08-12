@@ -6,7 +6,7 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools base eutils gnome2 readme.gentoo virtualx ubuntu-versionator
 
 UURL="mirror://unity/pool/main/n/${PN}"

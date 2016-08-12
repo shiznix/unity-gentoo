@@ -31,15 +31,16 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-47.0-patches-0.1"
+PATCH="${PN}-48.0-patches-01"
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 
+#MOZCONFIG_OPTIONAL_QT5=1 -- fails to build so leave it off until the code can be patched
 MOZCONFIG_OPTIONAL_GTK2ONLY=1
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="xenial-security"
-UVER_PREFIX="+build3"
+UVER_PREFIX="+build2"
 UURL="mirror://unity/pool/main/f/${PN}"
 
 inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.48 pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
@@ -62,7 +63,7 @@ SRC_URI="${SRC_URI}
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 RDEPEND="
-	>=dev-libs/nss-3.23
+	>=dev-libs/nss-3.24
 	>=dev-libs/nspr-4.12
 	selinux? ( sec-policy/selinux-mozilla )"
 
@@ -126,7 +127,13 @@ src_prepare() {
 	default
 
 	# Apply our patches
-	eapply "${WORKDIR}/firefox"
+	eapply "${WORKDIR}/firefox" \
+		"${FILESDIR}"/${PN}-48.0-pgo.patch
+#		"${FILESDIR}"/${PN}-45-qt-widget-fix.patch
+
+	if ! tc-ld-is-gold && has_version ">=sys-devel/binutils-2.26" ; then
+		eapply "${FILESDIR}"/xpcom-components-binutils-26.patch
+	fi
 
 	# Enable gnomebreakpad
 	if use debug ; then
@@ -198,19 +205,22 @@ src_configure() {
 	# Add full relro support for hardened
 	use hardened && append-ldflags "-Wl,-z,relro,-z,now"
 
+	# Only available on mozilla-overlay for experimentation -- Removed in Gentoo repo per bug 571180
+	#use egl && mozconfig_annotate 'Enable EGL as GL provider' --with-gl-provider=EGL
+
 	# Setup api key for location services
 	echo -n "${_google_api_key}" > "${S}"/google-api-key
 	mozconfig_annotate '' --with-google-api-keyfile="${S}/google-api-key"
 
 	mozconfig_annotate '' --enable-extensions="${MEXTENSIONS}"
-	mozconfig_annotate '' --disable-mailnews
 
 	# Allow for a proper pgo build
 	if use pgo; then
-		echo "mk_add_options PROFILE_GEN_SCRIPT='\$(PYTHON) \$(OBJDIR)/_profile/pgo/profileserver.py'" >> "${S}"/.mozconfig
+		echo "mk_add_options PROFILE_GEN_SCRIPT='EXTRA_TEST_ARGS=10 \$(MAKE) -C \$(MOZ_OBJDIR) pgo-profile-run'" >> "${S}"/.mozconfig
 	fi
 
 	echo "mk_add_options MOZ_OBJDIR=${BUILD_OBJ_DIR}" >> "${S}"/.mozconfig
+	echo "mk_add_options XARGS=/usr/bin/xargs" >> "${S}"/.mozconfig
 
 	# Finalize and report settings
 	mozconfig_final
