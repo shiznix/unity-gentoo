@@ -9,7 +9,8 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 #		die "Oops! A development profile has been detected. Set 'UNITY_DEVELOPMENT_${PROFILE_RELEASE}=yes' in make.conf if you really know how broken this profile could be"
 #	fi
 
-	KEYWORD_STATE="$(emerge --info | grep ACCEPT_KEYWORDS)"
+	KEYWORD_STATE="${KEYWORD_STATE:=`grep ACCEPT_KEYWORDS /etc/portage/make.conf 2>/dev/null`}"
+	KEYWORD_STATE="${KEYWORD_STATE:=`grep ACCEPT_KEYWORDS /etc/make.conf 2>/dev/null`}"
 	if [ -n "$(echo ${KEYWORD_STATE} | grep \~)" ] && \
 		[ "$(eval echo \${UNITY_GLOBAL_KEYWORD_UNMASK})" != "yes" ]; then
 			eerror "Oops! Your system has been detected as having ~arch keywords globally unmasked (${KEYWORD_STATE})"
