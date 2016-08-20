@@ -143,8 +143,8 @@ src_prepare() {
 	# DESKTOP_SESSION and SESSION is 'unity' not 'ubuntu' #
 	sed -e 's:SESSION=ubuntu:SESSION=unity:g' \
 		-e 's:ubuntu.session:unity.session:g' \
-			-i {debian/unity7.conf,services/unity-panel-service.conf.in} || \
-				die "Sed failed for {debian/unity7.conf,services/unity-panel-service.conf.in}"
+			-i {unity7.conf.in,services/unity-panel-service.conf.in} || \
+				die "Sed failed for {unity7.conf.in,services/unity-panel-service.conf.in}"
 	cmake-utils_src_prepare
 }
 
@@ -229,9 +229,6 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
-
-	insinto /usr/share/upstart/sessions
-	doins debian/unity7.conf
 
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe "${FILESDIR}/99ibus-service"

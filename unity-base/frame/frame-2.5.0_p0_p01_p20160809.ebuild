@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/f/${PN}"
-UVER_PREFIX="daily13.06.05"
+UVER_PREFIX="daily13.06.05+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="uTouch Frame Library"
 HOMEPAGE="https://launchpad.net/frame"
@@ -28,7 +28,7 @@ DEPEND="app-text/asciidoc
 	x11-libs/libXi
 	test? ( sys-apps/xorg-gtest )"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
