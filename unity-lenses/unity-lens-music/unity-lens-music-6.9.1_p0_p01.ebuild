@@ -33,9 +33,6 @@ DEPEND="${RDEPEND}
 	gnome-base/gnome-menus:3
 	media-libs/gstreamer:1.0
 	media-libs/gst-plugins-base:1.0
-	net-libs/libsoup
-	net-libs/libsoup-gnome
-	net-libs/liboauth
 	sys-libs/tdb
 	unity-base/unity
 	$(vala_depend)"
