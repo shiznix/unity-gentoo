@@ -22,6 +22,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug doc examples test"
 RESTRICT="mirror"
 
+# Build fails when >=media-libs/glew-2.0.0 is installed (see https://github.com/shiznix/unity-gentoo/issues/147) #
 DEPEND="app-i18n/ibus
 	dev-cpp/gtest
 	dev-libs/boost:=
@@ -29,10 +30,9 @@ DEPEND="app-i18n/ibus
 	dev-libs/libpcre
 	dev-libs/libsigc++:2
 	gnome-base/gnome-common
-	media-libs/glew:=
+	<media-libs/glew-2.0.0:=
 	media-libs/libpng:0
 	sys-apps/pciutils
-	>=sys-devel/gcc-4.7
 	unity-base/geis
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
