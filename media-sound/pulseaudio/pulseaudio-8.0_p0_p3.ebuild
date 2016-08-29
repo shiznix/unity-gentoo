@@ -375,6 +375,18 @@ pkg_postinst() {
 		elog "particular advantage over speex. Upstream suggests disabling them."
 	fi
 
+	elog
+	elog "Depending on hardware, use of Pulseaudio can often result in poor audio quality by way of distortion or crackling"
+	elog "If you're experiencing this then you are most likely affected by Pulseaudio's policy to always overdrive PCM to 100%"
+	elog " (see https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/PulseAudioStoleMyVolumes/)"
+	elog "One effective method to work around is to set PCM to around 75% then edit /etc/pulse/default.pa and change:"
+	elog "  load-module module-udev-detect"
+	elog "to instead read:"
+	elog "  load-module module-udev-detect ignore_dB=1"
+	elog "Note that this may cost skewing any on-screen volume display's linear scaling,"
+	elog " however audio quality will be greatly improved when Pulseaudio is instructed to leave 'PCM' alone when adjusting 'Master'"
+	elog
+
 	# Needed for pulseaudio-6.0 update from older versions
 	if use udev; then
 		if ! version_is_at_least 6.0 ${REPLACING_VERSIONS}; then
