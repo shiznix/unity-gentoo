@@ -30,6 +30,18 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 DOCS=( NEWS README )
 
+src_compile() {
+	# Poorly implemented source writes /usr/lib64/cmake/Qt5Gui/Qt5Gui_AppMenuPlatformThemePlugin.cmake
+	#  out to root filesystem at compile step #
+	# We include an 'addpredict' here so that the check to write out to root filesystem can quietly fail
+	#  in the sandbox without stopping the entire build process
+	# This means Qt5Gui_AppMenuPlatformThemePlugin.cmake is now not created but nothing seems to require it anymore
+	#  (refer https://bugzilla.redhat.com/show_bug.cgi?id=1307320#c9)
+	# Separate to this global appmenu QT5 support seems to break in >=QT-5.6 applications anyway #
+	addpredict /usr/lib/cmake/Qt5Gui/
+	qt5-build_src_compile
+}
+
 src_install() {
 	qt5-build_src_install
 
