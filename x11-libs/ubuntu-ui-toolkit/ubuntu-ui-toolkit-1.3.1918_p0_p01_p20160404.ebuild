@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc examples test"
+IUSE="examples test"
 RESTRICT="mirror"
 
 RDEPEND="dev-qt/qtfeedback:5
@@ -28,14 +28,14 @@ DEPEND="${RDEPEND}
 	dev-qt/qtcore:5=
 	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
+	dev-qt/qdoc:5
 	dev-qt/qtgraphicaleffects:5
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtpim:5
 	dev-qt/qtsvg:5
 	dev-qt/qttest:5
-	media-gfx/thumbnailer
-	doc? ( dev-qt/qdoc:5 )"
+	media-gfx/thumbnailer"
 
 S="${WORKDIR}"
 QT5_BUILD_DIR="${S}"
@@ -52,10 +52,6 @@ src_prepare() {
 	# Don't install autopilot python testsuite files, they require dpkg to run tests #
 	sed -e '/autopilot/d' \
 		-i tests/tests.pro
-
-	use doc || \
-		sed -e '/documentation\/documentation.pri/d' \
-			-i ubuntu-sdk.pro
 	qt5-build_src_prepare
 }
 
@@ -65,7 +61,6 @@ src_test() {
 
 src_install() {
 	qt5-build_src_install
-
 	use examples || \
 		rm -rf "${ED}usr/lib/ubuntu-ui-toolkit/examples" \
 			"${ED}usr/share/applications"
