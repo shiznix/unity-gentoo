@@ -5,7 +5,7 @@
 EAPI=6
 
 URELEASE="xenial"
-inherit cmake-utils ubuntu-versionator vala
+inherit cmake-utils gnome2 ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/d/${PN}"
 
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+nautilus"
+IUSE="test +nautilus"
 RESTRICT="mirror test"
 
 COMMON_DEPEND="
@@ -43,14 +43,32 @@ DEPEND="${COMMON_DEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+	sed -e '/RPATH/s:PKG_LIBEXECDIR:PKG_LIBDIR:g' \
+		-i CMakeLists.txt || die
 	vala_src_prepare
-	export VALA_API_GEN="$VAPIGEN"
+	gnome2_src_prepare
 	cmake-utils_src_prepare
 }
 
 src_configure() {
-	mycmakeargs+=(-DCMAKE_INSTALL_SYSCONFDIR=/etc
-		-DVALA_COMPILER=$VALAC
-		-DVAPI_GEN=$VAPIGEN)
+	local mycmakeargs=(
+		-DVALA_EXECUTABLE="${VALAC}"
+		-DENABLE_CCPANEL=ON
+		-DENABLE_PK=OFF
+		-DENABLE_UNITY=ON
+		-DENABLE_UNITY_CCPANEL=ON
+		-DCMAKE_INSTALL_SYSCONFDIR="${EPREFIX}"/etc
+		-DENABLE_NAUTILUS="$(usex nautilus)"
+		-DENABLE_TESTING="$(usex test)"
+	)
 	cmake-utils_src_configure
 }
+
+src_compile() {
+	cmake-utils_src_compile
+}
+
+src_install() {
+	cmake-utils_src_install
+}
+
