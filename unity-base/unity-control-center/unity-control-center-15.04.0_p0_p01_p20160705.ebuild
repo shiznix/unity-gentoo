@@ -135,7 +135,7 @@ S="${WORKDIR}"
 
 src_prepare() {
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
-	epatch "${FILESDIR}/03_enable_printer_panel.patch"
+	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
 
 	eautoreconf
 	gnome2_src_prepare
