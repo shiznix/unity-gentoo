@@ -29,6 +29,7 @@ RDEPEND="!<gnome-base/gnome-session-3.8
 	dev-libs/libxml2:2
 	gnome-base/dconf
 	gnome-base/gconf:2[introspection?]
+	gnome-base/gdm
 	>=gnome-base/gnome-desktop-3.18:3=
 	>=gnome-base/gnome-menus-3.13:3
 	gnome-base/gsettings-desktop-schemas
