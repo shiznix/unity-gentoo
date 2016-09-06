@@ -5,7 +5,7 @@
 EAPI=5
 XORG_DRI=dri
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools base linux-info xorg-2 ubuntu-versionator
 
 MY_PV="${PV}"

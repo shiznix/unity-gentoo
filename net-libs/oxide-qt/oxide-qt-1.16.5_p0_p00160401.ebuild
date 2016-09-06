@@ -15,7 +15,7 @@ PYTHON_COMPAT=( python2_7 )
 #	 <--LP #1341565-->
 #	Attempt to dump the plugin types to plugins.qmltypes and install that to avoid needless calls to qmlplugindump (in progress) #
 URELEASE="xenial-security"
-inherit check-reqs cmake-utils python-single-r1 ubuntu-versionator
+inherit check-reqs cmake-utils flag-o-matic python-single-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/o/${PN}"
 DESCRIPTION="Web browser engine library for Qt"
@@ -92,4 +92,11 @@ src_configure() {
 	fi
 
 	cmake-utils_src_configure
+}
+
+src_compile() {
+	# Strip any custom cflags away as it can cause linktime failures #
+	#  (see https://bugs.funtoo.org/browse/FL-3257) #
+	strip-flags
+	cmake-utils_src_compile
 }

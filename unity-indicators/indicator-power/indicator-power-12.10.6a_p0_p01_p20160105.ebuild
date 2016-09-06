@@ -31,7 +31,7 @@ DEPEND="${RDEPEND}
 	unity-base/unity-settings-daemon"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-MAKEOPTS="-j1"
+MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

@@ -28,7 +28,7 @@ DEPEND="dev-qt/qtcore:5
 	sys-devel/gettext"
 
 S="${WORKDIR}"
-MAKEOPTS="-j1"
+MAKEOPTS="${MAKEOPTS} -j1"
 export QT_SELECT=5
 unset QT_QPA_PLATFORMTHEME
 

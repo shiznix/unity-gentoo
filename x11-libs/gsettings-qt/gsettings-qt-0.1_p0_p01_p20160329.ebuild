@@ -27,6 +27,7 @@ DEPEND="dev-qt/qtcore:5
 S="${WORKDIR}"
 QT5_BUILD_DIR="${S}"
 unset QT_QPA_PLATFORMTHEME
+MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

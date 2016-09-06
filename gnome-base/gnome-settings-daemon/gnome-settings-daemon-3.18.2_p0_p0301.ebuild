@@ -7,7 +7,7 @@ GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools base eutils gnome2 python-r1 systemd udev virtualx ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"
