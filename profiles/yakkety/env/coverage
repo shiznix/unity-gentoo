@@ -1,0 +1,2 @@
+CFLAGS="${CFLAGS}"
+CXXFLAGS="${CXXFLAGS} --coverage"

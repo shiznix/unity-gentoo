@@ -1,6 +1,6 @@
 ## A set of packages that require keyword unmasking for Unity installation ##
 
-*/*::unity-gentoo -webapps
+*/*::unity-gentoo
 
 ## Other packages keyword by exact version ##
 app-admin/cgmanager

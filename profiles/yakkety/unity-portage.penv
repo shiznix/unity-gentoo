@@ -3,3 +3,6 @@ x11-libs/content-hub no-sandbox
 
 ## Needs to run an instance of dev-db/couchdb during build process and this is incompatible in a sandbox ##
 dev-db/desktopcouch no-sandbox
+
+## Enable gcov and lcov on clean install to resolve missing references ## 
+net-libs/oxide-qt coverage
