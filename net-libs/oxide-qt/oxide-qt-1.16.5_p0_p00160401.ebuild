@@ -26,7 +26,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="debug +plugins"
+IUSE="custom-cflags debug +plugins"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/expat
@@ -48,7 +48,6 @@ DEPEND="dev-libs/expat
 	media-libs/freetype
 	media-libs/harfbuzz
 	sys-apps/dbus
-	>=sys-devel/gcc-4.8
 	sys-libs/libcap
 	virtual/libudev
 	x11-libs/cairo
@@ -74,29 +73,22 @@ pkg_setup() {
 src_prepare() {
 	PATCHES+=( "${FILESDIR}/${PN}-1.16.5-remove-_FORTIFY_SOURCE-warning.patch" )
 	ubuntu-versionator_src_prepare
+
+	# Strip down custom cflags by defult as can cause linktime failures #
+	#  (see https://bugs.funtoo.org/browse/FL-3257) #
+	use custom-cflags || strip-flags
+
 	cmake-utils_src_prepare
 }
 
 src_configure() {
 	mycmakeargs+=(-DENABLE_PROPRIETARY_CODECS=1)
-
-	if use plugins; then
-		mycmakeargs+=(-DENABLE_PLUGINS=1)
-	fi
-
+	use plugins && mycmakeargs+=(-DENABLE_PLUGINS=1)
 	if use debug; then
 		CMAKE_BUILD_TYPE="Debug"
 	else
 		# prevent generate and dump debug symbols to save diskspace
 		CMAKE_BUILD_TYPE="Release"
 	fi
-
 	cmake-utils_src_configure
-}
-
-src_compile() {
-	# Strip any custom cflags away as it can cause linktime failures #
-	#  (see https://bugs.funtoo.org/browse/FL-3257) #
-	strip-flags
-	cmake-utils_src_compile
 }
