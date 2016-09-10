@@ -27,7 +27,7 @@ DEPEND="app-admin/system-config-printer
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk3]
 	dev-libs/libindicator:3
-	net-print/cups
+	net-print/cups[dbus]
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
@@ -53,4 +53,18 @@ src_install() {
 			insinto /usr/share/icons/$(dirname "${file}")
 			doins "${file}"
 		done
+}
+
+pkg_preinst() {
+	gnome2_icon_savelist
+}
+
+pkg_postinst() {
+	gnome2_icon_cache_update
+	elog "Please note the printer jobs indicator requires the cupsd daemon to be"
+	elog " running so that it can grab printer job status from cups dbus notifier"
+}
+
+pkg_postrm() {
+	gnome2_icon_cache_update
 }

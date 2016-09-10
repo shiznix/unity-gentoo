@@ -29,6 +29,8 @@ DEPEND="${RDEPEND}
 	dev-libs/libgee:0
 	dev-libs/libindicate-qt
 	dev-libs/libdbusmenu:=
+	dev-libs/libqtdbusmock
+	dev-libs/libqtdbustest
 	media-sound/pulseaudio
 	net-misc/url-dispatcher
 	unity-base/bamf:=

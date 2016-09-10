@@ -5,19 +5,19 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-CHROMIUM_LANGS="am ar bg bn ca cs da de el en_GB es es_LA et fa fi fil fr gu he
-	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt_BR pt_PT ro ru sk sl sr
-	sv sw ta te th tr uk vi zh_CN zh_TW"
+CHROMIUM_LANGS="am ar bg bn ca cs da de el en-GB es es-419 et fa fi fil fr gu he
+	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk sl sr
+	sv sw ta te th tr uk vi zh-CN zh-TW"
 
 URELEASE="xenial-security"
-inherit check-reqs chromium eutils flag-o-matic multilib multiprocessing pax-utils \
-	portability python-any-r1 readme.gentoo-r1 toolchain-funcs ubuntu-versionator versionator virtualx
+inherit check-reqs chromium-2 eutils gnome2-utils flag-o-matic multilib multiprocessing pax-utils \
+	portability python-any-r1 readme.gentoo-r1 toolchain-funcs ubuntu-versionator versionator virtualx xdg-utils
 
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://unity/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1242"
+UVER_SUFFIX=".1250"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -32,7 +32,7 @@ RESTRICT="!system-ffmpeg? ( proprietary-codecs? ( bindist ) )
 	mirror"
 
 # TODO: bootstrapped gn binary hangs when using tcmalloc with portage's sandbox.
-REQUIRED_USE="gn? ( kerberos !system-ffmpeg !tcmalloc )"
+REQUIRED_USE="gn? ( !tcmalloc )"
 
 # Native Client binaries are compiled with different set of flags, bug #452066.
 QA_FLAGS_IGNORED=".*\.nexe"
@@ -90,7 +90,6 @@ RDEPEND="
 		dev-libs/libxslt:=
 		media-libs/flac:=
 		>=media-libs/harfbuzz-0.9.41:=[icu(+)]
-		>=media-libs/libjpeg-turbo-1.2.0-r1:=
 		>=media-libs/libwebp-0.4.0:=
 		sys-libs/zlib:=[minizip]
 	)"
@@ -122,7 +121,7 @@ RDEPEND+="
 # with python_check_deps.
 DEPEND+=" $(python_gen_any_dep '
 	dev-python/beautifulsoup:python-2[${PYTHON_USEDEP}]
-	dev-python/beautifulsoup:4[${PYTHON_USEDEP}]
+	>=dev-python/beautifulsoup-4.3.2:4[${PYTHON_USEDEP}]
 	dev-python/html5lib[${PYTHON_USEDEP}]
 	dev-python/jinja[${PYTHON_USEDEP}]
 	dev-python/ply[${PYTHON_USEDEP}]
@@ -130,7 +129,7 @@ DEPEND+=" $(python_gen_any_dep '
 ')"
 python_check_deps() {
 	has_version --host-root "dev-python/beautifulsoup:python-2[${PYTHON_USEDEP}]" &&
-	has_version --host-root "dev-python/beautifulsoup:4[${PYTHON_USEDEP}]" &&
+	has_version --host-root ">=dev-python/beautifulsoup-4.3.2:4[${PYTHON_USEDEP}]" &&
 	has_version --host-root "dev-python/html5lib[${PYTHON_USEDEP}]" &&
 	has_version --host-root "dev-python/jinja[${PYTHON_USEDEP}]" &&
 	has_version --host-root "dev-python/ply[${PYTHON_USEDEP}]" &&
@@ -201,11 +200,15 @@ pkg_setup() {
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	epatch "${FILESDIR}/${PN}-system-ffmpeg-r3.patch"
-	epatch "${FILESDIR}/${PN}-system-jinja-r8.patch"
+	epatch "${FILESDIR}/${PN}-system-ffmpeg-r2.patch"
+	epatch "${FILESDIR}/${PN}-system-jinja-r9.patch"
 	epatch "${FILESDIR}/${PN}-widevine-r1.patch"
 	epatch "${FILESDIR}/${PN}-last-commit-position-r0.patch"
 	epatch "${FILESDIR}/${PN}-snapshot-toolchain-r1.patch"
+	epatch "${FILESDIR}/${PN}-pdfium-r0.patch"
+	epatch "${FILESDIR}/${PN}-system-zlib-r0.patch"
+	epatch "${FILESDIR}/${PN}-linker-warnings-r0.patch"
+	epatch "${FILESDIR}/${PN}-ffmpeg-license-r0.patch"
 
 	eapply_user
 
@@ -217,23 +220,10 @@ src_prepare() {
 		conditional_bundled_libraries+="
 			base/third_party/libevent
 			third_party/adobe
-			third_party/ffmpeg
-			third_party/flac
-			third_party/harfbuzz-ng
-			third_party/icu
-			third_party/jinja2
-			third_party/libjpeg_turbo
-			third_party/libpng
-			third_party/libwebp
-			third_party/libxml
-			third_party/libxslt
-			third_party/markupsafe
-			third_party/snappy
 			third_party/speech-dispatcher
 			third_party/usb_ids
 			third_party/xdg-utils
-			third_party/yasm
-			third_party/zlib
+			third_party/yasm/run_yasm.py
 		"
 	fi
 
@@ -252,7 +242,6 @@ src_prepare() {
 		'breakpad/src/third_party/curl' \
 		'chrome/third_party/mozilla_security_manager' \
 		'courgette/third_party' \
-		'crypto/third_party/nss' \
 		'net/third_party/mozilla_security_manager' \
 		'net/third_party/nss' \
 		'third_party/WebKit' \
@@ -293,6 +282,7 @@ src_prepare() {
 		'third_party/libXNVCtrl' \
 		'third_party/libaddressinput' \
 		'third_party/libjingle' \
+		'third_party/libjpeg_turbo' \
 		'third_party/libphonenumber' \
 		'third_party/libpng' \
 		'third_party/libsecret' \
@@ -301,8 +291,8 @@ src_prepare() {
 		'third_party/libusb' \
 		'third_party/libvpx' \
 		'third_party/libvpx/source/libvpx/third_party/x86inc' \
-		'third_party/libxml/chromium' \
 		'third_party/libwebm' \
+		'third_party/libxml/chromium' \
 		'third_party/libyuv' \
 		'third_party/lss' \
 		'third_party/lzma_sdk' \
@@ -321,9 +311,12 @@ src_prepare() {
 		'third_party/pdfium/third_party/lcms2-2.6' \
 		'third_party/pdfium/third_party/libjpeg' \
 		'third_party/pdfium/third_party/libopenjpeg20' \
+		'third_party/pdfium/third_party/libpng16' \
+		'third_party/pdfium/third_party/libtiff' \
 		'third_party/pdfium/third_party/zlib_v128' \
 		'third_party/polymer' \
 		'third_party/protobuf' \
+		'third_party/protobuf/third_party/six' \
 		'third_party/qcms' \
 		'third_party/re2' \
 		'third_party/sfntly' \
@@ -367,6 +360,7 @@ src_configure() {
 	# Use system-provided libraries.
 	# TODO: use_system_hunspell (upstream changes needed).
 	# TODO: use_system_icu (bug #576370).
+	# TODO: use_system_libjpeg (bug #584518).
 	# TODO: use_system_libpng (bug #578212).
 	# TODO: use_system_libsrtp (bug #459932).
 	# TODO: use_system_libusb (http://crbug.com/266149).
@@ -383,7 +377,6 @@ src_configure() {
 		-Duse_system_harfbuzz=1
 		-Duse_system_jsoncpp=1
 		-Duse_system_libevent=1
-		-Duse_system_libjpeg=1
 		-Duse_system_libwebp=1
 		-Duse_system_libxml=1
 		-Duse_system_libxslt=1
@@ -393,6 +386,21 @@ src_configure() {
 		-Duse_system_speex=1
 		-Duse_system_xdg_utils=1
 		-Duse_system_zlib=1"
+
+	local gn_system_libraries="
+		flac
+		harfbuzz-ng
+		libevent
+		libwebp
+		libxml
+		libxslt
+		snappy
+		yasm
+		zlib"
+	if use system-ffmpeg; then
+		gn_system_libraries+=" ffmpeg"
+	fi
+	build/linux/unbundle/replace_gn_files.py --system-libraries ${gn_system_libraries} || die
 
 	# Needed for system icu - we don't need additional data files.
 	# myconf_gyp+=" -Dicu_use_data_file_flag=0"
@@ -419,8 +427,9 @@ src_configure() {
 		$(gyp_use tcmalloc use_allocator tcmalloc none)
 		$(gyp_use widevine enable_widevine)"
 
-	myconf_gn+=" use_cups=$(usex cups true false)"
 	myconf_gn+=" use_allocator=$(usex tcmalloc \"tcmalloc\" \"none\")"
+	myconf_gn+=" use_cups=$(usex cups true false)"
+	myconf_gn+=" use_kerberos=$(usex kerberos true false)"
 
 	# Use explicit library dependencies instead of dlopen.
 	# This makes breakages easier to detect by revdep-rebuild.
@@ -459,14 +468,21 @@ src_configure() {
 
 	ffmpeg_branding="$(usex proprietary-codecs Chrome Chromium)"
 	myconf_gyp+=" -Dproprietary_codecs=1 -Dffmpeg_branding=${ffmpeg_branding}"
+	myconf_gn+=" proprietary_codecs=true ffmpeg_branding=\"${ffmpeg_branding}\""
 
 	# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys .
 	# Note: these are for Gentoo use ONLY. For your own distribution,
 	# please get your own set of keys. Feel free to contact chromium@gentoo.org
 	# for more info.
-	myconf_gyp+=" -Dgoogle_api_key=AIzaSyDEAOvatFo0eTgsV_ZlEzx0ObmepsMzfAc
-		-Dgoogle_default_client_id=329227923882.apps.googleusercontent.com
-		-Dgoogle_default_client_secret=vgKG0NNv7GoDpbtoFNLxCUXu"
+	local google_api_key="AIzaSyDEAOvatFo0eTgsV_ZlEzx0ObmepsMzfAc"
+	local google_default_client_id="329227923882.apps.googleusercontent.com"
+	local google_default_client_secret="vgKG0NNv7GoDpbtoFNLxCUXu"
+	myconf_gyp+=" -Dgoogle_api_key=${google_api_key}
+		-Dgoogle_default_client_id=${google_default_client_id}
+		-Dgoogle_default_client_secret=${google_default_client_secret}"
+	myconf_gn+=" google_api_key=\"${google_api_key}\""
+	myconf_gn+=" google_default_client_id=\"${google_default_client_id}\""
+	myconf_gn+=" google_default_client_secret=\"${google_default_client_secret}\""
 
 	local myarch="$(tc-arch)"
 	if [[ $myarch = amd64 ]] ; then
@@ -544,8 +560,7 @@ src_configure() {
 	export TMPDIR="${WORKDIR}/temp"
 	mkdir -p -m 755 "${TMPDIR}" || die
 
-	# TODO: also do this for GN bundled ffmpeg build.
-	if ! use system-ffmpeg && ! use gn; then
+	if ! use system-ffmpeg; then
 		local build_ffmpeg_args=""
 		if use pic && [[ "${ffmpeg_target_arch}" == "ia32" ]]; then
 			build_ffmpeg_args+=" --disable-asm"
@@ -711,8 +726,17 @@ src_install() {
 	readme.gentoo_create_doc
 }
 
-pkg_postinst() {
-	fdo-mime_desktop_database_update
+pkg_preinst() {
+	gnome2_icon_savelist
+}
+
+pkg_postrm() {
 	gnome2_icon_cache_update
+	xdg_desktop_database_update
+}
+
+pkg_postinst() {
+	gnome2_icon_cache_update
+	xdg_desktop_database_update
 	readme.gentoo_print_elog
 }
