@@ -71,7 +71,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	PATCHES+=( "${FILESDIR}/${PN}-1.16.5-remove-_FORTIFY_SOURCE-warning.patch" )
+	PATCHES+=( "${FILESDIR}/${PN}-1.16.5-remove-_FORTIFY_SOURCE-warning.patch"
+			"${FILESDIR}/chromium-linker-warnings-r0.patch" )
 	ubuntu-versionator_src_prepare
 
 	# Strip down custom cflags by defult as can cause linktime failures #
