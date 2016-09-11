@@ -1,8 +1,8 @@
 ## A set of packages that require keyword unmasking for Unity installation ##
 
-*/*::unity-gentoo
+*/*::unity-gentoo -webapps
 
-## Other packages keyword unmasking ##
+## Other packages keyword by exact version ##
 app-admin/cgmanager
 app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
