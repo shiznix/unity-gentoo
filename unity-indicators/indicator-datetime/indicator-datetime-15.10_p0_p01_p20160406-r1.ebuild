@@ -51,7 +51,8 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs+=(-DVALA_COMPILER=$VALAC
-		-DVAPI_GEN=$VAPIGEN)
+		-DVAPI_GEN=$VAPIGEN
+		-DCMAKE_INSTALL_FULL_LOCALEDIR=/usr/share/locale)
 	cmake-utils_src_configure
 }
 
