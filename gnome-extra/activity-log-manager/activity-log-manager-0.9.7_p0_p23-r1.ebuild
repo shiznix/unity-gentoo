@@ -35,37 +35,25 @@ DEPEND="dev-libs/glib:2
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# Install docs in /usr/share/doc #
-	sed -e "s:\${prefix}/doc/alm:/usr/share/doc/${P}:g" \
-		-i Makefile{.am,.in} || die
+	# Add X-GNOME-Gettext-Domain into .desktop launcher to get translation support #
+	find ${S}/data -type f -name "*.desktop.in" -exec sh -c 'echo X-GNOME-Gettext-Domain=unity-control-center >> "$1"' -- {} \;
 
-	cp "${FILESDIR}"/config.vapi src/ || die
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 
-	# Fix broken libgnome-control-center check #
-	sed -e 's:test "x$with_ccpanel" != xcheck:test "x$with_ccpanel" != xcheck \&\& test "x$with_ccpanel" != xno:g' \
-		-i configure.ac
 	eautoreconf
 }
 
 src_configure() {
 	econf --with-ccpanel=no
+
+	sed -e "s:\"//:\"/usr/share/:g" \
+		-i config.h
 }
 
 src_install() {
 	emake DESTDIR="${ED}" install
 	dodoc README NEWS INSTALL ChangeLog AUTHORS
-
-	# Remove whoopsie crash database error tracking submission daemon #
-	rm -rf "${ED}etc" \
-		"${ED}usr/share/dbus-1" \
-		"${ED}usr/share/polkit-1" \
-		"${ED}usr/share/gnome-control-center"
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 
 	prune_libtool_files --modules
 }
