@@ -43,7 +43,7 @@ src_prepare() {
 		sed -n '/indicator.help/{s|^|//|};p' \
 			-i src/service.c
 	else
-		sed -e 's:menu, help_label:menu, _("Unity Help"):g' \
+		sed -e 's:distro_name = g_strdup(value):distro_name = g_strdup(\"Unity\"):g' \
 			-i src/service.c
 		sed -e 's:yelp:yelp help\:ubuntu-help:g' \
 			-i src/backend-dbus/actions.c
