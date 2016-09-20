@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=6
+EAPI=5	# kernel-2.eclass unsupported for EAPI6
 ETYPE="sources"
 
 URELEASE="xenial-security"
