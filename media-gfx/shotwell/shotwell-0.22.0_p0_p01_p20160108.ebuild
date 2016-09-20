@@ -14,7 +14,6 @@ DESCRIPTION="Open source photo manager for GNOME patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Shotwell"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz
-	http://pkgs.fedoraproject.org/cgit/shotwell.git/plain/shotwell.1
 	http://pkgs.fedoraproject.org/repo/pkgs/shotwell/shotwell-icons.tar.bz2/1df95b65bb7689c10840faaa765bf931/shotwell-icons.tar.bz2"
 
 LICENSE="LGPL-2.1"
@@ -71,25 +70,18 @@ pkg_setup() {
 		--disable-schemas-compile
 		--disable-desktop-update
 		--disable-icon-update
+		--unity-support
 		--prefix=/usr
 		--lib=$(get_libdir)"
 }
 
-src_configure() {
-	econf \
-		--disable-desktop-update \
-		--disable-icon-update \
-		--prefix=/usr \
-		--lib=$(get_libdir)
-}
-
 src_prepare() {
-	# patch is broken
+	## FIXME: Patch currently broken ##
 	sed -i '/06_uoa.patch/d' "${WORKDIR}/debian/patches/series" || die
+
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
-	sed \
-		-e 's|CFLAGS :|CFLAGS +|g' \
+	sed -e 's|CFLAGS :|CFLAGS +|g' \
 		-i plugins/Makefile.plugin.mk || die
 }
 
@@ -110,7 +102,7 @@ src_install() {
 			find "${D}"/usr/share/locale/${x} -type f -exec rm {} + || die
 		fi
 	done
-	doman "${DISTDIR}"/${PN}.1
+	doman "${WORKDIR}/debian/shotwell.1"
 	local res
 	for res in 16 22 24 32 48 256; do
 		doicon -s ${res} "${WORKDIR}"/${res}x${res}/*
