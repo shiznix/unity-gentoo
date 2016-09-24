@@ -5,5 +5,8 @@ if [ "x$DESKTOP_SESSION" = "xunity" ]; then
 	export XMODIFIERS="@im=ibus"
 	export GTK_IM_MODULE="ibus"
 	export QT_IM_MODULE="xim"
-	ibus-daemon --daemonize --replace --xim --panel disable
+	# ibus-daemon start is provided
+	#  by /etc/xdg/autostart/ibus-daemon.desktop
+	#  due to issue #156
+	#ibus-daemon --daemonize --replace --xim --panel disable
 fi
