@@ -66,5 +66,18 @@ src_install() {
 	exeinto /etc/X11/xinit/xinitrc.d
 	doexe "${FILESDIR}/99upstart"
 
+	# disable job due to Unity logout lag
+	mv ${ED}usr/share/upstart/sessions/upstart-dconf-bridge.conf{,.disabled}
+
 	prune_libtool_files --modules
+}
+
+pkg_postinst() {
+	elog
+	elog "Following job is disabled by default due to Unity logout lag:"
+	elog
+	elog "/usr/share/upstart/sessions/upstart-dconf-bridge.conf"
+	elog
+	elog "To enable this job, simply remove extension '.disabled'"
+	elog
 }

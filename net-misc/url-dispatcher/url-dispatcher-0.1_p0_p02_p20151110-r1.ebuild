@@ -34,3 +34,25 @@ src_configure() {
 		mycmakeargs+=(-Denable_tests=OFF)
 	cmake-utils_src_configure
 }
+
+src_install() {
+	cmake-utils_src_install
+
+	# disable jobs due to Unity logout lag
+	for FILE in ${ED}usr/share/upstart/sessions/url-dispatcher*.conf; do
+		mv ${FILE}{,.disabled}
+	done
+}
+
+pkg_postinst() {
+	elog
+	elog "Following jobs are disabled by default due to Unity logout lag:"
+	elog
+	elog "/usr/share/upstart/sessions/url-dispatcher.conf"
+	elog "/usr/share/upstart/sessions/url-dispatcher-refresh.conf"
+	elog "/usr/share/upstart/sessions/url-dispatcher-update-system.conf"
+	elog "/usr/share/upstart/sessions/url-dispatcher-update-user.conf"
+	elog
+	elog "To enable these jobs, simply remove extension '.disabled'"
+	elog
+}
