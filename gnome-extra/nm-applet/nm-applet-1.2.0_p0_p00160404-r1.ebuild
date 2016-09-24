@@ -53,6 +53,11 @@ src_prepare() {
 	sed -e "s:-Werror::g" \
                 -i "configure" || die
 
+	# If a .desktop file does not have inline translations, fall back #
+	#  to calling gettext #
+	find ${WORKDIR} -type f -name "*.desktop*" \
+		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
+
 	eautoreconf
 	gnome2_src_prepare
 }
@@ -91,6 +96,10 @@ src_install() {
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
 	dosym nm-signal-100-secure.png \
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_preinst() {

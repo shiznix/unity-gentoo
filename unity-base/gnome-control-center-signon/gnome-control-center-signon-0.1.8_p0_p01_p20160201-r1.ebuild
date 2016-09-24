@@ -46,6 +46,12 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# If a .desktop file does not have inline translations, fall back #
+	#  to calling gettext #
+	find ${WORKDIR} -type f -name "*.desktop*" \
+		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=credentials-control-center" "$1"' -- {} \;
+
 	vala_src_prepare
 	eautoreconf
 }

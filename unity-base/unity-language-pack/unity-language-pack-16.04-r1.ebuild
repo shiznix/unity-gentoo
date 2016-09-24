@@ -19,7 +19,19 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="sys-devel/gettext"
+DEPEND="sys-devel/gettext
+	!!<app-accessibility/onboard-1.2.0_p0_p05-r1
+	!!<app-backup/deja-dup-34.2_p0_p01-r2
+	!!<gnome-base/nautilus-3.18.4_p0_p05-r1
+	!!<gnome-extra/nm-applet-1.2.0_p0_p00160404-r1
+	!!<gnome-extra/polkit-gnome-0.105_p2_p02-r1
+	!!<media-gfx/shotwell-0.22.0_p0_p01_p20160108-r1
+	!!<media-sound/pulseaudio-8.0_p0_p3-r1
+	!!<net-libs/gnome-online-accounts-3.18.3_p1_p02-r1
+	!!<www-client/webbrowser-app-0.23_p0_p01_p20160413-r1
+	!!<x11-libs/gtk+-2.24.30_p1_p01-r1:2
+	!!<x11-libs/gtk+-3.18.9_p1_p0301-r1:3
+	!!<x11-misc/lightdm-1.18.2_p0_p02-r1"
 
 setvar() {
 	eval "_ver_${1//-/_}=${2}"
@@ -641,22 +653,56 @@ src_prepare() {
 		die "At least one LINGUA must be set in /etc/make.conf"
 	fi
 }
-
 src_install() {
 	einfo "Installing language files for the following LINGUAS: ${LINGUAS}"
 	for TARBALL_LANG in ${TARBALL_LANGS}; do
 		if has ${TARBALL_LANG} ${LINGUAS}; then
+			for SUB_LANG in `find "${WORKDIR}/language-pack-${TARBALL_LANG}-base/data" -maxdepth 1 -type d | awk -Fdata/ '{print $NF}' | grep -v /data`; do
+				# Remove all translations except those we need #
+				find "language-pack-${TARBALL_LANG}-base/data/${SUB_LANG}" \
+					-type f \! -name 'activity-log-manager.po' \
+					-type f \! -name 'indicator-datetime.po' \
+					-type f \! -name 'language-selector.po' \
+					-type f \! -name 'lightdm.po' \
+					-type f \! -name 'pulseaudio.po' \
+					-type f \! -name 'ubuntu-help.po' \
+					-type f \! -name 'ureadahead.po' \
+					-type f \! -name 'webbrowser-app.po' \
+						-delete || die
+
+				if has ${SUB_LANG} ${LINGUAS}; then
+					for pofile in `find "${WORKDIR}/language-pack-${TARBALL_LANG}-base/data/${SUB_LANG}/LC_MESSAGES/" -type f -name "*.po"`; do
+						msgfmt -o ${pofile%%.po}.mo ${pofile}
+						rm ${pofile}
+					done
+					insinto /usr/share/locale
+					doins -r language-pack-${TARBALL_LANG}-base/data/${SUB_LANG}
+				fi
+			done
 			for SUB_LANG in `find "${WORKDIR}/language-pack-gnome-${TARBALL_LANG}-base/data" -maxdepth 1 -type d | awk -Fdata/ '{print $NF}' | grep -v /data`; do
 				# Remove all translations except those we need #
 				find "language-pack-gnome-${TARBALL_LANG}-base/data/${SUB_LANG}" \
-					-type f \! -iname '*activity-log-manager*' \
-					-type f \! -iname '*compiz*' \
-					-type f \! -iname '*ccsm*' \
-					-type f \! -iname '*credentials-control-center*' \
-					-type f \! -iname '*indicator-*' \
-					-type f \! -iname '*libdbusmenu*' \
-					-type f \! -iname '*signon*' \
-					-type f \! -iname '*unity*' \
+					-type f \! -name 'account-plugins.po' \
+					-type f \! -name 'compiz.po' \
+					-type f \! -name 'ccsm.po' \
+					-type f \! -name 'credentials-control-center.po' \
+					-type f \! -name 'deja-dup.po' \
+					-type f \! -name 'gnome-online-accounts.po' \
+					-type f \! -name 'gtk20.po' \
+					-type f \! -name 'gtk20-properties.po' \
+					-type f \! -name 'gtk30.po' \
+					-type f \! -name 'gtk30-properties.po' \
+					-type f \! -name 'hud.po' \
+					-type f \! -name 'indicator-*' \
+					-type f \! -name 'libdbusmenu.po' \
+					-type f \! -name 'nautilus.po' \
+					-type f \! -name 'nm-applet.po' \
+					-type f \! -name 'onboard.po' \
+					-type f \! -name 'polkit-gnome-1.po' \
+					-type f \! -name 'rhythmbox.po' \
+					-type f \! -name 'shotwell.po' \
+					-type f \! -name 'signon-ui.po' \
+					-type f \! -name 'unity*' \
 						-delete || die
 
 				if has ${SUB_LANG} ${LINGUAS}; then

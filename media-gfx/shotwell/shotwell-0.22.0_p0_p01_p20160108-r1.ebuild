@@ -97,11 +97,11 @@ src_compile() {
 
 src_install() {
 	default
-	for x in ${LANGS}; do
-		if ! has ${x} ${LINGUAS}; then
-			find "${D}"/usr/share/locale/${x} -type f -exec rm {} + || die
-		fi
-	done
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
+
 	doman "${WORKDIR}/debian/shotwell.1"
 	local res
 	for res in 16 22 24 32 48 256; do

@@ -50,4 +50,13 @@ src_install() {
 		/usr/$(get_libdir)/qt5/qml/Ubuntu/Components/Extras/Browser/assets/multi_selection_handle.png
 	dosym /usr/share/qtdeclarative5-ubuntu-web-plugin/assets/multi_selection_handle\@20.png \
 		/usr/$(get_libdir)/qt5/qml/Ubuntu/Web/assets/multi_selection_handle.png
+
+	# If a .desktop file does not have inline translations, fall back #
+	#  to calling gettext #
+	find ${ED} -type f -name "*.desktop*" \
+		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
 }

@@ -137,6 +137,11 @@ src_prepare() {
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
 
+	# If a .desktop file does not have inline translations, fall back #
+	#  to calling gettext #
+	find ${WORKDIR} -type f -name "*.desktop*" \
+		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
+
 	eautoreconf
 	gnome2_src_prepare
 	vala_src_prepare
@@ -173,7 +178,7 @@ src_install() {
 	exeinto /usr/bin
 	doexe "${FILESDIR}/unity-cc-region"
 	insinto /usr/share/applications
-	doins "${FILESDIR}/unity-language-selector.desktop"
+	doins "${FILESDIR}/language-selector.desktop"
 }
 
 pkg_preinst() { gnome2_icon_savelist; }

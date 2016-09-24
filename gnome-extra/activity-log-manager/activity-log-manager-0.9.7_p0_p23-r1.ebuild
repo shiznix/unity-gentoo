@@ -35,8 +35,10 @@ DEPEND="dev-libs/glib:2
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# Add X-GNOME-Gettext-Domain to .desktop launcher to use translation support #
-	find ${S}/data -type f -name "*.desktop.in" -exec sh -c 'echo X-GNOME-Gettext-Domain=activity-log-manager >> "$1"' -- {} \;
+	# If a .desktop file does not have inline translations, fall back #
+	#  to calling gettext #
+	find ${WORKDIR} -type f -name "*.desktop*" \
+		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

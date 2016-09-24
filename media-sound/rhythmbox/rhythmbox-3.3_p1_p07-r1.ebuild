@@ -111,6 +111,12 @@ pkg_setup() {
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# If a .desktop file does not have inline translations, fall back #
+	#  to calling gettext #
+	find ${WORKDIR} -type f -name "*.desktop*" \
+		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
+
 	eautoreconf
 	DOCS="AUTHORS ChangeLog DOCUMENTERS INTERNALS \
 		MAINTAINERS MAINTAINERS.old NEWS README THANKS"
@@ -166,6 +172,17 @@ src_test() {
 	Xemake check
 }
 
-pkg_preinst() { gnome2_icon_savelist; }
-pkg_postinst() { gnome2_icon_cache_update; }
-pkg_postrm() { gnome2_icon_cache_update; }
+pkg_preinst() {
+	gnome2_schemas_savelist
+	gnome2_icon_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
+	gnome2_icon_cache_update
+}

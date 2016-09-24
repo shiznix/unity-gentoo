@@ -57,4 +57,8 @@ src_install() {
 
 	insinto /etc/xdg/autostart
 	doins "${T}"/polkit-gnome-authentication-agent-1.desktop
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
 }

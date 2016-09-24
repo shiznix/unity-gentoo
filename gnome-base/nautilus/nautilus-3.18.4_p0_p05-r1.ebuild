@@ -81,6 +81,12 @@ S="${WORKDIR}/${PN}-3.14.3"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# If a .desktop file does not have inline translations, fall back #
+	#  to calling gettext #
+	find ${WORKDIR} -type f -name "*.desktop*" \
+		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
+
 	eautoreconf
 
 	if use previewer; then
@@ -127,6 +133,10 @@ src_install() {
 
 	insinto /usr/share/applications/
 	doins "${WORKDIR}"/debian/*.desktop
+
+	# Remove all installed language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_postinst() {
