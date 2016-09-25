@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="+eds"
 RESTRICT="mirror"
 
 RDEPEND="unity-base/unity-language-pack"
@@ -43,6 +43,11 @@ src_prepare() {
 
 	# Fix schema errors and sandbox violations #
 	epatch -p1 "${FILESDIR}/sandbox_violations_fix.diff"
+
+	# Disable autostart of Evolution-Data-Server subprocess
+	if ! use eds; then
+		epatch -p1 "${FILESDIR}/disable-eds.diff"
+	fi
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

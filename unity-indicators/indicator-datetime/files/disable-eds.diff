@@ -1,0 +1,21 @@
+## Disable autostart of Evolution-Data-Server subprocess:
+## evolution-addressbook-factory
+## evolution-calendar-factory
+## evolution-source-registry
+diff -Nur a/src/main.cpp b/src/main.cpp
+--- a/src/main.cpp	2016-04-06 21:04:16.000000000 +0200
++++ b/src/main.cpp	2016-07-31 00:20:41.327596912 +0200
+@@ -55,10 +55,10 @@
+ 
+         // we don't show appointments in the greeter,
+         // so no need to connect to EDS there...
+-        if (!g_strcmp0("lightdm", g_get_user_name()))
++//        if (!g_strcmp0("lightdm", g_get_user_name()))
+             engine.reset(new MockEngine);
+-        else
+-            engine.reset(new EdsEngine);
++//        else
++//            engine.reset(new EdsEngine);
+ 
+         return engine;
+     }
