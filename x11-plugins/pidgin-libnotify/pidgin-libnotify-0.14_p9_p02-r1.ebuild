@@ -29,6 +29,10 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# Fix Unity messaging menu (LP #1339405) #
+	epatch "${FILESDIR}"/unity-mm-fix.patch
+
 	eautoreconf
 }
 

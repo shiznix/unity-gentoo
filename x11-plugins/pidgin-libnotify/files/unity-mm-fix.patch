@@ -1,0 +1,65 @@
+## Fix Unity messaging menu integration
+## https://launchpad.net/bugs/1339405
+diff -Nur a/src/pidgin-libnotify.c b/src/pidgin-libnotify.c
+--- a/src/pidgin-libnotify.c	2016-09-25 13:46:30.836248766 +0200
++++ b/src/pidgin-libnotify.c	2016-09-25 13:49:12.982013687 +0200
+@@ -59,6 +59,9 @@
+ /* Prototypes */
+ static void notify_new_message_cb (PurpleAccount *account, const gchar *sender, const gchar *message, int flags, gpointer data);
+ 
++static gboolean
++pidgin_conversation_has_focus (PurpleConversation *conv);
++
+ /* Globals */
+ static GHashTable *buddy_hash;
+ 
+@@ -637,20 +640,13 @@
+ 		return;
+ 	}
+ 
+-	if (conv == NULL) {
+-		return;
+-	}
+-
+ 	if (!should_notify_unavailable (account))
+ 		return;
+ 
+-	PidginConversation * pconv = PIDGIN_CONVERSATION(conv);
+-	if (pconv != NULL) {
+-	if (pconv->entry != NULL && pconv->imhtml != NULL) {
+-	if (GTK_WIDGET_HAS_FOCUS(pconv->entry) || GTK_WIDGET_HAS_FOCUS(pconv->imhtml)) {
++	if (pidgin_conversation_has_focus (conv)) {
+ 		purple_debug_warning(PLUGIN_ID, "Pidgin conversation's widgets are in focus");
+ 		return;
+-	}}}
++	}
+ 
+ 	notify_msg_sent (account, sender, message, conv);
+ }
+@@ -671,13 +667,10 @@
+ 	if (!purple_utf8_has_word (message, nick))
+ 		return;
+ 
+-	PidginConversation * pconv = PIDGIN_CONVERSATION(conv);
+-	if (pconv != NULL) {
+-	if (pconv->entry != NULL && pconv->imhtml != NULL) {
+-	if (GTK_WIDGET_HAS_FOCUS(pconv->entry) || GTK_WIDGET_HAS_FOCUS(pconv->imhtml)) {
++	if (pidgin_conversation_has_focus (conv)) {
+ 		purple_debug_warning(PLUGIN_ID, "Pidgin conversation's widgets are in focus");
+ 		return;
+-	}}}
++	}
+ 
+ 	if (name_blacklisted(account, sender)) return;
+ 
+@@ -1255,9 +1248,7 @@
+ 			purple_debug_warning (PLUGIN_ID, "NULL gtkconv '%s'\n", source_id);
+ 			return;
+ 		}
+-		pidgin_conv_switch_active_conversation(conv);
+-		pidgin_conv_window_switch_gtkconv(gtkconv->win, gtkconv);
+-		gtk_window_present(GTK_WINDOW(gtkconv->win->window));
++		conv->ui_ops->present (conv);
+ 	}
+ }
+ 
