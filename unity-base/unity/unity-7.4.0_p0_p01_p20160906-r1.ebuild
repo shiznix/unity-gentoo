@@ -21,7 +21,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug doc +branding pch test"
+IUSE="+branding debug doc pch +systray test"
 RESTRICT="mirror"
 
 S="${WORKDIR}"
@@ -99,7 +99,9 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# Taken from http://ppa.launchpad.net/timekiller/unity-systrayfix/ubuntu/pool/main/u/unity/ #
-	epatch -p1 "${FILESDIR}/systray-fix_saucy.diff"
+	if use systray; then
+		epatch -p1 "${FILESDIR}/systray-fix_saucy.diff"
+	fi
 
 	# Setup Unity side launcher default applications #
 	sed \
