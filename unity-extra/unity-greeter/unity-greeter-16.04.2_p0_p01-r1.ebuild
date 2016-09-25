@@ -73,13 +73,21 @@ src_install() {
 	# due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
 
-	# Remove Ubuntu logo #
-	rm -rf "${ED}usr/share/unity-greeter/logo.png"
-
 	# Gentoo logo for multi monitor usage #
 	if use branding; then
 		insinto /usr/share/unity-greeter
 		newins "${FILESDIR}/gentoo_cof.png" cof.png
+	fi
+
+	# Branding #
+	insinto /usr/share/unity-greeter
+	newins "${FILESDIR}/gentoo_logo.png" logo.png
+	if use branding; then
+		newins "${FILESDIR}/gentoo_cof.png" cof.png # Gentoo logo for multi monitor usage #
+		newins "${FILESDIR}/gentoo_badge.png" ubuntu_badge.png
+	else
+		insinto /usr/share/glib-2.0/schemas
+		doins "${FILESDIR}/50_unity-greeter.gschema.override"
 	fi
 
 	# Install polkit privileges config #
