@@ -113,5 +113,6 @@ src_install() {
 	#  except telepathy-account-widgets #
 	find "${ED}usr/share/locale" \
 		-type f \! -name 'gnome-online-accounts-tpaw.mo' \
-			-delete || die
+			-delete 2>/dev/null
+	find "${ED}usr/share/locale" -type d -empty -delete 2>/dev/null
 }
