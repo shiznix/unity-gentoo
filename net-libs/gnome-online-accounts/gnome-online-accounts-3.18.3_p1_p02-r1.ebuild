@@ -111,9 +111,7 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	#  except telepathy-account-widgets #
-	if [ -d "${ED}usr/share/locale" ]; then
-		find "${ED}usr/share/locale" \
-			-type f \! -name 'gnome-online-accounts-tpaw.mo' \
-				-delete || die
-	fi
+	find "${ED}usr/share/locale" \
+		-type f \! -name 'gnome-online-accounts-tpaw.mo' \
+			-delete || die
 }
