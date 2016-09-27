@@ -170,8 +170,12 @@ src_install() {
 	prune_libtool_files --all
 	rm -rf "${ED}"/etc/init
 
-	pamd_mimic system-local-login ${PN} auth account session #372229
-	dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
+        # Remove existing pam file. We will build a new one. Bug #524792
+        rm -rf "${ED}"/etc/pam.d/${PN}{,-greeter}
+        pamd_mimic system-local-login ${PN} auth account password session #372229
+        pamd_mimic system-local-login ${PN}-greeter auth account password session #372229
+        dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
+
 
 	readme.gentoo_create_doc
 
