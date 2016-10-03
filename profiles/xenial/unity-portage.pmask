@@ -1,7 +1,7 @@
 ## Global masks ##
 
 # Mask >=net-libs/webkit-gtk-2.4.11-r1:2.4.11 as it requires >=x11-libs/gtk+-3.20 and Xenial requires gtk+-3.18
->=net-libs/webkit-gtk-2.4.11-r1:2.4.11
+>=net-libs/webkit-gtk-2.4.11-r1:3
 
 # xapian-1.3 is the development release which appends it's version to all includes/libs (see related b.g.o #480470)
 #   xapian{-bindings} versions must match
@@ -10,6 +10,8 @@
 
 # mask gnome-3.20 packages
 =*/gnome*-*20*::gentoo
+=gnome-base/*-*20*::gentoo
+=gnome-extra/*-*20*::gentoo
 # >=app-accessibility/at-spi2-atk-2.18::gentoo
 # >=app-accessibility/at-spi2-core-2.18::gentoo
 >=app-accessibility/orca-3.20.0::gentoo
@@ -25,6 +27,8 @@
 >=dev-python/pygobject-3.20.0::gentoo
 >=mail-client/evolution-3.20.0::gentoo
 >=media-gfx/eog-3.20.0::gentoo
+>=media-libs/clutter-gtk-1.8.0::gentoo
+>=media-sound/sound-juicer-3.20.0::gentoo
 >=media-video/cheese-3.20.0::gentoo
 >=media-video/totem-3.20::gentoo
 >=net-misc/vinagre-3.20::gentoo

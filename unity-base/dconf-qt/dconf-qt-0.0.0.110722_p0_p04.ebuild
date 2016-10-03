@@ -23,7 +23,7 @@ RESTRICT="mirror"
 RDEPEND="dev-libs/glib:2
 	dev-qt/qtcore:4
 	dev-qt/qtdeclarative:4
-	gnome-base/dconf"
+	<gnome-base/dconf-0.26"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/lib${PN}-0.0.0"
