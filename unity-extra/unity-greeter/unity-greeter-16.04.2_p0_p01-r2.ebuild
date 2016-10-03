@@ -78,7 +78,6 @@ src_install() {
 	newins "${FILESDIR}/gentoo_logo.png" logo.png
 	if use branding; then
 		newins "${FILESDIR}/gentoo_cof.png" cof.png # Gentoo logo for multi monitor usage #
-		newins "${FILESDIR}/gentoo_badge.png" ubuntu_badge.png
 	else
 		insinto /usr/share/glib-2.0/schemas
 		doins "${FILESDIR}/50_unity-greeter.gschema.override"
