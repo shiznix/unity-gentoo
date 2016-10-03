@@ -30,24 +30,24 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-48.0-patches-01"
+PATCH="${PN}-49.0-patches-02"
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 
-#MOZCONFIG_OPTIONAL_QT5=1 -- fails to build so leave it off until the code can be patched
 MOZCONFIG_OPTIONAL_GTK2ONLY=1
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="xenial-security"
-UVER_PREFIX="+build2"
+UVER_PREFIX="+build4"
 UURL="mirror://unity/pool/main/f/${PN}"
 
-inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.49 pax-utils fdo-mime autotools virtualx mozlinguas ubuntu-versionator
+inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.49 pax-utils fdo-mime autotools virtualx mozlinguas-v2 ubuntu-versionator
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
 
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~alpha ~amd64"
+
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
 IUSE="bindist hardened +hwaccel pgo selinux +gmp-autoupdate test"
@@ -55,14 +55,14 @@ RESTRICT="!bindist? ( bindist ) mirror"
 
 PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/${PATCH}.tar.xz )
 SRC_URI="${SRC_URI}
-        ${MOZ_HTTP_URI}/${MOZ_PV}/source/firefox-${MOZ_PV}.source.tar.xz
-        ${PATCH_URIS[@]}
+	${MOZ_HTTP_URI}/${MOZ_PV}/source/firefox-${MOZ_PV}.source.tar.xz
+	${PATCH_URIS[@]}
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 RDEPEND="
-	>=dev-libs/nss-3.24
+	>=dev-libs/nss-3.25
 	>=dev-libs/nspr-4.12
 	selinux? ( sec-policy/selinux-mozilla )"
 
@@ -121,6 +121,10 @@ src_unpack() {
 }
 
 src_prepare() {
+	# Fix site loading icon
+	insinto "${S}/toolkit/themes/linux/global/icons"
+	newins "${FILESDIR}/fix-loading.png" loading.png
+
 	# Ubuntu global menu patch #
 	PATCHES+=( "${WORKDIR}/debian/patches/unity-menubar.patch" )
 	default
@@ -128,11 +132,6 @@ src_prepare() {
 	# Apply our patches
 	eapply "${WORKDIR}/firefox" \
 		"${FILESDIR}"/${PN}-48.0-pgo.patch
-#		"${FILESDIR}"/${PN}-45-qt-widget-fix.patch
-
-	if ! tc-ld-is-gold && has_version ">=sys-devel/binutils-2.26" ; then
-		eapply "${FILESDIR}"/xpcom-components-binutils-26.patch
-	fi
 
 	# Enable gnomebreakpad
 	if use debug ; then
@@ -339,15 +338,15 @@ PROFILE_EOF
 	newins "${icon_path}/mozicon128.png" "${icon}.png"
 	# Install a 48x48 icon into /usr/share/pixmaps for legacy DEs
 	newicon "${icon_path}/content/icon48.png" "${icon}.png"
-	newmenu "${FILESDIR}/icon/${PN}.desktop" "${PN}.desktop"
-	sed -i -e "s:@NAME@:${name}:" -e "s:@ICON@:${icon}:" \
+	newmenu "${WORKDIR}/debian/${PN}.desktop.in" "${PN}.desktop"
+	sed -i -e "/%%ifdef/d" -e "/%%else/d" -e "/%%endif/d" \
+		-e "/@MOZ_DISPLAY_NAME@/d" -e "/OnlyShowIn=Unity/d" \
+		-e "s:@MOZ_APP_NAME@:${icon}:" \
 		"${ED}/usr/share/applications/${PN}.desktop" || die
 
-	# Add StartupNotify=true bug 237317
-	if use startup-notification ; then
-		echo "StartupNotify=true"\
-			 >> "${ED}/usr/share/applications/${PN}.desktop" \
-			|| die
+	if ! use startup-notification ; then
+		sed -i -e "/StartupNotify=true/d"
+			"${ED}/usr/share/applications/${PN}.desktop" || die
 	fi
 
 	# Required in order to use plugins and even run firefox on hardened, with jit useflag.
