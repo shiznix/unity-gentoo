@@ -31,7 +31,7 @@ EMVER="1.9.1"
 
 # Patches
 PATCH="thunderbird-38.0-patches-0.1"
-PATCHFF="firefox-45.0-patches-04"
+PATCHFF="firefox-45.0-patches-06"
 
 MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_JIT="enabled"
@@ -57,7 +57,7 @@ RESTRICT="!bindist? ( bindist )
 PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/{${PATCH},${PATCHFF}}.tar.xz )
 SRC_URI="${SRC_URI}
 	${MOZ_HTTP_URI}/${MOZ_PV}/source/${MOZ_P}.source.tar.xz
-	https://dev.gentoo.org/~axs/distfiles/lightning-${MOZ_LIGHTNING_VER}.tar.xz
+	https://dev.gentoo.org/~axs/distfiles/lightning-${MOZ_LIGHTNING_VER}.repack.tar.xz
 	lightning? ( https://dev.gentoo.org/~axs/distfiles/gdata-provider-${MOZ_LIGHTNING_GDATA_VER}-r1.tar.xz )
 	crypt? ( http://www.enigmail.net/download/source/enigmail-${EMVER}.tar.gz )
 	${PATCH_URIS[@]}
