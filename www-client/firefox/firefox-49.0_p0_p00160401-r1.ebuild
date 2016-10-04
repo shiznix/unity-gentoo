@@ -125,6 +125,10 @@ src_prepare() {
 	PATCHES+=( "${WORKDIR}/debian/patches/unity-menubar.patch" )
 	default
 
+	# Fix tab icon animation when site is loading
+	cp "${FILESDIR}/fix-loading.png" \
+		"${S}/toolkit/themes/linux/global/icons/loading.png"
+
 	# Apply our patches
 	eapply "${WORKDIR}/firefox" \
 		"${FILESDIR}"/${PN}-48.0-pgo.patch
@@ -334,15 +338,17 @@ PROFILE_EOF
 	newins "${icon_path}/mozicon128.png" "${icon}.png"
 	# Install a 48x48 icon into /usr/share/pixmaps for legacy DEs
 	newicon "${icon_path}/content/icon48.png" "${icon}.png"
-	newmenu "${FILESDIR}/icon/${PN}.desktop" "${PN}.desktop"
-	sed -i -e "s:@NAME@:${name}:" -e "s:@ICON@:${icon}:" \
+	newmenu "${WORKDIR}/debian/${PN}.desktop.in" "${PN}.desktop"
+	sed -i -e "/%%ifdef/d" -e "/%%else/d" -e "/%%endif/d" \
+		-e "/@MOZ_DISPLAY_NAME@/d" -e "/OnlyShowIn=Unity/d" \
+		-e "s:@MOZ_APP_NAME@:${icon}:" \
 		"${ED}/usr/share/applications/${PN}.desktop" || die
 
 	# Add StartupNotify=true bug 237317
-	if use startup-notification ; then
-		echo "StartupNotify=true"\
-			 >> "${ED}/usr/share/applications/${PN}.desktop" \
-			|| die
+	# StartupNotify=true is default option in Ubuntu
+	if ! use startup-notification ; then
+		sed -i -e "/StartupNotify=true/d"
+			"${ED}/usr/share/applications/${PN}.desktop" || die
 	fi
 
 	# Required in order to use plugins and even run firefox on hardened, with jit useflag.
