@@ -22,8 +22,8 @@
 =*/gnome*-*20*::gentoo
 =gnome-base/*-*20*::gentoo
 =gnome-extra/*-*20*::gentoo
-# >=app-accessibility/at-spi2-atk-2.18::gentoo
-# >=app-accessibility/at-spi2-core-2.18::gentoo
+>=app-accessibility/at-spi2-atk-2.20::gentoo
+>=app-accessibility/at-spi2-core-2.20::gentoo
 >=app-accessibility/orca-3.20.0::gentoo
 >=app-arch/file-roller-3.20.0::gentoo
 >=app-cdr/brasero-3.20.0::gentoo
@@ -37,6 +37,8 @@
 # >=dev-python/pyatspi-2.18.0::gentoo
 >=dev-python/pygobject-3.20.0::gentoo
 >=dev-util/gtk-update-icon-cache-3.20.9::gentoo
+>=dev-util/devhelp-3.20.0::gentoo
+>=dev-vcs/gitg-3.20::gentoo
 >=mail-client/evolution-3.20.0::gentoo
 >=media-gfx/eog-3.20.0::gentoo
 >=media-libs/clutter-gtk-1.8.0::gentoo
@@ -45,9 +47,11 @@
 >=media-video/totem-3.20::gentoo
 >=net-misc/vinagre-3.20::gentoo
 >=net-wireless/gnome-bluetooth-3.20::gentoo
+>=sci-geosciences/geocode-glib-3.20::gentoo
 >=sys-apps/baobab-3.20.0::gentoo
 >=www-client/epiphany-3.20.0::gentoo
 >=x11-libs/gtksourceview-3.20.0::gentoo
+>=x11-libs/libwnck-3.20.0::gentoo
 >=x11-themes/adwaita-icon-theme-3.20::gentoo
 >=x11-wm/mutter-3.20.0::gentoo
 # >=media-plugins/grilo-plugins-0.2.16::gentoo
