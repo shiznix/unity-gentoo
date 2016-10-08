@@ -24,6 +24,7 @@
 =gnome-extra/*-*20*::gentoo
 >=app-accessibility/at-spi2-atk-2.20::gentoo
 >=app-accessibility/at-spi2-core-2.20::gentoo
+>=dev-python/pyatspi-2.20::gentoo
 >=app-accessibility/orca-3.20.0::gentoo
 >=app-arch/file-roller-3.20.0::gentoo
 >=app-cdr/brasero-3.20.0::gentoo
