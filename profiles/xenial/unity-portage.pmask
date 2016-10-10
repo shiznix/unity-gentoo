@@ -34,7 +34,7 @@
 >=app-text/yelp-tools-3.20.0::gentoo
 >=dev-cpp/gtkmm-3.20.0::gentoo
 >=dev-libs/libgweather-3.20.0::gentoo
-# >=dev-python/pyatspi-2.18.0::gentoo
+>=dev-python/pyatspi-2.20.0::gentoo
 >=dev-python/pygobject-3.20.0::gentoo
 >=dev-util/gtk-update-icon-cache-3.20.9::gentoo
 >=dev-util/devhelp-3.20.0::gentoo
