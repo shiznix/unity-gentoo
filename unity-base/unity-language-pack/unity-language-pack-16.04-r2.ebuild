@@ -95,7 +95,6 @@ set_arr		"tag_xenial_2[@]"	"ver_xenial_2[@]"
 #  in array of tags and use set_spec() function instead, see below:
 # [func]	[specific tag]	[array of versions]	[ubuntu tag]
 set_spec	en-GB		"ver_xenial_2[@]"	en
-set_spec	en-US		"ver_xenial_2[@]"	en
 set_spec	pt-BR		"ver_xenial_2[@]"	pt
 set_spec	sr-Latn		"ver_xenial_2[@]"	sr
 set_spec	ur-PK		"ver_trusty[@]"		ur
@@ -109,11 +108,11 @@ set_spec	zh-TW		"ver_xenial_2[@]"	zh-hant
 # Only valid IETF language tags that are listed in
 #  /usr/portage/profiles/desc/l10n.desc are supported:
 IUSE_L10N="af am an ar as ast az be bg bn bo br bs ca cs csb cy da de dz
-el en en-GB en-US eo es et eu fa fi fil fo fr fy ga gd gl gu he hi hr hu
-hy ia id is it ja ka kk km kn ko ks ku ky la lb lo lt lv mai mi mk ml mn
-mr ms my nb nds ne nl nn nso oc om or pa pl pt pt-BR ro ru rw sa sd se
-si sk sl sq sr sr-Latn st sv sw ta te tg th tk tl tr ts tt ug uk ur-PK
-uz ve vi wa xh zh-CN zh-HK zh-TW zu"
+el en en-GB eo es et eu fa fi fil fo fr fy ga gd gl gu he hi hr hu hy ia
+id is it ja ka kk km kn ko ks ku ky la lb lo lt lv mai mi mk ml mn mr ms
+my nb nds ne nl nn nso oc om or pa pl pt pt-BR ro ru rw sa sd se si sk
+sl sq sr sr-Latn st sv sw ta te tg th tk tl tr ts tt ug uk ur-PK uz ve
+vi wa xh zh-CN zh-HK zh-TW zu"
 
 # IUSE and SRC_URI generator:
 for use_flag in ${IUSE_L10N}; do
