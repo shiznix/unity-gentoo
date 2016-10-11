@@ -41,7 +41,7 @@ set_arr() {
 
 # Pass specific language tag function:
 set_spec() {
-	eval "${1/-/_}=(\${!2} ${3})"
+	eval "${1/-/_}=(\${!2} \${3})"
 }
 
 # tag_[code name]=(
@@ -140,8 +140,10 @@ src_prepare() {
 			tags+=" ${use_flag}"
 		fi
 	done
-	if [ -z ${tags} ]; then
+	if [[ -z ${tags} ]]; then
 		die "At least one L10N USE_EXPAND flag must be set!"
+	else
+		einfo "Prepared language files for the following flags:${tags}"
 	fi
 	ubuntu-versionator_src_prepare
 }
