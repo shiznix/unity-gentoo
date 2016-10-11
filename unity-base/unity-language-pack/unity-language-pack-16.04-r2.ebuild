@@ -140,7 +140,7 @@ src_prepare() {
 			tags+=" ${use_flag}"
 		fi
 	done
-	if [ -z ${tags} ]; then
+	if [[ -z ${tags} ]]; then
 		die "At least one L10N USE_EXPAND flag must be set!"
 	fi
 	ubuntu-versionator_src_prepare
