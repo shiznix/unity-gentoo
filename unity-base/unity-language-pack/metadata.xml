@@ -10,28 +10,6 @@
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
 	<use>
-		<flag name="linguas_aa">Language support for aa</flag>
-		<flag name="linguas_bem">Language support for bem</flag>
-		<flag name="linguas_ber">Language support for ber</flag>
-		<flag name="linguas_cv">Language support for cv</flag>
-		<flag name="linguas_dv">Language support for dv</flag>
-		<flag name="linguas_en_US@piglatin">Language support for en_US@piglatin</flag>
-		<flag name="linguas_fur">Language support for fur</flag>
-		<flag name="linguas_gv">Language support for gv</flag>
-		<flag name="linguas_ha">Language support for ha</flag>
-		<flag name="linguas_ig">Language support for ig</flag>
-		<flag name="linguas_kl">Language support for kl</flag>
-		<flag name="linguas_kw">Language support for kw</flag>
-		<flag name="linguas_mhr">Language support for mhr</flag>
-		<flag name="linguas_nds@NFE">Language support for nds@NFE</flag>
-		<flag name="linguas_os">Language support for os</flag>
-		<flag name="linguas_sa">Language support for sa</flag>
-		<flag name="linguas_sc">Language support for sc</flag>
-		<flag name="linguas_shs">Language support for shs</flag>
-		<flag name="linguas_sn">Language support for sn</flag>
-		<flag name="linguas_sr@ije">Language support for sr@ije</flag>
-		<flag name="linguas_wae">Language support for wae</flag>
-		<flag name="linguas_yo">Language support for yo</flag>
+		<flag name="l10n_nb">Norwegian Bokmål</flag>
 	</use>
 </pkgmetadata>
-
