@@ -152,7 +152,6 @@ unity-lenses/unity-lens-music **
 unity-lenses/unity-lens-video **
 unity-scopes/unity-scope-home **
 www-client/webbrowser-app **
-www-client/chromium **
 www-client/firefox **
 x11-base/xorg-server **
 x11-base/xorg-drivers **
@@ -175,7 +174,6 @@ x11-misc/webapps-greasemonkey **
 x11-misc/lightdm **
 x11-misc/lightdm-kde **
 x11-misc/notify-osd **
-x11-misc/unity-chromium-extension **
 x11-misc/webaccounts-browser-extension **
 x11-themes/humanity-icon-theme **
 x11-themes/notify-osd-icons **

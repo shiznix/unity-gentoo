@@ -102,7 +102,6 @@ net-im/telepathy-mission-control::gentoo
 net-libs/gnome-online-accounts::gentoo
 sys-apps/accountsservice::gentoo
 sys-libs/libnih::gentoo
-www-client/chromium::gentoo
 www-client/firefox::gentoo
 x11-base/xorg-server::gentoo
 x11-base/xorg-drivers::gentoo

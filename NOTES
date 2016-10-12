@@ -56,7 +56,6 @@ net-libs/gnome-online-accounts		# Allow access to Gnome Online Accounts (GOA) vi
 sys-apps/accountsservice		# Requires patching for SetInputSources as needed by unity-indicators/indicator-keyboard and u-c-c text entry settings
 sys-kernel/ubuntu-sources		# Patched with Ubuntu's complete kernel patchset to add support for sys-apps/ureadahead
 sys-libs/mtdev				# Needs to be multilib aware to install with multilib dev-libs/libinput (mir-base/mir)
-www-client/chromium			# Requires patching for webapps browser plugin (x11-misc/webaccounts-browser-extension[chromium])
 www-client/firefox			# Requires patching for webapps browser plugin and global appmenu
 x11-base/xorg-server			# Provides Xmir patch
 x11-base/xorg-drivers			# DEPEND blocking versions incompatible with overlay versions (!<x11-drivers/xf86-video-intel-2.99.917_p20160122)
@@ -158,10 +157,6 @@ x11-wm/metacity				# Patched to support compiz window decoration
 			ie. Upstart cannot be started within the desktop session, upstart needs to be the process that starts the desktop session
 	* /usr/bin/initctl needs the $UPSTART_SESSION env variable set for it's many jobs to execute correctly
 	* To communicate properly over dbus, the dbus process also needs to be a child of the upstart process (as started by /usr/share/upstart/sessions/dbus.conf)
-	* FIXME: Too many unnecessary dbus daemon processes get launched outside of upstart, the following packages launch their own dbus daemon process:
-		- app-i18n/ibus
-		- media-sound/pulseaudio
-		- app-accessibility/at-spi2-core
 
 ## Healthy process tree example for a Unity desktop session using upstart to start it ##
 
