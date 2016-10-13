@@ -170,14 +170,13 @@ for use_flag in ${IUSE_L10N}; do
 	IUSE+=" l10n_${use_flag}"
 	use_flag=${use_flag//-/_}
 	eval "tag=\${$use_flag[2]}"
-	if [ -z ${tag} ]; then
-		tag=${use_flag}
-	fi
+	[ -z ${tag} ] && tag=${use_flag}
 	eval "ver=\${$use_flag[0]}"
 	eval "ver_gnome=\${$use_flag[1]}"
+	compress="xz"; [[ ( ${ver//[!0-9]} < 161000000000 ) ]] && compress="gz"
 	SRC_URI_array+=( "l10n_${use_flag//_/-}?" \(
-		${UURL}/language-pack-${tag}-base/language-pack-${tag}-base_${ver}.tar.gz
-		${UURL}/language-pack-gnome-${tag}-base/language-pack-gnome-${tag}-base_${ver_gnome}.tar.gz \) )
+		${UURL}/language-pack-${tag}-base/language-pack-${tag}-base_${ver}.tar.${compress}
+		${UURL}/language-pack-gnome-${tag}-base/language-pack-gnome-${tag}-base_${ver_gnome}.tar.${compress} \) )
 done
 SRC_URI="${SRC_URI_array[@]}"
 
