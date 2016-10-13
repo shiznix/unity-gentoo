@@ -1,5 +1,8 @@
 ## Global masks ##
 
+# Need to match gnome-extra/nm-applet version otherwise nm-applet consumes 100% CPU
+>=net-misc/networkmanager-1.4.0
+
 # Mask >=net-libs/webkit-gtk-2.4.11-r1:2.4.11 as it requires >=x11-libs/gtk+-3.20 and Xenial requires gtk+-3.18
 >=net-libs/webkit-gtk-2.4.11-r1:3
 
