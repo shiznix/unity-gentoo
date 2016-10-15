@@ -49,3 +49,20 @@ pre_src_prepare() {
 		fi
 	done
 }
+
+post_src_install() {
+	## Look for existence of profiles/${PROFILE_RELEASE}/ebuild_hooks/${CATEGORY}/${P}/post_src_install.sh and run it to perform hook ##
+	local REPO_ROOT="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
+	local HOOK_SOURCE check base=${REPO_ROOT}/profiles/${PROFILE_RELEASE}/ebuild_hooks
+	for check in ${CATEGORY}/{${P}-${PR},${PN}-${PV},${PN}}{,:${SLOT}}; do
+		HOOK_SOURCE=${base}/${CTARGET}/${check}
+		[[ -r ${HOOK_SOURCE} ]] || HOOK_SOURCE=${base}/${CHOST}/${check}
+		[[ -r ${HOOK_SOURCE} ]] || HOOK_SOURCE=${base}/${check}
+		if [[ -f ${HOOK_SOURCE}/post_src_install.sh ]]; then
+			einfo "Applying ebuild_hooks script ${HOOK_SOURCE}/post_src_install.sh"
+			export HOOK_SOURCE="${HOOK_SOURCE}"
+			${HOOK_SOURCE}/post_src_install.sh
+			return 0
+		fi
+	done
+}
