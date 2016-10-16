@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="xenial-updates"
 inherit autotools eutils flag-o-matic ubuntu-versionator vala virtualx
 
 UURL="mirror://unity/pool/main/libd/${PN}"
@@ -34,7 +34,7 @@ DEPEND="app-text/gnome-doc-utils
 	virtual/pkgconfig
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {

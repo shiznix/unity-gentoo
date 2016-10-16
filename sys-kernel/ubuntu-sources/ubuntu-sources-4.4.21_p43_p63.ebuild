@@ -5,7 +5,7 @@
 EAPI=5	# kernel-2.eclass unsupported for EAPI6
 ETYPE="sources"
 
-URELEASE="xenial-security"
+URELEASE="xenial-updates"
 inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
