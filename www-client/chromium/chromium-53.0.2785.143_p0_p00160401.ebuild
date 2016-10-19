@@ -651,7 +651,7 @@ src_install() {
 			-e "s:plugins:plugins --user-data-dir=\${HOME}/.config/chromium${CHROMIUM_SUFFIX}:"
 		)
 	fi
-	sed "${sedargs[@]}" "${FILESDIR}/chromium-launcher-r3.sh" > chromium-launcher.sh || die
+	sed "${sedargs[@]}" "${FILESDIR}/chromium-launcher-with-temp.sh" > chromium-launcher.sh || die
 	doexe chromium-launcher.sh
 
 	# It is important that we name the target "chromium-browser",
@@ -710,10 +710,8 @@ src_install() {
 	insinto /usr/share/applications
 	newins "${WORKDIR}/debian/chromium-browser.desktop" \
 			chromium-browser-chromium.desktop
-	sed \
-		-e "/^Exec/s/$/ %U/" \
-		-e "/^MimeType/s/$/x-scheme-handler\/ftp;x-scheme-handler\/mailto;x-scheme-handler\/webcal;/" \
-			-i "${ED}"/usr/share/applications/chromium-browser-chromium.desktop || die
+	sed -e "/^MimeType/s/$/x-scheme-handler\/ftp;x-scheme-handler\/mailto;x-scheme-handler\/webcal;/" \
+		-i "${ED}"/usr/share/applications/chromium-browser-chromium.desktop || die
 
 	# Install GNOME default application entry (bug #303100).
 	if use gnome; then
