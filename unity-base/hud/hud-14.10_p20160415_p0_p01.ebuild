@@ -22,9 +22,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-DEPEND="app-accessibility/pocketsphinx[${PYTHON_USEDEP}]
-	app-accessibility/unity-voice:=
-	dev-cpp/gmock
+DEPEND="dev-cpp/gmock
 	dev-db/sqlite:3
 	dev-libs/dee[${PYTHON_USEDEP}]
 	dev-libs/glib:2[${PYTHON_USEDEP}]

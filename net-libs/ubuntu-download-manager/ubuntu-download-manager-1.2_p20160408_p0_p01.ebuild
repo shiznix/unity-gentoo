@@ -28,7 +28,6 @@ DEPEND="dev-cpp/glog
 	dev-qt/qtnetwork:5
 	dev-qt/qtsql:5
 	dev-qt/qttest:5
-	dev-qt/qtsystems:5
 	sys-apps/dbus
 	sys-libs/libnih[dbus]"
 

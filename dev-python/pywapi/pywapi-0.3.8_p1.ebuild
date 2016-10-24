@@ -9,7 +9,7 @@ URELEASE="xenial"
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/p/${PN}"
-UVER="-${PVR_PL_MAJOR}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Python wrapper around different weather APIs"
 HOMEPAGE="https://launchpad.net/python-weather-api"

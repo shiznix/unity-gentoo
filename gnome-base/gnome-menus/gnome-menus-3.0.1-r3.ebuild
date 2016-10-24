@@ -9,7 +9,7 @@ inherit autotools eutils gnome2-utils python-single-r1 ubuntu-versionator
 
 DESCRIPTION="The GNOME menu system, implementing the F.D.O cross-desktop spec"
 HOMEPAGE="http://www.gnome.org"
-SRC_URI="mirror://gnome.org/sources/${PN}/${PV}/${P}.tar.bz2"
+SRC_URI="mirror://gnome/sources/${PN}/3.0/${P}.tar.bz2"
 LICENSE="GPL-2+ LGPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"

@@ -12,7 +12,7 @@ MY_PN="google-mock"
 MY_PV="${PV}"
 UURL="mirror://unity/pool/universe/g/${MY_PN}"
 UVER="-${PVR_MICRO}"
-UVER_SUFFIX="-${PVR_PL_MINOR}"
+UVER_SUFFIX="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="Google's C++ mocking framework patched for the Unity desktop"
 HOMEPAGE="http://code.google.com/p/googlemock/"

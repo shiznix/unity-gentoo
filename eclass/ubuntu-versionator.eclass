@@ -7,15 +7,15 @@
 #  <patchlevel>ubuntu<revision> strings for Ubuntu based SRC_URIs
 
 ## Naming convention examples ##
-# 0ubuntu0.12.10.3		= package-3.6.0_p0_p00121003
-# 0ubuntu0.13.04.3		= package-3.6.0_p0_p00130403
-# 0ubuntu3.2			= package-3.6.0_p0_p0302
-# 1ubuntu5			= package-3.6.0_p1_p05
-# 0ubuntu6			= package-3.6.0_p0_p06
-# +14.10.20140915-1ubuntu2.2	= package-3.6.0_p1_p0202_p20140915 (14.10 is the Ubuntu release version taken from URELEASE)
+# 0ubuntu0.12.10.3		= package-3.6.0_p_p0_p00121003
+# 0ubuntu0.13.04.3		= package-3.6.0_p_p0_p00130403
+# 0ubuntu3.2			= package-3.6.0_p_p0_p0302
+# 1ubuntu5			= package-3.6.0_p_p1_p05
+# 0ubuntu6			= package-3.6.0_p_p0_p06
+# +14.10.20140915-1ubuntu2.2	= package-3.6.0_p20140915_p1_p0202 (14.10 is the Ubuntu release version taken from URELEASE)
 #
 ## When upgrading <revision> from a floating point to a whole number, portage will see the upgrade as a downgrade ##
-# Example: package-3.6.0_p0_p0101 (0ubuntu1.1) to package-3.6.0_p0_p02 (0ubuntu2)
+# Example: package-3.6.0_p_p0_p0101 (0ubuntu1.1) to package-3.6.0_p_p0_p02 (0ubuntu2)
 # If this occurs, the ebuild should be named package-3.6.0a_p0_p02
 
 
@@ -51,8 +51,30 @@ OIFS="${IFS}"
 IFS=p; read -ra PVR_ARRAY <<< "${PVR}"
 IFS="${OIFS}"
 
+## Micro version field ##
+PVR_PL_MICRO="${PVR_ARRAY[1]}"
+PVR_PL_MICRO="${PVR_PL_MICRO%*_}"
+PVR_PL_MICRO="${PVR_PL_MICRO%%-r*}"     # Strip revision strings
+	[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
+		char=2
+		index=1
+		strlength="${#PVR_PL_MICRO}"
+	while [ "${PVR_PL_MICRO}" != "" ]; do
+		strtmp="${PVR_PL_MICRO:0:$char}"
+		if [ "${strlength}" -ge 10 ]; then      # Last field can be a floating point so strip off leading zero and add decimal point #
+			if [ "${index}" = 5 ]; then
+				strtmp=".${strtmp#0}"
+			fi
+		fi
+		strarray+=( "${strtmp}" )
+		PVR_PL_MICRO="${PVR_PL_MICRO:$char}"
+		((index++))
+	done
+PVR_PL_MICRO_tmp="${strarray[@]}"
+PVR_MICRO="${PVR_PL_MICRO_tmp// /}"
+
 ## Major version field ##
-PVR_PL_MAJOR="${PVR_ARRAY[1]}"
+PVR_PL_MAJOR="${PVR_ARRAY[2]}"
 PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"
 # Support floating point version numbers in major version field (eg. libnih-1.0.3_p0403_p01.ebuild becomes libnih-1.0.3-4.3ubuntu1)
 if [ "${#PVR_PL_MAJOR}" -gt 1 ]; then
@@ -72,7 +94,7 @@ if [ "${#PVR_PL_MAJOR}" -gt 1 ]; then
 fi
 
 ## Minor version field ##
-PVR_PL_MINOR="${PVR_ARRAY[2]}"
+PVR_PL_MINOR="${PVR_ARRAY[3]}"
 PVR_PL_MINOR="${PVR_PL_MINOR%*_}"
 PVR_PL_MINOR="${PVR_PL_MINOR%%-r*}"	# Strip revision strings
 	[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
@@ -94,29 +116,6 @@ PVR_PL_MINOR="${PVR_PL_MINOR%%-r*}"	# Strip revision strings
 	done
 PVR_PL_MINOR_tmp="${strarray[@]}"
 PVR_PL_MINOR="${PVR_PL_MINOR_tmp// /.}"
-
-## Micro version field ##
-PVR_PL_MICRO="${PVR_ARRAY[3]}"
-PVR_PL_MICRO="${PVR_PL_MICRO%*_}"
-PVR_PL_MICRO="${PVR_PL_MICRO%%-r*}"	# Strip revision strings
-	[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
-	char=2
-	index=1
-	strlength="${#PVR_PL_MICRO}"
-	while [ "${PVR_PL_MICRO}" != "" ]; do
-		strtmp="${PVR_PL_MICRO:0:$char}"
-		if [ "${strlength}" -ge 10 ]; then	# Last field can be a floating point so strip off leading zero and add decimal point #
-			if [ "${index}" = 5 ]; then
-				strtmp=".${strtmp#0}"
-			fi
-		fi
-		strarray+=( "${strtmp}" )
-		PVR_PL_MICRO="${PVR_PL_MICRO:$char}"
-		((index++))
-	done
-PVR_PL_MICRO_tmp="${strarray[@]}"
-PVR_MICRO="${PVR_PL_MICRO_tmp// /}"
-
 
 if [ "${PN}" = "ubuntu-sources" ]; then
 	UVER="${PVR_PL_MAJOR}.${PVR_PL_MINOR}"

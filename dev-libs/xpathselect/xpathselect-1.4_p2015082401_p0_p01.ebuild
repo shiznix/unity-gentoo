@@ -14,7 +14,7 @@ UURL="mirror://unity/pool/main/x/${PN}"
 DESCRIPTION="Select objects in an object tree using XPath queries"
 HOMEPAGE="https://launchpad.net/xpathselect"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	test? ( http://googletest.googlecode.com/files/gtest-${GTESTVER}.zip )"
+	test? ( https://github.com/google/googletest/archive/release-${GTESTVER}.tar.gz -> gtest-${GTESTVER}.tar.gz )"
 
 LICENSE="GPL-3"
 SLOT="0"

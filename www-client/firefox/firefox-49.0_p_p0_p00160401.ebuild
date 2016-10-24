@@ -17,6 +17,7 @@ son sq sr sv-SE ta te th tr uk uz vi xh zh-CN zh-TW )
 # Taken from ubuntu-versionator.eclass
 MY_PV="${PV%%[a-z]_p*}"
 MY_PV="${MY_PV%%_p*}"
+MY_PV="${MY_PV%%_*}"
 
 # Convert the ebuild version to the upstream mozilla version, used by mozlinguas
 MOZ_PV="${MY_PV/_alpha/a}" # Handle alpha for SRC_URI

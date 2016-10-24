@@ -233,8 +233,31 @@ uver() {
 	IFS=p; read -ra PVR_ARRAY <<< "${PVR}"
 	IFS=${OIFS}
 
+	## Micro version field ##
+	PVR_PL_MICRO="${PVR_ARRAY[1]}"
+	PVR_PL_MICRO="${PVR_PL_MICRO%*_}"
+	if [ -n "${PVR_PL_MICRO}" ]; then
+		[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
+		char=2
+		index=1
+		strlength="${#PVR_PL_MICRO}"
+		while [ "${PVR_PL_MICRO}" != "" ]; do
+			strtmp="${PVR_PL_MICRO:0:$char}"
+			if [ "${strlength}" -ge 10 ]; then      # Last field can be a floating point so strip off leading zero and add decimal point #
+				if [ "${index}" = 5 ]; then
+					strtmp=".${strtmp#0}"
+				fi
+			fi
+			strarray+=( "${strtmp}" )
+			PVR_PL_MICRO="${PVR_PL_MICRO:$char}"
+			((index++))
+		done
+		PVR_PL_MICRO_tmp="${strarray[@]}"
+		PVR_MICRO="${PVR_PL_MICRO_tmp// /}"     # Value gets sourced later from UVER variable in .ebuild #
+	fi
+
 	## Major version field ##
-	PVR_PL_MAJOR="${PVR_ARRAY[1]}"
+	PVR_PL_MAJOR="${PVR_ARRAY[2]}"
 	PVR_PL_MAJOR="${PVR_PL_MAJOR%*_}"
 	# Support floating point version numbers in major version field (eg. libnih-1.0.3_p0403_p01.ebuild becomes libnih-1.0.3-4.3ubuntu1)
 	if [ "${#PVR_PL_MAJOR}" -gt 1 ]; then
@@ -254,7 +277,7 @@ uver() {
 	fi
 
 	## Minor version field ##
-	PVR_PL_MINOR="${PVR_ARRAY[2]}"
+	PVR_PL_MINOR="${PVR_ARRAY[3]}"
 	PVR_PL_MINOR="${PVR_PL_MINOR%*_}"
 	[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
 	char=2
@@ -275,30 +298,6 @@ uver() {
 	done
 	PVR_PL_MINOR_tmp="${strarray[@]}"
 	PVR_PL_MINOR="${PVR_PL_MINOR_tmp// /.}"
-
-	## Micro version field ##
-	PVR_PL_MICRO="${PVR_ARRAY[3]}"
-	PVR_PL_MICRO="${PVR_PL_MICRO%*_}"
-	if [ -n "${PVR_PL_MICRO}" ]; then
-		[[ -n "${strarray[@]}" ]] && unset 'strarray[@]'
-		char=2
-		index=1
-		strlength="${#PVR_PL_MICRO}"
-		while [ "${PVR_PL_MICRO}" != "" ]; do
-			strtmp="${PVR_PL_MICRO:0:$char}"
-			if [ "${strlength}" -ge 10 ]; then      # Last field can be a floating point so strip off leading zero and add decimal point #
-				if [ "${index}" = 5 ]; then
-					strtmp=".${strtmp#0}"
-				fi
-			fi
-			strarray+=( "${strtmp}" )
-			PVR_PL_MICRO="${PVR_PL_MICRO:$char}"
-			((index++))
-		done
-		PVR_PL_MICRO_tmp="${strarray[@]}"
-		PVR_MICRO="${PVR_PL_MICRO_tmp// /}"	# Value gets sourced later from UVER variable in .ebuild #
-	fi
-
 
 	if [ "${packname}" = "linux" ]; then
 		UVER="${PVR_PL_MAJOR}.${PVR_PL_MINOR}"

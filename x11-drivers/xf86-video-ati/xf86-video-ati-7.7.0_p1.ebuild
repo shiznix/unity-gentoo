@@ -11,7 +11,7 @@ inherit base linux-info xorg-2 ubuntu-versionator
 MY_PV="${PV}"
 MY_PN="xserver-xorg-video-ati"
 UURL="mirror://unity/pool/main/x/${MY_PN}"
-UVER="-${PVR_PL_MAJOR}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="ATI video driver patched for Mir display server"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz

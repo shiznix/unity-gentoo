@@ -9,7 +9,7 @@ URELEASE="xenial"
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/p/${PN}"
-UVER="-${PVR_PL_MAJOR}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="A library to manipulate gettext files (po and mo files)"
 HOMEPAGE="http://bitbucket.org/izi/polib/"

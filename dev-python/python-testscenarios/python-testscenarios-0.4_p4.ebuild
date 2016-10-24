@@ -9,7 +9,7 @@ URELEASE="xenial"
 inherit distutils-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/p/${PN}"
-UVER="-${PVR_PL_MAJOR}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Python unittest extension for running tests in different scenarios"
 HOMEPAGE="https://launchpad.net/testscenarios"

@@ -9,7 +9,7 @@ URELEASE="xenial"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/g/${PN}"
-UVER="-${PVR_PL_MAJOR}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="A PyGTK+ based advanced clipboard manager"
 HOMEPAGE="http://launchpad.net/glipper"

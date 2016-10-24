@@ -8,7 +8,7 @@ URELEASE="xenial"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/a/${PN}"
-UVER_PREFIX="+14.04.20140305"
+UVER_PREFIX="+14.04.${PVR_MICRO}"
 
 DESCRIPTION="Application menu module for Qt"
 HOMEPAGE="https://launchpad.net/appmenu-qt"

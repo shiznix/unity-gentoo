@@ -8,7 +8,7 @@ URELEASE="xenial"
 inherit autotools eutils linux-info systemd ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
-UVER="-${PVR_PL_MAJOR}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Ureadahead - Read files in advance during boot"
 HOMEPAGE="https://launchpad.net/ureadahead"
