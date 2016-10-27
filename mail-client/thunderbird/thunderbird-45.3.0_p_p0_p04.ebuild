@@ -37,7 +37,7 @@ PATCHFF="firefox-45.0-patches-06"
 MOZ_HTTP_URI="http://ftp.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="xenial-security"
+URELEASE="yakkety"
 inherit flag-o-matic toolchain-funcs mozconfig-v6.45 makeedit multilib autotools pax-utils check-reqs nsplugins mozlinguas-v2 ubuntu-versionator
 
 UVER_PREFIX="+build1"

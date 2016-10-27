@@ -17,7 +17,7 @@ PYTHON_COMPAT=( python2_7 )
 #
 # 'tcmalloc' is left disabled by default as the source considers this experimental
 
-URELEASE="xenial-security"
+URELEASE="yakkety"
 inherit check-reqs chromium-2 cmake-utils flag-o-matic gnome2-utils python-single-r1 ubuntu-versionator xdg-utils
 
 UURL="mirror://unity/pool/main/o/${PN}"

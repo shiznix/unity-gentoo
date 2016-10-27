@@ -38,7 +38,7 @@ MOZCONFIG_OPTIONAL_GTK2ONLY=1
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="xenial-security"
+URELEASE="yakkety"
 UVER_PREFIX="+build4"
 UURL="mirror://unity/pool/main/f/${PN}"
 
