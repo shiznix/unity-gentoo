@@ -17,19 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-DEPEND="sys-devel/gettext
-	!!<app-accessibility/onboard-1.2.0_p0_p05-r1
-	!!<app-backup/deja-dup-34.2_p0_p01-r2
-	!!<gnome-base/nautilus-3.18.4_p0_p05-r1
-	!!<gnome-extra/nm-applet-1.2.0_p0_p00160404-r1
-	!!<gnome-extra/polkit-gnome-0.105_p2_p02-r1
-	!!<media-gfx/shotwell-0.22.0_p0_p01_p20160108-r1
-	!!<media-sound/pulseaudio-8.0_p0_p3-r1
-	!!<net-libs/gnome-online-accounts-3.18.3_p1_p02-r1
-	!!<www-client/webbrowser-app-0.23_p0_p01_p20160413-r1
-	!!<x11-libs/gtk+-2.24.30_p1_p01-r1:2
-	!!<x11-libs/gtk+-3.18.9_p1_p0301-r1:3
-	!!<x11-misc/lightdm-1.18.2_p0_p02-r1"
+DEPEND="sys-devel/gettext"
 
 setvar() {
 	eval "${1//-/_}=(${2} ${3} ${4})"
