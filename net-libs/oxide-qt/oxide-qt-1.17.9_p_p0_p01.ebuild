@@ -46,6 +46,7 @@ DEPEND="dev-libs/expat
 	dev-qt/qtpositioning:5
 	dev-qt/qttest:5
 	dev-util/ninja
+	dev-python/psutil
 	media-libs/alsa-lib
 	media-libs/fontconfig
 	media-libs/freetype
