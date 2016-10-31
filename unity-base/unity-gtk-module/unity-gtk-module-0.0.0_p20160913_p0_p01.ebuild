@@ -28,7 +28,7 @@ DEPEND="dev-libs/glib:2
 	x11-libs/gtk+:3
 	!x11-misc/appmenu-gtk"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

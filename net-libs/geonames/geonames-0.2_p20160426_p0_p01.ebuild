@@ -23,9 +23,14 @@ RESTRICT="mirror"
 DEPEND="dev-libs/glib:2
 	dev-util/gtk-doc"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}/${PN}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eautoreconf
+}
+
+src_install() {
+	default
+	prune_libtool_files --modules
 }

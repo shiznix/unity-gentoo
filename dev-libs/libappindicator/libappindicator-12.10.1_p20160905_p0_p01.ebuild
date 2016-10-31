@@ -38,7 +38,7 @@ DEPEND="dev-dotnet/gtk-sharp:2
 	$(vala_depend)
 	${PYTHON_DEPS}"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 pkg_setup() {

@@ -3,10 +3,10 @@
 # $Id$
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{3_4,3_5} )
 
 URELEASE="yakkety"
-inherit cmake-utils python-single-r1 ubuntu-versionator
+inherit cmake-utils python-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -29,17 +29,11 @@ DEPEND="dev-libs/boost:=
 	<=dev-python/pillow-2.8.1[${PYTHON_USEDEP}]
 	x11-base/xorg-server[mir]"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	python-single-r1_pkg_setup
-}
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
-	python_fix_shebang .
 	cmake-utils_src_prepare
 }
 
@@ -55,9 +49,6 @@ src_configure() {
 
 src_install() {
 	cmake-utils_src_install
-
-	insinto /etc/lightdm/lightdm.conf.d
-	doins debian/10-unity-system-compositor.conf
 
 	exeinto /usr/bin
 	doexe debian/unity-system-compositor.sleep

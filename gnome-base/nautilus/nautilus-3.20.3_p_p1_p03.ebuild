@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"
 # profiling?
-IUSE="debug exif gnome +introspection packagekit +previewer selinux sendto tracker xmp"
+IUSE="exif gnome +introspection packagekit +previewer selinux sendto tracker xmp"
 #KEYWORDS="~amd64 ~x86"
 
 # FIXME: tests fails under Xvfb, but pass when building manually
@@ -57,7 +57,7 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig
 	x11-proto/xproto
-	dev-libs/libzeitgeist"
+	gnome-extra/zeitgeist"
 RDEPEND="${COMMON_DEPEND}
 	packagekit? ( app-admin/packagekit-base )
 	sendto? ( !<gnome-extra/nautilus-sendto-3.0.1 )"
@@ -74,8 +74,6 @@ PDEPEND="
 	>=gnome-base/gvfs-1.14[gtk]"
 # Need gvfs[gtk] for recent:/// support
 
-S="${WORKDIR}/${PN}-3.14.3"
-
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
@@ -84,14 +82,13 @@ src_prepare() {
 	find ${WORKDIR} -type f -name "*.desktop*" \
 		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
 
-	eautoreconf
-
 	if use previewer; then
 		DOC_CONTENTS="nautilus uses gnome-extra/sushi to preview media files.
 			To activate the previewer, select a file and press space; to
 			close the previewer, press space again."
 	fi
 	gnome2_src_prepare
+	eautoreconf
 }
 
 src_configure() {
@@ -99,7 +96,6 @@ src_configure() {
 	gnome2_src_configure \
 		--disable-profiling \
 		--disable-update-mimedb \
-		$(use_enable debug) \
 		$(use_enable exif libexif) \
 		$(use_enable introspection) \
 		$(use_enable packagekit) \

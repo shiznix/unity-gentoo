@@ -30,7 +30,7 @@ DEPEND="dev-libs/glib:2
 	nls? ( virtual/libintl )
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	mv "${WORKDIR}/debian" "${S}/"      # aclocal executes 'get-version' from source tree requiring existence of debian/Changelog

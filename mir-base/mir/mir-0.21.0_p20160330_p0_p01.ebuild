@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3 MIT"
-SLOT="0/35"	# Taken from /usr/lib/libmirserver.so.*
+SLOT="0/38"	# Taken from /usr/lib/libmirserver.so.*
 KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"

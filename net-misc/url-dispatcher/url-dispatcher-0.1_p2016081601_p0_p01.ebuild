@@ -27,7 +27,7 @@ DEPEND="dev-libs/glib:2
 	sys-apps/dbus
 	sys-apps/ubuntu-app-launch"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_configure() {
 	! use test && \

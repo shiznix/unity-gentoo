@@ -31,10 +31,19 @@ DEPEND="dev-db/sqlite:3
 	${PYTHON_DEPS}"
 
 MAKEOPTS="${MAKEOPTS} -j1"
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
+	#       (the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
+	# Workaround by changing into a re-defined "${S}" #
+	mkdir "${WORKDIR}/${P}"
+	mv "${WORKDIR}"/* "${WORKDIR}/${P}" &> /dev/null
+	export S="${WORKDIR}/${P}"
+	cd "${S}"
+
 	eautoreconf
 	append-cflags -Wno-error
 }

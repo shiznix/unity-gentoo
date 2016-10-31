@@ -28,7 +28,7 @@ DEPEND="dev-qt/qtcore:5
 	dev-libs/libdbusmenu-qt"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 DOCS=( NEWS README )
 
 src_compile() {

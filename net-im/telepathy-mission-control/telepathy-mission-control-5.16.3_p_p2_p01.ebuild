@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="yakkety"
-inherit gnome2-utils python-any-r1 ubuntu-versionator
+inherit autotools gnome2-utils python-any-r1 ubuntu-versionator
 
 DESCRIPTION="An account manager and channel dispatcher for the Telepathy framework patched for the Unity desktop"
 HOMEPAGE="http://cgit.freedesktop.org/telepathy/telepathy-mission-control/"
@@ -46,6 +46,7 @@ pkg_setup() {
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+	eautoreconf
 }
 
 src_configure() {

@@ -20,4 +20,4 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"

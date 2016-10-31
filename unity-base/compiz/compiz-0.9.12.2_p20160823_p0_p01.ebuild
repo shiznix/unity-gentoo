@@ -82,7 +82,7 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 
-	# 'python-copy-sources' will not work if S="${WORKDIR}" becaues it bails if 'cp' prints anything to stderr #
+	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
 	#	(the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
 	# Workaround by changing into a re-defined "${S}" #
 	mkdir "${WORKDIR}/${P}"

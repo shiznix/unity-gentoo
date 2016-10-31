@@ -183,12 +183,13 @@ ubuntu-versionator_src_prepare() {
 		done
 		[[ ${PATCHES[@]} ]] && einfo "  <-- Ubuntu patchset -->"
 	fi
-	# Many eclasses (cmake-utils,distutils-r1,qt5-build) apply their own 'default' command for EAPI=6 or 'epatch ${PATCHES[@]}' command for EAPI <6 so let them #
+	# Many eclasses (cmake-utils,distutils-r1,qt5-build,xdg) apply their own 'default' command for EAPI=6 or 'epatch ${PATCHES[@]}' command for EAPI <6 so let them #
 	#	'declare' checks to see if any of those functions are set/inherited and only apply 'default' if they are not
 	if [ "${EAPI}" -ge 6 ]; then
 		[[ $(declare -Ff cmake-utils_src_prepare) ]] || \
 		[[ $(declare -Ff distutils-r1_src_prepare) ]] || \
 		[[ $(declare -Ff qt5-build_src_prepare) ]] || \
+		[[ $(declare -Ff xdg_src_prepare) ]] || \
 			default
 	else
 		# Only apply base_src_prepare if EAPI<6 and have inherited base.eclass #
