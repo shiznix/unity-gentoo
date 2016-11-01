@@ -25,7 +25,8 @@ DEPEND="dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtdeclarative:5
 	dev-util/intltool
-	sys-devel/gettext"
+	sys-devel/gettext
+	>=x11-libs/content-hub-0.2"
 
 S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
@@ -44,6 +45,12 @@ src_prepare() {
 	sed -e "s:python3:${MY_EPYTHON}:g" \
 		-i CMakeLists.txt
 	cmake-utils_src_prepare
+}
+
+src_compile() {
+	pushd "${BUILD_DIR}"
+		VERBOSE=1 emake all translations
+	popd
 }
 
 pkg_preinst() {

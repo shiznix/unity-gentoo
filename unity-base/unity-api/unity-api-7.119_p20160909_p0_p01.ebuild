@@ -25,5 +25,5 @@ DEPEND="dev-libs/boost:=
 	dev-qt/qtdeclarative
 	test? ( dev-util/cppcheck )"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 export QT_SELECT=5

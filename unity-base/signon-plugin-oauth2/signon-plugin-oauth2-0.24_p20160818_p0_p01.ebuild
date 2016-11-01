@@ -26,7 +26,7 @@ RDEPEND="dev-libs/qjson
 	unity-base/signon-ui"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

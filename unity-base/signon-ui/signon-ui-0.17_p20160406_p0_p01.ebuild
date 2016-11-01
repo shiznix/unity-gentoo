@@ -36,5 +36,5 @@ DEPEND="dev-qt/qtcore:5
 	x11-libs/libaccounts-qt:=
 	x11-libs/libnotify"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 QT5_BUILD_DIR="${S}"

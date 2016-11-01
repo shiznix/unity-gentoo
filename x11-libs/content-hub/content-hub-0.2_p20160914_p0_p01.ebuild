@@ -42,7 +42,7 @@ DEPEND="!dev-libs/libupstart-app-launch
 	x11-libs/libnotify
 	x11-libs/ubuntu-ui-toolkit"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 export QT_SELECT=5
 export QT_DEBUG_PLUGINS=1	# Uncommented to debug the inevitable QML plugins problems
 export QML_IMPORT_TRACE=1

@@ -40,7 +40,7 @@ DEPEND="${RDEPEND}
 	doc? ( dev-qt/qdoc:5 )
 	${PYTHON_DEPS}"
 
-S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
+S="${WORKDIR}"
 QT5_BUILD_DIR="${S}"
 export QT_SELECT=5
 

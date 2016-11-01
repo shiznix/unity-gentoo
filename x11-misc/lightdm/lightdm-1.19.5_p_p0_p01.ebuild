@@ -69,7 +69,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+#	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369

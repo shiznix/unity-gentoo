@@ -43,10 +43,19 @@ DEPEND="${RDEPEND}
 	$(vala_depend)
 	${PYTHON_DEPS}"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
+	#       (the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
+	# Workaround by changing into a re-defined "${S}" #
+	mkdir "${WORKDIR}/${P}"
+	mv "${WORKDIR}"/* "${WORKDIR}/${P}" &> /dev/null
+	export S="${WORKDIR}/${P}"
+	cd "${S}"
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf

@@ -23,8 +23,6 @@ SLOT="0/1.0.0"
 IUSE="debug"
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
 RDEPEND="dev-libs/check
 	>=dev-libs/glib-2.35.1
 	>=dev-libs/gobject-introspection-1.36.0
@@ -35,11 +33,21 @@ DEPEND="${RDEPEND}
 	dev-util/gtk-doc-am
 	${PYTHON_DEPS}"
 
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
 	ubuntu-versionator_src_prepare
+
+	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
+	#       (the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
+	# Workaround by changing into a re-defined "${S}" #
+	mkdir "${WORKDIR}/${P}"
+	mv "${WORKDIR}"/* "${WORKDIR}/${P}" &> /dev/null
+	export S="${WORKDIR}/${P}"
+	cd "${S}"
+
 	vala_src_prepare
 	append-cflags -Wno-error
 	eautoreconf
