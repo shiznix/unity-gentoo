@@ -99,5 +99,6 @@ x11-drivers/xf86-video-ati::gentoo
 x11-drivers/xf86-video-intel::gentoo
 x11-drivers/xf86-video-nouveau::gentoo
 x11-libs/gtk+::gentoo
+x11-libs/mx::gentoo
 x11-misc/lightdm::gentoo
 x11-misc/lightdm-kde::gentoo

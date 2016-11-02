@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-GCONF_DEBUG="yes"
+GNOME2_LA_PUNT="yes"
 
 URELEASE="yakkety"
 inherit autotools eutils gnome2 ubuntu-versionator
@@ -83,11 +83,11 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# Desktop Session is named 'unity' #
-	sed -e 's:Ubuntu:Unity:g' \
-		-e 's:session=ubuntu:session=unity:g' \
-			-i data/ubuntu.desktop.in || die
-	sed -e 's:Ubuntu:Unity:g' \
-		-i data/ubuntu.session.desktop.in.in || die
+#	sed -e 's:Ubuntu:Unity:g' \
+#		-e 's:session=ubuntu:session=unity:g' \
+#			-i data/ubuntu.desktop.in || die
+#	sed -e 's:Ubuntu:Unity:g' \
+#		-i data/ubuntu.session.desktop.in.in || die
 	eautoreconf
 	gnome2_src_prepare
 }

@@ -29,6 +29,7 @@ DEPEND="${RDEPEND}
 	dev-qt/qtdbus:5
 	dev-qt/qtdeclarative:5
 	dev-qt/qdoc:5
+	dev-qt/qthelp:5
 	dev-qt/qtgraphicaleffects:5
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
@@ -43,11 +44,17 @@ export QT_SELECT=5
 unset QT_QPA_PLATFORMTHEME
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER}.diff"
 	ubuntu-versionator_src_prepare
 
-	# Fix build hanging when trying to build with QT-5.6 #
-	epatch -p1 "${FILESDIR}/qt-5.6_qmlplugindump-wrapper.sh-fix.diff"
+	# Don't assume GCC's _FORTIFY_SOURCE hasn't already been built-in #
+	sed -e '/_FORTIFY_SOURCE/d' \
+			-i features/ubuntu_common.prf
+
+	# Disable documentation as it fails to build with 'Can't link to...' errors #
+	sed -e '/documentation.pri/d' \
+		-e 's:po documentation:po :g' \
+			-i ubuntu-sdk.pro
 
 	# Don't install autopilot python testsuite files, they require dpkg to run tests #
 	sed -e '/autopilot/d' \

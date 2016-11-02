@@ -34,6 +34,7 @@ RDEPEND="sys-auth/polkit-pkla-compat
 	x11-themes/gtk-engines-murrine
 	x11-themes/unity-asset-pool"
 DEPEND="${RDEPEND}
+	!unity-base/dconf-qt
 	dev-libs/boost:=
 	dev-libs/dee:=
 	dev-libs/dbus-glib
@@ -64,7 +65,6 @@ DEPEND="${RDEPEND}
 	sys-libs/libnih[dbus]
 	unity-base/bamf:=
 	unity-base/compiz:=
-	unity-base/dconf-qt
 	unity-base/nux:=[debug?]
 	unity-base/overlay-scrollbar
 	unity-base/unity-control-center
@@ -108,10 +108,10 @@ src_prepare() {
 		-e '/amazon/d' \
 		-e '/software-center/d' \
 		-e 's:nautilus.desktop:org.gnome.Nautilus.desktop:' \
-			-i com.canonical.Unity.gschema.xml || die
+			-i data/com.canonical.Unity.gschema.xml || die
 
 	sed -e "s:/desktop:/org/unity/desktop:g" \
-		-i com.canonical.Unity.gschema.xml || die
+		-i data/com.canonical.Unity.gschema.xml || die
 
 	sed -e "s:Ubuntu Desktop:Unity Gentoo Desktop:g" \
 		-i panel/PanelMenuView.cpp || die
@@ -145,7 +145,7 @@ src_prepare() {
 	# DESKTOP_SESSION and SESSION is 'unity' not 'ubuntu' #
 	sed -e 's:SESSION=ubuntu:SESSION=unity:g' \
 		-e 's:ubuntu.session:unity.session:g' \
-			-i {unity7.conf.in,services/unity-panel-service.conf.in} || \
+			-i {data/unity7.conf.in,services/unity-panel-service.conf.in} || \
 				die "Sed failed for {unity7.conf.in,services/unity-panel-service.conf.in}"
 	cmake-utils_src_prepare
 }

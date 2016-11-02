@@ -22,6 +22,7 @@ sys-libs/db:5.1
 sys-libs/db:5.3
 ~x11-base/xorg-drivers-1.18
 =x11-drivers/xf86-input-evdev-2.10*
+x11-misc/xvfb-run
 x11-proto/glproto
 ~x11-libs/libdrm-2.4.67
 

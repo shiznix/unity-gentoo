@@ -34,7 +34,8 @@ DEPEND="${RDEPEND}
 	dev-qt/qtsql:5
 	dev-qt/qtwebkit:5[qml,multimedia,webp]
 	dev-qt/qtwidgets:5
-	x11-libs/unity-webapps-qml"
+	x11-libs/unity-webapps-qml
+	x11-misc/xvfb-run"
 
 S="${WORKDIR}"
 export QT_SELECT=5

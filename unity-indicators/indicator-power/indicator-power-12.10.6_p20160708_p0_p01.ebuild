@@ -30,7 +30,7 @@ DEPEND="${RDEPEND}
 	sys-power/upower
 	unity-base/unity-settings-daemon"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {

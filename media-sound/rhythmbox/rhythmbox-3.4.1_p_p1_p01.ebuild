@@ -37,8 +37,6 @@ REQUIRED_USE="
 # upstream bug #688745
 RESTRICT="test"
 
-# FIXME: double check what to do with fm-radio plugin
-# webkit-gtk-1.10 is needed because it uses gstreamer-1.0
 COMMON_DEPEND="
 	>=dev-libs/glib-2.34:2
 	>=dev-libs/libxml2-2.7.8:2
@@ -64,7 +62,7 @@ COMMON_DEPEND="
 		>=net-libs/libdmapsharing-2.9.19:3.0
 		media-plugins/gst-plugins-soup:1.0 )
 	libsecret? ( >=app-crypt/libsecret-0.18 )
-	html? ( >=net-libs/webkit-gtk-1.10:3 )
+	html? ( >=net-libs/webkit-gtk-2.4:3 )
 	libnotify? ( >=x11-libs/libnotify-0.7.0 )
 	lirc? ( app-misc/lirc )
 	python? ( >=dev-python/pygobject-3.0:3[${PYTHON_USEDEP}] )
@@ -95,7 +93,7 @@ RDEPEND="${COMMON_DEPEND}
 		libsecret? ( >=app-crypt/libsecret-0.18[introspection] )
 		webkit? (
 			dev-python/mako[${PYTHON_USEDEP}]
-			>=net-libs/webkit-gtk-1.10:3[introspection] ) )"
+			>=net-libs/webkit-gtk-2.4:3[introspection] ) )"
 DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 	app-text/yelp-tools
@@ -146,7 +144,6 @@ src_configure() {
 		$(use_enable python) \
 		$(use_enable upnp-av grilo) \
 		$(use_with cdr brasero) \
-		$(use_with html webkit) \
 		$(use_with ipod) \
 		$(use_with libsecret) \
 		$(use_with mtp) \

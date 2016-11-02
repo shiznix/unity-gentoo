@@ -41,7 +41,7 @@ DEPEND="dev-libs/libaccounts-glib:=
 	x11-proto/kbproto
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {

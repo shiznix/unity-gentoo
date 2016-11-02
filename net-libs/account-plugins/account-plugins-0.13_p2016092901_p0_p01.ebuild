@@ -36,7 +36,7 @@ DEPEND="${RDEPEND}
 	x11-proto/kbproto
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

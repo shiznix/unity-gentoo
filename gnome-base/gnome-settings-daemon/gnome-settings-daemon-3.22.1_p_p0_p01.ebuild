@@ -7,7 +7,7 @@ GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
 URELEASE="yakkety-updates"
-inherit autotools eutils gnome2 python-any-r1 systemd udev virtualx ubuntu-versionator
+inherit autotools eutils flag-o-matic gnome2 python-any-r1 systemd udev virtualx ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"
 
@@ -39,6 +39,7 @@ COMMON_DEPEND="
 	>=media-libs/lcms-2.2:2
 	media-libs/libcanberra[gtk3]
 	>=media-sound/pulseaudio-2
+	sys-apps/accountsservice
 	>=sys-power/upower-0.99:=
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
@@ -119,13 +120,16 @@ src_prepare() {
 		-i data/gnome-settings-daemon.desktop.in.in
 
 	# Make colord and wacom optional; requires eautoreconf
-	eapply "${FILESDIR}"/${PN}-3.16.0-optional.patch
+	eapply "${FILESDIR}"/${PN}-3.22.0-optional.patch
 
 	eautoreconf
 	gnome2_src_prepare
 }
 
 src_configure() {
+	# Ubuntu 53_sync_input_sources_to_accountsservice.patch adds references to act/act.h but misses telling configure about it #
+	append-cflags "$(pkg-config --libs --cflags accountsservice)"
+
 	gnome2_src_configure \
 		--disable-static \
 		--enable-man \
