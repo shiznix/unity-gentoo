@@ -38,8 +38,8 @@ MOZCONFIG_OPTIONAL_GTK2ONLY=1
 MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="yakkety"
-UVER_PREFIX="+build4"
+URELEASE="yakkety-security"
+UVER_PREFIX="+build2"
 UURL="mirror://unity/pool/main/f/${PN}"
 
 inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.49 pax-utils fdo-mime autotools virtualx mozlinguas-v2 ubuntu-versionator
