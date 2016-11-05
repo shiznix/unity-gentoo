@@ -51,6 +51,10 @@ src_prepare() {
 	# Ubuntu patchset (don't use epatch so we can easily see what files get patched) #
 	cat "${WORKDIR}/${MY_PN}_${BASE_PV}-${UVER}.diff" | patch -p1 || die
 
+	# Fix from LP# 1630990 (header syntax error with !CONFIG_SECURITYFS) #
+	sed -e 's/const struct inode_operations \*iops))$/const struct inode_operations *iops)/' \
+		-i include/linux/security.h
+
 	sed -i -e "s:^\(EXTRAVERSION =\).*:\1 ${EXTRAVERSION}:" Makefile || die
 	sed	-i -e 's:#export\tINSTALL_PATH:export\tINSTALL_PATH:' Makefile || die
 	rm -f .config >/dev/null
