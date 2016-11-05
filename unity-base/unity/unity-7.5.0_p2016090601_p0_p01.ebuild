@@ -54,7 +54,7 @@ DEPEND="${RDEPEND}
 	app-text/yelp-tools
 	gnome-base/gnome-desktop:3=
 	gnome-base/gnome-menus:3
-	gnome-base/gnome-session
+	gnome-base/gnome-session[systemd]
 	gnome-base/gsettings-desktop-schemas
 	gnome-extra/polkit-gnome:0
 	media-libs/clutter-gtk:1.0

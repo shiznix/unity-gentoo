@@ -6,7 +6,7 @@ EAPI=6
 GNOME2_LA_PUNT="yes"
 
 URELEASE="yakkety"
-inherit autotools eutils gnome2 ubuntu-versionator
+inherit autotools eutils gnome2 systemd ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -81,15 +81,17 @@ DEPEND="${COMMON_DEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+	gnome2_src_prepare
 
 	# Desktop Session is named 'unity' #
-#	sed -e 's:Ubuntu:Unity:g' \
-#		-e 's:session=ubuntu:session=unity:g' \
-#			-i data/ubuntu.desktop.in || die
-#	sed -e 's:Ubuntu:Unity:g' \
-#		-i data/ubuntu.session.desktop.in.in || die
+	sed -e 's:buntu:nity:g' \
+		-i data/ubuntu.desktop.in \
+		-i data/ubuntu.session.desktop.in.in \
+		-i "${WORKDIR}/debian/data/ubuntu-session.target" \
+		-i "${WORKDIR}/debian/data/50-ubuntu.conf" || die
+	sed -e 's:/usr/lib/gnome-session:/usr/libexec/gnome-session:g' \
+		-i data/ubuntu.desktop.in || die
 	eautoreconf
-	gnome2_src_prepare
 }
 
 src_configure() {
@@ -155,6 +157,17 @@ src_install() {
 	# Start gnome-session using upstart #
 	insinto /usr/share/upstart/sessions
 	newins "${WORKDIR}/debian/gnome-session-bin.user-session.upstart" gnome-session.conf
+
+	# Start gnome-session using systemd #
+	exeinto /usr/libexec
+	doexe "${WORKDIR}/debian/data/run-systemd-session"
+
+	# Install systemd unit files to enable starting desktop sessions via systemd #
+	systemd_douserunit "${WORKDIR}/debian/data/gnome-session.service"
+	systemd_douserunit "${WORKDIR}/debian/data/ubuntu-session.target"
+
+	insinto /etc/lightdm/lightdm.conf.d
+	newins "${WORKDIR}/debian/data/50-ubuntu.conf" 50-unity.conf
 }
 
 pkg_postinst() {
