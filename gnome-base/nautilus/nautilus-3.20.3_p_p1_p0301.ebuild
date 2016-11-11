@@ -5,7 +5,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit autotools eutils gnome2 readme.gentoo-r1 virtualx ubuntu-versionator
 
 UURL="mirror://unity/pool/main/n/${PN}"
@@ -75,6 +75,11 @@ PDEPEND="
 # Need gvfs[gtk] for recent:/// support
 
 src_prepare() {
+	# Disable selected patches #
+	sed \
+		`# multiarch_fallback.patch causes segfault in /usr/lib/nautilus/extensions-3.0/libterminal-nautilus.so` \
+		-e 's:multiarch_fallback:#multiarch_fallback:g' \
+			-i "${WORKDIR}/debian/patches/series"
 	ubuntu-versionator_src_prepare
 
 	# If a .desktop file does not have inline translations, fall back #

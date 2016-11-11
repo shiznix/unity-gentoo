@@ -33,7 +33,7 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	!<${CATEGORY}/${PN}-0.4.1-r201"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {

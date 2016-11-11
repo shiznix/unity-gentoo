@@ -89,7 +89,7 @@ src_prepare() {
 		-i data/ubuntu.session.desktop.in.in \
 		-i "${WORKDIR}/debian/data/ubuntu-session.target" \
 		-i "${WORKDIR}/debian/data/50-ubuntu.conf" || die
-	sed -e 's:/usr/lib/gnome-session:/usr/libexec/gnome-session:g' \
+	sed -e 's:/usr/lib/gnome-session:/usr/libexec:g' \
 		-i data/ubuntu.desktop.in || die
 	eautoreconf
 }
@@ -164,7 +164,7 @@ src_install() {
 
 	# Install systemd unit files to enable starting desktop sessions via systemd #
 	systemd_douserunit "${WORKDIR}/debian/data/gnome-session.service"
-	systemd_douserunit "${WORKDIR}/debian/data/ubuntu-session.target"
+	systemd_newuserunit "${WORKDIR}/debian/data/ubuntu-session.target" unity-session.target
 
 	insinto /etc/lightdm/lightdm.conf.d
 	newins "${WORKDIR}/debian/data/50-ubuntu.conf" 50-unity.conf

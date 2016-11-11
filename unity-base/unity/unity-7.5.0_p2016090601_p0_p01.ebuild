@@ -26,7 +26,8 @@ RESTRICT="mirror"
 
 S="${WORKDIR}"
 
-RDEPEND="sys-auth/polkit-pkla-compat
+RDEPEND=">=sys-apps/systemd-232
+	sys-auth/polkit-pkla-compat
 	unity-base/gsettings-ubuntu-touch-schemas
 	unity-base/session-shortcuts
 	unity-base/unity-language-pack
@@ -59,7 +60,7 @@ DEPEND="${RDEPEND}
 	gnome-extra/polkit-gnome:0
 	media-libs/clutter-gtk:1.0
 	media-libs/glew:=
-	sys-apps/dbus
+	sys-apps/dbus[systemd,user-session]
 	sys-apps/upstart
 	sys-auth/pambase
 	sys-libs/libnih[dbus]
@@ -145,8 +146,9 @@ src_prepare() {
 	# DESKTOP_SESSION and SESSION is 'unity' not 'ubuntu' #
 	sed -e 's:SESSION=ubuntu:SESSION=unity:g' \
 		-e 's:ubuntu.session:unity.session:g' \
-			-i {data/unity7.conf.in,services/unity-panel-service.conf.in} || \
-				die "Sed failed for {unity7.conf.in,services/unity-panel-service.conf.in}"
+			-i {data/unity7.conf.in,services/unity-panel-service.conf.in} \
+			-i tools/{systemd,upstart}-prestart-check || \
+				die "Sed failed for {data/unity7.conf.in,services/unity-panel-service.conf.in} tools/{systemd,upstart}-prestart-check"
 	cmake-utils_src_prepare
 }
 

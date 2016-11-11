@@ -38,7 +38,7 @@ COMMON_DEPEND="dev-libs/glib:2
 	media-libs/libcanberra[gtk3]
 	media-sound/pulseaudio
 	sys-apps/accountsservice
-	sys-apps/systemd
+	>=sys-apps/systemd-232
 	>=sys-power/upower-0.99:=
 	x11-apps/xinput
 	x11-libs/cairo
@@ -101,9 +101,10 @@ src_prepare() {
 	# Make colord and wacom optional; requires eautoreconf
 	epatch "${FILESDIR}/${PN}-optional-color-wacom.patch"
 
-	# Correct path to unity-settings-daemon executable in upstart files #
+	# Correct path to unity-settings-daemon executable in upstart and systemd files #
 	sed -e 's:/usr/lib/unity-settings-daemon:/usr/libexec:g' \
-		-i debian/unity-settings-daemon.user-session.{desktop,upstart}
+		-i debian/unity-settings-daemon.user-session.{desktop,upstart} \
+		-i debian/user/unity-settings-daemon.service || die
 
 	eautoreconf
 	gnome2_src_prepare
@@ -154,6 +155,12 @@ src_install() {
 	newins debian/unity-settings-daemon.user-session.desktop unity-settings-daemon.desktop
 	insinto /usr/share/upstart/sessions/
 	newins debian/unity-settings-daemon.user-session.upstart unity-settings-daemon.conf
+
+	# Install systemd units #
+	insinto /usr/lib/systemd/user
+	doins debian/user/unity-settings-daemon.service
+	insinto /usr/share/upstart/systemd-session/upstart
+	doins debian/user/unity-settings-daemon.override
 
 	prune_libtool_files --modules
 }

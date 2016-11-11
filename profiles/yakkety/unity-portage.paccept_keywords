@@ -6,9 +6,10 @@
 app-admin/cgmanager
 app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
+=app-shells/bash-completion-2.4*	# For systemd-232 unmask
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
-=dev-libs/boost-1.58*		# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
+=dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
 ~dev-libs/nss-3.26.1
 =dev-util/boost-build-1.58*
 dev-libs/libindicate-qt
@@ -17,9 +18,12 @@ dev-libs/libindicate-qt
 dev-util/umockdev
 ~media-libs/giflib-4.2.3
 =net-misc/networkmanager-1.2*
+~sys-apps/systemd-232			# Provides support for graphical(-pre)-session.target(.wants) systemd units used to start Unity desktop session
+=sys-apps/util-linux-2.28*		# For systemd-232 unmask
 sys-devel/gcc:5.3.0
 sys-libs/db:5.1
 sys-libs/db:5.3
+~sys-libs/libseccomp-2.3.1		# For systemd-232 unmask
 ~x11-base/xorg-drivers-1.18
 =x11-drivers/xf86-input-evdev-2.10*
 x11-misc/xvfb-run
@@ -35,6 +39,7 @@ dev-libs/dee **
 dev-libs/dbus-cpp **
 dev-libs/libaccounts-glib **
 dev-libs/libdbusmenu-qt **
+dev-libs/libindicator **
 dev-libs/libtimezonemap **
 dev-libs/glib **
 dev-libs/gobject-introspection **

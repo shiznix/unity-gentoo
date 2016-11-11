@@ -62,6 +62,8 @@ src_install() {
 	#!/bin/sh
 	/bin/false
 	EOF
+
+	prune_libtool_files --modules
 }
 
 pkg_preinst() {

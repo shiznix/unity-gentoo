@@ -37,6 +37,11 @@ src_prepare() {
 	export VALA_API_GEN="$VAPIGEN"
 }
 
+src_install() {
+	default
+	prune_libtool_files --modules
+}
+
 pkg_preinst() {
 	gnome2_schemas_savelist
 }

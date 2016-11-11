@@ -60,6 +60,11 @@ src_configure() {
 	econf --disable-coverage
 }
 
+src_install() {
+	default
+	prune_libtool_files --modules
+}
+
 pkg_postinst() {
 	elog "To reset all Online Accounts do the following as your desktop user:"
 	elog "rm -rfv ~/.cache/telepathy ~/.local/share/telepathy ~/.config/libaccounts-glib"

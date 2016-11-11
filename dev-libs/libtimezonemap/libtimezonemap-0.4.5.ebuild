@@ -33,3 +33,9 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	eautoreconf
 }
+
+src_install() {
+	default
+	prune_libtool_files --modules
+
+}

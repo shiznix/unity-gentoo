@@ -66,6 +66,9 @@ src_install() {
 	exeinto /etc/X11/xinit/xinitrc.d
 	doexe "${FILESDIR}/99upstart"
 
+	insinto /usr/share/upstart/systemd-session/upstart
+	doins debian/systemd-graphical-session.conf
+
 	# disable job due to Unity logout lag
 	mv ${ED}usr/share/upstart/sessions/upstart-dconf-bridge.conf{,.disabled}
 
