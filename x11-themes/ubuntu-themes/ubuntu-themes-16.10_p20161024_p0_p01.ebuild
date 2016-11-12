@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit eutils gnome2-utils python-single-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"

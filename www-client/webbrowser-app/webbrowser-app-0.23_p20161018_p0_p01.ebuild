@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python3_4 )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit distutils-r1 cmake-utils ubuntu-versionator	# Inheritance order important
 
 UURL="mirror://unity/pool/main/w/${PN}"
