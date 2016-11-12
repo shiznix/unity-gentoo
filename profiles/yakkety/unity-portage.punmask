@@ -4,8 +4,3 @@
 =gnome-base/libgnomeprint-2.20*::gentoo
 =gnome-base/libgnomeprintui-2.20*::gentoo
 gnome-extra/gnome-integration-spotify
-
-
-~gnome-base/gnome-settings-daemon-3.22.1
-~dev-libs/glib-2.50.0
-~dev-util/gdbus-codegen-2.50.0
