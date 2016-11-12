@@ -47,10 +47,6 @@ pkg_setup() {
 	python-single-r1_pkg_setup
 }
 
-src_prepare() {
-	ubuntu-versionator_src_prepare
-}
-
 src_configure() {
 	if ! has_version "x11-libs/cairo[glib]"; then
 		# Bug #391213: enable cairo-gobject support even if it's not installed
