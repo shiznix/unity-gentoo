@@ -44,6 +44,7 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
+	epatch_user
 }
 
 src_prepare() {
