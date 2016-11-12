@@ -6,6 +6,6 @@
 gnome-extra/gnome-integration-spotify
 
 
->=gnome-base/gnome-settings-daemon-3.21
-=dev-libs/glib-2.50*
-=dev-util/gdbus-codegen-2.50*
+~gnome-base/gnome-settings-daemon-3.22.1
+~dev-libs/glib-2.50.0
+~dev-util/gdbus-codegen-2.50.0
