@@ -1,5 +1,11 @@
 ## Global masks ##
 
+# >=net-misc/networkmanager-1.2 enables MAC address spoofing by default with >=net-wireless/wpa_supplicant-2.6
+#	However this cannot actually be configured to be turned off until >=net-misc/networkmanager-1.4
+#		(see https://blogs.gnome.org/thaller/2016/08/26/mac-address-spoofing-in-networkmanager-1-4-0)
+# Workaround is to mask >=net-wireless/wpa_supplicant-2.6 until we start using >=net-misc/networkmanager-1.4
+>=net-wireless/wpa_supplicant-2.6
+
 # Need to match gnome-extra/nm-applet version otherwise nm-applet consumes 100% CPU
 >=net-misc/networkmanager-1.4.0
 
