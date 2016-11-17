@@ -187,6 +187,24 @@ unix:abstract=/com/ubuntu/upstart-session/1000/6350
 * Upstart processes it's *.conf files in /usr/share/upstart/sessions/
 * Upstart job /usr/share/upstart/sessions/gnome-session.conf starts 'gnome-session --session=$DESKTOP_SESSION'
 
+## Systemd Session Launch ##
+* As of Yakkety release, Canonical are starting to move from upstart to 'systemd --user' *.service units to start desktop sessions and services
+* Unity session is launched as follows:
+	- Display manager (eg.lightdm) executes /usr/share/xsessions/unity.desktop:
+		- '/usr/share/xsessions/unity.desktop' executes '/usr/libexec/run-systemd-session unity-session.target'
+		- '/usr/libexec/run-systemd-session unity-session.target' runs 'systemctl --user start --wait unity-session.target'
+		- '/usr/lib/systemd/user/unity-session.target' starts:
+			- 'gnome-session.service' which in turn executes 'gnome-session --session=unity'
+			- 'unity7.service' is auto-started due to existence of '/usr/lib/systemd/user/unity-session.target.requires/unity7.service' symlink
+		- All other Unity systemd service units are then started as being 'PartOf=graphical-session.target'
+		- Most importantly, unity7.service unit does the following:
+			- Sets the compizconfig profile to 'COMPIZ_CONFIG_PROFILE=ubuntu' via '/usr/lib/unity/compiz-profile-selector'
+			- Executes '/usr/lib/unity/systemd-prestart-check' to check if we're in an upstart or systemd session
+			- Starts {unity-settings-daemon,unity-panel-service,bamfdaemon}.service units
+	- In the scenario of 'XSESSION=unity startx' from console with no display manager:
+		- Relies on /etc/X11/xinit/xinitrc.d/99upstart-systemd to perform the upstart/systemd check
+		- If an upstart session then executes '/usr/bin/upstart --user'
+		- If a systemd session then executes '/usr/libexec/run-systemd-session unity-session.target'
 
 ## Compiz performance settings for 'ccsm' ##
  Click on "OpenGL" and set "Texture Filter" to Fast.
