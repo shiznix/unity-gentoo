@@ -64,7 +64,7 @@ src_install() {
 	newins init/man/init.8 upstart.8
 
 	exeinto /etc/X11/xinit/xinitrc.d
-	doexe "${FILESDIR}/99upstart"
+	doexe "${FILESDIR}/99upstart-systemd"
 
 	insinto /usr/share/upstart/systemd-session/upstart
 	doins debian/systemd-graphical-session.conf
