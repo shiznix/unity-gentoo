@@ -233,10 +233,6 @@ multilib_src_install_all() {
 	rm "${ED}"usr/bin/gtk-builder-convert || die
 
 	readme.gentoo_create_doc
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_preinst() {

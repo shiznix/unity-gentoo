@@ -104,15 +104,3 @@ src_configure() {
 	# gudev & cheese from sub-configure is overriden
 	# by top level configure, and disabled so leave it like that
 }
-
-src_install() {
-	default
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	#  except telepathy-account-widgets #
-	find "${ED}usr/share/locale" \
-		-type f \! -name 'gnome-online-accounts-tpaw.mo' \
-			-delete 2>/dev/null
-	find "${ED}usr/share/locale" -type d -empty -delete 2>/dev/null
-}

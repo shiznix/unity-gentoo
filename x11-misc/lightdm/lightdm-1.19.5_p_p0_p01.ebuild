@@ -183,10 +183,6 @@ src_install() {
 
 	# Create data directory
 	dodir /var/lib/${PN}-data
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_postinst() {

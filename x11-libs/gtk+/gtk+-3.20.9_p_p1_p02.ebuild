@@ -205,10 +205,6 @@ multilib_src_install_all() {
 	# Taken from Ubuntus at-spi2-atk package, needed for gtk3 menus to work with Unitys global appmenu #
 	exeinto /etc/X11/xinit/xinitrc.d
 	doexe "${FILESDIR}/90atk-adaptor"
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_preinst() {

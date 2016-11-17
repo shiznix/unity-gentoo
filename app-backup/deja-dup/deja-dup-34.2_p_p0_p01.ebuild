@@ -76,8 +76,4 @@ src_compile() {
 
 src_install() {
 	cmake-utils_src_install
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }

@@ -96,10 +96,6 @@ src_install() {
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
 	dosym nm-signal-100-secure.png \
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_preinst() {

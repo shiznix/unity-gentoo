@@ -120,10 +120,6 @@ src_install() {
 
 	insinto /usr/share/applications/
 	doins "${WORKDIR}"/debian/*.desktop
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_postinst() {
