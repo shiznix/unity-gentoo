@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_4 )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="yakkety"
-inherit cmake-utils distutils-r1 eutils gnome2-utils pam toolchain-funcs ubuntu-versionator xdummy
+inherit cmake-utils distutils-r1 eutils gnome2-utils pam systemd toolchain-funcs ubuntu-versionator xdummy
 
 UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -258,6 +258,11 @@ src_install() {
 	insinto /var/lib/polkit-1/localauthority/10-vendor.d
 	doins "${FILESDIR}/com.ubuntu.desktop.pkla"
 	fowners root:polkitd /var/lib/polkit-1/localauthority/10-vendor.d/com.ubuntu.desktop.pkla
+
+	# Make 'unity-session.target' systemd user unit auto-start 'unity7.service' #
+	dosym $(systemd_get_userunitdir)/unity7.service $(systemd_get_userunitdir)/unity-session.target.requires/unity7.service
+	dosym $(systemd_get_userunitdir)/unity-gtk-module.service $(systemd_get_userunitdir)/unity-session.target.wants/unity-gtk-module.service
+	dosym $(systemd_get_userunitdir)/unity-settings-daemon.service $(systemd_get_userunitdir)/unity-session.target.wants/unity-settings-daemon.service
 }
 
 pkg_preinst() {
