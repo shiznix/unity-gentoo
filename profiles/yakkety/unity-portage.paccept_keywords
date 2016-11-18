@@ -59,6 +59,7 @@ dev-libs/process-cpp **
 dev-libs/properties-cpp **
 dev-libs/trust-store **
 dev-libs/ubuntu-download-manager **
+dev-libs/userspace-rcu **
 dev-python/autopilot **
 dev-python/python-testscenarios **
 dev-python/u1db **
@@ -70,6 +71,8 @@ dev-util/android-headers **
 dev-util/cmake-extras **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
+dev-util/lttng-tools **
+dev-util/lttng-ust **
 gnome-base/gconf **
 gnome-base/gnome-core-apps **
 gnome-base/gnome-desktop **
@@ -110,6 +113,7 @@ sys-kernel/ubuntu-sources **
 unity-base/bamf **
 unity-base/compiz **
 unity-base/evemu **
+unity-base/frame **
 unity-base/geis **
 unity-base/gnome-control-center-signon **
 unity-base/grail **

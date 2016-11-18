@@ -5,7 +5,9 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-inherit autotools autotools-multilib eutils python-single-r1
+URELEASE="yakkety"
+inherit autotools autotools-multilib eutils python-single-r1 ubuntu-versionator
+UVER="-1"
 
 DESCRIPTION="Linux Trace Toolkit - UST library"
 HOMEPAGE="http://lttng.org"
@@ -13,12 +15,17 @@ SRC_URI="http://lttng.org/files/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+#KEYWORDS="~x86 ~amd64"
 IUSE="examples"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/userspace-rcu[${MULTILIB_USEDEP}]"
 RDEPEND="${DEPEND}"
+
+pkg_setup() {
+	ubuntu-versionator_pkg_setup
+	python-single-r1_pkg_setup
+}
 
 src_prepare() {
 	python_fix_shebang .

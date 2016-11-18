@@ -69,6 +69,8 @@ dev-libs/libindicator::gentoo
 dev-libs/libinput::gentoo
 dev-libs/libwacom::gentoo
 dev-util/gdbus-codegen::gentoo
+dev-util/lttng-tools::gentoo
+dev-util/lttng-ust::gentoo
 
 gnome-base/gconf::gentoo
 gnome-base/gnome-desktop::gentoo

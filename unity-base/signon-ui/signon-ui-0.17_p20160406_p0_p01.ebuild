@@ -32,7 +32,7 @@ DEPEND="dev-qt/qtcore:5
 	dev-qt/qtwebkit:5
 	dev-qt/qtwidgets:5
 	net-libs/libproxy[-kde]
-	unity-base/signon[qt5]
+	unity-base/signon
 	x11-libs/libaccounts-qt:=
 	x11-libs/libnotify"
 

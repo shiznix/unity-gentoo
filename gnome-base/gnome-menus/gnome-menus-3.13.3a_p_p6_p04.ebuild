@@ -47,9 +47,7 @@ src_configure() {
 
 	# Do NOT compile with --disable-debug/--enable-debug=no
 	# It disables api usage checks
-	G2CONF="${G2CONF}
-		$(usex debug --enable-debug=yes --enable-debug=minimum)
-		$(use_enable introspection)
-		--disable-static"
-	gnome2_src_configure
+	gnome2_src_configure \
+		$(use_enable introspection) \
+		--disable-static
 }

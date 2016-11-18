@@ -2,9 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=5
 
-inherit autotools-multilib eutils linux-info
+URELEASE="yakkety"
+inherit autotools-multilib eutils linux-info ubuntu-versionator
+UVER="-1"
 
 DESCRIPTION="Linux Trace Toolkit - next generation"
 HOMEPAGE="http://lttng.org"
@@ -12,7 +14,7 @@ SRC_URI="http://lttng.org/files/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="+ust"
 RESTRICT="mirror"
 
@@ -30,8 +32,7 @@ pkg_pretend() {
 }
 
 src_prepare() {
-	# Enable building with gcc:5 #
-	epatch -p1 "${FILESDIR}/multiple_defs-gcc5.diff"
+	ubuntu-versionator_src_prepare
 	autotools-multilib_src_prepare
 }
 

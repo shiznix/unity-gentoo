@@ -25,10 +25,10 @@ DEPEND="dev-qt/qtcore:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtxml:5
 	net-libs/liboauth
-	unity-base/signon[qt5]
+	unity-base/signon
 	x11-libs/libaccounts-qt"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}${UVER}${UVER_SUFFIX}"
+S="${WORKDIR}/${PN}"
 unset QT_QPA_PLATFORMTHEME
 
 src_prepare() {

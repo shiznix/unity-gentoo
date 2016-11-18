@@ -4,7 +4,9 @@
 
 EAPI=5
 
-inherit autotools-multilib
+URELEASE="xenial"
+inherit autotools-multilib ubuntu-versionator
+UVER="-3"
 
 DESCRIPTION="userspace RCU (read-copy-update) library"
 HOMEPAGE="http://lttng.org/urcu"
