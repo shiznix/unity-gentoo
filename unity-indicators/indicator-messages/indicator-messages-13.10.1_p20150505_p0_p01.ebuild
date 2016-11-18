@@ -24,6 +24,7 @@ DEPEND="!net-im/indicator-messages
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
+	dev-util/dbus-test-runner
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
