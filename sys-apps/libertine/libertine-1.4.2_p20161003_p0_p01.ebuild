@@ -11,7 +11,7 @@ inherit python-single-r1 cmake-utils gnome2-utils ubuntu-versionator
 UURL="mirror://unity/pool/main/libe/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
-DESCRIPTION="sandbox for running Deb-packaged X11-based application under a Ubuntu \"Snappy Personal\" regime"
+DESCRIPTION="Sandbox for running Deb-packaged X11-based application under a Ubuntu \"Snappy Personal\" regime"
 HOMEPAGE="https://launchpad.net/libertine"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
@@ -25,8 +25,7 @@ DEPEND="dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtdeclarative:5
 	dev-util/intltool
-	sys-devel/gettext
-	>=x11-libs/content-hub-0.2"
+	sys-devel/gettext"
 
 S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
@@ -40,10 +39,19 @@ pkg_setup() {
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
 	# Correct path to python3.pc #
 	MY_EPYTHON="$(echo ${EPYTHON:0:6}-${EPYTHON:6:9})"
 	sed -e "s:python3:${MY_EPYTHON}:g" \
-		-i CMakeLists.txt
+		-i CMakeLists.txt || die
+
+	# Circular dep. between sys-apps/libertine and x11-libs/content-hub #
+	#  x11-libs/content-hub requires sys-apps/libertine but 'pasted' module of sys-apps/libertine requires x11-libs/content-hub #
+	# FIXME: Split out libertine's pasted daemon into a separate package sys-apps/libertine-pasted #
+	#  'pasted' daemon handles transfer of pasteboard content between Xmir and content-hub #
+	sed -e '/pasted/d' \
+		-i CMakeLists.txt || die
+
 	cmake-utils_src_prepare
 }
 
