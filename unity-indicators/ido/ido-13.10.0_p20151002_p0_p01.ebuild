@@ -21,9 +21,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-# Be version specific with gtk+:3 as Ido needs Ubuntu's patched version of gtk+:3 #
 DEPEND=">=dev-libs/glib-2.37
-	<x11-libs/gtk+-3.21:3
+	x11-libs/gtk+:3
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
