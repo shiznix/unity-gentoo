@@ -28,6 +28,7 @@ DEPEND="app-admin/cgmanager
 	dev-util/dbus-test-runner
 	mir-base/mir:=
 	sys-apps/click
+	sys-apps/libertine
 	sys-apps/upstart
 	sys-libs/libnih[dbus]"
 
