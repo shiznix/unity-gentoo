@@ -154,6 +154,8 @@ ubuntu-versionator_pkg_setup() {
 	[[ "${PROFILE_RELEASE}" == utopic ]] && GCC_MINIMUM="4.8"
 	[[ "${PROFILE_RELEASE}" == vivid ]] && GCC_MINIMUM="4.9"
 	[[ "${PROFILE_RELEASE}" == wily ]] && GCC_MINIMUM="5.3"
+	[[ "${PROFILE_RELEASE}" == xenial ]] && GCC_MINIMUM="5.3"
+	[[ "${PROFILE_RELEASE}" == yakkety ]] && GCC_MINIMUM="5.3"	# Yakkety actually uses 6.1 but all packages build so far(?) #
 	GCC_MINIMUM_MAJOR="${GCC_MINIMUM%%.*}"
 	GCC_MINIMUM_MINOR="${GCC_MINIMUM##*.}"
 
