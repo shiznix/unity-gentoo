@@ -24,6 +24,7 @@ DEPEND="app-admin/cgmanager
 	dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libzeitgeist
+	dev-libs/properties-cpp
 	dev-util/lttng-tools
 	dev-util/dbus-test-runner
 	mir-base/mir:=

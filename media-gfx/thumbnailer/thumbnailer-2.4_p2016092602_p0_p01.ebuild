@@ -26,6 +26,7 @@ DEPEND="dev-libs/boost:=
 	dev-libs/leveldb
 	dev-libs/libxml2
 	dev-libs/persistent-cache-cpp
+	dev-qt/qtconcurrent:5
 	dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
 	media-libs/gst-plugins-base:1.0

@@ -28,6 +28,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libappindicator:=
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicate-qt
+	net-misc/url-dispatcher
 	help? ( gnome-extra/yelp
 		gnome-extra/gnome-user-docs
 		unity-base/ubuntu-docs )"
