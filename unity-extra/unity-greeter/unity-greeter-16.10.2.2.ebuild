@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 IUSE="accessibility battery +branding networkmanager nls"
 RESTRICT="mirror"

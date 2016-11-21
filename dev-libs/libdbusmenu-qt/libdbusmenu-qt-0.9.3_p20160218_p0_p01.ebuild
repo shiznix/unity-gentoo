@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit cmake-multilib multibuild multilib virtualx ubuntu-versionator
 
 UURL="mirror://unity/pool/main/libd/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="A library providing Qt implementation of DBusMenu specification"
 HOMEPAGE="https://launchpad.net/libdbusmenu-qt/"

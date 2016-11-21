@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit eutils autotools mono-env fdo-mime gnome2-utils versionator ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/b/${PN}"

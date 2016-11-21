@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="LGPL-2+"
 SLOT="0/1"
 IUSE="gnome +introspection kerberos uoa"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # pango used in goaeditablelabel

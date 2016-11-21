@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="xenial xenial-security xenial-updates yakkety yakkety-security yakkety-updates"
+RELEASES="yakkety yakkety-security yakkety-updates"
 SOURCES="main universe"
 
 sources_download() {

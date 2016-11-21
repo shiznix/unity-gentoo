@@ -5,7 +5,7 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit eutils python-single-r1 autotools-multilib ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"

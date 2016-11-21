@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-2+"
 SLOT="0"
 IUSE="+cups +gnome-online-accounts +i18n kerberos v4l"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # False positives caused by nested configure scripts

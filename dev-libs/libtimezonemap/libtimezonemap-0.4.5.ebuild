@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit autotools eutils gnome2-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/libt/${PN}"

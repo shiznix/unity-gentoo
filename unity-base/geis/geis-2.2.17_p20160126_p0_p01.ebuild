@@ -5,11 +5,11 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit autotools eutils python-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="An implementation of the GEIS (Gesture Engine Interface and Support) interface"
 HOMEPAGE="https://launchpad.net/geis"

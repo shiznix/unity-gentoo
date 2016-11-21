@@ -14,7 +14,7 @@ SRC_URI="http://lttng.org/files/urcu/${P}.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="0/2" # subslot = soname version
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="static-libs"
 
 MULTILIB_WRAPPED_HEADERS=(/usr/include/urcu/config.h)

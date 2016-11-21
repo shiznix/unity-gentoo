@@ -5,7 +5,7 @@
 EAPI=6
 GTESTVER="1.7.0"
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit cmake-utils ubuntu-versionator
 
 UVER_PREFIX="+15.10.${PVR_MICRO}"

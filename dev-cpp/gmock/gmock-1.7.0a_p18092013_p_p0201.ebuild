@@ -21,7 +21,7 @@ SRC_URI="${UURL}/${MY_PN}_${PV}${UVER}.orig.tar.bz2
 
 LICENSE="BSD"
 SLOT="0"
-#KEYWORDS="amd64 x86"
+KEYWORDS="amd64 x86"
 IUSE="static-libs"
 
 RDEPEND="=dev-cpp/gtest-${PV}*"

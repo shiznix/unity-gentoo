@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit autotools eutils flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/i/${PN}"

@@ -6,11 +6,11 @@ EAPI=6
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/h/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"

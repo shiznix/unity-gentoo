@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit versionator eutils autotools toolchain-funcs multilib flag-o-matic ubuntu-versionator
 
 UURL="mirror://unity/pool/main/libn/${PN}"

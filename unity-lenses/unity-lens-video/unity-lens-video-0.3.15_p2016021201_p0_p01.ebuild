@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="Video lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-video"

@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit eutils qt5-build ubuntu-versionator
 
 UURL="mirror://unity/pool/main/liba/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="QT library for Single Sign On framework for the Unity desktop"
 HOMEPAGE="http://code.google.com/p/accounts-sso/"

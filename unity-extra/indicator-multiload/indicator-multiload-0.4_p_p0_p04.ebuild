@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit gnome2-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/i/${PN}"

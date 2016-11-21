@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/n/${PN}"

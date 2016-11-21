@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit autotools gnome2-utils multilib savedconfig ubuntu-versionator
 
 UURL="mirror://unity/pool/main/n/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="Canonical's on-screen-display notification agent"
 HOMEPAGE="http://launchpad.net/notify-osd"

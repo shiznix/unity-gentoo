@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/g/${PN}"

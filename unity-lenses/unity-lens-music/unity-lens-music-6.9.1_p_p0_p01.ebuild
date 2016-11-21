@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="xenial"
+URELEASE="yakkety"
 inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}"
+UVER_PREFIX="+16.04"
 
 DESCRIPTION="Music lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-music"
