@@ -1,9 +1,0 @@
-# Unmask those gnome packages inadvertently masked globablly in package.mask #
-=app-text/gnome-doc-utils-0.20*::gentoo
-=gnome-base/gnome-mime-data-2.20*::gentoo
-=gnome-base/libgnomeprint-2.20*::gentoo
-=gnome-base/libgnomeprintui-2.20*::gentoo
-gnome-extra/gnome-integration-spotify
-
-# Portage tree has masked libsoup-gnome for removal but it's still needed by several packages #
-net-libs/libsoup-gnome:2.4

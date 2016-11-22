@@ -1,0 +1,7 @@
+# Mask all other releases #
+>unity-base/unity-build-env-16.11
+<unity-base/unity-build-env-16.10
+
+>unity-base/unity-meta-16.11
+<unity-base/unity-meta-16.10
+
