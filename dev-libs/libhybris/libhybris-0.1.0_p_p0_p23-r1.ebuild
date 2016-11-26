@@ -44,7 +44,6 @@ src_configure() {
 	local myeconfargs=(
 		--enable-arch=x86 \
 		--enable-wayland \
-		--with-android-headers=/usr/include/android-latest
 	)
 	autotools-multilib_src_configure
 	econf "${myeconfargs[@]}"	# Non-multilib ./configure run for 'make && make clean' command below

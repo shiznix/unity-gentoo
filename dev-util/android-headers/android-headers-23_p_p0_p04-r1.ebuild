@@ -34,12 +34,14 @@ src_compile() {
 	:	# Do nothing
 }
 
-src_install(){
-	insinto /usr/include/android
-	doins -r *
+src_install() {
+	for dir in *; do
+		insinto /usr/include/android-${dir}
+		doins -r ${dir}/*
+	done
 
-	# Need to fudge in the current headers version so dev-libs/libhybris knows which version to use #
-	dosym /usr/include/android/$(get_version_component_range 1) /usr/include/android-latest
+	# Yakkety uses android-19 as the system selected android headers version #
+	dosym /usr/include/android-19 /usr/include/android
 
 	multilib_src_install() {
 		insinto "/usr/$(get_libdir)/pkgconfig"
