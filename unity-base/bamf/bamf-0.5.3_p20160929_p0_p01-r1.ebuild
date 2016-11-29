@@ -23,6 +23,7 @@ IUSE="test"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/gobject-introspection
+	dev-libs/libdbusmenu[gtk3]
 	dev-libs/libunity[${PYTHON_USEDEP}]
 	dev-libs/libunity-webapps
 	dev-libs/libxslt[python,${PYTHON_USEDEP}]
@@ -67,6 +68,7 @@ src_prepare() {
 
 src_configure() {
 	econf \
+		--enable-export-actions-menu=yes \
 		--enable-introspection=yes \
 		--disable-static || die
 }

@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="test"
+IUSE="doc test"
 RESTRICT="mirror"
 
 DEPEND="dev-cpp/gmock
@@ -66,11 +66,20 @@ src_prepare() {
 	# disable build of tests
 	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
 
+	# Window-stack-bridge service must be running for hud-service to return search results #
+	sed -e '/@pkglibexecdir@\/hud-service/i \
+			trap "kill 0" SIGINT SIGTERM EXIT \
+			@pkglibexecdir@\/window-stack-bridge &' \
+				-i data/dbus-activation-hack.sh.in || die
+
 	cmake-utils_src_prepare
 }
 
 src_configure() {
 	mycmakeargs+=( -DENABLE_TESTS="$(usex test)"
+			-DENABLE_DOCUMENTATION="$(usex doc)"
+			-DENABLE_MEMCHECK_OPTION=ON
+			-DENABLE_BAMF=ON
 			-DVALA_COMPILER=$(type -P valac-${VALA_MIN_API_VERSION})
 			-DVAPI_GEN=$(type -P vapigen-${VALA_MIN_API_VERSION})
 			-DCMAKE_INSTALL_DATADIR=/usr/share )
