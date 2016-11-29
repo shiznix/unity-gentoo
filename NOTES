@@ -203,10 +203,29 @@ unix:abstract=/com/ubuntu/upstart-session/1000/6350
 			- Sets the compizconfig profile to 'COMPIZ_CONFIG_PROFILE=ubuntu' via '/usr/lib/unity/compiz-profile-selector'
 			- Executes '/usr/lib/unity/systemd-prestart-check' to check if we're in an upstart or systemd session
 			- Starts {unity-settings-daemon,unity-panel-service,bamfdaemon}.service units
-	- In the scenario of 'XSESSION=unity startx' from console with no display manager:
+	- 'XSESSION=unity startx' from console with no display manager:
 		- Relies on /etc/X11/xinit/xinitrc.d/99upstart-systemd to perform the upstart/systemd check
 		- If an upstart session then executes '/usr/bin/upstart --user'
 		- If a systemd session then executes '/usr/libexec/run-systemd-session unity-session.target'
+	- Ubuntu relies on '/usr/bin/upstart --user' via /etc/X11/xinit/xinitrc.d/99upstart to start the upstart job
+			'/usr/share/upstart/systemd-session/upstart/systemd-graphical-session.conf'
+		- '/usr/share/upstart/systemd-session/upstart/systemd-graphical-session.conf' then starts 'systemctl --user start ${DESKTOP_SESSION}-session.target'
+		- Every '/usr/share/upstart/systemd-session/upstart/<service>.override' file that has the word 'manual' in it, is skipped being started by upstart
+		- We don't rely on this method and instead start '/usr/libexec/run-systemd-session unity-session.target' as above
+			The reason for this is that almost all Unity desktop services have already been migrated to use 'systemd --user' *.service units,
+				and so would be needlessly maintaining '<service>.override' files for every service
+		- The following services have not yet been migrated to use systemd and still use upstart *.conf files to start:
+			- unity-base/hud
+				- In a systemd (non-upstart) session it falls back to /usr/share/dbus-1/services/com.canonical.hud.service
+						to start /usr/libexec/hud/dbus-activation-hack.sh
+					/usr/libexec/hud/dbus-activation-hack.sh then starts /usr/libexec/hud/hud-service
+				- We add /usr/libexec/hud/window-stack-bridge to /usr/libexec/hud/dbus-activation-hack.sh to ensure it gets started in a systemd user session
+			- net-misc/url-dispatcher (currently disabled due to causing Unity desktop logout lag)
+			- All indicators still rely on /etc/xdg/autostart/*.desktop files to start
+
+## Unity8 Session Launch ##
+	- Lightdm executes /usr/bin/unity-system-compositor.sleep --file '/run/mir_socket' --from-dm-fd 13 --to-dm-fd 22 --vt 8
+
 
 ## Compiz performance settings for 'ccsm' ##
  Click on "OpenGL" and set "Texture Filter" to Fast.
