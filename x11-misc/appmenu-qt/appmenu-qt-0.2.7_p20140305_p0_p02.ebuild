@@ -23,7 +23,7 @@ RESTRICT="mirror"
 DEPEND=">=dev-qt/qtcore-4.8:4
 	>=dev-qt/qtdbus-4.8:4
 	>=dev-qt/qtgui-4.8:4
-	>=dev-libs/libdbusmenu-qt-0.9.0"
+	>=dev-libs/libdbusmenu-qt-0.9.0[qt4]"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
