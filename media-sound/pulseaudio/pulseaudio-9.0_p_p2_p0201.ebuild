@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit autotools bash-completion-r1 eutils flag-o-matic gnome2-utils linux-info systemd user versionator udev multilib-minimal ubuntu-versionator
 
 UURL="mirror://unity/pool/main/p/${PN}"

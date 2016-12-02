@@ -38,7 +38,7 @@ MOZCONFIG_OPTIONAL_WIFI=1
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="yakkety-security"
-UVER_PREFIX="+build2"
+UVER_PREFIX="+build1"
 UURL="mirror://unity/pool/main/f/${PN}"
 
 inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.49 pax-utils fdo-mime autotools virtualx mozlinguas-v2 ubuntu-versionator
@@ -49,7 +49,7 @@ HOMEPAGE="http://www.mozilla.com/firefox"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist hardened +hwaccel pgo selinux +gmp-autoupdate test"
+IUSE="bindist hardened +hwaccel jack pgo selinux +gmp-autoupdate test"
 RESTRICT="!bindist? ( bindist ) mirror"
 
 PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/${PATCH}.tar.xz )
@@ -61,6 +61,7 @@ SRC_URI="${SRC_URI}
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 RDEPEND="
+	jack? ( virtual/jack )
 	>=dev-libs/nss-3.26.2
 	>=dev-libs/nspr-4.12
 	selinux? ( sec-policy/selinux-mozilla )"
@@ -206,6 +207,9 @@ src_configure() {
 
 	mozconfig_init
 	mozconfig_config
+
+	# enable JACK, bug 600002
+	mozconfig_use_enable jack
 
 	# It doesn't compile on alpha without this LDFLAGS
 	use alpha && append-ldflags "-Wl,--no-relax"
