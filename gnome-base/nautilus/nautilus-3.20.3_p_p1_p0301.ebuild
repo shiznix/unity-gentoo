@@ -4,7 +4,6 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-AT_NOELIBTOOLIZE="yes"
 
 URELEASE="yakkety-updates"
 inherit autotools eutils gnome2 readme.gentoo-r1 virtualx ubuntu-versionator
@@ -93,8 +92,8 @@ src_prepare() {
 			To activate the previewer, select a file and press space; to
 			close the previewer, press space again."
 	fi
-	gnome2_src_prepare
 	eautoreconf
+	gnome2_src_prepare
 }
 
 src_configure() {

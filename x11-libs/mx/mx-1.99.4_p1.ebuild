@@ -40,8 +40,8 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	gnome2_src_prepare
 	eautoreconf
+	gnome2_src_prepare
 }
 
 src_configure() {

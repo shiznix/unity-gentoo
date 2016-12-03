@@ -4,7 +4,6 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-AT_NOELIBTOOLIZE="yes"
 
 URELEASE="yakkety"
 inherit autotools eutils gnome2 systemd ubuntu-versionator
@@ -82,7 +81,6 @@ DEPEND="${COMMON_DEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	gnome2_src_prepare
 
 	# Desktop Session is named 'unity' #
 	sed -e 's:buntu:nity:g' \
@@ -92,7 +90,9 @@ src_prepare() {
 		-i "${WORKDIR}/debian/data/50-ubuntu.conf" || die
 	sed -e 's:/usr/lib/gnome-session:/usr/libexec:g' \
 		-i data/ubuntu.desktop.in || die
+
 	eautoreconf
+	gnome2_src_prepare
 }
 
 src_configure() {

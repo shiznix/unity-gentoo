@@ -4,7 +4,6 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-AT_NOELIBTOOLIZE="yes"
 
 URELEASE="yakkety"
 inherit autotools eutils flag-o-matic gnome2 multilib virtualx multilib-minimal ubuntu-versionator
@@ -150,8 +149,8 @@ src_prepare() {
 	# gtk-update-icon-cache is installed by dev-util/gtk-update-icon-cache
 	eapply "${FILESDIR}"/${PN}-3.16.2-remove_update-icon-cache.patch
 
-	gnome2_src_prepare
 	eautoreconf
+	gnome2_src_prepare
 }
 
 multilib_src_configure() {

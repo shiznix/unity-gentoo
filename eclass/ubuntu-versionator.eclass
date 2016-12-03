@@ -181,19 +181,21 @@ ubuntu-versionator_src_prepare() {
 	[[ -f "debian/patches/series" ]] && UPATCH_DIR="debian/patches"
 	if [ -d "${UPATCH_DIR}" ]; then
 		for patch in $(grep -v \# "${UPATCH_DIR}/series"); do
-			PATCHES+=( "${UPATCH_DIR}/${patch}" )
+			UBUNTU_PATCHES+=( "${UPATCH_DIR}/${patch}" )
 		done
-		[[ ${PATCHES[@]} ]] && einfo "  <-- Ubuntu patchset -->"
+		[[ ${UBUNTU_PATCHES[@]} ]] && einfo "  <-- Ubuntu patchset -->"
 	fi
 	# Many eclasses (cmake-utils,distutils-r1,qt5-build,xdg) apply their own 'default' command for EAPI=6 or 'epatch ${PATCHES[@]}' command for EAPI <6 so let them #
 	#	'declare' checks to see if any of those functions are set/inherited and only apply 'default' if they are not
 	if [ "${EAPI}" -ge 6 ]; then
+		[[ ${UBUNTU_PATCHES[@]} ]] && eapply "${UBUNTU_PATCHES[@]}"
 		[[ $(declare -Ff cmake-utils_src_prepare) ]] || \
 		[[ $(declare -Ff distutils-r1_src_prepare) ]] || \
 		[[ $(declare -Ff qt5-build_src_prepare) ]] || \
 		[[ $(declare -Ff xdg_src_prepare) ]] || \
 			default
 	else
+		[[ ${UBUNTU_PATCHES[@]} ]] && epatch "${UBUNTU_PATCHES[@]}"
 		# Only apply base_src_prepare if EAPI<6 and have inherited base.eclass #
 		# 	(use 'base' eclass while 'autotools-{multilib,utils}','gnome2','kde-4','qt4-r2','readme.gentoo','xorg-2(autotools-utils)' block EAPI6 upgrade) #
 		[[ $(declare -Ff base_src_prepare) ]] && \
