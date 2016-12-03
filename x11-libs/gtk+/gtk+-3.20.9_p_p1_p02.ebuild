@@ -4,6 +4,7 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
+AT_NOELIBTOOLIZE="yes"
 
 URELEASE="yakkety"
 inherit autotools eutils flag-o-matic gnome2 multilib virtualx multilib-minimal ubuntu-versionator
