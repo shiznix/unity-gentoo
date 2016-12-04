@@ -23,6 +23,7 @@ RESTRICT="mirror"
 
 RDEPEND="unity-base/unity-language-pack"
 DEPEND="${RDEPEND}
+  dev-libs/libaccounts-glib
 	dev-libs/libappindicator:=
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicate-qt
