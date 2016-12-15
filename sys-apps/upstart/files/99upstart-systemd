@@ -1,13 +1,8 @@
 if [ "x$DESKTOP_SESSION" = "xunity" ]; then
 	export XDG_CURRENT_DESKTOP="Unity"	# Needs to be manually set for 'startx' to work
+	export XDG_CONFIG_DIRS="/usr/share/upstart/systemd-session:$XDG_CONFIG_DIRS"
+	dbus-update-activation-environment --systemd --all	# Pass all current environment variables to the 'systemd --user' process
 
-	if [ -z "$(echo "$@" | grep '\.target$')" ]; then	# If desktop session is not run through a systemd user target, use upstart to start user desktop services #
-		export XDG_CONFIG_DIRS="/usr/share/upstart/xdg:/etc/xdg"
-		export SESSIONTYPE=gnome-session	# Set for gnome-session.conf upstart job to start
-		exec /usr/bin/upstart --user
-	else		# Otherwise use systemd to start user desktop services #
-		export XDG_CONFIG_DIRS="/usr/share/upstart/systemd-session:$XDG_CONFIG_DIRS"
-		dbus-update-activation-environment --systemd --all	# Pass all current environment variables to the 'systemd --user' process
-		exec /usr/libexec/run-systemd-session unity-session.target
-	fi
+	exec /usr/bin/upstart --user --verbose	# Upstart job systemd-graphical-session.conf starts the 'systemd --user' services
+#	exec /usr/libexec/run-systemd-session unity-session.target
 fi

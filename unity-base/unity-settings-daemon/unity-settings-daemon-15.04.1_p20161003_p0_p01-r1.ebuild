@@ -106,6 +106,15 @@ src_prepare() {
 		-i debian/unity-settings-daemon.user-session.{desktop,upstart} \
 		-i debian/user/unity-settings-daemon.service || die
 
+	#  'After=graphical-session-pre.target' must be explicitly set in the unit files that require it #
+	#  Relying on the upstart job /usr/share/upstart/systemd-session/upstart/systemd-graphical-session.conf #
+	#       to create "$XDG_RUNTIME_DIR/systemd/user/${unit}.d/graphical-session-pre.conf" drop-in units #
+	#       results in weird race problems on desktop logout where the reliant desktop services #
+	#       stop in a different jumbled order each time #
+	sed -e '/PartOf=/i After=graphical-session-pre.target' \
+		-i debian/user/unity-settings-daemon.service || \
+			die "Sed failed for debian/user/unity-settings-daemon.service"
+
 	eautoreconf
 	gnome2_src_prepare
 }

@@ -169,6 +169,9 @@ src_install() {
 
 	insinto /etc/lightdm/lightdm.conf.d
 	newins "${WORKDIR}/debian/data/50-ubuntu.conf" 50-unity.conf
+
+	insinto /usr/share/upstart/systemd-session/upstart
+	doins "${WORKDIR}/debian/data/gnome-session.override"
 }
 
 pkg_postinst() {

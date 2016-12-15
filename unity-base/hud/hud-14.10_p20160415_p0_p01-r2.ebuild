@@ -66,12 +66,6 @@ src_prepare() {
 	# disable build of tests
 	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
 
-	# Window-stack-bridge service must be running for hud-service to return search results #
-	sed -e '/@pkglibexecdir@\/hud-service/i \
-			trap "kill 0" SIGINT SIGTERM EXIT \
-			@pkglibexecdir@\/window-stack-bridge &' \
-				-i data/dbus-activation-hack.sh.in || die
-
 	cmake-utils_src_prepare
 }
 
