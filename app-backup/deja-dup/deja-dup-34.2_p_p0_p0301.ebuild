@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit cmake-utils gnome2 ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/d/${PN}"
