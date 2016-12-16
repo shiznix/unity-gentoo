@@ -1,0 +1,37 @@
+Author: Sebastien Bacher <seb128@ubuntu.com>
+Description: Add fallback if agent is not running in a logind session
+ This fixes polkit with dbus-user-session.
+Bug: https://bugs.freedesktop.org/show_bug.cgi?id=96977
+
+Index: policykit-1/src/polkit/polkitunixsession-systemd.c
+===================================================================
+--- policykit-1.orig/src/polkit/polkitunixsession-systemd.c
++++ policykit-1/src/polkit/polkitunixsession-systemd.c
+@@ -451,6 +451,7 @@ polkit_unix_session_initable_init (GInit
+   PolkitUnixSession *session = POLKIT_UNIX_SESSION (initable);
+   gboolean ret = FALSE;
+   char *s;
++  uid_t uid;
+ 
+   if (session->session_id != NULL)
+     {
+@@ -467,6 +468,19 @@ polkit_unix_session_initable_init (GInit
+       goto out;
+     }
+ 
++  /* Now do process -> uid -> graphical session (systemd version 213)*/
++  if (sd_pid_get_owner_uid (session->pid, &uid) < 0)
++    goto error;
++
++  if (sd_uid_get_display (uid, &s) >= 0)
++    {
++      session->session_id =  g_strdup (s);
++      free (s);
++      ret = TRUE;
++      goto out;
++    }
++
++error:
+   g_set_error (error,
+                POLKIT_ERROR,
+                POLKIT_ERROR_FAILED,

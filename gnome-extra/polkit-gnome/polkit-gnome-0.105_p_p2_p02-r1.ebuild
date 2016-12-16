@@ -51,8 +51,10 @@ src_install() {
 	Type=Application
 	Categories=
 	NoDisplay=true
-	NotShowIn=MATE;KDE;
+	OnlyShowIn=GNOME;XFCE;Unity;
+	X-GNOME-AutoRestart=true
 	AutostartCondition=GNOME3 unless-session gnome
+	X-Ubuntu-Gettext-Domain=polkit-gnome-1
 	EOF
 
 	insinto /etc/xdg/autostart
