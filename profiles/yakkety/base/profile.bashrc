@@ -28,12 +28,6 @@ pre_src_prepare() {
 	local EPATCH_SOURCE check base=${REPO_ROOT}/profiles/${PROFILE_RELEASE}/patches
 	local applied="${T}/epatch_user.log"
 
-	# Strip off ubuntu-versionator.eclass specific version _p* strings #
-	PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
-	PV="${PV%%[a-z]*}"	# For package-3.6.0a
-	PV="${PV%%_p*}"		# For package-3.6.0_p0_p02
-	PV="${PV%%_*}"		# For package-3.6.0_p_p02
-
 	for check in ${CATEGORY}/{${P}-${PR},${PN}-${PV},${PN}}{,:${SLOT}}; do
 		EPATCH_SOURCE=${base}/${CTARGET}/${check}
 		[[ -r ${EPATCH_SOURCE} ]] || EPATCH_SOURCE=${base}/${CHOST}/${check}
