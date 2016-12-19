@@ -65,7 +65,6 @@ dev-libs/userspace-rcu **
 dev-python/autopilot **
 dev-python/python-testscenarios **
 dev-python/u1db **
-dev-qt/qt3d:5 **
 dev-qt/qtfeedback:5 **
 dev-qt/qtpim:5 **
 dev-qt/qtsystems:5 **
