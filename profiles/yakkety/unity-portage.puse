@@ -42,7 +42,7 @@ media-libs/clutter egl
 media-libs/libmediaart -qt4 -qt5
 media-libs/gst-plugins-base theora
 media-libs/harfbuzz icu
-media-libs/libvpx postproc
+media-libs/libvpx postproc svc
 media-libs/mesa egl gbm gles2          # Mir display server requires mesa[egl,gbm,gles2]
 media-plugins/alsa-plugins pulseaudio
 media-plugins/gst-plugins-meta ffmpeg
