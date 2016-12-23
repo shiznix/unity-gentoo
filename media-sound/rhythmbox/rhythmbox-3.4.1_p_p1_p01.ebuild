@@ -153,10 +153,6 @@ src_configure() {
 src_install() {
 	emake DESTDIR="${ED}" install
 
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
-
 	dodoc AUTHORS ChangeLog DOCUMENTERS INTERNALS \
 		MAINTAINERS MAINTAINERS.old NEWS README THANKS
 

@@ -336,10 +336,6 @@ multilib_src_install_all() {
 	# Prevent warnings when system-wide is not used, bug #447694
 	use system-wide || rm "${ED}"/etc/dbus-1/system.d/pulseaudio-system.conf
 
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
-
 	prune_libtool_files --all
 }
 
