@@ -24,9 +24,9 @@ dev-libs/openssl -bindist
 dev-libs/protobuf python
 dev-libs/xapian-bindings python
 
-## In Ubuntu 'qt5[gles2]' is only enabled on arm architectures so far (breaks QtGL on desktop if enabled) and 'qtgui:5[eglfs]' is also explicitly disabled #
+## In Ubuntu 'qt5[gles2]' is only enabled on arm architectures so far (breaks QtGL on desktop if enabled) #
 dev-qt/qtcore:5 icu
-dev-qt/qtgui:5 egl evdev ibus -eglfs
+dev-qt/qtgui:5 egl eglfs evdev ibus
 dev-qt/qtmultimedia:5 widgets
 dev-qt/qtopengl:5 egl
 dev-qt/qtquick1:5 webkit
