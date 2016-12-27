@@ -60,7 +60,6 @@ dev-libs/persistent-cache-cpp **
 dev-libs/process-cpp **
 dev-libs/properties-cpp **
 dev-libs/trust-store **
-dev-libs/ubuntu-download-manager **
 dev-libs/userspace-rcu **
 dev-python/autopilot **
 dev-python/python-testscenarios **
