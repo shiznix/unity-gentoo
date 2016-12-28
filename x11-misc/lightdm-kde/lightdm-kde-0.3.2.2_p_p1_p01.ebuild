@@ -25,10 +25,10 @@ SLOT="4"
 IUSE="debug"
 RESTRICT="mirror"
 
-DEPEND="x11-libs/libX11
-	dev-qt/qtdeclarative:4
+DEPEND="dev-qt/qtdeclarative:4
+	kde-frameworks/kdelibs:4
 	x11-misc/lightdm[qt4]
-	kde-base/kdelibs:4"
+	x11-libs/libX11"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${PN/-kde}-0.3.2.1	# Incorrect versioning from upstream in tarball
