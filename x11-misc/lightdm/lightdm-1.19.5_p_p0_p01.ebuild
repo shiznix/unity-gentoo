@@ -135,28 +135,27 @@ src_install() {
 
 	insinto /etc/${PN}/${PN}.conf.d
 	doins "${FILESDIR}"/50-display-setup.conf		# Executes lightdm-greeter-display-setup
-	doins "${FILESDIR}"/50-session-wrapper.conf		# Executes custom Xsession
 	doins debian/50-greeter-wrapper.conf			# Executes lightdm-greeter-session
 
 	exeinto /usr/lib/${PN}
-	doexe debian/lightdm-greeter-session			# Handle extraneous dbus processes (eliminates 2nd nm-applet icon)
-	doexe "${FILESDIR}"/Xsession
-
+	doexe debian/lightdm-greeter-session                    # Handle extraneous dbus processes (eliminates 2nd nm-applet icon)
 	# script makes lightdm multi monitor sessions aware
 	# and enable first display as primary output
 	# all other monitors are aranged right of it in a row
 	#
 	# on 'unity-greeter' the login prompt will follow the mouse cursor
 	#
-	doexe "${FILESDIR}"/lightdm-greeter-display-setup	# Handle multi-monitor setups
+	doexe "${FILESDIR}"/lightdm-greeter-display-setup       # Handle multi-monitor setups
+
+	exeinto /usr/sbin
+	newexe "${FILESDIR}"/Xsession lightdm-session		# Install our custom Xsession as /usr/sbin/lightdm-session
 
 	# install guest-account script
-	insinto /usr/bin
-	newins debian/guest-account.sh guest-account || die
-	fperms +x /usr/bin/guest-account
+# FIXME	exeinto /usr/bin
+#	newexe debian/guest-account.sh guest-account || die
 
-	# Create GSettings defaults directory
-	insinto /etc/guest-session/gsettings/
+# FIXME	# Create GSettings defaults directory
+#	insinto /etc/guest-session/gsettings/
 
 	# Install systemd tmpfiles.d file
 	insinto /usr/lib/tmpfiles.d
@@ -176,21 +175,14 @@ src_install() {
         pamd_mimic system-local-login ${PN}-greeter auth account password session #372229
         dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
 
-
 	readme.gentoo_create_doc
-
 	systemd_dounit "${FILESDIR}/${PN}.service"
 
 	# Create data directory
 	dodir /var/lib/${PN}-data
 }
 
-pkg_postinst() {
-	if use mir; then
-		elog "'mir' useflag is enabled. If lightdm should fail to work, first try disabling the use of Mir display server"
-		elog " by setting 'type=unity;xlocal' to 'type=xlocal' in /etc/lightdm/lightdm.conf.d/10-unity-system-compositor.conf"
-		elog
-	fi
-	elog "'guest session' is disabled by default."
-	elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
-}
+#pkg_postinst() {
+#	elog "'guest session' is disabled by default."
+#	elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
+#}
