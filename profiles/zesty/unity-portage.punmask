@@ -1,0 +1,7 @@
+## Gentoo dropping mono packages required by media-sound/banshee ##
+dev-dotnet/google-gdata-sharp   (b.g.o #563234 - make: gmcs: Command not found)
+dev-dotnet/gtk-sharp-beans      (b.g.o #588938 - needs gmcs)
+dev-dotnet/gudev-sharp          (b.g.o #580590 - needs gmcs)
+dev-dotnet/mono-zeroconf        (b.g.o #596614 - needs gmcs)
+dev-dotnet/taglib-sharp         (b.g.o #565032 - needs gmcs)
+media-sound/banshee             (b.g.o #558106 - DEPENDs on the above packages)
