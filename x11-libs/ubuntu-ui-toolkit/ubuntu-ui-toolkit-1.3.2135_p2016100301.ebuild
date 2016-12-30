@@ -5,7 +5,7 @@
 EAPI=6
 
 URELEASE="yakkety"
-inherit gnome2-utils qt5-build ubuntu-versionator virtualx
+inherit gnome2-utils qmake-utils ubuntu-versionator virtualx
 
 UURL="mirror://unity/pool/main/u/${PN}"
 UVER="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -39,8 +39,6 @@ DEPEND="${RDEPEND}
 	media-gfx/thumbnailer"
 
 S="${WORKDIR}"
-QT5_BUILD_DIR="${S}"
-export QT_SELECT=5
 unset QT_QPA_PLATFORMTHEME
 
 src_prepare() {
@@ -59,7 +57,10 @@ src_prepare() {
 	# Don't install autopilot python testsuite files, they require dpkg to run tests #
 	sed -e '/autopilot/d' \
 		-i tests/tests.pro
-	qt5-build_src_prepare
+}
+
+src_configure() {
+	eqmake5
 }
 
 src_test() {
@@ -67,7 +68,8 @@ src_test() {
 }
 
 src_install() {
-	qt5-build_src_install
+#	emake DESTDIR="${ED}" install
+	emake INSTALL_ROOT="${ED}" install
 	use examples || \
 		rm -rf "${ED}usr/lib/ubuntu-ui-toolkit/examples" \
 			"${ED}usr/share/applications"

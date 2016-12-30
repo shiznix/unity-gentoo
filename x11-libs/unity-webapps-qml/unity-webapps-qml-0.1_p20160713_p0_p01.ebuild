@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="yakkety"
-inherit python-any-r1 qt5-build ubuntu-versionator
+inherit python-any-r1 qmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="doc"
+IUSE="doc examples"
 RESTRICT="mirror"
 
 RDEPEND="x11-libs/content-hub"
@@ -41,8 +41,6 @@ DEPEND="${RDEPEND}
 	${PYTHON_DEPS}"
 
 S="${WORKDIR}"
-QT5_BUILD_DIR="${S}"
-export QT_SELECT=5
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
@@ -63,5 +61,15 @@ src_prepare() {
 	use doc || \
 		sed '/docs.pri/d' \
 			-i webapps-qml.pro
-	qt5-build_src_prepare
+	use examples || \
+		sed '/examples/d' \
+			-i webapps-qml.pro
+}
+
+src_configure() {
+	eqmake5
+}
+
+src_install() {
+	emake INSTALL_ROOT="${ED}" install
 }

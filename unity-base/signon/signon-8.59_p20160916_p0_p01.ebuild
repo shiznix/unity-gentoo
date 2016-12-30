@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 URELEASE="yakkety"
-inherit base qt5-build ubuntu-versionator
+inherit qmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/s/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -17,22 +17,22 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+debug doc"
+IUSE="+debug doc test"
 RESTRICT="mirror"
 
-DEPEND="doc? ( app-doc/doxygen )
-	dev-qt/qtcore:5
+DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtsql:5
-	dev-qt/qttest:5
-	dev-qt/qtxml:5"
+	dev-qt/qtxml:5
+	doc? ( app-doc/doxygen )
+	test? ( dev-qt/qttest:5 )"
 
 S="${WORKDIR}"
-export QT_SELECT=5
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	# Fix remotepluginprocess.cpp missing QDebug include on some systems #
 	epatch "${FILESDIR}/remotepluginprocess-QDebug-fix.patch"
 
@@ -44,11 +44,19 @@ src_prepare() {
 			sed -e 's:CONFIG -= debug_and_release:CONFIG += debug_and_release:g' \
 				-i "${file}"
 		done
-
 	use doc || \
 		for file in $(grep -r doc/doc.pri * | grep \\.pro | awk -F: '{print $1}'); do
 			sed -e '/doc\/doc.pri/d' -i "${file}"
 		done
+	use test || \
+		sed -e 's:tests::g' \
+			-i signon.pro
+}
 
-	qt5-build_src_prepare
+src_configure() {
+	eqmake5
+}
+
+src_install() {
+	emake INSTALL_ROOT="${ED}" install
 }

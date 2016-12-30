@@ -5,7 +5,7 @@
 EAPI=6
 
 URELEASE="yakkety"
-inherit qt5-build ubuntu-versionator
+inherit qmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/a/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -31,7 +31,7 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}"
 DOCS=( NEWS README )
 
-src_compile() {
+src_configure() {
 	# Poorly implemented source writes /usr/lib64/cmake/Qt5Gui/Qt5Gui_AppMenuPlatformThemePlugin.cmake
 	#  out to root filesystem at compile step #
 	# We include an 'addpredict' here so that the check to write out to root filesystem can quietly fail
@@ -40,11 +40,11 @@ src_compile() {
 	#  (refer https://bugzilla.redhat.com/show_bug.cgi?id=1307320#c9)
 	# Separate to this global appmenu QT5 support seems to break in >=QT-5.6 applications anyway #
 	addpredict /usr/lib/cmake/Qt5Gui/
-	qt5-build_src_compile
+	eqmake5
 }
 
 src_install() {
-	qt5-build_src_install
+	emake INSTALL_ROOT="${ED}" install
 
 	insinto /etc/profile.d
 	doins data/appmenu-qt5.sh

@@ -5,7 +5,7 @@
 EAPI=6
 
 URELEASE="yakkety"
-inherit gnome2-utils qt5-build ubuntu-versionator
+inherit gnome2-utils qmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/a/${PN}"
 UVER_PREFIX="+16.04.${PVR_MICRO}"
@@ -18,16 +18,16 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc"
+IUSE="doc test"
 RESTRICT="mirror"
 
 DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
 	unity-base/signon
-	x11-libs/libaccounts-qt"
+	x11-libs/libaccounts-qt
+	test? ( dev-qt/qttest:5 )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-QT5_BUILD_DIR="${S}"
 unset QT_QPA_PLATFORMTHEME
 
 src_prepare() {
@@ -37,7 +37,17 @@ src_prepare() {
 	use doc || \
 		sed -e '/doc\/doc.pri/d' \
 			-i accounts-qml-module.pro
-	qt5-build_src_prepare
+	use test || \
+		sed -s '/tests/d' \
+			-i accounts-qml-module.pro
+}
+
+src_configure() {
+	eqmake5
+}
+
+src_install() {
+	emake INSTALL_ROOT="${ED}" install
 }
 
 pkg_preinst() {
