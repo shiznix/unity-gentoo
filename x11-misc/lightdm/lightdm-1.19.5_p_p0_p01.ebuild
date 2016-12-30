@@ -151,8 +151,12 @@ src_install() {
 	newexe "${FILESDIR}"/Xsession lightdm-session		# Install our custom Xsession as /usr/sbin/lightdm-session
 
 	# install guest-account script
-# FIXME	exeinto /usr/bin
-#	newexe debian/guest-account.sh guest-account || die
+	exeinto /usr/bin
+	newexe debian/guest-account.sh guest-account || die
+	# to work the script properly
+	exeinto /usr/share/lightdm/guest-session
+	doexe "${FILESDIR}"/setup.sh
+	dodir /usr/share/lightdm/guest-session/skel
 
 # FIXME	# Create GSettings defaults directory
 #	insinto /etc/guest-session/gsettings/
@@ -182,7 +186,9 @@ src_install() {
 	dodir /var/lib/${PN}-data
 }
 
-#pkg_postinst() {
-#	elog "'guest session' is disabled by default."
-#	elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
-#}
+pkg_postinst() {
+	elog
+	elog "'guest session' is disabled by default."
+	elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
+	elog
+}
