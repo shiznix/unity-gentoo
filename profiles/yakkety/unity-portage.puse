@@ -9,6 +9,7 @@ app-cdr/brasero nautilus
 app-crypt/libsecret crypt vala
 app-i18n/fcitx -autostart
 app-i18n/ibus dconf python -gconf vala
+app-misc/geoclue skyhook
 app-text/gtkspell vala
 dev-lang/python sqlite
 dev-libs/folks vala
@@ -44,6 +45,7 @@ media-libs/gst-plugins-base theora
 media-libs/harfbuzz icu
 media-libs/libvpx postproc svc
 media-libs/mesa egl gbm gles2          # Mir display server requires mesa[egl,gbm,gles2]
+media-libs/qt-gstreamer qt5
 media-plugins/alsa-plugins pulseaudio
 media-plugins/gst-plugins-meta ffmpeg
 media-sound/rhythmbox zeitgeist
@@ -65,6 +67,7 @@ virtual/notification-daemon -gnome	# Needed to avoid blocks because of 'x11-misc
 www-client/firefox -gstreamer-0 -qt5
 x11-base/xorg-server dmx xvfb
 x11-drivers/xf86-video-intel -dri3	# Disabled as it often causes black-screen-of-death when screensaver wakes
+x11-libs/gtk+:3 mir
 x11-libs/libdrm libkms
 x11-libs/libxcb xkb
 x11-misc/x11vnc dummy
