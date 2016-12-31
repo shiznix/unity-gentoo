@@ -43,6 +43,15 @@ DEPEND="app-admin/cgmanager
 S="${WORKDIR}"
 export QT_SELECT=5
 
+src_prepare() {
+	ubuntu-versionator_src_prepare
+	# Disable demos and benchmarks #
+	sed -e '/demos/d' \
+		-e '/benchmarks/d' \
+			-i CMakeLists.txt || die
+	cmake-utils_src_prepare
+}
+
 src_configure() {
 	use test || mycmakeargs+=(-DNO_TESTS=ON)
 	mycmakeargs+=(-DUSE_OPENGLES=1
