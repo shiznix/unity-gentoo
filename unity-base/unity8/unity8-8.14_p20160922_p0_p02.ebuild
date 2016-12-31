@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
 URELEASE="yakkety"
-inherit gnome2-utils cmake-utils ubuntu-versionator
+inherit gnome2-utils cmake-utils systemd ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -21,7 +21,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+debug test"
 RESTRICT="mirror"
 
-RDEPEND="sys-auth/polkit-pkla-compat
+RDEPEND="app-admin/cgmanager
+	sys-auth/polkit-pkla-compat
 	unity-base/ubuntu-settings-components
 	unity-base/unity-scopes-shell
 	x11-libs/unity-notifications
@@ -66,6 +67,17 @@ S="${WORKDIR}"
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 	gnome2_environment_reset
+	if [[ $(grep cgroup2 /proc/self/mounts) ]]; then
+		elog "Oops...Systemd cgroup is detected as using the new cgroup2 unified hierarchy"
+		elog " cgmanager.service is required for Unity8 but does not work with cgroup2"
+		elog " >=systemd-232 (needed for Unity7) enables the new cgroup2 by default"
+		elog "  You must revert to the legacy systemd cgroup (v1)"
+		elog " This can be done automatically by simply re-emerging systemd and the overlay will apply"
+		elog "  'core-don-t-use-the-unified-hierarchy-for-the-systemd-cgro.patch' to make legacy cgroup the default for =systemd-232"
+		elog " If ever you need to then revert to cgroup2, you can switch by adding 'systemd.legacy_systemd_cgroup_controller=0'"
+		elog "  to the kernel command-line"
+		die
+	fi
 }
 
 src_prepare() {
@@ -102,10 +114,12 @@ src_install() {
 	# Remove all installed language files as they can be incomplete #
 	# due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
+
+	# Enable cgmanager.service to start by default #
+	dosym $(systemd_get_systemunitdir)/cgmanager.service $(systemd_get_systemunitdir)/multi-user.target.wants/cgmanager.service
 }
 
 pkg_postinst() {
-	elog "To run Unity8, open an xterm on your desktop and run '/usr/bin/unity8_run.sh'"
 	gnome2_schemas_update
 	ubuntu-versionator_pkg_postinst
 }
