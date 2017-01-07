@@ -21,19 +21,21 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+eds"
 RESTRICT="mirror"
 
-RDEPEND="unity-base/unity-language-pack"
-DEPEND="${RDEPEND}
+COMMON_DEPEND="
 	dev-libs/libaccounts-glib
-	dev-libs/libappindicator:=
 	dev-libs/libdbusmenu:=
-	dev-libs/libindicate-qt
 	dev-libs/libtimezonemap:=
-	dev-libs/properties-cpp
 	gnome-extra/evolution-data-server:=
+	media-libs/gstreamer:1.0
 	net-misc/url-dispatcher
+	sys-apps/util-linux
 	unity-indicators/ido:=
-	unity-base/unity-control-center
 	>=x11-libs/libnotify-0.7.6"
+RDEPEND="${COMMON_DEPEND}
+	unity-base/unity-control-center
+	unity-base/unity-language-pack"
+DEPEND="${COMMON_DEPEND}
+	dev-libs/properties-cpp"
 
 S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
