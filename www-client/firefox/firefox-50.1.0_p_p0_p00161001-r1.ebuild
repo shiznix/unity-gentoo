@@ -132,6 +132,8 @@ src_prepare() {
 
 	# Apply our patches
 	eapply "${WORKDIR}/firefox" \
+		"${FILESDIR}"/mozilla_configure_regexp.patch \
+		"${FILESDIR}"/update_h2_curve.patch \
 		"${FILESDIR}"/${PN}-48.0-pgo.patch
 
 	# Enable gnomebreakpad
