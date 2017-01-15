@@ -41,10 +41,10 @@ DEPEND="app-misc/location-service
 S="${WORKDIR}"
 export QT_SELECT=5
 unset QT_QPA_PLATFORMTHEME
-gnome2_environment_reset
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
+	gnome2_environment_reset
 	python-single-r1_pkg_setup
 }
 
