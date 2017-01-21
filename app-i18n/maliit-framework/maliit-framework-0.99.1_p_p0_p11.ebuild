@@ -29,6 +29,10 @@ DEPEND="dev-qt/qtcore:5
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
+src_prepare() {
+	ubuntu-versionator_src_prepare
+}
+
 src_configure() {
 	export ENABLE_MULTITOUCH="false"
 	export MALIIT_SERVER_ARGUMENTS="-software -bypass-wm-hint"

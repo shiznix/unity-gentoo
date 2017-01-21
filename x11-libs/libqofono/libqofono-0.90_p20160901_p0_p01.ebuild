@@ -32,6 +32,12 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# Use system QT prefix for mkspecs installation #
+	sed -e 's:QT_INSTALL_PREFIX]/share/qt4:QT_INSTALL_ARCHDATA]:g' \
+		-e 's:QT_INSTALL_PREFIX]/share/qt5:QT_INSTALL_ARCHDATA]:g' \
+			-i src/src.pro || die
+
 	use test || \
 		sed -e 's:test$::g' \
 			-i libqofono.pro || die
