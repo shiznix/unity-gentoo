@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit autotools eutils flag-o-matic ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/i/${PN}"
-UVER_PREFIX="+15.10.${PVR_MICRO}"
+UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"
 HOMEPAGE="https://launchpad.net/ido"
@@ -25,7 +25,7 @@ DEPEND=">=dev-libs/glib-2.37
 	x11-libs/gtk+:3
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die

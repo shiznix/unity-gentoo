@@ -28,6 +28,7 @@ RDEPEND="app-admin/cgmanager
 	x11-libs/unity-notifications
 	x11-misc/ubuntu-keyboard
 	x11-themes/ubuntu-themes
+	x11-themes/vanilla-dmz-xcursors
 	x11-libs/gtk+:3[mir]"
 DEPEND="${RDEPEND}
 	app-misc/pay-service
@@ -100,9 +101,6 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 
-	exeinto /usr/bin
-	doexe "${FILESDIR}/unity8_run.sh"
-
 	insinto /usr/share/upstart/sessions
 	doins data/unity8{,-dash,-filewatcher}.conf
 
@@ -122,6 +120,15 @@ src_install() {
 pkg_postinst() {
 	gnome2_schemas_update
 	ubuntu-versionator_pkg_postinst
+	elog
+	elog "Unity8 relies on the selected mouse cursor theme to at least implement 'left_side'"
+	elog " It will try and fallback to 'left_ptr' which may or may not work (YMMV)"
+	elog "Current valid mouse cursor themes found on this system are as follows:"
+	elog "$(find /usr/share/ -name left_side | grep cursors | awk -F/ '{print $(NF-2)}')"
+	elog "Be sure you're selected mouse cursor theme is one of these and is set as the default"
+	elog "	 by editing /usr/share/icons/default/index.theme (example below):"
+	elog "[icon theme]"
+	elog "Inherits=Vanilla-DMZ"
 }
 
 pkg_preinst() {
