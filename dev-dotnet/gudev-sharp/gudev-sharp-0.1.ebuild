@@ -14,8 +14,7 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-RDEPEND=">=dev-dotnet/gtk-sharp-1.9
-	>=dev-dotnet/gtk-sharp-gapi-1.9
+RDEPEND=">=dev-dotnet/gtk-sharp-2.12.21
 	virtual/libgudev"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"

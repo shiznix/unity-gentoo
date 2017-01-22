@@ -20,6 +20,11 @@ RDEPEND=">=dev-lang/mono-2.0
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
+src_prepare() {
+	sed -e 's:mono/2.0:mono/2.0-api:g' \
+		-i configure || die
+}
+
 src_configure() {
 	econf $(use_enable doc docs) --enable-avahi
 }

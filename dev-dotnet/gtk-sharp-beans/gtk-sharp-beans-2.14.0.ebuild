@@ -15,9 +15,7 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 RDEPEND="dev-dotnet/gio-sharp
-	>=dev-dotnet/glib-sharp-2.12
-	>=dev-dotnet/gtk-sharp-2.12
-	>=dev-dotnet/gtk-sharp-gapi-2.12"
+	>=dev-dotnet/gtk-sharp-2.12.21"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 

@@ -23,7 +23,7 @@ RESTRICT="mirror"
 RDEPEND="dev-lang/mono
 	gnome-base/gnome-settings-daemon
 	sys-apps/dbus
-	dev-dotnet/gtk-sharp:2
+	>=dev-dotnet/gtk-sharp-2.12.21:2
 	dev-dotnet/notify-sharp
 	media-libs/gstreamer:1.0
 	media-libs/gst-plugins-base:1.0
@@ -31,7 +31,6 @@ RDEPEND="dev-lang/mono
 	media-libs/gst-plugins-good:1.0
 	media-libs/gst-plugins-ugly:1.0
 	media-plugins/gst-plugins-meta:1.0
-	dev-dotnet/gconf-sharp:2
 	cdda? (
 		|| (
 			media-plugins/gst-plugins-cdparanoia:1.0
@@ -68,10 +67,10 @@ RDEPEND="dev-lang/mono
 	)
 	udev? (
 		app-misc/media-player-info
-		dev-dotnet/gudev-sharp
+		dev-dotnet/gio-sharp
 		dev-dotnet/gkeyfile-sharp
 		dev-dotnet/gtk-sharp-beans
-		dev-dotnet/gio-sharp
+		dev-dotnet/gudev-sharp
 	)"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
