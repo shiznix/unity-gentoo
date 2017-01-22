@@ -2,13 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-GCONF_DEBUG="no"
+EAPI=6
 GNOME2_LA_PUNT="yes"
 GNOME_ORG_MODULE="network-manager-applet"
 
-URELEASE="yakkety"
-inherit autotools base eutils gnome2 ubuntu-versionator
+URELEASE="zesty"
+inherit autotools eutils gnome2 ubuntu-versionator
 
 MY_P="${GNOME_ORG_MODULE}_${PV}"
 S="${WORKDIR}/${GNOME_ORG_MODULE}-${PV}"
@@ -22,7 +21,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+introspection systemd"
+IUSE="+introspection modemmanager systemd teamd"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -36,16 +35,18 @@ RDEPEND="app-crypt/libsecret
 	>=x11-libs/libnotify-0.7.0
 
 	app-text/iso-codes
-	>=net-misc/networkmanager-1.2:=[introspection?]
+	>=net-misc/networkmanager-1.3:=[introspection?,modemmanager?,teamd?]
 	net-misc/mobile-broadband-provider-info
 
 	introspection? ( >=dev-libs/gobject-introspection-0.9.6:= )
 	virtual/freedesktop-icon-theme
 	virtual/notification-daemon
-	virtual/libgudev:="
+	virtual/libgudev:=
+	modemmanager? ( net-misc/modemmanager )
+	teamd? ( >=dev-libs/jansson-2.3 )"
 DEPEND="${RDEPEND}
-	virtual/pkgconfig
-	>=dev-util/intltool-0.50.1"
+	>=dev-util/intltool-0.50.1
+	virtual/pkgconfig"
 PDEPEND="virtual/notification-daemon" #546134
 
 src_prepare() {
