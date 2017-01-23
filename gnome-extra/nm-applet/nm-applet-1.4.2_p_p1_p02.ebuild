@@ -69,7 +69,10 @@ src_configure() {
 		--disable-more-warnings \
 		--disable-static \
 		--localstatedir=/var \
-		$(use_enable introspection)
+		$(use_enable introspection) \
+		$(use_with modemmanager wwan) \
+                $(use_with teamd team)
+
 }
 
 src_install() {
