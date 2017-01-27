@@ -5,7 +5,7 @@
 EAPI=6
 
 URELEASE="yakkety"
-inherit autotools cmake-utils ubuntu-versionator
+inherit autotools cmake-utils multilib ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.xz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="+debug"
 RESTRICT="mirror"
 
 DEPEND="dev-cpp/gmock
@@ -46,8 +46,9 @@ export CMAKE_BUILD_TYPE=none
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# Don't build tests as they fail to compile #
-	sed -i '/add_subdirectory(test)/d' "${S}/CMakeLists.txt" || die
+	# CMAKE_LIBRARY_ARCHITECTURE is not set so build tries to write to root filesystem and fails on sandbox violations #
+	sed -e 's:${CMAKE_LIBRARY_ARCHITECTURE}/::g' \
+		-i test/gtest/scopes/Registry/scopes/testscope{A,B}/CMakeLists.txt || die
 
 	# Gentoo's lsb-release will never match the source's expected output of a Ubuntu system #
 	sed -e "s:.*COMMAND lsb_release.*:set(SERIES $URELEASE):g" \
@@ -57,6 +58,11 @@ src_prepare() {
 		-i data/CMakeLists.txt
 
 	cmake-utils_src_prepare
+}
+
+src_configure() {
+	mycmakeargs+=(-DCMAKE_BUILD_TYPE="$(usex debug debug)")
+	cmake-utils_src_configure
 }
 
 src_install() {
