@@ -26,7 +26,7 @@ DEPEND="dev-libs/boost:=
 	dev-libs/protobuf
 	media-libs/mesa[egl,gbm,gles2]
 	mir-base/mir:=
-	<=dev-python/pillow-2.8.1[${PYTHON_USEDEP}]
+	dev-python/pillow[${PYTHON_USEDEP}]
 	x11-base/xorg-server[mir]"
 
 S="${WORKDIR}"
