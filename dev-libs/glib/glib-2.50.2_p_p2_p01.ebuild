@@ -17,7 +17,7 @@ inherit autotools bash-completion-r1 gnome2 libtool eutils multilib pax-utils py
 
 MY_P="${PN}2.0_${PV}"
 MY_PV="${PV}"
-UVER="-${PVR_MICRO}"
+#UVER="-${PVR_MICRO}"
 #S="${WORKDIR}/${PN}-${PV}"
 
 UURL="mirror://unity/pool/main/g/${PN}2.0"
