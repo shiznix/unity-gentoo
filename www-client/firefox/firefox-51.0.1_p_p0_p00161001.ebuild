@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -8,11 +8,11 @@ WANT_AUTOCONF="2.1"
 MOZ_ESR=""
 
 # This list can be updated with scripts/get_langs.sh from the mozilla overlay
-MOZ_LANGS=( ach af an ar as ast az be bg bn-BD bn-IN br bs ca cak cs cy da de dsb
-el en en-GB en-US en-ZA eo es-AR es-CL es-ES es-MX et eu fa ff fi fr fy-NL
-ga-IE gd gl gn gu-IN he hi-IN hr hsb hu hy-AM id is it ja kk km kn ko lij lt
-lv mai mk ml mr ms nb-NO nl nn-NO or pa-IN pl pt-BR pt-PT rm ro ru si sk sl
-son sq sr sv-SE ta te th tr uk uz vi xh zh-CN zh-TW )
+MOZ_LANGS=( ach af an ar as ast az bg bn-BD bn-IN br bs ca cak cs cy da de dsb
+el en en-GB en-US en-ZA eo es-AR es-CL es-ES es-MX et eu fa ff fi fr fy-NL ga-IE
+gd gl gn gu-IN he hi-IN hr hsb hu hy-AM id is it ja ka kk km kn ko lij lt lv
+mai mk ml mr ms nb-NO nl nn-NO or pa-IN pl pt-BR pt-PT rm ro ru si sk sl son sq
+sr sv-SE ta te th tr uk uz vi xh zh-CN zh-TW )
 
 # Taken from ubuntu-versionator.eclass
 MY_PV="${PV%%[a-z]_p*}"
@@ -30,7 +30,7 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-50.0-patches-02"
+PATCH="${PN}-51.0-patches-05"
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 
 MOZCONFIG_OPTIONAL_GTK2ONLY=1
@@ -41,7 +41,7 @@ URELEASE="yakkety-security"
 UVER_PREFIX="+build2"
 UURL="mirror://unity/pool/main/f/${PN}"
 
-inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.49 pax-utils fdo-mime autotools virtualx mozlinguas-v2 ubuntu-versionator
+inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.51 pax-utils fdo-mime autotools virtualx mozlinguas-v2 ubuntu-versionator
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
@@ -49,7 +49,7 @@ HOMEPAGE="http://www.mozilla.com/firefox"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist hardened +hwaccel jack pgo selinux +gmp-autoupdate test"
+IUSE="bindist +gmp-autoupdate hardened hwaccel jack pgo rust selinux test"
 RESTRICT="!bindist? ( bindist ) mirror"
 
 PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/${PATCH}.tar.xz )
@@ -62,12 +62,15 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 RDEPEND="
 	jack? ( virtual/jack )
-	>=dev-libs/nss-3.26.2
-	>=dev-libs/nspr-4.12
+	>=dev-libs/nss-3.28.1
+	>=dev-libs/nspr-4.13.1
+	>=media-libs/libpng-1.6.25
+	system-sqlite? ( >=dev-db/sqlite-3.14.1:3[secure-delete,debug=] )
 	selinux? ( sec-policy/selinux-mozilla )"
 
 DEPEND="${RDEPEND}
 	pgo? ( >=sys-devel/gcc-4.5 )
+	rust? ( dev-lang/rust )
 	amd64? ( ${ASM_DEPEND} virtual/opengl )
 	x86? ( ${ASM_DEPEND} virtual/opengl )"
 
@@ -75,10 +78,11 @@ QA_PRESTRIPPED="usr/lib*/${PN}/firefox"
 
 BUILD_OBJ_DIR="${S}/ff"
 
-# dependencies newer than specified in the eclass
-RDEPEND="${RDEPEND}
-	>=media-libs/libpng-1.6.23
-	"
+# allow GMP_PLUGIN_LIST to be set in an eclass or
+# overridden in the enviromnent (advanced hackers only)
+if [[ -z $GMP_PLUGIN_LIST ]]; then
+	GMP_PLUGIN_LIST=( gmp-gmpopenh264 gmp-widevinecdm )
+fi
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
@@ -106,6 +110,11 @@ pkg_setup() {
 		ewarn "You will do a double build for profile guided optimization."
 		ewarn "This will result in your build taking at least twice as long as before."
 	fi
+
+	if use rust; then
+		einfo
+		ewarn "This is very experimental, should only be used by those developing firefox."
+	fi
 }
 
 pkg_pretend() {
@@ -131,10 +140,7 @@ src_prepare() {
 	default
 
 	# Apply our patches
-	eapply "${WORKDIR}/firefox" \
-		"${FILESDIR}"/mozilla_configure_regexp.patch \
-		"${FILESDIR}"/update_h2_curve.patch \
-		"${FILESDIR}"/${PN}-48.0-pgo.patch
+	eapply "${WORKDIR}/firefox"
 
 	# Enable gnomebreakpad
 	if use debug ; then
@@ -228,6 +234,8 @@ src_configure() {
 
 	mozconfig_annotate '' --enable-extensions="${MEXTENSIONS}"
 
+	mozconfig_use_enable rust
+
 	# Allow for a proper pgo build
 	if use pgo; then
 		echo "mk_add_options PROFILE_GEN_SCRIPT='EXTRA_TEST_ARGS=10 \$(MAKE) -C \$(MOZ_OBJDIR) pgo-profile-run'" >> "${S}"/.mozconfig
@@ -268,7 +276,7 @@ src_compile() {
 			fi
 		fi
 		shopt -u nullglob
-		addpredict "${cards}"
+		[[ -n "${cards}" ]] && addpredict "${cards}"
 
 		MOZ_MAKE_FLAGS="${MAKEOPTS}" SHELL="${SHELL:-${EPREFIX%/}/bin/bash}" \
 		virtx emake -f client.mk profiledbuild || die "virtx emake failed"
@@ -305,14 +313,13 @@ src_install() {
 		|| die
 
 	local plugin
-	use gmp-autoupdate || for plugin in \
-	gmp-gmpopenh264 ; do
+	use gmp-autoupdate || for plugin in "${GMP_PLUGIN_LIST[@]}" ; do
 		echo "pref(\"media.${plugin}.autoupdate\", false);" >> \
 			"${BUILD_OBJ_DIR}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
 			|| die
 	done
 
-	MOZ_MAKE_FLAGS="${MAKEOPTS}" \
+	MOZ_MAKE_FLAGS="${MAKEOPTS}" SHELL="${SHELL:-${EPREFIX%/}/bin/bash}" \
 	emake DESTDIR="${D}" install
 
 	# Install language packs
@@ -374,11 +381,8 @@ PROFILE_EOF
 		pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/plugin-container
 	fi
 
-	# very ugly hack to make firefox not sigbus on sparc
-	# FIXME: is this still needed??
-	use sparc && { sed -e 's/Firefox/FirefoxGentoo/g' \
-					 -i "${ED}/${MOZILLA_FIVE_HOME}/application.ini" \
-					|| die "sparc sed failed"; }
+	# Required in order to use plugins and even run firefox on hardened.
+	pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/{firefox,firefox-bin,plugin-container}
 }
 
 pkg_preinst() {
@@ -390,6 +394,13 @@ pkg_postinst() {
 	fdo-mime_desktop_database_update
 	gnome2_icon_cache_update
 	ubuntu-versionator_pkg_postinst
+
+	if ! use gmp-autoupdate ; then
+		elog "USE='-gmp-autoupdate' has disabled the following plugins from updating or"
+		elog "installing into new profiles:"
+		local plugin
+		for plugin in "${GMP_PLUGIN_LIST[@]}"; do elog "\t ${plugin}" ; done
+	fi
 }
 
 pkg_postrm() {
