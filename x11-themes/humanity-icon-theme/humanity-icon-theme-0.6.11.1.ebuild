@@ -5,7 +5,7 @@
 EAPI=6
 inherit gnome2-utils ubuntu-versionator
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 UVER=
 
 DESCRIPTION="A nice and well polished icon theme"
