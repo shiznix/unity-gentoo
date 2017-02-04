@@ -5,7 +5,7 @@
 EAPI=6
 GCONF_DEBUG="yes"
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit autotools gnome2-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"
