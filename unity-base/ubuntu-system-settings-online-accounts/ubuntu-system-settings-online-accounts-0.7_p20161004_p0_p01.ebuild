@@ -21,6 +21,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
+PDEPEND="unity-base/online-accounts-api"
 DEPEND="dev-libs/glib:2
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
