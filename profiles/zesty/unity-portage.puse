@@ -54,6 +54,7 @@ net-libs/libgadu gnutls
 net-libs/libproxy -kde
 net-libs/gnome-online-accounts uoa
 net-misc/openssh -bindist
+net-wireless/bluez user-session
 sys-apps/dbus user-session
 sys-apps/systemd pam
 sys-devel/gcc:5.3.0 -jit	# gcc fails to compile with 'jit' enabled #

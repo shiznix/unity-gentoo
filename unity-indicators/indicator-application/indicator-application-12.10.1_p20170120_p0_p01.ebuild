@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
 UURL="mirror://unity/pool/main/i/${PN}"
-UVER_PREFIX="+15.04.${PVR_MICRO}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-application"
@@ -24,7 +24,7 @@ DEPEND="dev-libs/libappindicator:=
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicate-qt"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	# Fix desktop file installation location #
