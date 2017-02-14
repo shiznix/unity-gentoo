@@ -1,0 +1,27 @@
+Title: Use of Canonical's QT5 patchset on core qtbase packages for the unity-gentoo overlay
+Author: shiznix <rickfharris@yahoo.com.au>
+Content-Type: text/plain
+Posted: 2017-02-13
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: sys-apps/portage
+
+As of Yakkety (16.10) release, Unity8 is now being shipped by Canonical
+as a preview status software with the view to it being a
+fully useable desktop by Zesty (17.04) release.
+
+Unity8 uses a combination of QT5's EGL and QML functionality
+to render the desktop atop the new Mir EGL display server.
+
+This means that for building/execution sanity and correct functionality
+of the new Unity8 desktop, it is important to align with the same
+QT5 software versions and implemented bugfixes that Canonical perform.
+
+For this reason unity-gentoo overlay now uses QT5 ebuilds of the same version
+expected by Unity8, and implements their QT5 base patchset for same.
+
+To bring your system to use the new QT5 ebuilds ready for Unity8,
+it is highly recommended you perform the following in order:
+
+emerge -1avt $(qlist -ICS dev-qt/ | grep \:5)
+revdep-rebuild --library 'libQt5Core.so' -- -avt
