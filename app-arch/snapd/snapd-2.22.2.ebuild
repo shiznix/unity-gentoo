@@ -72,6 +72,7 @@ src_install() {
 	systemd_dounit ../data/systemd/snapd.{service,socket}
 	systemd_dounit ../data/systemd/snapd.autoimport.service
 	systemd_dounit ../data/systemd/snapd.refresh.{service,timer}
+	systemd_dounit ../data/systemd/snapd.system-shutdown.service
 
 	# Put /snap/bin on PATH
 	dodir /etc/profile.d/
