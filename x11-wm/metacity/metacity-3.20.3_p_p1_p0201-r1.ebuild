@@ -72,6 +72,10 @@ src_install() {
 	emake DESTDIR="${ED}" install
 	dodoc AUTHORS ChangeLog HACKING NEWS README *.txt doc/*.txt
 	prune_libtool_files --modules
+
+	insinto /usr/share/glib-2.0/schemas
+	newins "${WORKDIR}"/debian/metacity-common.gsettings-override \
+		10_metacity-common.gschema.override
 }
 
 pkg_preinst() {
