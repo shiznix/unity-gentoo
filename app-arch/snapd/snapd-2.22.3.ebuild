@@ -77,6 +77,7 @@ src_install() {
 	# Put /snap/bin on PATH
 	dodir /etc/profile.d/
 	echo 'PATH=$PATH:/snap/bin' > ${ED}/etc/profile.d/snapd.sh
+	keepdir /snap
 
 	# Delete some files that are only useful on Ubuntu
 	rm -rf "${ED}"etc/apparmor.d
