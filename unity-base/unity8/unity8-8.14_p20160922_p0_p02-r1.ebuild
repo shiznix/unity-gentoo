@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
 URELEASE="yakkety"
-inherit gnome2-utils cmake-utils systemd ubuntu-versionator
+inherit gnome2-utils cmake-utils linux-info systemd ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -64,9 +64,31 @@ DEPEND="${RDEPEND}
 	x11-libs/ubuntu-ui-toolkit"
 
 S="${WORKDIR}"
+export QT_SELECT=5
+
+CONFIG_CHECK="
+	~BLK_CGROUP
+	~CGROUPS
+	~CGROUP_CPUACCT
+	~CGROUP_DEVICE
+	~CGROUP_FREEZER
+	~CGROUP_HUGETLB
+	~CGROUP_NET_CLASSID
+	~CGROUP_PERF
+	~CGROUP_PIDS
+	~CGROUP_SCHED
+	~CGROUP_WRITEBACK
+	~NET_CLS_CGROUP
+	~SOCK_CGROUP_DATA
+
+	~CPUSETS
+	~NAMESPACES
+	~IPC_NS ~USER_NS ~PID_NS
+"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
+	linux-info_pkg_setup
 	gnome2_environment_reset
 	if [[ $(grep cgroup2 /proc/self/mounts) ]]; then
 		elog "Oops...Systemd cgroup is detected as using the new cgroup2 unified hierarchy"
@@ -88,6 +110,10 @@ src_prepare() {
 	sed '/${CMAKE_CURRENT_BINARY_DIR}\/version/d' \
 		-i data/CMakeLists.txt
 
+	# Correct path to libGL.so.1 #
+	sed -e 's:mesa/libGL.so.1:libGL.so.1:g' \
+		-i cmake/modules/QmlTest.cmake
+
 	cmake-utils_src_prepare
 }
 
@@ -97,6 +123,11 @@ src_configure() {
 			-DCMAKE_BUILD_TYPE="$(usex debug debug)")
 	cmake-utils_src_configure
 }
+
+# Uncomment to perform exhaustive set of tests, can take a very long time to complete #
+#src_test() {
+#	Xemake -k xvfballtests
+#}
 
 src_install() {
 	cmake-utils_src_install
