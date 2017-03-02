@@ -210,6 +210,14 @@ unix:abstract=/com/ubuntu/upstart-session/1000/6350
 	       \_ 'upstart --user' starts /usr/share/upstart/sessions/unity8.conf
 		 \_ unity8.conf triggers on SESSION=unity8, points /run/user/<uid>/mir_socket at /run/mir_socket and starts '/usr/bin/unity8 --mode=full-shell'
 
+## Unity8 Applications Launch ##
+	- On each application launched from Unity8's 'Scopes', the following Upstart jobs are started:
+		url-dispatcher.conf
+		  \_ application.conf
+		    \_ application-legacy.conf
+		    \_ application-click-start.conf
+	- QTMir renders a window surface and assigns the APPID to the window
+
 ## Compiz performance settings for 'ccsm' ##
  Click on "OpenGL" and set "Texture Filter" to Fast.
  Make sure "Sync to V blank" is selected, that Texture Compression is NOT selected, and make sure Frame Buffer, Vertex Buffer, and Always Use Buffer Swapping ARE all selected.
