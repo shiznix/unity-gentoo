@@ -22,13 +22,16 @@ RESTRICT="mirror"
 
 DEPEND="app-admin/cgmanager
 	dev-libs/glib:2
+	dev-libs/gobject-introspection
 	dev-libs/json-glib
 	dev-libs/libzeitgeist
 	dev-libs/properties-cpp
 	dev-util/lttng-tools
 	dev-util/dbus-test-runner
 	mir-base/mir:=
+	net-misc/curl
 	sys-apps/click
+	sys-apps/dbus
 	sys-apps/libertine
 	sys-apps/upstart
 	sys-libs/libnih[dbus]"
@@ -37,8 +40,6 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	# Disable '-Werror'
-	sed -i 's/-Werror//g' CMakeLists.txt
 
 	# Fix incorrect installation path for ubuntu-app-test binary #
 	sed -e 's:{CMAKE_INSTALL_FULL_BINDIR}/app-test:{CMAKE_INSTALL_FULL_BINDIR}:g' \
