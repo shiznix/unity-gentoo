@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-PYTHON_COMPAT=( python{3_4,3_5} )
+PYTHON_COMPAT=( python3_4 )
 VALA_MIN_API_VERSION="0.28"
 VALA_MAX_API_VERSION="0.28"
 
@@ -24,7 +24,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE="nls systemd"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/glib:2
+RDEPEND="dev-lang/perl
+	dev-util/schroot"
+DEPEND="${RDEPEND}
+	dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libgee:0.8
 	nls? ( virtual/libintl )
@@ -33,7 +36,6 @@ DEPEND="dev-libs/glib:2
 S="${WORKDIR}"
 
 src_prepare() {
-	mv "${WORKDIR}/debian" "${S}/"      # aclocal executes 'get-version' from source tree requiring existence of debian/Changelog
 	ubuntu-versionator_src_prepare
 	distutils-r1_src_prepare
 	vala_src_prepare
@@ -42,25 +44,15 @@ src_prepare() {
 }
 
 src_configure() {
-	distutils-r1_src_configure
+	export PYTHON_INSTALL_FLAGS="--force --no-compile --root=${ED}"
 	econf \
+		--prefix=/usr \
 		--disable-packagekit \
 		$(use_enable nls) \
 		$(use_enable systemd)
 }
 
-src_compile() {
-	rm -rfv tests/
-	distutils-r1_src_compile
-	pushd lib/
-		emake
-	popd
-}
-
 src_install() {
-	distutils-r1_src_install
-	pushd lib/
-		emake DESTDIR="${ED}" install
-	popd
+	default
 	prune_libtool_files --modules
 }
