@@ -30,7 +30,7 @@ DEPEND="dev-lang/go
 # TODO: enable tests
 # TODO: put /var/lib/snapd/desktop on XDG_DATA_DIRS
 
-S="${WORKDIR}/snappy.upstream/cmd"
+S="${S}/cmd"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
@@ -43,6 +43,7 @@ src_prepare() {
 		${GOPATH}/bin/govendor sync
 	popd
 
+	echo "${PV}" > VERSION
 	eautoreconf
 }
 
@@ -78,9 +79,6 @@ src_install() {
 	dodir /etc/profile.d/
 	echo 'PATH=$PATH:/snap/bin' > ${ED}/etc/profile.d/snapd.sh
 	keepdir /snap
-
-	# Delete some files that are only useful on Ubuntu
-	rm -rf "${ED}"etc/apparmor.d
 }
 
 pkg_postinst() {
