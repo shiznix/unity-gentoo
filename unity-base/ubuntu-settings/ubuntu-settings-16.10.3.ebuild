@@ -8,6 +8,7 @@ URELEASE="yakkety"
 inherit gnome2-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
+UVER=
 
 DESCRIPTION="Default settings for the Unity"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/ubuntu-settings"

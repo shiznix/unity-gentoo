@@ -6,7 +6,7 @@ EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit autotools base eutils multilib multilib-minimal flag-o-matic \
 	python-any-r1 pax-utils ubuntu-versionator
 
@@ -25,17 +25,17 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="!bindist? ( bindist )
 	mirror"
 
-INTEL_CARDS="i915 i965 ilo intel"
+INTEL_CARDS="i915 i965 intel"
 RADEON_CARDS="r100 r200 r300 r600 radeon radeonsi"
-VIDEO_CARDS="${INTEL_CARDS} ${RADEON_CARDS} freedreno nouveau vmware"
+VIDEO_CARDS="${INTEL_CARDS} ${RADEON_CARDS} freedreno nouveau vc4 vmware"
 for card in ${VIDEO_CARDS}; do
 	IUSE_VIDEO_CARDS+=" video_cards_${card}"
 done
 
 IUSE="${IUSE_VIDEO_CARDS}
 	bindist +classic d3d9 debug +dri3 +egl +gallium +gbm gles1 gles2 +llvm mir
-	+nptl opencl osmesa pax_kernel openmax pic selinux +udev vaapi vdpau
-	wayland xvmc xa kernel_FreeBSD"
+	+nptl opencl osmesa pax_kernel openmax pic selinux +udev vaapi valgrind
+	vdpau wayland xvmc xa kernel_FreeBSD"
 
 REQUIRED_USE="
 	d3d9?   ( dri3 gallium )
@@ -53,10 +53,9 @@ REQUIRED_USE="
 	video_cards_intel?  ( classic )
 	video_cards_i915?   ( || ( classic gallium ) )
 	video_cards_i965?   ( classic )
-	video_cards_ilo?    ( gallium )
 	video_cards_nouveau? ( || ( classic gallium ) )
 	video_cards_radeon? ( || ( classic gallium )
-					gallium? ( x86? ( llvm ) amd64? ( llvm ) ) )
+						  gallium? ( x86? ( llvm ) amd64? ( llvm ) ) )
 	video_cards_r100?   ( classic )
 	video_cards_r200?   ( classic )
 	video_cards_r300?   ( gallium x86? ( llvm ) amd64? ( llvm ) )
@@ -86,32 +85,26 @@ RDEPEND="
 	>=x11-libs/libxcb-1.9.3:=[${MULTILIB_USEDEP}]
 	x11-libs/libXfixes:=[${MULTILIB_USEDEP}]
 	llvm? ( !kernel_FreeBSD? (
-		video_cards_radeonsi? ( || (
-			>=dev-libs/elfutils-0.155-r1:=[${MULTILIB_USEDEP}]
-			>=dev-libs/libelf-0.8.13-r2:=[${MULTILIB_USEDEP}]
-			) )
+		video_cards_radeonsi? ( virtual/libelf:0=[${MULTILIB_USEDEP}] )
 		!video_cards_r600? (
-			video_cards_radeon? ( || (
-				>=dev-libs/elfutils-0.155-r1:=[${MULTILIB_USEDEP}]
-				>=dev-libs/libelf-0.8.13-r2:=[${MULTILIB_USEDEP}]
-				) )
+			video_cards_radeon? ( virtual/libelf:0=[${MULTILIB_USEDEP}] )
 		) )
 		>=sys-devel/llvm-3.6.0:=[${MULTILIB_USEDEP}]
 	)
 	opencl? (
 				app-eselect/eselect-opencl
 				dev-libs/libclc
-				!kernel_FreeBSD? ( || (
-					>=dev-libs/elfutils-0.155-r1:=[${MULTILIB_USEDEP}]
-					>=dev-libs/libelf-0.8.13-r2:=[${MULTILIB_USEDEP}]
-				) )
+				!kernel_FreeBSD? ( virtual/libelf:0=[${MULTILIB_USEDEP}] )
 			)
 	openmax? ( >=media-libs/libomxil-bellagio-0.9.3:=[${MULTILIB_USEDEP}] )
-	vaapi? ( >=x11-libs/libva-1.6.0:=[${MULTILIB_USEDEP}] )
+	vaapi? (
+		>=x11-libs/libva-1.6.0:=[${MULTILIB_USEDEP}]
+		video_cards_nouveau? ( !<=x11-libs/libva-vdpau-driver-0.7.4-r3 )
+	)
 	vdpau? ( >=x11-libs/libvdpau-1.1:=[${MULTILIB_USEDEP}] )
 	wayland? ( >=dev-libs/wayland-1.2.0:=[${MULTILIB_USEDEP}] )
 	xvmc? ( >=x11-libs/libXvMC-1.0.8:=[${MULTILIB_USEDEP}] )
-	${LIBDRM_DEPSTRING}[video_cards_freedreno?,video_cards_nouveau?,video_cards_vmware?,${MULTILIB_USEDEP}]
+	${LIBDRM_DEPSTRING}[video_cards_freedreno?,video_cards_nouveau?,video_cards_vc4?,video_cards_vmware?,${MULTILIB_USEDEP}]
 "
 for card in ${INTEL_CARDS}; do
 	RDEPEND="${RDEPEND}
@@ -128,10 +121,15 @@ RDEPEND="${RDEPEND}
 	video_cards_radeonsi? ( ${LIBDRM_DEPSTRING}[video_cards_amdgpu] )
 "
 
+# FIXME: kill the sys-devel/llvm[video_cards_radeon] compat once
+# LLVM < 3.9 is out of the game
 DEPEND="${RDEPEND}
 	!!media-libs/mesa-mir
 	llvm? (
-		video_cards_radeonsi? ( sys-devel/llvm[video_cards_radeon] )
+		video_cards_radeonsi? ( || (
+			sys-devel/llvm[llvm_targets_AMDGPU]
+			sys-devel/llvm[video_cards_radeon]
+		) )
 	)
 	opencl? (
 				>=sys-devel/llvm-3.4.2:=[${MULTILIB_USEDEP}]
@@ -140,6 +138,7 @@ DEPEND="${RDEPEND}
 	)
 	sys-devel/gettext
 	virtual/pkgconfig
+	valgrind? ( dev-util/valgrind )
 	>=x11-proto/dri2proto-2.8-r1:=[${MULTILIB_USEDEP}]
 	dri3? (
 		>=x11-proto/dri3proto-1.0:=[${MULTILIB_USEDEP}]
@@ -180,10 +179,6 @@ pkg_setup() {
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
-
-	# fix for hardened pax_kernel, bug 240956
-	epatch "${FILESDIR}"/glx_ro_text_segm.patch
-
 	eautoreconf
 }
 
@@ -239,10 +234,10 @@ multilib_src_configure() {
 		use vaapi && myconf+=" --with-va-libdir=/usr/$(get_libdir)/va/drivers"
 
 		gallium_enable swrast
+		gallium_enable video_cards_vc4 vc4
 		gallium_enable video_cards_vmware svga
 		gallium_enable video_cards_nouveau nouveau
 		gallium_enable video_cards_i915 i915
-		gallium_enable video_cards_ilo ilo
 		if ! use video_cards_i915 && \
 			! use video_cards_i965; then
 			gallium_enable video_cards_intel i915
@@ -301,6 +296,7 @@ multilib_src_configure() {
 		$(use_enable gles2) \
 		$(use_enable nptl glx-tls) \
 		$(use_enable !udev sysfs) \
+		--enable-valgrind=$(usex valgrind auto no) \
 		--enable-llvm-shared-libs \
 		--with-dri-drivers=${DRI_DRIVERS} \
 		--with-gallium-drivers=${GALLIUM_DRIVERS} \

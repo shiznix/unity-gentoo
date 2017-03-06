@@ -8,6 +8,7 @@ URELEASE="yakkety"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
+UVER=
 
 DESCRIPTION="Default audio theme for the Unity"
 HOMEPAGE="https://launchpad.net/ubuntu-sounds"
