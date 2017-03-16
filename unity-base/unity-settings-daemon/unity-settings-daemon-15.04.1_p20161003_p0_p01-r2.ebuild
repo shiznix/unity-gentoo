@@ -171,9 +171,27 @@ src_install() {
 	insinto /usr/share/upstart/systemd-session/upstart
 	doins debian/user/unity-settings-daemon.override
 
+	# Install gschema override settings #
+	insinto /usr/share/glib-2.0/schemas
+	newins debian/unity-settings-daemon.gsettings-override \
+		10_unity-settings-daemon.gschema.override
+
 	prune_libtool_files --modules
 }
 
 src_test() {
 	Xemake check
+}
+
+pkg_preinst() {
+	# Modified gnome2_schemas_savelist to find *.gschema.override files #
+	export GNOME2_ECLASS_GLIB_SCHEMAS=$(find "${ED}usr/share/glib-2.0/schemas" -name "*.gschema.override" 2>/dev/null)
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
 }

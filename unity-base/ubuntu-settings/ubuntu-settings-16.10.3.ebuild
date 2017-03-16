@@ -74,11 +74,8 @@ src_install() {
 }
 
 pkg_preinst() {
-	# Modified gnome2_schemas_savelist #
-	#  to find *.gschema.override files #
-	pushd "${ED}" > /dev/null || die
-		export GNOME2_ECLASS_GLIB_SCHEMAS=$(find 'usr/share/glib-2.0/schemas' -name '*.gschema.override' 2>/dev/null)
-	popd > /dev/null || die
+	# Modified gnome2_schemas_savelist to find *.gschema.override files #
+	export GNOME2_ECLASS_GLIB_SCHEMAS=$(find "${ED}usr/share/glib-2.0/schemas" -name "*.gschema.override" 2>/dev/null)
 }
 
 pkg_postinst() {
