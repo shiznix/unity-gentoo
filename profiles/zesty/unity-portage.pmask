@@ -1,3 +1,7 @@
+# Requires >=dev-libs/libinput-1.6 which is greater than the 1.4 version needed to comply with current mir-base/mir version
+>=x11-drivers/xf86-input-libinput-0.24
+
+
 ## Global masks ##
 
 dev-qt/assistant:5::gentoo
