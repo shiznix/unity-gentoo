@@ -5,7 +5,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit autotools eutils flag-o-matic gnome2 multilib virtualx multilib-minimal ubuntu-versionator
 
 MY_PN="gtk+3.0"
