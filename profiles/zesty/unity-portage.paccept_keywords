@@ -12,7 +12,7 @@ app-eselect/eselect-opengl
 =dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
 dev-libs/capnproto
 dev-libs/libindicate-qt
-=dev-libs/nss-3.27*
+=dev-libs/nss-3.29*
 =dev-util/boost-build-1.58*
 ~dev-python/python-prctl-1.5.0
 ~dev-qt/qtlocation-5.6.1
@@ -22,7 +22,7 @@ dev-util/umockdev
 =net-misc/networkmanager-1.2*
 ~sys-apps/systemd-232			# Provides support for graphical(-pre)-session.target(.wants) systemd units used to start Unity desktop session
 =sys-apps/util-linux-2.28*		# For systemd-232 unmask
-sys-devel/gcc:5.3.0
+sys-devel/gcc:5.4.0
 sys-libs/db:5.1
 sys-libs/db:5.3
 ~sys-libs/libseccomp-2.3.1		# For systemd-232 unmask

@@ -10,7 +10,7 @@ MOZ_ESR=""
 # This list can be updated with scripts/get_langs.sh from the mozilla overlay
 MOZ_LANGS=( ach af an ar as ast az bg bn-BD bn-IN br bs ca cak cs cy da de dsb
 el en en-GB en-US en-ZA eo es-AR es-CL es-ES es-MX et eu fa ff fi fr fy-NL ga-IE
-gd gl gn gu-IN he hi-IN hr hsb hu hy-AM id is it ja ka kk km kn ko lij lt lv
+gd gl gn gu-IN he hi-IN hr hsb hu hy-AM id is it ja ka kab kk km kn ko lij lt lv
 mai mk ml mr ms nb-NO nl nn-NO or pa-IN pl pt-BR pt-PT rm ro ru si sk sl son sq
 sr sv-SE ta te th tr uk uz vi xh zh-CN zh-TW )
 
@@ -30,18 +30,17 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-51.0-patches-05"
+PATCH="${PN}-52.0-patches-07"
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 
 MOZCONFIG_OPTIONAL_GTK2ONLY=1
 MOZCONFIG_OPTIONAL_WIFI=1
-MOZCONFIG_OPTIONAL_JIT="enabled"
 
 URELEASE="yakkety-security"
 UVER_PREFIX="+build2"
 UURL="mirror://unity/pool/main/f/${PN}"
 
-inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.51 pax-utils fdo-mime autotools virtualx mozlinguas-v2 ubuntu-versionator
+inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.52 pax-utils fdo-mime autotools virtualx mozlinguas-v2 ubuntu-versionator
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
@@ -49,7 +48,7 @@ HOMEPAGE="http://www.mozilla.com/firefox"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist +gmp-autoupdate hardened hwaccel jack pgo rust selinux test"
+IUSE="bindist +gmp-autoupdate hardened hwaccel jack nsplugin pgo rust selinux test"
 RESTRICT="!bindist? ( bindist ) mirror"
 
 PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/${PATCH}.tar.xz )
@@ -62,10 +61,8 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 RDEPEND="
 	jack? ( virtual/jack )
-	>=dev-libs/nss-3.28.1
+	>=dev-libs/nss-3.28.3
 	>=dev-libs/nspr-4.13.1
-	>=media-libs/libpng-1.6.25
-	system-sqlite? ( >=dev-db/sqlite-3.14.1:3[secure-delete,debug=] )
 	selinux? ( sec-policy/selinux-mozilla )"
 
 DEPEND="${RDEPEND}
@@ -312,6 +309,12 @@ src_install() {
 		"${BUILD_OBJ_DIR}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
 		|| die
 
+	if use nsplugin; then
+		echo "pref(\"plugin.load_flash_only\", false);" >> \
+			"${BUILD_OBJ_DIR}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
+			|| die
+	fi
+
 	local plugin
 	use gmp-autoupdate || for plugin in "${GMP_PLUGIN_LIST[@]}" ; do
 		echo "pref(\"media.${plugin}.autoupdate\", false);" >> \
@@ -372,13 +375,6 @@ PROFILE_EOF
 	if ! use startup-notification ; then
 		sed -i -e "/StartupNotify=true/d"
 			"${ED}/usr/share/applications/${PN}.desktop" || die
-	fi
-
-	# Required in order to use plugins and even run firefox on hardened, with jit useflag.
-	if use jit; then
-		pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/{firefox,firefox-bin,plugin-container}
-	else
-		pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/plugin-container
 	fi
 
 	# Required in order to use plugins and even run firefox on hardened.
