@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="yakkety yakkety-security yakkety-updates"
+RELEASES="yakkety yakkety-security yakkety-updates zesty zesty-security zesty-updates"
 SOURCES="main universe"
 
 sources_download() {

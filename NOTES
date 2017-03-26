@@ -55,6 +55,7 @@ net-im/empathy				# Integrates with Unity online accounts, associated plugins an
 net-im/telepathy-mission-control	# Enables Ubuntu libaccounts-sso integration
 net-libs/gnome-online-accounts		# Allow access to Gnome Online Accounts (GOA) via Ubuntu Online Accounts (UOA)
 sys-apps/accountsservice		# Requires patching for SetInputSources as needed by unity-indicators/indicator-keyboard and u-c-c text entry settings
+sys-auth/pambase			# Requires patching to support sys-fs/lxcfs[pam] and so have userspace access to 'freezer' cgroup controller
 sys-kernel/ubuntu-sources		# Patched with Ubuntu's complete kernel patchset to add support for sys-apps/ureadahead
 sys-libs/mtdev				# Needs to be multilib aware to install with multilib dev-libs/libinput (mir-base/mir)
 www-client/chromium			# Required to support Unity Launcher icon effects (no duplicate icons, quicklist menu, progress bar, window title bar fixes etc.)
@@ -179,7 +180,7 @@ unix:abstract=/com/ubuntu/upstart-session/1000/6350
 	- The following services have not yet been migrated to use systemd and still use upstart *.conf files to start:
 		- unity-base/hud
 			/usr/libexec/hud/dbus-activation-hack.sh then starts /usr/libexec/hud/hud-service
-		- net-misc/url-dispatcher (currently disabled due to causing Unity desktop logout lag)
+		- net-misc/url-dispatcher
 		- All indicators (application,bluetooth,datetime,keyboard,messages,power,printers,session,sound)
 		
 	- Once Canonical have fully migrated 'systemd --user' to start all desktop services, the following can be expected:
@@ -212,11 +213,22 @@ unix:abstract=/com/ubuntu/upstart-session/1000/6350
 
 ## Unity8 Applications Launch ##
 	- On each application launched from Unity8's 'Scopes', the following Upstart jobs are started:
-		url-dispatcher.conf
-		  \_ application.conf
+		url-dispatcher.conf	(provided by net-misc/url-dispatcher)
+		  \_ application.conf	(provided by ubuntu-app-launch)
 		    \_ application-legacy.conf
 		    \_ application-click-start.conf
-	- QTMir renders a window surface and assigns the APPID to the window
+	- ubuntu-app-launch upstart jobs rely on the 'freezer' cgroup controller to be available to the user and apparmor to set APP_EXEC_POLICY
+	- upstart is made cgroup aware by 'notify-cgmanager.conf' upstart job
+	- cgroups are considered experimental alpha while upstream kernel, systemd and cgmanager devs are still to agree on a final design
+			that supports all available cgroup controllers for system and user processes
+		For example:
+		- Kernel cgroup support was written and then re-written so we now have 'cgroup v1' and 'cgroup v2' support
+			These two are mutually exclusive and cgmanager does not support v2 yet
+			>=systemd-232 enables v2 by default and so is patched back to enable v1 by default so cgmanager can continue to work
+		- Systemd doesn't expose the 'freezer' cgroup controller to userspace because Lennart doesn't like the way kernel authors wrote it
+				(see https://lists.fedoraproject.org/pipermail/devel/2014-May/199304.html)
+			This means to get userspace 'freezer' cgroup controller support, it must be FUSE mounted using sys-fs/lxcfs[pam]
+		- Unity8 relies on this fragile setup as it's core function to launch applications
 
 ## Compiz performance settings for 'ccsm' ##
  Click on "OpenGL" and set "Texture Filter" to Fast.

@@ -56,6 +56,7 @@ src_install() {
 	rm debian/user-conf/logrotate.conf	# Gentoo does not run logrotate as a user process
 	doins debian/user-conf/*.conf
 	doins "${FILESDIR}/dbus.conf"
+	doins "${FILESDIR}/notify-cgmanager.conf"
 
 	exeinto /usr/bin
 	newexe init/init upstart

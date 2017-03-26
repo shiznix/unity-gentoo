@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
 URELEASE="yakkety"
-inherit gnome2-utils cmake-utils linux-info systemd ubuntu-versionator virtualx
+inherit gnome2-utils cmake-utils linux-info pam systemd ubuntu-versionator virtualx
 
 UURL="mirror://ubuntu/pool/main/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -21,7 +21,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+debug test"
 RESTRICT="mirror"
 
-RDEPEND="app-admin/cgmanager
+RDEPEND="app-admin/cgmanager[pam]
+	sys-auth/pambase[lxcfs]
 	sys-auth/polkit-pkla-compat
 	unity-base/ubuntu-settings-components
 	unity-base/unity-scopes-shell

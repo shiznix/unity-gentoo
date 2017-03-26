@@ -133,6 +133,7 @@ net-im/empathy::gentoo
 net-im/telepathy-mission-control::gentoo
 net-libs/gnome-online-accounts::gentoo
 sys-apps/accountsservice::gentoo
+sys-auth/pambase::gentoo
 sys-libs/libnih::gentoo
 www-client/chromium::gentoo
 www-client/firefox::gentoo
