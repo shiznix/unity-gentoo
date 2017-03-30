@@ -4,13 +4,12 @@
 
 EAPI=5
 
-URELEASE="yakkety"
+URELEASE="yakkety-updates"
 inherit autotools-multilib eutils linux-info ubuntu-versionator
-UVER="-1"
 
 DESCRIPTION="Linux Trace Toolkit - next generation"
 HOMEPAGE="http://lttng.org"
-SRC_URI="http://lttng.org/files/${PN}/${P}.tar.bz2"
+SRC_URI="http://lttng.org/files/${PN}/${PN}-${PV}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
