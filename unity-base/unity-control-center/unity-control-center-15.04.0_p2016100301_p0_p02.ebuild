@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+cups +gnome-online-accounts +i18n kerberos v4l"
+IUSE="+cups +i18n input_devices_wacom kerberos v4l"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -79,9 +79,6 @@ COMMON_DEPEND="
 	cups? (
 		>=net-print/cups-1.4[dbus]
 		|| ( >=net-fs/samba-3.6.14-r1[smbclient] >=net-fs/samba-4.0.0[client] ) )
-	gnome-online-accounts? (
-		>=media-libs/grilo-0.2.12:0.2
-		>=net-libs/gnome-online-accounts-3.15.1 )
 	i18n? ( >=app-i18n/ibus-1.5.2
 		>=gnome-base/libgnomekbd-3 )
 	v4l? (
@@ -89,10 +86,14 @@ COMMON_DEPEND="
 		media-libs/clutter-gtk:1.0
 		>=media-video/cheese-3.5.91 )
 
-	>=dev-libs/libwacom-0.7
+	input_devices_wacom? ( >=dev-libs/libwacom-0.7 )
 	>=media-libs/clutter-1.11.3:1.0
 	media-libs/clutter-gtk:1.0
 	>=x11-libs/libXi-1.2
+
+	kerberos? ( app-crypt/mit-krb5 )
+	dev-libs/libtimezonemap
+	net-libs/webkit-gtk:4
 
 	$(vala_depend)"
 RDEPEND="${COMMON_DEPEND}
@@ -137,6 +138,8 @@ src_prepare() {
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
 
+	epatch "${FILESDIR}/optional.patch"
+
 	# If a .desktop file does not have inline translations, fall back #
 	#  to calling gettext #
 	find ${WORKDIR} -type f -name "*.desktop*" \
@@ -155,8 +158,10 @@ src_configure() {
 		--disable-static \
 		--enable-documentation \
 		--without-cheese \
+		--enable-color \
 		$(use_enable cups) \
 		$(use_enable i18n ibus) \
+		$(use_enable input_devices_wacom wacom) \
 		$(use_enable kerberos)
 }
 
