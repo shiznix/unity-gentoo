@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+cups +i18n input_devices_wacom kerberos v4l"
+IUSE="+bluetooth +colord +cups +gnome-online-accounts +i18n input_devices_wacom kerberos v4l"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -70,11 +70,11 @@ COMMON_DEPEND="
 	x11-libs/libXxf86misc
 	>=x11-libs/libXi-1.2
 
-	>=net-wireless/gnome-bluetooth-3.18.0:=
-
 	net-libs/libsoup:2.4
-	>=x11-misc/colord-0.1.34:0=
-	>=x11-libs/colord-gtk-0.1.24
+	colord? (
+		>=x11-misc/colord-0.1.34:0=
+		>=x11-libs/colord-gtk-0.1.24
+	)
 
 	cups? (
 		>=net-print/cups-1.4[dbus]
@@ -98,6 +98,7 @@ COMMON_DEPEND="
 	$(vala_depend)"
 RDEPEND="${COMMON_DEPEND}
 	|| ( ( app-admin/openrc-settingsd sys-auth/consolekit ) >=sys-apps/systemd-31 )
+	gnome-online-accounts? ( net-libs/gnome-online-accounts[uoa] )
 	>=sys-apps/accountsservice-0.6.39
 	x11-themes/gnome-icon-theme-symbolic
 	>=gnome-extra/gnome-color-manager-3
@@ -158,7 +159,7 @@ src_configure() {
 		--disable-static \
 		--enable-documentation \
 		--without-cheese \
-		--enable-color \
+		$(use_enable colord color) \
 		$(use_enable cups) \
 		$(use_enable i18n ibus) \
 		$(use_enable input_devices_wacom wacom) \
@@ -177,6 +178,17 @@ src_install() {
 
 	# Remove /usr/share/pixmaps/faces/ as is provided by gnome-base/gnome-control-center #
 	rm -rf "${ED}usr/share/pixmaps/faces"
+
+	if ! use bluetooth ; then
+		rm -f "${ED}/usr/$(get_libdir)/${PN}-1/panels/libbluetooth.so"
+		rm -f "${ED}/usr/$(get_libdir)/libgnome-bluetooth.so.0"
+		rm -f "${ED}/usr/$(get_libdir)/libgnome-bluetooth.so.0.0.0"
+		rm -f "${ED}/usr/share/${PN}/pin-code-database.xml"
+		rm -f "${ED}/usr/share/applications/unity-bluetooth-panel.desktop"
+		rm -f "${ED}/usr/share/man/man1/bluetooth-wizard.1.bz2"
+		rm -f "${ED}/usr/bin/bluetooth-wizard"
+		rm -rf "${ED}/usr/include/${PN}"
+	fi
 
 	# Add Region and Language locale support #
 	#  Unable to use Unity's language-selector as it needs a complete apt/dpkg enabled system #
