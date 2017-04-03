@@ -99,7 +99,7 @@ src_configure() {
 		--enable-pocket \
 		--enable-telepathy \
 		--enable-windows-live \
-		$(use_enable kerberos)
+		$(use_enable kerberos) \
 		$(use_enable uoa ubuntu-online-accounts)
 	# gudev & cheese from sub-configure is overriden
 	# by top level configure, and disabled so leave it like that
