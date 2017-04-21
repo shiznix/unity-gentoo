@@ -22,6 +22,9 @@ IUSE="+debug test"
 RESTRICT="mirror"
 
 RDEPEND="app-admin/cgmanager[pam]
+	sec-policy/apparmor-profiles
+	sys-apps/apparmor
+	sys-apps/apparmor-utils
 	sys-auth/pambase[lxcfs]
 	sys-auth/polkit-pkla-compat
 	unity-base/ubuntu-settings-components
@@ -82,6 +85,10 @@ CONFIG_CHECK="
 	~NET_CLS_CGROUP
 	~SOCK_CGROUP_DATA
 
+	~DEFAULT_SECURITY_APPARMOR=y
+	~DEFAULT_SECURITY="apparmor"
+	~SECURITY_APPARMOR
+	~SECURITYFS
 	~CPUSETS
 	~NAMESPACES
 	~IPC_NS ~USER_NS ~PID_NS
