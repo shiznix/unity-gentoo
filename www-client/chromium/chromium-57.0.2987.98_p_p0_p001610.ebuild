@@ -17,7 +17,7 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://unity/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1335"
+UVER_SUFFIX=".1344"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -27,7 +27,7 @@ SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
-IUSE="cups gnome gnome-keyring gtk3 +hangouts kerberos neon pic +proprietary-codecs pulseaudio selinux +suid +system-ffmpeg +tcmalloc widevine"
+IUSE="component-build cups gconf gnome-keyring gtk3 +hangouts kerberos neon pic +proprietary-codecs pulseaudio selinux +suid +system-ffmpeg +system-libvpx +tcmalloc widevine"
 RESTRICT="!system-ffmpeg? ( proprietary-codecs? ( bindist ) )
 	mirror"
 
@@ -46,18 +46,21 @@ COMMON_DEPEND="
 	dev-libs/glib:2=
 	dev-libs/icu:=
 	>=dev-libs/jsoncpp-0.5.0-r1:=
+	dev-libs/libxml2:=[icu]
+	dev-libs/libxslt:=
 	dev-libs/nspr:=
 	>=dev-libs/nss-3.14.3:=
 	>=dev-libs/re2-0.2016.05.01:=
-	gnome? ( >=gnome-base/gconf-2.24.0:= )
+	gconf? ( >=gnome-base/gconf-2.24.0:= )
 	gnome-keyring? ( >=gnome-base/libgnome-keyring-3.12:= )
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/fontconfig:=
 	media-libs/freetype:=
+	>=media-libs/harfbuzz-1.3.1:=[icu(+)]
 	media-libs/libexif:=
 	media-libs/libjpeg-turbo:=
 	media-libs/libpng:=
-	media-libs/libvpx:=[svc]
+	system-libvpx? ( media-libs/libvpx:=[postproc,svc] )
 	media-libs/speex:=
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( >=media-video/ffmpeg-3:= )
@@ -82,10 +85,7 @@ COMMON_DEPEND="
 	x11-libs/libXtst:=
 	x11-libs/pango:=
 	app-arch/snappy:=
-	dev-libs/libxml2:=[icu]
-	dev-libs/libxslt:=
 	media-libs/flac:=
-	>=media-libs/harfbuzz-1.3.1:=[icu(+)]
 	>=media-libs/libwebp-0.4.0:=
 	sys-libs/zlib:=[minizip]
 	kerberos? ( virtual/krb5 )
@@ -93,7 +93,7 @@ COMMON_DEPEND="
 # For nvidia-drivers blocker, see bug #413637 .
 RDEPEND="${COMMON_DEPEND}
 	!=www-client/chromium-9999
-	!<www-plugins/chrome-binary-plugins-37
+	!<www-plugins/chrome-binary-plugins-57
 	x11-misc/xdg-utils
 	virtual/opengl
 	virtual/ttf-fonts
@@ -184,7 +184,9 @@ pre_build_checks() {
 	eshopts_push -s extglob
 	if is-flagq '-g?(gdb)?([1-9])'; then
 		CHECKREQS_DISK_BUILD="25G"
-		CHECKREQS_MEMORY="16G"
+		if ! use component-build; then
+			CHECKREQS_MEMORY="16G"
+		fi
 	fi
 	eshopts_pop
 	check-reqs_pkg_setup
@@ -219,7 +221,6 @@ src_prepare() {
 
 	local PATCHES=(
 		"${FILESDIR}/${PN}-widevine-r1.patch"
-		"${FILESDIR}/${PN}-glibc-2.24.patch"
 	)
 
 	use system-ffmpeg && PATCHES+=( "${FILESDIR}/${PN}-system-ffmpeg-r4.patch" )
@@ -345,6 +346,10 @@ src_prepare() {
 	if ! use system-ffmpeg; then
 		keeplibs+=( third_party/ffmpeg )
 	fi
+	if ! use system-libvpx; then
+		keeplibs+=( third_party/libvpx )
+		keeplibs+=( third_party/libvpx/source/libvpx/third_party/x86inc )
+	fi
 
 	# Remove most bundled libraries. Some are still needed.
 	build/linux/unbundle/remove_bundled_libraries.py "${keeplibs[@]}" --do-remove || die
@@ -355,6 +360,10 @@ src_configure() {
 
 	# GN needs explicit config for Debug/Release as opposed to inferring it from build directory.
 	myconf_gn+=" is_debug=false"
+
+	# Component build isn't generally intended for use by end users. It's mostly useful
+	# for development and debugging.
+	myconf_gn+=" is_component_build=$(usex component-build true false)"
 
 	# Disable nacl, we can't build without pnacl (http://crbug.com/269560).
 	myconf_gn+=" enable_nacl=false"
@@ -369,30 +378,33 @@ src_configure() {
 	# TODO: use_system_sqlite (http://crbug.com/22208).
 
 	# libevent: https://bugs.gentoo.org/593458
-	local gn_system_libraries="
+	local gn_system_libraries=(
 		flac
 		harfbuzz-ng
 		icu
 		libjpeg
 		libpng
-		libvpx
 		libwebp
 		libxml
 		libxslt
 		re2
 		snappy
 		yasm
-		zlib"
+		zlib
+	)
 	if use system-ffmpeg; then
-		gn_system_libraries+=" ffmpeg"
+		gn_system_libraries+=( ffmpeg )
 	fi
-	build/linux/unbundle/replace_gn_files.py --system-libraries ${gn_system_libraries} || die
+	if use system-libvpx; then
+		gn_system_libraries+=( libvpx )
+	fi
+	build/linux/unbundle/replace_gn_files.py --system-libraries "${gn_system_libraries[@]}" || die
 
 	# Optional dependencies.
 	myconf_gn+=" enable_hangout_services_extension=$(usex hangouts true false)"
 	myconf_gn+=" enable_widevine=$(usex widevine true false)"
 	myconf_gn+=" use_cups=$(usex cups true false)"
-	myconf_gn+=" use_gconf=$(usex gnome true false)"
+	myconf_gn+=" use_gconf=$(usex gconf true false)"
 	myconf_gn+=" use_gnome_keyring=$(usex gnome-keyring true false)"
 	myconf_gn+=" use_gtk3=$(usex gtk3 true false)"
 	myconf_gn+=" use_kerberos=$(usex kerberos true false)"
@@ -554,15 +566,14 @@ src_compile() {
 src_install() {
 	local CHROMIUM_HOME="/usr/$(get_libdir)/chromium-browser${CHROMIUM_SUFFIX}"
 	exeinto "${CHROMIUM_HOME}"
-	doexe out/Release/chrome || die
+	doexe out/Release/chrome
 
 	if use suid; then
-		newexe out/Release/chrome_sandbox chrome-sandbox || die
+		newexe out/Release/chrome_sandbox chrome-sandbox
 		fperms 4755 "${CHROMIUM_HOME}/chrome-sandbox"
 	fi
 
-	doexe out/Release/chromedriver || die
-	use widevine && doexe out/Release/libwidevinecdmadapter.so
+	doexe out/Release/chromedriver
 
 	# if ! use arm; then
 	#	doexe out/Release/nacl_helper{,_bootstrap} || die
@@ -591,23 +602,31 @@ src_install() {
 	dosym "${CHROMIUM_HOME}/chromedriver" /usr/bin/chromedriver${CHROMIUM_SUFFIX} || die
 
 	# Allow users to override command-line options, bug #357629.
-	dodir /etc/chromium || die
 	insinto /etc/chromium
-	newins "${FILESDIR}/chromium.default" "default" || die
+	newins "${FILESDIR}/chromium.default" "default"
 
 	pushd out/Release/locales > /dev/null || die
 	chromium_remove_language_paks
 	popd
 
+	if use widevine; then
+		# These will be provided by chrome-binary-plugins
+		rm out/Release/libwidevinecdm*.so || die
+	fi
+
 	insinto "${CHROMIUM_HOME}"
-	doins out/Release/*.bin || die
-	doins out/Release/*.pak || die
+	doins out/Release/*.bin
+	doins out/Release/*.pak
+	doins out/Release/*.so
 
-	doins -r out/Release/locales || die
-	doins -r out/Release/resources || die
+	# Needed by bundled icu
+	# doins out/Release/icudtl.dat
 
-	newman out/Release/chrome.1 chromium${CHROMIUM_SUFFIX}.1 || die
-	newman out/Release/chrome.1 chromium-browser${CHROMIUM_SUFFIX}.1 || die
+	doins -r out/Release/locales
+	doins -r out/Release/resources
+
+	newman out/Release/chrome.1 chromium${CHROMIUM_SUFFIX}.1
+	newman out/Release/chrome.1 chromium-browser${CHROMIUM_SUFFIX}.1
 
 	# Install icons and desktop entry.
 	local branding size
@@ -640,7 +659,7 @@ src_install() {
 		-i "${ED}"/usr/share/applications/chromium-browser-chromium.desktop || die
 
 	# Install GNOME default application entry (bug #303100).
-	if use gnome; then
+	if use gconf; then
 		dodir /usr/share/gnome-control-center/default-apps || die
 		insinto /usr/share/gnome-control-center/default-apps
 		newins "${FILESDIR}"/chromium-browser.xml chromium-browser${CHROMIUM_SUFFIX}.xml || die

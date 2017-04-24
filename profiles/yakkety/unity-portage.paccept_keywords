@@ -7,6 +7,7 @@ app-admin/cgmanager
 app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
 =app-shells/bash-completion-2.4*	# For systemd-232 unmask
+=app-text/hunspell-1.5*
 app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
@@ -20,7 +21,7 @@ dev-util/valgrind
 ~dev-qt/qtlocation-5.6.1
 dev-util/umockdev
 ~media-libs/giflib-4.2.3
-~media-libs/libpng-1.6.25
+=media-libs/libpng-1.6.28*
 =net-misc/networkmanager-1.2*
 =sec-policy/apparmor-profiles-2.10*
 =sys-apps/apparmor-2.10*
