@@ -30,7 +30,6 @@ RDEPEND="app-admin/cgmanager[pam]
 	unity-base/ubuntu-settings-components
 	unity-base/unity-scopes-shell
 	x11-libs/unity-notifications
-	x11-misc/ubuntu-keyboard
 	x11-themes/ubuntu-themes
 	x11-themes/vanilla-dmz-xcursors
 	x11-libs/gtk+:3[mir]"

@@ -6,8 +6,6 @@
 app-admin/cgmanager
 app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
-=app-shells/bash-completion-2.4*	# For systemd-232 unmask
-=app-text/hunspell-1.5*
 app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
@@ -27,13 +25,11 @@ dev-util/umockdev
 =sys-apps/apparmor-2.10*
 =sys-apps/apparmor-utils-2.10*
 ~sys-apps/systemd-232			# Provides support for graphical(-pre)-session.target(.wants) systemd units used to start Unity desktop session
-=sys-apps/util-linux-2.28*		# For systemd-232 unmask
 sys-devel/gcc:5.4.0
 sys-fs/lxcfs
 sys-libs/db:5.1
 sys-libs/db:5.3
 =sys-libs/libapparmor-2.10*
-~sys-libs/libseccomp-2.3.1		# For systemd-232 unmask
 ~x11-base/xorg-drivers-1.18
 =x11-drivers/xf86-input-evdev-2.10*
 x11-misc/xvfb-run

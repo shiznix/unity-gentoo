@@ -152,15 +152,18 @@ src_prepare() {
 		-i tools/{systemd,upstart}-prestart-check || \
 			die "Sed failed for tools/{systemd,upstart}-prestart-check"
 
-	#  'After=graphical-session-pre.target' must be explicitly set in the unit files that require it #
-	#  Relying on the upstart job /usr/share/upstart/systemd-session/upstart/systemd-graphical-session.conf #
-	#       to create "$XDG_RUNTIME_DIR/systemd/user/${unit}.d/graphical-session-pre.conf" drop-in units #
-	#       results in weird race problems on desktop logout where the reliant desktop services #
-	#       stop in a different jumbled order each time #
+	# 'After=graphical-session-pre.target' must be explicitly set in the unit files that require it #
+	# Relying on the upstart job /usr/share/upstart/systemd-session/upstart/systemd-graphical-session.conf #
+	#	to create "$XDG_RUNTIME_DIR/systemd/user/${unit}.d/graphical-session-pre.conf" drop-in units #
+	#	results in weird race problems on desktop logout where the reliant desktop services #
+	#	stop in a different jumbled order each time #
 	sed -e 's:Requires=unity-settings-daemon.service:Requires=gnome-session.service unity-settings-daemon.service:g' \
 		-e 's:After=unity-settings-daemon.service:After=graphical-session-pre.target gnome-session.service bamfdaemon.service unity-settings-daemon.service:g' \
 			-i data/unity7.service.in || \
 				die "Sed failed for data/unity7.service.in"
+
+	# Fix build error: ‘std::vector’ has not been declared #
+	epatch -p1 "${FILESDIR}/unity-7.5.0_fix-missing-vector-includes.diff"
 
 	cmake-utils_src_prepare
 }

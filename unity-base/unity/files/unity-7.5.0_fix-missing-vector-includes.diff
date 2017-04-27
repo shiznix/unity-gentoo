@@ -1,0 +1,78 @@
+diff -urN unity/launcher/BFBLauncherIcon.cpp unity-patched/launcher/BFBLauncherIcon.cpp
+--- unity/launcher/BFBLauncherIcon.cpp	2016-11-12 12:42:36.000000000 +1030
++++ unity-patched/launcher/BFBLauncherIcon.cpp	2017-04-27 18:28:49.196947112 +0930
+@@ -18,6 +18,8 @@
+  *              Andrea Azzarone <azzaronea@gmail.com>
+  */
+ 
++#include <vector>
++
+ #include "config.h"
+ #include <glib/gi18n-lib.h>
+ #include "unity-shared/UBusMessages.h"
+diff -urN unity/launcher/FavoriteStore.cpp unity-patched/launcher/FavoriteStore.cpp
+--- unity/launcher/FavoriteStore.cpp	2016-11-12 12:42:36.000000000 +1030
++++ unity-patched/launcher/FavoriteStore.cpp	2017-04-27 18:47:26.244891402 +0930
+@@ -18,6 +18,8 @@
+ *              Marco Trevisan <marco.trevisan@canonical.com>
+ */
+ 
++#include <vector>
++
+ #include <NuxCore/Logger.h>
+ #include <glib.h>
+ 
+diff -urN unity/launcher/FavoriteStorePrivate.cpp unity-patched/launcher/FavoriteStorePrivate.cpp
+--- unity/launcher/FavoriteStorePrivate.cpp	2016-11-12 12:42:36.000000000 +1030
++++ unity-patched/launcher/FavoriteStorePrivate.cpp	2017-04-27 19:23:38.594400415 +0930
+@@ -17,6 +17,8 @@
+ * Authored by: Andrea Azzaronea <azzaronea@gmail.com>
+ */
+ 
++#include <vector>
++
+ #include <algorithm>
+ #include <boost/utility.hpp>
+ 
+diff -urN unity/launcher/QuicklistMenuItem.cpp unity-patched/launcher/QuicklistMenuItem.cpp
+--- unity/launcher/QuicklistMenuItem.cpp	2016-11-12 12:42:36.000000000 +1030
++++ unity-patched/launcher/QuicklistMenuItem.cpp	2017-04-27 19:43:44.260401814 +0930
+@@ -19,6 +19,8 @@
+  *              Marco Trevisan <marco.trevisan@canonical.com>
+  */
+ 
++#include <vector>
++
+ #include <gtk/gtk.h>
+ #include "unity-shared/ThemeSettings.h"
+ #include "unity-shared/UBusWrapper.h"
+diff -urN unity/UnityCore/ScopeData.cpp unity-patched/UnityCore/ScopeData.cpp
+--- unity/UnityCore/ScopeData.cpp	2016-11-12 12:42:36.000000000 +1030
++++ unity-patched/UnityCore/ScopeData.cpp	2017-04-27 18:28:03.256086672 +0930
+@@ -17,6 +17,7 @@
+  * Authored by: Nick Dedekind <nick.dedekind@canonical.com>
+  */
+ 
++#include <vector>
+ 
+ #include "ScopeData.h"
+ #include <unity-protocol.h>
+@@ -89,4 +90,4 @@
+ }
+ 
+ }
+-}
+\ No newline at end of file
++}
+diff -urN unity/unity-shared/ThemeSettings.cpp unity-patched/unity-shared/ThemeSettings.cpp
+--- unity/unity-shared/ThemeSettings.cpp	2016-11-12 12:42:36.000000000 +1030
++++ unity-patched/unity-shared/ThemeSettings.cpp	2017-04-27 18:28:20.720413042 +0930
+@@ -17,6 +17,8 @@
+  * Authored by: Marco Trevisan <marco.trevisan@canonical.com>
+  */
+ 
++#include <vector>
++
+ #include "config.h"
+ #include "ThemeSettings.h"
+ 
