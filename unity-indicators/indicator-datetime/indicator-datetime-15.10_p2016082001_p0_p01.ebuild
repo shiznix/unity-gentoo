@@ -30,6 +30,7 @@ COMMON_DEPEND="
 	net-misc/url-dispatcher
 	sys-apps/util-linux
 	unity-indicators/ido:=
+	unity-indicators/indicator-messages
 	>=x11-libs/libnotify-0.7.6"
 RDEPEND="${COMMON_DEPEND}
 	unity-base/unity-control-center

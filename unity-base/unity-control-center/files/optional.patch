@@ -1,0 +1,221 @@
+diff --git a/configure.ac b/configure.ac
+index 12a8adee6..022635d34 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -120,8 +120,6 @@ LIBGD_INIT([_view-common static])
+ PKG_CHECK_MODULES(LIBLANGUAGE, $COMMON_MODULES gnome-desktop-3.0 fontconfig)
+ PKG_CHECK_MODULES(LIBSHORTCUTS, $COMMON_MODULES x11)
+ PKG_CHECK_MODULES(SHELL, $COMMON_MODULES libgnome-menu-3.0 gio-unix-2.0 x11)
+-PKG_CHECK_MODULES(APPEARANCE_PANEL, $COMMON_MODULES libxml-2.0 gnome-desktop-3.0
+-                  gdk-pixbuf-2.0 >= $GDKPIXBUF_REQUIRED_VERSION)
+ PKG_CHECK_MODULES(DATETIME_PANEL, $COMMON_MODULES timezonemap geonames
+                   polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION)
+ PKG_CHECK_MODULES(DISPLAY_PANEL, $COMMON_MODULES libunity-settings-daemon x11)
+@@ -141,7 +137,33 @@ PKG_CHECK_MODULES(MOUSE_PANEL, $COMMON_MODULES xi >= 1.2
+ PKG_CHECK_MODULES(NETWORK_PANEL, $COMMON_MODULES)
+ PKG_CHECK_MODULES(POWER_PANEL, $COMMON_MODULES upower-glib >= 0.9.1
+                   unity-settings-daemon)
+-PKG_CHECK_MODULES(COLOR_PANEL, $COMMON_MODULES colord >= 0.1.8)
++
++PKG_CHECK_MODULES(APPEARANCE_PANEL, $COMMON_MODULES cairo-gobject libxml-2.0 gnome-desktop-3.0
++                  gdk-pixbuf-2.0 >= $GDKPIXBUF_REQUIRED_VERSION
++                  $background_goa_dependencies)
++
++build_color=no
++AC_ARG_ENABLE([color],
++              AS_HELP_STRING([--disable-color],
++                             [disable color management panel]),
++              [],
++              [enable_color=auto])
++
++AS_IF([test "$enable_color" != "no"],
++      [PKG_CHECK_MODULES([COLOR_PANEL],
++                         [
++                           $COMMON_MODULES
++                           colord >= 0.1.8
++                         ], [
++                           AC_DEFINE(BUILD_COLOR, 1, [Define to 1 to build the Color panel])
++                           build_color=yes
++                         ], [
++                           AS_IF([test "$enable_color" = "yes"],
++                                 [AC_MSG_ERROR([colord support requested but not found])])
++                         ])
++      ])
++AM_CONDITIONAL(BUILD_COLOR, test "$build_color" = "yes")
++
+ PKG_CHECK_MODULES(PRINTERS_PANEL, $COMMON_MODULES
+                   polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION
+                   smbclient)
+@@ -319,41 +371,55 @@
+ AM_CONDITIONAL(BUILD_CHEESE, test x${have_cheese} = xyes)
+ 
+ # wacom is disabled for s390/s390x and non Linux platforms (needs udev)
+-case $host_os in
+-  linux*)
+-    if test "$host_cpu" = s390 -o "$host_cpu" = s390x; then
+-      have_wacom=no
+-    else
+-      PKG_CHECK_MODULES(WACOM_PANEL, $COMMON_MODULES
+-                        unity-settings-daemon
+-                        xi >= 1.2 x11 libwacom >= $LIBWACOM_REQUIRED_VERSION
+-                        libunity-settings-daemon)
+-      AC_DEFINE(BUILD_WACOM, 1, [Define to 1 to build the Wacom panel])
+-      have_wacom=yes
+-    fi
+-    ;;
+-  *)
+-    have_wacom=no
+-    ;;
+-esac
++AC_ARG_ENABLE([wacom],
++              AS_HELP_STRING([--disable-wacom],
++                             [disable wacom management panel]),
++              [],
++              [enable_wacom=yes])
++AS_IF([test "x$enable_wacom" = "xyes"],
++      [PKG_CHECK_MODULES([WACOM_PANEL],
++                         [
++                           $COMMON_MODULES
++                           unity-settings-daemon
++                           xi >= 1.2 x11 libwacom >= $LIBWACOM_REQUIRED_VERSION
++                           libunity-settings-daemon
++                         ], [
++                           have_wacom=yes
++                           AC_DEFINE(BUILD_WACOM, 1, [Define to 1 to build the Wacom panel])
++                           AC_DEFINE(HAVE_WACOM, 1, [Define to 1 is Wacom is supportted])
++                         ], [
++                           have_wacom=no
++                           AC_MSG_ERROR([wacom support requested but not found])
++                         ])
++      ])
+ AM_CONDITIONAL(BUILD_WACOM, [test x"$have_wacom" = x"yes"])
+ 
+ # This is a hard-dependency for the region and user-accounts panels
+ PKG_CHECK_MODULES(ISOCODES, iso-codes)
+ 
+ AC_DEFINE_UNQUOTED([ISO_CODES_PREFIX],["`$PKG_CONFIG --variable=prefix iso-codes`"],[ISO codes prefix])
+ ISO_CODES=iso-codes
+ 
+ # Kerberos kerberos support
+-AC_PATH_PROG(KRB5_CONFIG, krb5-config, no)
+-if test "$KRB5_CONFIG" = "no"; then
+-  AC_MSG_ERROR([krb5-config executable not found in your path - should be installed with the kerberos libraries])
+-fi
+-
+-AC_MSG_CHECKING(for krb5 libraries and flags)
+-KRB5_CFLAGS="`$KRB5_CONFIG --cflags`"
+-KRB5_LIBS="`$KRB5_CONFIG --libs`"
+-AC_MSG_RESULT($KRB5_CFLAGS $KRB5_LIBS)
++AC_ARG_ENABLE([kerberos],
++              AS_HELP_STRING([--disable-kerberos],
++                             [disable kerberos support (default: enabled)]),
++              [],
++              [enable_kerberos=yes])
++
++AS_IF([test "$enable_kerberos" != "no"],
++      [
++        AC_PATH_PROG(KRB5_CONFIG, krb5-config, no)
++
++        AS_IF([test "$KRB5_CONFIG" = "no"],
++              AC_MSG_ERROR([krb5-config executable not found in your path - should be installed with the kerberos libraries]))
++
++        AC_MSG_CHECKING([for krb5 libraries and flags])
++        KRB5_CFLAGS="`$KRB5_CONFIG --cflags`"
++        KRB5_LIBS="`$KRB5_CONFIG --libs`"
++        AC_MSG_RESULT($KRB5_CFLAGS $KRB5_LIBS)
++        AC_DEFINE(HAVE_KERBEROS, 1, [defined if krb5 is available])
++      ])
+ 
+ AC_SUBST(KRB5_CFLAGS)
+ AC_SUBST(KRB5_LIBS)
+@@ -576,11 +648,19 @@ if test "x$have_cups" = "xyes"; then
+ else
+ 	AC_MSG_NOTICE([   Printers panel disabled])
+ fi
++
++if test "x$build_color" = "xyes"; then
++	AC_MSG_NOTICE([** colord (Color panel)])
++else
++	AC_MSG_NOTICE([   Color panel disabled])
++fi
++
++
+ if test "x$have_cheese" = "xyes"; then
+ 	AC_MSG_NOTICE([** Cheese (Users panel webcam support)])
+ else
+ 	AC_MSG_NOTICE([   Users panel webcam support disabled])
+ fi
+ if test "x$with_libsocialweb" = "xyes"; then
+ 	AC_MSG_NOTICE([** libsocialweb (Appearance panel Flickr support)])
+ else
+diff --git a/panels/Makefile.am b/panels/Makefile.am
+index 507cd2f54..2806c4555 100644
+--- a/panels/Makefile.am
++++ b/panels/Makefile.am
+@@ -2,7 +2,6 @@ SUBDIRS= \
+ 	datetime \
+ 	screen \
+ 	power \
+-	color \
+ 	display \
+ 	mouse \
+ 	region \
+@@ -19,6 +17,10 @@ SUBDIRS= \
+ 	sharing \
+ 	printers
+ 
++if BUILD_COLOR
++SUBDIRS += color
++endif
++
+ if BUILD_WACOM
+ SUBDIRS += wacom
+ endif
+diff --git a/panels/user-accounts/um-realm-manager.c b/panels/user-accounts/um-realm-manager.c
+index 26391486f..977dab1d6 100644
+--- a/panels/user-accounts/um-realm-manager.c
++++ b/panels/user-accounts/um-realm-manager.c
+@@ -22,7 +22,9 @@
+ 
+ #include "um-realm-manager.h"
+ 
++#ifdef HAVE_KERBEROS
+ #include <krb5/krb5.h>
++#endif
+ 
+ #include <glib.h>
+ #include <glib/gi18n.h>
+@@ -698,6 +700,7 @@ login_closure_free (gpointer data)
+         g_slice_free (LoginClosure, login);
+ }
+ 
++#ifdef HAVE_KERBEROS
+ static krb5_error_code
+ login_perform_kinit (krb5_context k5,
+                      const gchar *realm,
+@@ -761,12 +764,14 @@ login_perform_kinit (krb5_context k5,
+ 
+         return code;
+ }
++#endif /* HAVE_KERBEROS */
+ 
+ static void
+ kinit_thread_func (GSimpleAsyncResult *async,
+                    GObject *object,
+                    GCancellable *cancellable)
+ {
++#ifdef HAVE_KERBEROS
+         LoginClosure *login = g_simple_async_result_get_op_res_gpointer (async);
+         krb5_context k5 = NULL;
+         krb5_error_code code;
+@@ -844,6 +849,10 @@ kinit_thread_func (GSimpleAsyncResult *async,
+ 
+         if (k5)
+                 krb5_free_context (k5);
++#else /* HAVE_KERBEROS */
++        g_simple_async_result_set_error (async, UM_REALM_ERROR, UM_REALM_ERROR_GENERIC,
++                                         _("gnome-control-center was built without kerberos support"));
++#endif
+ }
+ 
+ void
