@@ -1,0 +1,16 @@
+diff -urN ubuntu-sources-4.10.8-20.22/ubuntu/Makefile ubuntu-sources-4.10.8-20.22-patched/ubuntu/Makefile
+--- ubuntu-sources-4.10.8-20.22/ubuntu/Makefile	2017-05-09 08:15:30.000000000 +0930
++++ ubuntu-sources-4.10.8-20.22-patched/ubuntu/Makefile	2017-05-09 08:19:31.736401935 +0930
+@@ -15,9 +15,9 @@
+ ##
+ ##
+ ##
+-ifeq ($(ARCH),x86)
+-obj-y                         += vbox/
+-endif
++#ifeq ($(ARCH),x86)
++#obj-y                         += vbox/
++#endif
+ ##
+ ##
+ ##

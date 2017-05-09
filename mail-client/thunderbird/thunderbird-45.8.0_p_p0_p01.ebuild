@@ -37,7 +37,7 @@ PATCHFF="firefox-45.0-patches-12"
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_JIT="enabled"
 
-URELEASE="yakkety-security"
+URELEASE="zesty"
 inherit flag-o-matic toolchain-funcs mozconfig-v6.45 makeedit autotools pax-utils check-reqs nsplugins mozlinguas-v2 fdo-mime gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+build1"

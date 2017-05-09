@@ -5,12 +5,12 @@
 EAPI=5	# kernel-2.eclass unsupported for EAPI6
 ETYPE="sources"
 
-URELEASE="yakkety-security"
+URELEASE="zesty-security"
 inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
 MY_PV="${PV}"
-BASE_PV="4.8.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
+BASE_PV="4.10.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
 KCONFIG_URELEASE="utopic"
 UURL="mirror://unity/pool/main/l/${MY_PN}"
 
@@ -56,8 +56,11 @@ src_prepare() {
 	sed -e 's/const struct inode_operations \*iops))$/const struct inode_operations *iops)/' \
 		-i include/linux/security.h
 
+	# Omit building Ubuntu's VBox kernel modules, these are provided by package app-emulation/virtualbox-modules #
+	epatch -p1 "${FILESDIR}/omit-vbox.diff"
+
 	sed -i -e "s:^\(EXTRAVERSION =\).*:\1 ${EXTRAVERSION}:" Makefile || die
-	sed	-i -e 's:#export\tINSTALL_PATH:export\tINSTALL_PATH:' Makefile || die
+	sed -i -e 's:#export\tINSTALL_PATH:export\tINSTALL_PATH:' Makefile || die
 	rm -f .config >/dev/null
 
 	# Ubuntu #

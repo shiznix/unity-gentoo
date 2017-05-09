@@ -36,7 +36,7 @@ MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_GTK2ONLY=1
 MOZCONFIG_OPTIONAL_WIFI=1
 
-URELEASE="yakkety-security"
+URELEASE="zesty-security"
 UVER_PREFIX="+build6"
 UURL="mirror://unity/pool/main/f/${PN}"
 
