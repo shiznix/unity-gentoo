@@ -1,0 +1,82 @@
+Index: oxide-qt-1.17.0~git1467998257.c2676be/oxide/shared/renderer/oxide_content_renderer_client.cc
+===================================================================
+--- oxide-qt-1.17.0~git1467998257.c2676be.orig/oxide/shared/renderer/oxide_content_renderer_client.cc
++++ oxide-qt-1.17.0~git1467998257.c2676be/oxide/shared/renderer/oxide_content_renderer_client.cc
+@@ -56,6 +56,12 @@
+ #include "media/oxide_web_media_player.h"
+ #endif
+ 
++#if defined(USE_PROPRIETARY_CODECS)
++#include "media/base/mime_util.h"
++#include "media/ffmpeg/ffmpeg_common.h"
++#include "media/filters/ffmpeg_glue.h"
++#endif
++
+ namespace oxide {
+ 
+ void ContentRendererClient::RenderThreadStarted() {
+@@ -78,6 +84,14 @@ void ContentRendererClient::RenderThread
+   blink::WebRuntimeFeatures::enableNavigatorContentUtils(false);
+ 
+   blink::WebView::setUseExternalPopupMenus(true);
++
++#if defined(USE_PROPRIETARY_CODECS)
++  media::FFmpegGlue::InitializeFFmpeg();
++  if (!avcodec_find_decoder(AV_CODEC_ID_H264)) {
++    DVLOG(1) << "Proprietary codecs are not installed";
++    media::RemoveProprietaryMediaTypesAndCodecsForTests();
++  }
++#endif
+ }
+ 
+ void ContentRendererClient::RenderFrameCreated(
+Index: oxide-qt-1.17.0~git1467998257.c2676be/oxide/CMakeLists.txt
+===================================================================
+--- oxide-qt-1.17.0~git1467998257.c2676be.orig/oxide/CMakeLists.txt
++++ oxide-qt-1.17.0~git1467998257.c2676be/oxide/CMakeLists.txt
+@@ -249,7 +249,7 @@ if(USE_GYP)
+     list(APPEND _GYP_COMMAND -Dproprietary_codecs=1)
+   else()
+     list(APPEND _GYP_COMMAND -Dffmpeg_branding=Chromium)
+-    list(APPEND _GYP_COMMAND -Dproprietary_codecs=0)
++    list(APPEND _GYP_COMMAND -Dproprietary_codecs=1)
+   endif()
+   if(ENABLE_PLUGINS)
+     list(APPEND _GYP_COMMAND -Denable_plugins=1)
+Index: oxide-qt-1.17.0~git1467998257.c2676be/oxide/build/cmake/ChromiumBuildShim.cmake
+===================================================================
+--- oxide-qt-1.17.0~git1467998257.c2676be.orig/oxide/build/cmake/ChromiumBuildShim.cmake
++++ oxide-qt-1.17.0~git1467998257.c2676be/oxide/build/cmake/ChromiumBuildShim.cmake
+@@ -210,7 +210,7 @@ function(run_generate_ninja)
+     list(APPEND MAKE_GN_ARGS_CMD -Dproprietary_codecs=true)
+   else()
+     list(APPEND MAKE_GN_ARGS_CMD -Dffmpeg_branding=Chromium)
+-    list(APPEND MAKE_GN_ARGS_CMD -Dproprietary_codecs=false)
++    list(APPEND MAKE_GN_ARGS_CMD -Dproprietary_codecs=true)
+   endif()
+ 
+   if(ENABLE_PLUGINS)
+Index: oxide-qt-1.17.0~git1467998257.c2676be/oxide/shared/BUILD.gn
+===================================================================
+--- oxide-qt-1.17.0~git1467998257.c2676be.orig/oxide/shared/BUILD.gn
++++ oxide-qt-1.17.0~git1467998257.c2676be/oxide/shared/BUILD.gn
+@@ -198,6 +198,7 @@ component("shared") {
+     "//services/shell/public/cpp",
+     "//skia",
+     "//storage/common",
++    "//third_party/ffmpeg",
+     "//third_party/libXNVCtrl",
+     "//third_party/WebKit/public:blink",
+     "//ui/base",
+Index: oxide-qt-1.17.0~git1467998257.c2676be/oxide/shared/shared.gyp
+===================================================================
+--- oxide-qt-1.17.0~git1467998257.c2676be.orig/oxide/shared/shared.gyp
++++ oxide-qt-1.17.0~git1467998257.c2676be/oxide/shared/shared.gyp
+@@ -254,6 +254,7 @@
+         '<(DEPTH)/net/net.gyp:net',
+         '<(DEPTH)/services/shell/shell_public.gyp:shell_public',
+         '<(DEPTH)/skia/skia.gyp:skia',
++        '<(DEPTH)/third_party/ffmpeg/ffmpeg.gyp:ffmpeg',
+         '<(DEPTH)/third_party/khronos/khronos.gyp:khronos_headers',
+         '<(DEPTH)/third_party/libXNVCtrl/libXNVCtrl.gyp:libXNVCtrl',
+         '<(DEPTH)/third_party/re2/re2.gyp:re2',
