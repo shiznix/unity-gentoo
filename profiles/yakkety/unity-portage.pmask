@@ -142,7 +142,6 @@ sys-libs/libnih::gentoo
 www-client/chromium::gentoo
 www-client/firefox::gentoo
 x11-base/xorg-server::gentoo
-x11-base/xorg-drivers::gentoo
 x11-drivers/xf86-video-ati::gentoo
 x11-drivers/xf86-video-intel::gentoo
 x11-drivers/xf86-video-nouveau::gentoo

@@ -2,6 +2,53 @@
 
 */*::unity-gentoo
 
+
+# Unmask QT-5.7 #
+=dev-qt/assistant-5.7*:5::gentoo
+=dev-qt/designer-5.7*:5::gentoo
+=dev-qt/linguist-5.7*:5::gentoo
+=dev-qt/linguist-tools-5.7*:5::gentoo
+=dev-qt/pixeltool-5.7*:5::gentoo
+=dev-qt/qdbus-5.7*:5::gentoo
+=dev-qt/qdbusviewer-5.7*:5::gentoo
+=dev-qt/qdoc-5.7*:5::gentoo
+=dev-qt/qtbluetooth-5.7*:5::gentoo
+=dev-qt/qtconcurrent-5.7*:5::gentoo
+=dev-qt/qtcore-5.7*:5::gentoo
+=dev-qt/qtdbus-5.7*:5::gentoo
+=dev-qt/qtdeclarative-5.7*:5::gentoo
+=dev-qt/qtdiag-5.7*:5::gentoo
+=dev-qt/qt-docs-5.7*:5::gentoo
+=dev-qt/qtgraphicaleffects-5.7*:5::gentoo
+=dev-qt/qtgui-5.7*:5::gentoo
+=dev-qt/qthelp-5.7*:5::gentoo
+=dev-qt/qtimageformats-5.7*:5::gentoo
+=dev-qt/qtlocation-5.7*:5::gentoo
+=dev-qt/qtmultimedia-5.7*:5::gentoo
+=dev-qt/qtnetwork-5.7*:5::gentoo
+=dev-qt/qtopengl-5.7*:5::gentoo
+=dev-qt/qtpaths-5.7*:5::gentoo
+=dev-qt/qtplugininfo-5.7*:5::gentoo
+=dev-qt/qtpositioning-5.7*:5::gentoo
+=dev-qt/qtprintsupport-5.7*:5::gentoo
+=dev-qt/qtquickcontrols-5.7*:5::gentoo
+=dev-qt/qtscript-5.7*:5::gentoo
+=dev-qt/qtsensors-5.7*:5::gentoo
+=dev-qt/qtserialport-5.7*:5::gentoo
+=dev-qt/qtsql-5.7*:5::gentoo
+=dev-qt/qtsvg-5.7*:5::gentoo
+=dev-qt/qttest-5.7*:5::gentoo
+=dev-qt/qttranslations-5.7*:5::gentoo
+=dev-qt/qtwayland-5.7*:5::gentoo
+=dev-qt/qtwebchannel-5.7*:5::gentoo
+=dev-qt/qtwebengine-5.7*:5::gentoo
+=dev-qt/qtwebkit-5.7*:5::gentoo
+=dev-qt/qtwebsockets-5.7*:5::gentoo
+=dev-qt/qtwidgets-5.7*:5::gentoo
+=dev-qt/qtx11extras-5.7*:5::gentoo
+=dev-qt/qtxml-5.7*:5::gentoo
+=dev-qt/qtxmlpatterns-5.7*:5::gentoo
+
 ## Other packages keyword unmasking ##
 app-admin/cgmanager
 app-eselect/eselect-opengl
@@ -30,7 +77,6 @@ sys-fs/lxcfs
 sys-libs/db:5.1
 sys-libs/db:5.3
 =sys-libs/libapparmor-2.10*
-~x11-base/xorg-drivers-1.18
 =x11-drivers/xf86-input-evdev-2.10*
 x11-misc/xvfb-run
 x11-proto/glproto
@@ -167,7 +213,6 @@ unity-scopes/unity-scope-home **
 www-client/webbrowser-app **
 www-client/firefox **
 x11-base/xorg-server **
-x11-base/xorg-drivers **
 x11-drivers/xf86-video-ati **
 x11-drivers/xf86-video-intel **
 x11-drivers/xf86-video-nouveau **

@@ -1,8 +1,7 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=6
+EAPI=5
 
 DESCRIPTION="Meta package containing deps on all xorg drivers"
 HOMEPAGE="https://www.gentoo.org/"
@@ -10,7 +9,7 @@ SRC_URI=""
 
 LICENSE="metapackage"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux"
+KEYWORDS="alpha amd64 arm ~arm64 hppa ia64 ~mips ppc ppc64 ~s390 ~sh sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux"
 
 IUSE_INPUT_DEVICES="
 	input_devices_acecad
@@ -34,6 +33,7 @@ IUSE_INPUT_DEVICES="
 IUSE_VIDEO_CARDS="
 	video_cards_amdgpu
 	video_cards_apm
+	video_cards_ark
 	video_cards_ast
 	video_cards_chips
 	video_cards_cirrus
@@ -45,14 +45,16 @@ IUSE_VIDEO_CARDS="
 	video_cards_glint
 	video_cards_i128
 	video_cards_i740
+	video_cards_i915
+	video_cards_i965
 	video_cards_intel
 	video_cards_mach64
 	video_cards_mga
 	video_cards_neomagic
+	video_cards_newport
 	video_cards_nouveau
 	video_cards_nv
 	video_cards_omap
-	video_cards_omapfb
 	video_cards_qxl
 	video_cards_r128
 	video_cards_radeon
@@ -62,6 +64,7 @@ IUSE_VIDEO_CARDS="
 	video_cards_s3virge
 	video_cards_savage
 	video_cards_siliconmotion
+	video_cards_sis
 	video_cards_sisusb
 	video_cards_sunbw2
 	video_cards_suncg14
@@ -107,24 +110,27 @@ PDEPEND="
 
 	video_cards_amdgpu?        ( x11-drivers/xf86-video-amdgpu )
 	video_cards_apm?           ( x11-drivers/xf86-video-apm )
+	video_cards_ark?           ( x11-drivers/xf86-video-ark )
 	video_cards_ast?           ( x11-drivers/xf86-video-ast )
 	video_cards_chips?         ( x11-drivers/xf86-video-chips )
 	video_cards_cirrus?        ( x11-drivers/xf86-video-cirrus )
 	video_cards_dummy?         ( x11-drivers/xf86-video-dummy )
 	video_cards_fbdev?         ( x11-drivers/xf86-video-fbdev )
-	video_cards_freedreno?     ( x11-drivers/xf86-video-freedreno )
+	video_cards_freedreno?     ( >=x11-base/xorg-server-${PV}[glamor] )
 	video_cards_geode?         ( x11-drivers/xf86-video-geode )
 	video_cards_glint?         ( x11-drivers/xf86-video-glint )
 	video_cards_i128?          ( x11-drivers/xf86-video-i128 )
 	video_cards_i740?          ( x11-drivers/xf86-video-i740 )
-	video_cards_intel?         ( x11-drivers/xf86-video-intel )
+	video_cards_i915?          ( x11-drivers/xf86-video-intel )
+	video_cards_i965?          ( >=x11-base/xorg-server-${PV}[glamor] )
+	video_cards_intel?         ( !video_cards_i965? ( x11-drivers/xf86-video-intel ) )
 	video_cards_mach64?        ( x11-drivers/xf86-video-mach64 )
 	video_cards_mga?           ( x11-drivers/xf86-video-mga )
 	video_cards_neomagic?      ( x11-drivers/xf86-video-neomagic )
+	video_cards_newport?       ( x11-drivers/xf86-video-newport )
 	video_cards_nouveau?       ( x11-drivers/xf86-video-nouveau )
 	video_cards_nv?            ( x11-drivers/xf86-video-nv )
 	video_cards_omap?          ( x11-drivers/xf86-video-omap )
-	video_cards_omapfb?        ( x11-drivers/xf86-video-omapfb )
 	video_cards_qxl?           ( x11-drivers/xf86-video-qxl )
 	video_cards_nvidia?        ( x11-drivers/nvidia-drivers )
 	video_cards_fglrx?         ( x11-drivers/ati-drivers )
@@ -136,6 +142,7 @@ PDEPEND="
 	video_cards_s3virge?       ( x11-drivers/xf86-video-s3virge )
 	video_cards_savage?        ( x11-drivers/xf86-video-savage )
 	video_cards_siliconmotion? ( x11-drivers/xf86-video-siliconmotion )
+	video_cards_sis?           ( x11-drivers/xf86-video-sis )
 	video_cards_sisusb?        ( x11-drivers/xf86-video-sisusb )
 	video_cards_suncg14?       ( x11-drivers/xf86-video-suncg14 )
 	video_cards_suncg3?        ( x11-drivers/xf86-video-suncg3 )
@@ -144,7 +151,7 @@ PDEPEND="
 	video_cards_sunleo?        ( x11-drivers/xf86-video-sunleo )
 	video_cards_suntcx?        ( x11-drivers/xf86-video-suntcx )
 	video_cards_tdfx?          ( x11-drivers/xf86-video-tdfx )
-	video_cards_tegra?         ( x11-drivers/xf86-video-opentegra )
+	video_cards_tegra?         ( >=x11-base/xorg-server-${PV}[glamor] )
 	video_cards_tga?           ( x11-drivers/xf86-video-tga )
 	video_cards_trident?       ( x11-drivers/xf86-video-trident )
 	video_cards_tseng?         ( x11-drivers/xf86-video-tseng )
@@ -157,14 +164,35 @@ PDEPEND="
 	!x11-drivers/xf86-input-citron
 	!x11-drivers/xf86-video-cyrix
 	!x11-drivers/xf86-video-impact
+	!x11-drivers/xf86-video-ivtv
 	!x11-drivers/xf86-video-nsc
 	!x11-drivers/xf86-video-sunbw2
+
 	!<=x11-drivers/xf86-video-ark-0.7.5
 	!<=x11-drivers/xf86-video-newport-0.2.4
-	!<=x11-drivers/xf86-video-sis-0.10.7
-	!<=x11-drivers/xf86-video-v4l-0.2.0
-	!<x11-drivers/xf86-input-evdev-2.10.0
-	!<x11-drivers/xf86-video-ati-7.6.1
-	!<x11-drivers/xf86-video-intel-2.99.917
+
+	!<x11-drivers/xf86-input-evdev-2.10.4
+	!<x11-drivers/xf86-input-joystick-1.6.3
+	!<x11-drivers/xf86-input-libinput-0.19
+	!<x11-drivers/xf86-input-wacom-0.34.0
+	!<x11-drivers/xf86-video-amdgpu-1.2.0
+	!<x11-drivers/xf86-video-ati-7.7
+	!<x11-drivers/xf86-video-chips-1.2.7
+	!<x11-drivers/xf86-video-glint-1.2.9
+	!<x11-drivers/xf86-video-i740-1.3.6
+	!<x11-drivers/xf86-video-intel-2.99.917_p20160122
+	!<x11-drivers/xf86-video-mga-1.6.5
 	!<x11-drivers/xf86-video-nouveau-1.0.12
+	!<x11-drivers/xf86-video-nv-2.1.21
+	!<x11-drivers/xf86-video-omap-0.4.5
+	!<x11-drivers/xf86-video-r128-6.10.2
+	!<x11-drivers/xf86-video-savage-2.3.9
+	!<x11-drivers/xf86-video-siliconmotion-1.7.9
+	!<x11-drivers/xf86-video-sis-0.10.9
+	!<x11-drivers/xf86-video-sisusb-0.9.7
+	!<x11-drivers/xf86-video-sunleo-1.2.2
+	!<x11-drivers/xf86-video-tdfx-1.4.7
+	!<x11-drivers/xf86-video-trident-1.3.8
+	!<x11-drivers/xf86-video-virtualbox-5.1.14
+	!<x11-drivers/xf86-video-vmware-13.2.1
 "
