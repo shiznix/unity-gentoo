@@ -1,0 +1,15 @@
+diff -Nur a/configure.ac b/configure.ac
+--- a/configure.ac	2017-03-01 22:43:06.000000000 +0100
++++ b/configure.ac	2017-05-04 00:50:42.276160237 +0200
+@@ -617,9 +617,9 @@
+ 
+ AC_ARG_WITH(default-hierarchy,
+         AS_HELP_STRING([--with-default-hierarchy=MODE],
+-                [default cgroup hierarchy, defaults to "hybrid"]),
++                [default cgroup hierarchy, defaults to "legacy"]),
+         [DEFAULT_HIERARCHY="$withval"],
+-        [DEFAULT_HIERARCHY="hybrid"])
++        [DEFAULT_HIERARCHY="legacy"])
+ 
+ AS_CASE("$DEFAULT_HIERARCHY",
+         [legacy], [mode=CGROUP_UNIFIED_NONE],
