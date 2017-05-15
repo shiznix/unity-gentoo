@@ -1,0 +1,24 @@
+diff -urN dbus-cpp-5.0.0/include/core/dbus/impl/signal.h dbus-cpp-5.0.0-patched/include/core/dbus/impl/signal.h
+--- dbus-cpp-5.0.0/include/core/dbus/impl/signal.h	2015-07-21 19:55:39.000000000 +0930
++++ dbus-cpp-5.0.0-patched/include/core/dbus/impl/signal.h	2017-05-15 19:27:08.539646731 +0930
+@@ -65,7 +65,7 @@
+         const typename Signal<SignalDescription, Argument>::SubscriptionToken& token)
+ {
+     std::lock_guard<std::mutex> lg(handlers_guard);
+-    return handlers.erase(token);
++    handlers.erase(token);
+ }
+ 
+ template<typename SignalDescription, typename Argument>
+diff -urN dbus-cpp-5.0.0/tests/executor_test.cpp dbus-cpp-5.0.0-patched/tests/executor_test.cpp
+--- dbus-cpp-5.0.0/tests/executor_test.cpp	2015-07-21 19:55:39.000000000 +0930
++++ dbus-cpp-5.0.0-patched/tests/executor_test.cpp	2017-05-15 19:27:39.420093738 +0930
+@@ -33,6 +33,8 @@
+ #include <boost/asio.hpp>
+ #include <gtest/gtest.h>
+ 
++#include <random>
++
+ namespace dbus = core::dbus;
+ 
+ namespace

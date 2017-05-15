@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="zesty-security"
 inherit autotools eutils pam readme.gentoo-r1 systemd user ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/l/${PN}"

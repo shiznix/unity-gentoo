@@ -8,7 +8,7 @@ GNOME2_LA_PUNT="yes"
 URELEASE="yakkety"
 inherit autotools eutils gnome2 ubuntu-versionator
 
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/i/${PN}"
+UURL="mirror://unity/pool/main/i/${PN}"
 UVER_PREFIX="+15.04.${PVR_MICRO}"
 
 DESCRIPTION="Indicator showing active print jobs used by the Unity desktop"

@@ -7,7 +7,7 @@ EAPI=6
 URELEASE="yakkety"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/libq/${PN}"
+UURL="mirror://unity/pool/universe/libq/${PN}"
 UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="Library to facilitate testing DBus interactions in Qt applications"
