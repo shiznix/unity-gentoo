@@ -27,8 +27,8 @@ EXPORT_FUNCTIONS pkg_setup pkg_postinst
 
 ## vala.eclass ##
 # Set base sane vala version for all packages requiring vala, override in ebuild if or when specific higher versions are needed #
-export VALA_MIN_API_VERSION=${VALA_MIN_API_VERSION:=0.26}	# Needs to be >=${minimal_supported_minor_version} from vala.eclass
-export VALA_MAX_API_VERSION=${VALA_MAX_API_VERSION:=0.26}
+export VALA_MIN_API_VERSION=${VALA_MIN_API_VERSION:=0.32}	# Needs to be >=${minimal_supported_minor_version} from vala.eclass
+export VALA_MAX_API_VERSION=${VALA_MAX_API_VERSION:=0.32}
 export VALA_USE_DEPEND="vapigen"
 #---------------------------------------------------------------------------------------------------------------------------------#
 

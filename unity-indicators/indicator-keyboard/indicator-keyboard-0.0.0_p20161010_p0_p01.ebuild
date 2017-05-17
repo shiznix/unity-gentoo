@@ -4,8 +4,6 @@
 
 EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
-VALA_MIN_API_VERSION="0.26"
-VALA_MAX_API_VERSION="0.26"
 
 URELEASE="yakkety"
 inherit autotools eutils flag-o-matic gnome2-utils python-r1 ubuntu-versionator vala

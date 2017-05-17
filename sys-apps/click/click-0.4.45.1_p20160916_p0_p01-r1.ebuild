@@ -4,8 +4,6 @@
 
 EAPI=6
 PYTHON_COMPAT=( python3_4 )
-VALA_MIN_API_VERSION="0.28"
-VALA_MAX_API_VERSION="0.28"
 
 URELEASE="yakkety"
 inherit autotools distutils-r1 ubuntu-versionator vala
