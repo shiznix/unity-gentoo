@@ -1,6 +1,9 @@
 # Requires >=dev-libs/libinput-1.6 which is greater than the 1.4 version needed to comply with current mir-base/mir version
 >=x11-drivers/xf86-input-libinput-0.24
 
+#prevent update of meta package because needed xorg-server-1.19 is not 'yakkety' ready
+>=x11-base/xorg-drivers-1.19::unity-gentoo
+x11-base/xorg-drivers::gentoo
 
 ## Global masks ##
 
@@ -133,6 +136,8 @@ media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
 net-im/telepathy-mission-control::gentoo
 net-libs/gnome-online-accounts::gentoo
+net-libs/libsoup::gentoo
+net-libs/libsoup-gnome::gentoo
 sys-apps/accountsservice::gentoo
 sys-auth/pambase::gentoo
 sys-libs/libnih::gentoo
