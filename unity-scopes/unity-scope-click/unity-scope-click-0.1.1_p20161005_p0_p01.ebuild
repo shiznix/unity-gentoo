@@ -26,7 +26,7 @@ DEPEND="app-admin/packagekit-base
 	dev-db/sqlite:3
 	dev-libs/boost:=
 	dev-libs/glib:2
-	dev-libs/jsoncpp
+	dev-libs/jsoncpp:=
 	dev-libs/libaccounts-glib
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5

@@ -5,6 +5,9 @@
 >=x11-base/xorg-drivers-1.19::unity-gentoo
 x11-base/xorg-drivers::gentoo
 
+# Requires >=x11-libs/gtk+-3.22
+>=media-libs/clutter-1.26.2
+
 ## Global masks ##
 
 dev-qt/assistant:5::gentoo

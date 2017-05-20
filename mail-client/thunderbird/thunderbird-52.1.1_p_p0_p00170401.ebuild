@@ -5,8 +5,8 @@
 EAPI=6
 WANT_AUTOCONF="2.1"
 MOZ_ESR=""
-MOZ_LIGHTNING_VER="4.7.8"
-MOZ_LIGHTNING_GDATA_VER="2.6"
+MOZ_LIGHTNING_VER="5.4.1"
+MOZ_LIGHTNING_GDATA_VER="3.3"
 
 # This list can be updated using scripts/get_langs.sh from the mozilla overlay
 MOZ_LANGS=(ar ast be bg bn-BD br ca cs cy da de el en en-GB en-US es-AR
@@ -27,18 +27,15 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 MOZ_P="${PN}-${MOZ_PV}"
 
-# Enigmail version
-EMVER="1.9.1"
-
 # Patches
-PATCH="thunderbird-38.0-patches-0.1"
-PATCHFF="firefox-45.0-patches-12"
+PATCHFF="firefox-52.0-patches-08"
 
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
-MOZCONFIG_OPTIONAL_JIT="enabled"
+MOZCONFIG_OPTIONAL_GTK2ONLY=1
+MOZCONFIG_OPTIONAL_WIFI=1
 
-URELEASE="zesty"
-inherit flag-o-matic toolchain-funcs mozconfig-v6.45 makeedit autotools pax-utils check-reqs nsplugins mozlinguas-v2 fdo-mime gnome2-utils ubuntu-versionator
+URELEASE="zesty-security"
+inherit flag-o-matic toolchain-funcs mozconfig-v6.52 makeedit autotools pax-utils check-reqs nsplugins mozlinguas-v2 fdo-mime gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+build1"
 UURL="mirror://unity/pool/main/t/${PN}"
@@ -49,30 +46,29 @@ HOMEPAGE="http://www.mozilla.com/en-US/thunderbird/"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist crypt hardened ldap +lightning +minimal mozdom selinux"
+IUSE="bindist crypt hardened ldap lightning +minimal mozdom rust selinux"
 RESTRICT="!bindist? ( bindist )
 	mirror"
 
 # URI for upstream lightning package (when it is available)
 #${MOZ_HTTP_URI/${PN}/calendar/lightning}/${MOZ_LIGHTNING_VER}/linux/lightning.xpi -> lightning-${MOZ_LIGHTNING_VER}.xpi
-PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/{${PATCH},${PATCHFF}}.tar.xz )
+PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/${PATCHFF}.tar.xz )
 SRC_URI="${SRC_URI}
 	${MOZ_HTTP_URI}/${MOZ_PV}/source/${MOZ_P}.source.tar.xz
 	https://dev.gentoo.org/~axs/distfiles/lightning-${MOZ_LIGHTNING_VER}.tar.xz
-	lightning? ( https://dev.gentoo.org/~axs/distfiles/gdata-provider-${MOZ_LIGHTNING_GDATA_VER}-r1.tar.xz )
-	crypt? ( http://www.enigmail.net/download/source/enigmail-${EMVER}.tar.gz )
+	lightning? ( https://dev.gentoo.org/~axs/distfiles/gdata-provider-${MOZ_LIGHTNING_GDATA_VER}.tar.xz )
 	${PATCH_URIS[@]}
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 CDEPEND="
-	>=dev-libs/nss-3.21.1
-	>=dev-libs/nspr-4.12
+	>=dev-libs/nss-3.28.3
+	>=dev-libs/nspr-4.13.1
 	crypt? ( x11-plugins/enigmail[-thunderbird(-)] )
 	"
 
-DEPEND="${CDEPEND}
+DEPEND="rust? ( dev-lang/rust )
 	amd64? ( ${ASM_DEPEND}
 		virtual/opengl )
 	x86? ( ${ASM_DEPEND}
@@ -103,13 +99,6 @@ pkg_pretend() {
 	# Ensure we have enough disk space to compile
 	CHECKREQS_DISK_BUILD="4G"
 	check-reqs_pkg_setup
-
-	if use jit && [[ -n ${PROFILE_IS_HARDENED} ]]; then
-		ewarn "You are emerging this package on a hardened profile with USE=jit enabled."
-		ewarn "This is horribly insecure as it disables all PAGEEXEC restrictions."
-		ewarn "Please ensure you know what you are doing.  If you don't, please consider"
-		ewarn "emerging the package with USE=-jit"
-	fi
 }
 
 src_unpack() {
@@ -132,8 +121,7 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# Apply our Thunderbird patchset
-	rm -f "${WORKDIR}"/thunderbird/2001_ldap_respect_cflags.patch
-	eapply "${WORKDIR}/thunderbird"
+	epatch "${FILESDIR}"/1000_fix_gentoo_preferences.patch
 
 	# Apply our patchset from firefox to thunderbird as well
 	pushd "${S}"/mozilla &>/dev/null || die
@@ -201,13 +189,13 @@ src_configure() {
 	use hardened && append-ldflags "-Wl,-z,relro,-z,now"
 
 	mozconfig_annotate '' --enable-extensions="${MEXTENSIONS}"
-	mozconfig_annotate '' --disable-mailnews
 	mozconfig_annotate '' --enable-calendar
 
 	# Other tb-specific settings
 	mozconfig_annotate '' --with-user-appdir=.thunderbird
 
 	mozconfig_use_enable ldap
+	mozconfig_use_enable rust
 
 	mozlinguas_mozconfig
 
@@ -218,6 +206,7 @@ src_configure() {
 
 	# Use an objdir to keep things organized.
 	echo "mk_add_options MOZ_OBJDIR=${BUILD_OBJ_DIR}" >> "${S}"/.mozconfig
+	echo "mk_add_options XARGS=/usr/bin/xargs" >> "${S}"/.mozconfig
 
 	# Finalize and report settings
 	mozconfig_final
@@ -234,19 +223,23 @@ src_configure() {
 	if [[ $(gcc-major-version) -lt 4 ]]; then
 		append-cxxflags -fno-stack-protector
 	fi
+
+	# workaround for funky/broken upstream configure...
+	SHELL="${SHELL:-${EPREFIX%/}/bin/bash}" \
+	emake V=1 -f client.mk configure
 }
 
 src_compile() {
-	mkdir -p "${BUILD_OBJ_DIR}" && cd "${BUILD_OBJ_DIR}" || die
-
-	CC="$(tc-getCC)" CXX="$(tc-getCXX)" LD="$(tc-getLD)" \
-	MOZ_MAKE_FLAGS="${MAKEOPTS}" SHELL="${SHELL:-${EPREFIX%/}/bin/bash}" \
-	emake -f "${S}"/client.mk
+	MOZ_MAKE_FLAGS="${MAKEOPTS}" SHELL="${SHELL}" \
+	emake V=1 -f client.mk
 }
 
 src_install() {
 	declare emid
 	cd "${BUILD_OBJ_DIR}" || die
+
+	# Pax mark xpcshell for hardened support, only used for startupcache creation.
+	pax-mark m "${BUILD_OBJ_DIR}"/dist/bin/xpcshell
 
 	# Copy our preference before omnijar is created.
 	cp "${FILESDIR}"/thunderbird-gentoo-default-prefs-1.js-1 \
@@ -259,12 +252,9 @@ src_install() {
 	# dev-db/sqlite does not have FTS3_TOKENIZER support.
 	# gloda needs it to function, and bad crashes happen when its enabled and doesn't work
 	if in_iuse system-sqlite && use system-sqlite ; then
-		echo "lockPref(\"mailnews.database.global.indexer.enabled\", false);" \
+		echo "sticky_pref(\"mailnews.database.global.indexer.enabled\", false);" \
 			>>"${BUILD_OBJ_DIR}/dist/bin/defaults/pref/all-gentoo.js" || die
 	fi
-
-	# Pax mark xpcshell for hardened support, only used for startupcache creation.
-	pax-mark m "${BUILD_OBJ_DIR}"/dist/bin/xpcshell
 
 	MOZ_MAKE_FLAGS="${MAKEOPTS}" \
 	emake DESTDIR="${D}" install
@@ -322,21 +312,18 @@ src_install() {
 		doins -r "${T}/${emid}"
 	fi
 
-	if use crypt ; then
-		emid=$(sed -n '/<em:id>/!d; s/.*\({.*}\).*/\1/; p; q' "${EPREFIX}"/usr/share/enigmail/install.rdf)
+	if use crypt; then
+		emid=$(sed -n '/<em:id>/!d; s/.*\({.*}\).*/\1/; p; q' "${EROOT}"usr/share/enigmail/install.rdf)
 		if [[ -n ${emid} ]]; then
 			dosym "${EPREFIX}"/usr/share/enigmail ${MOZILLA_FIVE_HOME}/extensions/${emid}
 		else
-			die "<EM:ID> tag for installed enigmail could not be found!"
+			eerror "${EPREFIX}/usr/share/enigmail/install.rdf: No such file or directory"
+			die "<EM:ID> tag for x11-plugins/enigmail could not be found!"
 		fi
 	fi
 
-	# Required in order for jit to work on hardened, for mozilla-31 and above
-	use jit && pax-mark pm "${ED}"${MOZILLA_FIVE_HOME}/{thunderbird,thunderbird-bin}
-
-	# Plugin-container needs to be pax-marked for hardened to ensure plugins such as flash
-	# continue to work as expected.
-	pax-mark m "${ED}"${MOZILLA_FIVE_HOME}/plugin-container
+	# Required in order to use plugins and even run thunderbird on hardened.
+	pax-mark pm "${ED}"${MOZILLA_FIVE_HOME}/{thunderbird,thunderbird-bin,plugin-container}
 
 	if use minimal; then
 		rm -r "${ED}"/usr/include "${ED}"${MOZILLA_FIVE_HOME}/{idl,include,lib,sdk} || \
@@ -349,9 +336,14 @@ pkg_preinst() {
 
 	# Because PM's dont seem to properly merge a symlink replacing a directory
 	if use crypt ; then
-		local emid=$(sed -n '/<em:id>/!d; s/.*\({.*}\).*/\1/; p; q' "${EPREFIX}"/usr/share/enigmail/install.rdf)
-		if [[ -d "${EPREFIX}${MOZILLA_FIVE_HOME}/extensions/${emid}" ]] ; then
-			rm -Rf "${EPREFIX}${MOZILLA_FIVE_HOME}/extensions/${emid}" || (
+		local emid=$(sed -n '/<em:id>/!d; s/.*\({.*}\).*/\1/; p; q' "${EROOT}"usr/share/enigmail/install.rdf)
+		local emidpath="${EROOT%/}"${MOZILLA_FIVE_HOME}/extensions/${emid}
+		if [[ -z ${emid} ]]; then
+			eerror "${EROOT%/}/usr/share/enigmail/install.rdf: No such file or directory"
+			die "Could not find enigmail on disk during pkg_preinst()"
+		fi
+		if [[ ! -h "${emidpath}" ]] && [[ -d "${emidpath}" ]]; then
+			rm -Rf "${emidpath}" || (
 			eerror "Could not remove enigmail directory from previous installation,"
 			eerror "You must remove this by hand and rename the symbolic link yourself:"
 			eerror
@@ -366,9 +358,11 @@ pkg_postinst() {
 	fdo-mime_desktop_database_update
 	gnome2_icon_cache_update
 
+	elog
 	elog "If you experience problems with plugins please issue the"
 	elog "following command : rm \${HOME}/.thunderbird/*/extensions.sqlite ,"
 	elog "then restart thunderbird"
+
 	if ! use lightning; then
 		elog
 		elog "If calendar fails to show up in extensions please open config editor"
