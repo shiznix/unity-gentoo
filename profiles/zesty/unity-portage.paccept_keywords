@@ -84,6 +84,7 @@ x11-proto/glproto
 
 ## Overlay missing keyword unmasking ##
 app-accessibility/onboard **
+app-arch/snapd-glib **
 app-backup/deja-dup **
 dev-cpp/gmock **
 dev-cpp/gtest **

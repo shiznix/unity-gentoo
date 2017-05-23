@@ -27,7 +27,7 @@ DEPEND="dev-qt/qtcore:5
 	x11-libs/libaccounts-qt
 	test? ( dev-qt/qttest:5 )"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 unset QT_QPA_PLATFORMTHEME
 
 src_prepare() {

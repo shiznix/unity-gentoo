@@ -49,42 +49,42 @@
 #dev-qt/qtxml:5::gentoo
 #dev-qt/qtxmlpatterns:5::gentoo
 
-# mask gnome-3.24 packages
-=*/gnome*-*24*::gentoo
-=gnome-base/*-*24*::gentoo
-=gnome-extra/*-*24*::gentoo
->=app-accessibility/at-spi2-atk-2.24::gentoo
->=app-accessibility/at-spi2-core-2.24::gentoo
->=app-accessibility/orca-3.24::gentoo
->=app-arch/file-roller-3.24::gentoo
->=app-cdr/brasero-3.24::gentoo
->=app-crypt/gcr-3.24::gentoo
->=app-crypt/seahorse-3.24::gentoo
->=app-editors/gedit-3.24::gentoo
->=app-text/evince-3.24::gentoo
->=app-text/yelp-tools-3.24::gentoo
->=dev-cpp/gtkmm-3.24::gentoo
->=dev-libs/libgweather-3.24::gentoo
+# mask gnome-3.26 packages
+=*/gnome*-*26*::gentoo
+=gnome-base/*-*26*::gentoo
+=gnome-extra/*-*26*::gentoo
+>=app-accessibility/at-spi2-atk-2.26::gentoo
+>=app-accessibility/at-spi2-core-2.26::gentoo
+>=app-accessibility/orca-3.26::gentoo
+>=app-arch/file-roller-3.26::gentoo
+>=app-cdr/brasero-3.26::gentoo
+>=app-crypt/gcr-3.26::gentoo
+>=app-crypt/seahorse-3.26::gentoo
+>=app-editors/gedit-3.26::gentoo
+>=app-text/evince-3.26::gentoo
+>=app-text/yelp-tools-3.26::gentoo
+>=dev-cpp/gtkmm-3.26::gentoo
+>=dev-libs/libgweather-3.26::gentoo
 # >=dev-python/pyatspi-2.20.0::gentoo
->=dev-python/pygobject-3.24::gentoo
->=dev-util/gtk-update-icon-cache-3.24::gentoo
->=dev-util/devhelp-3.24::gentoo
->=dev-vcs/gitg-3.24::gentoo
->=mail-client/evolution-3.24::gentoo
->=media-gfx/eog-3.24::gentoo
+>=dev-python/pygobject-3.26::gentoo
+>=dev-util/gtk-update-icon-cache-3.26::gentoo
+>=dev-util/devhelp-3.26::gentoo
+>=dev-vcs/gitg-3.26::gentoo
+>=mail-client/evolution-3.26::gentoo
+>=media-gfx/eog-3.26::gentoo
 # >=media-libs/clutter-gtk-1.8.2::gentoo
->=media-sound/sound-juicer-3.24::gentoo
->=media-video/cheese-3.24::gentoo
->=media-video/totem-3.24::gentoo
->=net-misc/vinagre-3.24::gentoo
->=net-wireless/gnome-bluetooth-3.24::gentoo
->=sci-geosciences/geocode-glib-3.24::gentoo
->=sys-apps/baobab-3.24::gentoo
->=www-client/epiphany-3.24::gentoo
->=x11-libs/gtksourceview-3.24::gentoo
->=x11-libs/libwnck-3.24::gentoo
->=x11-themes/adwaita-icon-theme-3.24::gentoo
->=x11-wm/mutter-3.24::gentoo
+>=media-sound/sound-juicer-3.26::gentoo
+>=media-video/cheese-3.26::gentoo
+>=media-video/totem-3.26::gentoo
+>=net-misc/vinagre-3.26::gentoo
+>=net-wireless/gnome-bluetooth-3.26::gentoo
+>=sci-geosciences/geocode-glib-3.26::gentoo
+>=sys-apps/baobab-3.26::gentoo
+>=www-client/epiphany-3.26::gentoo
+>=x11-libs/gtksourceview-3.26::gentoo
+>=x11-libs/libwnck-3.26::gentoo
+>=x11-themes/adwaita-icon-theme-3.26::gentoo
+>=x11-wm/mutter-3.26::gentoo
 # >=media-plugins/grilo-plugins-0.2.16::gentoo
 
 

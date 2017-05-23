@@ -55,12 +55,6 @@ src_prepare() {
 	cmake-utils_src_prepare
 }
 
-src_compile() {
-	pushd "${BUILD_DIR}"
-		VERBOSE=1 emake all translations
-	popd
-}
-
 pkg_preinst() {
 	gnome2_schemas_savelist
 }

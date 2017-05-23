@@ -46,6 +46,6 @@ src_install() {
 
 pkg_postinst() {
 	echo
-	elog "If you have recently changed profile then you should re-run 'emerge -uDNavt @world' to catch any upgrades"
+	elog "If you have recently changed profile then you should re-run 'emerge -uDNavt --backtrack=30 @world' to catch any upgrades"
 	echo
 }

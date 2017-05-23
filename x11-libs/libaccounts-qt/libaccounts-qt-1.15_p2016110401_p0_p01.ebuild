@@ -26,7 +26,7 @@ DEPEND="dev-libs/libaccounts-glib:=
 	doc? ( app-doc/doxygen )
 	test? ( dev-qt/qttest:5 )"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

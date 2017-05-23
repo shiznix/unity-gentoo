@@ -20,7 +20,8 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="dev-qt/qtcore:5
+DEPEND="app-arch/snapd-glib
+	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtxml:5

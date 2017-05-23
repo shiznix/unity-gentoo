@@ -16,8 +16,6 @@ HOMEPAGE="https://launchpad.net/ubuntu-themes"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
-echo "UVER_PREFIX is: ${UVER_PREFIX}"
-
 LICENSE="GPL-3 CC-BY-SA-3.0"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
