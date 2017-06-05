@@ -72,6 +72,7 @@ dev-qt/qtxmlpatterns:5::gentoo
 >=dev-cpp/gtkmm-3.22.0::gentoo
 >=dev-libs/libgdata-0.17.7::gentoo
 >=dev-libs/libgweather-3.22.0::gentoo
+>=dev-libs/icu-58.2::gentoo
 # >=dev-python/pyatspi-2.20.0::gentoo
 >=dev-python/pygobject-3.22.0::gentoo
 >=dev-util/gtk-update-icon-cache-3.22.0::gentoo
