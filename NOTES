@@ -20,6 +20,7 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 app-backup/deja-dup			# Enable Unity desktop options
 dev-cpp/gtest				# Customised ebuild to install /usr/src/gtest/* files lacking from main tree ebuild
 dev-cpp/gmock				# Customised ebuild to install /usr/src/gmock/* files lacking from main tree ebuild
+dev-libs/capnproto			# Needs to be multilib aware to install with multilib mir-base/mir. Portage tree version does not install needed CMake files 'CapnProtoConfig.cmake' and 'CapnProtoConfigVersion.cmake'
 dev-libs/dee				# Portage tree versions can lag, maintained for patches and version control
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/gobject-introspection		# See glib reason above

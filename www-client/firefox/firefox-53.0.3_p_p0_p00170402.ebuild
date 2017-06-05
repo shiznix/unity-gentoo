@@ -33,7 +33,6 @@ fi
 PATCH="${PN}-53.0-patches-02"
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 
-MOZCONFIG_OPTIONAL_GTK2ONLY=1
 MOZCONFIG_OPTIONAL_WIFI=1
 
 URELEASE="zesty-security"
@@ -139,6 +138,7 @@ src_prepare() {
 	# Apply our patches
 	eapply "${WORKDIR}/firefox"
 	eapply "${FILESDIR}"/musl_drop_hunspell_alloc_hooks.patch
+	eapply "${FILESDIR}"/${PN}-53-turn_off_crash_on_seccomp_fail.patch
 
 	# Enable gnomebreakpad
 	if use debug ; then

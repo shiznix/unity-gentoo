@@ -41,6 +41,11 @@ S="${WORKDIR}"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
+	# Remove dependency on whoopsie (Ubuntu's error submission tracker)
+	for each in $(grep -ri whoopsie | awk -F: '{print $1}'); do
+		sed -e '/whoopsie/Id' -i "${each}"
+	done
+
 	# Fix incorrect installation path for ubuntu-app-test binary #
 	sed -e 's:{CMAKE_INSTALL_FULL_BINDIR}/app-test:{CMAKE_INSTALL_FULL_BINDIR}:g' \
 		-i ubuntu-app-test/src/CMakeLists.txt

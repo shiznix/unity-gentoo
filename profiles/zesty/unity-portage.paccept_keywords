@@ -61,6 +61,8 @@ dev-util/valgrind
 dev-libs/capnproto
 dev-libs/libindicate-qt
 =dev-libs/nss-3.29*
+=dev-libs/xapian-1.4*
+=dev-libs/xapian-bindings-1.4*
 =dev-util/boost-build-1.58*
 ~dev-python/python-prctl-1.5.0
 ~dev-qt/qtlocation-5.6.1
@@ -84,10 +86,13 @@ x11-proto/glproto
 
 ## Overlay missing keyword unmasking ##
 app-accessibility/onboard **
+app-arch/snapd **
 app-arch/snapd-glib **
 app-backup/deja-dup **
+app-misc/pay-service **
 dev-cpp/gmock **
 dev-cpp/gtest **
+dev-libs/capnproto **
 dev-libs/dee **
 dev-libs/dbus-cpp **
 dev-libs/libaccounts-glib **

@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/${MY_P}-${UVER}.diff.gz"
 
 IUSE_SERVERS="dmx kdrive xephyr xnest xorg xvfb"
-IUSE="${IUSE_SERVERS} glamor ipv6 libressl minimal mir selinux +suid systemd tslib +udev unwind wayland"
+IUSE="${IUSE_SERVERS} debug glamor ipv6 libressl minimal mir selinux +suid systemd tslib +udev unwind wayland"
 RESTRICT="mirror"
 
 CDEPEND=">=app-eselect/eselect-opengl-1.3.0

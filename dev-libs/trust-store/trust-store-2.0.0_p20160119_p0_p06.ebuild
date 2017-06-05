@@ -12,7 +12,8 @@ UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="API for creating, reading, updating and deleting trust requests answered by users"
 HOMEPAGE="http://launchpad.net/trust-store"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -33,8 +34,12 @@ DEPEND="dev-cpp/glog
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	epatch -p1 "${FILESDIR}/stdcerr_iostream-fix.diff"
 	ubuntu-versionator_src_prepare
+	epatch -p1 "${FILESDIR}/stdcerr_iostream-fix.diff"
+
+	# Disable warnings being treated as errors #
+	sed -e 's:-Werror ::g' \
+		-i CMakeLists.txt
 	cmake-utils_src_prepare
 }
 

@@ -29,6 +29,19 @@ DEPEND="dev-libs/glib:2
 
 S="${WORKDIR}"
 
+src_prepare() {
+	ubuntu-versionator_src_prepare
+
+	# Disable -Werror #
+	epatch -p1 "${FILESDIR}/disable-Werror.diff"
+
+	# Remove dependency on whoopsie (Ubuntu's error submission tracker)
+	for each in $(grep -ri whoopsie | awk -F: '{print $1}'); do
+		sed -e '/whoopsie/Id' -i "${each}"
+	done
+	cmake-utils_src_prepare
+}
+
 src_configure() {
 	! use test && \
 		mycmakeargs+=(-Denable_tests=OFF)

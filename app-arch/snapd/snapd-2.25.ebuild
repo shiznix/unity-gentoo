@@ -24,13 +24,14 @@ DEPEND="dev-lang/go
 	dev-python/docutils
 	sys-apps/systemd
 	sys-fs/squashfs-tools
+	sys-fs/xfsprogs
 	sys-libs/libseccomp"
 
 # TODO: ensure that used kernel supports xz compression for squashfs
 # TODO: enable tests
 # TODO: put /var/lib/snapd/desktop on XDG_DATA_DIRS
 
-S="${S}/cmd"
+S="${WORKDIR}/snappy.upstream/cmd"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
@@ -69,11 +70,11 @@ src_install() {
 	doexe "${GOPATH}/bin/snap-exec"
 
 	# Install systemd units
-	sed -i -e 's/RandomizedDelaySec=/#RandomizedDelaySec=/' ../data/systemd/snapd.refresh.timer
-	systemd_dounit ../data/systemd/snapd.{service,socket}
-	systemd_dounit ../data/systemd/snapd.autoimport.service
-	systemd_dounit ../data/systemd/snapd.refresh.{service,timer}
-	systemd_dounit ../data/systemd/snapd.system-shutdown.service
+	sed -i -e 's/RandomizedDelaySec=/#RandomizedDelaySec=/' ../packaging/ubuntu-14.04/snapd.refresh.timer
+	systemd_dounit ../packaging/ubuntu-14.04/snapd.{service,socket}
+	systemd_dounit ../packaging/ubuntu-14.04/snapd.autoimport.service
+	systemd_dounit ../packaging/ubuntu-14.04/snapd.refresh.{service,timer}
+	systemd_dounit ../packaging/ubuntu-14.04/snapd.system-shutdown.service
 
 	# Put /snap/bin on PATH
 	dodir /etc/profile.d/

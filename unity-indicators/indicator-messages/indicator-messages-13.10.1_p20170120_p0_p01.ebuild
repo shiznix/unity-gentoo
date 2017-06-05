@@ -27,7 +27,7 @@ DEPEND="!net-im/indicator-messages
 	dev-util/dbus-test-runner
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

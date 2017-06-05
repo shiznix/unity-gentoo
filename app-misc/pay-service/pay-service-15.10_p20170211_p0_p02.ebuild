@@ -33,3 +33,5 @@ DEPEND="dev-lang/go
 	x11-libs/libaccounts-qt"
 
 S="${WORKDIR}"
+export CFLAGS="${CFLAGS} -std=c++11"
+export CXXFLAGS="${CXXFLAGS} -std=c++11"

@@ -20,7 +20,7 @@ SLOT="0"
 IUSE="test"
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 DEPEND="dev-cpp/gmock
 	dev-libs/libqtdbustest

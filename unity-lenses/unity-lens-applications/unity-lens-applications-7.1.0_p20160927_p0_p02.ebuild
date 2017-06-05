@@ -24,7 +24,7 @@ DEPEND="dev-libs/dee:=
 	dev-libs/libcolumbus:=
 	dev-libs/libunity:=
 	dev-libs/libzeitgeist
-	<dev-libs/xapian-1.3
+	dev-libs/xapian
 	gnome-base/gnome-menus:3
 	gnome-extra/zeitgeist[datahub,fts]
 	sys-libs/db:5.3

@@ -25,6 +25,7 @@ DEPEND="!!media-libs/mesa-mir
 	>=dev-cpp/gflags-2.1.2[${MULTILIB_USEDEP}]
 	dev-cpp/glog[${MULTILIB_USEDEP}]
 	dev-libs/boost:=[${MULTILIB_USEDEP}]
+	dev-libs/capnproto[${MULTILIB_USEDEP}]
 	dev-libs/libhybris[${MULTILIB_USEDEP}]
 	dev-libs/libinput[${MULTILIB_USEDEP}]
 	dev-libs/protobuf:=[${MULTILIB_USEDEP}]

@@ -1,0 +1,12 @@
+diff -urN indicator-session/data/CMakeLists.txt indicator-session-patched/data/CMakeLists.txt
+--- indicator-session/data/CMakeLists.txt	2017-04-04 01:07:43.000000000 +0930
++++ indicator-session-patched/data/CMakeLists.txt	2017-06-05 08:51:40.472702349 +0930
+@@ -100,6 +100,6 @@
+          DESTINATION "${ICON_DIR}"
+          FILES_MATCHING PATTERN "*.png" PATTERN "*.svg")
+ 
+-install(CODE "execute_process (COMMAND gtk-update-icon-cache -t -f ${ICON_DIR})"
+-        CODE "message (STATUS \"Updating icon cache\")")
++#install(CODE "execute_process (COMMAND gtk-update-icon-cache -t -f ${ICON_DIR})"
++#        CODE "message (STATUS \"Updating icon cache\")")
+ 

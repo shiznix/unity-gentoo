@@ -37,8 +37,16 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	# Fix schema errors and sandbox violations #
-	epatch "${FILESDIR}/sandbox_violations_fix.diff"
+
+	# Remove dependency on whoopsie (Ubuntu's error submission tracker)
+	sed -e 's:libwhoopsie):):g' \
+		-i CMakeLists.txt
+	for each in $(grep -ri whoopsie | awk -F: '{print $1}'); do
+		sed -e '/whoopsie/Id' -i "${each}"
+	done
+
+	# Fix sandbox violations #
+	epatch "${FILESDIR}/sandbox_violations_fix-17.04.diff"
 
 	if ! use help || has nodoc ${FEATURES}; then
 		sed -n '/indicator.help/{s|^|//|};p' \

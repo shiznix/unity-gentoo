@@ -1,3 +1,19 @@
+- Multilib issues arising from mir-base/mir support
+	* mir-base/mir needs mir patched media-libs/mesa
+		Because media-libs/mesa is multilib, mir-base/mir also needs to be multilib to build for all multilib ABIs
+	* x11-libs/gtk+[mir] needs x11-libs/content-hub
+		Because x11-libs/gtk+ is multlib, x11-libs/content-hub also needs to be multilib to build for all multilib ABIs
+		x11-libs/content-hub multilib then opens up many more multilib dependencies that need to be created:
+		 sys-apps/ubuntu-app-launch
+		  \_dev-libs/gobject-introspection
+		    \_dev-libs/json-glib
+		    \_gnome-extra/zeitgeist
+		      \_dev-libs/dee
+		....and many more, it is for this reason mir-base/mir and unity-base/unity8 are currently broken in Zesty
+	* Some questions in resolving:
+		- Can mir-base/mir be installed without triggering multilib dependencies from media-libs/mesa and x11-libs/gtk+?
+		- Is mir-base/mir or it's unity-base/unity8 dependency ripe for dropping anyway as unmaintained by upstream?
+
 - dev-qt/qtwayland:5 fails to build if dev-libs/libhybris is installed (required by oxide-qt,mir and unity8)
 	hardwareintegration/compositor/libhybris-egl-server/libhybriseglserverbufferintegration.cpp
 		error: ‘class QWaylandCompositor’ has no member named ‘waylandDisplay’
