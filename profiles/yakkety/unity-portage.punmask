@@ -5,3 +5,6 @@ dev-dotnet/gudev-sharp		# (b.g.o #580590 - needs gmcs)
 dev-dotnet/mono-zeroconf	# (b.g.o #596614 - needs gmcs)
 dev-dotnet/taglib-sharp		# (b.g.o #565032 - needs gmcs)
 media-sound/banshee		# (b.g.o #558106 - DEPENDs on the above packages)
+
+
+dev-libs/dee::unity-gentoo
