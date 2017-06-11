@@ -35,6 +35,7 @@ DEPEND="${RDEPEND}
 	dev-qt/qtnetwork:5
 	dev-qt/qtpim:5
 	dev-qt/qtsvg:5
+	dev-qt/qtsystems:5
 	dev-qt/qttest:5
 	media-gfx/thumbnailer"
 
