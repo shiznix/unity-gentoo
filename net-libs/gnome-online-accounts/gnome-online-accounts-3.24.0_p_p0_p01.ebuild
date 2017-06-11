@@ -6,7 +6,7 @@ EAPI=6
 GCONF_DEBUG="yes"
 
 URELEASE="zesty"
-inherit autotools gnome2-utils ubuntu-versionator
+inherit autotools gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/g/${PN}"
 
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 LICENSE="LGPL-2+"
 SLOT="0/1"
-IUSE="gnome +introspection kerberos uoa"
+IUSE="gnome +introspection kerberos uoa +vala"
 #KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -61,6 +61,9 @@ DEPEND="${RDEPEND}
 
 	dev-libs/gobject-introspection-common
 	gnome-base/gnome-common
+	vala? (
+		$(vala_depend)
+	)
 "
 # eautoreconf needs gobject-introspection-common, gnome-common
 MAKEOPTS="${MAKEOPTS} -j1"
@@ -70,6 +73,12 @@ QA_CONFIGURE_OPTIONS=".*"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	if use vala; then
+		vala_src_prepare
+		export VALA_API_GEN="$VAPIGEN"
+	fi
+
 	# Fix undefined references to libaccounts-glib and libsignon-glib at link time for UOA enabled goabackend #
 	if use uoa; then
 		sed 's:glib-2.0:glib-2.0 libaccounts-glib libsignon-glib :' \
@@ -100,7 +109,8 @@ src_configure() {
 		--enable-telepathy \
 		--enable-windows-live \
 		$(use_enable kerberos) \
-		$(use_enable uoa ubuntu-online-accounts)
+		$(use_enable uoa ubuntu-online-accounts) \
+		$(use_enable vala)
 	# gudev & cheese from sub-configure is overriden
 	# by top level configure, and disabled so leave it like that
 }
