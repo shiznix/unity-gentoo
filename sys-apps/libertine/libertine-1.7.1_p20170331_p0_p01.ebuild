@@ -25,7 +25,7 @@ DEPEND="dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtdeclarative:5
 	dev-util/intltool
-	kde-plasma/systemsettings
+	unity-base/ubuntu-system-settings
 	sys-devel/gettext"
 
 S="${WORKDIR}"
