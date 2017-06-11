@@ -25,6 +25,7 @@ DEPEND="dev-libs/glib:2
 	dev-util/dbus-test-runner
 	mir-base/mir:=
 	sys-apps/dbus
+	unity-base/unity-scopes-api
 	sys-apps/ubuntu-app-launch"
 
 S="${WORKDIR}"
