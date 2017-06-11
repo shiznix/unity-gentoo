@@ -25,5 +25,6 @@ DEPEND="dev-libs/glib:2
 	dev-qt/qtdeclarative:5
 	unity-base/hud"
 
-S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
+#S=${WORKDIR}/${PN}-${PV}${UVER_PREFIX}
+S=${WORKDIR}
 export QT_SELECT=5
