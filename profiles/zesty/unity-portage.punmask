@@ -52,7 +52,6 @@ dev-libs/dee::unity-gentoo
 >=dev-libs/gobject-introspection-1.51::unity-gentoo
 >=dev-libs/gobject-introspection-common-1.51::unity-gentoo
 >=gnome-base/gsettings-desktop-schemas-3.23::unity-gentoo
->=gnome-base/gsettings-desktop-schemas-3.23
 >=app-text/gspell-1.3
 >=net-libs/gtk-vnc-0.7
 >=x11-libs/gtksourceview-3.23
@@ -62,7 +61,6 @@ dev-libs/dee::unity-gentoo
 >=net-libs/libsoup-2.57
 >=x11-wm/mutter-3.23
 >=gnome-base/nautilus-3.23::unity-gentoo
->=gnome-base/nautilus-3.22
 >=app-accessibility/orca-3.23
 >=dev-cpp/pangomm-2.41
 >=media-video/totem-3.23
