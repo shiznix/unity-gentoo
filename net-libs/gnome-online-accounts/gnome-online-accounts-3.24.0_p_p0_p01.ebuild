@@ -3,10 +3,11 @@
 # $Id$
 
 EAPI=6
-GCONF_DEBUG="yes"
+GNOME2_LA_PUNT="yes"
+VALA_USE_DEPEND="vapigen"
 
 URELEASE="zesty"
-inherit autotools gnome2-utils ubuntu-versionator vala
+inherit autotools gnome2 ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/g/${PN}"
 
@@ -16,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 LICENSE="LGPL-2+"
 SLOT="0/1"
-IUSE="gnome +introspection kerberos uoa +vala"
+IUSE="debug gnome +introspection kerberos uoa"
 #KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -52,6 +53,7 @@ RDEPEND="
 PDEPEND="gnome? ( >=gnome-base/gnome-control-center-3.2[gnome-online-accounts(+)] )"
 
 DEPEND="${RDEPEND}
+	$(vala_depend)
 	dev-libs/libxslt
 	>=dev-util/gtk-doc-am-1.3
 	>=dev-util/gdbus-codegen-2.30.0
@@ -61,9 +63,6 @@ DEPEND="${RDEPEND}
 
 	dev-libs/gobject-introspection-common
 	gnome-base/gnome-common
-	vala? (
-		$(vala_depend)
-	)
 "
 # eautoreconf needs gobject-introspection-common, gnome-common
 MAKEOPTS="${MAKEOPTS} -j1"
@@ -74,33 +73,28 @@ QA_CONFIGURE_OPTIONS=".*"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	if use vala; then
-		vala_src_prepare
-		export VALA_API_GEN="$VAPIGEN"
-	fi
-
 	# Fix undefined references to libaccounts-glib and libsignon-glib at link time for UOA enabled goabackend #
 	if use uoa; then
 		sed 's:glib-2.0:glib-2.0 libaccounts-glib libsignon-glib :' \
 			-i configure.ac || die
 		eautoreconf
 	fi
+	gnome2_src_prepare
+	vala_src_prepare
+	export VALA_API_GEN="$VAPIGEN"
 }
 
 src_configure() {
 	# TODO: Give users a way to set the G/FB/Windows Live secrets
-	# telepathy optional support is really a badly done, bug #494456
-	econf \
+	# telepathy optional support is really a badly one, bug #494456
+	gnome2_src_configure \
 		--disable-static \
 		--enable-backend \
-		--disable-twitter \
-		--disable-yahoo \
 		--enable-documentation \
 		--enable-exchange \
 		--enable-facebook \
 		--enable-flickr \
 		--enable-foursquare \
-		--enable-google \
 		--enable-imap-smtp \
 		--enable-lastfm \
 		--enable-media-server \
@@ -108,9 +102,10 @@ src_configure() {
 		--enable-pocket \
 		--enable-telepathy \
 		--enable-windows-live \
-		$(use_enable kerberos) \
-		$(use_enable uoa ubuntu-online-accounts) \
-		$(use_enable vala)
+		$(use_enable uoa ubuntu-online-accounts)
+		$(usex debug --enable-debug=yes ' ') \
+		$(use_enable kerberos)
+		#$(use_enable telepathy)
 	# gudev & cheese from sub-configure is overriden
 	# by top level configure, and disabled so leave it like that
 }

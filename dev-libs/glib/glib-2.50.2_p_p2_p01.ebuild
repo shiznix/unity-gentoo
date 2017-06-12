@@ -13,7 +13,7 @@ PYTHON_COMPAT=( python2_7 )
 GNOME2_LA_PUNT="yes"
 
 URELEASE="yakkety-updates"
-inherit autotools bash-completion-r1 gnome2 libtool eutils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator
+inherit autotools bash-completion-r1 epunt-cxx gnome2 libtool eutils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator
 
 MY_P="${PN}2.0_${PV}"
 MY_PV="${PV}"

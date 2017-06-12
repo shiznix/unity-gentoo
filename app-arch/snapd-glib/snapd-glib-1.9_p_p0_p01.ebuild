@@ -25,8 +25,6 @@ DEPEND="app-arch/snapd
 	net-libs/libsoup
 	$(vala_depend)"
 
-export CXXFLAGS="${CXXFLAGS} -std=c++11"
-
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	vala_src_prepare

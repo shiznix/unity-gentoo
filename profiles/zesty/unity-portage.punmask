@@ -25,10 +25,10 @@ dev-libs/dee::unity-gentoo
 >=gnome-extra/evolution-data-server-3.23
 >=gnome-base/gdm-3.23
 >=sci-geosciences/geocode-glib-3.23
+>=dev-libs/glib-2.51::unity-gentoo
 >=dev-libs/gjs-1.47
->=dev-libs/glib-2.51
 >=net-libs/phodav-2.2
->=dev-util/gdbus-codegen-2.51
+>=dev-util/gdbus-codegen-2.51::unity-gentoo
 >=dev-cpp/glibmm-2.51
 >=x11-themes/gnome-backgrounds-3.23
 >=gnome-extra/gnome-boxes-3.23
@@ -36,14 +36,14 @@ dev-libs/dee::unity-gentoo
 >=gnome-extra/gnome-calendar-3.23
 >=gnome-extra/gnome-clocks-3.23
 >=gnome-base/gnome-control-center-3.23
->=gnome-base/gnome-desktop-3.23
+>=gnome-base/gnome-desktop-3.23::unity-gentoo
 >=sys-apps/gnome-disk-utility-3.23
 >=gnome-extra/gnome-logs-3.23
 >=sci-geosciences/gnome-maps-3.23
 >=net-libs/gnome-online-accounts-3.23
 >=media-gfx/gnome-photos-3.23
->=gnome-base/gnome-session-3.23
->=gnome-base/gnome-settings-daemon-3.23
+>=gnome-base/gnome-session-3.23::unity-gentoo
+>=gnome-base/gnome-settings-daemon-3.23::unity-gentoo
 >=gnome-base/gnome-shell-3.23
 >=gnome-extra/gnome-shell-extensions-3.23
 >=gnome-extra/gnome-software-3.23
@@ -51,6 +51,7 @@ dev-libs/dee::unity-gentoo
 >=x11-terms/gnome-terminal-3.23
 >=dev-libs/gobject-introspection-1.51::unity-gentoo
 >=dev-libs/gobject-introspection-common-1.51::unity-gentoo
+>=gnome-base/gsettings-desktop-schemas-3.23::unity-gentoo
 >=gnome-base/gsettings-desktop-schemas-3.23
 >=app-text/gspell-1.3
 >=net-libs/gtk-vnc-0.7
@@ -60,6 +61,7 @@ dev-libs/dee::unity-gentoo
 >=gnome-base/libgtop-2.35
 >=net-libs/libsoup-2.57
 >=x11-wm/mutter-3.23
+>=gnome-base/nautilus-3.23::unity-gentoo
 >=gnome-base/nautilus-3.22
 >=app-accessibility/orca-3.23
 >=dev-cpp/pangomm-2.41

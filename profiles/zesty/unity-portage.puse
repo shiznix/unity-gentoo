@@ -58,7 +58,6 @@ net-wireless/bluez user-session
 sys-auth/pambase lxcfs
 sys-apps/dbus user-session
 sys-apps/systemd pam
-sys-devel/gcc:5.4.0 -jit	# gcc fails to compile with 'jit' enabled #
 sys-libs/pam audit
 sys-libs/talloc python
 sys-libs/zlib minizip
