@@ -29,7 +29,7 @@ DEPEND="${RDEPEND}
 	pgm? ( virtual/pkgconfig )"
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}/libzmq-${PV}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

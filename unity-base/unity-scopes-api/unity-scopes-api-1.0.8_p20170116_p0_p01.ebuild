@@ -40,7 +40,7 @@ DEPEND="dev-cpp/gmock
 	sys-libs/libapparmor
 	unity-base/unity-api"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}/${PN}"
 export CMAKE_BUILD_TYPE=none
 
 src_prepare() {

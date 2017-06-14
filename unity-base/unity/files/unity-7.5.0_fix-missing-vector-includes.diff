@@ -1,6 +1,6 @@
 diff -urN unity/launcher/BFBLauncherIcon.cpp unity-patched/launcher/BFBLauncherIcon.cpp
---- unity/launcher/BFBLauncherIcon.cpp	2016-11-12 12:42:36.000000000 +1030
-+++ unity-patched/launcher/BFBLauncherIcon.cpp	2017-04-27 18:28:49.196947112 +0930
+--- unity/launcher/BFBLauncherIcon.cpp	2017-04-08 04:00:59.000000000 +0930
++++ unity-patched/launcher/BFBLauncherIcon.cpp	2017-06-13 20:36:59.447609841 +0930
 @@ -18,6 +18,8 @@
   *              Andrea Azzarone <azzaronea@gmail.com>
   */
@@ -10,9 +10,20 @@ diff -urN unity/launcher/BFBLauncherIcon.cpp unity-patched/launcher/BFBLauncherI
  #include "config.h"
  #include <glib/gi18n-lib.h>
  #include "unity-shared/UBusMessages.h"
+diff -urN unity/launcher/DevicesSettingsImp.cpp unity-patched/launcher/DevicesSettingsImp.cpp
+--- unity/launcher/DevicesSettingsImp.cpp	2017-04-08 04:00:59.000000000 +0930
++++ unity-patched/launcher/DevicesSettingsImp.cpp	2017-06-13 21:51:22.930645293 +0930
+@@ -17,6 +17,7 @@
+  * Authored by: Andrea Azzarone <andrea.azzarone@canonical.com>
+  */
+ 
++#include <algorithm>
+ #include <list>
+ 
+ #include <gio/gio.h>
 diff -urN unity/launcher/FavoriteStore.cpp unity-patched/launcher/FavoriteStore.cpp
---- unity/launcher/FavoriteStore.cpp	2016-11-12 12:42:36.000000000 +1030
-+++ unity-patched/launcher/FavoriteStore.cpp	2017-04-27 18:47:26.244891402 +0930
+--- unity/launcher/FavoriteStore.cpp	2017-04-08 04:00:59.000000000 +0930
++++ unity-patched/launcher/FavoriteStore.cpp	2017-06-13 20:37:18.169796474 +0930
 @@ -18,6 +18,8 @@
  *              Marco Trevisan <marco.trevisan@canonical.com>
  */
@@ -22,9 +33,22 @@ diff -urN unity/launcher/FavoriteStore.cpp unity-patched/launcher/FavoriteStore.
  #include <NuxCore/Logger.h>
  #include <glib.h>
  
+diff -urN unity/launcher/FavoriteStoreGSettings.cpp unity-patched/launcher/FavoriteStoreGSettings.cpp
+--- unity/launcher/FavoriteStoreGSettings.cpp	2017-04-08 04:00:59.000000000 +0930
++++ unity-patched/launcher/FavoriteStoreGSettings.cpp	2017-06-13 21:51:52.581167659 +0930
+@@ -18,6 +18,9 @@
+ *              Marco Trevisan <marco.trevisan@canonical.com>
+ */
+ 
++#include <algorithm>
++#include <vector>
++
+ #include <NuxCore/Logger.h>
+ #include <UnityCore/DesktopUtilities.h>
+ 
 diff -urN unity/launcher/FavoriteStorePrivate.cpp unity-patched/launcher/FavoriteStorePrivate.cpp
---- unity/launcher/FavoriteStorePrivate.cpp	2016-11-12 12:42:36.000000000 +1030
-+++ unity-patched/launcher/FavoriteStorePrivate.cpp	2017-04-27 19:23:38.594400415 +0930
+--- unity/launcher/FavoriteStorePrivate.cpp	2017-04-08 04:00:59.000000000 +0930
++++ unity-patched/launcher/FavoriteStorePrivate.cpp	2017-06-13 20:37:30.959924262 +0930
 @@ -17,6 +17,8 @@
  * Authored by: Andrea Azzaronea <azzaronea@gmail.com>
  */
@@ -35,8 +59,8 @@ diff -urN unity/launcher/FavoriteStorePrivate.cpp unity-patched/launcher/Favorit
  #include <boost/utility.hpp>
  
 diff -urN unity/launcher/QuicklistMenuItem.cpp unity-patched/launcher/QuicklistMenuItem.cpp
---- unity/launcher/QuicklistMenuItem.cpp	2016-11-12 12:42:36.000000000 +1030
-+++ unity-patched/launcher/QuicklistMenuItem.cpp	2017-04-27 19:43:44.260401814 +0930
+--- unity/launcher/QuicklistMenuItem.cpp	2017-04-08 04:00:59.000000000 +0930
++++ unity-patched/launcher/QuicklistMenuItem.cpp	2017-06-13 20:37:44.934064140 +0930
 @@ -19,6 +19,8 @@
   *              Marco Trevisan <marco.trevisan@canonical.com>
   */
@@ -46,9 +70,21 @@ diff -urN unity/launcher/QuicklistMenuItem.cpp unity-patched/launcher/QuicklistM
  #include <gtk/gtk.h>
  #include "unity-shared/ThemeSettings.h"
  #include "unity-shared/UBusWrapper.h"
+diff -urN unity/UnityCore/GLibDBusServer.cpp unity-patched/UnityCore/GLibDBusServer.cpp
+--- unity/UnityCore/GLibDBusServer.cpp	2017-04-08 04:00:59.000000000 +0930
++++ unity-patched/UnityCore/GLibDBusServer.cpp	2017-06-13 20:57:52.094527700 +0930
+@@ -17,6 +17,8 @@
+ * Authored by: Marco Trevisan (Treviño) <marco.trevisan@canonical.com>
+ */
+ 
++#include <algorithm>
++
+ #include <unordered_map>
+ #include <NuxCore/Logger.h>
+ 
 diff -urN unity/UnityCore/ScopeData.cpp unity-patched/UnityCore/ScopeData.cpp
---- unity/UnityCore/ScopeData.cpp	2016-11-12 12:42:36.000000000 +1030
-+++ unity-patched/UnityCore/ScopeData.cpp	2017-04-27 18:28:03.256086672 +0930
+--- unity/UnityCore/ScopeData.cpp	2017-04-08 04:00:59.000000000 +0930
++++ unity-patched/UnityCore/ScopeData.cpp	2017-06-13 20:37:56.879183918 +0930
 @@ -17,6 +17,7 @@
   * Authored by: Nick Dedekind <nick.dedekind@canonical.com>
   */
@@ -65,8 +101,8 @@ diff -urN unity/UnityCore/ScopeData.cpp unity-patched/UnityCore/ScopeData.cpp
 \ No newline at end of file
 +}
 diff -urN unity/unity-shared/ThemeSettings.cpp unity-patched/unity-shared/ThemeSettings.cpp
---- unity/unity-shared/ThemeSettings.cpp	2016-11-12 12:42:36.000000000 +1030
-+++ unity-patched/unity-shared/ThemeSettings.cpp	2017-04-27 18:28:20.720413042 +0930
+--- unity/unity-shared/ThemeSettings.cpp	2017-04-08 04:00:59.000000000 +0930
++++ unity-patched/unity-shared/ThemeSettings.cpp	2017-06-13 20:38:18.335399540 +0930
 @@ -17,6 +17,8 @@
   * Authored by: Marco Trevisan <marco.trevisan@canonical.com>
   */

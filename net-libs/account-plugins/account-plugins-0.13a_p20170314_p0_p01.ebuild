@@ -49,7 +49,6 @@ src_configure() {
 		--enable-qml-plugins \
 		--with-twitter-consumer-key="NGOB5S7sICsj6epjh0PhAw" \
 		--with-twitter-consumer-secret="rbUEJCBEokMnGZd8bubd0QL2cSmoCjJeyiSJpnx3OM0" \
-		--with-windows-live-client-id="00000000400D5635" \
 		--with-facebook-client-id="271112146382618" \
 		--with-foursquare-client-id="1I2UNJXPHNDZT3OPZOOA5LCPIUEUJFMKRXSF42UFCN1KXKTK" \
 		--with-google-client-id="759250720802-4sii0me9963n9fdqdmi7cepn6ub8luoh.apps.googleusercontent.com" \
@@ -59,7 +58,10 @@ src_configure() {
 		--with-linkedin-consumer-key="34gnzrg96iq5" \
 		--with-linkedin-consumer-secret="BazRki2LE8eZtcqh" \
 		--with-instagram-client-id="01c3df41a2274a14882adea8e8ebbd46" \
-		--with-instagram-client-secret="4751ccdc39c648719ea83cfb1c866c26"
+		--with-instagram-client-secret="4751ccdc39c648719ea83cfb1c866c26" \
+		--with-mcloud-client-id="APP1ZtqoN3R0002" \
+		--with-mcloud-client-secret="A70EFCDC91456349E7FDECF0A33574AC" \
+		--with-microsoft-client-id="478797ed-02c1-442b-bebd-709401131e7d"
 }
 
 src_install() {
