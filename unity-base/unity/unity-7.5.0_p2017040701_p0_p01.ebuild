@@ -279,6 +279,16 @@ src_install() {
 	dosym $(systemd_get_userunitdir)/unity7.service $(systemd_get_userunitdir)/unity-session.target.requires/unity7.service
 	dosym $(systemd_get_userunitdir)/unity-gtk-module.service $(systemd_get_userunitdir)/unity-session.target.wants/unity-gtk-module.service
 	dosym $(systemd_get_userunitdir)/unity-settings-daemon.service $(systemd_get_userunitdir)/unity-session.target.wants/unity-settings-daemon.service
+
+	# Top panel systemd indicator services required for unity-panel-service #
+	for each in {application,bluetooth,datetime,keyboard,messages,power,printers,session,sound}; do
+		dosym $(systemd_get_userunitdir)/indicator-${each}.service $(systemd_get_userunitdir)/unity-panel-service.service.wants/indicator-${each}.service
+	done
+
+	# Top panel systemd indicator services required for unity-panel-service-lockscreen #
+	for each in {datetime,keyboard,power,session,sound}; do
+		dosym $(systemd_get_userunitdir)/indicator-${each}.service $(systemd_get_userunitdir)/unity-panel-service-lockscreen.service.wants/indicator-${each}.service
+	done
 }
 
 pkg_preinst() {

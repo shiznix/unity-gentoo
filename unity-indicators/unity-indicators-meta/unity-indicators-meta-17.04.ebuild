@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=6
 
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity indicators"
 HOMEPAGE="http://unity.ubuntu.com/"
