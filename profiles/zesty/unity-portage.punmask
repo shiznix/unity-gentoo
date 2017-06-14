@@ -11,6 +11,7 @@ media-sound/banshee             # (b.g.o #558106 - DEPENDs on the above packages
 
 # Unmask overlay version
 dev-libs/dee::unity-gentoo
+x11-misc/lightdm-kde::unity-gentoo
 
 ## Below taken from /usr/portage/profiles/package.mask ##
 # Gnome Team <gnome@gentoo.org> (08 Mar 2017)

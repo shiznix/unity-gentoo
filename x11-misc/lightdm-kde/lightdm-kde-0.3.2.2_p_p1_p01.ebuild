@@ -5,8 +5,6 @@
 EAPI=5
 
 KDE_MINIMAL="4.8"
-KDE_SCM="git"
-EGIT_REPONAME="${PN/-kde/}"
 KDE_LINGUAS="cs da de el es et fi fr ga hu it ja km lt nds nl pl pt pt_BR ro sk sv uk"
 
 URELEASE="yakkety"
@@ -35,4 +33,9 @@ S=${WORKDIR}/${PN/-kde}-0.3.2.1	# Incorrect versioning from upstream in tarball
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+}
+
+src_configure() {
+	mycmakeargs+=(-DCMAKE_INSTALL_PREFIX=/usr)
+	kde4-base_src_configure
 }

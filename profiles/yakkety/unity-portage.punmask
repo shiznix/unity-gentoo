@@ -8,3 +8,4 @@ media-sound/banshee		# (b.g.o #558106 - DEPENDs on the above packages)
 
 
 dev-libs/dee::unity-gentoo
+x11-misc/lightdm-kde::unity-gentoo
