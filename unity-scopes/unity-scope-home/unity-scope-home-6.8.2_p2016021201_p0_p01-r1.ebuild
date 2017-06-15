@@ -25,7 +25,7 @@ DEPEND="dev-libs/dee:=
 	dev-libs/json-glib
 	dev-libs/libgee
 	dev-libs/libunity:=
-	net-libs/libsoup-gnome
+	net-libs/libsoup
 	net-libs/liboauth
 	sys-apps/util-linux
 	unity-base/unity

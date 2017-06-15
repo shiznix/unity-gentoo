@@ -27,11 +27,10 @@ DEPEND="dev-libs/dee
 	dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libgee
-	>=dev-libs/libunity-6.91.11
+	dev-libs/libunity
 	dev-libs/libzeitgeist
 	net-libs/libsoup
-	net-libs/libsoup-gnome
-	>=unity-base/unity-7.1.0
+	unity-base/unity
 	$(vala_depend)"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"

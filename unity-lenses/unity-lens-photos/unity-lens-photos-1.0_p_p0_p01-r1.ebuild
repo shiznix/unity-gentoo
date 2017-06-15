@@ -31,7 +31,6 @@ RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	net-libs/liboauth
 	dev-python/pygobject[${PYTHON_USEDEP}]
 	net-libs/libsoup
-	net-libs/libsoup-gnome
 	dev-libs/libunity[${PYTHON_USEDEP}]
 	dev-python/httplib2[${PYTHON_USEDEP}]
 	dev-python/oauthlib[${PYTHON_USEDEP}]

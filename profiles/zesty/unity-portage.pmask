@@ -129,6 +129,7 @@ media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
 net-im/telepathy-mission-control::gentoo
 net-libs/gnome-online-accounts::gentoo
+net-libs/libsoup::gentoo
 sys-apps/accountsservice::gentoo
 sys-auth/pambase::gentoo
 sys-libs/libnih::gentoo

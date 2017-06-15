@@ -60,7 +60,7 @@ RDEPEND="dev-lang/mono
 	)
 	web? (
 		net-libs/webkit-gtk:2
-		net-libs/libsoup-gnome:2.4
+		net-libs/libsoup:2.4
 	)
 	youtube? (
 		dev-dotnet/google-gdata-sharp
