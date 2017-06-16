@@ -9,10 +9,12 @@ app-eselect/eselect-opengl
 app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
+dev-lang/rust
 =dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
 dev-libs/capnproto
 dev-libs/libindicate-qt
-=dev-libs/nss-3.29*
+=dev-libs/nss-3.31*
+dev-util/cargo
 =dev-util/boost-build-1.58*
 dev-util/valgrind
 ~dev-python/python-prctl-1.5.0
