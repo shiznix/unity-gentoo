@@ -52,6 +52,7 @@ RDEPEND="app-text/gnome-doc-utils
 	>=net-libs/libsoup-2.26.0:2.4
 	>=net-libs/rest-0.7:0.7
 	>=net-libs/webkit-gtk-1.4:3
+	unity-base/unity
 	virtual/libgudev:=[introspection]
 	>=x11-libs/gtk+-3.12.2:3[X]"
 DEPEND="${RDEPEND}
