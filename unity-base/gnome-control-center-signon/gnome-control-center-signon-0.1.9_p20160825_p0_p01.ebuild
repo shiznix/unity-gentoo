@@ -57,7 +57,9 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --disable-coverage
+	econf \
+		--disable-compile-warnings \
+		--disable-coverage
 }
 
 src_install() {
