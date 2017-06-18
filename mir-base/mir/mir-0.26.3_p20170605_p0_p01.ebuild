@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="zesty-updates"
 inherit cmake-multilib ubuntu-versionator
 
 UURL="mirror://unity/pool/main/m/${PN}"
