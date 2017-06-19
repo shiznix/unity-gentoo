@@ -23,7 +23,6 @@ IUSE="input_devices_wacom test"
 RESTRICT="mirror test"
 
 RDEPEND="dev-libs/libevdev[${MULTILIB_USEDEP}]
-	dev-libs/libwacom[${MULTILIB_USEDEP}]
 	sys-libs/mtdev[${MULTILIB_USEDEP}]
 	virtual/libudev
 	input_devices_wacom? ( dev-libs/libwacom[${MULTILIB_USEDEP}] )"

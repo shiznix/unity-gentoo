@@ -25,7 +25,6 @@ RESTRICT="mirror"
 DEPEND="dev-libs/gobject-introspection
 	dev-libs/libdbusmenu[gtk3]
 	dev-libs/libunity[${PYTHON_USEDEP}]
-	dev-libs/libunity-webapps
 	dev-libs/libxslt[python,${PYTHON_USEDEP}]
 	dev-libs/libxml2[${PYTHON_USEDEP}]
 	dev-util/gdbus-codegen
