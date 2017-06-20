@@ -54,7 +54,7 @@ COMMON_DEPEND="
 	>=sys-auth/polkit-0.97
 	>=sys-power/upower-0.99:=
 	unity-base/gnome-control-center-signon
-	unity-base/unity-settings-daemon[colord,policykit]
+	unity-base/unity-settings-daemon[colord]
 	>=x11-libs/libnotify-0.7.3:0=
 
 	>=gnome-extra/nm-applet-0.9.7.995
