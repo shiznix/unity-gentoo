@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="+colord +cups debug fcitx +i18n input_devices_wacom nls packagekit policykit +short-touchpad-timeout smartcard +udev"
+IUSE="+colord debug fcitx +i18n input_devices_wacom nls packagekit +short-touchpad-timeout smartcard +udev"
 KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="packagekit? ( udev )
 		smartcard? ( udev )"
@@ -52,13 +52,9 @@ COMMON_DEPEND="dev-libs/glib:2
 	x11-libs/libXtst
 	x11-libs/libXxf86misc
 
-	app-misc/geoclue:2.0
-	dev-libs/libgweather:2=
-	sci-geosciences/geocode-glib
 	sys-auth/polkit
 
 	colord? ( x11-misc/colord:= )
-	cups? ( net-print/cups[dbus] )
 	fcitx? ( app-i18n/fcitx-configtool )
 	i18n? ( app-i18n/ibus )
 	input_devices_wacom? (
@@ -76,7 +72,6 @@ RDEPEND="${COMMON_DEPEND}
 	!<gnome-extra/gnome-color-manager-3.1.1
 	!<gnome-extra/gnome-power-manager-3.1.3"
 DEPEND="${COMMON_DEPEND}
-	cups? ( sys-apps/sed )
 	dev-libs/libxml2:2
 	sys-devel/gettext
 	dev-util/intltool
@@ -127,7 +122,6 @@ src_configure() {
 		--disable-static \
 		--enable-man \
 		$(use_enable colord color) \
-		$(use_enable cups) \
 		$(use_enable debug) \
 		$(use_enable debug more-warnings) \
 		$(use_enable fcitx) \
