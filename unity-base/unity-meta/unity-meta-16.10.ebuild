@@ -14,13 +14,12 @@ URELEASE="yakkety"
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
 KEYWORDS="~amd64 ~x86"
-IUSE="accessibility +chat gnome gnome-extras +webapps +xdm"
+IUSE="accessibility +chat gnome gnome-extras +unity-extras +webapps +xdm"
 RESTRICT="mirror"
 
 # 'webapps' currently disabled in 'profiles/xenial/unity-portage.puse' due to broken upstream net-libs/oxide-qt #
 #	Due to this, net-libs/oxide-qt is soft-blocked when 'webapps' is disabled as oxide-qt must be uninstalled #
-DEPEND="app-backup/deja-dup[nautilus]
-	gnome-base/gnome-core-libs
+DEPEND="gnome-base/gnome-core-libs
 	gnome-base/nautilus
 	gnome-extra/activity-log-manager
 	gnome-extra/nm-applet
@@ -28,7 +27,6 @@ DEPEND="app-backup/deja-dup[nautilus]
 	unity-base/unity
 	unity-base/unity-build-env
 	unity-base/unity-control-center
-	unity-extra/unity-tweak-tool
 	unity-indicators/unity-indicators-meta
 	unity-lenses/unity-lens-meta
 	x11-misc/notify-osd
@@ -44,6 +42,9 @@ DEPEND="app-backup/deja-dup[nautilus]
 		net-libs/telepathy-indicator )
 	gnome? ( gnome-base/gnome-core-apps )
 	gnome-extras? ( gnome-base/gnome-extra-apps )
+	unity-extras? (
+		app-backup/deja-dup[nautilus]
+		unity-extra/unity-tweak-tool )
 	webapps? ( unity-base/webapps
 			x11-misc/webaccounts-browser-extension
 			x11-misc/webapps-greasemonkey )

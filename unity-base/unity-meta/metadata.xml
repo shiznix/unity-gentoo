@@ -14,6 +14,7 @@
 		<flag name="chat">Instant messaging desktop integration via the messages indicator and empathy</flag>
 		<flag name="gnome">Gnome core applications such as gnome-terminal, totem, eog etc.</flag>
 		<flag name="gnome-extras">Gnome extra applications such as file-roller, evolution, gcalctool etc.</flag>
+		<flag name="unity-extras">Unity extra applications deja-dup and unity-tweak-tool</flag>
 		<flag name="webapps">Desktop webapp integration. Where common webpages such as Facebook
 			and YouTube are seen as applications in the Dash, Launcher and indicators</flag>
 		<flag name="xdm">Use a display manager, defaults to lightdm and unity-greeter</flag>
