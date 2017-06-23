@@ -14,7 +14,7 @@ URELEASE="zesty"
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
 #KEYWORDS="~amd64 ~x86"
-IUSE="accessibility +chat gnome gnome-extras +xdm +webapps"
+IUSE="accessibility +chat gnome gnome-extras +webapps +xdm"
 RESTRICT="mirror"
 
 # 'webapps' currently disabled in 'profiles/xenial/unity-portage.puse' due to broken upstream net-libs/oxide-qt #
@@ -24,7 +24,6 @@ DEPEND="app-backup/deja-dup[nautilus]
 	gnome-base/nautilus
 	gnome-extra/activity-log-manager
 	gnome-extra/nm-applet
-	net-libs/telepathy-indicator
 	unity-base/hud
 	unity-base/unity
 	unity-base/unity-build-env
@@ -40,7 +39,9 @@ DEPEND="app-backup/deja-dup[nautilus]
 		app-accessibility/caribou
 		app-accessibility/orca
 		gnome-extra/mousetweaks )
-	chat? ( net-im/empathy )
+	chat? (
+		net-im/empathy
+		net-libs/telepathy-indicator )
 	gnome? ( gnome-base/gnome-core-apps )
 	gnome-extras? ( gnome-base/gnome-extra-apps )
 	webapps? ( unity-base/webapps

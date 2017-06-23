@@ -10,9 +10,15 @@
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
 	<use>
+		<flag name="colord">Support color management using
+			<pkg>x11-misc/colord</pkg></flag>
+		<flag name="fcitx">Enable support for enhanced input methods through
+			<pkg>app-i18n/fcitx</pkg></flag>
 		<flag name="gnome-online-accounts">Enable configuration panel for
 			<pkg>net-libs/gnome-online-accounts</pkg> accounts</flag>
 		<flag name="i18n">Enable support for enhanced input methods through
 			<pkg>app-i18n/ibus</pkg></flag>
+		<flag name="language-selector">Add Language Support launcher to configure
+			language through <pkg>gnome-base/gnome-control-center</pkg></flag>
 	</use>
 </pkgmetadata>

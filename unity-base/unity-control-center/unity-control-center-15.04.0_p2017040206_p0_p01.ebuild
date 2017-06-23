@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+bluetooth +colord +cups +gnome-online-accounts +i18n input_devices_wacom kerberos v4l"
+IUSE="+bluetooth +colord +cups fcitx +gnome-online-accounts +i18n input_devices_wacom kerberos +language-selector v4l"
 #KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -36,11 +36,9 @@ COMMON_DEPEND="
 	>=x11-libs/gtk+-3.15:3[X]
 	>=gnome-base/gsettings-desktop-schemas-3.15.4
 	>=gnome-base/gnome-desktop-3.17.4:3=
-	>=gnome-base/gnome-settings-daemon-3.8.3[colord,policykit]
+	>=gnome-base/gnome-settings-daemon-3.8.3[colord?]
 
-	>=dev-libs/libpwquality-1.2.2
 	app-admin/apg
-	app-i18n/fcitx
 	app-text/iso-codes
 	dev-libs/libpwquality
 	dev-libs/libtimezonemap
@@ -53,13 +51,11 @@ COMMON_DEPEND="
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
 	>=sys-power/upower-0.99:=
-	unity-base/gnome-control-center-signon
-	unity-base/unity-settings-daemon[colord]
+	unity-base/unity-settings-daemon[colord?,input_devices_wacom?]
 	>=x11-libs/libnotify-0.7.3:0=
 
 	>=gnome-extra/nm-applet-0.9.7.995
-	>=net-misc/networkmanager-0.9.8[modemmanager]
-	>=net-misc/modemmanager-0.7.990
+	>=net-misc/networkmanager-0.9.8
 	net-libs/geonames
 
 	virtual/libgudev
@@ -70,43 +66,49 @@ COMMON_DEPEND="
 	x11-libs/libXxf86misc
 	>=x11-libs/libXi-1.2
 
-	net-libs/libsoup:2.4
+	dev-util/desktop-file-utils
+	media-libs/mesa
+	net-libs/webkit-gtk:4
+	unity-indicators/indicator-datetime
+	x11-libs/libXft
+	x11-libs/libxkbfile
+	x11-libs/libxklavier
+
+	bluetooth? ( >=net-wireless/gnome-bluetooth-3.18.0:= )
 	colord? (
 		>=x11-misc/colord-0.1.34:0=
-		>=x11-libs/colord-gtk-0.1.24
-	)
-
+		>=x11-libs/colord-gtk-0.1.24 )
 	cups? (
 		>=net-print/cups-1.4[dbus]
 		|| ( >=net-fs/samba-3.6.14-r1[smbclient] >=net-fs/samba-4.0.0[client] ) )
-	i18n? ( >=app-i18n/ibus-1.5.2
+	fcitx? ( app-i18n/fcitx )
+	gnome-online-accounts? ( unity-base/gnome-control-center-signon )
+	i18n? (
+		>=app-i18n/ibus-1.5.2
 		>=gnome-base/libgnomekbd-3 )
+	input_devices_wacom? ( >=dev-libs/libwacom-0.7 )
+	kerberos? ( app-crypt/mit-krb5 )
 	v4l? (
 		media-libs/gstreamer:1.0
 		media-libs/clutter-gtk:1.0
 		>=media-video/cheese-3.5.91 )
 
-	input_devices_wacom? ( >=dev-libs/libwacom-0.7 )
-	>=media-libs/clutter-1.11.3:1.0
-	media-libs/clutter-gtk:1.0
-	>=x11-libs/libXi-1.2
-
-	kerberos? ( app-crypt/mit-krb5 )
-	dev-libs/libtimezonemap
-	net-libs/webkit-gtk:4
-
 	$(vala_depend)"
 RDEPEND="${COMMON_DEPEND}
 	|| ( ( app-admin/openrc-settingsd sys-auth/consolekit ) >=sys-apps/systemd-31 )
-	gnome-online-accounts? ( net-libs/gnome-online-accounts[uoa] )
 	>=sys-apps/accountsservice-0.6.39
 	x11-themes/gnome-icon-theme-symbolic
-	>=gnome-extra/gnome-color-manager-3
-	cups? ( app-admin/system-config-printer
-		net-print/cups-pk-helper )
-	unity-base/unity-settings-daemon[input_devices_wacom]
 
-	>=gnome-base/gnome-control-center-3.18
+	gnome-extra/mousetweaks
+	unity-base/gsettings-ubuntu-touch-schemas
+	x11-themes/adwaita-icon-theme
+
+	colord? ( >=gnome-extra/gnome-color-manager-3 )
+	cups? (
+		app-admin/system-config-printer
+		net-print/cups-pk-helper )
+	gnome-online-accounts? ( net-libs/gnome-online-accounts[uoa] )
+	language-selector? ( >=gnome-base/gnome-control-center-3.18 )
 
 	!<gnome-base/gdm-2.91.94
 	!<gnome-extra/gnome-color-manager-3.1.2
@@ -136,10 +138,9 @@ DEPEND="${COMMON_DEPEND}
 S="${WORKDIR}"
 
 src_prepare() {
+	epatch "${FILESDIR}/01_unity-cc-optional-bt-colord-kerberos-wacom.patch"
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
-
-	epatch "${FILESDIR}/optional.patch"
 
 	# If a .desktop file does not have inline translations, fall back #
 	#  to calling gettext #
@@ -159,8 +160,10 @@ src_configure() {
 		--disable-static \
 		--enable-documentation \
 		--without-cheese \
+		$(use_enable bluetooth) \
 		$(use_enable colord color) \
 		$(use_enable cups) \
+		$(use_enable fcitx) \
 		$(use_enable i18n ibus) \
 		$(use_enable input_devices_wacom wacom) \
 		$(use_enable kerberos)
@@ -174,28 +177,19 @@ src_install() {
 	rm -rf "${ED}usr/share/locale"
 
 	# Remove libgnome-bluetooth.so symlink as is provided by net-wireless/gnome-bluetooth #
-	rm "${ED}usr/$(get_libdir)/libgnome-bluetooth.so"
+	rm "${ED}usr/$(get_libdir)/libgnome-bluetooth.so" 2>/dev/null
 
 	# Remove /usr/share/pixmaps/faces/ as is provided by gnome-base/gnome-control-center #
 	rm -rf "${ED}usr/share/pixmaps/faces"
 
-	if ! use bluetooth ; then
-		rm -f "${ED}/usr/$(get_libdir)/${PN}-1/panels/libbluetooth.so"
-		rm -f "${ED}/usr/$(get_libdir)/libgnome-bluetooth.so.0"
-		rm -f "${ED}/usr/$(get_libdir)/libgnome-bluetooth.so.0.0.0"
-		rm -f "${ED}/usr/share/${PN}/pin-code-database.xml"
-		rm -f "${ED}/usr/share/applications/unity-bluetooth-panel.desktop"
-		rm -f "${ED}/usr/share/man/man1/bluetooth-wizard.1.bz2"
-		rm -f "${ED}/usr/bin/bluetooth-wizard"
-		rm -rf "${ED}/usr/include/${PN}"
-	fi
-
 	# Add Region and Language locale support #
 	#  Unable to use Unity's language-selector as it needs a complete apt/dpkg enabled system #
-	exeinto /usr/bin
-	doexe "${FILESDIR}/unity-cc-region"
-	insinto /usr/share/applications
-	doins "${FILESDIR}/language-selector.desktop"
+	if use language-selector; then
+		exeinto /usr/bin
+		doexe "${FILESDIR}/unity-cc-region"
+		insinto /usr/share/applications
+		doins "${FILESDIR}/language-selector.desktop"
+	fi
 }
 
 pkg_preinst() { gnome2_icon_savelist; }
