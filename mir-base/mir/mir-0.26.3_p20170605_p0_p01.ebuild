@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="zesty-updates"
+URELEASE="yakkety-updates"
 inherit cmake-multilib ubuntu-versionator
 
 UURL="mirror://unity/pool/main/m/${PN}"
@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3 LGPL-3 MIT"
 SLOT="0/41"	# Taken from /usr/lib/libmirserver.so.*
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
