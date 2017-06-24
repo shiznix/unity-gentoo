@@ -21,7 +21,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="qt4 qt5"
-REQUIRED_USE="!qt5? ( qt4 )"
+REQUIRED_USE="|| ( qt4 qt5 )"
 RESTRICT="mirror"
 
 RDEPEND=">=dev-libs/dee-1.2.7
