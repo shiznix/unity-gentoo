@@ -35,7 +35,7 @@ DEPEND="dev-cpp/gmock
 	dev-util/cppcheck
 	dev-util/lttng-tools[ust]
 	dev-util/valgrind
-	net-libs/zeromq3
+	net-libs/zeromq
 	net-libs/zmqpp
 	sys-libs/libapparmor
 	unity-base/unity-api"

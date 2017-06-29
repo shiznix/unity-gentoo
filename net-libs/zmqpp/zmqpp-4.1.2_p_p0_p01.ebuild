@@ -19,7 +19,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="net-libs/zeromq3"
+DEPEND="net-libs/zeromq"
 RESTRICT="mirror"
 
 src_prepare() {

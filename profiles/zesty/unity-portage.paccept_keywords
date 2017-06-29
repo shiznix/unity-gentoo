@@ -166,7 +166,6 @@ net-libs/oxide-qt **
 net-libs/telepathy-indicator **
 net-libs/ubuntu-download-manager **
 net-libs/ubuntuone-credentials **
-net-libs/zeromq3 **
 net-misc/telephony-service
 net-misc/url-dispatcher **
 sys-apps/accountsservice **
