@@ -57,7 +57,7 @@ net-misc/openssh -bindist
 net-wireless/bluez user-session
 sys-auth/pambase lxcfs
 sys-apps/dbus user-session
-sys-apps/systemd pam
+sys-apps/systemd nat pam
 sys-libs/pam audit
 sys-libs/talloc python
 sys-libs/zlib minizip
