@@ -22,6 +22,8 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-c++-${PV}"
 
+DEPEND="sys-devel/automake:1.14"
+
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	autotools-multilib_src_prepare

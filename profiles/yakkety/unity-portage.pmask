@@ -101,6 +101,7 @@ dev-qt/qtxmlpatterns:5::gentoo
 app-backup/deja-dup::gentoo
 dev-cpp/gtest::gentoo
 dev-cpp/gmock::gentoo
+dev-libs/capnproto::gentoo
 dev-libs/dee::gentoo
 dev-libs/glib:2::gentoo
 dev-libs/gobject-introspection::gentoo
