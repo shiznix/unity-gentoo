@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python3_4 )
 
-URELEASE="yakkety-updates"
+URELEASE="zesty-updates"
 inherit autotools distutils-r1 ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/c/${PN}"

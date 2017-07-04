@@ -17,7 +17,7 @@ DESCRIPTION="X.Org driver for Intel cards"
 SRC_URI="${UURL}/${MY_PN}_${PV}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${MY_PN}_${PV}${UVER_PREFIX}-${UVER}.diff.gz"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug +dri3 mir +sna +udev uxa xvmc"
 RESTRICT="mirror strip"
 

@@ -15,7 +15,7 @@ HOMEPAGE="https://launchpad.net/ubuntu/+source/ubuntu-settings"
 SRC_URI="${UURL}/${MY_P}.tar.xz"
 
 LICENSE="GPL-2+"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+ubuntu-cursor +ubuntu-sounds"
 RESTRICT="binchecks mirror strip"

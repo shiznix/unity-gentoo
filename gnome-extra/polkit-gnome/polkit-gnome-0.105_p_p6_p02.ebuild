@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.xz
 
 LICENSE="LGPL-2"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

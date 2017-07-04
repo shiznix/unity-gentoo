@@ -23,7 +23,7 @@ IUSE="cdr daap dbus html ipod libnotify libsecret lirc mtp nsplugin +python test
 # Let people emerge this by default, bug #472932
 IUSE+=" +python_single_target_python3_4 python_single_target_python3_5"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 REQUIRED_USE="

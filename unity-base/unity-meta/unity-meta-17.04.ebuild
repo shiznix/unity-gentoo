@@ -13,7 +13,7 @@ URELEASE="zesty"
 
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="accessibility +chat gnome gnome-extras +unity-extras +webapps +xdm"
 RESTRICT="mirror"
 

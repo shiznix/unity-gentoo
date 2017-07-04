@@ -17,7 +17,7 @@ DESCRIPTION="ATI video driver patched for Mir display server"
 SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
 	${UURL}/${MY_PN}_${PV}${UVER_PREFIX}-${UVER}.diff.gz"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+glamor mir udev"
 RESTRICT="mirror strip"
 
