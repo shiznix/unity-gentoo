@@ -30,6 +30,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
+	!net-libs/libsoup-gnome
 	>=dev-util/intltool-0.35
 	>=dev-util/gtk-doc-am-1.20
 	sys-devel/gettext
