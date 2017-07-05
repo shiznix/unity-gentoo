@@ -27,6 +27,7 @@ DEPEND="dev-libs/glib:2
 	dev-libs/libqtdbustest
 	dev-libs/libtimezonemap
 	dev-libs/trust-store
+	dev-qt/qtconcurrent:5
 	dev-qt/qtcore:5
 	net-libs/ubuntuone-credentials
 	net-misc/networkmanager

@@ -27,6 +27,7 @@ DEPEND="app-admin/cgmanager
 	dev-libs/libzeitgeist
 	dev-libs/properties-cpp
 	dev-util/lttng-tools
+	>=dev-util/cmake-extras-0.10
 	dev-util/dbus-test-runner
 	mir-base/mir:=
 	net-misc/curl
@@ -34,7 +35,8 @@ DEPEND="app-admin/cgmanager
 	sys-apps/dbus
 	sys-apps/libertine
 	sys-apps/upstart
-	sys-libs/libnih[dbus]"
+	sys-libs/libnih[dbus]
+	>=unity-base/unity-api-8.4"
 
 S="${WORKDIR}"
 
