@@ -28,7 +28,7 @@ fi
 MOZ_P="${PN}-${MOZ_PV}"
 
 # Patches
-PATCHFF="firefox-52.0-patches-08"
+PATCHFF="firefox-52.2-patches-01"
 
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_GTK2ONLY=1
@@ -65,7 +65,7 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 CDEPEND="
 	>=dev-libs/nss-3.28.3
 	>=dev-libs/nspr-4.13.1
-	crypt? ( x11-plugins/enigmail[-thunderbird(-)] )
+	crypt? ( >=x11-plugins/enigmail-1.9.7 )
 	"
 
 DEPEND="rust? ( dev-lang/rust )

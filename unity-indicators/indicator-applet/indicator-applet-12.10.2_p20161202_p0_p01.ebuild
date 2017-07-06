@@ -24,12 +24,10 @@ DEPEND="dev-libs/libindicator:3
 	x11-libs/gtk+:3
 	gnome-base/gnome-panel"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	# some API is declared as deprecated in gtk+ 3.10
-	epatch "${FILESDIR}/remove_GTK_DISABLE_DEPRECATED.patch"
 
 	# "Only <glib.h> can be included directly." #
 	sed -e "s:glib/gtypes.h:glib.h:g" \
