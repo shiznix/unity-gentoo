@@ -27,6 +27,7 @@ DEPEND="dev-dotnet/gtk-sharp:2
 	dev-libs/glib:2
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicator:3=
+	dev-libs/xapian:=
 	dev-libs/xapian-bindings[python]
 	dev-perl/XML-LibXML
 	dev-python/dbus-python[${PYTHON_USEDEP}]
