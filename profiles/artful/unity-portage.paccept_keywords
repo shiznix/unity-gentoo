@@ -70,7 +70,7 @@ dev-libs/libindicate-qt
 dev-util/cargo
 dev-util/umockdev
 ~media-libs/giflib-4.2.3
-=media-libs/libpng-1.6.28*
+=media-libs/libpng-1.6.29*
 =net-misc/networkmanager-1.2*
 =sec-policy/apparmor-profiles-2.10*
 =sys-apps/apparmor-2.10*
