@@ -4,10 +4,10 @@
 
 EAPI=5
 
-KDE_MINIMAL="4.8"
+KDE_MINIMAL="4.14"
 KDE_LINGUAS="cs da de el es et fi fr ga hu it ja km lt nds nl pl pt pt_BR ro sk sv uk"
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit base kde4-base ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/l/${PN}"

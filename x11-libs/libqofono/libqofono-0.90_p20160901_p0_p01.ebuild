@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit qmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/libq/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="QT library for accessing the ofono daemon, and a declarative plugin for Ofono"
 HOMEPAGE="https://github.com/nemomobile/libqofono"

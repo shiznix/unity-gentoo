@@ -6,7 +6,7 @@ EAPI=5
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 AUTOTOOLS_AUTORECONF=y
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools-utils eutils python-r1 ubuntu-versionator vala
 
 MY_P="${PN}_${PV}"

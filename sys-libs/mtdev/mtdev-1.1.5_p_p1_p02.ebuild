@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools-multilib ubuntu-versionator
 
 DESCRIPTION="Multitouch Protocol Translation Library"

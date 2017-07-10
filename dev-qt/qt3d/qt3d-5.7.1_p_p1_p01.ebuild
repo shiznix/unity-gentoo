@@ -4,12 +4,12 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit qt5-build ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/q/${QT5_MODULE}-opensource-src"
 UVER_PREFIX="+dfsg"
-UVER_SUFFIX="~1"
+UVER_SUFFIX="~2"
 
 SRC_URI="${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.xz
 	${UURL}/${QT5_MODULE}-opensource-src_${PV}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.debian.tar.xz"

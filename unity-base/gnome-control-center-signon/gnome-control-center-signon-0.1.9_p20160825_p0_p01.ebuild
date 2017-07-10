@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/g/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Online account plugin for unity-control-center used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/online-accounts-gnome-control-center"

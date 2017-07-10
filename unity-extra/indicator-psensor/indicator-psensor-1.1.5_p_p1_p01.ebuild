@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit gnome2-utils ubuntu-versionator
 
 MY_PN="psensor"

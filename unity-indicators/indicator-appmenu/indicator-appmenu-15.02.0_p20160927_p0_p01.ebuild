@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools eutils flag-o-matic gnome2-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/i/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-appmenu"

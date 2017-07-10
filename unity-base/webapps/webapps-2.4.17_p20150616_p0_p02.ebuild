@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit eutils gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+15.10.${PVR_MICRO}"

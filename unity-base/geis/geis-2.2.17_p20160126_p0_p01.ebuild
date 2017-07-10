@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools eutils python-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"

@@ -5,7 +5,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools gnome2-utils python-r1 ubuntu-versionator
 
 MY_PN="webapps-applications"

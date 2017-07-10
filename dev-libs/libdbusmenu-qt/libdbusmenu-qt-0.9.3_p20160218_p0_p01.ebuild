@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit cmake-multilib multibuild multilib virtualx ubuntu-versionator
 
 UURL="mirror://unity/pool/main/libd/${PN}"

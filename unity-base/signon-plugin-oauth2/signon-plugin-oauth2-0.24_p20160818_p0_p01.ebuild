@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit qmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/s/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Single Signon oauth2 plugin used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon-plugin-oauth2"

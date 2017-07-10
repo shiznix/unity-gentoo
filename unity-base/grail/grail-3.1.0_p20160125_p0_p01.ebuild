@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"

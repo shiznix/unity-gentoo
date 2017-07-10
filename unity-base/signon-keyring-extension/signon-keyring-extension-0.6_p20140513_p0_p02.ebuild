@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit base qt4-r2 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/s/${PN}"

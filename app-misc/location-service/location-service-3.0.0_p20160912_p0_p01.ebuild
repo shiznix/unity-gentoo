@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/l/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Location service aggregating position/velocity/heading"
 HOMEPAGE="http://launchpad.net/location-service"

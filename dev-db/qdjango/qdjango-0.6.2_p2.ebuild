@@ -4,7 +4,7 @@
 
 EAPI=5
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit multilib qmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/q/${PN}"

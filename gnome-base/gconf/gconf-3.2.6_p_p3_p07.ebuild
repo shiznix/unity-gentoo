@@ -8,7 +8,7 @@ GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_4,3_5} )
 PYTHON_REQ_USE="xml"
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit eutils gnome2 multilib-minimal python-r1 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"

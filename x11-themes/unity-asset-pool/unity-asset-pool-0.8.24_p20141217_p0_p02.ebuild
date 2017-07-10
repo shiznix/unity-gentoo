@@ -5,7 +5,7 @@
 EAPI=5
 GCONF_DEBUG="yes"
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit eutils gnome2 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"

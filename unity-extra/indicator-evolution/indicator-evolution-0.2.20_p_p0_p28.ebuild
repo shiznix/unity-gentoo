@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools gnome2-utils ubuntu-versionator
 
 MY_PN="evolution-indicator"

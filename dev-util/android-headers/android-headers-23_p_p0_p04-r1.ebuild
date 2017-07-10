@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit eutils multilib multilib-minimal ubuntu-versionator versionator
 
 UURL="mirror://unity/pool/main/a/${PN}"

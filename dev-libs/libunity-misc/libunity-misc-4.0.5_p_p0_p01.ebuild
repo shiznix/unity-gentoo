@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
 UURL="mirror://unity/pool/main/libu/${PN}"

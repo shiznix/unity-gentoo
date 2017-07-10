@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python2_7 python{3_4,3_5} )
 WANT_AUTOMAKE=1.14
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools gnome2-utils python-any-r1 virtualx ubuntu-versionator vala
 
 UURL="mirror://unity/pool/universe/e/${PN}"

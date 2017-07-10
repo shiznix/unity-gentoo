@@ -4,25 +4,24 @@
 
 EAPI=6
 
-URELEASE="yakkety"
-inherit qt5-build ubuntu-versionator virtualx
+URELEASE="zesty"
+inherit qt5-build ubuntu-versionator
 
 UURL="mirror://unity/pool/main/q/${PN}-opensource-src"
-UVER_PREFIX="~git20130529"
-UVER_SUFFIX="~2"
+UVER_PREFIX="~git20140515~29475884"
+UVER_SUFFIX="~3"
 
-DESCRIPTION="Qt Feedback module"
+DESCRIPTION="Qt PIM module, Organizer library"
 SRC_URI="${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}.orig.tar.gz
 	${UURL}/${PN}-opensource-src_${PV}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.debian.tar.xz"
 
 KEYWORDS="~amd64 ~x86"
+IUSE=""
 RESTRICT="mirror"
 
 DEPEND=">=dev-qt/qtcore-${PV}:5
 	>=dev-qt/qtdeclarative-${PV}:5
-	>=dev-qt/qtmultimedia-${PV}:5
-	>=dev-qt/qtxmlpatterns-${PV}:5
-	test? ( >=dev-qt/qtgui-${PV}:5 )"
+	>=dev-qt/qtxmlpatterns-${PV}:5"
 
 S="${WORKDIR}"
 
@@ -30,9 +29,4 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	qt5-build_src_prepare
 	perl -w /usr/$(get_libdir)/qt5/bin/syncqt.pl -version 5.0.0
-}
-
-src_test() {
-	local VIRTUALX_COMMAND="qt5-build_src_test"
-	virtualmake
 }

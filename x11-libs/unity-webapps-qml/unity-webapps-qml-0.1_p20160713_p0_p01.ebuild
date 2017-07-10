@@ -5,11 +5,11 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit python-any-r1 qmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Unity Webapps QML component"
 HOMEPAGE="https://launchpad.net/unity-webapps-qml"

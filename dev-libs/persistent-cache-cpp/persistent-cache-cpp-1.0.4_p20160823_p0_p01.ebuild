@@ -5,11 +5,11 @@
 EAPI=6
 CMAKE_BUILD_TYPE=none
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/p/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Cache of key-value pairs with persistent storage for C++11"
 HOMEPAGE="https://launchpad.net/persistent-cache-cpp"

@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="yakkety"
+URELEASE="zesty"
 inherit autotools eutils ubuntu-versionator
 
 UURL="mirror://unity/pool/main/f/${PN}"
-UVER_PREFIX="daily13.06.05+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="daily13.06.05+16.10.${PVR_MICRO}"
 
 DESCRIPTION="uTouch Frame Library"
 HOMEPAGE="https://launchpad.net/frame"
