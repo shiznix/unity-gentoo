@@ -77,7 +77,6 @@ DEPEND="${RDEPEND}
 	unity-base/unity-gtk-module
 	virtual/pam
 	x11-misc/appmenu-qt
-	x11-misc/appmenu-qt5
 	doc? ( app-doc/doxygen )
 	test? ( dev-cpp/gmock
 		dev-cpp/gtest
