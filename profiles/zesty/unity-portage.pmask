@@ -86,6 +86,7 @@
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 
+app-accessibility/at-spi2-core::gentoo
 app-backup/deja-dup::gentoo
 dev-cpp/gtest::gentoo
 dev-cpp/gmock::gentoo
