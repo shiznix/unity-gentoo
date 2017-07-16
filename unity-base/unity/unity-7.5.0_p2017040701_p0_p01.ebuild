@@ -249,14 +249,15 @@ src_install() {
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
 
+	# Configure input method (xim/ibus) #
 	exeinto /etc/X11/xinit/xinitrc.d/
-	doexe "${FILESDIR}/99ibus-service"
-
-	# ibus-daemon start is provided #
-	#  by /etc/xdg/autostart/ibus-daemon.desktop #
-	#  due to issue #156 #
+	doexe "${FILESDIR}/70im-config"
 	insinto /etc/xdg/autostart/
 	doins "${FILESDIR}/ibus-daemon.desktop"
+	# Fix conflict between ibus and indicator-keyboard #
+	#  default <Super+Space> now works to switch keyboard layouts #
+	insinto /usr/share/glib-2.0/schemas
+	doins "${FILESDIR}/10_ibus-unity-gentoo.gschema.override"
 
 	# Allow zeitgeist-fts to find KDE *.desktop files, so that KDE applications show in Dash 'Recently Used' (see LP# 1251915) #
 	#  (refer https://developer.gnome.org/gio/stable/gio-Desktop-file-based-GAppInfo.html#g-desktop-app-info-new)
