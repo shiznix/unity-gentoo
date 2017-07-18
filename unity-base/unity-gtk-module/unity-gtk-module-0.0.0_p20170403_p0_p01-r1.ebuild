@@ -33,6 +33,8 @@ S="${WORKDIR}"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}/unity-gtk-module-0.0.0+14.04-deprecated-api.patch"
+	sed -e 's/ubuntu-session/unity-session/g' \
+		-i data/unity-gtk-module.service
 	eautoreconf
 }
 
