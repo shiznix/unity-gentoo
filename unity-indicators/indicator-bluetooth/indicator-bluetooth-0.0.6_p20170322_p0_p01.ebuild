@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="dispatcher"
 RESTRICT="mirror"
 
 RDEPEND=">=net-wireless/bluez-5
@@ -28,16 +28,24 @@ DEPEND="${RDEPEND}
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicator:3=
 	gnome-base/dconf
-	net-misc/url-dispatcher
 	unity-base/unity-control-center
 	unity-indicators/ido:=
 	x11-libs/gtk+:3
+
+	dispatcher? ( net-misc/url-dispatcher )
+
 	$(vala_depend)"
 
 S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# Disable url-dispatcher when not using unity8-desktop-session
+	if ! use dispatcher; then
+		epatch -p1 "${FILESDIR}/disable-url-dispatcher.diff"
+	fi
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf

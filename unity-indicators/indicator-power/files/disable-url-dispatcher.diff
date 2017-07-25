@@ -1,0 +1,63 @@
+diff -Nur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2017-03-22 19:27:26.000000000 +0100
++++ b/CMakeLists.txt	2017-07-24 18:03:37.756755198 +0200
+@@ -43,7 +43,7 @@
+                   gio-unix-2.0>=2.36
+                   gudev-1.0>=204
+                   libnotify>=0.7.6
+-                  url-dispatcher-1>=1)
++)#                  url-dispatcher-1>=1)
+ 
+ include_directories (SYSTEM ${SERVICE_DEPS_INCLUDE_DIRS})
+ 
+diff -Nur a/src/notifier.c b/src/notifier.c
+--- a/src/notifier.c	2017-03-22 19:27:26.000000000 +0100
++++ b/src/notifier.c	2017-07-24 03:43:31.438550624 +0200
+@@ -23,7 +23,7 @@
+ #include "dbus-shared.h"
+ #include "notifier.h"
+ 
+-#include <url-dispatcher.h>
++//#include <url-dispatcher.h>
+ 
+ #include <libnotify/notify.h>
+ 
+@@ -226,7 +226,7 @@
+                             char               * action    G_GNUC_UNUSED,
+                             gpointer             user_data G_GNUC_UNUSED)
+ {
+-  url_dispatch_send("settings:///system/battery", NULL, NULL);
++//  url_dispatch_send("settings:///system/battery", NULL, NULL);
+ }
+ 
+ static void
+diff -Nur a/src/service.c b/src/service.c
+--- a/src/service.c	2017-03-22 19:27:26.000000000 +0100
++++ b/src/service.c	2017-07-24 03:42:57.892353345 +0200
+@@ -20,7 +20,7 @@
+ 
+ #include <glib/gi18n.h>
+ #include <gio/gio.h>
+-#include <url-dispatcher.h>
++//#include <url-dispatcher.h>
+ 
+ #include "brightness.h"
+ #include "dbus-shared.h"
+@@ -819,7 +819,7 @@
+     {
+       if (g_getenv ("MIR_SOCKET") != NULL)
+         {
+-          url_dispatch_send("settings:///system/battery", NULL, NULL);
++//          url_dispatch_send("settings:///system/battery", NULL, NULL);
+           return;
+         }
+       else if (!g_strcmp0 (g_getenv ("DESKTOP_SESSION"), "xubuntu"))
+@@ -867,7 +867,7 @@
+                              GVariant      * param  G_GNUC_UNUSED,
+                              gpointer        gself  G_GNUC_UNUSED)
+ {
+-  url_dispatch_send("settings:///system/battery", NULL, NULL);
++//  url_dispatch_send("settings:///system/battery", NULL, NULL);
+ }
+ 
+ /***

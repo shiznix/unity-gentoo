@@ -27,6 +27,7 @@ DEPEND="mir-base/qtmir
 	sys-auth/biometryd
 	unity-base/qtubuntu
 	unity-base/unity8
+	unity-indicators/unity-indicators-meta[dispatcher]
 	unity-scopes/unity-scope-click"
 
 S="${WORKDIR}"

@@ -1,0 +1,62 @@
+diff -Nur a/configure.ac b/configure.ac
+--- a/configure.ac	2017-03-22 19:27:18.000000000 +0100
++++ b/configure.ac	2017-07-24 19:23:23.159879929 +0200
+@@ -20,7 +20,7 @@
+ 
+ PKG_CHECK_MODULES(SERVICE_DEPS, [glib-2.0 >= $GLIB_REQUIRED_VERSION
+                                  gio-unix-2.0 >= $GIO_REQUIRED_VERSION
+-                                 url-dispatcher-1 >= $URL_DISPATCHER_1_REQUIRED_VERSION])
++])dnl                                 url-dispatcher-1 >= $URL_DISPATCHER_1_REQUIRED_VERSION])
+ 
+ SYSTEMD_USERDIR=`$PKG_CONFIG --variable=systemduserunitdir systemd`
+ AC_SUBST(SYSTEMD_USERDIR)
+diff -Nur a/src/desktop.vala b/src/desktop.vala
+--- a/src/desktop.vala	2017-03-22 19:27:18.000000000 +0100
++++ b/src/desktop.vala	2017-07-24 19:02:03.607314004 +0200
+@@ -227,7 +227,7 @@
+   void show_settings (string panel)
+   {
+     if (Environment.get_variable ("MIR_SOCKET") != null)
+-      UrlDispatch.send ("settings:///system/bluetooth");
++{/*      UrlDispatch.send ("settings:///system/bluetooth");*/}
+     else if (is_desktop ("Unity") && Environment.find_program_in_path ("unity-control-center") != null)
+       spawn_command_line_async ("unity-control-center " + panel);
+     else
+diff -Nur a/src/Makefile.am b/src/Makefile.am
+--- a/src/Makefile.am	2017-03-22 19:27:18.000000000 +0100
++++ b/src/Makefile.am	2017-07-24 19:14:09.138743569 +0200
+@@ -17,7 +17,6 @@
+ 	--vapidir=./ \
+ 	--pkg config \
+ 	--pkg rfkill \
+-	--pkg url-dispatcher \
+ 	--pkg posix \
+ 	--pkg glib-2.0 \
+ 	--pkg gio-2.0
+diff -Nur a/src/phone.vala b/src/phone.vala
+--- a/src/phone.vala	2017-03-22 19:27:18.000000000 +0100
++++ b/src/phone.vala	2017-07-24 19:03:06.047782433 +0200
+@@ -62,7 +62,7 @@
+ 
+   void show_settings (string panel)
+   {
+-    UrlDispatch.send ("settings:///system/bluetooth");
++//    UrlDispatch.send ("settings:///system/bluetooth");
+   }
+ 
+   Action create_settings_action ()
+diff -Nur a/vapi/url-dispatcher.vapi b/vapi/url-dispatcher.vapi
+--- a/vapi/url-dispatcher.vapi	2017-03-22 19:27:18.000000000 +0100
++++ b/vapi/url-dispatcher.vapi	2017-07-24 19:00:23.615563129 +0200
+@@ -1,4 +1,4 @@
+-[CCode (cprefix = "", lower_case_cprefix = "", cheader_filename = "liburl-dispatcher-1/url-dispatcher.h")]
++/*[CCode (cprefix = "", lower_case_cprefix = "", cheader_filename = "liburl-dispatcher-1/url-dispatcher.h")]
+ 
+ namespace UrlDispatch
+ {
+@@ -6,4 +6,4 @@
+ 
+   [CCode (cname = "url_dispatch_send")]
+   public static void send (string url, DispatchCallback? func = null);
+-}
++}*/

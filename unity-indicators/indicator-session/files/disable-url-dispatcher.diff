@@ -1,0 +1,60 @@
+diff -Nur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2017-04-03 17:37:43.000000000 +0200
++++ b/CMakeLists.txt	2017-07-24 03:58:50.399792847 +0200
+@@ -25,7 +25,7 @@
+ pkg_check_modules (SERVICE REQUIRED
+                    glib-2.0>=2.36
+                    gio-unix-2.0>=2.36
+-                   url-dispatcher-1>=1
++#                   url-dispatcher-1>=1
+                    libwhoopsie)
+ include_directories(SYSTEM ${SERVICE_INCLUDE_DIRS})
+ 
+diff -Nur a/src/backend-dbus/actions.c b/src/backend-dbus/actions.c
+--- a/src/backend-dbus/actions.c	2017-04-03 17:37:53.000000000 +0200
++++ b/src/backend-dbus/actions.c	2017-07-24 18:13:41.237522788 +0200
+@@ -19,7 +19,7 @@
+ 
+ #include <glib.h>
+ #include <glib/gi18n.h>
+-#include <url-dispatcher.h>
++//#include <url-dispatcher.h>
+ 
+ #include "dbus-end-session-dialog.h"
+ #include "dbus-login1-manager.h"
+@@ -832,7 +832,7 @@
+ my_help (IndicatorSessionActions * self G_GNUC_UNUSED)
+ {
+   if (g_getenv ("MIR_SOCKET") != NULL)
+-    url_dispatch_send("http://www.askubuntu.com", NULL, NULL);
++{/*    url_dispatch_send("http://www.askubuntu.com", NULL, NULL);*/}
+   else
+     run_outside_app ("yelp");
+ }
+@@ -873,7 +873,7 @@
+ my_settings (IndicatorSessionActions * self G_GNUC_UNUSED)
+ {
+   if (g_getenv ("MIR_SOCKET") != NULL)
+-    url_dispatch_send("settings:///system", NULL, NULL);
++{/*    url_dispatch_send("settings:///system", NULL, NULL);*/}
+   else if (have_unity_control_center ())
+     run_outside_app ("unity-control-center");
+   else
+@@ -884,7 +884,7 @@
+ my_online_accounts (IndicatorSessionActions * self G_GNUC_UNUSED)
+ {
+   if (g_getenv ("MIR_SOCKET") != NULL)
+-    url_dispatch_send("settings:///system/online-accounts", NULL, NULL);
++{/*    url_dispatch_send("settings:///system/online-accounts", NULL, NULL);*/}
+   else if (have_unity_control_center ())
+     run_outside_app ("unity-control-center credentials");
+   else
+@@ -895,7 +895,7 @@
+ my_about (IndicatorSessionActions * self G_GNUC_UNUSED)
+ {
+   if (g_getenv ("MIR_SOCKET") != NULL)
+-    url_dispatch_send("settings:///system/about", NULL, NULL);
++{/*    url_dispatch_send("settings:///system/about", NULL, NULL);*/}
+   else if (have_unity_control_center ())
+     run_outside_app ("unity-control-center info");
+   else

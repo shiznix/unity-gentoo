@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+eds"
+IUSE="dispatcher +eds"
 RESTRICT="mirror"
 
 COMMON_DEPEND="
@@ -27,11 +27,15 @@ COMMON_DEPEND="
 	dev-libs/libtimezonemap:=
 	gnome-extra/evolution-data-server:=
 	media-libs/gstreamer:1.0
-	net-misc/url-dispatcher
 	sys-apps/util-linux
 	unity-indicators/ido:=
 	unity-indicators/indicator-messages
-	>=x11-libs/libnotify-0.7.6"
+	>=x11-libs/libnotify-0.7.6
+
+	dispatcher? (
+		net-misc/url-dispatcher
+		sys-apps/ubuntu-app-launch )"
+
 RDEPEND="${COMMON_DEPEND}
 	unity-base/unity-control-center
 	unity-base/unity-language-pack"
@@ -51,6 +55,11 @@ src_prepare() {
 	# Disable autostart of Evolution-Data-Server subprocess
 	if ! use eds; then
 		epatch -p1 "${FILESDIR}/disable-eds.diff"
+	fi
+
+	# Disable url-dispatcher when not using unity8-desktop-session
+	if ! use dispatcher; then
+		epatch -p1 "${FILESDIR}/disable-url-dispatcher.diff"
 	fi
 
 	vala_src_prepare

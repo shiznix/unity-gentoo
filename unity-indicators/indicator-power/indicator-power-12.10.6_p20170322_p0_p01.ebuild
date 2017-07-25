@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="dispatcher"
 RESTRICT="mirror"
 
 RDEPEND="gnome-extra/gnome-power-manager"
@@ -26,9 +26,10 @@ DEPEND="${RDEPEND}
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	dev-libs/libindicate-qt
-	net-misc/url-dispatcher
 	sys-power/upower
-	unity-base/unity-settings-daemon"
+	unity-base/unity-settings-daemon
+
+	dispatcher? ( net-misc/url-dispatcher )"
 
 S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
@@ -36,6 +37,12 @@ MAKEOPTS="${MAKEOPTS} -j1"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}/sandbox_violations_fix.diff"
+
+	# Disable url-dispatcher when not using unity8-desktop-session
+	if ! use dispatcher; then
+		epatch -p1 "${FILESDIR}/disable-url-dispatcher.diff"
+	fi
+
 	cmake-utils_src_prepare
 }
 

@@ -10,6 +10,7 @@
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
 	<use>
+		<flag name="dispatcher">Enable support for <pkg>net-misc/url-dispatcher</pkg></flag>
 		<flag name="eds">Enable support for Evolution-Data-Server</flag>
 	</use>
 </pkgmetadata>

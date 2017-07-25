@@ -1,0 +1,68 @@
+diff -Nur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2017-03-28 17:03:50.000000000 +0200
++++ b/CMakeLists.txt	2017-07-24 04:15:01.387000848 +0200
+@@ -25,14 +25,14 @@
+ set(PULSE_AUDIO_REQUIRED_VERSION 0.9.19)
+ set(GLIB_2_0_REQUIRED_VERSION 2.32)
+ set(GIO_2_0_REQUIRED_VERSION 2.25.13)
+-set(URL_DISPATCHER_1_REQUIRED_VERSION 1)
++#set(URL_DISPATCHER_1_REQUIRED_VERSION 1)
+ 
+ pkg_check_modules(
+   PULSEAUDIO REQUIRED
+   libpulse-mainloop-glib>=${PULSE_AUDIO_REQUIRED_VERSION}
+   glib-2.0>=${GLIB_2_0_REQUIRED_VERSION}
+   gio-unix-2.0>=${GIO_2_0_REQUIRED_VERSION}
+-  url-dispatcher-1>=${URL_DISPATCHER_1_REQUIRED_VERSION}
++#  url-dispatcher-1>=${URL_DISPATCHER_1_REQUIRED_VERSION}
+ )
+ include_directories(${PULSEAUDIO_INCLUDE_DIRS})
+ 
+diff -Nur a/src/CMakeLists.txt b/src/CMakeLists.txt
+--- a/src/CMakeLists.txt	2017-03-28 17:03:50.000000000 +0200
++++ b/src/CMakeLists.txt	2017-07-24 04:15:59.421449453 +0200
+@@ -35,7 +35,7 @@
+     --target-glib=${GLIB_2_0_REQUIRED_VERSION}
+     --vapidir=${CMAKE_SOURCE_DIR}/vapi/
+     --vapidir=.
+-    --pkg=url-dispatcher
++#    --pkg=url-dispatcher
+     --pkg=bus-watcher
+ )
+ 
+diff -Nur a/src/service.vala b/src/service.vala
+--- a/src/service.vala	2017-03-28 17:03:50.000000000 +0200
++++ b/src/service.vala	2017-07-24 04:12:34.365831790 +0200
+@@ -253,7 +253,7 @@
+ 
+ 		if (Environment.get_variable ("MIR_SOCKET") != null)
+ 		{
+-			UrlDispatch.send ("settings:///system/sound");
++//			UrlDispatch.send ("settings:///system/sound");
+ 			return;
+ 		}
+ 
+@@ -274,7 +274,7 @@
+ 	}
+ 
+ 	void activate_phone_settings (SimpleAction action, Variant? param) {
+-		UrlDispatch.send ("settings:///system/sound");
++//		UrlDispatch.send ("settings:///system/sound");
+ 	}
+ 
+ 	/* Returns a serialized version of @icon_name suited for the panel */
+diff -Nur a/vapi/url-dispatcher.vapi b/vapi/url-dispatcher.vapi
+--- a/vapi/url-dispatcher.vapi	2017-03-28 17:03:50.000000000 +0200
++++ b/vapi/url-dispatcher.vapi	2017-07-24 18:22:16.311950300 +0200
+@@ -1,4 +1,4 @@
+-[CCode (cprefix="", lower_case_cprefix="", cheader_filename="liburl-dispatcher-1/url-dispatcher.h")]
++/*[CCode (cprefix="", lower_case_cprefix="", cheader_filename="liburl-dispatcher-1/url-dispatcher.h")]
+ 
+ namespace UrlDispatch
+ {
+@@ -6,4 +6,4 @@
+ 
+   [CCode (cname = "url_dispatch_send")]
+   public static void send (string url, DispatchCallback? func = null);
+-}
++}*/

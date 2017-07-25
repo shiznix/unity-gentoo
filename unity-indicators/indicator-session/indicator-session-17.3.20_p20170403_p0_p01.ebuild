@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+help"
+IUSE="dispatcher +help"
 RESTRICT="mirror"
 
 RDEPEND="unity-base/unity-language-pack"
@@ -28,7 +28,8 @@ DEPEND="${RDEPEND}
 	dev-libs/libappindicator:=
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicate-qt
-	net-misc/url-dispatcher
+
+	dispatcher? ( net-misc/url-dispatcher )
 	help? ( gnome-extra/yelp
 		gnome-extra/gnome-user-docs
 		unity-base/ubuntu-docs )"
@@ -37,6 +38,11 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# Disable url-dispatcher when not using unity8-desktop-session
+	if ! use dispatcher; then
+		epatch -p1 "${FILESDIR}/disable-url-dispatcher.diff"
+	fi
 
 	# Remove dependency on whoopsie (Ubuntu's error submission tracker)
 	sed -e 's:libwhoopsie):):g' \
@@ -57,6 +63,7 @@ src_prepare() {
 		sed -e 's:yelp:yelp help\:ubuntu-help:g' \
 			-i src/backend-dbus/actions.c
 	fi
+
 	cmake-utils_src_prepare
 }
 

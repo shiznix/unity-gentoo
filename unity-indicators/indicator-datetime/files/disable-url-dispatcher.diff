@@ -1,0 +1,136 @@
+diff -Nur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2017-03-22 19:27:40.000000000 +0100
++++ b/CMakeLists.txt	2017-07-24 17:16:04.463688549 +0200
+@@ -48,12 +48,12 @@
+                    libedataserver-1.2>=3.5
+                    gstreamer-1.0>=1.2
+                    libnotify>=0.7.6
+-                   url-dispatcher-1>=1
++#                   url-dispatcher-1>=1
+                    properties-cpp>=0.0.1
+                    libaccounts-glib>=1.18
+                    messaging-menu>=12.10
+                    uuid>=2.25
+-                   ubuntu-app-launch-3)
++)#                   ubuntu-app-launch-3)
+ include_directories (SYSTEM ${SERVICE_DEPS_INCLUDE_DIRS})
+ 
+ ##
+diff -Nur a/include/datetime/actions-live.h b/include/datetime/actions-live.h
+--- a/include/datetime/actions-live.h	2017-03-22 19:27:40.000000000 +0100
++++ b/include/datetime/actions-live.h	2017-07-24 03:23:12.195647680 +0200
+@@ -56,7 +56,7 @@
+ protected:
+     virtual Desktop get_desktop();
+     virtual void execute_command(const std::string& command);
+-    virtual void dispatch_url(const std::string& url);
++//    virtual void dispatch_url(const std::string& url);
+ 
+     void unity8_open_appointment(const Appointment& appt, const DateTime& date);
+ };
+diff -Nur a/src/actions-live.cpp b/src/actions-live.cpp
+--- a/src/actions-live.cpp	2017-03-22 19:27:40.000000000 +0100
++++ b/src/actions-live.cpp	2017-07-24 17:09:39.372140328 +0200
+@@ -20,7 +20,7 @@
+ #include <datetime/dbus-shared.h>
+ #include <datetime/actions-live.h>
+ 
+-#include <url-dispatcher.h>
++//#include <url-dispatcher.h>
+ 
+ #include <glib.h>
+ 
+@@ -52,11 +52,11 @@
+     }
+ }
+ 
+-void LiveActions::dispatch_url(const std::string& url)
++/*void LiveActions::dispatch_url(const std::string& url)
+ {
+     g_debug("Dispatching url '%s'", url.c_str());
+     url_dispatch_send(url.c_str(), nullptr, nullptr);
+-}
++}*/
+ 
+ /***
+ ****
+@@ -95,7 +95,7 @@
+ {
+     switch(get_desktop()) {
+         case LiveActions::UNITY8:
+-            dispatch_url("appid://ubuntu-clock-app/ubuntu-clock-app/current-user-version");
++//            dispatch_url("appid://ubuntu-clock-app/ubuntu-clock-app/current-user-version");
+             break;
+         case LiveActions::UNITY7:
+         default:
+@@ -120,9 +120,9 @@
+     switch(get_desktop()) {
+         case LiveActions::UNITY8:
+         {
+-            const auto utc = dt.to_timezone("UTC");
++/*            const auto utc = dt.to_timezone("UTC");
+             auto cmd = utc.format("calendar://startdate=%Y-%m-%dT%H:%M:%S+00:00");
+-            dispatch_url(cmd);
++            dispatch_url(cmd);*/
+             break;
+         }
+         case LiveActions::UNITY7:
+@@ -139,7 +139,7 @@
+ {
+     switch(get_desktop()) {
+     case LiveActions::UNITY8:
+-        dispatch_url("settings:///system/time-date");
++//        dispatch_url("settings:///system/time-date");
+         break;
+     case LiveActions::UNITY7:
+         execute_command("unity-control-center datetime");
+@@ -186,7 +186,7 @@
+ {
+     if (!appt.activation_url.empty())
+     {
+-        dispatch_url(appt.activation_url);
++//        dispatch_url(appt.activation_url);
+     }
+     else switch (appt.type)
+     {
+diff -Nur a/src/notifications.cpp b/src/notifications.cpp
+--- a/src/notifications.cpp	2017-03-22 19:27:40.000000000 +0100
++++ b/src/notifications.cpp	2017-07-24 17:12:34.769929542 +0200
+@@ -24,8 +24,8 @@
+ #include <messaging-menu/messaging-menu-app.h>
+ #include <messaging-menu/messaging-menu-message.h>
+ 
+-#include <libubuntu-app-launch-3/ubuntu-app-launch/appid.h>
+-#include <libubuntu-app-launch-3/ubuntu-app-launch/registry.h>
++//#include <libubuntu-app-launch-3/ubuntu-app-launch/appid.h>
++//#include <libubuntu-app-launch-3/ubuntu-app-launch/registry.h>
+ 
+ #include <uuid/uuid.h>
+ 
+@@ -461,12 +461,12 @@
+ 
+     static std::string calendar_app_id()
+     {
+-        auto registry = std::make_shared<ubuntu::app_launch::Registry>();
++/*        auto registry = std::make_shared<ubuntu::app_launch::Registry>();
+         auto app_id = ubuntu::app_launch::AppID::discover(registry, "ubuntu-calendar-app");
+         if (!app_id.empty())
+             // Due the use of old API by messaging_menu we need append a extra ".desktop" to the app_id.
+             return std::string(app_id) + ".desktop";
+-        else
++        else*/
+             return std::string();
+     }
+ 
+diff -Nur a/tests/test-live-actions.cpp b/tests/test-live-actions.cpp
+--- a/tests/test-live-actions.cpp	2017-03-22 19:27:40.000000000 +0100
++++ b/tests/test-live-actions.cpp	2017-07-24 03:37:07.229236822 +0200
+@@ -39,7 +39,7 @@
+     LiveActions::Desktop m_desktop;
+ 
+     LiveActions::Desktop get_desktop() override { return m_desktop; }
+-    void dispatch_url(const std::string& url) override { last_url = url; }
++//    void dispatch_url(const std::string& url) override { last_url = url; }
+     void execute_command(const std::string& cmd) override { last_cmd = cmd; }
+ };
+ 
