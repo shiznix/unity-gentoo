@@ -45,12 +45,6 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	sed -e '/RPATH/s:PKG_LIBEXECDIR:PKG_LIBDIR:g' \
 		-i CMakeLists.txt || die
-
-	# If a .desktop file does not have inline translations, fall back #
-	#  to calling gettext #
-	find ${WORKDIR} -type f -name "*.desktop*" \
-		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
-
 	vala_src_prepare
 	gnome2_src_prepare
 	cmake-utils_src_prepare

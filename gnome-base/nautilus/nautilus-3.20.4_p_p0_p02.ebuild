@@ -81,12 +81,6 @@ src_prepare() {
 		-e 's:multiarch_fallback:#multiarch_fallback:g' \
 			-i "${WORKDIR}/debian/patches/series"
 	ubuntu-versionator_src_prepare
-
-	# If a .desktop file does not have inline translations, fall back #
-	#  to calling gettext #
-	find ${WORKDIR} -type f -name "*.desktop*" \
-		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
-
 	if use previewer; then
 		DOC_CONTENTS="nautilus uses gnome-extra/sushi to preview media files.
 			To activate the previewer, select a file and press space; to

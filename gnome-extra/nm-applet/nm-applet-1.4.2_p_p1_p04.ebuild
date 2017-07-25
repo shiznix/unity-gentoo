@@ -53,12 +53,6 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	sed -e "s:-Werror::g" \
                 -i "configure" || die
-
-	# If a .desktop file does not have inline translations, fall back #
-	#  to calling gettext #
-	find ${WORKDIR} -type f -name "*.desktop*" \
-		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
-
 	eautoreconf
 	gnome2_src_prepare
 }
