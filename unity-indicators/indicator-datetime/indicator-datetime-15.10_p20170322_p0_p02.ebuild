@@ -37,10 +37,11 @@ COMMON_DEPEND="
 		sys-apps/ubuntu-app-launch )"
 
 RDEPEND="${COMMON_DEPEND}
-	unity-base/unity-control-center
 	unity-base/unity-language-pack"
 DEPEND="${COMMON_DEPEND}
 	dev-libs/properties-cpp"
+# PDEPEND to avoid circular dependency
+PDEPEND="unity-base/unity-control-center"
 
 S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
