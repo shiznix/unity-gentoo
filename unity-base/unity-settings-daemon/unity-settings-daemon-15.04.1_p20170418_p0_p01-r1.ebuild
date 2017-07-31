@@ -21,7 +21,8 @@ LICENSE="GPL-2"
 SLOT="0"
 IUSE="+colord debug fcitx +i18n input_devices_wacom nls packagekit +short-touchpad-timeout smartcard +udev"
 KEYWORDS="~amd64 ~x86"
-REQUIRED_USE="packagekit? ( udev )
+REQUIRED_USE="input_devices_wacom? ( udev )
+		packagekit? ( udev )
 		smartcard? ( udev )"
 RESTRICT="mirror"
 
@@ -62,7 +63,10 @@ COMMON_DEPEND="dev-libs/glib:2
 		x11-drivers/xf86-input-wacom )
 	packagekit? ( app-admin/packagekit-base )
 	smartcard? ( dev-libs/nss )
-	udev? ( virtual/libgudev:= )"
+	udev? (
+		sys-apps/hwids
+		virtual/libgudev:=
+		virtual/libudev:= )"
 RDEPEND="${COMMON_DEPEND}
 	gnome-base/dconf
 	x11-themes/gnome-themes-standard
@@ -94,7 +98,11 @@ src_prepare() {
 		epatch "${FILESDIR}/${PN}-3.7.90-short-touchpad-timeout.patch"
 
 	# Make colord and wacom optional; requires eautoreconf
-	epatch "${FILESDIR}/${PN}-optional-color-wacom.patch"
+	epatch "${FILESDIR}/01_${PN}-optional-color-wacom.patch"
+
+	# pnp.ids is not provided by >=gnome-base/gnome-desktop-3.21.4 #
+	#  use udev's hwdb to query PNP IDs instead #
+	epatch "${FILESDIR}/02_${PN}-optional-pnp-ids.patch"
 
 	# Correct path to unity-settings-daemon executable in upstart and systemd files #
 	sed -e 's:/usr/lib/unity-settings-daemon:/usr/libexec:g' \
@@ -130,6 +138,7 @@ src_configure() {
 		$(use_enable packagekit) \
 		$(use_enable smartcard smartcard-support) \
 		$(use_enable udev gudev) \
+		$(use_enable udev) \
 		$(use_enable input_devices_wacom wacom)
 }
 
@@ -149,9 +158,6 @@ src_install() {
 
 	insinto /usr/lib/unity-settings-daemon
 	doins gnome-settings-daemon/gnome-update-wallpaper-cache
-
-	dodir /usr/share/hwdata
-	dosym /usr/share/libgnome-desktop-3.0/pnp.ids /usr/share/hwdata/pnp.ids
 
 	# Install upstart files #
 	insinto /usr/share/upstart/xdg/autostart
