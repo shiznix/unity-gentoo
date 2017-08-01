@@ -56,9 +56,6 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
 
-	sed -e 's/SESSION=ubuntu)/SESSION=unity)/g' \
-		-i data/hud.conf.in
-
 	# Stop cmake doing the job of distutils #
 	sed -e '/add_subdirectory(hudkeywords)/d' \
 		-i tools/CMakeLists.txt
