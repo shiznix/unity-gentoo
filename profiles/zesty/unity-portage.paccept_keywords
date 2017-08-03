@@ -69,6 +69,7 @@ dev-libs/libindicate-qt
 ~dev-qt/qtlocation-5.6.1
 dev-util/cargo
 dev-util/umockdev
+=media-gfx/eog-3.24*
 ~media-libs/giflib-4.2.3
 =media-libs/libpng-1.6.29*
 =net-misc/networkmanager-1.2*
@@ -85,3 +86,4 @@ sys-libs/db:5.3
 x11-misc/xvfb-run
 x11-proto/glproto
 ~x11-libs/libdrm-2.4.67
+=x11-themes/adwaita-icon-theme-3.24*

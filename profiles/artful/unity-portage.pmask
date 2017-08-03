@@ -105,6 +105,7 @@ dev-util/lttng-tools::gentoo
 dev-util/lttng-ust::gentoo
 
 gnome-base/gconf::gentoo
+gnome-base/gnome-core-apps::gentoo
 gnome-base/gnome-desktop::gentoo
 gnome-base/gnome-menus:3::gentoo
 gnome-base/gnome-session::gentoo
