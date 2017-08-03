@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="3/12" # subslot = libgnome-desktop-3 soname version
-IUSE="debug +introspection"
+IUSE="debug +introspection udev"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -28,13 +28,14 @@ COMMON_DEPEND="
 	>=dev-libs/glib-2.44.0:2[dbus]
 	>=x11-libs/gdk-pixbuf-2.33.0:2[introspection?]
 	>=x11-libs/gtk+-3.3.6:3[X,introspection?]
-	>=x11-libs/libXext-1.1
-	>=x11-libs/libXrandr-1.3
 	x11-libs/cairo:=[X]
 	x11-libs/libX11
 	x11-misc/xkeyboard-config
 	>=gnome-base/gsettings-desktop-schemas-3.5.91
 	introspection? ( >=dev-libs/gobject-introspection-0.9.7:= )
+	udev? (
+		sys-apps/hwids
+		virtual/libudev:= )
 "
 RDEPEND="${COMMON_DEPEND}
 	!<gnome-base/gnome-desktop-2.32.1-r1:2[doc]
@@ -47,13 +48,10 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/itstool
 	sys-devel/gettext
 	x11-proto/xproto
-	>=x11-proto/randrproto-1.2
 	virtual/pkgconfig
 "
 
 # Includes X11/Xatom.h in libgnome-desktop/gnome-bg.c which comes from xproto
-# Includes X11/extensions/Xrandr.h that includes randr.h from randrproto (and
-# eventually libXrandr shouldn't RDEPEND on randrproto)
 
 src_prepare() {
 	# Disable language patches #
@@ -67,16 +65,14 @@ src_prepare() {
 
 src_configure() {
 	DOCS="AUTHORS ChangeLog HACKING NEWS README"
-	# Note: do *not* use "--with-pnp-ids-path" argument. Otherwise, the pnp.ids
-	# file (needed by other packages such as >=gnome-settings-daemon-3.1.2)
-	# will not get installed in ${pnpdatadir} (/usr/share/libgnome-desktop-3.0).
 	gnome2_src_configure \
 		--disable-static \
 		--with-gnome-distributor=Gentoo \
 		--enable-desktop-docs \
 		$(usex debug --enable-debug=yes ' ') \
 		$(use_enable debug debug-tools) \
-		$(use_enable introspection)
+		$(use_enable introspection) \
+		$(use_enable udev)
 }
 
 src_test() {
