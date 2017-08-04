@@ -6,9 +6,10 @@
 		<name>unity-gentoo overlay</name>
 	</maintainer>
 	<use>
-		<flag name="lightdm_greeters_gtk">Pull in the gtk+ greeter</flag>
 		<flag name="introspection">Use dev-libs/gobject-introspection for introspection</flag>
-		<flag name="lightdm_greeters_kde">Pull in the kde greeter</flag>
+		<flag name="lightdm_greeters_gtk">Pull in the GTK+ greeter</flag>
+		<flag name="lightdm_greeters_kde">Pull in the KDE greeter</flag>
+		<flag name="lightdm_greeters_unity">Pull in the Unity greeter</flag>
 		<flag name="mir">Enable Mir display server support</flag>
 	</use>
 	<upstream>

@@ -24,15 +24,16 @@ for greeters in ${IUSE_LIGHTDM_GREETERS}; do
 done
 
 # add and enable 'unity' greeter by default
-IUSE+=" +lightdm_greeters_unity +introspection qt4 qt5 mir test"
+IUSE+=" +lightdm_greeters_unity audit +introspection qt4 qt5 mir test"
 RESTRICT="mirror"
 
 COMMON_DEPEND="dev-libs/glib:2
 	dev-libs/libxml2
 	sys-apps/accountsservice
-	sys-libs/pam[audit]
+	sys-libs/pam
 	x11-libs/libX11
 	>=x11-libs/libxklavier-5
+	audit? ( sys-process/audit )
 	introspection? ( >=dev-libs/gobject-introspection-1 )
 	mir? ( mir-base/unity-system-compositor )
 	qt4? (
@@ -75,13 +76,10 @@ src_prepare() {
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
 	sed -i -e '/minimum-uid/s:500:1000:' data/users.conf || die
 
-	# Do not depend on Debian/Ubuntu specific adduser package
-# FIXME	epatch "${FILESDIR}"/guest-session-cross-distro_1.12.3.patch
-
 	# Add support for settings GSettings/dconf defaults in the guest session. Just
 	# put the files in /etc/guest-session/gsettings/. The file format is the same
 	# as the regular GSettings override files.
-# FIXME	epatch "${FILESDIR}"/guest-session-add-default-gsettings-support_1.11.5.patch
+	epatch "${FILESDIR}"/guest-session-add-default-gsettings-support_1.22.0.patch
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
@@ -97,13 +95,11 @@ src_prepare() {
 }
 
 src_configure() {
-	# sys-libs/pam[audit] must be installed and '--enable-audit' specified or else build will fail #
-	#  session-child.c:420:26: error: ‘AUDIT_USER_LOGIN’ undeclared (first use in this function)  #
 	econf \
 		--localstatedir=/var \
 		--disable-static \
-		--enable-audit \
 		--enable-vala \
+		$(use_enable audit libaudit) \
 		$(use_enable introspection) \
 		$(use_enable qt4 liblightdm-qt) \
 		$(use_enable qt5 liblightdm-qt5) \
@@ -158,8 +154,10 @@ src_install() {
 	doexe "${FILESDIR}"/setup.sh
 	dodir /usr/share/lightdm/guest-session/skel
 
-# FIXME	# Create GSettings defaults directory
-#	insinto /etc/guest-session/gsettings/
+	# Add guest session GSettings defaults
+	g_settings_path="/etc/guest-session/gsettings/"
+	insinto ${g_settings_path}
+	doins "${FILESDIR}"/99_default.gschema.override
 
 	# Install systemd tmpfiles.d file
 	insinto /usr/lib/tmpfiles.d
@@ -188,7 +186,13 @@ src_install() {
 
 pkg_postinst() {
 	elog
-	elog "'guest session' is disabled by default."
-	elog "To enable guest session edit '/etc/${PN}/${PN}.conf'"
+	elog "Guest session is disabled by default."
+	elog "To enable it edit '/etc/${PN}/${PN}.conf'"
+	elog "and set 'allow-guest=true'."
+	elog
+	elog "Guest session GSettings defaults can be"
+	elog "found in '${g_settings_path}'."
+	elog "You can place your settings over here."
+	elog "Higher numbered files have higher priority."
 	elog
 }

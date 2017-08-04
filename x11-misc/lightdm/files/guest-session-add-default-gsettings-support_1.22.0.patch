@@ -1,0 +1,25 @@
+diff -Nur a/debian/guest-account.sh b/debian/guest-account.sh
+--- a/debian/guest-account.sh	2017-04-04 23:26:00.000000000 +0200
++++ b/debian/guest-account.sh	2017-08-04 04:03:40.131691067 +0200
+@@ -152,6 +152,21 @@
+     source_local_prefs
+   fi
+ 
++  # set possible local guest session GSettings defaults
++  local g_settings_dir="gsettings"
++  local default_g_settings_file="99_default.gschema.override"
++  source_local_g_settings() {
++    local USER=${GUEST_USER}
++    local g_settings
++    for g_settings in ${site_gs}/${g_settings_dir}/*; do
++      cat "${g_settings}" | sed '/^\[.*\]$/ s/\./\//g' | \
++        su - ${USER} -c 'dbus-launch dconf load /'
++    done
++  }
++  if [ -f ${site_gs}/${g_settings_dir}/${default_g_settings_file} ]; then
++    source_local_g_settings
++  fi
++
+   echo ${GUEST_USER}
+ }
+ 
