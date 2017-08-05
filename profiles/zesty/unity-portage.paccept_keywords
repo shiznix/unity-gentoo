@@ -81,7 +81,7 @@ sys-devel/gcc:6.3.0
 sys-fs/lxcfs
 sys-libs/db:5.1
 sys-libs/db:5.3
-=sys-libs/libapparmor-2.10*
+=sys-libs/libapparmor-2.11*
 =x11-drivers/xf86-input-evdev-2.10*
 x11-misc/xvfb-run
 x11-proto/glproto
