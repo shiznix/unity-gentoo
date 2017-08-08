@@ -27,7 +27,7 @@ x11-misc/lightdm-kde::unity-gentoo
 >=gnome-base/gdm-3.23
 >=sci-geosciences/geocode-glib-3.23
 >=dev-libs/glib-2.51::unity-gentoo
->=dev-libs/gjs-1.47
+# >=dev-libs/gjs-1.47	# Requires >=dev-libs/gobject-introspection-1.52.1
 >=net-libs/phodav-2.2
 >=dev-util/gdbus-codegen-2.51::unity-gentoo
 >=dev-cpp/glibmm-2.51
