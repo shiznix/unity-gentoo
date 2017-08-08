@@ -28,7 +28,7 @@ fi
 MOZ_P="${PN}-${MOZ_PV}"
 
 # Patches
-PATCHFF="firefox-52.2-patches-01"
+PATCHFF="firefox-52.2-patches-02"
 
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_GTK2ONLY=1
