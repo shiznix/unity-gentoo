@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="zesty zesty-security zesty-updates"
+RELEASES="zesty zesty-security zesty-updates artful artful-security artful-updates"
 SOURCES="main universe"
 
 sources_download() {

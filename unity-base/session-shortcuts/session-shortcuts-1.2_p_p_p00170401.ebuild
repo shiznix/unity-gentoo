@@ -4,15 +4,15 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="zesty-updates"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/s/${PN}"
-UVER=
+UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 
 DESCRIPTION="Allows shutdown, logout, and reboot from dash"
 HOMEPAGE="http://unity.ubuntu.com/"
-SRC_URI="${UURL}/${MY_P}.tar.xz"
+SRC_URI="${UURL}/${MY_P}${UVER}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"

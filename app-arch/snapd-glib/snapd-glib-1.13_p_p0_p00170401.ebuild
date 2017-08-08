@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="zesty-updates"
 inherit autotools eutils ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/s/${PN}"
