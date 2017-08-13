@@ -5,7 +5,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-URELEASE="zesty"
+URELEASE="zesty-updates"
 inherit autotools eutils flag-o-matic gnome2 multilib multilib-minimal readme.gentoo-r1 virtualx ubuntu-versionator
 
 MY_PN="gtk+2.0"

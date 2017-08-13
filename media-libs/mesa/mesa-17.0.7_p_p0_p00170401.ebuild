@@ -6,7 +6,7 @@ EAPI=6
 
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="zesty"
+URELEASE="zesty-updates"
 inherit autotools eutils llvm multilib-minimal python-any-r1 pax-utils ubuntu-versionator
 
 OPENGL_DIR="xorg-x11"
