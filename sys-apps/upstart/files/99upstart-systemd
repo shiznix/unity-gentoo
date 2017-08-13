@@ -2,14 +2,6 @@ if [ "x$DESKTOP_SESSION" = "xunity" ]; then
 	export XDG_CURRENT_DESKTOP="Unity:Unity7"	# Needs to be manually set for 'startx' to work
 	export XDG_CONFIG_DIRS="/usr/share/upstart/systemd-session:$XDG_CONFIG_DIRS"
 	dbus-update-activation-environment --systemd --all	# Pass all current environment variables to the 'systemd --user' process
-
-	exec /usr/bin/upstart --user --verbose	# Upstart job systemd-graphical-session.conf starts the 'systemd --user' services
-#	exec /usr/libexec/run-systemd-session unity-session.target
-elif [ "x$DESKTOP_SESSION" = "xunity8" ]; then
-	export XDG_CURRENT_DESKTOP="Unity8"      # Needs to be manually set for 'startx' to work
-	export XDG_CONFIG_DIRS="/usr/share/upstart/systemd-session:$XDG_CONFIG_DIRS"
-	dbus-update-activation-environment --systemd --all      # Pass all current environment variables to the 'systemd --user' process
-
-	exec /usr/bin/upstart --user --verbose  # Upstart job systemd-graphical-session.conf starts the 'systemd --user' services
-#       exec /usr/libexec/run-systemd-session unity-session.target
+	[[ "$XSESSION" = "unity" ]] && exec /usr/libexec/run-systemd-session unity-session.target	# Using 'startx' to launch
+	## If $XSESSION is not set, then we need not do anything as the Display Manager will start the session via '/usr/share/xsessions/unity.desktop' ##
 fi
