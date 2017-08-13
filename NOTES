@@ -21,7 +21,6 @@ app-accessibility/at-spi2-core		# Patched to start 'accessibility bus' by defaul
 app-backup/deja-dup			# Enable Unity desktop options
 dev-cpp/gtest				# Customised ebuild to install /usr/src/gtest/* files lacking from main tree ebuild
 dev-cpp/gmock				# Customised ebuild to install /usr/src/gmock/* files lacking from main tree ebuild
-dev-libs/capnproto			# Needs to be multilib aware to install with multilib mir-base/mir. Portage tree version does not install needed CMake files 'CapnProtoConfig.cmake' and 'CapnProtoConfigVersion.cmake'
 dev-libs/dee				# Portage tree versions can lag and is now being removed, maintained for patches and version control
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/gobject-introspection		# See glib reason above
@@ -29,13 +28,7 @@ dev-libs/gobject-introspection-common	# See glib reason above
 dev-libs/libappindicator		# See "Using portage tree libindicate packages" item above
 dev-libs/libdbusmenu			# See "Using portage tree libindicate packages" item above
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
-dev-libs/libinput			# Needs to be multilib aware to install with multilib mir-base/mir
-dev-libs/libwacom			# Needs to be multilib aware to install with multilib dev-libs/libinput (mir-base/mir)
-dev-libs/userspace-rcu			# Needs to be multilib aware to install with multilib dev-util/lttng-{tools,ust}
-dev-qt/qt:5				# Many large Ubuntu fixes/patchsets for QML desktop and EGL for Mir
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
-dev-util/lttng-tools			# Needs to be multilib aware to install with multilib mir-base/mir
-dev-util/lttng-ust			# (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-core-apps		# Included to pull in lower versions of empathy, gnome-menus and nautilus
 gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
@@ -48,7 +41,6 @@ gnome-extra/activity-log-manager	# Adds unity-control-center integration
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 mail-client/thunderbird			# Requires patching for global appmenu
-media-libs/mesa				# Patched for mir display server support
 media-gfx/shotwell			# Patched for integration with Unity online accounts
 media-sound/banshee			# Patched/compiled for indicator-sound support, Meego UI and other Ubuntu UI improvements
 media-sound/pulseaudio			# Patched for indicator-sound 'cork' support
@@ -60,15 +52,9 @@ net-libs/libsoup			# Portage tree version forces '--without-gnome' and has remov
 sys-apps/accountsservice		# Requires patching for SetInputSources as needed by unity-indicators/indicator-keyboard and u-c-c text entry settings
 sys-auth/pambase			# Requires patching to support sys-fs/lxcfs[pam] and so have userspace access to 'freezer' cgroup controller
 sys-kernel/ubuntu-sources		# Patched with Ubuntu's complete kernel patchset to add support for sys-apps/ureadahead
-sys-libs/mtdev				# Needs to be multilib aware to install with multilib dev-libs/libinput (mir-base/mir)
 www-client/chromium			# Required to support Unity Launcher icon effects (no duplicate icons, quicklist menu, progress bar, window title bar fixes etc.)
 www-client/firefox			# Requires patching for webapps browser plugin and global appmenu
-x11-base/xorg-server			# Provides Xmir patch
-x11-base/xorg-drivers			# DEPEND blocking versions incompatible with overlay versions (!<x11-drivers/xf86-video-intel-2.99.917_p20160122)
-x11-drivers/xf86-video-ati		# Provides Mir display server support with 'mir' useflag and patch
-x11-drivers/xf86-video-intel		# Provides Mir display server support with 'mir' useflag and patch
-x11-drivers/xf86-video-nouveau		# Provides Mir display server support with 'mir' useflag and patch
-x11-libs/gtk+				# Needed for global appmenu + native Mir display server support
+x11-libs/gtk+				# Needed for global appmenu
 x11-misc/lightdm			# Custom fixes for Xsession profile sourcing and multi-monitor display
 x11-wm/metacity				# Patched to support compiz window decoration
 
@@ -141,54 +127,14 @@ x11-wm/metacity				# Patched to support compiz window decoration
 * Ubuntu Single Signon
 	- Check ~/.cache/sso/sso-client*.log
 
-* Mir EGL Display Server
-	- Circular dependencies between mir-base/mir and media-libs/mesa
-		- Mesa requires mir support patch
-		=== UTOPIC ===
-		- mir-base/mir requires libGL from media-libs/mesa to build
-		- media-libs/mesa with mir enabled requires mirclient from mir-base/mir
-			- SOLUTION:
-				- Introduce media-libs/mesa-mir ebuild that installs only the mesa EGL related files and DEPENDS on mir-base/mir
-				- Introduce 'mir' useflag to media-libs/mesa which when enabled removes all EGL related files and PDEPENDS on media-libs/mesa-mir
-		=== VIVID ===
-		- mir-base/mir now requires entire vanilla media-libs/mesa[-mir] to build
-		- media-libs/mesa with mir enabled requires mirclient from mir-base/mir
-			- SOLUTION:
-				- Remove and block media-libs/mesa-mir ebuild
-				- Insert check in media-libs/mesa ebuild that dies with message if mesa is trying to build with mir enabled before mir-base/mir is installed
-		-- (This needs to be revisited, perhaps split mirclient into it's own separate package...)
-
-* Ubuntu use the 'upstart' init system to start desktop services, notes below:
-	* '/usr/bin/upstart --user' sets the $UPSTART_SESSION env variable
-		- $UPSTART_SESSION env variable will only be set (inherited from upstart process) if the desktop session is a child process of the parent 'upstart' process
-			ie. Upstart cannot be started within the desktop session, upstart needs to be the process that starts the desktop session
-	* /usr/bin/initctl needs the $UPSTART_SESSION env variable set for it's many jobs to execute correctly
-	* To communicate properly over dbus, the dbus process also needs to be a child of the upstart process (as started by /usr/share/upstart/sessions/dbus.conf)
-
-$ echo $UPSTART_SESSION 
-unix:abstract=/com/ubuntu/upstart-session/1000/6350
-
-## Upstart Session Launch ##
-* On xsession start, /etc/X11/xinit/xinitrc.d/99upstart-systemd sets the required env variables and launches 'exec upstart --user'
-	- Note that no other file after '99upstart-systemd' in alphanumerical order will be parsed
-* Upstart processes it's *.conf files in /usr/share/upstart/sessions/
-
 ## Systemd Session Launch ##
-* As of Yakkety release, Canonical are starting to move from upstart to 'systemd --user' *.service units to start desktop sessions and services
 * Unity session is launched as follows:
-	- /etc/X11/xinit/xinitrc.d/99upstart-systemd starts '/usr/bin/upstart --user'
-		- Upstart job '/usr/share/upstart/systemd-session/upstart/systemd-graphical-session.conf' starts 'systemctl --user start ${DESKTOP_SESSION}-session.target'
-		- Every '/usr/share/upstart/systemd-session/upstart/<service>.override' file that has the word 'manual' in it, is skipped being started by upstart
-
-	- The following services have not yet been migrated to use systemd and still use upstart *.conf files to start:
-		- unity-base/hud
-			/usr/libexec/hud/dbus-activation-hack.sh then starts /usr/libexec/hud/hud-service
-		- net-misc/url-dispatcher
-		- All indicators (application,bluetooth,datetime,keyboard,messages,power,printers,session,sound)
-		
-	- Once Canonical have fully migrated 'systemd --user' to start all desktop services, the following can be expected:
-		- Display manager (eg.lightdm) executes /usr/share/xsessions/unity.desktop:
+	- Display manager (eg.lightdm) executes /usr/share/xsessions/unity.desktop:
 		- '/usr/share/xsessions/unity.desktop' executes '/usr/libexec/run-systemd-session unity-session.target'
+			OR
+	- Started from console with 'XSESSION=unity startx':
+		- '/etc/X11/xinit/xinitrc.d/99unity-session_systemd' executes '/usr/libexec/run-systemd-session unity-session.target'
+
 		- '/usr/libexec/run-systemd-session unity-session.target' runs 'systemctl --user start --wait unity-session.target'
 		- '/usr/lib/systemd/user/unity-session.target' starts:
 			- 'gnome-session.service' which in turn executes 'gnome-session --session=unity'
@@ -199,39 +145,6 @@ unix:abstract=/com/ubuntu/upstart-session/1000/6350
 			- Sets the compizconfig profile to 'COMPIZ_CONFIG_PROFILE=ubuntu' via '/usr/lib/unity/compiz-profile-selector'
 			- Performs 'ExecStart=/usr/bin/compiz'
 			- Pulls in and starts {unity-settings-daemon,unity-panel-service,bamfdaemon}.service units
-
-## Unity8 Session Launch ##
-	- Lightdm reads /usr/share/lightdm/lightdm.conf.d/45-unity8.conf and so executes '/usr/bin/unity-system-compositor.sleep' and '/usr/bin/lightdm-unity8-session'
-	- Lightdm executes /usr/bin/unity-system-compositor.sleep --file '/run/mir_socket' --from-dm-fd 13 --to-dm-fd 22 --vt 8
-	   \_ /usr/bin/unity-system-compositor.sleep executes /usr/sbin/unity-system-compositor --disable-inactivity-policy=true --on-fatal-error-abort $@
-	- Lightdm executes /usr/share/lightdm/sessions/unity8.desktop
-	   \_ /usr/share/lightdm/sessions/unity8.desktop executes /usr/bin/lightdm-unity8-session
-	     \_ /usr/bin/lightdm-unity8-session sets the following ${ENV} variables and executes 'upstart --user':
-			unset QT_QPA_PLATFORMTHEME
-			export QT_QPA_PLATFORM=ubuntumirclient
-			export UNITY_INDICATOR_PROFILE=desktop
-			export UBUNTU_PLATFORM_API_BACKEND=desktop_mirclient
-	       \_ 'upstart --user' starts /usr/share/upstart/sessions/unity8.conf
-		 \_ unity8.conf triggers on SESSION=unity8, points /run/user/<uid>/mir_socket at /run/mir_socket and starts '/usr/bin/unity8 --mode=full-shell'
-
-## Unity8 Applications Launch ##
-	- On each application launched from Unity8's 'Scopes', the following Upstart jobs are started:
-		url-dispatcher.conf	(provided by net-misc/url-dispatcher)
-		  \_ application.conf	(provided by ubuntu-app-launch)
-		    \_ application-legacy.conf
-		    \_ application-click-start.conf
-	- ubuntu-app-launch upstart jobs rely on the 'freezer' cgroup controller to be available to the user and apparmor to set APP_EXEC_POLICY
-	- upstart is made cgroup aware by 'notify-cgmanager.conf' upstart job
-	- cgroups are considered experimental alpha while upstream kernel, systemd and cgmanager devs are still to agree on a final design
-			that supports all available cgroup controllers for system and user processes
-		For example:
-		- Kernel cgroup support was written and then re-written so we now have 'cgroup v1' and 'cgroup v2' support
-			These two are mutually exclusive and cgmanager does not support v2 yet
-			>=systemd-232 enables v2 by default and so is patched back to enable v1 by default so cgmanager can continue to work
-		- Systemd doesn't expose the 'freezer' cgroup controller to userspace because Lennart doesn't like the way kernel authors wrote it
-				(see https://lists.fedoraproject.org/pipermail/devel/2014-May/199304.html)
-			This means to get userspace 'freezer' cgroup controller support, it must be FUSE mounted using sys-fs/lxcfs[pam]
-		- Unity8 relies on this fragile setup as it's core function to launch applications
 
 ## Compiz performance settings for 'ccsm' ##
  Click on "OpenGL" and set "Texture Filter" to Fast.

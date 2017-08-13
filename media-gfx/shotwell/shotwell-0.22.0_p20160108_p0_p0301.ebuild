@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="zesty-updates"
+URELEASE="zesty-security"
 inherit eutils gnome2-utils multilib toolchain-funcs vala ubuntu-versionator
 
 UURL="mirror://unity/pool/main/s/${PN}"

@@ -1,4 +1,5 @@
-*/* -consolekit -packagekit -tracker networkmanager qml qt5 systemd vala zeitgeist
+## 'webapps' is disabled until it can be seen how it fits into Ubuntu releases that have dropped Mir/Unity8 ##
+*/* -consolekit -packagekit -tracker -webapps networkmanager qt5 systemd vala zeitgeist
 
 ## Enabled PYTHON_SINGLE_TARGET must match state in PYTHON_TARGETS ##
 
@@ -7,6 +8,7 @@ app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
 app-crypt/libsecret crypt vala
+app-emulation/lxc cgmanager
 app-i18n/fcitx -autostart
 app-i18n/ibus dconf python -gconf vala
 app-text/gtkspell vala
@@ -43,7 +45,6 @@ media-libs/libmediaart -qt4 -qt5
 media-libs/gst-plugins-base theora
 media-libs/harfbuzz icu
 media-libs/libvpx postproc svc
-media-libs/mesa egl gbm gles2          # Mir display server requires mesa[egl,gbm,gles2]
 media-plugins/alsa-plugins pulseaudio
 media-plugins/gst-plugins-meta ffmpeg
 media-sound/rhythmbox zeitgeist

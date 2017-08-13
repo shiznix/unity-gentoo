@@ -97,7 +97,6 @@ app-misc/pay-service **
 app-misc/whoopsie **
 dev-cpp/gmock **
 dev-cpp/gtest **
-dev-libs/capnproto **
 dev-libs/dee **
 dev-libs/dbus-cpp **
 dev-libs/libaccounts-glib **
@@ -112,7 +111,6 @@ dev-libs/libappindicator **
 dev-libs/libcolumbus **
 dev-libs/libdbusmenu **
 dev-libs/libhybris **
-dev-libs/libinput **
 dev-libs/libqtdbusmock **
 dev-libs/libqtdbustest **
 dev-libs/libsignon-glib **
@@ -122,7 +120,6 @@ dev-libs/persistent-cache-cpp **
 dev-libs/process-cpp **
 dev-libs/properties-cpp **
 dev-libs/trust-store **
-dev-libs/userspace-rcu **
 dev-python/autopilot **
 dev-python/python-testscenarios **
 dev-python/u1db **
@@ -133,8 +130,6 @@ dev-util/android-headers **
 dev-util/cmake-extras **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
-dev-util/lttng-tools **
-dev-util/lttng-ust **
 gnome-base/gconf **
 gnome-base/gnome-core-apps **
 gnome-base/gnome-desktop **
@@ -150,8 +145,6 @@ gnome-extra/polkit-gnome **
 mail-client/thunderbird **
 media-gfx/shotwell **
 media-gfx/thumbnailer **
-media-libs/mesa **
-media-libs/mesa-mir **
 media-sound/banshee **
 media-sound/pulseaudio **
 media-sound/rhythmbox **
@@ -236,10 +229,6 @@ unity-lenses/unity-lens-video **
 unity-scopes/unity-scope-home **
 www-client/webbrowser-app **
 www-client/firefox **
-x11-base/xorg-server **
-x11-drivers/xf86-video-ati **
-x11-drivers/xf86-video-intel **
-x11-drivers/xf86-video-nouveau **
 x11-libs/accounts-qml-module **
 x11-libs/content-hub **
 x11-libs/dee-qt **

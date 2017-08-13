@@ -45,7 +45,6 @@ app-accessibility/at-spi2-core::gentoo
 app-backup/deja-dup::gentoo
 dev-cpp/gtest::gentoo
 dev-cpp/gmock::gentoo
-dev-libs/capnproto::gentoo
 dev-libs/dee::gentoo
 dev-libs/glib:2::gentoo
 dev-libs/gobject-introspection::gentoo
@@ -54,11 +53,7 @@ dev-libs/libappindicator::gentoo
 dev-libs/libdbusmenu::gentoo
 dev-libs/libdbusmenu-qt::gentoo
 dev-libs/libindicator::gentoo
-dev-libs/libinput::gentoo
-dev-libs/libwacom::gentoo
 dev-util/gdbus-codegen::gentoo
-dev-util/lttng-tools::gentoo
-dev-util/lttng-ust::gentoo
 
 gnome-base/gconf::gentoo
 gnome-base/gnome-core-apps::gentoo
@@ -80,7 +75,6 @@ gnome-extra/polkit-gnome::gentoo
 
 mail-client/thunderbird::gentoo
 media-gfx/shotwell::gentoo
-media-libs/mesa::gentoo
 media-sound/pulseaudio::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
@@ -92,10 +86,6 @@ sys-auth/pambase::gentoo
 sys-libs/libnih::gentoo
 www-client/chromium::gentoo
 www-client/firefox::gentoo
-x11-base/xorg-server::gentoo
-x11-drivers/xf86-video-ati::gentoo
-x11-drivers/xf86-video-intel::gentoo
-x11-drivers/xf86-video-nouveau::gentoo
 x11-libs/gtk+::gentoo
 x11-libs/mx::gentoo
 x11-misc/lightdm::gentoo

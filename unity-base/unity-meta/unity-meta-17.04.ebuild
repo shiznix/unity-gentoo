@@ -17,8 +17,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="accessibility +chat gnome gnome-extras +unity-extras +webapps +xdm"
 RESTRICT="mirror"
 
-# 'webapps' currently disabled in 'profiles/xenial/unity-portage.puse' due to broken upstream net-libs/oxide-qt #
-#	Due to this, net-libs/oxide-qt is soft-blocked when 'webapps' is disabled as oxide-qt must be uninstalled #
 DEPEND="gnome-base/gnome-core-libs
 	gnome-base/nautilus
 	gnome-extra/activity-log-manager
