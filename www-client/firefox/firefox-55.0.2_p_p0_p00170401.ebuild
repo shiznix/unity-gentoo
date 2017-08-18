@@ -36,7 +36,7 @@ MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_WIFI=1
 
 URELEASE="zesty-security"
-UVER_PREFIX="+build2"
+UVER_PREFIX="+build1"
 UURL="mirror://unity/pool/main/f/${PN}"
 
 inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.55 pax-utils xdg-utils autotools virtualx mozlinguas-v2 ubuntu-versionator
