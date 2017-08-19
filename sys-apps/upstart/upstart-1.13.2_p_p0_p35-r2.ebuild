@@ -29,6 +29,10 @@ S="${WORKDIR}/${PN}-${PV}"
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
+
+	# Ensure build compatibility with all current versions of sys-libs/glibc including 2.25 #
+	sed -e '/#include <sys\/types.h>/a #include <sys\/sysmacros.h>' \
+		-i init/{main,system}.c
 	eautoreconf
 }
 
