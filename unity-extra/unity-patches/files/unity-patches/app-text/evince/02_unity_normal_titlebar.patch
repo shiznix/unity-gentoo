@@ -1,0 +1,100 @@
+# Description: use GtkHeaderBar as decoration only under gnome-shell
+# Reported as a wishlist on https://bugzilla.gnome.org/show_bug.cgi?id=736420
+# The solution should probably be different from the getenv one though
+Index: evince-3.22.1/shell/ev-window.c
+===================================================================
+--- evince-3.22.1.orig/shell/ev-window.c
++++ evince-3.22.1/shell/ev-window.c
+@@ -100,6 +100,8 @@
+ #include <X11/extensions/XInput2.h>
+ #endif
+ 
++extern gboolean in_desktop (const gchar *name);
++
+ typedef enum {
+ 	PAGE_MODE_DOCUMENT,
+ 	PAGE_MODE_PASSWORD
+@@ -6732,8 +6734,16 @@ ev_window_init (EvWindow *ev_window)
+ 
+ 	ev_window->priv->toolbar = ev_toolbar_new (ev_window);
+ 	gtk_widget_set_no_show_all (ev_window->priv->toolbar, TRUE);
+-	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (ev_window->priv->toolbar), TRUE);
+-	gtk_window_set_titlebar (GTK_WINDOW (ev_window), ev_window->priv->toolbar);
++	if (in_desktop ("GNOME")) {
++		gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (ev_window->priv->toolbar), TRUE);
++		gtk_window_set_titlebar (GTK_WINDOW (ev_window), ev_window->priv->toolbar);
++		gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (ev_window->priv->toolbar)), "toolbar");
++	}
++	else {
++		gtk_box_pack_start (GTK_BOX (ev_window->priv->main_box),
++					ev_window->priv->toolbar,
++					FALSE, TRUE, 0);
++	}
+ 	gtk_widget_show (ev_window->priv->toolbar);
+ 
+ 	/* Window title */
+Index: evince-3.22.1/shell/ev-window-title.c
+===================================================================
+--- evince-3.22.1.orig/shell/ev-window-title.c
++++ evince-3.22.1/shell/ev-window-title.c
+@@ -29,6 +29,8 @@
+ #define EV_BACKEND_PS  "PSDocument"
+ #define EV_BACKEND_PDF "PdfDocument"
+ 
++gboolean in_desktop (const gchar *name);
++
+ typedef struct
+ {
+ 	const gchar *backend;
+@@ -105,6 +107,30 @@ ev_window_title_sanitize_title (EvWindow
+ 	}
+ }
+ 
++gboolean
++in_desktop (const gchar *name)
++{
++	const gchar *desktop_name_list;
++	gchar **names;
++	gboolean in_list = FALSE;
++	gint i;
++
++	desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
++	if (!desktop_name_list)
++		return FALSE;
++
++	names = g_strsplit (desktop_name_list, ":", -1);
++	for (i = 0; names[i] && !in_list; i++)
++		if (strcmp (names[i], name) == 0) {
++			in_list = TRUE;
++			break;
++		}
++	g_strfreev (names);
++
++	return in_list;
++}
++
++
+ static void
+ ev_window_title_update (EvWindowTitle *window_title)
+ {
+@@ -142,7 +168,8 @@ ev_window_title_update (EvWindowTitle *w
+ 	switch (window_title->type) {
+ 	case EV_WINDOW_TITLE_DOCUMENT:
+ 		gtk_window_set_title (window, title);
+-		if (title_header && subtitle) {
++		if (title_header && subtitle && 
++		    in_desktop ("GNOME")) {
+ 			gtk_header_bar_set_title (toolbar, title_header);
+ 			gtk_header_bar_set_subtitle (toolbar, subtitle);
+ 		}
+@@ -154,8 +181,10 @@ ev_window_title_update (EvWindowTitle *w
+ 		gtk_window_set_title (window, password_title);
+ 		g_free (password_title);
+ 
++		if (in_desktop ("GNOME")) {
+                 gtk_header_bar_set_title (toolbar, _("Password Required"));
+                 gtk_header_bar_set_subtitle (toolbar, title);
++        	}
+         }
+ 		break;
+         case EV_WINDOW_TITLE_RECENT:

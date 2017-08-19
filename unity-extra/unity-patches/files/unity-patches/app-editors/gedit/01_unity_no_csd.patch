@@ -1,0 +1,156 @@
+# Description: don't use GtkHeaderBar decorations under Unity, they still
+# create integration issues and are too differents
+# Upstream: https://bugzilla.gnome.org/show_bug.cgi?id=762332
+Index: b/gedit/gedit-window.c
+===================================================================
+--- a/gedit/gedit-window.c
++++ b/gedit/gedit-window.c
+@@ -403,6 +403,29 @@
+ 	peas_engine_garbage_collect (PEAS_ENGINE (gedit_plugins_engine_get_default ()));
+ }
+ 
++static gboolean
++in_desktop (const gchar *name)
++{
++	const gchar *desktop_name_list;
++	gchar **names;
++	gboolean in_list = FALSE;
++	gint i;
++
++	desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
++	if (!desktop_name_list)
++		return FALSE;
++
++	names = g_strsplit (desktop_name_list, ":", -1);
++	for (i = 0; names[i] && !in_list; i++)
++		if (strcmp (names[i], name) == 0) {
++			in_list = TRUE;
++			break;
++		}
++	g_strfreev (names);
++
++	return in_list;
++}
++
+ static void
+ gedit_window_class_init (GeditWindowClass *klass)
+ {
+@@ -482,6 +505,7 @@
+ 	gtk_widget_class_bind_template_child_private (widget_class, GeditWindow, new_button);
+ 	gtk_widget_class_bind_template_child_private (widget_class, GeditWindow, open_button);
+ 	gtk_widget_class_bind_template_child_private (widget_class, GeditWindow, gear_button);
++	gtk_widget_class_bind_template_child_private (widget_class, GeditWindow, main_box);
+ 	gtk_widget_class_bind_template_child_private (widget_class, GeditWindow, hpaned);
+ 	gtk_widget_class_bind_template_child_private (widget_class, GeditWindow, side_panel_box);
+ 	gtk_widget_class_bind_template_child_private (widget_class, GeditWindow, side_panel);
+@@ -1093,10 +1117,12 @@
+ 		gedit_app_set_window_title (GEDIT_APP (g_application_get_default ()),
+ 		                            window,
+ 		                            "gedit");
++		if (!in_desktop ("Unity")) {
+ 		gtk_header_bar_set_title (GTK_HEADER_BAR (window->priv->headerbar),
+ 		                          "gedit");
+ 		gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->priv->headerbar),
+ 		                             NULL);
++		}
+ 		gtk_header_bar_set_title (GTK_HEADER_BAR (window->priv->fullscreen_headerbar),
+ 		                          "gedit");
+ 		gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->priv->fullscreen_headerbar),
+@@ -1197,10 +1223,12 @@
+ 				    window,
+ 				    main_title);
+ 
++	if (!in_desktop ("Unity")) {
+ 	gtk_header_bar_set_title (GTK_HEADER_BAR (window->priv->headerbar),
+ 	                          title);
+ 	gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->priv->headerbar),
+ 	                             subtitle);
++	}
+ 	gtk_header_bar_set_title (GTK_HEADER_BAR (window->priv->fullscreen_headerbar),
+ 	                          title);
+ 	gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->priv->fullscreen_headerbar),
+@@ -2744,6 +2772,7 @@
+ {
+ 	GtkTargetList *tl;
+ 	GMenuModel *hamburger_menu;
++	GtkStyleContext *context;
+ 
+ 	gedit_debug (DEBUG_WINDOW);
+ 
+@@ -2768,6 +2797,38 @@
+ 
+ 	gtk_widget_init_template (GTK_WIDGET (window));
+ 
++	/* If we're in Unity, then we take the headerbars and move the to the
++	 * main GtkBox, so they effectively become toolbars. */
++	if (in_desktop ("Unity")) {
++		g_object_ref (window->priv->titlebar_paned);
++		gtk_window_set_titlebar (GTK_WINDOW (window), NULL);
++		gtk_box_pack_start (GTK_BOX (window->priv->main_box),
++				    window->priv->titlebar_paned,
++				    FALSE, /* expand */
++				    FALSE, /* fill */
++				    0); /* padding */
++		g_object_unref (window->priv->titlebar_paned);
++
++		gtk_box_reorder_child (GTK_BOX (window->priv->main_box),
++				       window->priv->hpaned,
++				       -1);
++
++		gtk_header_bar_set_show_close_button (window->priv->headerbar,
++						      FALSE);
++		gtk_header_bar_set_show_close_button (window->priv->side_headerbar,
++						      FALSE);
++
++		/* set up the style classes */
++		context = gtk_widget_get_style_context (window->priv->titlebar_paned);
++		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_TITLEBAR);
++
++		context = gtk_widget_get_style_context (window->priv->headerbar);
++		gtk_style_context_add_class (context, GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
++
++		context = gtk_widget_get_style_context (window->priv->side_headerbar);
++		gtk_style_context_add_class (context, GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
++	}
++
+ 	g_action_map_add_action_entries (G_ACTION_MAP (window),
+ 	                                 win_entries,
+ 	                                 G_N_ELEMENTS (win_entries),
+@@ -3557,6 +3618,13 @@
+ 		return;
+ 
+ 	sync_fullscreen_actions (window, TRUE);
++	/* Under unity since the headerbar is not a decoration it's not handled
++	   in an automatic way, we need to manual hide/show it so the behaviour
++	   is the correct one */
++	if (in_desktop ("Unity")) {
++		gtk_widget_hide (window->priv->headerbar);
++		gtk_widget_hide (window->priv->side_headerbar);
++	}
+ 
+ 	/* Go to fullscreen mode and hide bars */
+ 	gtk_window_fullscreen (GTK_WINDOW (&window->window));
+@@ -3571,6 +3639,11 @@
+ 		return;
+ 
+ 	sync_fullscreen_actions (window, FALSE);
++	if (in_desktop ("Unity")) {
++		gtk_widget_show (window->priv->headerbar);
++		if (gtk_widget_get_visible (window->priv->side_panel))
++			gtk_widget_show (window->priv->side_headerbar);
++	}
+ 
+ 	/* Unfullscreen and show bars */
+ 	gtk_window_unfullscreen (GTK_WINDOW (&window->window));
+Index: b/gedit/gedit-window-private.h
+===================================================================
+--- a/gedit/gedit-window-private.h
++++ b/gedit/gedit-window-private.h
+@@ -80,6 +80,7 @@
+ 	guint           wrap_mode_changed_id;
+ 
+ 	/* Headerbars */
++	GtkWidget      *main_box;
+ 	GtkWidget      *titlebar_paned;
+ 	GtkWidget      *side_headerbar;
+ 	GtkWidget      *headerbar;

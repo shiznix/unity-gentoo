@@ -1,0 +1,113 @@
+From fd12d0136bfd9abc8a121f47775c2200237e535f Mon Sep 17 00:00:00 2001
+From: Lars Uebernickel <lars.uebernickel@canonical.com>
+Date: Tue, 29 Sep 2015 12:25:29 +0200
+Subject: [PATCH 2/2] Show traditional title bar in unity
+
+Based on a patch by Iain Lane <iain@orangesquash.org.uk>
+---
+ src/eog-window.c | 66 ++++++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 55 insertions(+), 11 deletions(-)
+
+Index: eog-3.18.2/src/eog-window.c
+===================================================================
+--- eog-3.18.2.orig/src/eog-window.c
++++ eog-3.18.2/src/eog-window.c
+@@ -134,6 +134,7 @@ struct _EogWindowPrivate {
+ 	GtkWidget           *zoom_revealer;
+ 	GtkWidget           *zoom_scale;
+ 	GtkWidget           *properties_dlg;
++	GtkWidget           *headerbar;
+ 
+ 	GMenu               *open_with_menu;
+ 	GPtrArray           *appinfo;
+@@ -4281,6 +4282,20 @@ eog_window_zoom_button_toggled_cb (GtkTo
+ }
+ 
+ static void
++on_action_state_changed (GActionGroup *action_group,
++			 gchar        *name,
++			 GVariant     *value,
++			 gpointer      user_data)
++{
++	EogWindow *window = user_data;
++	EogWindowPrivate *priv = window->priv;
++
++	gtk_widget_set_visible (GTK_WIDGET (priv->headerbar),
++				priv->mode != EOG_WINDOW_MODE_FULLSCREEN &&
++				priv->mode != EOG_WINDOW_MODE_SLIDESHOW);
++}
++
++static void
+ eog_window_construct_ui (EogWindow *window)
+ {
+ 	EogWindowPrivate *priv;
+@@ -4291,7 +4306,6 @@ eog_window_construct_ui (EogWindow *wind
+ 
+ 	GtkWidget *popup_menu;
+ 	GtkWidget *hpaned;
+-	GtkWidget *headerbar;
+ 	GtkWidget *zoom_button;
+ 	GtkWidget *zoom_image;
+ 	GtkWidget *menu_button;
+@@ -4306,12 +4320,19 @@ eog_window_construct_ui (EogWindow *wind
+ 	gtk_container_add (GTK_CONTAINER (window), priv->box);
+ 	gtk_widget_show (priv->box);
+ 
+-	headerbar = gtk_header_bar_new ();
+-	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (headerbar), TRUE);
+-	gtk_header_bar_set_title (GTK_HEADER_BAR (headerbar),
+-				  g_get_application_name ());
+-	gtk_window_set_titlebar (GTK_WINDOW (window), headerbar);
+-	gtk_widget_show (headerbar);
++	priv->headerbar = gtk_header_bar_new ();
++	if (!in_desktop ("Unity")) {
++		gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (priv->headerbar), TRUE);
++		gtk_header_bar_set_title (GTK_HEADER_BAR (priv->headerbar), g_get_application_name ());
++		gtk_window_set_titlebar (GTK_WINDOW (window), priv->headerbar);
++	} else {
++		gtk_container_add (GTK_CONTAINER (priv->box), priv->headerbar);
++
++		/* Need to hide toolbar when fullscreen (slideshow or normal fullscreen) */
++		g_signal_connect (window, "action-state-changed",
++				  G_CALLBACK (on_action_state_changed), window);
++	}
++	gtk_widget_show (priv->headerbar);
+ 
+ 	zoom_button = gtk_toggle_button_new ();
+ 	zoom_image = gtk_image_new_from_icon_name ("zoom-in-symbolic",
+@@ -4322,7 +4343,7 @@ eog_window_construct_ui (EogWindow *wind
+ 	g_signal_connect (zoom_button, "toggled",
+ 			  G_CALLBACK (eog_window_zoom_button_toggled_cb),
+ 			  window);
+-	gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), zoom_button);
++	gtk_header_bar_pack_start (GTK_HEADER_BAR (priv->headerbar), zoom_button);
+ 	/* disable zoom button if no image is loaded */
+ 	g_object_bind_property (g_action_map_lookup_action (G_ACTION_MAP(window),
+ 							    "zoom-normal"),
+@@ -4333,7 +4354,7 @@ eog_window_construct_ui (EogWindow *wind
+ 	priv->zoom_revealer = gtk_revealer_new ();
+ 	gtk_revealer_set_transition_type (GTK_REVEALER (priv->zoom_revealer),
+ 					  GTK_REVEALER_TRANSITION_TYPE_SLIDE_RIGHT);
+-	gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar),
++	gtk_header_bar_pack_start (GTK_HEADER_BAR (priv->headerbar),
+ 				   priv->zoom_revealer);
+ 	gtk_widget_show (priv->zoom_revealer);
+ 
+@@ -4367,7 +4388,7 @@ eog_window_construct_ui (EogWindow *wind
+ 		gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (menu_button),
+ 						G_MENU_MODEL (builder_object));
+ 
+-		gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), menu_button);
++		gtk_header_bar_pack_end (GTK_HEADER_BAR (priv->headerbar), menu_button);
+ 		gtk_widget_show (menu_button);
+ 
+ 		builder_object = gtk_builder_get_object (builder, "open-with-menu");
+@@ -4384,7 +4405,7 @@ eog_window_construct_ui (EogWindow *wind
+ 					"win.view-fullscreen");
+ 	gtk_widget_set_tooltip_text(fullscreen_button,
+ 				    _("Show the current image in fullscreen mode"));
+-	gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), fullscreen_button);
++	gtk_header_bar_pack_end (GTK_HEADER_BAR (priv->headerbar), fullscreen_button);
+ 	gtk_widget_show (fullscreen_button);
+ 
+ 	priv->cbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);

@@ -1,0 +1,2 @@
+Load nvidia proprietary driver automatically when installed.
+Fall back to autoconfiguration for graphics drivers in some cases instead of letting X fail when configuration files are available.

@@ -1,0 +1,148 @@
+gedit From ccb999d0b54c30eb8b8f0a03d450fb60a7a15a4c Mon Sep 17 00:00:00 2001
+
+From d61bc1e6141c6680582906f69dbcdd3a532a6d00 Mon Sep 17 00:00:00 2001
+From: Tim Lunn <tim@feathertop.org>
+Date: Fri, 21 Nov 2014 08:21:38 +1100
+Subject: [PATCH] Use traditional headerbar on not GNOME DE's
+
+---
+ data/totem.ui      |  1 +
+ src/totem-grilo.c  |  9 ++++++---
+ src/totem-object.c | 16 +++++++++++++---
+ 3 files changed, 20 insertions(+), 6 deletions(-)
+
+Index: totem-3.18.1/data/totem.ui
+===================================================================
+--- totem-3.18.1.orig/data/totem.ui
++++ totem-3.18.1/data/totem.ui
+@@ -60,6 +60,7 @@
+             <property name="expand">True</property>
+             <property name="fill">True</property>
+             <property name="position">0</property>
++            <property name="pack-type">end</property>
+           </packing>
+         </child>
+       </object>
+Index: totem-3.18.1/src/totem-grilo.c
+===================================================================
+--- totem-3.18.1.orig/src/totem-grilo.c
++++ totem-3.18.1/src/totem-grilo.c
+@@ -2225,6 +2225,29 @@ delete_cb (TotemSelectionToolbar *bar,
+ 	g_object_set (G_OBJECT (self->priv->browser), "selection-mode", FALSE, NULL);
+ }
+ 
++static gboolean
++in_desktop (const gchar *name)
++{
++	const gchar *desktop_name_list;
++	gchar **names;
++	gboolean in_list = FALSE;
++	gint i;
++
++	desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
++	if (!desktop_name_list)
++		return FALSE;
++
++	names = g_strsplit (desktop_name_list, ":", -1);
++	for (i = 0; names[i] && !in_list; i++)
++		if (strcmp (names[i], name) == 0) {
++			in_list = TRUE;
++			break;
++		}
++	g_strfreev (names);
++
++	return in_list;
++}
++
+ static void
+ setup_browse (TotemGrilo *self)
+ {
+@@ -2282,9 +2305,10 @@ setup_browse (TotemGrilo *self)
+ 	g_object_bind_property (self->priv->header, "select-mode",
+ 				self->priv->browser, "selection-mode",
+ 				G_BINDING_BIDIRECTIONAL);
+-	g_object_bind_property (self->priv->header, "select-mode",
+-				self->priv->header, "show-close-button",
+-				G_BINDING_INVERT_BOOLEAN);
++	if (in_desktop ("GNOME"))
++		g_object_bind_property (self->priv->header, "select-mode",
++					self->priv->header, "show-close-button",
++					G_BINDING_INVERT_BOOLEAN);
+ 
+ 	g_signal_connect (self->priv->browser, "view-selection-changed",
+ 			  G_CALLBACK (view_selection_changed_cb), self);
+Index: totem-3.18.1/src/totem-object.c
+===================================================================
+--- totem-3.18.1.orig/src/totem-object.c
++++ totem-3.18.1/src/totem-object.c
+@@ -3594,6 +3594,29 @@ update_buttons (TotemObject *totem)
+ 	totem_object_set_sensitivity2 ("next-chapter", has_item);
+ }
+ 
++static gboolean
++in_desktop (const gchar *name)
++{
++	const gchar *desktop_name_list;
++	gchar **names;
++	gboolean in_list = FALSE;
++	gint i;
++
++	desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
++	if (!desktop_name_list)
++		return FALSE;
++
++	names = g_strsplit (desktop_name_list, ":", -1);
++	for (i = 0; names[i] && !in_list; i++)
++		if (strcmp (names[i], name) == 0) {
++			in_list = TRUE;
++			break;
++		}
++	g_strfreev (names);
++
++	return in_list;
++}
++
+ void
+ totem_setup_window (TotemObject *totem)
+ {
+@@ -3602,7 +3625,9 @@ totem_setup_window (TotemObject *totem)
+ 	char *filename;
+ 	GError *err = NULL;
+ 	GtkWidget *vbox;
++	GtkWidget *headerbox;
+ 	GdkRGBA black;
++	gboolean set_titlebar;
+ 
+ 	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
+ 	keyfile = g_key_file_new ();
+@@ -3652,16 +3677,27 @@ totem_setup_window (TotemObject *totem)
+ 	gtk_widget_override_background_color (vbox, (GTK_STATE_FLAG_FOCUSED << 1), &black);
+ 
+ 	/* Headerbar */
++	set_titlebar = in_desktop ("GNOME");
++
+ 	totem->header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
+ 				      "show-search-button", TRUE,
+ 				      "show-select-button", TRUE,
+-				      "show-close-button", TRUE,
++				      "show-close-button", set_titlebar,
+ 				      "title", _("Videos"),
+ 				      NULL);
+ 	g_signal_connect (G_OBJECT (totem->header), "back-clicked",
+ 			  G_CALLBACK (back_button_clicked_cb), totem);
+-	gtk_window_set_titlebar (GTK_WINDOW (totem->win), totem->header);
+-
++	if (set_titlebar)
++		gtk_window_set_titlebar (GTK_WINDOW (totem->win), totem->header);
++	else {
++		headerbox = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_vbox"));
++		gtk_box_pack_start (GTK_BOX(headerbox), totem->header, FALSE, FALSE, 0);
++		g_object_bind_property (totem,
++				"fullscreen",
++				totem->header,
++				"visible",
++				G_BINDING_INVERT_BOOLEAN);
++	}
+ 	return;
+ }
+ 

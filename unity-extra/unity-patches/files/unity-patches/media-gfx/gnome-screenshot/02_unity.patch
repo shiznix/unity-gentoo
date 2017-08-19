@@ -1,0 +1,189 @@
+From 2daf2aab3435c4867a4e8265ff53af2c2747ce29 Mon Sep 17 00:00:00 2001
+From: Robert Ancell <robert.ancell@canonical.com>
+Date: Thu, 4 Dec 2014 14:30:34 +1300
+Subject: [PATCH] Adjust when running under Unity.
+
+Don't use GtkHeaderBar.
+Show the save dialog by default.
+Don't try and use the GNOME Shell D-Bus interface.
+---
+ src/screenshot-application.c        |  4 ++--
+ src/screenshot-config.c             | 21 +++++++++++++++++++++
+ src/screenshot-config.h             |  1 +
+ src/screenshot-dialog.c             | 21 +++++++++++++++++++++
+ src/screenshot-interactive-dialog.c |  9 +++++++++
+ src/screenshot-utils.c              |  4 ++++
+ 6 files changed, 58 insertions(+), 2 deletions(-)
+
+Index: b/src/screenshot-application.c
+===================================================================
+--- a/src/screenshot-application.c
++++ b/src/screenshot-application.c
+@@ -129,7 +129,7 @@
+ save_pixbuf_handle_error (ScreenshotApplication *self,
+                           GError *error)
+ {
+-  if (screenshot_config->interactive)
++  if (in_desktop ("Unity") || screenshot_config->interactive)
+     {
+       ScreenshotDialog *dialog = self->priv->dialog;
+ 
+@@ -474,7 +474,7 @@
+ 
+   screenshot_play_sound_effect ("screen-capture", _("Screenshot taken"));
+ 
+-  if (screenshot_config->interactive)
++  if (in_desktop ("Unity") || screenshot_config->interactive)
+     {
+       self->priv->dialog = screenshot_dialog_new (self->priv->screenshot,
+                                                   self->priv->save_uri,
+Index: b/src/screenshot-config.c
+===================================================================
+--- a/src/screenshot-config.c
++++ b/src/screenshot-config.c
+@@ -170,3 +170,24 @@
+ 
+   return TRUE;
+ }
++
++gboolean
++in_desktop (const gchar *name)
++{
++  const gchar *desktop_name_list;
++  gchar **names;
++  gboolean in_list = FALSE;
++  gint i;
++
++  desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
++  if (!desktop_name_list)
++    return FALSE;
++
++  names = g_strsplit (desktop_name_list, ":", -1);
++  for (i = 0; names[i] && !in_list; i++)
++    if (strcmp (names[i], name) == 0)
++      in_list = TRUE;
++  g_strfreev (names);
++
++  return in_list;
++}
+Index: b/src/screenshot-config.h
+===================================================================
+--- a/src/screenshot-config.h
++++ b/src/screenshot-config.h
+@@ -62,6 +62,7 @@
+ 							 guint delay_arg,
+ 							 gboolean interactive_arg,
+ 							 const gchar *file_arg);
++gboolean in_desktop (const gchar *name);
+ 
+ G_END_DECLS
+ 
+Index: b/src/screenshot-dialog.c
+===================================================================
+--- a/src/screenshot-dialog.c
++++ b/src/screenshot-dialog.c
+@@ -227,6 +227,31 @@
+   g_assert (res != 0);
+ 
+   dialog->dialog = GTK_WIDGET (gtk_builder_get_object (ui, "toplevel"));
++  if (in_desktop ("Unity"))
++    {
++      GtkWidget *grid, *button_box;
++
++      gtk_window_set_titlebar (GTK_WINDOW (dialog->dialog), NULL);
++
++      grid = GTK_WIDGET (gtk_builder_get_object (ui, "grid1"));
++      button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
++      gtk_widget_show (button_box);
++      gtk_grid_attach (GTK_GRID (grid), button_box, 0, 2, 3, 1);
++
++      dialog->copy_button = gtk_button_new_with_mnemonic (_("C_opy to Clipboard"));
++      gtk_widget_show (dialog->copy_button);
++      gtk_container_add (GTK_CONTAINER (button_box), dialog->copy_button);
++
++      dialog->save_button = gtk_widget_new (GTK_TYPE_BUTTON,
++              "label", _("_Save"),
++              "use-underline", TRUE,
++              "can-default", TRUE,
++              NULL);
++      gtk_window_set_default (GTK_WINDOW (dialog->dialog), dialog->save_button);
++
++      gtk_widget_show (dialog->save_button);
++      gtk_container_add (GTK_CONTAINER (button_box), dialog->save_button);
++    }
+   gtk_window_set_application (GTK_WINDOW (dialog->dialog), GTK_APPLICATION (g_application_get_default ()));
+   gtk_widget_realize (dialog->dialog);
+   g_signal_connect (dialog->dialog, "key-press-event",
+@@ -238,9 +263,11 @@
+   gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog->save_widget), current_folder);
+   gtk_entry_set_text (GTK_ENTRY (dialog->filename_entry), current_name);
+ 
+-  dialog->save_button = GTK_WIDGET (gtk_builder_get_object (ui, "save_button"));
++  if (!dialog->save_button)
++    dialog->save_button = GTK_WIDGET (gtk_builder_get_object (ui, "save_button"));
+   g_signal_connect (dialog->save_button, "clicked", G_CALLBACK (button_clicked), dialog);
+-  dialog->copy_button = GTK_WIDGET (gtk_builder_get_object (ui, "copy_button"));
++  if (!dialog->copy_button)
++    dialog->copy_button = GTK_WIDGET (gtk_builder_get_object (ui, "copy_button"));
+   g_signal_connect (dialog->copy_button, "clicked", G_CALLBACK (button_clicked), dialog);
+ 
+   setup_drawing_area (dialog, ui);
+Index: b/src/screenshot-interactive-dialog.c
+===================================================================
+--- a/src/screenshot-interactive-dialog.c
++++ b/src/screenshot-interactive-dialog.c
+@@ -447,8 +447,12 @@
+ 
+   dialog = gtk_application_window_new (GTK_APPLICATION (g_application_get_default ()));
+ 
++  if (!in_desktop ("Unity")) {
+   header_bar = gtk_header_bar_new ();
+   gtk_window_set_titlebar (GTK_WINDOW (dialog), header_bar);
++  }
++  else
++    header_bar = NULL;
+ 
+   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+@@ -493,7 +497,11 @@
+   data->user_data = user_data;
+   g_signal_connect (button, "clicked", G_CALLBACK (capture_button_clicked_cb), data);
+   gtk_size_group_add_widget (size_group, button);
++  if (header_bar)
+   gtk_header_bar_pack_end (GTK_HEADER_BAR (header_bar), button);
++  else
++    gtk_container_add (GTK_CONTAINER (button_box), button);
++
+   gtk_widget_set_can_default (button, TRUE);
+   gtk_widget_grab_default (button);
+   g_signal_connect (dialog, "key-press-event",
+@@ -503,6 +511,7 @@
+   button = gtk_button_new_with_mnemonic (_("_Cancel"));
+   gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
+   gtk_size_group_add_widget (size_group, button);
++  if (header_bar)
+   gtk_header_bar_pack_start (GTK_HEADER_BAR (header_bar), button);
+   g_signal_connect_swapped (button, "clicked",
+                             G_CALLBACK (gtk_widget_destroy), dialog);
+Index: b/src/screenshot-utils.c
+===================================================================
+--- a/src/screenshot-utils.c
++++ b/src/screenshot-utils.c
+@@ -630,6 +630,9 @@
+                                      filename);
+     }
+ 
++  if (in_desktop ("Unity"))
++      screenshot = screenshot_fallback_get_pixbuf(rectangle);
++  else {
+   connection = g_application_get_dbus_connection (g_application_get_default ());
+   g_dbus_connection_call_sync (connection,
+                                "org.gnome.Shell.Screenshot",
+@@ -659,6 +662,7 @@
+ 
+       screenshot = screenshot_fallback_get_pixbuf (rectangle);
+     }
++  }
+ 
+   g_free (path);
+   g_free (tmpname);

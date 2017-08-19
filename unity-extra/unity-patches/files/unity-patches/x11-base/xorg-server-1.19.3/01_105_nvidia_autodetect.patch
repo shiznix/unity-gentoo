@@ -1,0 +1,42 @@
+Description: Load proprietary drivers automatically when installed.
+Author: Robert Hooker <sarvatt@ubuntu.com>
+
+--- a/hw/xfree86/common/xf86AutoConfig.c
++++ b/hw/xfree86/common/xf86AutoConfig.c
+@@ -76,6 +76,13 @@
+ 	"\tDevice\t" BUILTIN_DEVICE_NAME "\n" \
+ 	"EndSection\n\n"
+ 
++#define BUILTIN_SCREEN_SECTION_PROPRIETARY \
++	"Section \"Screen\"\n" \
++	"\tIdentifier\t" BUILTIN_SCREEN_NAME "\n" \
++	"\tDevice\t" BUILTIN_DEVICE_NAME "\n" \
++	"\tDefaultDepth\t24\n" \
++	"EndSection\n\n"
++
+ #define BUILTIN_LAYOUT_SECTION_PRE \
+ 	"Section \"ServerLayout\"\n" \
+ 	"\tIdentifier\t\"Builtin Default Layout\"\n"
+@@ -154,7 +161,11 @@ xf86AutoConfig(void)
+     for (p = deviceList; *p; p++) {
+         snprintf(buf, sizeof(buf), BUILTIN_DEVICE_SECTION, *p, 0, *p);
+         AppendToConfig(buf);
+-        snprintf(buf, sizeof(buf), BUILTIN_SCREEN_SECTION, *p, 0, *p, 0);
++        if (strcmp(*p, "nvidia") == 0)
++            snprintf(buf, sizeof(buf), BUILTIN_SCREEN_SECTION_PROPRIETARY, *p,
++                     0, *p, 0);
++        else
++            snprintf(buf, sizeof(buf), BUILTIN_SCREEN_SECTION, *p, 0, *p, 0);
+         AppendToConfig(buf);
+     }
+ 
+--- a/hw/xfree86/common/xf86pciBus.c
++++ b/hw/xfree86/common/xf86pciBus.c
+@@ -1205,6 +1205,7 @@ xf86VideoPtrToDriverList(struct pci_devi
+     {
+         int idx = 0;
+ 
++        driverList[idx++] = "nvidia";
+ #ifdef __linux__
+         driverList[idx++] = "nouveau";
+ #endif

@@ -1,0 +1,2 @@
+!!! This patch is intended to use along with patches for x11-terms/gnome-terminal
+Add the style context provider with FALLBACK priority.

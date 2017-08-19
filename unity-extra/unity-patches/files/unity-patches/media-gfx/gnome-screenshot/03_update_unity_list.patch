@@ -1,0 +1,24 @@
+Description: Add quicklist area-shot option
+
+Index: gnome-screenshot-3.16.2/src/org.gnome.Screenshot.desktop.in
+===================================================================
+--- gnome-screenshot-3.16.2.orig/src/org.gnome.Screenshot.desktop.in
++++ gnome-screenshot-3.16.2/src/org.gnome.Screenshot.desktop.in
+@@ -12,7 +12,7 @@ NotShowIn=KDE;
+ X-GNOME-Bugzilla-Bugzilla=GNOME
+ X-GNOME-Bugzilla-Product=gnome-utils
+ X-GNOME-Bugzilla-Component=screenshot
+-Actions=screen-shot;window-shot;
++Actions=screen-shot;window-shot;area-shot
+ DBusActivatable=true
+ 
+ [Desktop Action screen-shot]
+@@ -22,3 +22,8 @@ Exec=gnome-screenshot
+ [Desktop Action window-shot]
+ _Name=Take a Screenshot of the Current Window
+ Exec=gnome-screenshot -w
++
++[Desktop Action area-shot]
++_Name=Take a Screenshot of a Selected Area
++Exec=gnome-screenshot -a
++OnlyShowIn=Unity;

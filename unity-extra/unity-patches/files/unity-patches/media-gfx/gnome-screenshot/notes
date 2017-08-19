@@ -1,0 +1,5 @@
+Use Ubuntu help instead of GNOME help.
+Don't use GtkHeaderBar.
+Show the save dialog by default.
+Don't try and use the GNOME Shell D-Bus interface.
+Add quicklist area-shot option.
