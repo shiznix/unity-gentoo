@@ -60,10 +60,12 @@ src_install() {
 	if use ubuntu-cursor; then
 		# Do the following only if there #
 		#  is no file collision detected #
-		local path="usr/share/cursors/xorg-x11/default"
-		local owner=$(portageq owners "${EROOT}" "${EROOT}${path}"/index.theme 2>/dev/null | grep "${CATEGORY}/${PN}-[0-9]" 2>/dev/null)
-		if [ ! -e "${EROOT}${path}"/index.theme ] || [ "${owner}" ]; then
-			insinto "${path}"
+		local index_dir="/usr/share/cursors/xorg-x11/default"
+		[[ -e "${EROOT%/}${index_dir}"/index.theme ]] \
+			&& local index_owner=$(portageq owners "${EROOT}" "${EROOT%/}${index_dir}"/index.theme 2>/dev/null | grep "${CATEGORY}/${PN}-[0-9]" 2>/dev/null)
+		## pass when not null or unset
+		if [[ -n "${index_owner-unset}" ]]; then
+			insinto "${index_dir}"
 			doins "${FILESDIR}"/index.theme
 		fi
 	fi

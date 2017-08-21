@@ -22,3 +22,9 @@ src_install() {
 	insinto /etc/portage
 	doins -r "${FILESDIR}"/unity-patches
 }
+
+pkg_postinst() {
+	einfo
+	elog "Use 'eselect unity-patches' to enable patches"
+	einfo
+}
