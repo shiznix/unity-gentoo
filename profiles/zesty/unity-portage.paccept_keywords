@@ -59,6 +59,7 @@ app-emulation/lxc
 dev-lang/rust
 =dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
 dev-libs/capnproto
+dev-libs/folks
 dev-libs/libindicate-qt
 =dev-libs/nspr-4.16*
 =dev-libs/nss-3.32*
