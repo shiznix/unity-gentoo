@@ -38,9 +38,6 @@ QA_FLAGS_IGNORED=".*\.nexe"
 # right tools for it, bug #469144 .
 QA_PRESTRIPPED=".*\.nexe"
 
-# For <net-fs/samba-4.5 DEPEND below, see b.g.o #622700 #
-#  >=net-fs/samba-4.5 enables '--with-lttng' by default if dev-util/lttng-ust is present #
-#  thus breaking Chromium kernel namespace sandbox (see https://bugs.chromium.org/p/chromium/issues/detail?id=571277) #
 COMMON_DEPEND="
 	app-arch/bzip2:=
 	cups? ( >=net-print/cups-1.3.11:= )
@@ -58,7 +55,6 @@ COMMON_DEPEND="
 	>=media-libs/harfbuzz-1.4.2:=[icu(-)]
 	media-libs/libjpeg-turbo:=
 	media-libs/libpng:=
-	<net-fs/samba-4.5
 	system-libvpx? ( media-libs/libvpx:=[postproc,svc] )
 	>=media-libs/openh264-1.6.0:=
 	pulseaudio? ( media-sound/pulseaudio:= )
