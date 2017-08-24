@@ -21,6 +21,16 @@ S="${FILESDIR}"
 src_install() {
 	insinto /etc/portage
 	doins -r "${FILESDIR}"/unity-patches
+
+	## Rename slot delimiter '--' to ':'.
+	##   (a dirname with char ':' can't be listed in the Manifest).
+	local dirname prev_shopt=$(shopt -p nullglob)
+
+	shopt -s nullglob
+	for dirname in "${D}"/etc/portage/unity-patches/*/*--*; do
+		mv "${dirname}" "${dirname/--/:}"
+	done
+	${prev_shopt}
 }
 
 pkg_postinst() {

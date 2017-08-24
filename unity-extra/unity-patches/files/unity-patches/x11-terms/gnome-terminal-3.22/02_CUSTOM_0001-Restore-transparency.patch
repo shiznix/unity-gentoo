@@ -1,7 +1,18 @@
-diff -Nur a/src/migration.c b/src/migration.c
---- a/src/migration.c	2016-05-23 10:28:00.000000000 +0200
-+++ b/src/migration.c	2017-08-18 03:11:43.420310711 +0200
-@@ -331,6 +331,9 @@
+ src/migration.c                    | 43 ++++++++++++++++++++++++++++++++++++--
+ src/org.gnome.Terminal.gschema.xml |  6 +++++-
+ src/profile-editor.c               | 27 +++++++++++++++++++++---
+ src/profile-preferences.ui         | 41 ++++++++++++++++++++++++++++++------
+ src/terminal-app.c                 | 13 +++++++-----
+ src/terminal-prefs.c               |  4 ++--
+ src/terminal-schemas.h             |  1 +
+ src/terminal-screen.c              | 32 ++++++++++++++++++++++------
+ 8 files changed, 142 insertions(+), 25 deletions(-)
+
+diff --git a/src/migration.c b/src/migration.c
+index 34401c7..3c60559 100644
+--- a/src/migration.c
++++ b/src/migration.c
+@@ -331,6 +331,9 @@ migrate_global_prefs (GSettings *settings,
    migrate_string_list (client, GCONF_GLOBAL_PREFIX, "active_encodings",
                         settings, TERMINAL_SETTING_ENCODINGS_KEY);
  
@@ -11,7 +22,7 @@ diff -Nur a/src/migration.c b/src/migration.c
    g_object_unref (client);
  
    return TRUE;
-@@ -378,6 +381,8 @@
+@@ -378,6 +381,8 @@ migrate_profile (TerminalSettingsList *list,
  {
    GSettings *settings;
    char *child_name, *path;
@@ -20,7 +31,7 @@ diff -Nur a/src/migration.c b/src/migration.c
    gs_free char *name;
    gboolean is_default;
  
-@@ -394,6 +399,31 @@
+@@ -394,6 +399,31 @@ migrate_profile (TerminalSettingsList *list,
  
    path = gconf_concat_dir_and_key (GCONF_PROFILES_PREFIX, gconf_id);
  
@@ -52,7 +63,7 @@ diff -Nur a/src/migration.c b/src/migration.c
    migrate_string (client, path, KEY_VISIBLE_NAME,
                    settings, TERMINAL_PROFILE_VISIBLE_NAME_KEY);
  
-@@ -481,7 +511,7 @@
+@@ -481,7 +511,7 @@ migrate_profiles (GSettings *global_settings,
    TerminalSettingsList *list;
    GConfClient *client;
    GConfValue *value, *dvalue;
@@ -61,7 +72,7 @@ diff -Nur a/src/migration.c b/src/migration.c
    const char *default_profile;
  
    client = gconf_client_get_default ();
-@@ -491,15 +521,24 @@
+@@ -491,15 +521,24 @@ migrate_profiles (GSettings *global_settings,
        dvalue->type == GCONF_VALUE_STRING)
      default_profile = gconf_value_get_string (dvalue);
    else
@@ -87,9 +98,10 @@ diff -Nur a/src/migration.c b/src/migration.c
        migrate_profile (list, client,
                         gconf_value_get_string (l->data),
                         default_profile);
-diff -Nur a/src/org.gnome.Terminal.gschema.xml b/src/org.gnome.Terminal.gschema.xml
---- a/src/org.gnome.Terminal.gschema.xml	2017-08-18 03:09:24.706859584 +0200
-+++ b/src/org.gnome.Terminal.gschema.xml	2017-08-18 03:11:43.415310658 +0200
+diff --git a/src/org.gnome.Terminal.gschema.xml b/src/org.gnome.Terminal.gschema.xml
+index 7bdd156..a8bdb93 100644
+--- a/src/org.gnome.Terminal.gschema.xml
++++ b/src/org.gnome.Terminal.gschema.xml
 @@ -374,9 +374,13 @@
        <default>false</default>
        <summary>Whether to use a transparent background</summary>
@@ -105,9 +117,10 @@ diff -Nur a/src/org.gnome.Terminal.gschema.xml b/src/org.gnome.Terminal.gschema.
        <summary>Adjust the amount of transparency</summary>
        <description>A value between 0 and 100, where 0 is opaque and 100 is fully transparent.</description>
      </key>
-diff -Nur a/src/profile-editor.c b/src/profile-editor.c
---- a/src/profile-editor.c	2017-08-18 03:09:24.706859584 +0200
-+++ b/src/profile-editor.c	2017-08-18 03:11:43.416310668 +0200
+diff --git a/src/profile-editor.c b/src/profile-editor.c
+index 1a758a9..ed8aa43 100644
+--- a/src/profile-editor.c
++++ b/src/profile-editor.c
 @@ -35,6 +35,7 @@
  #include "terminal-util.h"
  #include "terminal-profiles-list.h"
@@ -116,7 +129,7 @@ diff -Nur a/src/profile-editor.c b/src/profile-editor.c
  
  typedef struct _TerminalColorScheme TerminalColorScheme;
  
-@@ -817,6 +818,7 @@
+@@ -817,6 +818,7 @@ terminal_profile_edit (GSettings  *profile,
    GtkWidget *editor, *w;
    gs_free char *uuid = NULL;
    guint i;
@@ -124,7 +137,7 @@ diff -Nur a/src/profile-editor.c b/src/profile-editor.c
  
    editor = g_object_get_data (G_OBJECT (profile), "editor-window");
    if (editor)
-@@ -824,7 +826,7 @@
+@@ -824,7 +826,7 @@ terminal_profile_edit (GSettings  *profile,
        terminal_util_dialog_focus_widget (editor, widget_name);
  
        gtk_window_set_transient_for (GTK_WINDOW (editor),
@@ -133,7 +146,7 @@ diff -Nur a/src/profile-editor.c b/src/profile-editor.c
        gtk_window_present (GTK_WINDOW (editor));
        return;
      }
-@@ -905,6 +907,15 @@
+@@ -905,6 +907,15 @@ terminal_profile_edit (GSettings  *profile,
                          profile);
      }
  
@@ -149,7 +162,7 @@ diff -Nur a/src/profile-editor.c b/src/profile-editor.c
    profile_palette_notify_colorpickers_cb (profile, TERMINAL_PROFILE_PALETTE_KEY, editor);
    g_signal_connect (profile, "changed::" TERMINAL_PROFILE_PALETTE_KEY,
                      G_CALLBACK (profile_palette_notify_colorpickers_cb),
-@@ -1224,14 +1235,24 @@
+@@ -1224,14 +1235,24 @@ terminal_profile_edit (GSettings  *profile,
    g_settings_bind (profile, TERMINAL_PROFILE_BACKGROUND_TRANSPARENCY_PERCENT,
                     gtk_builder_get_object (builder, "background-transparent-adjustment"),
                     "value", G_SETTINGS_BIND_GET | G_SETTINGS_BIND_SET);
@@ -176,9 +189,10 @@ diff -Nur a/src/profile-editor.c b/src/profile-editor.c
 +                                NULL);
    gtk_window_present (GTK_WINDOW (editor));
  }
-diff -Nur a/src/profile-preferences.ui b/src/profile-preferences.ui
---- a/src/profile-preferences.ui	2017-08-18 03:09:24.707859594 +0200
-+++ b/src/profile-preferences.ui	2017-08-18 03:11:43.417310679 +0200
+diff --git a/src/profile-preferences.ui b/src/profile-preferences.ui
+index b7decb2..b01122b 100644
+--- a/src/profile-preferences.ui
++++ b/src/profile-preferences.ui
 @@ -23,11 +23,6 @@
      <property name="step_increment">1</property>
      <property name="page_increment">100</property>
@@ -248,10 +262,11 @@ diff -Nur a/src/profile-preferences.ui b/src/profile-preferences.ui
                            </object>
                          </child>
                        </object>
-diff -Nur a/src/terminal-app.c b/src/terminal-app.c
---- a/src/terminal-app.c	2017-03-20 22:02:06.000000000 +0100
-+++ b/src/terminal-app.c	2017-08-18 03:11:43.421310721 +0200
-@@ -237,7 +237,7 @@
+diff --git a/src/terminal-app.c b/src/terminal-app.c
+index 6c783bc..df96dc5 100644
+--- a/src/terminal-app.c
++++ b/src/terminal-app.c
+@@ -237,7 +237,7 @@ terminal_app_new_profile (TerminalApp *app,
    if (profile == NULL)
      return;
  
@@ -260,7 +275,7 @@ diff -Nur a/src/terminal-app.c b/src/terminal-app.c
  }
  
  void
-@@ -339,8 +339,11 @@
+@@ -339,8 +339,11 @@ app_menu_preferences_cb (GSimpleAction *action,
                           gpointer       user_data)
  {
    TerminalApp *app = user_data;
@@ -273,7 +288,7 @@ diff -Nur a/src/terminal-app.c b/src/terminal-app.c
  }
  
  static void
-@@ -675,21 +678,21 @@
+@@ -675,21 +678,21 @@ terminal_app_edit_profile (TerminalApp     *app,
                             GtkWindow       *transient_parent,
                             const char      *widget_name)
  {
@@ -298,10 +313,11 @@ diff -Nur a/src/terminal-app.c b/src/terminal-app.c
  }
  
  /**
-diff -Nur a/src/terminal-prefs.c b/src/terminal-prefs.c
---- a/src/terminal-prefs.c	2016-11-27 20:10:27.000000000 +0100
-+++ b/src/terminal-prefs.c	2017-08-18 03:11:43.421310721 +0200
-@@ -300,7 +300,7 @@
+diff --git a/src/terminal-prefs.c b/src/terminal-prefs.c
+index cd7b0d9..860e911 100644
+--- a/src/terminal-prefs.c
++++ b/src/terminal-prefs.c
+@@ -300,7 +300,7 @@ profile_list_row_activated_cb (GtkTreeView *tree_view,
    if (selected_profile == NULL)
      return;
  
@@ -310,7 +326,7 @@ diff -Nur a/src/terminal-prefs.c b/src/terminal-prefs.c
  }
  
  static GtkTreeView *
-@@ -425,7 +425,7 @@
+@@ -425,7 +425,7 @@ profile_list_edit_button_clicked_cb (GtkWidget *button,
    if (selected_profile == NULL)
      return;
  
@@ -319,10 +335,11 @@ diff -Nur a/src/terminal-prefs.c b/src/terminal-prefs.c
  }
  
  static void
-diff -Nur a/src/terminal-schemas.h b/src/terminal-schemas.h
---- a/src/terminal-schemas.h	2017-08-18 03:09:24.707859594 +0200
-+++ b/src/terminal-schemas.h	2017-08-18 03:11:43.418310690 +0200
-@@ -70,6 +70,7 @@
+diff --git a/src/terminal-schemas.h b/src/terminal-schemas.h
+index e434075..c64a2e7 100644
+--- a/src/terminal-schemas.h
++++ b/src/terminal-schemas.h
+@@ -70,6 +70,7 @@ G_BEGIN_DECLS
  #define TERMINAL_PROFILE_WORD_CHAR_EXCEPTIONS_KEY       "word-char-exceptions"
  
  #define TERMINAL_PROFILE_USE_TRANSPARENT_BACKGROUND      "use-transparent-background"
@@ -330,10 +347,11 @@ diff -Nur a/src/terminal-schemas.h b/src/terminal-schemas.h
  #define TERMINAL_PROFILE_BACKGROUND_TRANSPARENCY_PERCENT "background-transparency-percent"
  
  #define TERMINAL_SETTING_CONFIRM_CLOSE_KEY              "confirm-close"
-diff -Nur a/src/terminal-screen.c b/src/terminal-screen.c
---- a/src/terminal-screen.c	2017-08-18 03:09:24.708859605 +0200
-+++ b/src/terminal-screen.c	2017-08-18 03:11:43.418310690 +0200
-@@ -563,6 +563,11 @@
+diff --git a/src/terminal-screen.c b/src/terminal-screen.c
+index f9efd30..7cd6e18 100644
+--- a/src/terminal-screen.c
++++ b/src/terminal-screen.c
+@@ -573,6 +573,11 @@ terminal_screen_class_init (TerminalScreenClass *klass)
  
    g_type_class_add_private (object_class, sizeof (TerminalScreenPrivate));
  
@@ -345,7 +363,7 @@ diff -Nur a/src/terminal-screen.c b/src/terminal-screen.c
    n_url_regexes = G_N_ELEMENTS (url_regex_patterns);
    precompile_regexes (url_regex_patterns, n_url_regexes, &url_regexes, &url_regex_flavors);
    n_extra_regexes = G_N_ELEMENTS (extra_regex_patterns);
-@@ -829,7 +834,8 @@
+@@ -839,7 +844,8 @@ terminal_screen_profile_changed_cb (GSettings     *profile,
        prop_name == I_(TERMINAL_PROFILE_HIGHLIGHT_FOREGROUND_COLOR_KEY) ||
        prop_name == I_(TERMINAL_PROFILE_PALETTE_KEY) ||
        prop_name == I_(TERMINAL_PROFILE_USE_TRANSPARENT_BACKGROUND) ||
@@ -355,7 +373,7 @@ diff -Nur a/src/terminal-screen.c b/src/terminal-screen.c
      update_color_scheme (screen);
  
    if (!prop_name || prop_name == I_(TERMINAL_PROFILE_AUDIBLE_BELL_KEY))
-@@ -899,9 +905,10 @@
+@@ -935,9 +941,10 @@ update_color_scheme (TerminalScreen *screen)
    GdkRGBA *cursor_bgp = NULL, *cursor_fgp = NULL;
    GdkRGBA *highlight_bgp = NULL, *highlight_fgp = NULL;
    GtkStyleContext *context;
@@ -368,7 +386,7 @@ diff -Nur a/src/terminal-screen.c b/src/terminal-screen.c
  
    context = gtk_widget_get_style_context (widget);
    gtk_style_context_get_color (context, gtk_style_context_get_state (context), &theme_fg);
-@@ -942,9 +949,18 @@
+@@ -978,9 +985,18 @@ update_color_scheme (TerminalScreen *screen)
      }
  
    colors = terminal_g_settings_get_rgba_palette (priv->profile, TERMINAL_PROFILE_PALETTE_KEY, &n_colors);
@@ -389,7 +407,7 @@ diff -Nur a/src/terminal-screen.c b/src/terminal-screen.c
      {
        gint transparency_percent;
  
-@@ -952,7 +968,11 @@
+@@ -988,7 +1004,11 @@ update_color_scheme (TerminalScreen *screen)
        bg.alpha = (100 - transparency_percent) / 100.0;
      }
    else

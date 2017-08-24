@@ -1,0 +1,1592 @@
+ src/Makefile.am           |   1 +
+ src/math-preferences.c    | 919 +++++++++++++++++++++++-----------------------
+ src/math-preferences.vala |   8 +-
+ src/math-window.c         | 209 ++++++++---
+ src/math-window.vala      |  27 ++
+ src/xdg-desktop.c         | 115 ++++++
+ src/xdg-desktop.vala      |  22 ++
+ 7 files changed, 800 insertions(+), 501 deletions(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 6ad5a70..3ac24da 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -26,6 +26,7 @@ gnome_calculator_SOURCES = \
+ 	math-window.vala \
+ 	math-function-popup.vala \
+ 	math-history.vala \
++	xdg-desktop.vala \
+ 	$(BUILT_SOURCES)
+ 
+ gnome_calculator_VALAFLAGS = \
+diff --git a/src/math-preferences.c b/src/math-preferences.c
+index 1661d42..866131f 100644
+--- a/src/math-preferences.c
++++ b/src/math-preferences.c
+@@ -15,12 +15,12 @@
+ #include <glib-object.h>
+ #include <gtk/gtk.h>
+ #include "libcalculator.h"
++#include <stdlib.h>
++#include <string.h>
+ #include <gdk/gdk.h>
+ #include <glib/gi18n-lib.h>
+ #include <float.h>
+ #include <math.h>
+-#include <stdlib.h>
+-#include <string.h>
+ 
+ 
+ #define TYPE_MATH_PREFERENCES_DIALOG (math_preferences_dialog_get_type ())
+@@ -66,6 +66,7 @@ enum  {
+ };
+ MathPreferencesDialog* math_preferences_dialog_new (MathEquation* eq);
+ MathPreferencesDialog* math_preferences_dialog_construct (GType object_type, MathEquation* eq);
++gboolean is_desktop (const gchar* name);
+ static void math_preferences_dialog_real_response (GtkDialog* base, gint id);
+ static gboolean math_preferences_dialog_real_delete_event (GtkWidget* base, GdkEventAny* event);
+ static void math_preferences_dialog_number_format_combo_changed_cb (MathPreferencesDialog* self, GtkComboBox* combo);
+@@ -106,10 +107,18 @@ static gint _vala_array_length (gpointer array);
+ 
+ MathPreferencesDialog* math_preferences_dialog_construct (GType object_type, MathEquation* eq) {
+ 	MathPreferencesDialog * self = NULL;
+-	MathEquation* _tmp0_ = NULL;
++	gint _tmp0_ = 0;
++	gboolean _tmp1_ = FALSE;
++	MathEquation* _tmp2_ = NULL;
+ 	g_return_val_if_fail (eq != NULL, NULL);
+-	_tmp0_ = eq;
+-	self = (MathPreferencesDialog*) g_object_new (object_type, "use-header-bar", 1, "equation", _tmp0_, NULL);
++	_tmp1_ = is_desktop ("Unity");
++	if (_tmp1_) {
++		_tmp0_ = 0;
++	} else {
++		_tmp0_ = 1;
++	}
++	_tmp2_ = eq;
++	self = (MathPreferencesDialog*) g_object_new (object_type, "use-header-bar", _tmp0_, "equation", _tmp2_, NULL);
+ 	return self;
+ }
+ 
+@@ -506,615 +515,623 @@ static GObject * math_preferences_dialog_constructor (GType type, guint n_constr
+ 	GObjectClass * parent_class;
+ 	MathPreferencesDialog * self;
+ 	const gchar* _tmp0_ = NULL;
+-	GtkWidget* _tmp1_ = NULL;
++	gboolean _tmp1_ = FALSE;
+ 	GtkGrid* grid = NULL;
+-	GtkGrid* _tmp2_ = NULL;
+-	GtkGrid* _tmp3_ = NULL;
+ 	GtkGrid* _tmp4_ = NULL;
+ 	GtkGrid* _tmp5_ = NULL;
+ 	GtkGrid* _tmp6_ = NULL;
+-	GtkBox* _tmp7_ = NULL;
++	GtkGrid* _tmp7_ = NULL;
+ 	GtkGrid* _tmp8_ = NULL;
++	GtkBox* _tmp9_ = NULL;
++	GtkGrid* _tmp10_ = NULL;
+ 	GtkLabel* label = NULL;
+-	const gchar* _tmp9_ = NULL;
+-	GtkLabel* _tmp10_ = NULL;
+-	GtkLabel* _tmp11_ = NULL;
++	const gchar* _tmp11_ = NULL;
+ 	GtkLabel* _tmp12_ = NULL;
+-	GtkGrid* _tmp13_ = NULL;
++	GtkLabel* _tmp13_ = NULL;
+ 	GtkLabel* _tmp14_ = NULL;
+-	GtkComboBox* _tmp15_ = NULL;
++	GtkGrid* _tmp15_ = NULL;
+ 	GtkLabel* _tmp16_ = NULL;
+ 	GtkComboBox* _tmp17_ = NULL;
+-	GtkComboBox* _tmp18_ = NULL;
++	GtkLabel* _tmp18_ = NULL;
+ 	GtkComboBox* _tmp19_ = NULL;
+-	GtkGrid* _tmp20_ = NULL;
++	GtkComboBox* _tmp20_ = NULL;
+ 	GtkComboBox* _tmp21_ = NULL;
+-	GtkListStore* model = NULL;
+-	GtkListStore* _tmp22_ = NULL;
++	GtkGrid* _tmp22_ = NULL;
+ 	GtkComboBox* _tmp23_ = NULL;
++	GtkListStore* model = NULL;
+ 	GtkListStore* _tmp24_ = NULL;
++	GtkComboBox* _tmp25_ = NULL;
++	GtkListStore* _tmp26_ = NULL;
+ 	GtkTreeIter iter = {0};
+-	GtkListStore* _tmp25_ = NULL;
+-	GtkTreeIter _tmp26_ = {0};
+ 	GtkListStore* _tmp27_ = NULL;
+ 	GtkTreeIter _tmp28_ = {0};
+-	const gchar* _tmp29_ = NULL;
+-	GtkListStore* _tmp30_ = NULL;
+-	GtkTreeIter _tmp31_ = {0};
++	GtkListStore* _tmp29_ = NULL;
++	GtkTreeIter _tmp30_ = {0};
++	const gchar* _tmp31_ = NULL;
+ 	GtkListStore* _tmp32_ = NULL;
+ 	GtkTreeIter _tmp33_ = {0};
+-	const gchar* _tmp34_ = NULL;
+-	GtkListStore* _tmp35_ = NULL;
+-	GtkTreeIter _tmp36_ = {0};
++	GtkListStore* _tmp34_ = NULL;
++	GtkTreeIter _tmp35_ = {0};
++	const gchar* _tmp36_ = NULL;
+ 	GtkListStore* _tmp37_ = NULL;
+ 	GtkTreeIter _tmp38_ = {0};
+-	const gchar* _tmp39_ = NULL;
+-	GtkListStore* _tmp40_ = NULL;
+-	GtkTreeIter _tmp41_ = {0};
++	GtkListStore* _tmp39_ = NULL;
++	GtkTreeIter _tmp40_ = {0};
++	const gchar* _tmp41_ = NULL;
+ 	GtkListStore* _tmp42_ = NULL;
+ 	GtkTreeIter _tmp43_ = {0};
+-	const gchar* _tmp44_ = NULL;
++	GtkListStore* _tmp44_ = NULL;
++	GtkTreeIter _tmp45_ = {0};
++	const gchar* _tmp46_ = NULL;
+ 	GtkCellRendererText* renderer = NULL;
+-	GtkCellRendererText* _tmp45_ = NULL;
+-	GtkComboBox* _tmp46_ = NULL;
+ 	GtkCellRendererText* _tmp47_ = NULL;
+ 	GtkComboBox* _tmp48_ = NULL;
+ 	GtkCellRendererText* _tmp49_ = NULL;
++	GtkComboBox* _tmp50_ = NULL;
++	GtkCellRendererText* _tmp51_ = NULL;
+ 	GtkBox* format_options_box = NULL;
+-	GtkBox* _tmp50_ = NULL;
+-	GtkBox* _tmp51_ = NULL;
+ 	GtkBox* _tmp52_ = NULL;
+ 	GtkBox* _tmp53_ = NULL;
+ 	GtkBox* _tmp54_ = NULL;
+ 	GtkBox* _tmp55_ = NULL;
+-	GtkGrid* _tmp56_ = NULL;
++	GtkBox* _tmp56_ = NULL;
+ 	GtkBox* _tmp57_ = NULL;
+-	GtkBox* places_box = NULL;
+-	GtkBox* _tmp58_ = NULL;
++	GtkGrid* _tmp58_ = NULL;
+ 	GtkBox* _tmp59_ = NULL;
++	GtkBox* places_box = NULL;
+ 	GtkBox* _tmp60_ = NULL;
+ 	GtkBox* _tmp61_ = NULL;
++	GtkBox* _tmp62_ = NULL;
++	GtkBox* _tmp63_ = NULL;
+ 	gchar* string = NULL;
+-	const gchar* _tmp62_ = NULL;
+-	gchar* _tmp63_ = NULL;
+-	gchar** tokens = NULL;
+ 	const gchar* _tmp64_ = NULL;
+-	gchar** _tmp65_ = NULL;
+-	gchar** _tmp66_ = NULL;
++	gchar* _tmp65_ = NULL;
++	gchar** tokens = NULL;
++	const gchar* _tmp66_ = NULL;
++	gchar** _tmp67_ = NULL;
++	gchar** _tmp68_ = NULL;
+ 	gint tokens_length1 = 0;
+ 	gint _tokens_size_ = 0;
+ 	GtkAdjustment* decimal_places_adjustment = NULL;
+-	GtkAdjustment* _tmp67_ = NULL;
+-	GtkAdjustment* _tmp68_ = NULL;
+-	GtkSpinButton* _tmp69_ = NULL;
+-	gchar** _tmp70_ = NULL;
+-	gint _tmp70__length1 = 0;
+-	GtkSpinButton* _tmp81_ = NULL;
+-	GtkSpinButton* _tmp82_ = NULL;
+-	GtkBox* _tmp83_ = NULL;
++	GtkAdjustment* _tmp69_ = NULL;
++	GtkAdjustment* _tmp70_ = NULL;
++	GtkSpinButton* _tmp71_ = NULL;
++	gchar** _tmp72_ = NULL;
++	gint _tmp72__length1 = 0;
++	GtkSpinButton* _tmp83_ = NULL;
+ 	GtkSpinButton* _tmp84_ = NULL;
+-	gchar** _tmp85_ = NULL;
+-	gint _tmp85__length1 = 0;
+-	const gchar* _tmp96_ = NULL;
+-	GtkCheckButton* _tmp97_ = NULL;
+-	GtkCheckButton* _tmp98_ = NULL;
++	GtkBox* _tmp85_ = NULL;
++	GtkSpinButton* _tmp86_ = NULL;
++	gchar** _tmp87_ = NULL;
++	gint _tmp87__length1 = 0;
++	const gchar* _tmp98_ = NULL;
+ 	GtkCheckButton* _tmp99_ = NULL;
+-	GtkBox* _tmp100_ = NULL;
++	GtkCheckButton* _tmp100_ = NULL;
+ 	GtkCheckButton* _tmp101_ = NULL;
+-	const gchar* _tmp102_ = NULL;
++	GtkBox* _tmp102_ = NULL;
+ 	GtkCheckButton* _tmp103_ = NULL;
+-	GtkCheckButton* _tmp104_ = NULL;
++	const gchar* _tmp104_ = NULL;
+ 	GtkCheckButton* _tmp105_ = NULL;
+-	GtkBox* _tmp106_ = NULL;
++	GtkCheckButton* _tmp106_ = NULL;
+ 	GtkCheckButton* _tmp107_ = NULL;
+-	const gchar* _tmp108_ = NULL;
+-	GtkLabel* _tmp109_ = NULL;
+-	GtkLabel* _tmp110_ = NULL;
++	GtkBox* _tmp108_ = NULL;
++	GtkCheckButton* _tmp109_ = NULL;
++	const gchar* _tmp110_ = NULL;
+ 	GtkLabel* _tmp111_ = NULL;
+-	GtkGrid* _tmp112_ = NULL;
++	GtkLabel* _tmp112_ = NULL;
+ 	GtkLabel* _tmp113_ = NULL;
+-	GtkComboBox* _tmp114_ = NULL;
++	GtkGrid* _tmp114_ = NULL;
+ 	GtkLabel* _tmp115_ = NULL;
+ 	GtkComboBox* _tmp116_ = NULL;
+-	GtkComboBox* _tmp117_ = NULL;
++	GtkLabel* _tmp117_ = NULL;
+ 	GtkComboBox* _tmp118_ = NULL;
+-	GtkGrid* _tmp119_ = NULL;
++	GtkComboBox* _tmp119_ = NULL;
+ 	GtkComboBox* _tmp120_ = NULL;
+-	GtkListStore* _tmp121_ = NULL;
++	GtkGrid* _tmp121_ = NULL;
+ 	GtkComboBox* _tmp122_ = NULL;
+ 	GtkListStore* _tmp123_ = NULL;
+-	GtkListStore* _tmp124_ = NULL;
+-	GtkTreeIter _tmp125_ = {0};
++	GtkComboBox* _tmp124_ = NULL;
++	GtkListStore* _tmp125_ = NULL;
+ 	GtkListStore* _tmp126_ = NULL;
+ 	GtkTreeIter _tmp127_ = {0};
+-	const gchar* _tmp128_ = NULL;
+-	GtkListStore* _tmp129_ = NULL;
+-	GtkTreeIter _tmp130_ = {0};
++	GtkListStore* _tmp128_ = NULL;
++	GtkTreeIter _tmp129_ = {0};
++	const gchar* _tmp130_ = NULL;
+ 	GtkListStore* _tmp131_ = NULL;
+ 	GtkTreeIter _tmp132_ = {0};
+-	const gchar* _tmp133_ = NULL;
+-	GtkListStore* _tmp134_ = NULL;
+-	GtkTreeIter _tmp135_ = {0};
++	GtkListStore* _tmp133_ = NULL;
++	GtkTreeIter _tmp134_ = {0};
++	const gchar* _tmp135_ = NULL;
+ 	GtkListStore* _tmp136_ = NULL;
+ 	GtkTreeIter _tmp137_ = {0};
+-	const gchar* _tmp138_ = NULL;
+-	GtkCellRendererText* _tmp139_ = NULL;
+-	GtkComboBox* _tmp140_ = NULL;
++	GtkListStore* _tmp138_ = NULL;
++	GtkTreeIter _tmp139_ = {0};
++	const gchar* _tmp140_ = NULL;
+ 	GtkCellRendererText* _tmp141_ = NULL;
+ 	GtkComboBox* _tmp142_ = NULL;
+ 	GtkCellRendererText* _tmp143_ = NULL;
+-	const gchar* _tmp144_ = NULL;
+-	GtkLabel* _tmp145_ = NULL;
+-	GtkLabel* _tmp146_ = NULL;
++	GtkComboBox* _tmp144_ = NULL;
++	GtkCellRendererText* _tmp145_ = NULL;
++	const gchar* _tmp146_ = NULL;
+ 	GtkLabel* _tmp147_ = NULL;
+-	GtkGrid* _tmp148_ = NULL;
++	GtkLabel* _tmp148_ = NULL;
+ 	GtkLabel* _tmp149_ = NULL;
+-	GtkComboBox* _tmp150_ = NULL;
++	GtkGrid* _tmp150_ = NULL;
+ 	GtkLabel* _tmp151_ = NULL;
+ 	GtkComboBox* _tmp152_ = NULL;
+-	GtkComboBox* _tmp153_ = NULL;
++	GtkLabel* _tmp153_ = NULL;
+ 	GtkComboBox* _tmp154_ = NULL;
+-	GtkGrid* _tmp155_ = NULL;
++	GtkComboBox* _tmp155_ = NULL;
+ 	GtkComboBox* _tmp156_ = NULL;
+-	GtkListStore* _tmp157_ = NULL;
++	GtkGrid* _tmp157_ = NULL;
+ 	GtkComboBox* _tmp158_ = NULL;
+ 	GtkListStore* _tmp159_ = NULL;
+-	GtkListStore* _tmp160_ = NULL;
+-	GtkTreeIter _tmp161_ = {0};
++	GtkComboBox* _tmp160_ = NULL;
++	GtkListStore* _tmp161_ = NULL;
+ 	GtkListStore* _tmp162_ = NULL;
+ 	GtkTreeIter _tmp163_ = {0};
+-	const gchar* _tmp164_ = NULL;
+-	GtkListStore* _tmp165_ = NULL;
+-	GtkTreeIter _tmp166_ = {0};
++	GtkListStore* _tmp164_ = NULL;
++	GtkTreeIter _tmp165_ = {0};
++	const gchar* _tmp166_ = NULL;
+ 	GtkListStore* _tmp167_ = NULL;
+ 	GtkTreeIter _tmp168_ = {0};
+-	const gchar* _tmp169_ = NULL;
+-	GtkListStore* _tmp170_ = NULL;
+-	GtkTreeIter _tmp171_ = {0};
++	GtkListStore* _tmp169_ = NULL;
++	GtkTreeIter _tmp170_ = {0};
++	const gchar* _tmp171_ = NULL;
+ 	GtkListStore* _tmp172_ = NULL;
+ 	GtkTreeIter _tmp173_ = {0};
+-	const gchar* _tmp174_ = NULL;
+-	GtkListStore* _tmp175_ = NULL;
+-	GtkTreeIter _tmp176_ = {0};
++	GtkListStore* _tmp174_ = NULL;
++	GtkTreeIter _tmp175_ = {0};
++	const gchar* _tmp176_ = NULL;
+ 	GtkListStore* _tmp177_ = NULL;
+ 	GtkTreeIter _tmp178_ = {0};
+-	const gchar* _tmp179_ = NULL;
+-	GtkCellRendererText* _tmp180_ = NULL;
+-	GtkComboBox* _tmp181_ = NULL;
++	GtkListStore* _tmp179_ = NULL;
++	GtkTreeIter _tmp180_ = {0};
++	const gchar* _tmp181_ = NULL;
+ 	GtkCellRendererText* _tmp182_ = NULL;
+ 	GtkComboBox* _tmp183_ = NULL;
+ 	GtkCellRendererText* _tmp184_ = NULL;
+-	GtkSpinButton* _tmp185_ = NULL;
+-	MathEquation* _tmp186_ = NULL;
+-	gint _tmp187_ = 0;
+-	gint _tmp188_ = 0;
+-	MathEquation* _tmp189_ = NULL;
+-	GtkCheckButton* _tmp190_ = NULL;
++	GtkComboBox* _tmp185_ = NULL;
++	GtkCellRendererText* _tmp186_ = NULL;
++	GtkSpinButton* _tmp187_ = NULL;
++	MathEquation* _tmp188_ = NULL;
++	gint _tmp189_ = 0;
++	gint _tmp190_ = 0;
+ 	MathEquation* _tmp191_ = NULL;
+-	gboolean _tmp192_ = FALSE;
+-	gboolean _tmp193_ = FALSE;
+-	MathEquation* _tmp194_ = NULL;
+-	GtkCheckButton* _tmp195_ = NULL;
++	GtkCheckButton* _tmp192_ = NULL;
++	MathEquation* _tmp193_ = NULL;
++	gboolean _tmp194_ = FALSE;
++	gboolean _tmp195_ = FALSE;
+ 	MathEquation* _tmp196_ = NULL;
+-	gboolean _tmp197_ = FALSE;
+-	gboolean _tmp198_ = FALSE;
+-	MathEquation* _tmp199_ = NULL;
+-	GtkComboBox* _tmp200_ = NULL;
++	GtkCheckButton* _tmp197_ = NULL;
++	MathEquation* _tmp198_ = NULL;
++	gboolean _tmp199_ = FALSE;
++	gboolean _tmp200_ = FALSE;
+ 	MathEquation* _tmp201_ = NULL;
+-	DisplayFormat _tmp202_ = 0;
+-	DisplayFormat _tmp203_ = 0;
+-	MathEquation* _tmp204_ = NULL;
+-	GtkComboBox* _tmp205_ = NULL;
++	GtkComboBox* _tmp202_ = NULL;
++	MathEquation* _tmp203_ = NULL;
++	DisplayFormat _tmp204_ = 0;
++	DisplayFormat _tmp205_ = 0;
+ 	MathEquation* _tmp206_ = NULL;
+-	gint _tmp207_ = 0;
+-	gint _tmp208_ = 0;
+-	MathEquation* _tmp209_ = NULL;
+-	GtkComboBox* _tmp210_ = NULL;
++	GtkComboBox* _tmp207_ = NULL;
++	MathEquation* _tmp208_ = NULL;
++	gint _tmp209_ = 0;
++	gint _tmp210_ = 0;
+ 	MathEquation* _tmp211_ = NULL;
+-	AngleUnit _tmp212_ = 0;
+-	AngleUnit _tmp213_ = 0;
+-	MathEquation* _tmp214_ = NULL;
++	GtkComboBox* _tmp212_ = NULL;
++	MathEquation* _tmp213_ = NULL;
++	AngleUnit _tmp214_ = 0;
++	AngleUnit _tmp215_ = 0;
++	MathEquation* _tmp216_ = NULL;
+ 	parent_class = G_OBJECT_CLASS (math_preferences_dialog_parent_class);
+ 	obj = parent_class->constructor (type, n_construct_properties, construct_properties);
+ 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, TYPE_MATH_PREFERENCES_DIALOG, MathPreferencesDialog);
+ 	_tmp0_ = _ ("Preferences");
+ 	gtk_window_set_title ((GtkWindow*) self, _tmp0_);
+ 	gtk_container_set_border_width ((GtkContainer*) self, (guint) 8);
+-	_tmp1_ = gtk_dialog_get_header_bar ((GtkDialog*) self);
+-	gtk_header_bar_set_show_close_button (G_TYPE_CHECK_INSTANCE_CAST (_tmp1_, gtk_header_bar_get_type (), GtkHeaderBar), TRUE);
+-	_tmp2_ = (GtkGrid*) gtk_grid_new ();
+-	g_object_ref_sink (_tmp2_);
+-	grid = _tmp2_;
+-	_tmp3_ = grid;
+-	gtk_widget_show ((GtkWidget*) _tmp3_);
+-	_tmp4_ = grid;
+-	gtk_container_set_border_width ((GtkContainer*) _tmp4_, (guint) 5);
++	_tmp1_ = is_desktop ("Unity");
++	if (_tmp1_) {
++		const gchar* _tmp2_ = NULL;
++		_tmp2_ = _ ("_Close");
++		gtk_dialog_add_button ((GtkDialog*) self, _tmp2_, 0);
++	} else {
++		GtkWidget* _tmp3_ = NULL;
++		_tmp3_ = gtk_dialog_get_header_bar ((GtkDialog*) self);
++		gtk_header_bar_set_show_close_button (G_TYPE_CHECK_INSTANCE_CAST (_tmp3_, gtk_header_bar_get_type (), GtkHeaderBar), TRUE);
++	}
++	_tmp4_ = (GtkGrid*) gtk_grid_new ();
++	g_object_ref_sink (_tmp4_);
++	grid = _tmp4_;
+ 	_tmp5_ = grid;
+-	gtk_grid_set_column_spacing (_tmp5_, 6);
++	gtk_widget_show ((GtkWidget*) _tmp5_);
+ 	_tmp6_ = grid;
+-	gtk_grid_set_row_spacing (_tmp6_, 12);
+-	_tmp7_ = (GtkBox*) gtk_dialog_get_content_area ((GtkDialog*) self);
++	gtk_container_set_border_width ((GtkContainer*) _tmp6_, (guint) 5);
++	_tmp7_ = grid;
++	gtk_grid_set_column_spacing (_tmp7_, 6);
+ 	_tmp8_ = grid;
+-	gtk_box_pack_start (_tmp7_, (GtkWidget*) _tmp8_, TRUE, TRUE, (guint) 0);
+-	_tmp9_ = _ ("Number _Format:");
+-	_tmp10_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp9_);
+-	g_object_ref_sink (_tmp10_);
+-	label = _tmp10_;
+-	_tmp11_ = label;
+-	gtk_widget_show ((GtkWidget*) _tmp11_);
+-	_tmp12_ = label;
+-	gtk_label_set_xalign (_tmp12_, (gfloat) 0);
+-	_tmp13_ = grid;
++	gtk_grid_set_row_spacing (_tmp8_, 12);
++	_tmp9_ = (GtkBox*) gtk_dialog_get_content_area ((GtkDialog*) self);
++	_tmp10_ = grid;
++	gtk_box_pack_start (_tmp9_, (GtkWidget*) _tmp10_, TRUE, TRUE, (guint) 0);
++	_tmp11_ = _ ("Number _Format:");
++	_tmp12_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp11_);
++	g_object_ref_sink (_tmp12_);
++	label = _tmp12_;
++	_tmp13_ = label;
++	gtk_widget_show ((GtkWidget*) _tmp13_);
+ 	_tmp14_ = label;
+-	gtk_grid_attach (_tmp13_, (GtkWidget*) _tmp14_, 0, 0, 1, 1);
+-	_tmp15_ = (GtkComboBox*) gtk_combo_box_new ();
+-	g_object_ref_sink (_tmp15_);
+-	_g_object_unref0 (self->priv->number_format_combo);
+-	self->priv->number_format_combo = _tmp15_;
++	gtk_label_set_xalign (_tmp14_, (gfloat) 0);
++	_tmp15_ = grid;
+ 	_tmp16_ = label;
+-	_tmp17_ = self->priv->number_format_combo;
+-	gtk_label_set_mnemonic_widget (_tmp16_, (GtkWidget*) _tmp17_);
+-	_tmp18_ = self->priv->number_format_combo;
+-	gtk_widget_show ((GtkWidget*) _tmp18_);
++	gtk_grid_attach (_tmp15_, (GtkWidget*) _tmp16_, 0, 0, 1, 1);
++	_tmp17_ = (GtkComboBox*) gtk_combo_box_new ();
++	g_object_ref_sink (_tmp17_);
++	_g_object_unref0 (self->priv->number_format_combo);
++	self->priv->number_format_combo = _tmp17_;
++	_tmp18_ = label;
+ 	_tmp19_ = self->priv->number_format_combo;
+-	g_signal_connect_object (_tmp19_, "changed", (GCallback) _math_preferences_dialog_number_format_combo_changed_cb_gtk_combo_box_changed, self, 0);
+-	_tmp20_ = grid;
++	gtk_label_set_mnemonic_widget (_tmp18_, (GtkWidget*) _tmp19_);
++	_tmp20_ = self->priv->number_format_combo;
++	gtk_widget_show ((GtkWidget*) _tmp20_);
+ 	_tmp21_ = self->priv->number_format_combo;
+-	gtk_grid_attach (_tmp20_, (GtkWidget*) _tmp21_, 1, 0, 1, 1);
+-	_tmp22_ = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT, -1);
+-	model = _tmp22_;
++	g_signal_connect_object (_tmp21_, "changed", (GCallback) _math_preferences_dialog_number_format_combo_changed_cb_gtk_combo_box_changed, self, 0);
++	_tmp22_ = grid;
+ 	_tmp23_ = self->priv->number_format_combo;
+-	_tmp24_ = model;
+-	gtk_combo_box_set_model (_tmp23_, (GtkTreeModel*) _tmp24_);
+-	_tmp25_ = model;
+-	gtk_list_store_append (_tmp25_, &_tmp26_);
+-	iter = _tmp26_;
++	gtk_grid_attach (_tmp22_, (GtkWidget*) _tmp23_, 1, 0, 1, 1);
++	_tmp24_ = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT, -1);
++	model = _tmp24_;
++	_tmp25_ = self->priv->number_format_combo;
++	_tmp26_ = model;
++	gtk_combo_box_set_model (_tmp25_, (GtkTreeModel*) _tmp26_);
+ 	_tmp27_ = model;
+-	_tmp28_ = iter;
+-	_tmp29_ = _ ("Automatic");
+-	gtk_list_store_set (_tmp27_, &_tmp28_, 0, _tmp29_, 1, DISPLAY_FORMAT_AUTOMATIC, -1, -1);
+-	_tmp30_ = model;
+-	gtk_list_store_append (_tmp30_, &_tmp31_);
+-	iter = _tmp31_;
++	gtk_list_store_append (_tmp27_, &_tmp28_);
++	iter = _tmp28_;
++	_tmp29_ = model;
++	_tmp30_ = iter;
++	_tmp31_ = _ ("Automatic");
++	gtk_list_store_set (_tmp29_, &_tmp30_, 0, _tmp31_, 1, DISPLAY_FORMAT_AUTOMATIC, -1, -1);
+ 	_tmp32_ = model;
+-	_tmp33_ = iter;
+-	_tmp34_ = _ ("Fixed");
+-	gtk_list_store_set (_tmp32_, &_tmp33_, 0, _tmp34_, 1, DISPLAY_FORMAT_FIXED, -1, -1);
+-	_tmp35_ = model;
+-	gtk_list_store_append (_tmp35_, &_tmp36_);
+-	iter = _tmp36_;
++	gtk_list_store_append (_tmp32_, &_tmp33_);
++	iter = _tmp33_;
++	_tmp34_ = model;
++	_tmp35_ = iter;
++	_tmp36_ = _ ("Fixed");
++	gtk_list_store_set (_tmp34_, &_tmp35_, 0, _tmp36_, 1, DISPLAY_FORMAT_FIXED, -1, -1);
+ 	_tmp37_ = model;
+-	_tmp38_ = iter;
+-	_tmp39_ = _ ("Scientific");
+-	gtk_list_store_set (_tmp37_, &_tmp38_, 0, _tmp39_, 1, DISPLAY_FORMAT_SCIENTIFIC, -1, -1);
+-	_tmp40_ = model;
+-	gtk_list_store_append (_tmp40_, &_tmp41_);
+-	iter = _tmp41_;
++	gtk_list_store_append (_tmp37_, &_tmp38_);
++	iter = _tmp38_;
++	_tmp39_ = model;
++	_tmp40_ = iter;
++	_tmp41_ = _ ("Scientific");
++	gtk_list_store_set (_tmp39_, &_tmp40_, 0, _tmp41_, 1, DISPLAY_FORMAT_SCIENTIFIC, -1, -1);
+ 	_tmp42_ = model;
+-	_tmp43_ = iter;
+-	_tmp44_ = _ ("Engineering");
+-	gtk_list_store_set (_tmp42_, &_tmp43_, 0, _tmp44_, 1, DISPLAY_FORMAT_ENGINEERING, -1, -1);
+-	_tmp45_ = (GtkCellRendererText*) gtk_cell_renderer_text_new ();
+-	g_object_ref_sink (_tmp45_);
+-	renderer = _tmp45_;
+-	_tmp46_ = self->priv->number_format_combo;
+-	_tmp47_ = renderer;
+-	gtk_cell_layout_pack_start ((GtkCellLayout*) _tmp46_, (GtkCellRenderer*) _tmp47_, TRUE);
++	gtk_list_store_append (_tmp42_, &_tmp43_);
++	iter = _tmp43_;
++	_tmp44_ = model;
++	_tmp45_ = iter;
++	_tmp46_ = _ ("Engineering");
++	gtk_list_store_set (_tmp44_, &_tmp45_, 0, _tmp46_, 1, DISPLAY_FORMAT_ENGINEERING, -1, -1);
++	_tmp47_ = (GtkCellRendererText*) gtk_cell_renderer_text_new ();
++	g_object_ref_sink (_tmp47_);
++	renderer = _tmp47_;
+ 	_tmp48_ = self->priv->number_format_combo;
+ 	_tmp49_ = renderer;
+-	gtk_cell_layout_add_attribute ((GtkCellLayout*) _tmp48_, (GtkCellRenderer*) _tmp49_, "text", 0);
+-	_tmp50_ = (GtkBox*) gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+-	g_object_ref_sink (_tmp50_);
+-	format_options_box = _tmp50_;
+-	_tmp51_ = format_options_box;
+-	gtk_widget_set_margin_bottom ((GtkWidget*) _tmp51_, 6);
+-	_tmp52_ = format_options_box;
+-	gtk_widget_set_margin_start ((GtkWidget*) _tmp52_, 12);
++	gtk_cell_layout_pack_start ((GtkCellLayout*) _tmp48_, (GtkCellRenderer*) _tmp49_, TRUE);
++	_tmp50_ = self->priv->number_format_combo;
++	_tmp51_ = renderer;
++	gtk_cell_layout_add_attribute ((GtkCellLayout*) _tmp50_, (GtkCellRenderer*) _tmp51_, "text", 0);
++	_tmp52_ = (GtkBox*) gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
++	g_object_ref_sink (_tmp52_);
++	format_options_box = _tmp52_;
+ 	_tmp53_ = format_options_box;
+-	gtk_widget_set_halign ((GtkWidget*) _tmp53_, GTK_ALIGN_CENTER);
++	gtk_widget_set_margin_bottom ((GtkWidget*) _tmp53_, 6);
+ 	_tmp54_ = format_options_box;
+-	gtk_widget_set_valign ((GtkWidget*) _tmp54_, GTK_ALIGN_CENTER);
++	gtk_widget_set_margin_start ((GtkWidget*) _tmp54_, 12);
+ 	_tmp55_ = format_options_box;
+-	gtk_widget_show ((GtkWidget*) _tmp55_);
+-	_tmp56_ = grid;
++	gtk_widget_set_halign ((GtkWidget*) _tmp55_, GTK_ALIGN_CENTER);
++	_tmp56_ = format_options_box;
++	gtk_widget_set_valign ((GtkWidget*) _tmp56_, GTK_ALIGN_CENTER);
+ 	_tmp57_ = format_options_box;
+-	gtk_grid_attach (_tmp56_, (GtkWidget*) _tmp57_, 0, 1, 2, 1);
+-	_tmp58_ = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+-	g_object_ref_sink (_tmp58_);
+-	places_box = _tmp58_;
+-	_tmp59_ = places_box;
+-	gtk_widget_show ((GtkWidget*) _tmp59_);
+-	_tmp60_ = format_options_box;
++	gtk_widget_show ((GtkWidget*) _tmp57_);
++	_tmp58_ = grid;
++	_tmp59_ = format_options_box;
++	gtk_grid_attach (_tmp58_, (GtkWidget*) _tmp59_, 0, 1, 2, 1);
++	_tmp60_ = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
++	g_object_ref_sink (_tmp60_);
++	places_box = _tmp60_;
+ 	_tmp61_ = places_box;
+-	gtk_box_pack_start (_tmp60_, (GtkWidget*) _tmp61_, FALSE, FALSE, (guint) 0);
+-	_tmp62_ = _ ("Show %d decimal _places");
+-	_tmp63_ = g_strdup (_tmp62_);
+-	string = _tmp63_;
+-	_tmp64_ = string;
+-	_tmp66_ = _tmp65_ = g_strsplit (_tmp64_, "%d", 2);
+-	tokens = _tmp66_;
+-	tokens_length1 = _vala_array_length (_tmp65_);
++	gtk_widget_show ((GtkWidget*) _tmp61_);
++	_tmp62_ = format_options_box;
++	_tmp63_ = places_box;
++	gtk_box_pack_start (_tmp62_, (GtkWidget*) _tmp63_, FALSE, FALSE, (guint) 0);
++	_tmp64_ = _ ("Show %d decimal _places");
++	_tmp65_ = g_strdup (_tmp64_);
++	string = _tmp65_;
++	_tmp66_ = string;
++	_tmp68_ = _tmp67_ = g_strsplit (_tmp66_, "%d", 2);
++	tokens = _tmp68_;
++	tokens_length1 = _vala_array_length (_tmp67_);
+ 	_tokens_size_ = tokens_length1;
+-	_tmp67_ = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 1.0, 0.0);
+-	g_object_ref_sink (_tmp67_);
+-	decimal_places_adjustment = _tmp67_;
+-	_tmp68_ = decimal_places_adjustment;
+-	_tmp69_ = (GtkSpinButton*) gtk_spin_button_new (_tmp68_, 0.0, (guint) 0);
++	_tmp69_ = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 1.0, 0.0);
+ 	g_object_ref_sink (_tmp69_);
++	decimal_places_adjustment = _tmp69_;
++	_tmp70_ = decimal_places_adjustment;
++	_tmp71_ = (GtkSpinButton*) gtk_spin_button_new (_tmp70_, 0.0, (guint) 0);
++	g_object_ref_sink (_tmp71_);
+ 	_g_object_unref0 (self->priv->decimal_places_spin);
+-	self->priv->decimal_places_spin = _tmp69_;
+-	_tmp70_ = tokens;
+-	_tmp70__length1 = tokens_length1;
+-	if (_tmp70__length1 > 0) {
+-		gchar** _tmp71_ = NULL;
+-		gint _tmp71__length1 = 0;
+-		const gchar* _tmp72_ = NULL;
+-		gchar* _tmp73_ = NULL;
+-		gchar* _tmp74_ = NULL;
+-		GtkLabel* _tmp75_ = NULL;
+-		GtkLabel* _tmp76_ = NULL;
+-		GtkSpinButton* _tmp77_ = NULL;
++	self->priv->decimal_places_spin = _tmp71_;
++	_tmp72_ = tokens;
++	_tmp72__length1 = tokens_length1;
++	if (_tmp72__length1 > 0) {
++		gchar** _tmp73_ = NULL;
++		gint _tmp73__length1 = 0;
++		const gchar* _tmp74_ = NULL;
++		gchar* _tmp75_ = NULL;
++		gchar* _tmp76_ = NULL;
++		GtkLabel* _tmp77_ = NULL;
+ 		GtkLabel* _tmp78_ = NULL;
+-		GtkBox* _tmp79_ = NULL;
++		GtkSpinButton* _tmp79_ = NULL;
+ 		GtkLabel* _tmp80_ = NULL;
+-		_tmp71_ = tokens;
+-		_tmp71__length1 = tokens_length1;
+-		_tmp72_ = _tmp71_[0];
+-		_tmp73_ = string_strip (_tmp72_);
+-		_tmp74_ = _tmp73_;
+-		_tmp75_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp74_);
+-		g_object_ref_sink (_tmp75_);
++		GtkBox* _tmp81_ = NULL;
++		GtkLabel* _tmp82_ = NULL;
++		_tmp73_ = tokens;
++		_tmp73__length1 = tokens_length1;
++		_tmp74_ = _tmp73_[0];
++		_tmp75_ = string_strip (_tmp74_);
++		_tmp76_ = _tmp75_;
++		_tmp77_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp76_);
++		g_object_ref_sink (_tmp77_);
+ 		_g_object_unref0 (label);
+-		label = _tmp75_;
+-		_g_free0 (_tmp74_);
+-		_tmp76_ = label;
+-		_tmp77_ = self->priv->decimal_places_spin;
+-		gtk_label_set_mnemonic_widget (_tmp76_, (GtkWidget*) _tmp77_);
++		label = _tmp77_;
++		_g_free0 (_tmp76_);
+ 		_tmp78_ = label;
+-		gtk_widget_show ((GtkWidget*) _tmp78_);
+-		_tmp79_ = places_box;
++		_tmp79_ = self->priv->decimal_places_spin;
++		gtk_label_set_mnemonic_widget (_tmp78_, (GtkWidget*) _tmp79_);
+ 		_tmp80_ = label;
+-		gtk_box_pack_start (_tmp79_, (GtkWidget*) _tmp80_, FALSE, FALSE, (guint) 0);
++		gtk_widget_show ((GtkWidget*) _tmp80_);
++		_tmp81_ = places_box;
++		_tmp82_ = label;
++		gtk_box_pack_start (_tmp81_, (GtkWidget*) _tmp82_, FALSE, FALSE, (guint) 0);
+ 	}
+-	_tmp81_ = self->priv->decimal_places_spin;
+-	gtk_widget_show ((GtkWidget*) _tmp81_);
+-	_tmp82_ = self->priv->decimal_places_spin;
+-	g_signal_connect_object (_tmp82_, "value-changed", (GCallback) __math_preferences_dialog___lambda31__gtk_spin_button_value_changed, self, 0);
+-	_tmp83_ = places_box;
++	_tmp83_ = self->priv->decimal_places_spin;
++	gtk_widget_show ((GtkWidget*) _tmp83_);
+ 	_tmp84_ = self->priv->decimal_places_spin;
+-	gtk_box_pack_start (_tmp83_, (GtkWidget*) _tmp84_, FALSE, FALSE, (guint) 0);
+-	_tmp85_ = tokens;
+-	_tmp85__length1 = tokens_length1;
+-	if (_tmp85__length1 == 2) {
+-		gchar** _tmp86_ = NULL;
+-		gint _tmp86__length1 = 0;
+-		const gchar* _tmp87_ = NULL;
+-		gchar* _tmp88_ = NULL;
+-		gchar* _tmp89_ = NULL;
+-		GtkLabel* _tmp90_ = NULL;
+-		GtkLabel* _tmp91_ = NULL;
+-		GtkSpinButton* _tmp92_ = NULL;
++	g_signal_connect_object (_tmp84_, "value-changed", (GCallback) __math_preferences_dialog___lambda31__gtk_spin_button_value_changed, self, 0);
++	_tmp85_ = places_box;
++	_tmp86_ = self->priv->decimal_places_spin;
++	gtk_box_pack_start (_tmp85_, (GtkWidget*) _tmp86_, FALSE, FALSE, (guint) 0);
++	_tmp87_ = tokens;
++	_tmp87__length1 = tokens_length1;
++	if (_tmp87__length1 == 2) {
++		gchar** _tmp88_ = NULL;
++		gint _tmp88__length1 = 0;
++		const gchar* _tmp89_ = NULL;
++		gchar* _tmp90_ = NULL;
++		gchar* _tmp91_ = NULL;
++		GtkLabel* _tmp92_ = NULL;
+ 		GtkLabel* _tmp93_ = NULL;
+-		GtkBox* _tmp94_ = NULL;
++		GtkSpinButton* _tmp94_ = NULL;
+ 		GtkLabel* _tmp95_ = NULL;
+-		_tmp86_ = tokens;
+-		_tmp86__length1 = tokens_length1;
+-		_tmp87_ = _tmp86_[1];
+-		_tmp88_ = string_strip (_tmp87_);
+-		_tmp89_ = _tmp88_;
+-		_tmp90_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp89_);
+-		g_object_ref_sink (_tmp90_);
++		GtkBox* _tmp96_ = NULL;
++		GtkLabel* _tmp97_ = NULL;
++		_tmp88_ = tokens;
++		_tmp88__length1 = tokens_length1;
++		_tmp89_ = _tmp88_[1];
++		_tmp90_ = string_strip (_tmp89_);
++		_tmp91_ = _tmp90_;
++		_tmp92_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp91_);
++		g_object_ref_sink (_tmp92_);
+ 		_g_object_unref0 (label);
+-		label = _tmp90_;
+-		_g_free0 (_tmp89_);
+-		_tmp91_ = label;
+-		_tmp92_ = self->priv->decimal_places_spin;
+-		gtk_label_set_mnemonic_widget (_tmp91_, (GtkWidget*) _tmp92_);
++		label = _tmp92_;
++		_g_free0 (_tmp91_);
+ 		_tmp93_ = label;
+-		gtk_widget_show ((GtkWidget*) _tmp93_);
+-		_tmp94_ = places_box;
++		_tmp94_ = self->priv->decimal_places_spin;
++		gtk_label_set_mnemonic_widget (_tmp93_, (GtkWidget*) _tmp94_);
+ 		_tmp95_ = label;
+-		gtk_box_pack_start (_tmp94_, (GtkWidget*) _tmp95_, FALSE, FALSE, (guint) 0);
++		gtk_widget_show ((GtkWidget*) _tmp95_);
++		_tmp96_ = places_box;
++		_tmp97_ = label;
++		gtk_box_pack_start (_tmp96_, (GtkWidget*) _tmp97_, FALSE, FALSE, (guint) 0);
+ 	}
+-	_tmp96_ = _ ("Show trailing _zeroes");
+-	_tmp97_ = (GtkCheckButton*) gtk_check_button_new_with_mnemonic (_tmp96_);
+-	g_object_ref_sink (_tmp97_);
++	_tmp98_ = _ ("Show trailing _zeroes");
++	_tmp99_ = (GtkCheckButton*) gtk_check_button_new_with_mnemonic (_tmp98_);
++	g_object_ref_sink (_tmp99_);
+ 	_g_object_unref0 (self->priv->trailing_zeroes_check);
+-	self->priv->trailing_zeroes_check = _tmp97_;
+-	_tmp98_ = self->priv->trailing_zeroes_check;
+-	gtk_widget_show ((GtkWidget*) _tmp98_);
+-	_tmp99_ = self->priv->trailing_zeroes_check;
+-	g_signal_connect_object ((GtkToggleButton*) _tmp99_, "toggled", (GCallback) __math_preferences_dialog___lambda32__gtk_toggle_button_toggled, self, 0);
+-	_tmp100_ = format_options_box;
++	self->priv->trailing_zeroes_check = _tmp99_;
++	_tmp100_ = self->priv->trailing_zeroes_check;
++	gtk_widget_show ((GtkWidget*) _tmp100_);
+ 	_tmp101_ = self->priv->trailing_zeroes_check;
+-	gtk_box_pack_start (_tmp100_, (GtkWidget*) _tmp101_, FALSE, FALSE, (guint) 0);
+-	_tmp102_ = _ ("Show _thousands separators");
+-	_tmp103_ = (GtkCheckButton*) gtk_check_button_new_with_mnemonic (_tmp102_);
+-	g_object_ref_sink (_tmp103_);
++	g_signal_connect_object ((GtkToggleButton*) _tmp101_, "toggled", (GCallback) __math_preferences_dialog___lambda32__gtk_toggle_button_toggled, self, 0);
++	_tmp102_ = format_options_box;
++	_tmp103_ = self->priv->trailing_zeroes_check;
++	gtk_box_pack_start (_tmp102_, (GtkWidget*) _tmp103_, FALSE, FALSE, (guint) 0);
++	_tmp104_ = _ ("Show _thousands separators");
++	_tmp105_ = (GtkCheckButton*) gtk_check_button_new_with_mnemonic (_tmp104_);
++	g_object_ref_sink (_tmp105_);
+ 	_g_object_unref0 (self->priv->thousands_separator_check);
+-	self->priv->thousands_separator_check = _tmp103_;
+-	_tmp104_ = self->priv->thousands_separator_check;
+-	gtk_widget_show ((GtkWidget*) _tmp104_);
+-	_tmp105_ = self->priv->thousands_separator_check;
+-	g_signal_connect_object ((GtkToggleButton*) _tmp105_, "toggled", (GCallback) __math_preferences_dialog___lambda33__gtk_toggle_button_toggled, self, 0);
+-	_tmp106_ = format_options_box;
++	self->priv->thousands_separator_check = _tmp105_;
++	_tmp106_ = self->priv->thousands_separator_check;
++	gtk_widget_show ((GtkWidget*) _tmp106_);
+ 	_tmp107_ = self->priv->thousands_separator_check;
+-	gtk_box_pack_start (_tmp106_, (GtkWidget*) _tmp107_, FALSE, FALSE, (guint) 0);
+-	_tmp108_ = _ ("_Angle units:");
+-	_tmp109_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp108_);
+-	g_object_ref_sink (_tmp109_);
++	g_signal_connect_object ((GtkToggleButton*) _tmp107_, "toggled", (GCallback) __math_preferences_dialog___lambda33__gtk_toggle_button_toggled, self, 0);
++	_tmp108_ = format_options_box;
++	_tmp109_ = self->priv->thousands_separator_check;
++	gtk_box_pack_start (_tmp108_, (GtkWidget*) _tmp109_, FALSE, FALSE, (guint) 0);
++	_tmp110_ = _ ("_Angle units:");
++	_tmp111_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp110_);
++	g_object_ref_sink (_tmp111_);
+ 	_g_object_unref0 (label);
+-	label = _tmp109_;
+-	_tmp110_ = label;
+-	gtk_widget_show ((GtkWidget*) _tmp110_);
+-	_tmp111_ = label;
+-	gtk_label_set_xalign (_tmp111_, (gfloat) 0);
+-	_tmp112_ = grid;
++	label = _tmp111_;
++	_tmp112_ = label;
++	gtk_widget_show ((GtkWidget*) _tmp112_);
+ 	_tmp113_ = label;
+-	gtk_grid_attach (_tmp112_, (GtkWidget*) _tmp113_, 0, 2, 1, 1);
+-	_tmp114_ = (GtkComboBox*) gtk_combo_box_new ();
+-	g_object_ref_sink (_tmp114_);
+-	_g_object_unref0 (self->priv->angle_unit_combo);
+-	self->priv->angle_unit_combo = _tmp114_;
++	gtk_label_set_xalign (_tmp113_, (gfloat) 0);
++	_tmp114_ = grid;
+ 	_tmp115_ = label;
+-	_tmp116_ = self->priv->angle_unit_combo;
+-	gtk_label_set_mnemonic_widget (_tmp115_, (GtkWidget*) _tmp116_);
+-	_tmp117_ = self->priv->angle_unit_combo;
+-	gtk_widget_show ((GtkWidget*) _tmp117_);
++	gtk_grid_attach (_tmp114_, (GtkWidget*) _tmp115_, 0, 2, 1, 1);
++	_tmp116_ = (GtkComboBox*) gtk_combo_box_new ();
++	g_object_ref_sink (_tmp116_);
++	_g_object_unref0 (self->priv->angle_unit_combo);
++	self->priv->angle_unit_combo = _tmp116_;
++	_tmp117_ = label;
+ 	_tmp118_ = self->priv->angle_unit_combo;
+-	g_signal_connect_object (_tmp118_, "changed", (GCallback) _math_preferences_dialog_angle_unit_combo_changed_cb_gtk_combo_box_changed, self, 0);
+-	_tmp119_ = grid;
++	gtk_label_set_mnemonic_widget (_tmp117_, (GtkWidget*) _tmp118_);
++	_tmp119_ = self->priv->angle_unit_combo;
++	gtk_widget_show ((GtkWidget*) _tmp119_);
+ 	_tmp120_ = self->priv->angle_unit_combo;
+-	gtk_grid_attach (_tmp119_, (GtkWidget*) _tmp120_, 1, 2, 1, 1);
+-	_tmp121_ = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT, -1);
+-	_g_object_unref0 (model);
+-	model = _tmp121_;
++	g_signal_connect_object (_tmp120_, "changed", (GCallback) _math_preferences_dialog_angle_unit_combo_changed_cb_gtk_combo_box_changed, self, 0);
++	_tmp121_ = grid;
+ 	_tmp122_ = self->priv->angle_unit_combo;
+-	_tmp123_ = model;
+-	gtk_combo_box_set_model (_tmp122_, (GtkTreeModel*) _tmp123_);
+-	_tmp124_ = model;
+-	gtk_list_store_append (_tmp124_, &_tmp125_);
+-	iter = _tmp125_;
++	gtk_grid_attach (_tmp121_, (GtkWidget*) _tmp122_, 1, 2, 1, 1);
++	_tmp123_ = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT, -1);
++	_g_object_unref0 (model);
++	model = _tmp123_;
++	_tmp124_ = self->priv->angle_unit_combo;
++	_tmp125_ = model;
++	gtk_combo_box_set_model (_tmp124_, (GtkTreeModel*) _tmp125_);
+ 	_tmp126_ = model;
+-	_tmp127_ = iter;
+-	_tmp128_ = _ ("Degrees");
+-	gtk_list_store_set (_tmp126_, &_tmp127_, 0, _tmp128_, 1, ANGLE_UNIT_DEGREES, -1, -1);
+-	_tmp129_ = model;
+-	gtk_list_store_append (_tmp129_, &_tmp130_);
+-	iter = _tmp130_;
++	gtk_list_store_append (_tmp126_, &_tmp127_);
++	iter = _tmp127_;
++	_tmp128_ = model;
++	_tmp129_ = iter;
++	_tmp130_ = _ ("Degrees");
++	gtk_list_store_set (_tmp128_, &_tmp129_, 0, _tmp130_, 1, ANGLE_UNIT_DEGREES, -1, -1);
+ 	_tmp131_ = model;
+-	_tmp132_ = iter;
+-	_tmp133_ = _ ("Radians");
+-	gtk_list_store_set (_tmp131_, &_tmp132_, 0, _tmp133_, 1, ANGLE_UNIT_RADIANS, -1, -1);
+-	_tmp134_ = model;
+-	gtk_list_store_append (_tmp134_, &_tmp135_);
+-	iter = _tmp135_;
++	gtk_list_store_append (_tmp131_, &_tmp132_);
++	iter = _tmp132_;
++	_tmp133_ = model;
++	_tmp134_ = iter;
++	_tmp135_ = _ ("Radians");
++	gtk_list_store_set (_tmp133_, &_tmp134_, 0, _tmp135_, 1, ANGLE_UNIT_RADIANS, -1, -1);
+ 	_tmp136_ = model;
+-	_tmp137_ = iter;
+-	_tmp138_ = _ ("Gradians");
+-	gtk_list_store_set (_tmp136_, &_tmp137_, 0, _tmp138_, 1, ANGLE_UNIT_GRADIANS, -1, -1);
+-	_tmp139_ = (GtkCellRendererText*) gtk_cell_renderer_text_new ();
+-	g_object_ref_sink (_tmp139_);
++	gtk_list_store_append (_tmp136_, &_tmp137_);
++	iter = _tmp137_;
++	_tmp138_ = model;
++	_tmp139_ = iter;
++	_tmp140_ = _ ("Gradians");
++	gtk_list_store_set (_tmp138_, &_tmp139_, 0, _tmp140_, 1, ANGLE_UNIT_GRADIANS, -1, -1);
++	_tmp141_ = (GtkCellRendererText*) gtk_cell_renderer_text_new ();
++	g_object_ref_sink (_tmp141_);
+ 	_g_object_unref0 (renderer);
+-	renderer = _tmp139_;
+-	_tmp140_ = self->priv->angle_unit_combo;
+-	_tmp141_ = renderer;
+-	gtk_cell_layout_pack_start ((GtkCellLayout*) _tmp140_, (GtkCellRenderer*) _tmp141_, TRUE);
++	renderer = _tmp141_;
+ 	_tmp142_ = self->priv->angle_unit_combo;
+ 	_tmp143_ = renderer;
+-	gtk_cell_layout_add_attribute ((GtkCellLayout*) _tmp142_, (GtkCellRenderer*) _tmp143_, "text", 0);
+-	_tmp144_ = _ ("Word _size:");
+-	_tmp145_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp144_);
+-	g_object_ref_sink (_tmp145_);
++	gtk_cell_layout_pack_start ((GtkCellLayout*) _tmp142_, (GtkCellRenderer*) _tmp143_, TRUE);
++	_tmp144_ = self->priv->angle_unit_combo;
++	_tmp145_ = renderer;
++	gtk_cell_layout_add_attribute ((GtkCellLayout*) _tmp144_, (GtkCellRenderer*) _tmp145_, "text", 0);
++	_tmp146_ = _ ("Word _size:");
++	_tmp147_ = (GtkLabel*) gtk_label_new_with_mnemonic (_tmp146_);
++	g_object_ref_sink (_tmp147_);
+ 	_g_object_unref0 (label);
+-	label = _tmp145_;
+-	_tmp146_ = label;
+-	gtk_widget_show ((GtkWidget*) _tmp146_);
+-	_tmp147_ = label;
+-	gtk_label_set_xalign (_tmp147_, (gfloat) 0);
+-	_tmp148_ = grid;
++	label = _tmp147_;
++	_tmp148_ = label;
++	gtk_widget_show ((GtkWidget*) _tmp148_);
+ 	_tmp149_ = label;
+-	gtk_grid_attach (_tmp148_, (GtkWidget*) _tmp149_, 0, 3, 1, 1);
+-	_tmp150_ = (GtkComboBox*) gtk_combo_box_new ();
+-	g_object_ref_sink (_tmp150_);
+-	_g_object_unref0 (self->priv->word_size_combo);
+-	self->priv->word_size_combo = _tmp150_;
++	gtk_label_set_xalign (_tmp149_, (gfloat) 0);
++	_tmp150_ = grid;
+ 	_tmp151_ = label;
+-	_tmp152_ = self->priv->word_size_combo;
+-	gtk_label_set_mnemonic_widget (_tmp151_, (GtkWidget*) _tmp152_);
+-	_tmp153_ = self->priv->word_size_combo;
+-	gtk_widget_show ((GtkWidget*) _tmp153_);
++	gtk_grid_attach (_tmp150_, (GtkWidget*) _tmp151_, 0, 3, 1, 1);
++	_tmp152_ = (GtkComboBox*) gtk_combo_box_new ();
++	g_object_ref_sink (_tmp152_);
++	_g_object_unref0 (self->priv->word_size_combo);
++	self->priv->word_size_combo = _tmp152_;
++	_tmp153_ = label;
+ 	_tmp154_ = self->priv->word_size_combo;
+-	g_signal_connect_object (_tmp154_, "changed", (GCallback) _math_preferences_dialog_word_size_combo_changed_cb_gtk_combo_box_changed, self, 0);
+-	_tmp155_ = grid;
++	gtk_label_set_mnemonic_widget (_tmp153_, (GtkWidget*) _tmp154_);
++	_tmp155_ = self->priv->word_size_combo;
++	gtk_widget_show ((GtkWidget*) _tmp155_);
+ 	_tmp156_ = self->priv->word_size_combo;
+-	gtk_grid_attach (_tmp155_, (GtkWidget*) _tmp156_, 1, 3, 1, 1);
+-	_tmp157_ = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT, -1);
+-	_g_object_unref0 (model);
+-	model = _tmp157_;
++	g_signal_connect_object (_tmp156_, "changed", (GCallback) _math_preferences_dialog_word_size_combo_changed_cb_gtk_combo_box_changed, self, 0);
++	_tmp157_ = grid;
+ 	_tmp158_ = self->priv->word_size_combo;
+-	_tmp159_ = model;
+-	gtk_combo_box_set_model (_tmp158_, (GtkTreeModel*) _tmp159_);
+-	_tmp160_ = model;
+-	gtk_list_store_append (_tmp160_, &_tmp161_);
+-	iter = _tmp161_;
++	gtk_grid_attach (_tmp157_, (GtkWidget*) _tmp158_, 1, 3, 1, 1);
++	_tmp159_ = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT, -1);
++	_g_object_unref0 (model);
++	model = _tmp159_;
++	_tmp160_ = self->priv->word_size_combo;
++	_tmp161_ = model;
++	gtk_combo_box_set_model (_tmp160_, (GtkTreeModel*) _tmp161_);
+ 	_tmp162_ = model;
+-	_tmp163_ = iter;
+-	_tmp164_ = _ ("8 bits");
+-	gtk_list_store_set (_tmp162_, &_tmp163_, 0, _tmp164_, 1, 8, -1);
+-	_tmp165_ = model;
+-	gtk_list_store_append (_tmp165_, &_tmp166_);
+-	iter = _tmp166_;
++	gtk_list_store_append (_tmp162_, &_tmp163_);
++	iter = _tmp163_;
++	_tmp164_ = model;
++	_tmp165_ = iter;
++	_tmp166_ = _ ("8 bits");
++	gtk_list_store_set (_tmp164_, &_tmp165_, 0, _tmp166_, 1, 8, -1);
+ 	_tmp167_ = model;
+-	_tmp168_ = iter;
+-	_tmp169_ = _ ("16 bits");
+-	gtk_list_store_set (_tmp167_, &_tmp168_, 0, _tmp169_, 1, 16, -1);
+-	_tmp170_ = model;
+-	gtk_list_store_append (_tmp170_, &_tmp171_);
+-	iter = _tmp171_;
++	gtk_list_store_append (_tmp167_, &_tmp168_);
++	iter = _tmp168_;
++	_tmp169_ = model;
++	_tmp170_ = iter;
++	_tmp171_ = _ ("16 bits");
++	gtk_list_store_set (_tmp169_, &_tmp170_, 0, _tmp171_, 1, 16, -1);
+ 	_tmp172_ = model;
+-	_tmp173_ = iter;
+-	_tmp174_ = _ ("32 bits");
+-	gtk_list_store_set (_tmp172_, &_tmp173_, 0, _tmp174_, 1, 32, -1);
+-	_tmp175_ = model;
+-	gtk_list_store_append (_tmp175_, &_tmp176_);
+-	iter = _tmp176_;
++	gtk_list_store_append (_tmp172_, &_tmp173_);
++	iter = _tmp173_;
++	_tmp174_ = model;
++	_tmp175_ = iter;
++	_tmp176_ = _ ("32 bits");
++	gtk_list_store_set (_tmp174_, &_tmp175_, 0, _tmp176_, 1, 32, -1);
+ 	_tmp177_ = model;
+-	_tmp178_ = iter;
+-	_tmp179_ = _ ("64 bits");
+-	gtk_list_store_set (_tmp177_, &_tmp178_, 0, _tmp179_, 1, 64, -1);
+-	_tmp180_ = (GtkCellRendererText*) gtk_cell_renderer_text_new ();
+-	g_object_ref_sink (_tmp180_);
++	gtk_list_store_append (_tmp177_, &_tmp178_);
++	iter = _tmp178_;
++	_tmp179_ = model;
++	_tmp180_ = iter;
++	_tmp181_ = _ ("64 bits");
++	gtk_list_store_set (_tmp179_, &_tmp180_, 0, _tmp181_, 1, 64, -1);
++	_tmp182_ = (GtkCellRendererText*) gtk_cell_renderer_text_new ();
++	g_object_ref_sink (_tmp182_);
+ 	_g_object_unref0 (renderer);
+-	renderer = _tmp180_;
+-	_tmp181_ = self->priv->word_size_combo;
+-	_tmp182_ = renderer;
+-	gtk_cell_layout_pack_start ((GtkCellLayout*) _tmp181_, (GtkCellRenderer*) _tmp182_, TRUE);
++	renderer = _tmp182_;
+ 	_tmp183_ = self->priv->word_size_combo;
+ 	_tmp184_ = renderer;
+-	gtk_cell_layout_add_attribute ((GtkCellLayout*) _tmp183_, (GtkCellRenderer*) _tmp184_, "text", 0);
+-	_tmp185_ = self->priv->decimal_places_spin;
+-	_tmp186_ = self->priv->_equation;
+-	_tmp187_ = math_equation_get_accuracy (_tmp186_);
+-	_tmp188_ = _tmp187_;
+-	gtk_spin_button_set_value (_tmp185_, (gdouble) _tmp188_);
+-	_tmp189_ = self->priv->_equation;
+-	g_signal_connect_object ((GObject*) _tmp189_, "notify::accuracy", (GCallback) __math_preferences_dialog___lambda34__g_object_notify, self, 0);
+-	_tmp190_ = self->priv->thousands_separator_check;
++	gtk_cell_layout_pack_start ((GtkCellLayout*) _tmp183_, (GtkCellRenderer*) _tmp184_, TRUE);
++	_tmp185_ = self->priv->word_size_combo;
++	_tmp186_ = renderer;
++	gtk_cell_layout_add_attribute ((GtkCellLayout*) _tmp185_, (GtkCellRenderer*) _tmp186_, "text", 0);
++	_tmp187_ = self->priv->decimal_places_spin;
++	_tmp188_ = self->priv->_equation;
++	_tmp189_ = math_equation_get_accuracy (_tmp188_);
++	_tmp190_ = _tmp189_;
++	gtk_spin_button_set_value (_tmp187_, (gdouble) _tmp190_);
+ 	_tmp191_ = self->priv->_equation;
+-	_tmp192_ = math_equation_get_show_thousands_separators (_tmp191_);
+-	_tmp193_ = _tmp192_;
+-	gtk_toggle_button_set_active ((GtkToggleButton*) _tmp190_, _tmp193_);
+-	_tmp194_ = self->priv->_equation;
+-	g_signal_connect_object ((GObject*) _tmp194_, "notify::show-thousands-separators", (GCallback) __math_preferences_dialog___lambda35__g_object_notify, self, 0);
+-	_tmp195_ = self->priv->trailing_zeroes_check;
++	g_signal_connect_object ((GObject*) _tmp191_, "notify::accuracy", (GCallback) __math_preferences_dialog___lambda34__g_object_notify, self, 0);
++	_tmp192_ = self->priv->thousands_separator_check;
++	_tmp193_ = self->priv->_equation;
++	_tmp194_ = math_equation_get_show_thousands_separators (_tmp193_);
++	_tmp195_ = _tmp194_;
++	gtk_toggle_button_set_active ((GtkToggleButton*) _tmp192_, _tmp195_);
+ 	_tmp196_ = self->priv->_equation;
+-	_tmp197_ = math_equation_get_show_trailing_zeroes (_tmp196_);
+-	_tmp198_ = _tmp197_;
+-	gtk_toggle_button_set_active ((GtkToggleButton*) _tmp195_, _tmp198_);
+-	_tmp199_ = self->priv->_equation;
+-	g_signal_connect_object ((GObject*) _tmp199_, "notify::show-trailing_zeroes", (GCallback) __math_preferences_dialog___lambda36__g_object_notify, self, 0);
+-	_tmp200_ = self->priv->number_format_combo;
++	g_signal_connect_object ((GObject*) _tmp196_, "notify::show-thousands-separators", (GCallback) __math_preferences_dialog___lambda35__g_object_notify, self, 0);
++	_tmp197_ = self->priv->trailing_zeroes_check;
++	_tmp198_ = self->priv->_equation;
++	_tmp199_ = math_equation_get_show_trailing_zeroes (_tmp198_);
++	_tmp200_ = _tmp199_;
++	gtk_toggle_button_set_active ((GtkToggleButton*) _tmp197_, _tmp200_);
+ 	_tmp201_ = self->priv->_equation;
+-	_tmp202_ = math_equation_get_number_format (_tmp201_);
+-	_tmp203_ = _tmp202_;
+-	math_preferences_dialog_set_combo_box_from_int (self, _tmp200_, (gint) _tmp203_);
+-	_tmp204_ = self->priv->_equation;
+-	g_signal_connect_object ((GObject*) _tmp204_, "notify::number-format", (GCallback) __math_preferences_dialog___lambda37__g_object_notify, self, 0);
+-	_tmp205_ = self->priv->word_size_combo;
++	g_signal_connect_object ((GObject*) _tmp201_, "notify::show-trailing_zeroes", (GCallback) __math_preferences_dialog___lambda36__g_object_notify, self, 0);
++	_tmp202_ = self->priv->number_format_combo;
++	_tmp203_ = self->priv->_equation;
++	_tmp204_ = math_equation_get_number_format (_tmp203_);
++	_tmp205_ = _tmp204_;
++	math_preferences_dialog_set_combo_box_from_int (self, _tmp202_, (gint) _tmp205_);
+ 	_tmp206_ = self->priv->_equation;
+-	_tmp207_ = math_equation_get_word_size (_tmp206_);
+-	_tmp208_ = _tmp207_;
+-	math_preferences_dialog_set_combo_box_from_int (self, _tmp205_, _tmp208_);
+-	_tmp209_ = self->priv->_equation;
+-	g_signal_connect_object ((GObject*) _tmp209_, "notify::word-size", (GCallback) __math_preferences_dialog___lambda38__g_object_notify, self, 0);
+-	_tmp210_ = self->priv->angle_unit_combo;
++	g_signal_connect_object ((GObject*) _tmp206_, "notify::number-format", (GCallback) __math_preferences_dialog___lambda37__g_object_notify, self, 0);
++	_tmp207_ = self->priv->word_size_combo;
++	_tmp208_ = self->priv->_equation;
++	_tmp209_ = math_equation_get_word_size (_tmp208_);
++	_tmp210_ = _tmp209_;
++	math_preferences_dialog_set_combo_box_from_int (self, _tmp207_, _tmp210_);
+ 	_tmp211_ = self->priv->_equation;
+-	_tmp212_ = math_equation_get_angle_units (_tmp211_);
+-	_tmp213_ = _tmp212_;
+-	math_preferences_dialog_set_combo_box_from_int (self, _tmp210_, (gint) _tmp213_);
+-	_tmp214_ = self->priv->_equation;
+-	g_signal_connect_object ((GObject*) _tmp214_, "notify::angle-units", (GCallback) __math_preferences_dialog___lambda39__g_object_notify, self, 0);
++	g_signal_connect_object ((GObject*) _tmp211_, "notify::word-size", (GCallback) __math_preferences_dialog___lambda38__g_object_notify, self, 0);
++	_tmp212_ = self->priv->angle_unit_combo;
++	_tmp213_ = self->priv->_equation;
++	_tmp214_ = math_equation_get_angle_units (_tmp213_);
++	_tmp215_ = _tmp214_;
++	math_preferences_dialog_set_combo_box_from_int (self, _tmp212_, (gint) _tmp215_);
++	_tmp216_ = self->priv->_equation;
++	g_signal_connect_object ((GObject*) _tmp216_, "notify::angle-units", (GCallback) __math_preferences_dialog___lambda39__g_object_notify, self, 0);
+ 	_g_object_unref0 (decimal_places_adjustment);
+ 	tokens = (_vala_array_free (tokens, tokens_length1, (GDestroyNotify) g_free), NULL);
+ 	_g_free0 (string);
+diff --git a/src/math-preferences.vala b/src/math-preferences.vala
+index 095c3f7..93f9d95 100644
+--- a/src/math-preferences.vala
++++ b/src/math-preferences.vala
+@@ -21,7 +21,7 @@ public class MathPreferencesDialog : Gtk.Dialog
+ 
+     public MathPreferencesDialog (MathEquation eq)
+     {
+-        Object(use_header_bar: 1, equation: eq);
++        Object(use_header_bar: is_desktop ("Unity") ? 0 : 1, equation: eq);
+     }
+ 
+     construct
+@@ -30,7 +30,11 @@ public class MathPreferencesDialog : Gtk.Dialog
+                    _("Preferences"));
+         border_width = 8;
+ 
+-        ((Gtk.HeaderBar) get_header_bar ()).show_close_button = true;
++        if (is_desktop ("Unity"))
++            add_button (/* Label on close button in preferences dialog */
++                        _("_Close"), 0);
++        else
++            ((Gtk.HeaderBar) get_header_bar ()).show_close_button = true;
+ 
+         var grid = new Gtk.Grid ();
+         grid.show ();
+diff --git a/src/math-window.c b/src/math-window.c
+index 08abf5e..0bee4de 100644
+--- a/src/math-window.c
++++ b/src/math-window.c
+@@ -133,6 +133,7 @@ MathWindow* math_window_construct (GType object_type, GtkApplication* app, MathE
+ void math_converter_set_equation (MathConverter* self, MathEquation* equation);
+ void math_converter_set_category (MathConverter* self, const gchar* category);
+ void math_converter_set_conversion (MathConverter* self, const gchar* unit_a, const gchar* unit_b);
++gboolean is_desktop (const gchar* name);
+ MathDisplay* math_display_new (MathEquation* equation);
+ MathDisplay* math_display_construct (GType object_type, MathEquation* equation);
+ void math_display_grabfocus (MathDisplay* self);
+@@ -210,24 +211,25 @@ MathWindow* math_window_construct (GType object_type, GtkApplication* app, MathE
+ 	gchar* _tmp12_ = NULL;
+ 	gchar* _tmp13_ = NULL;
+ 	gchar* _tmp14_ = NULL;
+-	MathEquation* _tmp15_ = NULL;
+-	MathDisplay* _tmp16_ = NULL;
+-	GtkScrolledWindow* _tmp17_ = NULL;
+-	MathDisplay* _tmp18_ = NULL;
+-	MathDisplay* _tmp19_ = NULL;
+-	MathDisplay* _tmp20_ = NULL;
+-	MathEquation* _tmp21_ = NULL;
+-	MathButtons* _tmp22_ = NULL;
+-	GtkGrid* _tmp23_ = NULL;
+-	MathButtons* _tmp24_ = NULL;
+-	gboolean _tmp25_ = FALSE;
+-	MathButtons* _tmp26_ = NULL;
+-	ButtonMode _tmp27_ = 0;
+-	ButtonMode _tmp28_ = 0;
+-	MathButtons* _tmp29_ = NULL;
++	gboolean _tmp15_ = FALSE;
++	MathEquation* _tmp52_ = NULL;
++	MathDisplay* _tmp53_ = NULL;
++	GtkScrolledWindow* _tmp54_ = NULL;
++	MathDisplay* _tmp55_ = NULL;
++	MathDisplay* _tmp56_ = NULL;
++	MathDisplay* _tmp57_ = NULL;
++	MathEquation* _tmp58_ = NULL;
++	MathButtons* _tmp59_ = NULL;
++	GtkGrid* _tmp60_ = NULL;
++	MathButtons* _tmp61_ = NULL;
++	gboolean _tmp62_ = FALSE;
++	MathButtons* _tmp63_ = NULL;
++	ButtonMode _tmp64_ = 0;
++	ButtonMode _tmp65_ = 0;
++	MathButtons* _tmp66_ = NULL;
+ 	GtkCssProvider* provider = NULL;
+-	GtkCssProvider* _tmp30_ = NULL;
+-	GdkScreen* _tmp31_ = NULL;
++	GtkCssProvider* _tmp67_ = NULL;
++	GdkScreen* _tmp68_ = NULL;
+ 	g_return_val_if_fail (app != NULL, NULL);
+ 	g_return_val_if_fail (equation != NULL, NULL);
+ 	_tmp0_ = app;
+@@ -255,43 +257,154 @@ MathWindow* math_window_construct (GType object_type, GtkApplication* app, MathE
+ 	math_converter_set_conversion (_tmp6_, _tmp10_, _tmp14_);
+ 	_g_free0 (_tmp14_);
+ 	_g_free0 (_tmp10_);
+-	_tmp15_ = equation;
+-	_tmp16_ = math_display_new (_tmp15_);
+-	g_object_ref_sink (_tmp16_);
++	_tmp15_ = is_desktop ("Unity");
++	if (_tmp15_) {
++		GMenu* menu = NULL;
++		GMenu* _tmp16_ = NULL;
++		GMenu* section = NULL;
++		GMenu* _tmp17_ = NULL;
++		GMenu* _tmp18_ = NULL;
++		const gchar* _tmp19_ = NULL;
++		GMenu* _tmp20_ = NULL;
++		GMenuItem* item = NULL;
++		const gchar* _tmp21_ = NULL;
++		GMenuItem* _tmp22_ = NULL;
++		GMenuItem* _tmp23_ = NULL;
++		GMenu* _tmp24_ = NULL;
++		GMenuItem* _tmp25_ = NULL;
++		const gchar* _tmp26_ = NULL;
++		GMenuItem* _tmp27_ = NULL;
++		GMenuItem* _tmp28_ = NULL;
++		GMenu* _tmp29_ = NULL;
++		GMenuItem* _tmp30_ = NULL;
++		const gchar* _tmp31_ = NULL;
++		GMenuItem* _tmp32_ = NULL;
++		GMenuItem* _tmp33_ = NULL;
++		GMenu* _tmp34_ = NULL;
++		GMenuItem* _tmp35_ = NULL;
++		const gchar* _tmp36_ = NULL;
++		GMenuItem* _tmp37_ = NULL;
++		GMenuItem* _tmp38_ = NULL;
++		GMenu* _tmp39_ = NULL;
++		GMenuItem* _tmp40_ = NULL;
++		const gchar* _tmp41_ = NULL;
++		GMenuItem* _tmp42_ = NULL;
++		GMenuItem* _tmp43_ = NULL;
++		GMenu* _tmp44_ = NULL;
++		GMenuItem* _tmp45_ = NULL;
++		GtkMenuBar* menubar = NULL;
++		GMenu* _tmp46_ = NULL;
++		GtkMenuBar* _tmp47_ = NULL;
++		GtkMenuBar* _tmp48_ = NULL;
++		GtkGrid* _tmp49_ = NULL;
++		GtkGrid* _tmp50_ = NULL;
++		GtkMenuBar* _tmp51_ = NULL;
++		gtk_window_set_titlebar ((GtkWindow*) self, NULL);
++		_tmp16_ = g_menu_new ();
++		menu = _tmp16_;
++		_tmp17_ = g_menu_new ();
++		section = _tmp17_;
++		_tmp18_ = menu;
++		_tmp19_ = _ ("Mode");
++		_tmp20_ = section;
++		g_menu_append_submenu (_tmp18_, _tmp19_, (GMenuModel*) _tmp20_);
++		_tmp21_ = _ ("Basic Mode");
++		_tmp22_ = g_menu_item_new (_tmp21_, NULL);
++		item = _tmp22_;
++		_tmp23_ = item;
++		g_menu_item_set_action_and_target (_tmp23_, "win.mode", "s", "basic", NULL);
++		_tmp24_ = section;
++		_tmp25_ = item;
++		g_menu_append_item (_tmp24_, _tmp25_);
++		_tmp26_ = _ ("Advanced Mode");
++		_tmp27_ = g_menu_item_new (_tmp26_, NULL);
++		_g_object_unref0 (item);
++		item = _tmp27_;
++		_tmp28_ = item;
++		g_menu_item_set_action_and_target (_tmp28_, "win.mode", "s", "advanced", NULL);
++		_tmp29_ = section;
++		_tmp30_ = item;
++		g_menu_append_item (_tmp29_, _tmp30_);
++		_tmp31_ = _ ("Financial Mode");
++		_tmp32_ = g_menu_item_new (_tmp31_, NULL);
++		_g_object_unref0 (item);
++		item = _tmp32_;
++		_tmp33_ = item;
++		g_menu_item_set_action_and_target (_tmp33_, "win.mode", "s", "financial", NULL);
++		_tmp34_ = section;
++		_tmp35_ = item;
++		g_menu_append_item (_tmp34_, _tmp35_);
++		_tmp36_ = _ ("Programming Mode");
++		_tmp37_ = g_menu_item_new (_tmp36_, NULL);
++		_g_object_unref0 (item);
++		item = _tmp37_;
++		_tmp38_ = item;
++		g_menu_item_set_action_and_target (_tmp38_, "win.mode", "s", "programming", NULL);
++		_tmp39_ = section;
++		_tmp40_ = item;
++		g_menu_append_item (_tmp39_, _tmp40_);
++		_tmp41_ = _ ("Keyboard Mode");
++		_tmp42_ = g_menu_item_new (_tmp41_, NULL);
++		_g_object_unref0 (item);
++		item = _tmp42_;
++		_tmp43_ = item;
++		g_menu_item_set_action_and_target (_tmp43_, "win.mode", "s", "keyboard", NULL);
++		_tmp44_ = section;
++		_tmp45_ = item;
++		g_menu_append_item (_tmp44_, _tmp45_);
++		_tmp46_ = menu;
++		_tmp47_ = (GtkMenuBar*) gtk_menu_bar_new_from_model ((GMenuModel*) _tmp46_);
++		g_object_ref_sink (_tmp47_);
++		menubar = _tmp47_;
++		_tmp48_ = menubar;
++		gtk_widget_set_visible ((GtkWidget*) _tmp48_, TRUE);
++		_tmp49_ = self->priv->grid;
++		gtk_grid_insert_row (_tmp49_, 0);
++		_tmp50_ = self->priv->grid;
++		_tmp51_ = menubar;
++		gtk_grid_attach (_tmp50_, (GtkWidget*) _tmp51_, 0, 0, 1, 1);
++		_g_object_unref0 (menubar);
++		_g_object_unref0 (item);
++		_g_object_unref0 (section);
++		_g_object_unref0 (menu);
++	}
++	_tmp52_ = equation;
++	_tmp53_ = math_display_new (_tmp52_);
++	g_object_ref_sink (_tmp53_);
+ 	_g_object_unref0 (self->priv->_display);
+-	self->priv->_display = _tmp16_;
+-	_tmp17_ = self->priv->scrolled_window;
+-	_tmp18_ = self->priv->_display;
+-	gtk_container_add ((GtkContainer*) _tmp17_, (GtkWidget*) _tmp18_);
+-	_tmp19_ = self->priv->_display;
+-	gtk_widget_show ((GtkWidget*) _tmp19_);
+-	_tmp20_ = self->priv->_display;
+-	math_display_grabfocus (_tmp20_);
+-	_tmp21_ = equation;
+-	_tmp22_ = math_buttons_new (_tmp21_);
+-	g_object_ref_sink (_tmp22_);
++	self->priv->_display = _tmp53_;
++	_tmp54_ = self->priv->scrolled_window;
++	_tmp55_ = self->priv->_display;
++	gtk_container_add ((GtkContainer*) _tmp54_, (GtkWidget*) _tmp55_);
++	_tmp56_ = self->priv->_display;
++	gtk_widget_show ((GtkWidget*) _tmp56_);
++	_tmp57_ = self->priv->_display;
++	math_display_grabfocus (_tmp57_);
++	_tmp58_ = equation;
++	_tmp59_ = math_buttons_new (_tmp58_);
++	g_object_ref_sink (_tmp59_);
+ 	_g_object_unref0 (self->priv->_buttons);
+-	self->priv->_buttons = _tmp22_;
+-	_tmp23_ = self->priv->grid;
+-	_tmp24_ = self->priv->_buttons;
+-	gtk_container_add ((GtkContainer*) _tmp23_, (GtkWidget*) _tmp24_);
+-	_tmp26_ = self->priv->_buttons;
+-	_tmp27_ = math_buttons_get_mode (_tmp26_);
+-	_tmp28_ = _tmp27_;
+-	if (_tmp28_ != BUTTON_MODE_KEYBOARD) {
+-		_tmp25_ = TRUE;
++	self->priv->_buttons = _tmp59_;
++	_tmp60_ = self->priv->grid;
++	_tmp61_ = self->priv->_buttons;
++	gtk_container_add ((GtkContainer*) _tmp60_, (GtkWidget*) _tmp61_);
++	_tmp63_ = self->priv->_buttons;
++	_tmp64_ = math_buttons_get_mode (_tmp63_);
++	_tmp65_ = _tmp64_;
++	if (_tmp65_ != BUTTON_MODE_KEYBOARD) {
++		_tmp62_ = TRUE;
+ 	} else {
+-		_tmp25_ = FALSE;
++		_tmp62_ = FALSE;
+ 	}
+-	self->priv->remove_buttons = _tmp25_;
+-	_tmp29_ = self->priv->_buttons;
+-	g_signal_connect_object ((GObject*) _tmp29_, "notify::mode", (GCallback) _math_window_mode_changed_cb_g_object_notify, self, 0);
++	self->priv->remove_buttons = _tmp62_;
++	_tmp66_ = self->priv->_buttons;
++	g_signal_connect_object ((GObject*) _tmp66_, "notify::mode", (GCallback) _math_window_mode_changed_cb_g_object_notify, self, 0);
+ 	math_window_mode_changed_cb (self);
+-	_tmp30_ = gtk_css_provider_new ();
+-	provider = _tmp30_;
++	_tmp67_ = gtk_css_provider_new ();
++	provider = _tmp67_;
+ 	gtk_css_provider_load_from_resource (provider, "/org/gnome/calculator/calculator.css");
+-	_tmp31_ = gtk_window_get_screen ((GtkWindow*) self);
+-	gtk_style_context_add_provider_for_screen (_tmp31_, (GtkStyleProvider*) provider, (guint) GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
++	_tmp68_ = gtk_window_get_screen ((GtkWindow*) self);
++	gtk_style_context_add_provider_for_screen (_tmp68_, (GtkStyleProvider*) provider, (guint) GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+ 	_g_object_unref0 (provider);
+ 	return self;
+ }
+diff --git a/src/math-window.vala b/src/math-window.vala
+index f9325e0..af7df21 100644
+--- a/src/math-window.vala
++++ b/src/math-window.vala
+@@ -54,6 +54,33 @@ public class MathWindow : Gtk.ApplicationWindow
+         converter.set_category (null);
+         converter.set_conversion (equation.source_units, equation.target_units);
+ 
++        if (is_desktop ("Unity"))
++        {
++            set_titlebar (null);
++            var menu = new Menu ();
++            var section = new Menu ();
++            menu.append_submenu (_("Mode"), section);
++            var item = new MenuItem (_("Basic Mode"), null);
++            item.set_action_and_target ("win.mode", "s", "basic");
++            section.append_item (item);
++            item = new MenuItem (_("Advanced Mode"), null);
++            item.set_action_and_target ("win.mode", "s", "advanced");
++            section.append_item (item);
++            item = new MenuItem (_("Financial Mode"), null);
++            item.set_action_and_target ("win.mode", "s", "financial");
++            section.append_item (item);
++            item = new MenuItem (_("Programming Mode"), null);
++            item.set_action_and_target ("win.mode", "s", "programming");
++            section.append_item (item);
++            item = new MenuItem (_("Keyboard Mode"), null);
++            item.set_action_and_target ("win.mode", "s", "keyboard");
++            section.append_item (item);
++            var menubar = new Gtk.MenuBar.from_model (menu);
++            menubar.visible = true;
++            grid.insert_row (0);
++            grid.attach (menubar, 0, 0, 1, 1);
++        }
++
+         _display = new MathDisplay (equation);
+         scrolled_window.add (_display);
+         _display.show ();
+diff --git a/src/xdg-desktop.c b/src/xdg-desktop.c
+index e69de29..c5a4e84 100644
+--- a/src/xdg-desktop.c
++++ b/src/xdg-desktop.c
+@@ -0,0 +1,115 @@
++/* xdg-desktop.c generated by valac 0.34.4, the Vala compiler
++ * generated from xdg-desktop.vala, do not modify */
++
++/*
++ * Copyright (C) 2014 Robert Ancell.
++ *
++ * This program is free software: you can redistribute it and/or modify it under
++ * the terms of the GNU General Public License as published by the Free Software
++ * Foundation, either version 2 of the License, or (at your option) any later
++ * version. See http://www.gnu.org/copyleft/gpl.html the full text of the
++ * license.
++ */
++
++#include <glib.h>
++#include <glib-object.h>
++#include <stdlib.h>
++#include <string.h>
++
++#define _g_free0(var) (var = (g_free (var), NULL))
++
++
++
++gboolean is_desktop (const gchar* name);
++static void _vala_array_destroy (gpointer array, gint array_length, GDestroyNotify destroy_func);
++static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify destroy_func);
++static gint _vala_array_length (gpointer array);
++
++
++gboolean is_desktop (const gchar* name) {
++	gboolean result = FALSE;
++	gchar* desktop_name_list = NULL;
++	const gchar* _tmp0_ = NULL;
++	gchar* _tmp1_ = NULL;
++	const gchar* _tmp2_ = NULL;
++	const gchar* _tmp3_ = NULL;
++	gchar** _tmp4_ = NULL;
++	gchar** _tmp5_ = NULL;
++	g_return_val_if_fail (name != NULL, FALSE);
++	_tmp0_ = g_getenv ("XDG_CURRENT_DESKTOP");
++	_tmp1_ = g_strdup (_tmp0_);
++	desktop_name_list = _tmp1_;
++	_tmp2_ = desktop_name_list;
++	if (_tmp2_ == NULL) {
++		result = FALSE;
++		_g_free0 (desktop_name_list);
++		return result;
++	}
++	_tmp3_ = desktop_name_list;
++	_tmp5_ = _tmp4_ = g_strsplit (_tmp3_, ":", 0);
++	{
++		gchar** n_collection = NULL;
++		gint n_collection_length1 = 0;
++		gint _n_collection_size_ = 0;
++		gint n_it = 0;
++		n_collection = _tmp5_;
++		n_collection_length1 = _vala_array_length (_tmp4_);
++		for (n_it = 0; n_it < _vala_array_length (_tmp4_); n_it = n_it + 1) {
++			gchar* _tmp6_ = NULL;
++			gchar* n = NULL;
++			_tmp6_ = g_strdup (n_collection[n_it]);
++			n = _tmp6_;
++			{
++				const gchar* _tmp7_ = NULL;
++				const gchar* _tmp8_ = NULL;
++				_tmp7_ = n;
++				_tmp8_ = name;
++				if (g_strcmp0 (_tmp7_, _tmp8_) == 0) {
++					result = TRUE;
++					_g_free0 (n);
++					n_collection = (_vala_array_free (n_collection, n_collection_length1, (GDestroyNotify) g_free), NULL);
++					_g_free0 (desktop_name_list);
++					return result;
++				}
++				_g_free0 (n);
++			}
++		}
++		n_collection = (_vala_array_free (n_collection, n_collection_length1, (GDestroyNotify) g_free), NULL);
++	}
++	result = FALSE;
++	_g_free0 (desktop_name_list);
++	return result;
++}
++
++
++static void _vala_array_destroy (gpointer array, gint array_length, GDestroyNotify destroy_func) {
++	if ((array != NULL) && (destroy_func != NULL)) {
++		int i;
++		for (i = 0; i < array_length; i = i + 1) {
++			if (((gpointer*) array)[i] != NULL) {
++				destroy_func (((gpointer*) array)[i]);
++			}
++		}
++	}
++}
++
++
++static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify destroy_func) {
++	_vala_array_destroy (array, array_length, destroy_func);
++	g_free (array);
++}
++
++
++static gint _vala_array_length (gpointer array) {
++	int length;
++	length = 0;
++	if (array) {
++		while (((gpointer*) array)[length]) {
++			length++;
++		}
++	}
++	return length;
++}
++
++
++
+diff --git a/src/xdg-desktop.vala b/src/xdg-desktop.vala
+index e69de29..cbcbbed 100644
+--- a/src/xdg-desktop.vala
++++ b/src/xdg-desktop.vala
+@@ -0,0 +1,22 @@
++/*
++ * Copyright (C) 2014 Robert Ancell.
++ *
++ * This program is free software: you can redistribute it and/or modify it under
++ * the terms of the GNU General Public License as published by the Free Software
++ * Foundation, either version 2 of the License, or (at your option) any later
++ * version. See http://www.gnu.org/copyleft/gpl.html the full text of the
++ * license.
++ */
++
++private bool is_desktop (string name)
++{
++    var desktop_name_list = Environment.get_variable ("XDG_CURRENT_DESKTOP");
++    if (desktop_name_list == null)
++        return false;
++
++    foreach (var n in desktop_name_list.split (":"))
++        if (n == name)
++            return true;
++
++    return false;
++}
