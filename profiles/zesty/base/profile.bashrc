@@ -80,7 +80,7 @@ pre_src_prepare() {
 	if [[ -n ${eapply_source} ]]; then
 
 	## If there are some patches to be applied
-	##   define _apply_user_patches function.
+	##   define apply function.
 	_apply_unity-gentoo_patches() {
 		eapply "${eapply_source}"
 		einfo "User patches applied."
