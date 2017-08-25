@@ -77,13 +77,27 @@ pre_src_prepare() {
 
 	${prev_shopt}
 
+	## If there are some patches to be applied
+	##   define function to apply them.
 	if [[ -n ${eapply_source} ]]; then
 
-	## If there are some patches to be applied
-	##   define apply function.
 	_apply_unity-gentoo_patches() {
+		## Pull eapply function if it is not available.
+		if ! type eapply > /dev/null 2>&1; then
+			local sh_script=${EROOT%/}/usr/lib/portage/${PYTHON_SINGLE_TARGET/_/.}/phase-helpers.sh
+			[[ -f ${sh_script} ]] \
+				|| die "${sh_script} not found"
+
+			einfo "Pulling eapply function from ${sh_script} ..."
+			source <(awk "/^\w/ { p = 0 } /^\teapply\() {/ { p = 1 } p { print }" ${sh_script})
+			type eapply > /dev/null 2>&1 \
+				|| die "eapply not found"
+		fi
+
 		eapply "${eapply_source}"
 		einfo "User patches applied."
+
+		[[ -n ${sh_script} ]] && unset -f eapply
 
 		## Run eautoreconf if needed.
 		if [[ -n ${run_eautoreconf} ]]; then
@@ -107,6 +121,7 @@ pre_src_prepare() {
 				&& AT_NOELIBTOOLIZE="yes" eautoreconf \
 				|| eautoreconf
 
+			local name
 			for name in ${autotools_names}; do
 				unset ${name}
 			done
