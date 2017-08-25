@@ -34,6 +34,7 @@ RESTRICT="mirror"
 #		lxc-stop -P /var/lib/anbox/containers/ -n default
 #	/var/lib/anbox/containers/default/default.log	# LXC container log
 #	/var/lib/anbox/rootfs/data/system.log		# Android system log
+#	ANBOX_LOG_LEVEL=debug anbox session-manager
 ##
 # anbox-container-manager.service does the following:
 #	Sets up cgroups and mounts /var/lib/anbox/android.img on LXC path /var/lib/anbox/rootfs/
