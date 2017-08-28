@@ -47,6 +47,7 @@ pre_src_prepare() {
 	##   1) app-arch/file-roller-3.22.3-r1
 	##   2) app-arch/file-roller-3.22.3
 	##   3) app-arch/file-roller-3.22
+	##   3) app-arch/file-roller-3
 	##   4) app-arch/file-roller
 	## all of the above may be optionally followed by a slot:
 	##   app-arch/file-roller-3.22.3-r1:0
@@ -54,7 +55,7 @@ pre_src_prepare() {
 	## Possible file extensions:
 	##   *.diff or *.patch
 	for basedir in "${basearr[@]}"; do
-		for d in "${basedir}"/${CATEGORY}/{${P}-${PR},${P},${PN}-${PV%.*},${PN}}{,:${SLOT%/*}}; do
+		for d in "${basedir}"/${CATEGORY}/{${P}-${PR},${P},${PN}{-${PV%.*},-${PV%.*.*},}}{,:${SLOT%/*}}; do
 			if [[ -n $(echo "${d}"/*.diff) || -n $(echo "${d}"/*.patch) ]]; then
 				## Look for 'enabled' file in 'optdir'.
 				[[ ${basedir} != ${optdir} ]] \
@@ -89,7 +90,7 @@ pre_src_prepare() {
 				|| die "${sh_script} not found"
 
 			einfo "Pulling eapply function from ${sh_script} ..."
-			source <(awk "/^\w/ { p = 0 } /^\teapply\() {/ { p = 1 } p { print }" ${sh_script})
+			source <(awk "/^(\w|#)/ { p = 0 } /^(\t|)eapply\() {\$/ { p = 1 } p { print }" ${sh_script})
 			type eapply > /dev/null 2>&1 \
 				|| die "eapply not found"
 		fi
