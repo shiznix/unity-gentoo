@@ -43,7 +43,6 @@ gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 
 mail-client/thunderbird			# Requires patching for global appmenu
 media-gfx/shotwell			# Patched for integration with Unity online accounts
 media-sound/banshee			# Patched/compiled for indicator-sound support, Meego UI and other Ubuntu UI improvements
-media-sound/pulseaudio			# Patched for indicator-sound 'cork' support
 media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu quicklist, Magnatune and other Ubuntu UI improvements
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 net-im/telepathy-mission-control	# Enables Ubuntu libaccounts-sso integration

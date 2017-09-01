@@ -74,7 +74,6 @@ gnome-extra/polkit-gnome::gentoo
 
 mail-client/thunderbird::gentoo
 media-gfx/shotwell::gentoo
-media-sound/pulseaudio::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
 net-im/telepathy-mission-control::gentoo
