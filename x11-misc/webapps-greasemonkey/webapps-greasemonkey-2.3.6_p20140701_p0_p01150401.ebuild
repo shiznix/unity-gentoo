@@ -22,9 +22,12 @@ RESTRICT="mirror"
 
 DEPEND="unity-base/webapps"
 
-OLDDATE="$(date +%Y.%m.%d)"
-
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
+src_prepare() {
+	ubuntu-versionator_src_prepare
+	OLDDATE="$(date +%Y.%m.%d)"
+}
 
 src_compile() {
 	./build.sh
