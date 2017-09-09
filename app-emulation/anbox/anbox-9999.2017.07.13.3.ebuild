@@ -3,8 +3,9 @@
 # $Header: $
 
 EAPI=6
+PYTHON_COMPAT=( python2_7 )
 
-inherit cmake-utils git-r3 linux-info systemd udev versionator
+inherit cmake-utils git-r3 linux-info python-single-r1 systemd udev versionator
 
 DESCRIPTION="Run Android applications on any GNU/Linux operating system"
 HOMEPAGE="https://anbox.io/"
