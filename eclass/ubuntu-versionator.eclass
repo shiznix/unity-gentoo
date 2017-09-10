@@ -158,13 +158,10 @@ ubuntu-versionator_pkg_setup() {
 	[[ "${PROFILE_RELEASE}" == xenial ]] && GCC_MINIMUM="5.4.0"
 	[[ "${PROFILE_RELEASE}" == yakkety ]] && GCC_MINIMUM="5.4.0"
 	[[ "${PROFILE_RELEASE}" == zesty ]] && GCC_MINIMUM="6.3.0"
-	GCC_MINIMUM_MAJOR="${GCC_MINIMUM%%.*}"
-	GCC_MINIMUM_MINOR="${GCC_MINIMUM##*.}"
+	GCC_CURRENT=$(gcc-major-version).$(gcc-minor-version).$(gcc-micro-version)
 
-	if [[ $(gcc-major-version) -lt "${GCC_MINIMUM_MAJOR}" ]] || \
-		( [[ $(gcc-major-version) -eq "${GCC_MINIMUM_MAJOR}" && $(gcc-minor-version) -lt "${GCC_MINIMUM_MINOR}" ]] ); then
-			die "The selected '${PROFILE_RELEASE}' profile requires your system be built using >=sys-devel/gcc:${GCC_MINIMUM}, please consult the output of 'gcc-config -l'"
-	fi
+	[[ ${GCC_CURRENT//./} -lt ${GCC_MINIMUM//./} ]] \
+		&& die "The selected '${PROFILE_RELEASE}' profile requires your system be built using >=sys-devel/gcc:${GCC_MINIMUM}, please consult the output of 'gcc-config -l'"
 
 	# Disable ld.gold linker if selected as it causes undefined reference linking failures (see net-libs/ubuntu-download-manager linking with sys-libs/libnih) #
 	#	This type of build failure is intended by upstream (see https://sourceware.org/bugzilla/show_bug.cgi?id=10238)
