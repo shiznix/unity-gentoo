@@ -158,7 +158,7 @@ ubuntu-versionator_pkg_setup() {
 	[[ "${PROFILE_RELEASE}" == xenial ]] && GCC_MINIMUM="5.4.0"
 	[[ "${PROFILE_RELEASE}" == yakkety ]] && GCC_MINIMUM="5.4.0"
 	[[ "${PROFILE_RELEASE}" == zesty ]] && GCC_MINIMUM="6.3.0"
-	GCC_CURRENT=$(gcc-major-version).$(gcc-minor-version).$(gcc-micro-version)
+	GCC_CURRENT=$(gcc-fullversion)
 
 	[[ ${GCC_CURRENT//./} -lt ${GCC_MINIMUM//./} ]] \
 		&& die "The selected '${PROFILE_RELEASE}' profile requires your system be built using >=sys-devel/gcc:${GCC_MINIMUM}, please consult the output of 'gcc-config -l'"
