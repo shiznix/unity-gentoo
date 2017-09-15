@@ -19,146 +19,199 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 			eerror
 			die
 	fi
-fi
 
-## Mimic the function of epatch_user/eapply_user
-##   and /etc/portage/patches/ so we can custom patch packages
-##   we don't need to maintain. Loosly based on eapply_user function
-##   from /usr/lib/portage/python*/phase-helpers.sh and
-##   https://wiki.gentoo.org/wiki//etc/portage/patches#Enabling_.2Fetc.2Fportage.2Fpatches_for_all_ebuilds.
-if [[ ${EBUILD_PHASE} == "prepare" ]]; then
+	## Look for existence of {pre,post}_${EBUILD_PHASE_FUNC}.ehook
+	##   and run it to perform ebuild hook. Mimic the function
+	##   of eapply_user and /etc/portage/patches/ so we can custom
+	##   patch packages we don't need to maintain. Loosly based
+	##   on eapply_user function from
+	##   /usr/lib/portage/python*/phase-helpers.sh and
+	##   https://wiki.gentoo.org/wiki//etc/portage/patches#Enabling_.2Fetc.2Fportage.2Fpatches_for_all_ebuilds.
 
-local eapply_source run_post_src_prepare run_eautoreconf
+	local -a EHOOK_SOURCE=()
 
-pre_src_prepare() {
-	local repodir="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
-	local optdir=${PORTAGE_CONFIGROOT%/}/etc/portage/unity-patches
-	local -a basearr=(${repodir}/profiles/${PROFILE_RELEASE}/patches ${optdir})
-	local basedir d
+	## Define function to look for ebuild hooks in setup phase.
+	pre_pkg_setup() {
 
-	local prev_shopt=$(shopt -p nullglob)
-	shopt -s nullglob
+	local \
+		basedir pkgdir \
+		repodir=$(/usr/bin/portageq get_repo_path / unity-gentoo) \
+		optdir=${PORTAGE_CONFIGROOT%/}/etc/portage/ehooks
+	local -a basedirs=(
+		"${repodir}"/profiles/${PROFILE_RELEASE}/ehooks
+		"${optdir}"
+	)
 
-	## Basedir priority order:
-	##   1) unity-gentoo profile #repodir
-	##   2) /etc/portage/unity-patches #optdir
-	## Packagedir priority order:
-	## e.g. for app-arch/file-roller-3.22.3-r1:0::gentoo
-	##   1) app-arch/file-roller-3.22.3-r1
-	##   2) app-arch/file-roller-3.22.3
-	##   3) app-arch/file-roller-3.22
-	##   3) app-arch/file-roller-3
-	##   4) app-arch/file-roller
-	## all of the above may be optionally followed by a slot:
-	##   app-arch/file-roller-3.22.3-r1:0
-	##   app-arch/file-roller:0
-	## Possible file extensions:
-	##   *.diff or *.patch
-	for basedir in "${basearr[@]}"; do
-		for d in "${basedir}"/${CATEGORY}/{${P}-${PR},${P},${PN}{-${PV%.*},-${PV%.*.*},}}{,:${SLOT%/*}}; do
-			if [[ -n $(echo "${d}"/*.diff) || -n $(echo "${d}"/*.patch) ]]; then
-				## Look for 'enabled' file in 'optdir'.
-				[[ ${basedir} != ${optdir} ]] \
-					|| [[ -f ${d}/enabled ]] \
-					|| break 2
+	for basedir in "${basedirs[@]}"; do
+		for pkgdir in "${basedir}"/${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{,:${SLOT%/*}}; do
+			if [[ -d ${pkgdir} ]]; then
+				## Skip if source from ${optdir} not enabled.
+				[[ ${basedir} == ${optdir} ]] \
+					&& [[ ! -e ${pkgdir}/enabled ]] \
+					&& break 2
 
-				## Set patches source.
-				eapply_source=${d}
+				local prev_shopt=$(shopt -p nullglob)
 
-				## Set config triggers.
-				[[ -f ${d}/eautoreconf ]] \
-					&& run_eautoreconf=1
-				[[ -f ${d}/post_prepare ]] \
-					&& run_post_src_prepare=1
-
+				shopt -s nullglob
+				EHOOK_SOURCE=( "${pkgdir}"/*.ehook )
+				${prev_shopt}
 				break 2
 			fi
 		done
 	done
 
-	${prev_shopt}
+	## Process EHOOK_SOURCE.
+	if [[ -n ${EHOOK_SOURCE[@]} ]]; then
 
-	## If there are some patches to be applied
-	##   define function to apply them.
-	if [[ -n ${eapply_source} ]]; then
+	declare -F apply_ehook 1>/dev/null \
+		&& die "apply_ehook: function name collision, please file a bug at https://github.com/shiznix/unity-gentoo/issues"
 
-	_apply_unity-gentoo_patches() {
-		## Pull eapply function if it is not available.
-		if ! type eapply > /dev/null 2>&1; then
-			local sh_script=${EROOT%/}/usr/lib/portage/${PYTHON_SINGLE_TARGET/_/.}/phase-helpers.sh
-			[[ -f ${sh_script} ]] \
-				|| die "${sh_script} not found"
+	## Define function to apply ebuild hook.
+	apply_ehook() {
+		local x bug="please file a bug at https://github.com/shiznix/unity-gentoo/issues"
 
-			einfo "Pulling eapply function from ${sh_script} ..."
-			source <(awk "/^(\w|#)/ { p = 0 } /^(\t|)eapply\() {\$/ { p = 1 } p { print }" ${sh_script})
-			type eapply > /dev/null 2>&1 \
-				|| die "eapply not found"
+		declare -F ebuild_hook 1>/dev/null \
+			&& die "ebuild_hook: function name collision, ${bug}"
+		for x in "${EHOOK_SOURCE[@]}"; do
+			[[ ${x} == *"${FUNCNAME[1]}.ehook" ]] && break
+		done
+		echo ">>> Loading ebuild hook from ${x%/*} ..."
+		source "${x}" 2>/dev/null
+		declare -F ebuild_hook 1>/dev/null \
+			|| die "ebuild_hook: function not found, ${bug}"
+		einfo "Processing ${x##*/} ..."
+
+		local EHOOK_FILESDIR=${x%/*}/files
+
+		## Check for eapply and eautoreconf.
+		if [[ ${EBUILD_PHASE} == prepare ]]; then
+
+		if declare -f ebuild_hook | grep -q "eapply"; then
+			if [[ ${EAPI} -lt 6 ]]; then
+				x=${EROOT%/}/usr/lib/portage/${PYTHON_SINGLE_TARGET/_/.}/phase-helpers.sh
+				[[ -f ${x} ]] \
+					|| die "${x}: file not found, ${bug}"
+				source <(awk "/^(\t|)eapply\() {\$/ { p = 1 } p { print } /^(\t|)}\$/ { p = 0 }" ${x} 2>/dev/null)
+				declare -F eapply 1>/dev/null \
+					|| die "eapply: function not found, ${bug}"
+			fi
 		fi
 
-		eapply "${eapply_source}"
-		einfo "User patches applied."
+		if declare -f ebuild_hook | grep -q "eautoreconf"; then
+			if ! declare -F eautoreconf 1>/dev/null; then
+				x=${PORTDIR%/}/eclass/autotools.eclass
+				[[ -f ${x} ]] \
+					|| die "${x}: file not found, ${bug}"
 
-		[[ -n ${sh_script} ]] && unset -f eapply
+				local eautoreconf_names="eautoreconf _at_uses_pkg _at_uses_autoheader _at_uses_automake _at_uses_gettext _at_uses_glibgettext _at_uses_intltool _at_uses_gtkdoc _at_uses_gnomedoc _at_uses_libtool _at_uses_libltdl eaclocal_amflags eaclocal _elibtoolize eautoheader eautoconf eautomake autotools_env_setup autotools_run_tool ALL_AUTOTOOLS_MACROS autotools_check_macro autotools_check_macro_val _autotools_m4dir_include autotools_m4dir_include autotools_m4sysdir_include"
 
-		## Run eautoreconf if needed.
-		if [[ -n ${run_eautoreconf} ]]; then
-			## Pull autotools.eclass functions
-			##   if they are not available.
-			if ! type eautoreconf > /dev/null 2>&1; then
-				local eclass=${PORTDIR}/eclass/autotools.eclass
-				[[ -f ${eclass} ]] \
-					|| die "${eclass} not found"
-
-				einfo "Pulling autotools functions from ${eclass} ..."
-				local autotools_names="eautoreconf _at_uses_pkg _at_uses_autoheader _at_uses_automake _at_uses_gettext _at_uses_glibgettext _at_uses_intltool _at_uses_gtkdoc _at_uses_gnomedoc _at_uses_libtool _at_uses_libltdl eaclocal_amflags eaclocal _elibtoolize eautoheader eautoconf eautomake autotools_env_setup autotools_run_tool ALL_AUTOTOOLS_MACROS autotools_check_macro autotools_check_macro_val _autotools_m4dir_include autotools_m4dir_include autotools_m4sysdir_include"
-				source <(awk "/^(\w|#)/ { p = 0 } /^(${autotools_names// /|})/ { p = 1 } p { print }" ${eclass})
-				type eautoreconf > /dev/null 2>&1 \
-					|| die "eautoreconf not found"
+				source <(awk "/^(${eautoreconf_names// /|})(\(\)|=\(\$)/ { p = 1 } p { print } /(^(}|\))|; })\$/ { p = 0 }" ${x} 2>/dev/null)
+				declare -F eautoreconf 1>/dev/null \
+					|| die "eautoreconf: function not found, ${bug}"
 			fi
 
-			## Don't use elibtoolize
-			##   in post_src_prepare phase.
-			[[ -n ${run_post_src_prepare} ]] \
-				&& AT_NOELIBTOOLIZE="yes" eautoreconf \
-				|| eautoreconf
+		fi
 
-			local name
-			for name in ${autotools_names}; do
-				unset ${name}
+		fi ## End of checking for eapply and eautoreconf.
+
+		ebuild_hook
+
+		## Sanitize.
+		unset -f ebuild_hook
+		[[ ${EAPI} -lt 6 ]] && unset -f eapply
+		if [[ -n ${eautoreconf_names} ]]; then
+			for x in ${eautoreconf_names}; do
+				unset ${x}
 			done
 		fi
-	} ## End of _apply_unity-gentoo_patches function.
 
-	## Apply patches intended for pre_src_prepare phase.
-	[[ -n ${run_post_src_prepare} ]] || _apply_unity-gentoo_patches
+		echo ">>> Done."
+	} ## End of apply_ehook function.
 
-	fi
-}
+	## Apply ebuild hook intended for setup phase.
+	[[ ${EHOOK_SOURCE[@]} == *"pre_pkg_setup"* ]] \
+		&& apply_ehook
+	[[ ${EHOOK_SOURCE[@]} == *"post_pkg_setup"* ]] \
+		&& post_pkg_setup() {
+			apply_ehook
+		}
 
-post_src_prepare() {
-	## Apply patches intended for post_src_prepare phase.
-	[[ -n ${run_post_src_prepare} ]] && _apply_unity-gentoo_patches
+	fi ## End of processing EHOOK_SOURCE.
 
-	unset -v eapply_source run_post_src_prepare run_eautoreconf
-	unset -f _apply_unity-gentoo_patches
-}
+	} ## End of pre_pkg_setup function.
 
-fi ## End of 'prepare' phase.
+fi ## End of setup phase.
 
-post_src_install() {
-	## Look for existence of
-	##   profiles/${PROFILE_RELEASE}/ebuild_hooks/${CATEGORY}/${P}/post_src_install.sh
-	##   and run it to perform hook.
-	local repodir="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
-	local basedir=${repodir}/profiles/${PROFILE_RELEASE}/ebuild_hooks
-	local d
-
-	for d in "${basedir}"/${CATEGORY}/{${P}-${PR},${P},${PN}-${PV%.*},${PN}}{,:${SLOT%/*}}; do
-		if [[ -x "${d}"/post_src_install.sh ]]; then
-			einfo "Applying ebuild_hooks script ${d}/post_src_install.sh"
-			export HOOK_SOURCE="${d}"
-			${HOOK_SOURCE}/post_src_install.sh
-			return 0
-		fi
-	done
-}
+## Define appropriate ebuild function to apply ebuild hook.
+case ${EBUILD_PHASE} in
+	unpack)
+		[[ ${EHOOK_SOURCE[@]} == *"pre_src_unpack"* ]] \
+			&& pre_src_unpack() {
+				apply_ehook
+			}
+		[[ ${EHOOK_SOURCE[@]} == *"post_src_unpack"* ]] \
+			&& post_src_unpack() {
+				apply_ehook
+			}
+		;;
+	prepare)
+		[[ ${EHOOK_SOURCE[@]} == *"pre_src_prepare"* ]] \
+			&& pre_src_prepare() {
+				apply_ehook
+			}
+		[[ ${EHOOK_SOURCE[@]} == *"post_src_prepare"* ]] \
+			&& post_src_prepare() {
+				apply_ehook
+			}
+		;;
+	configure)
+		[[ ${EHOOK_SOURCE[@]} == *"pre_src_configure"* ]] \
+			&& pre_src_configure() {
+				apply_ehook
+			}
+		[[ ${EHOOK_SOURCE[@]} == *"post_src_configure"* ]] \
+			&& post_src_configure() {
+				apply_ehook
+			}
+		;;
+	compile)
+		[[ ${EHOOK_SOURCE[@]} == *"pre_src_compile"* ]] \
+			&& pre_src_compile() {
+				apply_ehook
+			}
+		[[ ${EHOOK_SOURCE[@]} == *"post_src_compile"* ]] \
+			&& post_src_compile() {
+				apply_ehook
+			}
+		;;
+	install)
+		[[ ${EHOOK_SOURCE[@]} == *"pre_src_install"* ]] \
+			&& pre_src_install() {
+				apply_ehook
+			}
+		[[ ${EHOOK_SOURCE[@]} == *"post_src_install"* ]] \
+			&& post_src_install() {
+				apply_ehook
+			}
+		;;
+	preinst)
+		[[ ${EHOOK_SOURCE[@]} == *"pre_pkg_preinst"* ]] \
+			&& pre_pkg_preinst() {
+				apply_ehook
+			}
+		[[ ${EHOOK_SOURCE[@]} == *"post_pkg_preinst"* ]] \
+			&& post_pkg_preinst() {
+				apply_ehook
+			}
+		;;
+	postinst)
+		[[ ${EHOOK_SOURCE[@]} == *"pre_pkg_postinst"* ]] \
+			&& pre_pkg_postinst() {
+				apply_ehook
+			}
+		[[ ${EHOOK_SOURCE[@]} == *"post_pkg_postinst"* ]] \
+			&& post_pkg_postinst() {
+				apply_ehook
+			}
+		;;
+esac

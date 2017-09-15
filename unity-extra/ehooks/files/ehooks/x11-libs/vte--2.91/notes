@@ -1,0 +1,2 @@
+! This ehook is intended to use along with ehook for x11-terms/gnome-terminal
+Add the style context provider with FALLBACK priority.

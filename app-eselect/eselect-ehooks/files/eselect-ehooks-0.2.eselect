@@ -1,0 +1,175 @@
+# Copyright 2005-2017 Gentoo Foundation
+# Distributed under the terms of the GNU GPL version 2 or later
+
+DESCRIPTION="Manage ebuild hooks in /etc/portage/ehooks"
+MAINTAINER="c4pp4@seznam.cz"
+VERSION="0.2"
+
+get_notes() {
+	local param note newline=$'\n'
+
+	for param in "$@"; do
+		if [[ -f ${param}/notes ]]; then
+			note="${COLOUR_BOLD}${param#*/ehooks/}${COLOUR_NORMAL}${newline}$(<${param}/notes)"
+			[[ ${param} == $1 ]] \
+				&& echo "${note//${newline}/${newline}* }" \
+				|| echo "${newline}${note//${newline}/${newline}* }"
+		fi
+	done
+}
+
+get_packages() {
+	local pkg prev_shopt=$(shopt -p nullglob)
+	local -a packages=()
+
+	shopt -s nullglob
+	for pkg in ${EROOT%/}/etc/portage/ehooks/*/*; do
+		[[ ${pkg##*/} != templates ]] \
+			&& [[ -n $(echo "${pkg}"/*.ehook) ]] \
+			&& packages+=( ${pkg} )
+	done
+	${prev_shopt}
+
+	if [[ -z $@ ]]; then
+		echo "${packages[@]}"
+		return
+	fi
+
+	local param
+
+	for param in "$@"; do
+		if is_number ${param}; then
+			[[ ${param} -lt 1 || ${param} -gt ${#packages[@]} ]] \
+				&& write_error_msg "Invalid number: ${param}" \
+				|| echo "${packages[${param}-1]}"
+		else
+			local i
+
+			for (( i = 0; i < ${#packages[@]}; i++ )); do
+				[[ ${packages[i]#*/ehooks/} == ${param} ]] \
+					&& break
+			done
+			[[ ${i} -eq ${#packages[@]} ]] \
+				&& write_error_msg "Package not found: ${param}" \
+				|| echo "${packages[i]}"
+		fi
+	done
+}
+
+### notes action ###
+
+describe_notes() {
+	echo "Print notes for all or specified package(s)"
+}
+
+describe_notes_parameters() {
+	echo "[PACKAGEs...]"
+}
+
+describe_notes_options() {
+	echo "PACKAGE : CATEGORY/NAME[-VERSION|:SLOT] or NUMBER (from 'list' action)"
+}
+
+do_notes() {
+	local -a packages=( $(get_packages $@) )
+
+	if [[ -n ${packages[@]} ]]; then
+		local -a notes=( "$(get_notes ${packages[@]})" )
+
+		write_list_start "Notes:"
+		if [[ -n ${notes[@]} ]]; then
+			local note
+
+			for note in "${notes[@]}"; do
+				echo "${note}"
+			done
+		else
+			echo "  ${COLOUR_BOLD}(none found)${COLOUR_NORMAL}"
+		fi
+	fi
+}
+
+### list action ###
+
+describe_list() {
+	echo "List available packages"
+}
+
+do_list() {
+	local -a packages=( $(get_packages) )
+	local i
+
+	for (( i = 0; i < ${#packages[@]}; i++ )); do
+		[[ -f ${packages[i]}/enabled ]] \
+			&& packages[i]=$(highlight_marker ${packages[i]#*/ehooks/}) \
+			|| packages[i]=${packages[i]#*/ehooks/}
+	done
+	write_list_start "Available packages:"
+	write_numbered_list -m "(none found)" "${packages[@]}"
+}
+
+### enable action ###
+
+describe_enable() {
+	echo "Enable ebuild hooks for specified package(s)"
+}
+
+describe_enable_parameters() {
+	echo "PACKAGEs..."
+}
+
+describe_enable_options() {
+	echo "PACKAGE : CATEGORY/NAME[-VERSION|:SLOT] or NUMBER (from 'list' action)"
+}
+
+do_enable() {
+	if [[ -z $@ ]]; then
+		write_error_msg "No package(s) specified"
+		return
+	fi
+
+	local -a packages=( $(get_packages $@) )
+
+	if [[ -n ${packages[@]} ]]; then
+		local pkg
+
+		for pkg in "${packages[@]}"; do
+			[[ -f ${pkg}/enabled ]] \
+				&& write_warning_msg "Already enabled: ${pkg#*/ehooks/}" \
+				|| touch "${pkg}"/enabled
+		done
+	fi
+}
+
+### disable action ###
+
+describe_disable() {
+	echo "Disable ebuild hooks for specified package(s)"
+}
+
+describe_disable_parameters() {
+	echo "PACKAGEs..."
+}
+
+describe_disable_options() {
+	echo "PACKAGE : CATEGORY/NAME[-VERSION|:SLOT] or NUMBER (from 'list' action)"
+}
+
+do_disable() {
+	if [[ -z $@ ]]; then
+		write_error_msg "No package(s) specified"
+		return
+	fi
+
+	local -a packages=( $(get_packages $@) )
+
+	if [[ -n ${packages[@]} ]]; then
+		local pkg
+
+		for pkg in "${packages[@]}"; do
+			[[ -f ${pkg}/enabled ]] \
+				&& rm "${pkg}"/enabled \
+				|| write_warning_msg "Already disabled: ${pkg#*/ehooks/}"
+		done
+	fi
+}

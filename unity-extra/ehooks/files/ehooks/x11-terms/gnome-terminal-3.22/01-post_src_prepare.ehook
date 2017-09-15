@@ -1,0 +1,8 @@
+ebuild_hook() {
+	if use vanilla; then
+		ewarn "USE flag 'vanilla' declared: skipping ebuild hook ..."
+	else
+		eapply "${EHOOK_FILESDIR}"
+		AT_NOELIBTOOLIZE="yes" eautoreconf
+	fi
+}

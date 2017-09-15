@@ -14,7 +14,7 @@ URELEASE="zesty"
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
 KEYWORDS="~amd64 ~x86"
-IUSE="accessibility +chat gnome gnome-extras +unity-extras +unity-patches +webapps +xdm"
+IUSE="accessibility +chat +ehooks gnome gnome-extras +unity-extras +webapps +xdm"
 RESTRICT="mirror"
 
 DEPEND="gnome-base/gnome-core-libs
@@ -38,12 +38,12 @@ DEPEND="gnome-base/gnome-core-libs
 	chat? (
 		net-im/empathy
 		net-libs/telepathy-indicator )
+	ehooks? ( unity-extra/ehooks )
 	gnome? ( gnome-base/gnome-core-apps )
 	gnome-extras? ( gnome-base/gnome-extra-apps )
 	unity-extras? (
 		app-backup/deja-dup[nautilus]
 		unity-extra/unity-tweak-tool )
-	unity-patches? ( unity-extra/unity-patches )
 	webapps? ( unity-base/webapps
 			x11-misc/webaccounts-browser-extension
 			x11-misc/webapps-greasemonkey )

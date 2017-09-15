@@ -1,0 +1,5 @@
+ebuild_hook() {
+	sed -i \
+		-e "s/@USES_MM_CHAT_SECTION@/X-MessagingMenu-UsesChatSection=true/" \
+		pidgin/data/pidgin.desktop.in.in || die
+}

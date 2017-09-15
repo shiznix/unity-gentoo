@@ -1,0 +1,4 @@
+! To use theme background color, enable ehook for x11-libs/vte as well.
+Add style classes and CSS names to some of our widgets.
+Use theme transparency.
+Draw proper background under the scrollbar. https://bugzilla.gnome.org/show_bug.cgi?id=754796 https://bugs.launchpad.net/ubuntu/+source/gnome-terminal/+bug/1493964
