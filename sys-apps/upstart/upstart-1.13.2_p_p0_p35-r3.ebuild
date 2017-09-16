@@ -20,7 +20,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+threads"
 RESTRICT="mirror"
 
-DEPEND="sys-devel/gettext
+DEPEND=">=dev-libs/json-c-0.10
+	sys-devel/gettext
 	sys-libs/libnih[dbus]
 	virtual/pkgconfig"
 
