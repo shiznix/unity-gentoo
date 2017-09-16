@@ -5,7 +5,7 @@
 EAPI=6
 WANT_AUTOCONF="2.1"
 MOZ_ESR=""
-MOZ_LIGHTNING_VER="5.4.1"
+MOZ_LIGHTNING_VER="5.4.3"
 MOZ_LIGHTNING_GDATA_VER="3.3"
 
 # This list can be updated using scripts/get_langs.sh from the mozilla overlay
@@ -28,14 +28,14 @@ fi
 MOZ_P="${PN}-${MOZ_PV}"
 
 # Patches
-PATCHFF="firefox-52.2-patches-02"
+PATCHFF="firefox-52.2-patches-03"
 
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 MOZCONFIG_OPTIONAL_GTK2ONLY=1
 MOZCONFIG_OPTIONAL_WIFI=1
 
 URELEASE="zesty-security"
-inherit flag-o-matic toolchain-funcs mozconfig-v6.52 makeedit autotools pax-utils check-reqs nsplugins mozlinguas-v2 fdo-mime gnome2-utils ubuntu-versionator
+inherit flag-o-matic toolchain-funcs mozconfig-v6.53 makeedit autotools pax-utils check-reqs nsplugins mozlinguas-v2 xdg-utils gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+build1"
 UURL="mirror://unity/pool/main/t/${PN}"
@@ -355,7 +355,7 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	fdo-mime_desktop_database_update
+	xdg_desktop_database_update
 	gnome2_icon_cache_update
 
 	elog
@@ -373,6 +373,6 @@ pkg_postinst() {
 }
 
 pkg_postrm() {
-	fdo-mime_desktop_database_update
+	xdg_desktop_database_update
 	gnome2_icon_cache_update
 }
