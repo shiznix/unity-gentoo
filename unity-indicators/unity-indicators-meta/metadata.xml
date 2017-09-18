@@ -13,7 +13,6 @@
 		<flag name="battery">Battery power indicator</flag>
 		<flag name="bluetooth">Bluetooth settings and transfers indicator</flag>
 		<flag name="datetime">Date, time and calendar indicator</flag>
-		<flag name="dispatcher">Enable support for <pkg>net-misc/url-dispatcher</pkg></flag>
 		<flag name="keyboard">Keyboard layout indicator</flag>
 		<flag name="paste">Copy/Paste clipboard indicator</flag>
 		<flag name="printer">Printer jobs indicator</flag>

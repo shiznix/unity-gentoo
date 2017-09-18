@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="dispatcher"
+IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="gnome-extra/gucharmap:2.90
@@ -38,9 +38,6 @@ DEPEND="${RDEPEND}
 	x11-libs/libxklavier
 	x11-libs/pango
 	x11-misc/lightdm
-
-	dispatcher? ( net-misc/url-dispatcher )
-
 	$(vala_depend)
 	${PYTHON_DEPS}"
 
@@ -50,9 +47,7 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# Disable url-dispatcher when not using unity8-desktop-session
-	if ! use dispatcher; then
-		epatch -p1 "${FILESDIR}/disable-url-dispatcher.diff"
-	fi
+	eapply "${FILESDIR}/disable-url-dispatcher.diff"
 
 	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
 	#       (the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #

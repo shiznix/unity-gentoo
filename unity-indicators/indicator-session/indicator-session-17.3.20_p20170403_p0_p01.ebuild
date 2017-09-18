@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="dispatcher +help"
+IUSE="+help"
 RESTRICT="mirror"
 
 RDEPEND="unity-base/unity-language-pack"
@@ -29,7 +29,6 @@ DEPEND="${RDEPEND}
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicate-qt
 
-	dispatcher? ( net-misc/url-dispatcher )
 	help? ( gnome-extra/yelp
 		gnome-extra/gnome-user-docs
 		unity-base/ubuntu-docs )"
@@ -40,9 +39,7 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# Disable url-dispatcher when not using unity8-desktop-session
-	if ! use dispatcher; then
-		epatch -p1 "${FILESDIR}/disable-url-dispatcher.diff"
-	fi
+	eapply "${FILESDIR}/disable-url-dispatcher.diff"
 
 	# Remove dependency on whoopsie (Ubuntu's error submission tracker)
 	sed -e 's:libwhoopsie):):g' \
@@ -52,7 +49,7 @@ src_prepare() {
 	done
 
 	# Fix sandbox violations #
-	epatch "${FILESDIR}/sandbox_violations_fix-17.04.diff"
+	eapply "${FILESDIR}/sandbox_violations_fix-17.04.diff"
 
 	if ! use help || has nodoc ${FEATURES}; then
 		sed -n '/indicator.help/{s|^|//|};p' \

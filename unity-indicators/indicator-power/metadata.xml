@@ -9,7 +9,4 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
-	<use>
-		<flag name="dispatcher">Enable support for <pkg>net-misc/url-dispatcher</pkg></flag>
-	</use>
 </pkgmetadata>

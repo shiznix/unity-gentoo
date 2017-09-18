@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="dispatcher"
+IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="sys-auth/polkit-pkla-compat
@@ -34,9 +34,6 @@ DEPEND="${RDEPEND}
 	unity-base/unity-api
 	unity-indicators/ido:=
 	>=x11-libs/libnotify-0.7.6
-
-	dispatcher? ( net-misc/url-dispatcher )
-
 	$(vala_depend)"
 
 S="${WORKDIR}"
@@ -46,9 +43,7 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# Disable url-dispatcher when not using unity8-desktop-session
-	if ! use dispatcher; then
-		epatch -p1 "${FILESDIR}/disable-url-dispatcher.diff"
-	fi
+	eapply "${FILESDIR}/disable-url-dispatcher.diff"
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

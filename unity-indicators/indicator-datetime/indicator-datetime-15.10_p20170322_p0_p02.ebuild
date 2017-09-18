@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="dispatcher +eds"
+IUSE="+eds"
 RESTRICT="mirror"
 
 COMMON_DEPEND="
@@ -30,11 +30,7 @@ COMMON_DEPEND="
 	sys-apps/util-linux
 	unity-indicators/ido:=
 	unity-indicators/indicator-messages
-	>=x11-libs/libnotify-0.7.6
-
-	dispatcher? (
-		net-misc/url-dispatcher
-		sys-apps/ubuntu-app-launch )"
+	>=x11-libs/libnotify-0.7.6"
 
 RDEPEND="${COMMON_DEPEND}
 	unity-base/unity-language-pack"
@@ -51,17 +47,15 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# Fix schema errors and sandbox violations #
-	epatch -p1 "${FILESDIR}/sandbox_violations_fix.diff"
+	eapply "${FILESDIR}/sandbox_violations_fix.diff"
 
 	# Disable autostart of Evolution-Data-Server subprocess
 	if ! use eds; then
-		epatch -p1 "${FILESDIR}/disable-eds.diff"
+		eapply "${FILESDIR}/disable-eds.diff"
 	fi
 
 	# Disable url-dispatcher when not using unity8-desktop-session
-	if ! use dispatcher; then
-		epatch -p1 "${FILESDIR}/disable-url-dispatcher.diff"
-	fi
+	eapply "${FILESDIR}/disable-url-dispatcher.diff"
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
