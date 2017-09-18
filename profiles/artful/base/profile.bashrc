@@ -64,21 +64,26 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 	if [[ -n ${EHOOK_SOURCE[@]} ]]; then
 
 	declare -F apply_ehook 1>/dev/null \
-		&& die "apply_ehook: function name collision, please file a bug at https://github.com/shiznix/unity-gentoo/issues"
+		&& die "apply_ehook: function name collision\n\nPlease file a bug at 'https://github.com/shiznix/unity-gentoo/issues'."
 
 	## Define function to apply ebuild hook.
 	apply_ehook() {
-		local x bug="please file a bug at https://github.com/shiznix/unity-gentoo/issues"
+		local \
+			x \
+			log="${T}/ehook.log" \
+			bug="Please file a bug at 'https://github.com/shiznix/unity-gentoo/issues'."
 
 		declare -F ebuild_hook 1>/dev/null \
-			&& die "ebuild_hook: function name collision, ${bug}"
+			&& die "ebuild_hook: function name collision\n\n${bug}"
 		for x in "${EHOOK_SOURCE[@]}"; do
 			[[ ${x} == *"${FUNCNAME[1]}.ehook" ]] && break
 		done
 		echo ">>> Loading ebuild hook from ${x%/*} ..."
-		source "${x}" 2>/dev/null
+		source "${x}" 2>"${log}"
+		[[ -s ${log} ]] \
+			&& die "${x##*/}: sourcing failed\n\n${bug}\n\nOutput of '${log}':\n$(<${log})"
 		declare -F ebuild_hook 1>/dev/null \
-			|| die "ebuild_hook: function not found, ${bug}"
+			|| die "ebuild_hook: function not found\n\n${bug}"
 		einfo "Processing ${x##*/} ..."
 
 		local EHOOK_FILESDIR=${x%/*}/files
@@ -88,12 +93,12 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 		if declare -f ebuild_hook | grep -q "eapply"; then
 			if [[ ${EAPI} -lt 6 ]]; then
-				x=${EROOT%/}/usr/lib/portage/${PYTHON_SINGLE_TARGET/_/.}/phase-helpers.sh
+				x=${PORTAGE_BIN_PATH%/}/phase-helpers.sh
 				[[ -f ${x} ]] \
-					|| die "${x}: file not found, ${bug}"
+					|| die "${x}: file not found\n\n${bug}"
 				source <(awk "/^(\t|)eapply\() {\$/ { p = 1 } p { print } /^(\t|)}\$/ { p = 0 }" ${x} 2>/dev/null)
 				declare -F eapply 1>/dev/null \
-					|| die "eapply: function not found, ${bug}"
+					|| die "eapply: function not found\n\n${bug}"
 			fi
 		fi
 
@@ -101,20 +106,22 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 			if ! declare -F eautoreconf 1>/dev/null; then
 				x=${PORTDIR%/}/eclass/autotools.eclass
 				[[ -f ${x} ]] \
-					|| die "${x}: file not found, ${bug}"
+					|| die "${x}: file not found\n\n${bug}"
 
 				local eautoreconf_names="eautoreconf _at_uses_pkg _at_uses_autoheader _at_uses_automake _at_uses_gettext _at_uses_glibgettext _at_uses_intltool _at_uses_gtkdoc _at_uses_gnomedoc _at_uses_libtool _at_uses_libltdl eaclocal_amflags eaclocal _elibtoolize eautoheader eautoconf eautomake autotools_env_setup autotools_run_tool ALL_AUTOTOOLS_MACROS autotools_check_macro autotools_check_macro_val _autotools_m4dir_include autotools_m4dir_include autotools_m4sysdir_include"
 
 				source <(awk "/^(${eautoreconf_names// /|})(\(\)|=\(\$)/ { p = 1 } p { print } /(^(}|\))|; })\$/ { p = 0 }" ${x} 2>/dev/null)
 				declare -F eautoreconf 1>/dev/null \
-					|| die "eautoreconf: function not found, ${bug}"
+					|| die "eautoreconf: function not found\n\n${bug}"
 			fi
 
 		fi
 
 		fi ## End of checking for eapply and eautoreconf.
 
-		ebuild_hook
+		ebuild_hook 2>"${log}"
+		[[ -s ${log} ]] \
+			&& die "ebuild_hook: processing failed\n\n${bug}\n\nOutput of '${log}':\n$(<${log})"
 
 		## Sanitize.
 		unset -f ebuild_hook
