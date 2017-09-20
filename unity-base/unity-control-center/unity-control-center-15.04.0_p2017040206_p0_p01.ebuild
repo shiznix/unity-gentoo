@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+bluetooth +colord +cups fcitx +gnome-online-accounts +i18n input_devices_wacom kerberos +language-selector v4l"
+IUSE="+bluetooth +colord +cups fcitx +gnome-online-accounts +i18n input_devices_wacom kerberos +language-selector v4l +webkit"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -68,7 +68,6 @@ COMMON_DEPEND="
 
 	dev-util/desktop-file-utils
 	media-libs/mesa
-	net-libs/webkit-gtk:4
 	unity-indicators/indicator-datetime
 	x11-libs/libXft
 	x11-libs/libxkbfile
@@ -92,6 +91,7 @@ COMMON_DEPEND="
 		media-libs/gstreamer:1.0
 		media-libs/clutter-gtk:1.0
 		>=media-video/cheese-3.5.91 )
+	webkit? ( net-libs/webkit-gtk:4 )
 
 	$(vala_depend)"
 RDEPEND="${COMMON_DEPEND}
@@ -138,7 +138,7 @@ DEPEND="${COMMON_DEPEND}
 S="${WORKDIR}"
 
 src_prepare() {
-	epatch "${FILESDIR}/01_unity-cc-optional-bt-colord-kerberos-wacom.patch"
+	epatch "${FILESDIR}/01_${PN}-optional-bt-colord-kerberos-wacom-webkit.patch"
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
 
@@ -166,7 +166,8 @@ src_configure() {
 		$(use_enable fcitx) \
 		$(use_enable i18n ibus) \
 		$(use_enable input_devices_wacom wacom) \
-		$(use_enable kerberos)
+		$(use_enable kerberos) \
+		$(use_enable webkit)
 }
 
 src_install() {
@@ -193,5 +194,15 @@ src_install() {
 }
 
 pkg_preinst() { gnome2_icon_savelist; }
-pkg_postinst() { gnome2_icon_cache_update; }
+
+pkg_postinst() {
+	gnome2_icon_cache_update
+	if ! use webkit; then
+		echo
+		elog "Searching in the dash - Legal notice:"
+		elog "file:///usr/share/unity-control-center/searchingthedashlegalnotice.html"
+		echo
+	fi
+}
+
 pkg_postrm() { gnome2_icon_cache_update; }
