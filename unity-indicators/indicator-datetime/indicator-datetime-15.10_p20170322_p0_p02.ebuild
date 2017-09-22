@@ -25,12 +25,13 @@ COMMON_DEPEND="
 	dev-libs/libaccounts-glib
 	dev-libs/libdbusmenu:=
 	dev-libs/libtimezonemap:=
-	gnome-extra/evolution-data-server:=
 	media-libs/gstreamer:1.0
 	sys-apps/util-linux
 	unity-indicators/ido:=
 	unity-indicators/indicator-messages
-	>=x11-libs/libnotify-0.7.6"
+	>=x11-libs/libnotify-0.7.6
+
+	eds? ( gnome-extra/evolution-data-server:= )"
 
 RDEPEND="${COMMON_DEPEND}
 	unity-base/unity-language-pack"
@@ -43,19 +44,15 @@ S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
 
 	# Fix schema errors and sandbox violations #
 	eapply "${FILESDIR}/sandbox_violations_fix.diff"
 
-	# Disable autostart of Evolution-Data-Server subprocess
-	if ! use eds; then
-		eapply "${FILESDIR}/disable-eds.diff"
-	fi
-
-	# Disable url-dispatcher when not using unity8-desktop-session
-	eapply "${FILESDIR}/disable-url-dispatcher.diff"
+	eapply "${FILESDIR}/01-${PN}-add-custom-deps.patch"
+	eapply "${FILESDIR}/02-${PN}-remove-url-dispatcher.patch"
+	eapply "${FILESDIR}/02-${PN}-optional-eds.patch"
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
@@ -63,9 +60,12 @@ src_prepare() {
 }
 
 src_configure() {
-	mycmakeargs+=(-DVALA_COMPILER=$VALAC
+	local mycmakeargs=(
+		-DVALA_COMPILER=$VALAC
 		-DVAPI_GEN=$VAPIGEN
-		-DCMAKE_INSTALL_FULL_LOCALEDIR=/usr/share/locale)
+		-DCMAKE_INSTALL_FULL_LOCALEDIR=/usr/share/locale
+		-DWITH_EDS="$(usex eds)"
+	)
 	cmake-utils_src_configure
 }
 

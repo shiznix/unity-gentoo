@@ -1,0 +1,148 @@
+ CMakeLists.txt       | 11 +++++++++++
+ src/CMakeLists.txt   |  6 ++++++
+ src/main.cpp         | 12 ++++++++++++
+ tests/CMakeLists.txt | 23 +++++++++++++----------
+ 4 files changed, 42 insertions(+), 10 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1d20082..3e229a9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -57,6 +57,17 @@ set (CUSTOM_DEPS
+ 
+ 
+ 
++option (WITH_EDS "Evolution Data Server support" ON)
++
++if (WITH_EDS)
++  add_definitions (-DUSE_EDS)
++else ()
++  list (REMOVE_ITEM CUSTOM_DEPS
++        libical>=0.48
++        libecal-1.2>=3.5
++        libedataserver-1.2>=3.5)
++endif ()
++
+ pkg_check_modules (SERVICE_DEPS REQUIRED ${CUSTOM_DEPS})
+ include_directories (SYSTEM ${SERVICE_DEPS_INCLUDE_DIRS})
+ 
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 84c09b8..66c9b8b 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -41,6 +41,12 @@ set (SERVICE_CXX_SOURCES
+      wakeup-timer-mainloop.cpp
+      wakeup-timer-powerd.cpp)
+ 
++if (NOT WITH_EDS)
++  list (REMOVE_ITEM SERVICE_CXX_SOURCES
++        engine-eds.cpp
++        planner-snooze.cpp)
++endif ()
++
+ # generated sources
+ include (GdbusCodegen)
+ set(SERVICE_GENERATED_SOURCES)
+diff --git a/src/main.cpp b/src/main.cpp
+index 349ba1c..f069c2d 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -21,13 +21,17 @@
+ #include <datetime/alarm-queue-simple.h>
+ #include <datetime/clock.h>
+ #include <datetime/engine-mock.h>
++#ifdef USE_EDS
+ #include <datetime/engine-eds.h>
++#endif /* USE_EDS */
+ #include <datetime/exporter.h>
+ #include <datetime/locations-settings.h>
+ #include <datetime/menu.h>
+ #include <datetime/myself.h>
+ #include <datetime/planner-aggregate.h>
++#ifdef USE_EDS
+ #include <datetime/planner-snooze.h>
++#endif /* USE_EDS */
+ #include <datetime/planner-range.h>
+ #include <datetime/settings-live.h>
+ #include <datetime/snap.h>
+@@ -56,10 +60,14 @@ namespace
+ 
+         // we don't show appointments in the greeter,
+         // so no need to connect to EDS there...
++#ifdef USE_EDS
+         if (!g_strcmp0("lightdm", g_get_user_name()))
++#endif /* USE_EDS */
+             engine.reset(new MockEngine);
++#ifdef USE_EDS
+         else
+             engine.reset(new EdsEngine(std::shared_ptr<Myself>(new Myself)));
++#endif /* USE_EDS */
+ 
+         return engine;
+     }
+@@ -91,6 +99,7 @@ namespace
+         return state;
+     }
+ 
++#ifdef USE_EDS
+     std::shared_ptr<AlarmQueue> create_simple_alarm_queue(const std::shared_ptr<Clock>& clock,
+                                                           const std::shared_ptr<Planner>& snooze_planner,
+                                                           const std::shared_ptr<Engine>& engine,
+@@ -114,6 +123,7 @@ namespace
+         auto wakeup_timer = std::make_shared<PowerdWakeupTimer>(clock);
+         return std::make_shared<SimpleAlarmQueue>(clock, planner, wakeup_timer);
+     }
++#endif /* USE_EDS */
+ }
+ 
+ int
+@@ -143,6 +153,7 @@ main(int /*argc*/, char** /*argv*/)
+     auto actions = std::make_shared<LiveActions>(state);
+     MenuFactory factory(actions, state);
+ 
++#ifdef USE_EDS
+     // set up the snap decisions
+     auto snooze_planner = std::make_shared<SnoozePlanner>(state->settings, state->clock);
+     auto notification_engine = std::make_shared<uin::Engine>("indicator-datetime-service");
+@@ -166,6 +177,7 @@ main(int /*argc*/, char** /*argv*/)
+         engine->disable_ubuntu_alarm(appointment);
+     };
+     alarm_queue->alarm_reached().connect(on_alarm_reached);
++#endif /* USE_EDS */
+ 
+     // create the menus
+     std::vector<std::shared_ptr<Menu>> menus;
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index a972f44..7b0e2ff 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -88,16 +88,19 @@ function(add_eds_ics_test_by_name name)
+             ${CMAKE_CURRENT_BINARY_DIR}/${TEST_NAME}.ics           # arg5: the ical file for this test
+             ${CMAKE_CURRENT_SOURCE_DIR}/accounts.db)               # arg6: online accounts database
+ endfunction()
+-add_eds_ics_test_by_name(test-eds-ics-all-day-events)
+-add_eds_ics_test_by_name(test-eds-ics-repeating-events)
+-add_eds_ics_test_by_name(test-eds-ics-nonrepeating-events)
+-add_eds_ics_test_by_name(test-eds-ics-repeating-valarms)
+-add_eds_ics_test_by_name(test-eds-ics-missing-trigger)
+-add_eds_ics_test_by_name(test-eds-ics-tzids)
+-add_eds_ics_test_by_name(test-eds-ics-tzids-2)
+-add_eds_ics_test_by_name(test-eds-ics-tzids-utc)
+-add_eds_ics_test_by_name(test-eds-ics-non-attending-alarms)
+-add_eds_ics_test_by_name(test-eds-ics-repeating-events-with-individual-change)
++
++if (WITH_EDS)
++  add_eds_ics_test_by_name (test-eds-ics-all-day-events)
++  add_eds_ics_test_by_name (test-eds-ics-repeating-events)
++  add_eds_ics_test_by_name (test-eds-ics-nonrepeating-events)
++  add_eds_ics_test_by_name (test-eds-ics-repeating-valarms)
++  add_eds_ics_test_by_name (test-eds-ics-missing-trigger)
++  add_eds_ics_test_by_name (test-eds-ics-tzids)
++  add_eds_ics_test_by_name (test-eds-ics-tzids-2)
++  add_eds_ics_test_by_name (test-eds-ics-tzids-utc)
++  add_eds_ics_test_by_name (test-eds-ics-non-attending-alarms)
++  add_eds_ics_test_by_name (test-eds-ics-repeating-events-with-individual-change)
++endif ()
+ 
+ 
+ # disabling the timezone unit tests because they require
