@@ -1,0 +1,46 @@
+ CMakeLists.txt | 32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7cc70b9..1d20082 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -40,20 +40,24 @@ find_package (PkgConfig REQUIRED)
+ include (CheckIncludeFile)
+ include (FindPkgConfig)
+ 
+-pkg_check_modules (SERVICE_DEPS REQUIRED
+-                   glib-2.0>=2.36
+-                   gio-unix-2.0>=2.36
+-                   libical>=0.48
+-                   libecal-1.2>=3.5
+-                   libedataserver-1.2>=3.5
+-                   gstreamer-1.0>=1.2
+-                   libnotify>=0.7.6
+-                   url-dispatcher-1>=1
+-                   properties-cpp>=0.0.1
+-                   libaccounts-glib>=1.18
+-                   messaging-menu>=12.10
+-                   uuid>=2.25
+-                   ubuntu-app-launch-3)
++set (CUSTOM_DEPS
++     glib-2.0>=2.36
++     gio-unix-2.0>=2.36
++     libical>=0.48
++     libecal-1.2>=3.5
++     libedataserver-1.2>=3.5
++     gstreamer-1.0>=1.2
++     libnotify>=0.7.6
++     url-dispatcher-1>=1
++     properties-cpp>=0.0.1
++     libaccounts-glib>=1.18
++     messaging-menu>=12.10
++     uuid>=2.25
++     ubuntu-app-launch-3)
++
++
++
++pkg_check_modules (SERVICE_DEPS REQUIRED ${CUSTOM_DEPS})
+ include_directories (SYSTEM ${SERVICE_DEPS_INCLUDE_DIRS})
+ 
+ ##

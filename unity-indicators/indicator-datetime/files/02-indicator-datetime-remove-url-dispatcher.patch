@@ -1,25 +1,34 @@
-diff -Nur a/CMakeLists.txt b/CMakeLists.txt
---- a/CMakeLists.txt	2017-03-22 19:27:40.000000000 +0100
-+++ b/CMakeLists.txt	2017-07-24 17:16:04.463688549 +0200
-@@ -48,12 +48,12 @@
-                    libedataserver-1.2>=3.5
-                    gstreamer-1.0>=1.2
-                    libnotify>=0.7.6
--                   url-dispatcher-1>=1
-+#                   url-dispatcher-1>=1
-                    properties-cpp>=0.0.1
-                    libaccounts-glib>=1.18
-                    messaging-menu>=12.10
-                    uuid>=2.25
--                   ubuntu-app-launch-3)
-+)#                   ubuntu-app-launch-3)
- include_directories (SYSTEM ${SERVICE_DEPS_INCLUDE_DIRS})
+ CMakeLists.txt                  |  4 ++--
+ include/datetime/actions-live.h |  2 +-
+ src/actions-live.cpp            | 16 ++++++++--------
+ src/notifications.cpp           |  8 ++++----
+ tests/test-live-actions.cpp     |  2 +-
+ 5 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1d20082..d54676d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -48,12 +48,12 @@ set (CUSTOM_DEPS
+      libedataserver-1.2>=3.5
+      gstreamer-1.0>=1.2
+      libnotify>=0.7.6
+-     url-dispatcher-1>=1
++#     url-dispatcher-1>=1
+      properties-cpp>=0.0.1
+      libaccounts-glib>=1.18
+      messaging-menu>=12.10
+      uuid>=2.25
+-     ubuntu-app-launch-3)
++)#     ubuntu-app-launch-3)
  
- ##
-diff -Nur a/include/datetime/actions-live.h b/include/datetime/actions-live.h
---- a/include/datetime/actions-live.h	2017-03-22 19:27:40.000000000 +0100
-+++ b/include/datetime/actions-live.h	2017-07-24 03:23:12.195647680 +0200
-@@ -56,7 +56,7 @@
+ 
+ 
+diff --git a/include/datetime/actions-live.h b/include/datetime/actions-live.h
+index 3bca1aa..88edefd 100644
+--- a/include/datetime/actions-live.h
++++ b/include/datetime/actions-live.h
+@@ -56,7 +56,7 @@ public:
  protected:
      virtual Desktop get_desktop();
      virtual void execute_command(const std::string& command);
@@ -28,9 +37,10 @@ diff -Nur a/include/datetime/actions-live.h b/include/datetime/actions-live.h
  
      void unity8_open_appointment(const Appointment& appt, const DateTime& date);
  };
-diff -Nur a/src/actions-live.cpp b/src/actions-live.cpp
---- a/src/actions-live.cpp	2017-03-22 19:27:40.000000000 +0100
-+++ b/src/actions-live.cpp	2017-07-24 17:09:39.372140328 +0200
+diff --git a/src/actions-live.cpp b/src/actions-live.cpp
+index 4386271..2b01878 100644
+--- a/src/actions-live.cpp
++++ b/src/actions-live.cpp
 @@ -20,7 +20,7 @@
  #include <datetime/dbus-shared.h>
  #include <datetime/actions-live.h>
@@ -40,7 +50,7 @@ diff -Nur a/src/actions-live.cpp b/src/actions-live.cpp
  
  #include <glib.h>
  
-@@ -52,11 +52,11 @@
+@@ -52,11 +52,11 @@ void LiveActions::execute_command(const std::string& cmdstr)
      }
  }
  
@@ -54,7 +64,7 @@ diff -Nur a/src/actions-live.cpp b/src/actions-live.cpp
  
  /***
  ****
-@@ -95,7 +95,7 @@
+@@ -95,7 +95,7 @@ void LiveActions::open_alarm_app()
  {
      switch(get_desktop()) {
          case LiveActions::UNITY8:
@@ -63,7 +73,7 @@ diff -Nur a/src/actions-live.cpp b/src/actions-live.cpp
              break;
          case LiveActions::UNITY7:
          default:
-@@ -120,9 +120,9 @@
+@@ -120,9 +120,9 @@ void LiveActions::open_calendar_app(const DateTime& dt)
      switch(get_desktop()) {
          case LiveActions::UNITY8:
          {
@@ -75,7 +85,7 @@ diff -Nur a/src/actions-live.cpp b/src/actions-live.cpp
              break;
          }
          case LiveActions::UNITY7:
-@@ -139,7 +139,7 @@
+@@ -139,7 +139,7 @@ void LiveActions::open_settings_app()
  {
      switch(get_desktop()) {
      case LiveActions::UNITY8:
@@ -84,7 +94,7 @@ diff -Nur a/src/actions-live.cpp b/src/actions-live.cpp
          break;
      case LiveActions::UNITY7:
          execute_command("unity-control-center datetime");
-@@ -186,7 +186,7 @@
+@@ -186,7 +186,7 @@ void LiveActions::unity8_open_appointment(const Appointment& appt, const DateTim
  {
      if (!appt.activation_url.empty())
      {
@@ -93,9 +103,10 @@ diff -Nur a/src/actions-live.cpp b/src/actions-live.cpp
      }
      else switch (appt.type)
      {
-diff -Nur a/src/notifications.cpp b/src/notifications.cpp
---- a/src/notifications.cpp	2017-03-22 19:27:40.000000000 +0100
-+++ b/src/notifications.cpp	2017-07-24 17:12:34.769929542 +0200
+diff --git a/src/notifications.cpp b/src/notifications.cpp
+index 0e52c5b..6be81ea 100644
+--- a/src/notifications.cpp
++++ b/src/notifications.cpp
 @@ -24,8 +24,8 @@
  #include <messaging-menu/messaging-menu-app.h>
  #include <messaging-menu/messaging-menu-message.h>
@@ -107,7 +118,7 @@ diff -Nur a/src/notifications.cpp b/src/notifications.cpp
  
  #include <uuid/uuid.h>
  
-@@ -461,12 +461,12 @@
+@@ -461,12 +461,12 @@ private:
  
      static std::string calendar_app_id()
      {
@@ -122,10 +133,11 @@ diff -Nur a/src/notifications.cpp b/src/notifications.cpp
              return std::string();
      }
  
-diff -Nur a/tests/test-live-actions.cpp b/tests/test-live-actions.cpp
---- a/tests/test-live-actions.cpp	2017-03-22 19:27:40.000000000 +0100
-+++ b/tests/test-live-actions.cpp	2017-07-24 03:37:07.229236822 +0200
-@@ -39,7 +39,7 @@
+diff --git a/tests/test-live-actions.cpp b/tests/test-live-actions.cpp
+index 91ff16d..7f9218f 100644
+--- a/tests/test-live-actions.cpp
++++ b/tests/test-live-actions.cpp
+@@ -39,7 +39,7 @@ protected:
      LiveActions::Desktop m_desktop;
  
      LiveActions::Desktop get_desktop() override { return m_desktop; }
