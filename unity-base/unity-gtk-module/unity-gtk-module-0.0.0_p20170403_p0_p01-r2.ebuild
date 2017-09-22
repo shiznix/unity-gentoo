@@ -43,6 +43,7 @@ src_configure() {
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
 		../configure --prefix=/usr \
+			--libdir=/usr/$(get_libdir) \
 			--sysconfdir=/etc \
 			--disable-static \
 			--with-gtk=2 || die
@@ -52,6 +53,7 @@ src_configure() {
 	[[ -d build-gtk3 ]] || mkdir build-gtk3
 	pushd build-gtk3
 		../configure --prefix=/usr \
+		--libdir=/usr/$(get_libdir) \
 		--sysconfdir=/etc \
 		--disable-static || die
 	popd
