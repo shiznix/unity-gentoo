@@ -118,6 +118,10 @@ src_prepare() {
 		-i debian/user/unity-settings-daemon.service || \
 			die "Sed failed for debian/user/unity-settings-daemon.service"
 
+	# Ensure libunity-settings-daemon.so.1 gets linked to libudev.so #
+	sed -e 's:-lm :-lm -ludev :g' \
+		-i gnome-settings-daemon/Makefile.am
+
 	eautoreconf
 	gnome2_src_prepare
 }
