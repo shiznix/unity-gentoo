@@ -10,7 +10,7 @@ inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
 MY_PV="${PV}"
-BASE_PV="4.12.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
+BASE_PV="4.13.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
 KCONFIG_URELEASE="utopic"
 UURL="mirror://unity/pool/main/l/${MY_PN}"
 

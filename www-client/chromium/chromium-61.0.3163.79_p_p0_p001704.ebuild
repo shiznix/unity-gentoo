@@ -17,7 +17,7 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://unity/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1369"
+UVER_SUFFIX=".1371"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -27,7 +27,7 @@ SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
-IUSE="component-build cups gnome-keyring +hangouts kerberos neon pic +proprietary-codecs pulseaudio selinux +suid +system-ffmpeg +system-libvpx +tcmalloc widevine"
+IUSE="component-build cups gnome-keyring +hangouts kerberos neon pic +proprietary-codecs pulseaudio selinux +suid +system-ffmpeg +system-icu +system-libvpx +tcmalloc widevine"
 RESTRICT="!system-ffmpeg? ( proprietary-codecs? ( bindist ) )
 	mirror"
 
@@ -43,7 +43,7 @@ COMMON_DEPEND="
 	cups? ( >=net-print/cups-1.3.11:= )
 	dev-libs/expat:=
 	dev-libs/glib:2
-	<dev-libs/icu-59:=
+	system-icu? ( <dev-libs/icu-59:= )
 	dev-libs/libxslt:=
 	dev-libs/nspr:=
 	>=dev-libs/nss-3.14.3:=
@@ -58,13 +58,21 @@ COMMON_DEPEND="
 	system-libvpx? ( media-libs/libvpx:=[postproc,svc] )
 	>=media-libs/openh264-1.6.0:=
 	pulseaudio? ( media-sound/pulseaudio:= )
-	system-ffmpeg? ( >=media-video/ffmpeg-3:= media-libs/opus:= )
+	system-ffmpeg? (
+		>=media-video/ffmpeg-3:=
+		|| (
+			media-video/ffmpeg[-samba]
+			>=net-fs/samba-4.5.10-r1[-debug(-)]
+		)
+		!=net-fs/samba-4.5.12
+		media-libs/opus:=
+	)
 	sys-apps/dbus:=
 	sys-apps/pciutils:=
 	virtual/udev
 	x11-libs/cairo:=
 	x11-libs/gdk-pixbuf:2
-	x11-libs/gtk+:3
+	x11-libs/gtk+:3[X]
 	x11-libs/libX11:=
 	x11-libs/libXcomposite:=
 	x11-libs/libXcursor:=
@@ -103,7 +111,7 @@ DEPEND="${COMMON_DEPEND}
 	)
 	dev-lang/perl
 	>=dev-util/gperf-3.0.3
-	dev-util/ninja
+	>=dev-util/ninja-1.7.2
 	>=net-libs/nodejs-4.6.1
 	sys-apps/hwids[usb(+)]
 	tcmalloc? ( !<sys-apps/sandbox-2.11 )
@@ -205,11 +213,6 @@ src_prepare() {
 	sed -e 's:${rebuild_string}:-U_FORTIFY_SOURCE ${rebuild_string}:g' \
 		-i build/toolchain/gcc_toolchain.gni || die
 
-	local PATCHES=(
-		"${FILESDIR}/${PN}-widevine-r1.patch"
-		"${FILESDIR}/${PN}-major-minor.patch"
-	)
-
 	default
 
 	mkdir -p third_party/node/linux/node-linux-x64/bin || die
@@ -233,10 +236,10 @@ src_prepare() {
 		third_party/WebKit
 		third_party/analytics
 		third_party/angle
-		third_party/angle/src/common/third_party/numerics
+		third_party/angle/src/common/third_party/base
+		third_party/angle/src/common/third_party/murmurhash
 		third_party/angle/src/third_party/compiler
 		third_party/angle/src/third_party/libXNVCtrl
-		third_party/angle/src/third_party/murmurhash
 		third_party/angle/src/third_party/trace_event
 		third_party/boringssl
 		third_party/brotli
@@ -318,7 +321,6 @@ src_prepare() {
 		third_party/swiftshader
 		third_party/swiftshader/third_party/llvm-subzero
 		third_party/swiftshader/third_party/subzero
-		third_party/tcmalloc
 		third_party/usrsctp
 		third_party/vulkan
 		third_party/vulkan-validation-layers
@@ -343,9 +345,15 @@ src_prepare() {
 	if ! use system-ffmpeg; then
 		keeplibs+=( third_party/ffmpeg third_party/opus )
 	fi
+	if ! use system-icu; then
+		keeplibs+=( third_party/icu )
+	fi
 	if ! use system-libvpx; then
 		keeplibs+=( third_party/libvpx )
 		keeplibs+=( third_party/libvpx/source/libvpx/third_party/x86inc )
+	fi
+	if use tcmalloc; then
+		keeplibs+=( third_party/tcmalloc )
 	fi
 
 	# Remove most bundled libraries. Some are still needed.
@@ -396,7 +404,6 @@ src_configure() {
 	local gn_system_libraries=(
 		flac
 		harfbuzz-ng
-		icu
 		libdrm
 		libjpeg
 		libpng
@@ -411,6 +418,9 @@ src_configure() {
 	if use system-ffmpeg; then
 		gn_system_libraries+=( ffmpeg opus )
 	fi
+	if use system-icu; then
+		gn_system_libraries+=( icu )
+	fi
 	if use system-libvpx; then
 		gn_system_libraries+=( libvpx )
 	fi
@@ -422,7 +432,6 @@ src_configure() {
 	myconf_gn+=" use_cups=$(usex cups true false)"
 	myconf_gn+=" use_gconf=false"
 	myconf_gn+=" use_gnome_keyring=$(usex gnome-keyring true false)"
-	myconf_gn+=" use_gtk3=true"
 	myconf_gn+=" use_kerberos=$(usex kerberos true false)"
 	myconf_gn+=" use_pulseaudio=$(usex pulseaudio true false)"
 
@@ -439,7 +448,7 @@ src_configure() {
 	# Never use bundled gold binary. Disable gold linker flags for now.
 	# Do not use bundled clang.
 	# Trying to use gold results in linker crash.
-	myconf_gn+=" use_gold=false use_sysroot=false linux_use_bundled_binutils=false"
+	myconf_gn+=" use_gold=false use_sysroot=false linux_use_bundled_binutils=false use_custom_libcxx=false"
 
 	ffmpeg_branding="$(usex proprietary-codecs Chrome Chromium)"
 	myconf_gn+=" proprietary_codecs=$(usex proprietary-codecs true false)"
@@ -506,6 +515,7 @@ src_configure() {
 	if tc-is-cross-compiler; then
 		tc-export BUILD_{AR,CC,CXX,NM}
 		myconf_gn+=" host_toolchain=\"${FILESDIR}/toolchain:host\""
+		myconf_gn+=" v8_snapshot_toolchain=\"${FILESDIR}/toolchain:host\""
 	else
 		myconf_gn+=" host_toolchain=\"${FILESDIR}/toolchain:default\""
 	fi
@@ -552,8 +562,13 @@ src_compile() {
 	fi
 
 	# Build mksnapshot and pax-mark it.
-	eninja -C out/Release mksnapshot || die
-	pax-mark m out/Release/mksnapshot
+	if tc-is-cross-compiler; then
+		eninja -C out/Release host/mksnapshot || die
+		pax-mark m out/Release/host/mksnapshot
+	else
+		eninja -C out/Release mksnapshot || die
+		pax-mark m out/Release/mksnapshot
+	fi
 
 	# Even though ninja autodetects number of CPUs, we respect
 	# user's options, for debugging with -j 1 or any other reason.
@@ -618,8 +633,9 @@ src_install() {
 	doins out/Release/*.pak
 	doins out/Release/*.so
 
-	# Needed by bundled icu
-	# doins out/Release/icudtl.dat
+	if ! use system-icu; then
+		doins out/Release/icudtl.dat
+	fi
 
 	doins -r out/Release/locales
 	doins -r out/Release/resources
