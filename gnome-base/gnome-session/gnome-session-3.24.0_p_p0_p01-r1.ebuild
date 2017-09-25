@@ -20,7 +20,7 @@ SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.24/${PN}-${PV}.tar.xz
 LICENSE="GPL-2 LGPL-2 FDL-1.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc elibc_FreeBSD ipv6 systemd"
+IUSE="doc elibc_FreeBSD ipv6 systemd wayland"
 RESTRICT="mirror"
 
 # x11-misc/xdg-user-dirs{,-gtk} are needed to create the various XDG_*_DIRs, and
@@ -172,6 +172,16 @@ src_install() {
 
 	insinto /usr/share/upstart/systemd-session/upstart
 	doins "${WORKDIR}/debian/data/gnome-session.override"
+
+	if use wayland; then
+		sed -e 's:^Exec=gnome-session:Exec=gnome-session --session=gnome:g' \
+			-e 's:TryExec=gnome-session:TryExec=gnome-shell:g' \
+				-i "${ED}usr/share/xsessions/gnome-xorg.desktop"
+		rm "${ED}usr/share/xsessions/gnome.desktop"
+	else
+		rm "${ED}usr/share/xsessions/gnome-xorg.desktop"
+		rm "${ED}usr/share/wayland-sessions/gnome.desktop"
+	fi
 }
 
 pkg_postinst() {
