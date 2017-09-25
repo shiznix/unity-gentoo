@@ -2,6 +2,50 @@
 
 */*::unity-gentoo
 
+# Unmask Gnome-3.24 #
+=*/gnome*-*24*::gentoo
+=gnome-base/*-*24*::gentoo
+=gnome-extra/*-*24*::gentoo
+>=app-accessibility/at-spi2-atk-2.24::gentoo
+>=app-accessibility/at-spi2-core-2.24::gentoo
+>=app-accessibility/orca-3.24::gentoo
+>=app-arch/file-roller-3.24::gentoo
+>=app-cdr/brasero-3.12::gentoo
+>=app-editors/gedit-3.24::gentoo
+>=app-text/evince-3.24::gentoo
+>=app-text/yelp-tools-3.24::gentoo
+>=dev-cpp/gtkmm-3.24::gentoo
+>=dev-libs/atk-2.24::gentoo
+>=dev-libs/gjs-1.48::gentoo
+~dev-libs/libgudev-232::gentoo
+>=dev-libs/libgweather-3.24::gentoo
+~dev-libs/libusb-1.0.21::gentoo
+>=dev-python/pyatspi-2.24.0::gentoo
+>=dev-python/pygobject-3.24::gentoo
+>=dev-util/gtk-update-icon-cache-3.24::gentoo
+>=dev-util/devhelp-3.24::gentoo
+>=dev-vcs/gitg-3.24::gentoo
+>=gnome-base/gvfs-1.32::gentoo
+>=mail-client/evolution-3.24::gentoo
+>=media-gfx/eog-3.24::gentoo
+>=media-libs/clutter-gtk-1.8.4::gentoo
+>=media-sound/sound-juicer-3.24::gentoo
+>=media-video/cheese-3.24::gentoo
+>=media-video/totem-3.24::gentoo
+>=net-misc/vinagre-3.24::gentoo
+>=net-wireless/gnome-bluetooth-3.24::gentoo
+>=sci-geosciences/geocode-glib-3.24::gentoo
+>=sys-apps/baobab-3.24::gentoo
+~virtual/libgudev-232::gentoo
+>=www-client/epiphany-3.24::gentoo
+>=x11-libs/gtksourceview-3.24::gentoo
+>=x11-libs/libwnck-3.24::gentoo
+>=x11-libs/pango-1.40.9::gentoo
+>=x11-libs/vte-0.48::gentoo
+>=x11-themes/adwaita-icon-theme-3.24::gentoo
+>=x11-wm/mutter-3.24::gentoo
+# >=media-plugins/grilo-plugins-0.2.16::gentoo
+
 
 # Unmask QT-5.7 #
 =dev-qt/assistant-5.7*:5::gentoo

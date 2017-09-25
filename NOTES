@@ -22,6 +22,7 @@ app-backup/deja-dup			# Enable Unity desktop options
 dev-cpp/gtest				# Customised ebuild to install /usr/src/gtest/* files lacking from main tree ebuild
 dev-cpp/gmock				# Customised ebuild to install /usr/src/gmock/* files lacking from main tree ebuild
 dev-libs/dee				# Portage tree versions can lag and is now being removed, maintained for patches and version control
+dev-libs/gjs				# Included to pull in lower versions of dev-libs/glib and dev-libs/gobject-introspection
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/gobject-introspection		# See glib reason above
 dev-libs/gobject-introspection-common	# See glib reason above
@@ -31,6 +32,7 @@ dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-core-apps		# Included to pull in lower versions of empathy, gnome-menus and nautilus
+gnome-base/gnome-core-libs		# Included to pull in lower version of x11-libs/gtk+:3
 gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
