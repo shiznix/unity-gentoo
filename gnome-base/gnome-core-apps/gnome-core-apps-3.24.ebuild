@@ -25,27 +25,27 @@ RDEPEND="
 	>=gnome-base/gnome-settings-daemon-${PV}[cups?]
 	>=gnome-base/gnome-control-center-${PV}[cups?]
 
-	>=app-crypt/gcr-3.20
+	>=app-crypt/gcr-3.20.0
 	>=gnome-base/nautilus-3.20
-	>=gnome-base/gnome-keyring-3.20
-	>=gnome-extra/evolution-data-server-3.16
+	>=gnome-base/gnome-keyring-3.20.0
+	>=gnome-extra/evolution-data-server-${PV}
 
-	>=app-crypt/seahorse-3.20
-	>=app-editors/gedit-${PV}
+	>=app-crypt/seahorse-3.20.0
+	>=app-editors/gedit-3.22.1
 	>=app-text/evince-${PV}
-	>=gnome-extra/gnome-contacts-${PV}
+	>=gnome-extra/gnome-contacts-3.22.1
 	>=media-gfx/eog-${PV}
 	>=media-video/totem-${PV}
 	>=net-im/empathy-3.12
 	>=x11-terms/gnome-terminal-${PV}
 
 	>=gnome-extra/gnome-user-docs-${PV}
-	>=gnome-extra/yelp-${PV}
+	>=gnome-extra/yelp-3.22.0
 
 	>=x11-themes/adwaita-icon-theme-${PV}
-	>=x11-themes/gnome-themes-standard-${PV}
+	>=x11-themes/gnome-themes-standard-3.22.3
 
-	bluetooth? ( >=net-wireless/gnome-bluetooth-3.20 )
+	bluetooth? ( >=net-wireless/gnome-bluetooth-3.20.0 )
 	cdr? ( >=app-cdr/brasero-3.12.1 )
 
 	!gnome-base/gnome-applets

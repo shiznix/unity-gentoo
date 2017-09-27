@@ -27,7 +27,7 @@ src_install() {
 		die "Failed to detect unity-gentoo overlay and/or profile"
 	fi
 
-	for pfile in {env,accept_keywords,mask,unmask,use}; do
+	for pfile in {env,keywords,mask,unmask,use}; do
 		dodir "/etc/portage/package.${pfile}"
 		dosym "${REPO_ROOT}/profiles/${PROFILE_RELEASE}/unity-portage.p${pfile}" \
 			"/etc/portage/package.${pfile}/unity-portage.p${pfile}" || die

@@ -11,7 +11,7 @@
 >=app-accessibility/orca-3.24::gentoo
 >=app-arch/file-roller-3.24::gentoo
 >=app-cdr/brasero-3.12::gentoo
->=app-editors/gedit-3.24::gentoo
+>=app-editors/gedit-3.22::gentoo
 >=app-text/evince-3.24::gentoo
 >=app-text/yelp-tools-3.24::gentoo
 >=dev-cpp/gtkmm-3.24::gentoo
