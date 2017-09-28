@@ -40,7 +40,7 @@ src_prepare() {
 }
 
 src_configure() {
-	eqmake5
+	eqmake5 LIBDIR="/usr/$(get_libdir)"
 }
 
 src_install() {

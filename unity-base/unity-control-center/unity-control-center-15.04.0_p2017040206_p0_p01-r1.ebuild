@@ -116,7 +116,8 @@ RDEPEND="${COMMON_DEPEND}
 	!<net-wireless/gnome-bluetooth-3.3.2
 "
 # PDEPEND to avoid circular dependency
-PDEPEND=">=gnome-base/gnome-session-2.91.6-r1"
+PDEPEND=">=gnome-base/gnome-session-2.91.6-r1
+	bluetooth? ( unity-indicators/indicator-bluetooth )"
 
 DEPEND="${COMMON_DEPEND}
 	x11-proto/xproto
@@ -155,13 +156,10 @@ src_prepare() {
 }
 
 src_configure() {
-	# cheese is disabled as it can cause gnome-control-center to segfault (and Ubuntu disable it anyway) #
-	# gnome-online-accounts is disabled as we use Ubuntu's online accounts method #
 	gnome2_src_configure \
 		--disable-update-mimedb \
 		--disable-static \
 		--enable-documentation \
-		--without-cheese \
 		$(use_enable bluetooth) \
 		$(use_enable colord color) \
 		$(use_enable cups) \
@@ -169,6 +167,7 @@ src_configure() {
 		$(use_enable i18n ibus) \
 		$(use_enable input_devices_wacom wacom) \
 		$(use_enable kerberos) \
+		$(use_with v4l cheese) \
 		$(use_enable webkit)
 }
 
