@@ -1,11 +1,11 @@
- configure.ac                            | 168 ++++++++++++++++++++++++++------
+ configure.ac                            | 167 ++++++++++++++++++++++++++------
  panels/Makefile.am                      |  12 ++-
  panels/info/cc-info-panel.c             |   8 ++
  panels/user-accounts/um-realm-manager.c |   9 ++
- 4 files changed, 163 insertions(+), 34 deletions(-)
+ 4 files changed, 162 insertions(+), 34 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 572490e..992b554 100644
+index 66cac5d..039582e 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -139,8 +139,6 @@ PKG_CHECK_MODULES(APPEARANCE_PANEL, $COMMON_MODULES libxml-2.0 gnome-desktop-3.0
@@ -25,7 +25,7 @@ index 572490e..992b554 100644
  PKG_CHECK_MODULES(PRINTERS_PANEL, $COMMON_MODULES
                    polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION)
  PKG_CHECK_MODULES(REGION_PANEL, $COMMON_MODULES
-@@ -171,13 +168,84 @@ PKG_CHECK_MODULES(USER_ACCOUNTS_PANEL, $COMMON_MODULES
+@@ -176,13 +173,83 @@ PKG_CHECK_MODULES(USER_ACCOUNTS_PANEL, $COMMON_MODULES
                    gdk-pixbuf-2.0 >= $GDKPIXBUF_REQUIRED_VERSION
                    pwquality
                    accountsservice >= $ACCOUNTSSERVICE_REQUIRED_VERSION)
@@ -37,16 +37,18 @@ index 572490e..992b554 100644
  AC_SUBST(GDESKTOP_PREFIX)
  
 +# Check for webkit2gtk
++INFO_BASE_MODULES="libgtop-2.0
++ gl
++ x11
++ polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION"
++
 +AC_ARG_ENABLE([webkit], [
 +    AS_HELP_STRING([--disable-webkit], [disable webkit support])
 +])
 +AS_IF([test "x$enable_webkit" != "xno"], [
 +    PKG_CHECK_MODULES([INFO_PANEL], [
 +        $COMMON_MODULES
-+        libgtop-2.0
-+        gl
-+        x11
-+        polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION
++        $INFO_BASE_MODULES
 +        webkit2gtk-4.0
 +    ], [
 +        AC_DEFINE([BUILD_WEBKIT], [1], [
@@ -55,10 +57,7 @@ index 572490e..992b554 100644
 +], [
 +    PKG_CHECK_MODULES([INFO_PANEL], [
 +        $COMMON_MODULES
-+        libgtop-2.0
-+        gl
-+        x11
-+        polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION
++        $INFO_BASE_MODULES
 +    ])
 +])
 +
@@ -111,7 +110,7 @@ index 572490e..992b554 100644
  # Check for NetworkManager ~0.9
  PKG_CHECK_MODULES(NETWORK_MANAGER, NetworkManager >= $NETWORK_MANAGER_REQUIRED_VERSION
                    libnm-glib >= $NETWORK_MANAGER_REQUIRED_VERSION
-@@ -241,25 +309,40 @@ else
+@@ -246,25 +313,40 @@ else
  fi
  AM_CONDITIONAL(BUILD_CHEESE, test x${have_cheese} = xyes)
  
@@ -170,7 +169,7 @@ index 572490e..992b554 100644
  
  # This is a hard-dependency for the region and user-accounts panels
  PKG_CHECK_MODULES(ISOCODES, iso-codes)
-@@ -268,15 +351,25 @@ AC_DEFINE_UNQUOTED([ISO_CODES_PREFIX],["`$PKG_CONFIG --variable=prefix iso-codes
+@@ -273,15 +355,25 @@ AC_DEFINE_UNQUOTED([ISO_CODES_PREFIX],["`$PKG_CONFIG --variable=prefix iso-codes
  ISO_CODES=iso-codes
  
  # Kerberos kerberos support
@@ -205,7 +204,7 @@ index 572490e..992b554 100644
  
  AC_SUBST(KRB5_CFLAGS)
  AC_SUBST(KRB5_LIBS)
-@@ -510,6 +603,19 @@ if test "x$enable_cups" = "xyes"; then
+@@ -517,6 +609,19 @@ if test "x$enable_cups" = "xyes"; then
  else
  	AC_MSG_NOTICE([   Printers panel disabled])
  fi
@@ -226,7 +225,7 @@ index 572490e..992b554 100644
  	AC_MSG_NOTICE([** Cheese (Users panel webcam support)])
  else
 diff --git a/panels/Makefile.am b/panels/Makefile.am
-index 5ed02c6..4d14de1 100644
+index 37cf6f3..81d9feb 100644
 --- a/panels/Makefile.am
 +++ b/panels/Makefile.am
 @@ -4,7 +4,6 @@ SUBDIRS= \
@@ -237,7 +236,7 @@ index 5ed02c6..4d14de1 100644
  	display \
  	mouse \
  	region \
-@@ -12,8 +11,15 @@ SUBDIRS= \
+@@ -13,8 +12,15 @@ SUBDIRS= \
  	sound \
  	keyboard \
  	universal-access \

@@ -188,6 +188,7 @@ src_install() {
 		-type f \! -name 'credentials-control-center.po' \
 		-type f \! -name 'hud.po' \
 		-type f \! -name 'indicator-*' \
+		-type f \! -name 'language-selector.po' \
 		-type f \! -name 'libdbusmenu.po' \
 		-type f \! -name 'onboard.po' \
 		-type f \! -name 'signon-ui.po' \

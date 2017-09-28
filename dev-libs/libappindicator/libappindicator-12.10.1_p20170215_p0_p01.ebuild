@@ -22,8 +22,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+mono test"
 RESTRICT="mirror"
 
-DEPEND="mono? ( dev-dotnet/gtk-sharp:2 )
-	dev-libs/dbus-glib
+DEPEND="dev-libs/dbus-glib
 	dev-libs/glib:2
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicator:3=
@@ -36,6 +35,9 @@ DEPEND="mono? ( dev-dotnet/gtk-sharp:2 )
 	dev-python/pyxdg[${PYTHON_USEDEP}]
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
+
+	mono? ( dev-dotnet/gtk-sharp:2 )
+
 	$(vala_depend)
 	${PYTHON_DEPS}"
 
@@ -48,7 +50,7 @@ pkg_setup() {
 }
 
 src_prepare () {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 
 	eapply "${FILESDIR}/${PN}-optional-mono.patch"
@@ -75,7 +77,9 @@ src_configure() {
 	# Build GTK2 support #
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
-		PYTHON="${EPYTHON}" ../configure --prefix=/usr --libdir=/usr/$(get_libdir) \
+		PYTHON="${EPYTHON}" ../configure \
+			--prefix=/usr \
+			--libdir=/usr/$(get_libdir) \
 			--disable-static \
 			--with-gtk=2 \
 			$(use_enable mono ) \
@@ -85,7 +89,9 @@ src_configure() {
 	# Build GTK3 support #
 	[[ -d build-gtk3 ]] || mkdir build-gtk3
 	pushd build-gtk3
-		PYTHON="${EPYTHON}" ../configure --prefix=/usr --libdir=/usr/$(get_libdir) \
+		PYTHON="${EPYTHON}" ../configure \
+			--prefix=/usr \
+			--libdir=/usr/$(get_libdir) \
 			--disable-static \
 			--with-gtk=3 \
 			$(use_enable mono ) \

@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+bluetooth +colord +cups fcitx +gnome-online-accounts +i18n input_devices_wacom kerberos +language-selector v4l +webkit"
+IUSE="+bluetooth +colord +cups fcitx +gnome-online-accounts +i18n input_devices_wacom kerberos v4l +webkit"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -108,7 +108,6 @@ RDEPEND="${COMMON_DEPEND}
 		app-admin/system-config-printer
 		net-print/cups-pk-helper )
 	gnome-online-accounts? ( net-libs/gnome-online-accounts[uoa] )
-	language-selector? ( >=gnome-base/gnome-control-center-3.18 )
 
 	!<gnome-base/gdm-2.91.94
 	!<gnome-extra/gnome-color-manager-3.1.2
@@ -138,14 +137,17 @@ DEPEND="${COMMON_DEPEND}
 S="${WORKDIR}"
 
 src_prepare() {
-	epatch "${FILESDIR}/01_${PN}-optional-bt-colord-kerberos-wacom-webkit.patch"
+	epatch "${FILESDIR}/01_${PN}-language-selector.patch"
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
+	epatch "${FILESDIR}/04_${PN}-optional-bt-colord-kerberos-wacom-webkit.patch"
 
 	# If a .desktop file does not have inline translations, fall back #
 	#  to calling gettext #
-	find ${WORKDIR} -type f -name "*.desktop*" \
+	find ${WORKDIR} -type f -name "unity*desktop.in.in" \
 		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
+	echo "X-GNOME-Gettext-Domain=language-selector" \
+		>> panels/langselector/language-selector.desktop.in.in
 
 	eautoreconf
 	gnome2_src_prepare
@@ -182,15 +184,6 @@ src_install() {
 
 	# Remove /usr/share/pixmaps/faces/ as is provided by gnome-base/gnome-control-center #
 	rm -rf "${ED}usr/share/pixmaps/faces"
-
-	# Add Region and Language locale support #
-	#  Unable to use Unity's language-selector as it needs a complete apt/dpkg enabled system #
-	if use language-selector; then
-		exeinto /usr/bin
-		doexe "${FILESDIR}/unity-cc-region"
-		insinto /usr/share/applications
-		doins "${FILESDIR}/language-selector.desktop"
-	fi
 }
 
 pkg_preinst() { gnome2_icon_savelist; }
