@@ -55,6 +55,7 @@ src_configure() {
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
 	../configure --enable-tests \
+		--libdir="/usr/$(get_libdir)" \
 		--prefix=/usr \
 		--enable-introspection \
 		--disable-static \
@@ -65,6 +66,7 @@ src_configure() {
 	[[ -d build-gtk3 ]] || mkdir build-gtk3
 	pushd build-gtk3
 	../configure --enable-tests \
+		--libdir="/usr/$(get_libdir)" \
 		--prefix=/usr \
 		--enable-introspection \
 		--disable-static \
