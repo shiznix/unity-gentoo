@@ -255,3 +255,10 @@ x11-themes/ubuntu-themes **
 x11-themes/ubuntu-wallpapers **
 x11-themes/unity-asset-pool **
 x11-wm/metacity **
+
+
+# older versions are not compilable with gcc-6.3 (needed for re-compile)
+~sys-block/thin-provisioning-tools-0.7.1
+
+~dev-util/ragel-7.0.0.10
+~dev-util/colm-0.13.0.5 # (new) dependency of 'dev-util/ragel'
