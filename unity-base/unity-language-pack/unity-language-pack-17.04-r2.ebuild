@@ -158,49 +158,95 @@ for use_flag in ${IUSE_L10N}; do
 	IUSE+=" l10n_${use_flag}"
 	use_flag=${use_flag//-/_}
 	eval "tag=\${$use_flag[2]}"
-	[ -z ${tag} ] && tag=${use_flag}
+	[[ -z ${tag} ]] && tag=${use_flag}
 	eval "ver=\${$use_flag[0]}"
 	eval "ver_gnome=\${$use_flag[1]}"
-	compress="xz"; [[ ( ${ver//[!0-9]} < 161000000000 ) ]] && compress="gz"
-	SRC_URI_array+=( "l10n_${use_flag//_/-}?" \(
+	compress="xz"
+	[[ ${ver//[!0-9]} -lt 161000000000 ]] \
+		&& compress="gz"
+	SRC_URI+=" l10n_${use_flag//_/-}? (
 		${UURL}/language-pack-${tag}-base/language-pack-${tag}-base_${ver}.tar.${compress}
-		${UURL}/language-pack-gnome-${tag}-base/language-pack-gnome-${tag}-base_${ver_gnome}.tar.${compress} \) )
+		${UURL}/language-pack-gnome-${tag}-base/language-pack-gnome-${tag}-base_${ver_gnome}.tar.${compress} )"
 done
-SRC_URI="${SRC_URI_array[@]}"
 
 S="${WORKDIR}"
 
 src_unpack() {
-	if [ "${A}" != "" ]; then
-		unpack ${A}
-	else
-		die "At least one L10N USE_EXPAND flag must be set!"
-	fi
+	[[ -n ${A} ]] \
+		&& unpack ${A} \
+		|| die "At least one L10N USE_EXPAND flag must be set!"
 }
 
 src_install() {
+	# langselector panel msgids
+	local -a msgids=(
+		"Language Support"
+		"Configure multiple and native language support on your system"
+		"Login _Screen"
+		"_Language"
+		"_Formats"
+		"Login settings are used by all users when logging into the system"
+		"Your session needs to be restarted for changes to take effect"
+		"Restart Now"
+		"Formats"
+		"_Done"
+		"_Cancel"
+		"Preview"
+		"Dates"
+		"Times"
+		"Numbers"
+		"Measurement"
+		"Paper"
+	)
+
+	local \
+		pofile msgid gcc_src ls_src \
+		ucc_po="unity-control-center.po" \
+		gcc_po="gnome-control-center-2.0.po" \
+		ls_po="language-selector.po"
+
 	# Remove all translations except those we need
-	find "${S}" \
-		-type f \! -name 'activity-log-manager.po' \
-		-type f \! -name 'account-plugins.po' \
-		-type f \! -name 'compiz.po' \
-		-type f \! -name 'ccsm.po' \
-		-type f \! -name 'credentials-control-center.po' \
-		-type f \! -name 'hud.po' \
-		-type f \! -name 'indicator-*' \
-		-type f \! -name 'language-selector.po' \
-		-type f \! -name 'libdbusmenu.po' \
-		-type f \! -name 'onboard.po' \
-		-type f \! -name 'signon-ui.po' \
-		-type f \! -name 'ubuntu-help.po' \
-		-type f \! -name 'unity*' \
-		-type f \! -name 'ureadahead.po' \
-		-type f \! -name 'webbrowser-app.po' \
+	find "${S}" -type f \
+		! -name ${gcc_po} \
+		! -name ${ls_po} \
+		! -name 'activity-log-manager.po' \
+		! -name 'account-plugins.po' \
+		! -name 'compiz.po' \
+		! -name 'ccsm.po' \
+		! -name 'credentials-control-center.po' \
+		! -name 'hud.po' \
+		! -name 'indicator-*' \
+		! -name 'libdbusmenu.po' \
+		! -name 'onboard.po' \
+		! -name 'signon-ui.po' \
+		! -name 'ubuntu-help.po' \
+		! -name 'unity*' \
+		! -name 'ureadahead.po' \
+		! -name 'webbrowser-app.po' \
 			-delete || die
 	find "${S}" -mindepth 1 -type d -empty -delete || die
-	for pofile in `find "${S}" -type f -name "*.po"`; do
-		msgfmt -o ${pofile%%.po}.mo ${pofile}
-		rm ${pofile}
+
+	for pofile in $( \
+		find "${S}" -type f -name "*.po" \
+			! -name "${gcc_po}" \
+			! -name "${ls_po}" \
+	); do
+		# Add translations for langselector panel
+		if [[ ${pofile##*/} == ${ucc_po} ]]; then
+			gcc_src=${pofile/${ucc_po}/${gcc_po}}
+			ls_src=${pofile/${ucc_po}/${ls_po}}
+			ls_src=${ls_src/gnome-}
+			for msgid in "${msgids[@]}"; do
+				if ! grep -q "^msgid\s\"${msgid}\"$" "${pofile}"; then
+					echo "$(awk "/^msgid\s\"${msgid}\"\$/ { p = 1 } p { print } /^\$/ { p = 0 }" "${gcc_src}" "${ls_src}" 2>/dev/null)" \
+						>> "${pofile}"
+				fi
+			done
+			rm "${gcc_src}" "${ls_src}" 2>/dev/null
+		fi
+
+		msgfmt -o "${pofile%.po}.mo" "${pofile}"
+		rm "${pofile}"
 	done
 	insinto /usr/share/locale
 	doins -r "${S}"/language-pack-*-base/data/*

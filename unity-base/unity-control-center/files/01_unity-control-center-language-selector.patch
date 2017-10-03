@@ -17,7 +17,7 @@
  panels/langselector/format-chooser.ui              | 342 ++++++++
  panels/langselector/langselector-module.c          |  41 +
  panels/langselector/langselector.ui                | 221 +++++
- .../langselector/language-selector.desktop.in.in   |  11 +
+ .../unity-langselector-panel.desktop.in.in         |  11 +
  panels/region/gnome-region-panel-formats.c         |   2 +-
  panels/region/gnome-region-panel-input.c           |  38 +-
  panels/region/gnome-region-panel-lang.c            |   2 +-
@@ -25,13 +25,14 @@
  panels/region/unity-region-panel-ibus.ui           |  23 +-
  panels/user-accounts/data/user-accounts-dialog.ui  |  15 +-
  panels/user-accounts/um-user-panel.c               | 120 ++-
+ po/POTFILES.in                                     |   6 +-
  shell/Makefile.am                                  |   2 +
  shell/list-box-helper.c                            |  41 +
  shell/list-box-helper.h                            |  24 +
- 30 files changed, 3192 insertions(+), 905 deletions(-)
+ 31 files changed, 3197 insertions(+), 906 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 572490e..9be089d 100644
+index 572490e..6daa64e 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -159,6 +159,11 @@ PKG_CHECK_MODULES(REGION_PANEL, $COMMON_MODULES
@@ -51,7 +52,7 @@ index 572490e..9be089d 100644
  panels/region/Makefile
  panels/region/unity-region-panel.desktop.in
 +panels/langselector/Makefile
-+panels/langselector/language-selector.desktop.in
++panels/langselector/unity-langselector-panel.desktop.in
  panels/mouse/Makefile
  panels/mouse/unity-mouse-panel.desktop.in
  panels/sound/Makefile
@@ -1954,7 +1955,7 @@ index 43920be..a9a78a2 100644
  void
 diff --git a/panels/langselector/Makefile.am b/panels/langselector/Makefile.am
 new file mode 100644
-index 0000000..937ad83
+index 0000000..4f3503c
 --- /dev/null
 +++ b/panels/langselector/Makefile.am
 @@ -0,0 +1,48 @@
@@ -1998,7 +1999,7 @@ index 0000000..937ad83
 +
 +desktopdir = $(datadir)/applications
 +Desktop_in_files = \
-+	language-selector.desktop.in
++	unity-langselector-panel.desktop.in
 +desktop_DATA = $(Desktop_in_files:.desktop.in=.desktop)
 +
 +CLEANFILES = $(Desktop_in_files) $(desktop_DATA)
@@ -4236,11 +4237,11 @@ index 0000000..2242872
 +    </child>
 +  </object>
 +</interface>
-diff --git a/panels/langselector/language-selector.desktop.in.in b/panels/langselector/language-selector.desktop.in.in
+diff --git a/panels/langselector/unity-langselector-panel.desktop.in.in b/panels/langselector/unity-langselector-panel.desktop.in.in
 new file mode 100644
 index 0000000..9ac1b1f
 --- /dev/null
-+++ b/panels/langselector/language-selector.desktop.in.in
++++ b/panels/langselector/unity-langselector-panel.desktop.in.in
 @@ -0,0 +1,11 @@
 +[Desktop Entry]
 +_Name=Language Support
@@ -4652,6 +4653,20 @@ index cda837b..c3c4549 100644
  
          button = get_widget (d, "autologin-switch");
          g_signal_connect (button, "notify::active", G_CALLBACK (autologin_changed), d);
+diff --git a/po/POTFILES.in b/po/POTFILES.in
+index a7d8e83..0e3713e 100644
+--- a/po/POTFILES.in
++++ b/po/POTFILES.in
+@@ -142,4 +142,8 @@ shell/unitycc.directory.in
+ panels/display/cc-rr-labeler.c
+ panels/region/keyboard-shortcuts.c
+ [type: gettext/glade]panels/region/gnome-region-panel.ui
+-
++panels/langselector/cc-format-chooser.c
++[type: gettext/glade]panels/langselector/format-chooser.ui
++panels/langselector/cc-langselector-panel.c
++[type: gettext/glade]panels/langselector/langselector.ui
++panels/langselector/unity-langselector-panel.desktop.in.in
 diff --git a/shell/Makefile.am b/shell/Makefile.am
 index 9a32746..5fd51cd 100644
 --- a/shell/Makefile.am
