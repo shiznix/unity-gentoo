@@ -137,6 +137,6 @@ virtual/rust
 
 # older versions are not compilable with gcc-6.3 (needed for re-compile)
 ~sys-block/thin-provisioning-tools-0.7.1
-
-~dev-util/ragel-7.0.0.10
 ~dev-util/colm-0.13.0.5 # (new) dependency of 'dev-util/ragel'
+~dev-util/ragel-7.0.0.10
+~x11-libs/wxGTK-3.0.2.0
