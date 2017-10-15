@@ -30,16 +30,16 @@ if [[ ${MOZ_ESR} == 1 ]]; then
 fi
 
 # Patch version
-PATCH="${PN}-55.0-patches-07"
+PATCH="${PN}-56.0-patches-07"
 MOZ_HTTP_URI="https://archive.mozilla.org/pub/${PN}/releases"
 
 MOZCONFIG_OPTIONAL_WIFI=1
 
 URELEASE="zesty-security"
-UVER_PREFIX="+build1"
+UVER_PREFIX="+build6"
 UURL="mirror://unity/pool/main/f/${PN}"
 
-inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.55 pax-utils xdg-utils autotools virtualx mozlinguas-v2 ubuntu-versionator
+inherit check-reqs flag-o-matic toolchain-funcs eutils gnome2-utils mozconfig-v6.56 pax-utils xdg-utils autotools virtualx mozlinguas-v2 ubuntu-versionator
 
 DESCRIPTION="Firefox Web Browser"
 HOMEPAGE="http://www.mozilla.com/firefox"
@@ -48,7 +48,7 @@ KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
-IUSE="bindist +gmp-autoupdate hardened hwaccel jack nsplugin pgo selinux test"
+IUSE="bindist eme-free +gmp-autoupdate hardened hwaccel jack nsplugin pgo selinux test"
 RESTRICT="!bindist? ( bindist ) mirror"
 
 PATCH_URIS=( https://dev.gentoo.org/~{anarchy,axs,polynomial-c}/mozilla/patchsets/${PATCH}.tar.xz )
@@ -61,13 +61,14 @@ ASM_DEPEND=">=dev-lang/yasm-1.1"
 
 RDEPEND="
 	jack? ( virtual/jack )
-	>=dev-libs/nss-3.32
+	>=dev-libs/nss-3.32.1
 	>=dev-libs/nspr-4.16
 	selinux? ( sec-policy/selinux-mozilla )"
 
 DEPEND="${RDEPEND}
 	pgo? ( >=sys-devel/gcc-4.5 )
-	>=virtual/rust-1.15.1
+	>=virtual/rust-1.17.1
+	>=dev-util/cargo-0.17.1
 	amd64? ( ${ASM_DEPEND} virtual/opengl )
 	x86? ( ${ASM_DEPEND} virtual/opengl )"
 
@@ -207,11 +208,17 @@ src_configure() {
 	# enable JACK, bug 600002
 	mozconfig_use_enable jack
 
+	use eme-free && mozconfig_annotate '+eme-free' --disable-eme
+
 	# It doesn't compile on alpha without this LDFLAGS
 	use alpha && append-ldflags "-Wl,--no-relax"
 
 	# Add full relro support for hardened
 	use hardened && append-ldflags "-Wl,-z,relro,-z,now"
+	if use hardened; then
+		append-ldflags "-Wl,-z,relro,-z,now"
+		mozconfig_use_enable hardened hardening
+	fi
 
 	# Only available on mozilla-overlay for experimentation -- Removed in Gentoo repo per bug 571180
 	#use egl && mozconfig_annotate 'Enable EGL as GL provider' --with-gl-provider=EGL
@@ -301,7 +308,7 @@ src_install() {
 	fi
 
 	local plugin
-	use gmp-autoupdate || for plugin in "${GMP_PLUGIN_LIST[@]}" ; do
+	use gmp-autoupdate || use eme-free || for plugin in "${GMP_PLUGIN_LIST[@]}" ; do
 		echo "pref(\"media.${plugin}.autoupdate\", false);" >> \
 			"${BUILD_OBJ_DIR}/dist/bin/browser/defaults/preferences/all-gentoo.js" \
 			|| die
@@ -392,7 +399,7 @@ pkg_postinst() {
 	gnome2_icon_cache_update
 	ubuntu-versionator_pkg_postinst
 
-	if ! use gmp-autoupdate ; then
+	if ! use gmp-autoupdate && ! use eme-free ; then
 		elog "USE='-gmp-autoupdate' has disabled the following plugins from updating or"
 		elog "installing into new profiles:"
 		local plugin
