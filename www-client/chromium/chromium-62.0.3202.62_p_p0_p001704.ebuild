@@ -17,7 +17,7 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://unity/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1377"
+UVER_SUFFIX=".1379"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -43,7 +43,8 @@ COMMON_DEPEND="
 	cups? ( >=net-print/cups-1.3.11:= )
 	dev-libs/expat:=
 	dev-libs/glib:2
-	system-icu? ( <dev-libs/icu-59:= )
+	system-icu? ( >=dev-libs/icu-59:= )
+	>=dev-libs/libxml2-2.9.4-r3:=[icu]
 	dev-libs/libxslt:=
 	dev-libs/nspr:=
 	>=dev-libs/nss-3.14.3:=
@@ -114,7 +115,6 @@ DEPEND="${COMMON_DEPEND}
 	>=dev-util/ninja-1.7.2
 	>=net-libs/nodejs-4.6.1
 	sys-apps/hwids[usb(+)]
-	tcmalloc? ( !<sys-apps/sandbox-2.11 )
 	>=sys-devel/bison-2.4.3
 	sys-devel/flex
 	virtual/pkgconfig
@@ -257,6 +257,7 @@ src_prepare() {
 		third_party/ced
 		third_party/cld_2
 		third_party/cld_3
+		third_party/crc32c
 		third_party/cros_system_api
 		third_party/devscripts
 		third_party/dom_distiller_js
@@ -284,7 +285,7 @@ src_prepare() {
 		third_party/libsrtp
 		third_party/libudev
 		third_party/libwebm
-		third_party/libxml
+		third_party/libxml/chromium
 		third_party/libyuv
 		third_party/lss
 		third_party/lzma_sdk
@@ -293,7 +294,7 @@ src_prepare() {
 		third_party/modp_b64
 		third_party/mt19937ar
 		third_party/node
-		third_party/node/node_modules/vulcanize/third_party/UglifyJS2
+		third_party/node/node_modules/polymer-bundler/lib/third_party/UglifyJS2
 		third_party/openmax_dl
 		third_party/ots
 		third_party/pdfium
@@ -302,7 +303,7 @@ src_prepare() {
 		third_party/pdfium/third_party/build
 		third_party/pdfium/third_party/bigint
 		third_party/pdfium/third_party/freetype
-		third_party/pdfium/third_party/lcms2-2.6
+		third_party/pdfium/third_party/lcms
 		third_party/pdfium/third_party/libopenjpeg20
 		third_party/pdfium/third_party/libpng16
 		third_party/pdfium/third_party/libtiff
@@ -313,6 +314,7 @@ src_prepare() {
 		third_party/qcms
 		third_party/sfntly
 		third_party/skia
+		third_party/skia/third_party/gif
 		third_party/skia/third_party/vulkan
 		third_party/smhasher
 		third_party/spirv-headers
@@ -395,7 +397,6 @@ src_configure() {
 	# TODO: freetype (https://bugs.chromium.org/p/pdfium/issues/detail?id=733).
 	# TODO: use_system_hunspell (upstream changes needed).
 	# TODO: use_system_libsrtp (bug #459932).
-	# TODO: xml (bug #616818).
 	# TODO: use_system_protobuf (bug #525560).
 	# TODO: use_system_ssl (http://crbug.com/58087).
 	# TODO: use_system_sqlite (http://crbug.com/22208).
@@ -408,6 +409,7 @@ src_configure() {
 		libjpeg
 		libpng
 		libwebp
+		libxml
 		libxslt
 		openh264
 		re2
@@ -510,14 +512,14 @@ src_configure() {
 	tc-export AR CC CXX NM
 
 	# Define a custom toolchain for GN
-	myconf_gn+=" custom_toolchain=\"${FILESDIR}/toolchain:default\""
+	myconf_gn+=" custom_toolchain=\"//build/toolchain/linux/unbundle:default\""
 
 	if tc-is-cross-compiler; then
 		tc-export BUILD_{AR,CC,CXX,NM}
-		myconf_gn+=" host_toolchain=\"${FILESDIR}/toolchain:host\""
-		myconf_gn+=" v8_snapshot_toolchain=\"${FILESDIR}/toolchain:host\""
+		myconf_gn+=" host_toolchain=\"//build/toolchain/linux/unbundle:host\""
+		myconf_gn+=" v8_snapshot_toolchain=\"//build/toolchain/linux/unbundle:host\""
 	else
-		myconf_gn+=" host_toolchain=\"${FILESDIR}/toolchain:default\""
+		myconf_gn+=" host_toolchain=\"//build/toolchain/linux/unbundle:default\""
 	fi
 
 	# https://bugs.gentoo.org/588596
@@ -542,10 +544,6 @@ src_configure() {
 		chromium/scripts/generate_gn.py || die
 		popd > /dev/null || die
 	fi
-
-	third_party/libaddressinput/chromium/tools/update-strings.py || die
-
-	touch chrome/test/data/webui/i18n_process_css_test.html || die
 
 	bootstrap_gn
 
@@ -588,13 +586,6 @@ src_install() {
 	fi
 
 	doexe out/Release/chromedriver
-
-	# if ! use arm; then
-	#	doexe out/Release/nacl_helper{,_bootstrap} || die
-	#	insinto "${CHROMIUM_HOME}"
-	#	doins out/Release/nacl_irt_*.nexe || die
-	#	doins out/Release/libppGoogleNaClPluginChrome.so || die
-	# fi
 
 	local sedargs=( -e "s:/usr/lib/:/usr/$(get_libdir)/:g" )
 	if [[ -n ${CHROMIUM_SUFFIX} ]]; then
