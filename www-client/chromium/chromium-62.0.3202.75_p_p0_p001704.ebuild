@@ -17,7 +17,7 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://unity/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1379"
+UVER_SUFFIX=".1384"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -113,7 +113,7 @@ DEPEND="${COMMON_DEPEND}
 	dev-lang/perl
 	>=dev-util/gperf-3.0.3
 	>=dev-util/ninja-1.7.2
-	>=net-libs/nodejs-4.6.1
+	>=net-libs/nodejs-6.9.4
 	sys-apps/hwids[usb(+)]
 	>=sys-devel/bison-2.4.3
 	sys-devel/flex
