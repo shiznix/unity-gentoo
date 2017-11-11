@@ -20,7 +20,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc examples test"
 RESTRICT="mirror"
 
-DEPEND="dev-cpp/gtest
+DEPEND="doc? ( app-doc/doxygen )
+        test? ( dev-cpp/gmock )
+        dev-cpp/gtest
 	dev-libs/boost:=
 	dev-libs/process-cpp
 	sys-apps/dbus"
@@ -38,7 +40,7 @@ src_prepare() {
 			-i CMakeLists.txt
 
 	use test || \
-		sed -i 's:add_subdirectory(test)::g' \
+		sed -i 's:add_subdirectory(tests)::g' \
 			-i CMakeLists.txt
 
 	# Fix build errors using >=gcc-5.4.0 #

@@ -16,10 +16,24 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="doc test"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/boost:=
+DEPEND="doc? ( app-doc/doxygen )
+        test? ( dev-cpp/gtest
+                dev-cpp/gmock )
+        dev-libs/boost:=
 	dev-libs/properties-cpp"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
+src_prepare() {
+	ubuntu-versionator_src_prepare
+	use doc || \
+		sed -i 's:add_subdirectory(doc)::g' \
+			-i "${S}/CMakeLists.txt"
+	use test || \
+		sed -i 's:add_subdirectory(tests)::g' \
+			-i "${S}/CMakeLists.txt"
+	cmake-utils_src_prepare
+}
