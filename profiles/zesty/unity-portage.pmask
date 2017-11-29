@@ -84,7 +84,7 @@ sys-apps/accountsservice::gentoo
 sys-auth/pambase::gentoo
 sys-libs/libnih::gentoo
 www-client/chromium::gentoo
-www-client/firefox::gentoo
+>=www-client/firefox-53.0::gentoo               # allow to install Firefox 52 ESR (Extended Support Release)
 x11-libs/gtk+::gentoo
 x11-libs/mx::gentoo
 x11-misc/lightdm::gentoo

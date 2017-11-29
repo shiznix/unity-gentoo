@@ -1,0 +1,30 @@
+ebuild_hook() {
+	newmenu "${EHOOK_FILESDIR}/${PN}.desktop.in" "${PN}.desktop"
+
+	sed -i \
+		-e "/%%ifdef/d" \
+		-e "/%%else/d" \
+		-e "/%%endif/d" \
+		-e "/OnlyShowIn=Unity/d" \
+		-e "/Exec/{s/@MOZ_APP_NAME@/${PN}/g}" \
+		"${ED}/usr/share/applications/${PN}.desktop" || die
+
+	if use bindist; then
+		sed -i \
+			-e "s/@MOZ_DISPLAY_NAME@/Aurora/g" \
+			-e "/Firefox/d" \
+			-e "s/@MOZ_APP_NAME@/aurora/" \
+			"${ED}/usr/share/applications/${PN}.desktop" || die
+	else
+		sed -i \
+			-e "/@MOZ_DISPLAY_NAME@/d" \
+			-e "s/@MOZ_APP_NAME@/${PN}/" \
+			"${ED}/usr/share/applications/${PN}.desktop" || die
+	fi
+
+	if ! use startup-notification; then
+		sed -i \
+			-e "/StartupNotify=true/d" \
+			"${ED}/usr/share/applications/${PN}.desktop" || die
+	fi
+}
