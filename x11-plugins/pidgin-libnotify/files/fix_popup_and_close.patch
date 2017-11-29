@@ -1,0 +1,104 @@
+From: c4pp4
+Date: Thu, 09 Nov 2017 00:07:57 +0100
+Subject: [PATCH 1/2] Fix debian/patches/ubuntu_notify_support.patch
+
+Show new conversation popup when enabled by plugin extension Libnotify
+Popups.
+
+https://launchpad.net/bugs/1339405
+---
+ src/pidgin-libnotify.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
+
+diff --git a/src/pidgin-libnotify.c b/src/pidgin-libnotify.c
+index bfb516c..71c5872 100644
+--- a/src/pidgin-libnotify.c
++++ b/src/pidgin-libnotify.c
+@@ -58,6 +58,7 @@
+ 
+ /* Prototypes */
+ static void notify_new_message_cb (PurpleAccount *account, const gchar *sender, const gchar *message, int flags, gpointer data);
++static gboolean pidgin_conversation_has_focus (PurpleConversation *);
+ 
+ /* Globals */
+ static GHashTable *buddy_hash;
+@@ -637,20 +638,13 @@ notify_new_message_cb (PurpleAccount *account,
+ 		return;
+ 	}
+ 
+-	if (conv == NULL) {
+-		return;
+-	}
+-
+ 	if (!should_notify_unavailable (account))
+ 		return;
+ 
+-	PidginConversation * pconv = PIDGIN_CONVERSATION(conv);
+-	if (pconv != NULL) {
+-	if (pconv->entry != NULL && pconv->imhtml != NULL) {
+-	if (GTK_WIDGET_HAS_FOCUS(pconv->entry) || GTK_WIDGET_HAS_FOCUS(pconv->imhtml)) {
++	if (pidgin_conversation_has_focus (conv)) {
+ 		purple_debug_warning(PLUGIN_ID, "Pidgin conversation's widgets are in focus");
+ 		return;
+-	}}}
++	}
+ 
+ 	notify_msg_sent (account, sender, message, conv);
+ }
+@@ -671,13 +665,10 @@ notify_chat_nick (PurpleAccount *account,
+ 	if (!purple_utf8_has_word (message, nick))
+ 		return;
+ 
+-	PidginConversation * pconv = PIDGIN_CONVERSATION(conv);
+-	if (pconv != NULL) {
+-	if (pconv->entry != NULL && pconv->imhtml != NULL) {
+-	if (GTK_WIDGET_HAS_FOCUS(pconv->entry) || GTK_WIDGET_HAS_FOCUS(pconv->imhtml)) {
++	if (pidgin_conversation_has_focus (conv)) {
+ 		purple_debug_warning(PLUGIN_ID, "Pidgin conversation's widgets are in focus");
+ 		return;
+-	}}}
++	}
+ 
+ 	if (name_blacklisted(account, sender)) return;
+ 
+---
+From: c4pp4
+Date: Thu, 09 Nov 2017 00:08:38 +0100
+Subject: [PATCH 2/2] Fix debian/patches/messaging_menu.patch
+
+Make possible to close conversation window opened by Unity's Messaging
+Menu.
+
+https://launchpad.net/bugs/1339405
+---
+ src/pidgin-libnotify.c | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
+
+diff --git a/src/pidgin-libnotify.c b/src/pidgin-libnotify.c
+index 71c5872..bb45dcc 100644
+--- a/src/pidgin-libnotify.c
++++ b/src/pidgin-libnotify.c
+@@ -1235,21 +1235,12 @@ messaging_source_activated_cb (MessagingMenuApp *app,
+ 							   gpointer          user_data)
+ {
+ 	PurpleConversation *conv;
+-	PidginConversation *gtkconv;
+ 	purple_debug_info (PLUGIN_ID, "SOURCE activated '%s'\n", source_id);
+ 	/* find conversation with given source id */
+ 	conv = messaging_conversation_for_unique_id (source_id);
+ 
+-	if (conv) {
+-		gtkconv = PIDGIN_CONVERSATION (conv);
+-		if (gtkconv == NULL) {
+-			purple_debug_warning (PLUGIN_ID, "NULL gtkconv '%s'\n", source_id);
+-			return;
+-		}
+-		pidgin_conv_switch_active_conversation(conv);
+-		pidgin_conv_window_switch_gtkconv(gtkconv->win, gtkconv);
+-		gtk_window_present(GTK_WINDOW(gtkconv->win->window));
+-	}
++	g_return_if_fail(conv != NULL);
++	pidgin_conv_present_conversation(conv);
+ }
+ 
+ static gboolean

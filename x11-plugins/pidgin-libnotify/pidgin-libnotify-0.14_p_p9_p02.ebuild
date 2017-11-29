@@ -30,8 +30,10 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# Fix Unity messaging menu (LP #1339405) #
-	epatch "${FILESDIR}"/unity-mm-fix.patch
+	# Show new conversation popup when enabled by plugin extension #
+	#   Libnotify Popups. Make possible to close conversation window #
+	#   opened by Unity's Messaging Menu. (LP #1339405) #
+	eapply "${FILESDIR}"/fix_popup_and_close.patch
 
 	eautoreconf
 }
