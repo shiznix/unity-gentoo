@@ -20,9 +20,6 @@ LICENSE="GPL-2"
 SLOT="0"
 IUSE="cdr daap dbus html ipod libnotify libsecret lirc mtp nsplugin +python test +udev upnp-av visualizer webkit zeitgeist"
 
-# Let people emerge this by default, bug #472932
-IUSE+=" +python_single_target_python3_4 python_single_target_python3_5"
-
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
