@@ -22,7 +22,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 # Let people emerge this by default, bug #472932
-IUSE+=" +python_single_target_python3_4 python_single_target_python3_5"
+IUSE+="python_single_target_python3_4 python_single_target_python3_5"
 
 RESTRICT="mirror"
 
