@@ -72,7 +72,6 @@ gnome-extra/activity-log-manager::gentoo
 gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
 
-mail-client/thunderbird::gentoo
 media-gfx/shotwell::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
@@ -83,7 +82,6 @@ sys-apps/accountsservice::gentoo
 sys-auth/pambase::gentoo
 sys-libs/libnih::gentoo
 www-client/chromium::gentoo
-www-client/firefox::gentoo
 x11-libs/gtk+::gentoo
 x11-libs/mx::gentoo
 x11-misc/lightdm::gentoo
