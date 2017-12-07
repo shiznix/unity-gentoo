@@ -9,10 +9,10 @@ ebuild_hook() {
 	sed -i \
 		-e "/with_theme=/{s/hicontrast/hicontrast human/}" \
 		-e "/real_theme=/{s/hicontrast/hicontrast|human/}" \
-		configure.ac || die
+		configure.ac
 
 	## Make Human theme the default.
 	sed -i \
 		-e "/FALLBACK_ICON_THEME_ID/{s/tango/human/}" \
-		vcl/source/app/IconThemeSelector.cxx || die
+		vcl/source/app/IconThemeSelector.cxx
 }
