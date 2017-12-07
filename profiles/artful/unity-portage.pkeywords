@@ -56,14 +56,11 @@ app-eselect/eselect-opengl
 app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
-dev-lang/rust
 dev-lang/spidermonkey:38
 =dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
 dev-libs/capnproto
 dev-libs/folks
 dev-libs/libindicate-qt
-=dev-libs/nspr-4.16*
-=dev-libs/nss-3.32*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
 =dev-util/boost-build-1.58*
@@ -90,7 +87,6 @@ x11-misc/xvfb-run
 x11-proto/glproto
 ~x11-libs/libdrm-2.4.67
 =x11-themes/adwaita-icon-theme-3.24*
-virtual/rust
 
 ## Overlay missing keyword unmasking ##
 app-accessibility/onboard **
