@@ -22,6 +22,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/boost:=
 	dev-libs/glib:2
+	dev-libs/libqtdbustest
 	dev-qt/qtdeclarative
 	test? ( dev-util/cppcheck )"
 
