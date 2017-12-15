@@ -105,11 +105,13 @@ dev-lang/spidermonkey:38
 dev-libs/capnproto
 dev-libs/folks
 dev-libs/libindicate-qt
+=dev-libs/nspr-4.17*
+=dev-libs/nss-3.34*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
 =dev-util/boost-build-1.58*
 dev-util/valgrind
-~dev-python/python-prctl-1.5.0
+dev-python/python-prctl
 ~dev-qt/qtlocation-5.6.1
 dev-util/cargo
 dev-util/umockdev
@@ -121,7 +123,9 @@ dev-util/umockdev
 =sys-apps/apparmor-2.10*
 =sys-apps/apparmor-utils-2.10*
 ~sys-apps/systemd-232			# Provides support for graphical(-pre)-session.target(.wants) systemd units used to start Unity desktop session
+sys-devel/clang:4
 sys-devel/gcc:6.3.0
+sys-devel/llvm:4
 sys-fs/lxcfs
 sys-libs/db:5.1
 sys-libs/db:5.3
