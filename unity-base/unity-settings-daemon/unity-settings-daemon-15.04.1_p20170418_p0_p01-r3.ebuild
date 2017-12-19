@@ -90,6 +90,11 @@ src_prepare() {
 	# Ubuntu patchset #
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"  # This needs to be applied for the debian/ directory to be present #
 
+	# DESKTOP_SESSION: rename "ubuntu" to "unity" #
+	#  to fix keyboard layouts shortcut on lock screen #
+	sed -e 's/"ubuntu"/"unity"/g' \
+		-i plugins/media-keys/gsd-media-keys-manager.c || die
+
 	# https://bugzilla.gnome.org/show_bug.cgi?id=621836
 	# Apparently this change severely affects touchpad usability for some
 	# people, so revert it if USE=short-touchpad-timeout.
