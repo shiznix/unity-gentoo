@@ -34,6 +34,7 @@ gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to i
 gnome-base/gnome-core-apps		# Included to pull in lower versions of empathy, gnome-menus and nautilus
 gnome-base/gnome-core-libs		# Included to pull in lower version of x11-libs/gtk+:3
 gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
+gnome-base/gnome-extra-apps		# Included to pull in lower version of www-client/epiphany (higher version requires higher version of x11-libs/gtk+:3)
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
 gnome-base/gnome-settings-daemon	# unity-settings-daemon relies on files created from patchset, compiz at runtime needs 'terminal' key in 'org.gnome.settings-daemon.plugins.media-keys' schema

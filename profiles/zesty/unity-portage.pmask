@@ -58,6 +58,7 @@ gnome-base/gconf::gentoo
 gnome-base/gnome-core-apps::gentoo
 gnome-base/gnome-core-libs::gentoo
 gnome-base/gnome-desktop::gentoo
+gnome-base/gnome-extra-apps::gentoo
 gnome-base/gnome-menus:3::gentoo
 gnome-base/gnome-session::gentoo
 

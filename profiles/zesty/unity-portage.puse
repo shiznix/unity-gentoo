@@ -38,6 +38,7 @@ dev-qt/qtwayland:5 egl
 dev-qt/qtwebkit:4 icu
 dev-qt/qtwebkit:5 icu qml libxml2 multimedia webp widgets xslt -gstreamer -gstreamer010
 dev-qt/qt-mobility organizer
+gnome-base/gnome-extra-apps -shotwell	# Meta ebuild that pulls in higer version of shotwell than provided by overlay
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 media-libs/clutter egl

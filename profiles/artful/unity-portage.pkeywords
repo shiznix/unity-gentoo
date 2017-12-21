@@ -57,12 +57,15 @@ app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
 dev-lang/spidermonkey:38
+dev-lang/vala:0.36::gentoo
 =dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
 dev-libs/capnproto
 dev-libs/folks
+=dev-libs/icu-59*
 dev-libs/libindicate-qt
 =dev-libs/nss-3.34*
 =dev-libs/nspr-4.17*
+=dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
 =dev-util/boost-build-1.58*

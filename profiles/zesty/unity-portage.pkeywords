@@ -6,6 +6,8 @@
 =*/gnome*-*24*::gentoo
 =gnome-base/*-*24*::gentoo
 =gnome-extra/*-*24*::gentoo
+=games-puzzle/*-*24*::gentoo
+=app-i18n/unicode-data-10*
 >=app-accessibility/at-spi2-atk-2.24::gentoo
 >=app-accessibility/at-spi2-core-2.24::gentoo
 >=app-accessibility/orca-3.24::gentoo
@@ -15,17 +17,20 @@
 >=app-text/evince-3.24::gentoo
 >=app-text/yelp-tools-3.24::gentoo
 >=dev-cpp/gtkmm-3.24::gentoo
+dev-lang/vala:0.36::gentoo
 >=dev-libs/atk-2.24::gentoo
 >=dev-libs/gjs-1.48::gentoo
 ~dev-libs/libgudev-232::gentoo
 >=dev-libs/libgweather-3.24::gentoo
 ~dev-libs/libusb-1.0.21::gentoo
+=dev-libs/vala-common-0.36*::gentoo
 >=dev-python/pyatspi-2.24.0::gentoo
 >=dev-python/pygobject-3.24::gentoo
 >=dev-util/gtk-update-icon-cache-3.24::gentoo
 >=dev-util/devhelp-3.24::gentoo
 >=dev-vcs/gitg-3.24::gentoo
 >=gnome-base/gvfs-1.32::gentoo
+gnome-extra/gucharmap:2.90::gentoo
 >=mail-client/evolution-3.24::gentoo
 >=media-gfx/eog-3.24::gentoo
 >=media-libs/clutter-gtk-1.8.4::gentoo
@@ -37,7 +42,6 @@
 >=sci-geosciences/geocode-glib-3.24::gentoo
 >=sys-apps/baobab-3.24::gentoo
 ~virtual/libgudev-232::gentoo
->=www-client/epiphany-3.24::gentoo
 >=x11-libs/gtksourceview-3.24::gentoo
 >=x11-libs/libwnck-3.24::gentoo
 >=x11-libs/pango-1.40.9::gentoo
@@ -104,6 +108,7 @@ dev-lang/spidermonkey:38
 =dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
 dev-libs/capnproto
 dev-libs/folks
+=dev-libs/icu-59*
 dev-libs/libindicate-qt
 =dev-libs/nspr-4.17*
 =dev-libs/nss-3.34*

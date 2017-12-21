@@ -1,6 +1,5 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
@@ -19,7 +18,6 @@ LICENSE="LGPL-2+"
 SLOT="0/1"
 IUSE="debug gnome +introspection kerberos uoa vala"
 REQUIRED_USE="vala? ( introspection )"
-
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -29,7 +27,7 @@ RESTRICT="mirror"
 # https://bugzilla.gnome.org/show_bug.cgi?id=692250
 # json-glib-0.16 needed for bug #485092
 RDEPEND="
-	>=dev-libs/glib-2.40:2
+	>=dev-libs/glib-2.44:2
 	>=app-crypt/libsecret-0.5
 	>=dev-libs/json-glib-0.16
 	dev-libs/libxml2:2
@@ -42,7 +40,7 @@ RDEPEND="
 
 	introspection? ( >=dev-libs/gobject-introspection-0.6.2:= )
 	kerberos? (
-		app-crypt/gcr:0=
+		app-crypt/gcr:0=[gtk]
 		app-crypt/mit-krb5 )
 	uoa? (
 		dev-libs/libaccounts-glib
@@ -67,10 +65,10 @@ DEPEND="${RDEPEND}
 	gnome-base/gnome-common
 "
 # eautoreconf needs gobject-introspection-common, gnome-common
-MAKEOPTS="${MAKEOPTS} -j1"
 
 # Due to sub-configure
 QA_CONFIGURE_OPTIONS=".*"
+MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
@@ -81,9 +79,9 @@ src_prepare() {
 			-i configure.ac || die
 		eautoreconf
 	fi
-	gnome2_src_prepare
+
 	use vala && vala_src_prepare
-	export VALA_API_GEN="$VAPIGEN"
+	gnome2_src_prepare
 }
 
 src_configure() {
@@ -106,7 +104,8 @@ src_configure() {
 		--enable-windows-live \
 		$(use_enable uoa ubuntu-online-accounts)
 		$(usex debug --enable-debug=yes ' ') \
-		$(use_enable kerberos)
+		$(use_enable kerberos) \
+		$(use_enable introspection) \
 		$(use_enable vala)
 		#$(use_enable telepathy)
 	# gudev & cheese from sub-configure is overriden
