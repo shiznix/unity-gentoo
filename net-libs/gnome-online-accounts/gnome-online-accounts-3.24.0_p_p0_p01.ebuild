@@ -17,7 +17,9 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 LICENSE="LGPL-2+"
 SLOT="0/1"
-IUSE="debug gnome +introspection kerberos uoa"
+IUSE="debug gnome +introspection kerberos uoa vala"
+REQUIRED_USE="vala? ( introspection )"
+
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -53,7 +55,7 @@ RDEPEND="
 PDEPEND="gnome? ( >=gnome-base/gnome-control-center-3.2[gnome-online-accounts(+)] )"
 
 DEPEND="${RDEPEND}
-	$(vala_depend)
+	vala? ( $(vala_depend) )
 	dev-libs/libxslt
 	>=dev-util/gtk-doc-am-1.3
 	>=dev-util/gdbus-codegen-2.30.0
@@ -80,7 +82,7 @@ src_prepare() {
 		eautoreconf
 	fi
 	gnome2_src_prepare
-	vala_src_prepare
+	use vala && vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 }
 
@@ -105,6 +107,7 @@ src_configure() {
 		$(use_enable uoa ubuntu-online-accounts)
 		$(usex debug --enable-debug=yes ' ') \
 		$(use_enable kerberos)
+		$(use_enable vala)
 		#$(use_enable telepathy)
 	# gudev & cheese from sub-configure is overriden
 	# by top level configure, and disabled so leave it like that
