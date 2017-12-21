@@ -5,7 +5,7 @@ ebuild_hook() {
 
 	sed -i \
 		-e "\:Exec:{s:@MOZ_APP_NAME@:/usr/bin/${PN}:g}" \
-		"${desktopfile}"
+		"${desktopfile}" || die
 
 	if use bindist; then
 		sed -i \
@@ -13,18 +13,18 @@ ebuild_hook() {
 			-e "/%%ifdef/,+$(( $(grep -n %%else < ${desktopfile} | cut -d ':' -f 1) - $(grep -n %%ifdef < ${desktopfile} | cut -d ':' -f 1) )) d" \
 			-e "s/@MOZ_DISPLAY_NAME@/Aurora/g" \
 			-e "s/@MOZ_APP_NAME@/aurora/" \
-			"${desktopfile}"
+			"${desktopfile}" || die
 	else
 		sed -i \
 			-e "/%%ifdef/d" \
 			-e "/%%else/,+$(( $(grep -n %%endif < ${desktopfile} | cut -d ':' -f 1) - $(grep -n %%else < ${desktopfile} | cut -d ':' -f 1) )) d" \
 			-e "s/@MOZ_APP_NAME@/${PN}/" \
-			"${desktopfile}"
+			"${desktopfile}" || die
 	fi
 
 	if ! use startup-notification; then
 		sed -i \
 			-e "/StartupNotify=true/d" \
-			"${desktopfile}"
+			"${desktopfile}" || die
 	fi
 }

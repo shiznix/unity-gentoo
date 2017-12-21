@@ -54,19 +54,7 @@ File body:
 		eautoreconf
 	- and in post_src_prepare:
 		AT_NOELIBTOOLIZE="yes" eautoreconf
-	- stderr is handled by profile.bashrc, it creates ehook.log
-	  file in ${T} directory and displays error message
-	  with instructions,
-	- DON'T use 'die' as error handling:
-		[COMMAND] || die
-	  because it displays no message related to error, anyway it
-	  creates ehook.log file,
-	- if you want to use 'die' as result of some condition
-	  and display informational message, you have to redirect 'die'
-	  to stdout:
-		[CONDITION] && die "message" 2>&1
-	  because without redirection 'die' message is not displayed,
-	  it's logged into ehook.log file instead
+	- errors log is located at ${T}/ehook.log
 
 ${EHOOK_FILESDIR}
 	- path to ${pkgdir}/files

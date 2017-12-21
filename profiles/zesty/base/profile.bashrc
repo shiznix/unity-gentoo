@@ -64,26 +64,27 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 	if [[ -n ${EHOOK_SOURCE[@]} ]]; then
 
 	declare -F apply_ehook 1>/dev/null \
-		&& die "apply_ehook: function name collision\n\nPlease file a bug at 'https://github.com/shiznix/unity-gentoo/issues'."
+		&& die "apply_ehook: function name collision"
 
 	## Define function to apply ebuild hook.
 	apply_ehook() {
 		local \
 			x \
 			log="${T}/ehook.log" \
-			bug="Please file a bug at 'https://github.com/shiznix/unity-gentoo/issues'."
+			COLOR_NORM=$(tput sgr0) \
+			COLOR_BOLD=$(tput bold)
 
 		declare -F ebuild_hook 1>/dev/null \
-			&& die "ebuild_hook: function name collision\n\n${bug}"
+			&& die "ebuild_hook: function name collision"
 		for x in "${EHOOK_SOURCE[@]}"; do
 			[[ ${x} == *"${FUNCNAME[1]}.ehook" ]] && break
 		done
-		echo ">>> Loading ebuild hook from ${x%/*} ..."
+		echo "${COLOR_BOLD}>>> Loading unity-gentoo ebuild hook${COLOR_NORM} from ${x%/*} ..."
 		source "${x}" 2>"${log}"
 		[[ -s ${log} ]] \
-			&& die "${x##*/}: sourcing failed\n\n${bug}\n\nOutput of '${log}':\n$(<${log})"
+			&& die "$(<${log})"
 		declare -F ebuild_hook 1>/dev/null \
-			|| die "ebuild_hook: function not found\n\n${bug}"
+			|| die "ebuild_hook: function not found"
 		einfo "Processing ${x##*/} ..."
 
 		local EHOOK_FILESDIR=${x%/*}/files
@@ -95,10 +96,10 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 			if [[ ${EAPI} -lt 6 ]]; then
 				x=${PORTAGE_BIN_PATH%/}/phase-helpers.sh
 				[[ -f ${x} ]] \
-					|| die "${x}: file not found\n\n${bug}"
+					|| die "${x}: file not found"
 				source <(awk "/^(\t|)eapply\() {\$/ { p = 1 } p { print } /^(\t|)}\$/ { p = 0 }" ${x} 2>/dev/null)
 				declare -F eapply 1>/dev/null \
-					|| die "eapply: function not found\n\n${bug}"
+					|| die "eapply: function not found"
 			fi
 		fi
 
@@ -106,22 +107,25 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 			if ! declare -F eautoreconf 1>/dev/null; then
 				x=${PORTDIR%/}/eclass/autotools.eclass
 				[[ -f ${x} ]] \
-					|| die "${x}: file not found\n\n${bug}"
+					|| die "${x}: file not found"
 
 				local eautoreconf_names="eautoreconf _at_uses_pkg _at_uses_autoheader _at_uses_automake _at_uses_gettext _at_uses_glibgettext _at_uses_intltool _at_uses_gtkdoc _at_uses_gnomedoc _at_uses_libtool _at_uses_libltdl eaclocal_amflags eaclocal _elibtoolize eautoheader eautoconf eautomake autotools_env_setup autotools_run_tool ALL_AUTOTOOLS_MACROS autotools_check_macro autotools_check_macro_val _autotools_m4dir_include autotools_m4dir_include autotools_m4sysdir_include"
 
 				source <(awk "/^(${eautoreconf_names// /|})(\(\)|=\(\$)/ { p = 1 } p { print } /(^(}|\))|; })\$/ { p = 0 }" ${x} 2>/dev/null)
 				declare -F eautoreconf 1>/dev/null \
-					|| die "eautoreconf: function not found\n\n${bug}"
+					|| die "eautoreconf: function not found"
 			fi
 
 		fi
 
 		fi ## End of checking for eapply and eautoreconf.
 
-		ebuild_hook 2>"${log}"
+		## Redirect stderr to stdout and logfile.
+		exec 3>&1
+		ebuild_hook 2>&1 >&3 | tee "${log}"
+		exec 3>&-
 		[[ -s ${log} ]] \
-			&& die "ebuild_hook: processing failed\n\n${bug}\n\nOutput of '${log}':\n$(<${log})"
+			&& die "$(<${log})"
 
 		## Sanitize.
 		unset -f ebuild_hook
@@ -132,7 +136,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 			done
 		fi
 
-		echo ">>> Done."
+		echo "${COLOR_BOLD}>>> Done.${COLOR_NORM}"
 	} ## End of apply_ehook function.
 
 	## Apply ebuild hook intended for setup phase.

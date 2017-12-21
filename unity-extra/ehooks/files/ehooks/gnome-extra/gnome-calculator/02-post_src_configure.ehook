@@ -2,7 +2,7 @@
 ebuild_hook() {
 	ebegin "Checking for package dev-lang/vala"
 		local valaver=$(qatom -q $(best_version dev-lang/vala) | cut -d ' ' -f 3)
-		[[ -z ${valaver} ]] && die "dev-lang/vala: package not installed" 2>&1
+		[[ -z ${valaver} ]] && die "dev-lang/vala: package not installed"
 	eend
 
 	find -name Makefile -type f -exec \

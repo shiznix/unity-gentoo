@@ -2,5 +2,5 @@
 ebuild_hook() {
 	sed -i \
 		-e 's/"hybrid"/"legacy"/g' \
-		configure.ac
+		configure.ac || die
 }
