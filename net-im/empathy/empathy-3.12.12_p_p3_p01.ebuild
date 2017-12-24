@@ -113,6 +113,8 @@ src_prepare() {
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
+	cd telepathy-account-widgets && \
+		eautoreconf
 }
 
 src_configure() {
