@@ -17,12 +17,12 @@ MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
 
 UURL="mirror://unity/pool/universe/c/${MY_PN}"
-UVER_SUFFIX=".1384"
+#UVER_SUFFIX=".1384"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
 SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}.tar.xz
-	${UURL}/${MY_P}-${UVER}${UVER_SUFFIX}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -43,7 +43,7 @@ COMMON_DEPEND="
 	cups? ( >=net-print/cups-1.3.11:= )
 	dev-libs/expat:=
 	dev-libs/glib:2
-	system-icu? ( >=dev-libs/icu-59:= )
+	system-icu? ( >=dev-libs/icu-59 <dev-libs/icu-60:= )
 	>=dev-libs/libxml2-2.9.4-r3:=[icu]
 	dev-libs/libxslt:=
 	dev-libs/nspr:=
@@ -53,7 +53,7 @@ COMMON_DEPEND="
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/fontconfig:=
 	media-libs/freetype:=
-	>=media-libs/harfbuzz-1.4.2:=[icu(-)]
+	>=media-libs/harfbuzz-1.5.0:=[icu(-)]
 	media-libs/libjpeg-turbo:=
 	media-libs/libpng:=
 	system-libvpx? ( media-libs/libvpx:=[postproc,svc] )
@@ -159,6 +159,8 @@ theme that covers the appropriate MIME types, and configure this as your
 GTK+ icon theme.
 "
 
+PATCHES=( "${FILESDIR}/${PN}-webrtc-r0.patch" )
+
 pre_build_checks() {
 	if [[ ${MERGE_TYPE} != binary ]]; then
 		local -x CPP="$(tc-getCXX) -E"
@@ -228,7 +230,6 @@ src_prepare() {
 		base/third_party/valgrind
 		base/third_party/xdg_mime
 		base/third_party/xdg_user_dirs
-		breakpad/src/third_party/curl
 		chrome/third_party/mozilla_security_manager
 		courgette/third_party
 		net/third_party/mozilla_security_manager
@@ -237,23 +238,26 @@ src_prepare() {
 		third_party/analytics
 		third_party/angle
 		third_party/angle/src/common/third_party/base
-		third_party/angle/src/common/third_party/murmurhash
+		third_party/angle/src/common/third_party/smhasher
 		third_party/angle/src/third_party/compiler
 		third_party/angle/src/third_party/libXNVCtrl
 		third_party/angle/src/third_party/trace_event
+		third_party/blink
 		third_party/boringssl
+		third_party/breakpad
+		third_party/breakpad/breakpad/src/third_party/curl
 		third_party/brotli
 		third_party/cacheinvalidation
 		third_party/catapult
+		third_party/catapult/common/py_vulcanize/third_party/rcssmin
+		third_party/catapult/common/py_vulcanize/third_party/rjsmin
 		third_party/catapult/third_party/polymer
-		third_party/catapult/third_party/py_vulcanize
-		third_party/catapult/third_party/py_vulcanize/third_party/rcssmin
-		third_party/catapult/third_party/py_vulcanize/third_party/rjsmin
 		third_party/catapult/tracing/third_party/d3
 		third_party/catapult/tracing/third_party/gl-matrix
 		third_party/catapult/tracing/third_party/jszip
 		third_party/catapult/tracing/third_party/mannwhitneyu
 		third_party/catapult/tracing/third_party/oboe
+		third_party/catapult/tracing/third_party/pako
 		third_party/ced
 		third_party/cld_2
 		third_party/cld_3
@@ -404,7 +408,8 @@ src_configure() {
 	# libevent: https://bugs.gentoo.org/593458
 	local gn_system_libraries=(
 		flac
-		harfbuzz-ng
+		# Need harfbuzz_from_pkgconfig target
+		#harfbuzz-ng
 		libdrm
 		libjpeg
 		libpng
@@ -427,6 +432,9 @@ src_configure() {
 		gn_system_libraries+=( libvpx )
 	fi
 	build/linux/unbundle/replace_gn_files.py --system-libraries "${gn_system_libraries[@]}" || die
+
+	# See dependency logic in third_party/BUILD.gn
+	myconf_gn+=" use_system_harfbuzz=true"
 
 	# Optional dependencies.
 	myconf_gn+=" enable_hangout_services_extension=$(usex hangouts true false)"
@@ -554,23 +562,26 @@ src_configure() {
 }
 
 src_compile() {
-	local ninja_targets="chrome chromedriver"
-	if use suid; then
-		ninja_targets+=" chrome_sandbox"
-	fi
-
 	# Build mksnapshot and pax-mark it.
-	if tc-is-cross-compiler; then
-		eninja -C out/Release host/mksnapshot || die
-		pax-mark m out/Release/host/mksnapshot
-	else
-		eninja -C out/Release mksnapshot || die
-		pax-mark m out/Release/mksnapshot
-	fi
+	local x
+	for x in mksnapshot v8_context_snapshot_generator; do
+		if tc-is-cross-compiler; then
+			eninja -C out/Release "host/${x}"
+			pax-mark m "out/Release/host/${x}"
+		else
+			eninja -C out/Release "${x}"
+			pax-mark m "out/Release/${x}"
+		fi
+	done
+
+	# Work around circular dep issue
+	# https://chromium-review.googlesource.com/c/chromium/src/+/617768
+	eninja -C out/Release gen/ui/accessibility/ax_enums.h
 
 	# Even though ninja autodetects number of CPUs, we respect
 	# user's options, for debugging with -j 1 or any other reason.
-	eninja -C out/Release ${ninja_targets} || die
+	eninja -C out/Release chrome chromedriver
+	use suid && eninja -C out/Release chrome_sandbox
 
 	pax-mark m out/Release/chrome
 }
@@ -633,9 +644,6 @@ src_install() {
 
 	insinto "${CHROMIUM_HOME}/swiftshader"
 	doins out/Release/swiftshader/*.so
-
-	newman out/Release/chrome.1 chromium${CHROMIUM_SUFFIX}.1
-	newman out/Release/chrome.1 chromium-browser${CHROMIUM_SUFFIX}.1
 
 	# Install icons and desktop entry.
 	local branding size
