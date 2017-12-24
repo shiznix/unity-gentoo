@@ -104,3 +104,7 @@ src_install() {
 		doicon -s ${res} "${WORKDIR}"/${res}x${res}/*
 	done
 }
+
+pkg_postinst() {
+	xdg_desktop_database_update
+}
