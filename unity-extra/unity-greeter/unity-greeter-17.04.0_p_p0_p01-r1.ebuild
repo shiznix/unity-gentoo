@@ -48,6 +48,11 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# import environment variables before indicator-keyboard starts
+	#  (fix keyboard layout to correspond with indicator-keyboard icon)
+	eapply "${FILESDIR}"/environment-variables.patch
+
 	# patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
                   "${S}"/src/unity-greeter.vala || die

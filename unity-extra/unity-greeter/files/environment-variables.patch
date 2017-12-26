@@ -1,0 +1,33 @@
+From: c4pp4
+Date: Tue, 26 Dec 2017 00:15:15 +0100
+Subject: [PATCH] Fix keyboard layout to correspond
+with indicator-keyboard icon
+
+Package unity-greeter-17.04.0-0ubuntu1 includes: "Move indicator
+launching from upstart to systemd". This change is causing keyboard
+layout doesn't correspond with indicator-keyboard icon. The solution
+is to import environment variables before indicator-keyboard starts.
+---
+ src/unity-greeter.vala | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/src/unity-greeter.vala b/src/unity-greeter.vala
+index a683836..785980b 100644
+--- a/src/unity-greeter.vala
++++ b/src/unity-greeter.vala
+@@ -658,6 +658,15 @@ public class UnityGreeter
+                 greeter.show ();
+             });
+ 
++            try
++            {
++                Process.spawn_command_line_sync ("systemctl --user import-environment");
++            }
++            catch (Error e)
++            {
++                warning ("Error importing environment variables: %s", e.message);
++            }
++
+             /* Start the indicator services */
+             try
+             {
