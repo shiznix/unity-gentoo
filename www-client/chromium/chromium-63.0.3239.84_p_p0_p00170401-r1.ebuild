@@ -203,6 +203,11 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# Chromecast is not fully combatible with Chromium and can crash the browser when WiFi is enabled
+	# https://bugs.launchpad.net/ubuntu/+source/chromium-browser/+bug/1702407 #37
+	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833477
+	sed -i '/enable-chromecast-by-default.patch/d' "${WORKDIR}/debian/patches/series" || die
+
 	# Disable selected patches #
 	sed \
 		`# Don't limit gcc version to 4.8` \
