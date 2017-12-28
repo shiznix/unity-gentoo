@@ -17,7 +17,6 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 	unity-lenses/unity-lens-video
 
 * Reasons for patching/maintaining packages:
-app-accessibility/at-spi2-core		# Patched to start 'accessibility bus' by default (https://wiki.debian.org/accessibility-devel) and fix 'WARNING: Application 'at-spi-dbus-bus.desktop' failed to register before timeout' causing a desktop lag when the Unity is initializing
 app-backup/deja-dup			# Enable Unity desktop options
 dev-cpp/gtest				# Customised ebuild to install /usr/src/gtest/* files lacking from main tree ebuild
 dev-cpp/gmock				# Customised ebuild to install /usr/src/gmock/* files lacking from main tree ebuild
@@ -43,7 +42,6 @@ gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/activity-log-manager	# Adds unity-control-center integration
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
-mail-client/thunderbird			# Requires patching for global appmenu
 media-gfx/shotwell			# Patched for integration with Unity online accounts
 media-sound/banshee			# Patched/compiled for indicator-sound support, Meego UI and other Ubuntu UI improvements
 media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu quicklist, Magnatune and other Ubuntu UI improvements
@@ -55,10 +53,40 @@ sys-apps/accountsservice		# Requires patching for SetInputSources as needed by u
 sys-auth/pambase			# Requires patching to support sys-fs/lxcfs[pam] and so have userspace access to 'freezer' cgroup controller
 sys-kernel/ubuntu-sources		# Patched with Ubuntu's complete kernel patchset to add support for sys-apps/ureadahead
 www-client/chromium			# Required to support Unity Launcher icon effects (no duplicate icons, quicklist menu, progress bar, window title bar fixes etc.)
-www-client/firefox			# Requires patching for webapps browser plugin and global appmenu
 x11-libs/gtk+				# Needed for global appmenu
 x11-misc/lightdm			# Custom fixes for Xsession profile sourcing and multi-monitor display
 x11-wm/metacity				# Patched to support compiz window decoration
+
+* Reasons for maintaining ehooks:
+app-accessibility/at-spi2-core		# Start 'accessibility bus' by default (https://wiki.debian.org/accessibility-devel)
+app-accessibility/at-spi2-core-2.22	# Start 'accessibility bus' by default (https://wiki.debian.org/accessibility-devel) and fix 'WARNING: Application 'at-spi-dbus-bus.desktop' failed to register before timeout' causing a desktop lag when the Unity is initializing
+app-i18n/ibus				# Don't show notification if not upgrading from a previous version (https://bugs.launchpad.net/ibus/+bug/1255542)
+mail-client/thunderbird			# Add Unity menubar and desktop launcher with quicklist and translations
+media-fonts/ubuntu-font-family		# Keep Ubuntu medium font (e.g used by unity-indicators/indicator-keyboard)
+net-irc/quassel				# Fix notification icon not appearing in Unity
+sys-apps/systemd			# Use legacy cgroup hierarchy as the default
+sys-auth/polkit				# Add fallback if agent is not running in a logind session, this fixes polkit with dbus-user-session (https://bugs.freedesktop.org/show_bug.cgi?id=96977)
+www-client/firefox			# Add Unity menubar and desktop launcher with quicklist and translations
+
+* Optional ehooks provided by 'unity-extra/ehooks' and managed via 'eselect ehook':
+app-arch/file-roller			# Don't use GtkHeaderBar in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=739596)
+app-arch/file-roller-3.22		# Don't use GtkHeaderBar in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=739596), extension for Nautilus 3.20 (https://bugzilla.gnome.org/show_bug.cgi?id=770248)
+app-editors/gedit			# Don't use GtkHeaderBar decorations under Unity (https://bugzilla.gnome.org/show_bug.cgi?id=762332)
+app-office/libreoffice			# Add Human icon theme and make it the default, add custom icons (savemodified_{large,small}.png)
+app-text/evince				# Add traditional menu bar (https://bugzilla.gnome.org/show_bug.cgi?id=736419), use GtkHeaderBar as decoration only under gnome-shell (https://bugzilla.gnome.org/show_bug.cgi?id=736420)
+gnome-extra/gnome-calculator		# Don't use HeaderBars in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=712831)
+gnome-extra/gnome-calculator-3.22	# Don't use HeaderBars in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=712831)
+media-gfx/eog				# Add a traditional menu bar (https://bugzilla.gnome.org/749976, https://bugs.debian.org/793445), show traditional title bar in Unity
+media-gfx/eog-3.20			# Add a traditional menu bar (https://bugzilla.gnome.org/749976, https://bugs.debian.org/793445), show traditional title bar in Unity
+media-gfx/gnome-screenshot		# Use Ubuntu help instead of GNOME help, don't use GtkHeaderBar, show the save dialog by default, don't try and use the GNOME Shell D-Bus interface, add quicklist area-shot option
+media-gfx/shotwell			# Enable Unity support for version 0.24+, NOTE: you have to manually unmask media-gfx/shotwell::gentoo
+media-video/totem			# Add a traditional menubar (https://bugzilla.gnome.org/show_bug.cgi?id=749695), use traditional headerbar
+net-im/pidgin				# Add chat section into messaging menu (Available, Away, Busy, Invisible, Offline)
+x11-base/xorg-server-1.19		# Load nvidia proprietary driver automatically when installed, fall back to autoconfiguration for graphics drivers in some cases instead of letting X fail when configuration files are available
+x11-libs/vte:2.91			# Add the style context provider with FALLBACK priority, NOTE: use along with x11-terms/gnome-terminal ehook
+x11-misc/zim				# Install Ubuntu theme (/usr/share/icons/ubuntu-mono-{dark,light})
+x11-terms/gnome-terminal		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, https://bugs.launchpad.net/ubuntu/+source/gnome-terminal/+bug/1493964), NOTE: enable x11-libs/vte ehook as well to use theme background color
+x11-terms/gnome-terminal-3.22		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, https://bugs.launchpad.net/ubuntu/+source/gnome-terminal/+bug/1493964), NOTE: enable x11-libs/vte ehook as well to use theme background color
 
 * By design, some indicators or their features will not appear until they meet certain criteria
 	- indicator-messages	# Won't appear until a messaging type application is run first (eg. empathy, evolution (via indicator-evolution), pidgin, webapp)
