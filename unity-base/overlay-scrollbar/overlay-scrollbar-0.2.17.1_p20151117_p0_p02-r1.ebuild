@@ -28,6 +28,10 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# Install Xsession file into correct Gentoo path #
+	sed -e 's:/X11/Xsession.d:/X11/xinit/xinitrc.d:g' \
+		-i data/Makefile*
 	eautoreconf
 }
 
@@ -38,11 +42,6 @@ src_configure() {
 
 src_install() {
 	emake DESTDIR="${ED}" install || die
-
-	rm -rf "${D}usr/etc" &> /dev/null
-	exeinto /etc/X11/xinit/xinitrc.d/
-	doexe data/81overlay-scrollbar
-
 	prune_libtool_files --modules
 }
 
