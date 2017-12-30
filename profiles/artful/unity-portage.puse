@@ -70,4 +70,5 @@ www-client/firefox -gstreamer-0 -gtk2 -qt5
 x11-base/xorg-server dmx xvfb
 x11-libs/libdrm libkms
 x11-libs/libxcb xkb
+x11-libs/topmenu-gtk mate
 x11-misc/x11vnc dummy
