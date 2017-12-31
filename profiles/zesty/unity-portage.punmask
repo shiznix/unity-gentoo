@@ -9,6 +9,11 @@ dev-dotnet/mono-zeroconf        # (b.g.o #596614 - needs gmcs)
 dev-dotnet/taglib-sharp         # (b.g.o #565032 - needs gmcs)
 media-sound/banshee             # (b.g.o #558106 - DEPENDs on the above packages)
 
+## Gentoo dropping zeitgeist packages because they cannot be maintained ##
+dev-libs/libzeitgeist			# (b.g.o #629180)
+gnome-extra/activity-log-manager	# (b.g.o #625140)
+gnome-extra/zeitgeist			# (b.g.o #629180)
+
 # Unmask overlay version
 dev-libs/dee::unity-gentoo
 x11-misc/lightdm-kde::unity-gentoo
