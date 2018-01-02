@@ -42,6 +42,7 @@ src_configure() {
 
 src_install() {
 	emake DESTDIR="${ED}" install || die
+	chmod +x "${ED%/}"/etc/X11/xinit/xinitrc.d/81overlay-scrollbar
 	prune_libtool_files --modules
 }
 
