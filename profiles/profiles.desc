@@ -1,5 +1,13 @@
-amd64	zesty/amd64	stable
-x86	zesty/x86	stable
+amd64	zesty/amd64		stable
+x86	zesty/x86		stable
 
-amd64	artful/amd64	dev
-x86	artful/amd64	dev
+amd64	artful/amd64		dev
+x86	artful/x86		dev
+
+# Experimental SYMLINK_LIB=no profiles
+# Run app-portage/unsymlink-lib *before* switching the profile.
+amd64	zesty/amd64/17.1	exp
+x86	zesty/x86/17.1		exp
+
+amd64	artful/amd64/17.1	exp
+x86	artful/x86/17.1		exp

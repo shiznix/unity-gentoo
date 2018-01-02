@@ -1,0 +1,4 @@
+gentoo:default/linux/x86/17.1
+gentoo:targets/desktop/gnome
+gentoo:targets/systemd
+unity-gentoo:artful/base
