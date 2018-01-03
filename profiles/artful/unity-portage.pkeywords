@@ -2,6 +2,19 @@
 
 */*::unity-gentoo
 
+# Unmask MATE Desktop for mate-extra/mate-tweak	#
+mate-base/*
+mate-extra/*
+x11-misc/mozo
+x11-wm/marco
+app-editors/pluma
+media-gfx/eom
+x11-themes/mate-backgrounds
+x11-themes/mate-icon-theme
+app-arch/engrampa
+x11-terms/mate-terminal
+app-text/atril
+dev-libs/libmateweather
 
 # Unmask QT-5.7 #
 =dev-qt/assistant-5.7*:5::gentoo

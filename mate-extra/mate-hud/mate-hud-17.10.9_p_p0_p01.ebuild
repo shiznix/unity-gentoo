@@ -6,51 +6,33 @@ EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit distutils-r1 eutils ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/m/${PN}"
 
-DESCRIPTION="MATE desktop tweak tool"
-HOMEPAGE="https://github.com/ubuntu-mate/mate-tweak"
+DESCRIPTION="MATE menubar commands, like the Unity 7 Heads-Up Display (HUD)"
+HOMEPAGE="https://github.com/ubuntu-mate/mate-hud"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
-LICENSE="GPL-2+"
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 # Let people emerge this by default, bug #472932
 IUSE+=" +python_single_target_python3_4 python_single_target_python3_5"
 
 RESTRICT="mirror"
 
-RDEPEND="
-	dev-python/psutil[${PYTHON_USEDEP}]
-	dev-python/pygobject[${PYTHON_USEDEP}]
+RDEPEND="dev-python/pygobject[${PYTHON_USEDEP}]
 	dev-python/setproctitle[${PYTHON_USEDEP}]
-	gnome-base/dconf
-	gnome-extra/zenity
-	mate-base/mate
-	mate-extra/brisk-menu
-	mate-extra/mate-hud
-	mate-extra/mate-indicator-applet
-	mate-extra/mate-media
-	unity-base/compiz
-	unity-indicators/indicator-application
-	unity-indicators/indicator-messages
-	unity-indicators/indicator-sound
-	x11-apps/mesa-progs
+	dev-python/python-xlib
+	unity-base/unity-gtk-module
 	x11-libs/gtk+:3
-	x11-libs/libnotify
-	x11-libs/topmenu-gtk[mate]
-	x11-wm/metacity
-	x11-misc/compton
-	x11-misc/xcompmgr
+	x11-misc/appmenu-qt
+	x11-misc/rofi
 	${PYTHON_DEPS}"
 DEPEND="${RDEPEND}"
-
-S="${WORKDIR}/ubuntu-mate-${PN}-47c23ea77e72"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
@@ -60,6 +42,10 @@ pkg_setup() {
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	distutils-r1_src_prepare
+
+	# Install Xsession file into correct Gentoo path #
+	sed -e 's:/etc/X11/Xsession.d:/etc/X11/xinit/xinitrc.d:g' \
+		-i setup.py
 }
 
 src_install() {

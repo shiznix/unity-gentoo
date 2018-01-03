@@ -4,10 +4,11 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools gnome2-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/b/${PN}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Solus Project's Brisk Menu MATE Panel Applet"
 HOMEPAGE="https://github.com/solus-project/brisk-menu"
