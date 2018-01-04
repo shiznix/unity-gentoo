@@ -40,6 +40,8 @@ RDEPEND="dev-python/psutil[${PYTHON_USEDEP}]
 	unity-base/compiz
 	unity-indicators/indicator-application
 	unity-indicators/indicator-messages
+	unity-indicators/indicator-power
+	unity-indicators/indicator-session
 	unity-indicators/indicator-sound
 	x11-apps/mesa-progs
 	x11-libs/gtk+:3
@@ -47,6 +49,8 @@ RDEPEND="dev-python/psutil[${PYTHON_USEDEP}]
 	x11-libs/topmenu-gtk[mate]
 	x11-wm/metacity
 	x11-misc/compton
+	x11-misc/mate-dock-applet
+	x11-misc/vala-panel-appmenu[mate]
 	x11-misc/xcompmgr
 	${PYTHON_DEPS}"
 DEPEND="${RDEPEND}"
@@ -58,6 +62,14 @@ pkg_setup() {
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	## Correct paths in mate-tweak script ##
+	sed -e "s:/usr/lib/mate-panel/appmenu-mate:/usr/libexec/mate-panel/appmenu-mate:g" \
+		-e "s:brisk-menu/brisk-menu:brisk-menu:g" \
+		-e "s:/usr/lib/MULTIARCH:MULTIARCH:g" \
+		-e "s:'/usr/lib/' + self.multiarch + :self.multiarch + :g" \
+		-e "/self.multiarch = sysconfig.get_config_var/c\        self.multiarch = os.path.join('/','usr','libexec')" \
+			-i mate-tweak || die
 	distutils-r1_src_prepare
 }
 
