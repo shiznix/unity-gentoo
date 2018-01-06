@@ -143,12 +143,7 @@ ubuntu-versionator_pkg_setup() {
                 if [ -z "$(echo ${CURRENT_PROFILE} | grep unity-gentoo)" ]; then
                         die "Invalid profile detected, please select a 'unity-gentoo' profile for your architecture shown in 'eselect profile list'"
                 else
-			TEMP_PROFILE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-0)}')
-			if [ "${TEMP_PROFILE}" == "17.1" ]; then
-				PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-2)}')
-			else
-				PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-1)}')
-			fi
+			PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-0)}')
                 fi
 
                 has_version unity-base/unity-build-env:0/${PROFILE_RELEASE} || \

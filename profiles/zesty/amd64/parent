@@ -1,5 +1,0 @@
-gentoo:default/linux/amd64/17.0
-gentoo:targets/desktop/gnome
-gentoo:targets/systemd
-gentoo:arch/amd64/lib32
-unity-gentoo:zesty/base
