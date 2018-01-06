@@ -8,12 +8,12 @@ URELEASE="zesty"
 inherit autotools gnome2-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/t/${PN}"
-UVER="${PVR_MICRO}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="A Gtk+ module and Mate/Xfce/LXDE panel applets for a global menubar"
 HOMEPAGE="https://git.javispedro.com/cgit/topmenu-gtk.git/about/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
