@@ -5,16 +5,18 @@
 # Unmask MATE Desktop for mate-extra/mate-tweak #
 mate-base/*
 mate-extra/*
-x11-misc/mozo
-x11-wm/marco
-app-editors/pluma
-media-gfx/eom
-x11-themes/mate-backgrounds
-x11-themes/mate-icon-theme
 app-arch/engrampa
-x11-terms/mate-terminal
+app-editors/pluma
 app-text/atril
 dev-libs/libmateweather
+media-gfx/eom
+x11-misc/mate-notification-daemon
+x11-misc/mozo
+x11-terms/mate-terminal
+x11-themes/mate-backgrounds
+x11-themes/mate-icon-theme
+x11-terms/mate-terminal
+x11-wm/marco
 
 # Unmask Gnome-3.24 #
 =*/gnome*-*24*::gentoo
