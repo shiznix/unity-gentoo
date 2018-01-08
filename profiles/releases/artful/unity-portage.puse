@@ -41,6 +41,8 @@ dev-qt/qt-mobility organizer
 gnome-base/gnome-extra-apps -shotwell   # Meta ebuild that pulls in higer version of shotwell than provided by overlay
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
+mate-base/mate -notification	# x11-misc/mate-notification-daemon collides with x11-misc/notify-osd
+mate-base/mate-menus python
 media-libs/clutter egl
 media-libs/libmediaart -qt4 -qt5
 media-libs/gst-plugins-base theora
