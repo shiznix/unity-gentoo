@@ -23,8 +23,8 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 				fi
 			fi
 			if [[ "${edition}" == "exp" ]]; then
-					if [ "$(eval echo \${UNITY_EXPERIMENTAL_${PROFILE_RELEASE}})" != "yes" ]; then
-						die "Oops! A experimental profile has been detected. Set 'UNITY_EXPERIMENTAL_${PROFILE_RELEASE}=yes' in make.conf if you really know what you are doing!"
+					if [ "$(eval echo \${UNITY_EXPERIMENTAL_PROFILE_${PROFILE_RELEASE}})" != "yes" ]; then
+						die "Oops! A experimental profile has been detected. Set 'UNITY_EXPERIMENTAL_PROFILE_${PROFILE_RELEASE}=yes' in make.conf if you really know what you are doing!\nHave also a look at: https://www.gentoo.org/support/news-items/2017-12-26-experimental-amd64-17-1-profiles.html"
 					fi
 			fi
 		fi
