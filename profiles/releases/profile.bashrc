@@ -1,13 +1,34 @@
 if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 	CURRENT_PROFILE="$(readlink /etc/portage/make.profile)"
+	PROFILE_DESC="/etc/portage/${CURRENT_PROFILE%%profiles*}/profiles/profiles.desc"
+	PROFILE_NAME="${CURRENT_PROFILE#*profiles}"
+	PROFILE_NAME="${PROFILE_NAME#"/"}"
+
 	if [ -z "$(echo ${CURRENT_PROFILE} | grep unity-gentoo)" ]; then
 		die "Invalid profile detected, please select a 'unity-gentoo' profile for your architecture shown in 'eselect profile list'"
 	else
-		PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-1)}')
+		PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-0)}')
 	fi
-	if [ "$(eval echo \${UNITY_DEVELOPMENT_${PROFILE_RELEASE}})" != "yes" ]; then
-		die "Oops! A development profile has been detected. Set 'UNITY_DEVELOPMENT_${PROFILE_RELEASE}=yes' in make.conf if you really know how broken this profile could be"
-	fi
+
+	while read -r line; do
+	        [[ "$line" =~ ^#.*$ ]] && continue
+		[[ -z "$line" ]] && continue
+
+		name=$(echo "${line}" | awk -F' ' '{print $(NF-1)}')
+		edition=$(echo "${line}" | awk -F' ' '{print $(NF-0)}')
+		if [[ "${PROFILE_NAME}" == "${name}" ]]; then
+			if [[ "${edition}" == "dev" ]]; then
+				if [ "$(eval echo \${UNITY_DEVELOPMENT_${PROFILE_RELEASE}})" != "yes" ]; then
+					die "Oops! A development profile has been detected. Set 'UNITY_DEVELOPMENT_${PROFILE_RELEASE}=yes' in make.conf if you really know how broken this profile could be"
+				fi
+			fi
+			if [[ "${edition}" == "exp" ]]; then
+					if [ "$(eval echo \${UNITY_EXPERIMENTAL_PROFILE_${PROFILE_RELEASE}})" != "yes" ]; then
+						die "Oops! A experimental profile has been detected. Set 'UNITY_EXPERIMENTAL_PROFILE_${PROFILE_RELEASE}=yes' in make.conf if you really know what you are doing!\nHave also a look at: https://www.gentoo.org/support/news-items/2017-12-26-experimental-amd64-17-1-profiles.html"
+					fi
+			fi
+		fi
+	done < "$PROFILE_DESC"
 
 	KEYWORD_STATE="${KEYWORD_STATE:=`grep ACCEPT_KEYWORDS /etc/portage/make.conf 2>/dev/null`}"
 	KEYWORD_STATE="${KEYWORD_STATE:=`grep ACCEPT_KEYWORDS /etc/make.conf 2>/dev/null`}"
@@ -38,7 +59,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		repodir=$(/usr/bin/portageq get_repo_path / unity-gentoo) \
 		optdir=${PORTAGE_CONFIGROOT%/}/etc/portage/ehooks
 	local -a basedirs=(
-		"${repodir}"/profiles/${PROFILE_RELEASE}/ehooks
+		"${repodir}"/profiles/releases/${PROFILE_RELEASE}/ehooks
 		"${optdir}"
 	)
 

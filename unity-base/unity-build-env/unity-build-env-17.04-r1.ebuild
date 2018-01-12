@@ -21,7 +21,9 @@ pkg_setup() {
 
 src_install() {
 	local REPO_ROOT="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
-	local PROFILE_RELEASE=$(eselect --brief profile show | sed -n 's/.*:\(.*\)\/.*/\1/p')
+	#local PROFILE_RELEASE=$(eselect --brief profile show | sed -n 's/.*:\(.*\)\/.*/\1/p')
+	local CURRENT_PROFILE=$(readlink /etc/portage/make.profile)
+	local PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | awk -F/ '{print $(NF-0)}')
 
 	if [ -z "${REPO_ROOT}" ] || [ -z "${PROFILE_RELEASE}" ]; then
 		die "Failed to detect unity-gentoo overlay and/or profile"
@@ -29,7 +31,7 @@ src_install() {
 
 	for pfile in {env,keywords,mask,unmask,use}; do
 		dodir "/etc/portage/package.${pfile}"
-		dosym "${REPO_ROOT}/profiles/${PROFILE_RELEASE}/unity-portage.p${pfile}" \
+		dosym "${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/unity-portage.p${pfile}" \
 			"/etc/portage/package.${pfile}/unity-portage.p${pfile}" || die
 	done
 
