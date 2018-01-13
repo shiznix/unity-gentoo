@@ -14,6 +14,9 @@ dev-libs/libzeitgeist                   # (b.g.o #629180)
 gnome-extra/activity-log-manager        # (b.g.o #625140)
 gnome-extra/zeitgeist                   # (b.g.o #629180)
 
+## Gentoo dropping appmenu-qt package required by unity-base/unity (reason: dead upstream, depends on dead Qt4) ##
+x11-misc/appmenu-qt
+
 # Unmask overlay version
 dev-libs/dee::unity-gentoo
 x11-misc/lightdm-kde::unity-gentoo
