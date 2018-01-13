@@ -36,8 +36,8 @@ src_install() {
 	done
 
 	dodir "/etc/portage/env"
-	for envconf in $(ls -1 ${REPO_ROOT}/profiles/${PROFILE_RELEASE}/env/* | awk -F/ '{print $NF}'); do
-		dosym "${REPO_ROOT}/profiles/${PROFILE_RELEASE}/env/${envconf}" \
+	for envconf in $(ls -1 ${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/env/* | awk -F/ '{print $NF}'); do
+		dosym "${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/env/${envconf}" \
 			"/etc/portage/env/${envconf}" || die
 	done
 
