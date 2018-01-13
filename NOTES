@@ -68,7 +68,7 @@ sys-apps/systemd			# Use legacy cgroup hierarchy as the default
 sys-auth/polkit				# Add fallback if agent is not running in a logind session, this fixes polkit with dbus-user-session (https://bugs.freedesktop.org/show_bug.cgi?id=96977)
 www-client/firefox			# Add Unity menubar and desktop launcher with quicklist and translations
 
-* Optional ehooks provided by 'unity-extra/ehooks' and managed via 'eselect ehook':
+* Optional ehooks provided by 'unity-extra/ehooks' and managed via 'eselect ehooks':
 app-arch/file-roller			# Don't use GtkHeaderBar in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=739596)
 app-arch/file-roller-3.22		# Don't use GtkHeaderBar in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=739596), extension for Nautilus 3.20 (https://bugzilla.gnome.org/show_bug.cgi?id=770248)
 app-editors/gedit			# Don't use GtkHeaderBar decorations under Unity (https://bugzilla.gnome.org/show_bug.cgi?id=762332)
