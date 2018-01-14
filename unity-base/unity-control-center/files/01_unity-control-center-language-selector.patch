@@ -12,7 +12,7 @@
  panels/langselector/Makefile.am                    |  48 ++
  panels/langselector/cc-format-chooser.c            | 588 ++++++++++++++
  panels/langselector/cc-format-chooser.h            |  36 +
- panels/langselector/cc-langselector-panel.c        | 889 +++++++++++++++++++++
+ panels/langselector/cc-langselector-panel.c        | 892 +++++++++++++++++++++
  panels/langselector/cc-langselector-panel.h        |  71 ++
  panels/langselector/format-chooser.ui              | 342 ++++++++
  panels/langselector/langselector-module.c          |  41 +
@@ -24,12 +24,12 @@
  panels/region/unity-region-panel-fcitx.ui          |  21 +-
  panels/region/unity-region-panel-ibus.ui           |  23 +-
  panels/user-accounts/data/user-accounts-dialog.ui  |  15 +-
- panels/user-accounts/um-user-panel.c               | 120 ++-
+ panels/user-accounts/um-user-panel.c               | 123 ++-
  po/POTFILES.in                                     |   6 +-
  shell/Makefile.am                                  |   2 +
  shell/list-box-helper.c                            |  41 +
  shell/list-box-helper.h                            |  24 +
- 31 files changed, 3197 insertions(+), 906 deletions(-)
+ 31 files changed, 3203 insertions(+), 906 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
 index 572490e..6daa64e 100644
@@ -2645,10 +2645,10 @@ index 0000000..6b49c01
 +#endif /* __CC_FORMAT_CHOOSER_H__ */
 diff --git a/panels/langselector/cc-langselector-panel.c b/panels/langselector/cc-langselector-panel.c
 new file mode 100644
-index 0000000..5bcfa86
+index 0000000..ad7df1d
 --- /dev/null
 +++ b/panels/langselector/cc-langselector-panel.c
-@@ -0,0 +1,889 @@
+@@ -0,0 +1,892 @@
 +/*
 + * Copyright (C) 2010 Intel, Inc
 + *
@@ -2683,6 +2683,9 @@ index 0000000..5bcfa86
 +#include "cc-format-chooser.h"
 +
 +#include "cc-common-language.h"
++
++#define GNOME_DESKTOP_USE_UNSTABLE_API
++#include <libgnome-desktop/gnome-languages.h>
 +
 +#include <act/act.h>
 +
@@ -4461,10 +4464,20 @@ index 7873126..850e976 100644
                            <packing>
                              <property name="left_attach">1</property>
 diff --git a/panels/user-accounts/um-user-panel.c b/panels/user-accounts/um-user-panel.c
-index cda837b..c3c4549 100644
+index cda837b..238110a 100644
 --- a/panels/user-accounts/um-user-panel.c
 +++ b/panels/user-accounts/um-user-panel.c
-@@ -656,7 +656,7 @@ show_user (ActUser *user, CcUserPanelPrivate *d)
+@@ -34,6 +34,9 @@
+ #include <polkit/polkit.h>
+ #include <act/act.h>
+ 
++#define GNOME_DESKTOP_USE_UNSTABLE_API
++#include <libgnome-desktop/gnome-languages.h>
++
+ #include "shell/cc-editable-entry.h"
+ 
+ #include "um-editable-button.h"
+@@ -656,7 +659,7 @@ show_user (ActUser *user, CcUserPanelPrivate *d)
          GtkWidget *label2;
          GtkWidget *label3;
          GdkPixbuf *pixbuf;
@@ -4473,7 +4486,7 @@ index cda837b..c3c4549 100644
          GtkWidget *widget;
          GtkTreeModel *model;
          GtkTreeIter iter;
-@@ -690,16 +690,24 @@ show_user (ActUser *user, CcUserPanelPrivate *d)
+@@ -690,16 +693,24 @@ show_user (ActUser *user, CcUserPanelPrivate *d)
          g_signal_handlers_unblock_by_func (widget, autologin_changed, d);
          gtk_widget_set_sensitive (widget, get_autologin_possible (user));
  
@@ -4504,7 +4517,7 @@ index cda837b..c3c4549 100644
  
          /* Fingerprint: show when self, possible, and local account */
          widget = get_widget (d, "account-fingerprint-notebook");
-@@ -816,81 +824,62 @@ language_response (GtkDialog         *dialog,
+@@ -816,81 +827,62 @@ language_response (GtkDialog         *dialog,
                     gint               response_id,
                     CcUserPanelPrivate *d)
  {
@@ -4536,16 +4549,16 @@ index cda837b..c3c4549 100644
 -        if (response_id == GTK_RESPONSE_OK) {
 -                lang = cc_language_chooser_get_language (GTK_WIDGET (dialog));
 -                act_user_set_language (user, lang);
--        }
--        else {
--                lang = g_strdup (act_user_get_language (user));
--                if (!lang)
--                        lang = cc_common_language_get_current_language ();
 +                button = get_widget (d, "account-language-button-label");
 +                name = gnome_get_language_from_locale (lang, NULL);
 +                gtk_label_set_label (GTK_LABEL (button), name);
 +                g_free (name);
          }
+-        else {
+-                lang = g_strdup (act_user_get_language (user));
+-                if (!lang)
+-                        lang = cc_common_language_get_current_language ();
+-        }
 -        cc_common_language_get_iter_for_language (model, lang, &iter);
 -        um_editable_combo_set_active_iter (UM_EDITABLE_COMBO (combo), &iter);
 -        g_free (lang);
@@ -4619,7 +4632,7 @@ index cda837b..c3c4549 100644
  }
  
  static void
-@@ -1167,8 +1156,8 @@ on_permission_changed (GPermission *permission,
+@@ -1167,8 +1159,8 @@ on_permission_changed (GPermission *permission,
                  gtk_widget_show (get_widget (d, "user-icon-button"));
                  gtk_widget_hide (get_widget (d, "user-icon-nonbutton"));
  
@@ -4630,7 +4643,7 @@ index cda837b..c3c4549 100644
  
                  um_editable_button_set_editable (UM_EDITABLE_BUTTON (get_widget (d, "account-password-button")), TRUE);
                  remove_unlock_tooltip (get_widget (d, "account-password-button"));
-@@ -1179,8 +1168,8 @@ on_permission_changed (GPermission *permission,
+@@ -1179,8 +1171,8 @@ on_permission_changed (GPermission *permission,
                  gtk_widget_hide (get_widget (d, "user-icon-button"));
                  gtk_widget_show (get_widget (d, "user-icon-nonbutton"));
  
@@ -4641,7 +4654,7 @@ index cda837b..c3c4549 100644
  
                  um_editable_button_set_editable (UM_EDITABLE_BUTTON (get_widget (d, "account-password-button")), FALSE);
                  add_unlock_tooltip (get_widget (d, "account-password-button"));
-@@ -1381,8 +1370,9 @@ setup_main_window (CcUserPanelPrivate *d)
+@@ -1381,8 +1373,9 @@ setup_main_window (CcUserPanelPrivate *d)
          button = get_widget (d, "account-password-button");
          g_signal_connect (button, "start-editing", G_CALLBACK (change_password), d);
  
