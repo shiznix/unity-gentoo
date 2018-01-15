@@ -54,6 +54,10 @@ src_prepare() {
 	sed -e 's:python::g' \
 		-i Makefile.am || die
 
+	# fix placeholder in systemd service template
+	sed -e 's:@libexecdir@:@pkglibexecdir@:' \
+		-i extensions/fts++/zeitgeist-fts.service.in
+
 	vala_src_prepare
 	xdg_src_prepare
 }
