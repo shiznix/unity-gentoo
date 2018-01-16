@@ -9,7 +9,7 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en-GB es es-419 et fa fi fil fr gu he
 	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk sl sr
 	sv sw ta te th tr uk vi zh-CN zh-TW"
 
-URELEASE="zesty-security"
+URELEASE="artful-security"
 inherit check-reqs chromium-2 eutils gnome2-utils flag-o-matic multilib ninja-utils pax-utils \
 	portability python-any-r1 readme.gentoo-r1 toolchain-funcs ubuntu-versionator versionator virtualx xdg-utils
 
