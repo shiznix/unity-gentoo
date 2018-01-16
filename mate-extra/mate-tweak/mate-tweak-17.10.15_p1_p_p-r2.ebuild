@@ -36,6 +36,7 @@ RDEPEND="dev-python/psutil[${PYTHON_USEDEP}]
 	mate-extra/mate-hud
 	mate-extra/mate-indicator-applet
 	mate-extra/mate-media
+	mate-extra/mate-netbook
 	mate-extra/ubuntu-mate-settings
 	unity-base/compiz
 	unity-indicators/indicator-application
@@ -50,6 +51,7 @@ RDEPEND="dev-python/psutil[${PYTHON_USEDEP}]
 	x11-wm/metacity
 	x11-misc/compton
 	x11-misc/mate-dock-applet
+	x11-misc/plank
 	x11-misc/vala-panel-appmenu[mate]
 	x11-misc/xcompmgr
 	${PYTHON_DEPS}"
@@ -66,6 +68,7 @@ src_prepare() {
 	## Correct paths in mate-tweak script ##
 	sed -e "s:/usr/lib/mate-panel/appmenu-mate:/usr/libexec/mate-panel/appmenu-mate:g" \
 		-e "s:brisk-menu/brisk-menu:brisk-menu:g" \
+		-e "s:/usr/lib/mate-netbook/mate-window-picker-applet:/usr/libexec/mate-window-picker-applet:g" \
 		-e "s:/usr/lib/MULTIARCH:MULTIARCH:g" \
 		-e "s:'/usr/lib/' + self.multiarch + :self.multiarch + :g" \
 		-e "/self.multiarch = sysconfig.get_config_var/c\        self.multiarch = os.path.join('/','usr','libexec')" \

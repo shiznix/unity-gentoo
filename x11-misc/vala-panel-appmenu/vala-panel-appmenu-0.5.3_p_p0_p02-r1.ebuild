@@ -60,6 +60,8 @@ src_install () {
 	cmake-utils_src_install
 	insinto /usr/share/glib-2.0/schemas
 	doins ${WORKDIR}/debian/10_mate*
+	insinto /etc/profile.d
+	doins ${WORKDIR}/debian/vala-panel-appmenu.sh
 }
 
 pkg_postinst() {
