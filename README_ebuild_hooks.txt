@@ -1,4 +1,4 @@
-Ebuild hooks in /var/lib/layman/unity-gentoo/profiles/${PROFILE_RELEASE}/ehooks
+Ebuild hooks in /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks
 are always applied.
 Ebuild hooks in /etc/portage/ehooks are provided by unity-extra/ehooks
 and managed by app-eselect/eselect-ehooks.
