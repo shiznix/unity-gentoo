@@ -3,7 +3,7 @@
 
 DESCRIPTION="Manage ebuild hooks in /etc/portage/ehooks"
 MAINTAINER="c4pp4@seznam.cz"
-VERSION="0.2"
+VERSION="0.3"
 
 get_notes() {
 	local param note newline=$'\n'
@@ -97,10 +97,11 @@ describe_list() {
 
 do_list() {
 	local -a packages=( $(get_packages) )
-	local i
+	local i pkg
 
 	for (( i = 0; i < ${#packages[@]}; i++ )); do
-		[[ -f ${packages[i]}/enabled ]] \
+		pkg=${packages[i]/ehooks/ehooks\/conf.d}
+		[[ -f ${pkg%/*}@${pkg##*/} ]] \
 			&& packages[i]=$(highlight_marker ${packages[i]#*/ehooks/}) \
 			|| packages[i]=${packages[i]#*/ehooks/}
 	done
@@ -134,9 +135,10 @@ do_enable() {
 		local pkg
 
 		for pkg in "${packages[@]}"; do
-			[[ -f ${pkg}/enabled ]] \
-				&& write_warning_msg "Already enabled: ${pkg#*/ehooks/}" \
-				|| touch "${pkg}"/enabled
+			pkg=${pkg/ehooks/ehooks\/conf.d}
+			[[ -f ${pkg%/*}@${pkg##*/} ]] \
+				&& write_warning_msg "Already enabled: ${pkg#*/conf.d/}" \
+				|| install -D -m0644 /dev/null "${pkg%/*}@${pkg##*/}"
 		done
 	fi
 }
@@ -167,9 +169,10 @@ do_disable() {
 		local pkg
 
 		for pkg in "${packages[@]}"; do
-			[[ -f ${pkg}/enabled ]] \
-				&& rm "${pkg}"/enabled \
-				|| write_warning_msg "Already disabled: ${pkg#*/ehooks/}"
+			pkg=${pkg/ehooks/ehooks\/conf.d}
+			[[ -f ${pkg%/*}@${pkg##*/} ]] \
+				&& rm "${pkg%/*}@${pkg##*/}" \
+				|| write_warning_msg "Already disabled: ${pkg#*/conf.d/}"
 		done
 	fi
 }

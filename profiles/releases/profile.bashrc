@@ -55,7 +55,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 	pre_pkg_setup() {
 
 	local \
-		basedir pkgdir \
+		basedir pkg \
 		repodir=$(/usr/bin/portageq get_repo_path / unity-gentoo) \
 		optdir=${PORTAGE_CONFIGROOT%/}/etc/portage/ehooks
 	local -a basedirs=(
@@ -64,17 +64,19 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 	)
 
 	for basedir in "${basedirs[@]}"; do
-		for pkgdir in "${basedir}"/${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{,:${SLOT%/*}}; do
-			if [[ -d ${pkgdir} ]]; then
+		for pkg in "${basedir}"/${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{,:${SLOT%/*}}; do
+			if [[ -d ${pkg} ]]; then
 				## Skip if source from ${optdir} not enabled.
-				[[ ${basedir} == ${optdir} ]] \
-					&& [[ ! -e ${pkgdir}/enabled ]] \
-					&& break 2
+				if [[ ${basedir} == ${optdir} ]]; then
+					pkg=${pkg/ehooks/ehooks\/conf.d}
+					[[ -e ${pkg%/*}@${pkg##*/} ]] \
+						|| break 2
+				fi
 
 				local prev_shopt=$(shopt -p nullglob)
 
 				shopt -s nullglob
-				EHOOK_SOURCE=( "${pkgdir}"/*.ehook )
+				EHOOK_SOURCE=( "${pkg/\/conf.d}"/*.ehook )
 				${prev_shopt}
 				break 2
 			fi
