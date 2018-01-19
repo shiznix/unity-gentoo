@@ -100,7 +100,6 @@ dev-util/umockdev
 =sys-apps/apparmor-utils-2.10*
 ~sys-apps/systemd-232			# Provides support for graphical(-pre)-session.target(.wants) systemd units used to start Unity desktop session
 sys-devel/clang:4
-sys-devel/gcc:6.3.0
 sys-devel/llvm:4
 sys-fs/lxcfs
 sys-libs/db:5.1
@@ -117,8 +116,6 @@ app-accessibility/onboard **
 app-arch/snapd **
 app-arch/snapd-glib **
 app-backup/deja-dup **
-app-misc/pay-service **
-app-misc/whoopsie **
 dev-cpp/gmock **
 dev-cpp/gtest **
 dev-libs/dee **
@@ -127,30 +124,21 @@ dev-libs/libaccounts-glib **
 dev-libs/libdbusmenu-qt **
 dev-libs/libindicator **
 dev-libs/libtimezonemap **
-dev-libs/libusermetrics **
 dev-libs/glib **
 dev-libs/gobject-introspection **
 dev-libs/gobject-introspection-common **
 dev-libs/libappindicator **
 dev-libs/libcolumbus **
 dev-libs/libdbusmenu **
-dev-libs/libhybris **
 dev-libs/libqtdbusmock **
 dev-libs/libqtdbustest **
 dev-libs/libsignon-glib **
 dev-libs/libunity **
 dev-libs/libunity-webapps **
-dev-libs/persistent-cache-cpp **
 dev-libs/process-cpp **
 dev-libs/properties-cpp **
-dev-libs/trust-store **
 dev-python/autopilot **
 dev-python/python-testscenarios **
-dev-python/u1db **
-dev-qt/qtfeedback:5 **
-dev-qt/qtpim:5 **
-dev-qt/qtsystems:5 **
-dev-util/android-headers **
 dev-util/cmake-extras **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
@@ -172,9 +160,6 @@ media-gfx/thumbnailer **
 media-sound/banshee **
 media-sound/pulseaudio **
 media-sound/rhythmbox **
-mir-base/mir **
-mir-base/platform-api **
-mir-base/unity-system-compositor **
 net-im/empathy **
 net-im/telepathy-mission-control **
 net-libs/account-plugins **
@@ -183,18 +168,8 @@ net-libs/gnome-online-accounts **
 net-libs/libphonenumber **
 net-libs/oxide-qt **
 net-libs/telepathy-indicator **
-net-libs/ubuntu-download-manager **
-net-libs/ubuntuone-credentials **
-net-misc/telephony-service
-net-misc/url-dispatcher **
 sys-apps/accountsservice **
-sys-apps/click **
-sys-apps/libertine **
-sys-apps/ubuntu-app-launch **
 sys-apps/upstart **
-sys-auth/biometryd **
-sys-kernel/ubuntu-sources **
-unity-apps/ubuntu-terminal-app **
 unity-base/bamf **
 unity-base/compiz **
 unity-base/evemu **
@@ -206,7 +181,6 @@ unity-base/gsettings-ubuntu-touch-schemas **
 unity-base/hud **
 unity-base/nux **
 unity-base/overlay-scrollbar **
-unity-base/qtubuntu **
 unity-base/session-shortcuts **
 unity-base/signon **
 unity-base/signon-keyring-extension **
@@ -214,9 +188,6 @@ unity-base/signon-plugin-oauth2 **
 unity-base/signon-ui **
 unity-base/ubuntu-docs **
 unity-base/ubuntu-settings **
-unity-base/ubuntu-settings-components **
-unity-base/ubuntu-system-settings **
-unity-base/ubuntu-system-settings-online-accounts **
 unity-base/unity **
 unity-base/unity-api **
 unity-base/unity-control-center **
@@ -253,17 +224,12 @@ unity-lenses/unity-lens-video **
 unity-scopes/unity-scope-home **
 www-client/webbrowser-app **
 www-client/firefox **
-x11-libs/accounts-qml-module **
 x11-libs/content-hub **
 x11-libs/dee-qt **
 x11-libs/gsettings-qt **
 x11-libs/gtk+:2 **
 x11-libs/gtk+:3 **
 x11-libs/libaccounts-qt **
-x11-libs/u1db-qt **
-x11-libs/ubuntu-ui-toolkit **
-x11-libs/unity-action-api **
-x11-libs/unity-webapps-qml **
 x11-misc/appmenu-qt5 **
 x11-misc/webapps-greasemonkey **
 x11-misc/lightdm **

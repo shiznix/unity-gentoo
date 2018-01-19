@@ -146,7 +146,6 @@ dev-util/umockdev
 =sys-apps/apparmor-utils-2.10*
 ~sys-apps/systemd-232			# Provides support for graphical(-pre)-session.target(.wants) systemd units used to start Unity desktop session
 sys-devel/clang:4
-sys-devel/gcc:6.3.0
 sys-devel/llvm:4
 sys-fs/lxcfs
 sys-libs/db:5.1
