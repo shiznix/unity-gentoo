@@ -1,0 +1,58 @@
+From b0a4cb897cd509fcff2561ac66b9dc9a74c9b85b Mon Sep 17 00:00:00 2001
+From: Clement Lefebvre <clement.lefebvre@linuxmint.com>
+Date: Tue, 27 Jun 2017 16:09:17 +0200
+Subject: [PATCH] Add a gsettings key to enable/disable SNI Support
+
+---
+ applets/notification_area/main.c   | 19 +++++++++++++------
+ data/org.mate.panel.gschema.xml.in |  5 +++++
+ 2 files changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/applets/notification_area/main.c b/applets/notification_area/main.c
+index f4de7d01..9e489932 100644
+--- a/applets/notification_area/main.c
++++ b/applets/notification_area/main.c
+@@ -64,15 +64,22 @@ static GfStatusNotifierWatcher *sn_watcher_service = NULL;
+ static GfStatusNotifierWatcher *
+ sn_watcher_service_ref (void)
+ {
+-  if (sn_watcher_service != NULL)
+-    g_object_ref (sn_watcher_service);
+-  else
++  GSettings *settings;
++  settings = g_settings_new ("org.mate.panel");
++
++  if (g_settings_get_boolean (settings, "enable-sni-support") == TRUE)
+     {
+-      sn_watcher_service = gf_status_notifier_watcher_new ();
+-      g_object_add_weak_pointer ((GObject *) sn_watcher_service,
+-                                 (gpointer *) &sn_watcher_service);
++      if (sn_watcher_service != NULL)
++        g_object_ref (sn_watcher_service);
++      else
++        {
++          sn_watcher_service = gf_status_notifier_watcher_new ();
++          g_object_add_weak_pointer ((GObject *) sn_watcher_service,
++                                     (gpointer *) &sn_watcher_service);
++        }
+     }
+ 
++  g_object_unref (settings);
+   return sn_watcher_service;
+ }
+ #endif
+diff --git a/data/org.mate.panel.gschema.xml.in b/data/org.mate.panel.gschema.xml.in
+index 9c6fdb8c..8149db81 100644
+--- a/data/org.mate.panel.gschema.xml.in
++++ b/data/org.mate.panel.gschema.xml.in
+@@ -84,5 +84,10 @@
+       <summary>Disable Force Quit</summary>
+       <description>If true, the panel will not allow a user to force an application to quit by removing access to the force quit button.</description>
+     </key>
++    <key name="enable-sni-support" type="b">
++      <default>true</default>
++      <summary>Enable SNI support</summary>
++      <description>If true, the panel provides support for SNI.</description>
++    </key>
+   </schema>
+ </schemalist>
