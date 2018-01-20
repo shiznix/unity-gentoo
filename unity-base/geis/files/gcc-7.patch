@@ -1,0 +1,19 @@
+--- libgeis/geis_v1.c.orig      2018-01-20 18:25:29.259261626 -0500
++++ libgeis/geis_v1.c   2018-01-20 18:27:02.495736917 -0500
+@@ -610,7 +610,7 @@
+                      const char **gesture_list)
+ {
+   GeisStatus result = GEIS_UNKNOWN_ERROR;
+-  if (gesture_list == GEIS_ALL_GESTURES)
++  if (gesture_list[0][0] == GEIS_ALL_GESTURES)
+   {
+     geis_debug("subscribing device %d for all gestures", device_id);
+   }
+@@ -757,7 +757,7 @@
+                  GeisGestureType *gesture_list)
+ {
+   GeisStatus status = GEIS_STATUS_NOT_SUPPORTED;
+-  if (gesture_list == GEIS_ALL_GESTURES)
++  if (gesture_list[0] == GEIS_ALL_GESTURES)
+   {
+     status = geis_subscription_deactivate(instance->subscription);
