@@ -20,7 +20,7 @@ KEYWORDS="amd64 ~arm ~ia64 ~ppc ~ppc64 x86"
 RDEPEND="
 	>=gnome-base/gnome-core-libs-${PV}[cups?]
 
-	>=gnome-base/gnome-session-${PV}
+	>=gnome-base/gnome-session-3.24.0
 	>=gnome-base/gnome-menus-3.13:3
 	>=gnome-base/gnome-settings-daemon-${PV}[cups?]
 	>=gnome-base/gnome-control-center-${PV}[cups?]
@@ -34,15 +34,15 @@ RDEPEND="
 	>=app-editors/gedit-3.22.1
 	>=app-text/evince-${PV}
 	>=gnome-extra/gnome-contacts-3.22.1
-	>=media-gfx/eog-${PV}
-	>=media-video/totem-${PV}
+	>=media-gfx/eog-3.24.1
+	>=media-video/totem-3.24.0
 	>=net-im/empathy-3.12
 	>=x11-terms/gnome-terminal-${PV}
 
 	>=gnome-extra/gnome-user-docs-${PV}
 	>=gnome-extra/yelp-3.22.0
 
-	>=x11-themes/adwaita-icon-theme-${PV}
+	>=x11-themes/adwaita-icon-theme-3.24.0
 	>=x11-themes/gnome-themes-standard-3.22.3
 
 	bluetooth? ( >=net-wireless/gnome-bluetooth-3.20.0 )

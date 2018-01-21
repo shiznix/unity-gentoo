@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="zesty zesty-security zesty-updates artful artful-security artful-updates"
+RELEASES="artful artful-security artful-updates"
 SOURCES="main universe"
 
 sources_download() {
@@ -229,6 +229,7 @@ uver() {
 	[[ "${URELEASE}" == *xenial* ]] && UVER_RELEASE="16.04"
 	[[ "${URELEASE}" == *yakkety* ]] && UVER_RELEASE="16.10"
 	[[ "${URELEASE}" == *zesty* ]] && UVER_RELEASE="17.04"
+	[[ "${URELEASE}" == *artful* ]] && UVER_RELEASE="17.10"
 	PVR=`echo "${packbasename}" | sed -e 's/.*-\([0-9]\)/\1/' -e 's:-r[0-9].*$::g'`
 	PVR="_${PVR#*_}"
 

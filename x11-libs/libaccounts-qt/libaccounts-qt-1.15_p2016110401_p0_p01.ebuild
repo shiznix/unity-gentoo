@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit qmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/liba/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UURL="mirror://unity/pool/universe/liba/${PN}"
+UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="QT library for Single Sign On framework for the Unity desktop"
 HOMEPAGE="http://code.google.com/p/accounts-sso/"

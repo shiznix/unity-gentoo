@@ -39,6 +39,7 @@ export VALA_USE_DEPEND="vapigen"
 [[ "${URELEASE}" == *xenial* ]] && UVER_RELEASE="16.04"
 [[ "${URELEASE}" == *yakkety* ]] && UVER_RELEASE="16.10"
 [[ "${URELEASE}" == *zesty* ]] && UVER_RELEASE="17.04"
+[[ "${URELEASE}" == *artful* ]] && UVER_RELEASE="17.10"
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
 PV="${PV%%[a-z]*}"	# For package-3.6.0a
