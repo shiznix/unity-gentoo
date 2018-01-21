@@ -5,10 +5,10 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-URELEASE="zesty"
+URELEASE="artful-updates"
 inherit autotools eutils gnome2 ubuntu-versionator
 
-UURL="mirror://unity/pool/main/i/${PN}"
+UURL="mirror://unity/pool/universe/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Indicator showing active print jobs used by the Unity desktop"
@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

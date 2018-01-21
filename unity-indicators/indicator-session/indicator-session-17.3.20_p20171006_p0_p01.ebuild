@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful-updates"
 inherit cmake-utils gnome2-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/i/${PN}"
+UURL="mirror://unity/pool/universe/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Indicator showing session management, status and user switching used by the Unity desktop"
@@ -28,7 +28,6 @@ DEPEND="${RDEPEND}
 	dev-libs/libappindicator:=
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicate-qt
-
 	help? ( gnome-extra/yelp
 		gnome-extra/gnome-user-docs
 		unity-base/ubuntu-docs )"
@@ -38,18 +37,16 @@ S="${WORKDIR}"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# Disable url-dispatcher when not using unity8-desktop-session
-	eapply "${FILESDIR}/disable-url-dispatcher.diff"
+	# Fix build attempting to violate sandbox #
+	sed '/gtk-update-icon-cache/,+1 d' \
+		-i data/icons/CMakeLists.txt || die
 
-	# Remove dependency on whoopsie (Ubuntu's error submission tracker)
+	# Remove dependency on whoopsie (Ubuntu's error submission tracker) #
 	sed -e 's:libwhoopsie):):g' \
 		-i CMakeLists.txt
 	for each in $(grep -ri whoopsie | awk -F: '{print $1}'); do
 		sed -e '/whoopsie/Id' -i "${each}"
 	done
-
-	# Fix sandbox violations #
-	eapply "${FILESDIR}/sandbox_violations_fix-17.04.diff"
 
 	if ! use help || has nodoc ${FEATURES}; then
 		sed -n '/indicator.help/{s|^|//|};p' \
@@ -60,7 +57,6 @@ src_prepare() {
 		sed -e 's:yelp:yelp help\:ubuntu-help:g' \
 			-i src/backend-dbus/actions.c
 	fi
-
 	cmake-utils_src_prepare
 }
 

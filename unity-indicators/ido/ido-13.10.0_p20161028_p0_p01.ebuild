@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils flag-o-matic ubuntu-versionator vala
 
-UURL="mirror://unity/pool/main/i/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UURL="mirror://unity/pool/universe/i/${PN}"
+UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Widgets and other objects used for indicators by the Unity desktop"
 HOMEPAGE="https://launchpad.net/ido"

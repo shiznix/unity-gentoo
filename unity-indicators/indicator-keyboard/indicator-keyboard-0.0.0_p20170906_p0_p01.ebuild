@@ -5,10 +5,10 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils flag-o-matic gnome2-utils python-r1 ubuntu-versionator vala
 
-UURL="mirror://unity/pool/main/i/${PN}"
+UURL="mirror://unity/pool/universe/i/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Keyboard indicator used by the Unity desktop"
@@ -45,9 +45,6 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-
-	# Disable url-dispatcher when not using unity8-desktop-session
-	eapply "${FILESDIR}/disable-url-dispatcher.diff"
 
 	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
 	#       (the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
