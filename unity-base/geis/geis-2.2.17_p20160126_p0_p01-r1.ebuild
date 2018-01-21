@@ -1,6 +1,5 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
@@ -28,6 +27,7 @@ S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+	epatch "${FILESDIR}/gcc-7.patch"
 	eautoreconf
 }
 
