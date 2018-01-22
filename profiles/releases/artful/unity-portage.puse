@@ -10,7 +10,10 @@ app-cdr/brasero nautilus
 app-crypt/libsecret crypt vala
 app-emulation/lxc cgmanager
 app-i18n/fcitx -autostart
-app-i18n/ibus dconf python -gconf vala
+
+# 'gtk' and 'gtk2' need to be set, otherwise buggy 'GTK_IM_MODULE=xim' input method is preferred over 'GTK_IM_MODULE=ibus' (see LP# 1662617)
+app-i18n/ibus dconf gtk gtk2 python vala -gconf
+
 app-text/gtkspell vala
 dev-lang/python sqlite
 dev-libs/folks vala

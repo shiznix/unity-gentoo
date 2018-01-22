@@ -26,7 +26,8 @@ RESTRICT="mirror"
 
 S="${WORKDIR}"
 
-RDEPEND=">=sys-apps/systemd-232
+RDEPEND="app-i18n/ibus[gtk,gtk2]
+	>=sys-apps/systemd-232
 	sys-auth/polkit-pkla-compat
 	unity-base/gsettings-ubuntu-touch-schemas
 	unity-base/session-shortcuts
