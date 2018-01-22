@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils gnome2-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/t/${PN}"
+UURL="mirror://unity/pool/universe/t/${PN}"
 UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="Desktop service to integrate Telepathy with the messaging menu used by the Unity desktop"

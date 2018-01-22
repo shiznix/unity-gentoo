@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools ubuntu-versionator
 
-UURL="mirror://unity/pool/main/x/${PN}"
+UURL="mirror://unity/pool/universe/x/${PN}"
 
 DESCRIPTION="X.Org dummy testing environment for Google Test"
 HOMEPAGE="https://launchpad.net/xorg-gtest"

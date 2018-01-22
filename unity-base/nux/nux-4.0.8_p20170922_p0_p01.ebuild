@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils ubuntu-versionator xdummy
 
-UURL="mirror://unity/pool/main/n/${PN}"
+UURL="mirror://unity/pool/universe/n/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0/4"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="debug doc examples test"
 RESTRICT="mirror"
 

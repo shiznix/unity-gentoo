@@ -6,10 +6,10 @@ EAPI=6
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_4,3_5} )
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit distutils-r1 ubuntu-versionator
 
-UURL="mirror://unity/pool/main/t/${PN}"
+UURL="mirror://unity/pool/universe/t/${PN}"
 UVER=
 
 DESCRIPTION="Retrieve the list of remote desktop servers for a user."

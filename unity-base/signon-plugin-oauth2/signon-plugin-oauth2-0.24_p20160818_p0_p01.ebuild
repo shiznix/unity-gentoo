@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit qmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/s/${PN}"
+UURL="mirror://unity/pool/universe/s/${PN}"
 UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Single Signon oauth2 plugin used by the Unity desktop"

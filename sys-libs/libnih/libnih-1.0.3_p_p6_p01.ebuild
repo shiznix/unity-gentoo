@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit versionator eutils autotools toolchain-funcs multilib flag-o-matic ubuntu-versionator
 
 UURL="mirror://unity/pool/main/libn/${PN}"

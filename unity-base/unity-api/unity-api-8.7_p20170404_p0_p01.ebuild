@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UURL="mirror://unity/pool/universe/u/${PN}"
+UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="API for Unity shell integration"
 HOMEPAGE="https://launchpad.net/unity-api"

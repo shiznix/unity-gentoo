@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils gnome2-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/o/${PN}"
+UURL="mirror://unity/pool/universe/o/${PN}"
 UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="Ayatana Scrollbars use an overlay to ensure scrollbars take up no active screen real-estate"

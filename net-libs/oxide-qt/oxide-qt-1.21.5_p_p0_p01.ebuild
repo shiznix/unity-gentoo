@@ -17,10 +17,10 @@ PYTHON_COMPAT=( python2_7 )
 #
 # 'tcmalloc' is left disabled by default as the source considers this experimental
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit check-reqs chromium-2 cmake-utils flag-o-matic gnome2-utils python-single-r1 ubuntu-versionator xdg-utils
 
-UURL="mirror://unity/pool/main/o/${PN}"
+UURL="mirror://unity/pool/universe/o/${PN}"
 DESCRIPTION="Web browser engine library for Qt"
 HOMEPAGE="https://launchpad.net/oxide"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz

@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils linux-info systemd ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
@@ -59,5 +59,5 @@ pkg_postinst() {
 	elog "If systemd-readahead is enabled, it is recommended it be disabled when using ureadahead"
 	elog
 	elog "To disable systemd-readahead, as root do:"
-	elog "systemctl disable systemd-readahead-collect.service systemd-readahead-replay.service"
+	elog "systemctl disable systemd-readahead-collect systemd-readahead-replay"
 }

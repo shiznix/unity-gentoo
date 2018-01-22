@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/f/${PN}"
+UURL="mirror://unity/pool/universe/f/${PN}"
 UVER_PREFIX="daily13.06.05+16.10.${PVR_MICRO}"
 
 DESCRIPTION="uTouch Frame Library"
