@@ -3,11 +3,13 @@
 # $Id$
 
 EAPI=6
+VALA_MIN_API_VERSION="0.36"
+VALA_MAX_API_VERSION="0.36"
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://unity/pool/main/a/${PN}"
+UURL="mirror://unity/pool/universe/a/${PN}"
 
 DESCRIPTION="Blacklist configuration user interface for Zeitgeist"
 HOMEPAGE="https://launchpad.net/activity-log-manager"
@@ -47,7 +49,8 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --with-ccpanel=no
+	econf --with-unity-ccpanel=yes \
+		--with-ccpanel=no
 
 	# Fix LOCALE_DIR prefix #
 	sed -e "s:\"//:\"/usr/share/:g" \

@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/g/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UURL="mirror://unity/pool/universe/g/${PN}"
+UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Parse and query the geonames database dump"
 HOMEPAGE="https://launchpad.net/geonames"

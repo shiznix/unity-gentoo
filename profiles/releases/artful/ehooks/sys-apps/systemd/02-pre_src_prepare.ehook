@@ -1,6 +1,0 @@
-## Default to legacy cgroup hierarchy.
-ebuild_hook() {
-	sed -i \
-		-e 's/"hybrid"/"legacy"/g' \
-		configure.ac || die
-}

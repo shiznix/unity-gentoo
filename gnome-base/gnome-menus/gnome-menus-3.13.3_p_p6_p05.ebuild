@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools gnome2 ubuntu-versionator
 
 UURL="mirror://unity/pool/main/g/${PN}"

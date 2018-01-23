@@ -73,7 +73,7 @@ app-emulation/lxc
 ~dev-dotnet/libgdiplus-2.10.9
 dev-lang/spidermonkey:38
 dev-lang/vala:0.36::gentoo
-=dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest and media-gfx/thumbnailer
+=dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest
 dev-libs/capnproto
 dev-libs/folks
 =dev-libs/icu-59*
@@ -156,7 +156,6 @@ gnome-extra/nm-applet **
 gnome-extra/polkit-gnome **
 mail-client/thunderbird **
 media-gfx/shotwell **
-media-gfx/thumbnailer **
 media-sound/banshee **
 media-sound/pulseaudio **
 media-sound/rhythmbox **
@@ -165,7 +164,6 @@ net-im/telepathy-mission-control **
 net-libs/account-plugins **
 net-libs/geonames **
 net-libs/gnome-online-accounts **
-net-libs/libphonenumber **
 net-libs/oxide-qt **
 net-libs/telepathy-indicator **
 sys-apps/accountsservice **

@@ -45,7 +45,6 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	# Disable selected patches #
 	sed -i '/0002-create-and-manage-groups-like-on-a-ubuntu-system.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/0002-create-and-manage-groups-like-on-a-debian-system.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0006-adduser_instead_of_useradd.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0009-language-tools.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0010-set-language.patch/d' "${WORKDIR}/debian/patches/series" || die

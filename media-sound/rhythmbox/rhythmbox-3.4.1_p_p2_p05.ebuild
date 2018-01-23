@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_4,3_5} )
 PYTHON_REQ_USE="xml"
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils gnome2-utils python-single-r1 multilib ubuntu-versionator virtualx
 
 UURL="mirror://unity/pool/main/r/${PN}"
