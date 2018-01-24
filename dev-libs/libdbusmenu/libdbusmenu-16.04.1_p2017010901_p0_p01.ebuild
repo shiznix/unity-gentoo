@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils flag-o-matic ubuntu-versionator vala virtualx
 
 UURL="mirror://unity/pool/main/libd/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Library to pass menu structure across DBus"
 HOMEPAGE="https://launchpad.net/dbusmenu"

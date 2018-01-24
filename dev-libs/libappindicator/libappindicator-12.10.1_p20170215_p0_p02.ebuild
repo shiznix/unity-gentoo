@@ -5,11 +5,11 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/liba/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libappindicator"

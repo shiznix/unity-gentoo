@@ -6,17 +6,17 @@ EAPI=6
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="xml"
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit eutils gnome2 python-single-r1 toolchain-funcs versionator ubuntu-versionator
 
-UVER="-0ubuntu1"
+UVER="-1"
 
 DESCRIPTION="Introspection infrastructure for generating gobject library bindings for various languages"
 HOMEPAGE="https://wiki.gnome.org/Projects/GObjectIntrospection"
 SRC_URI="mirror://gnome/sources/${PN}/1.$(get_version_component_range 2)/${P}.tar.xz"
 LICENSE="LGPL-2+ GPL-2+"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="cairo doctool test"
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}

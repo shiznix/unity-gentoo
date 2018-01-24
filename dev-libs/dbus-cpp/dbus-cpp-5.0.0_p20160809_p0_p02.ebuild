@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/d/${PN}"
+UURL="mirror://unity/pool/universe/d/${PN}"
 UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Dbus-binding leveraging C++-11"

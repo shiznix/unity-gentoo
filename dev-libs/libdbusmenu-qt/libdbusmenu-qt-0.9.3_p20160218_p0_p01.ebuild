@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit cmake-multilib multibuild multilib virtualx ubuntu-versionator
 
-UURL="mirror://unity/pool/main/libd/${PN}"
+UURL="mirror://unity/pool/universe/libd/${PN}"
 UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="A library providing Qt implementation of DBusMenu specification"

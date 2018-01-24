@@ -4,7 +4,7 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit autotools flag-o-matic ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/d/${PN}"

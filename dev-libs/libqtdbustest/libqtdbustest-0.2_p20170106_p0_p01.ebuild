@@ -4,11 +4,11 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/libq/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Library to facilitate testing DBus interactions in Qt applications"
 HOMEPAGE="https://launchpad.net/libqtdbustest"

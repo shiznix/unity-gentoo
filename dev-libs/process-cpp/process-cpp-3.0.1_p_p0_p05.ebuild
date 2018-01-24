@@ -4,10 +4,10 @@
 
 EAPI=6
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/p/${PN}"
+UURL="mirror://unity/pool/universe/p/${PN}"
 
 DESCRIPTION="C++11 library for handling processes"
 HOMEPAGE="http://launchpad.net/process-cpp"

@@ -6,11 +6,11 @@ EAPI=6
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 WANT_AUTOMAKE=1.12
 
-URELEASE="zesty"
+URELEASE="artful"
 inherit vala autotools eutils flag-o-matic python-r1 ubuntu-versionator
 
-UURL="mirror://unity/pool/main/libs/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UURL="mirror://unity/pool/universe/libs/${PN}"
+UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="GObject introspection data for the Signon library for the Unity desktop"
 HOMEPAGE="https://launchpad.net/libsignon-glib"
