@@ -76,12 +76,13 @@ src_test() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die
-	dosym /usr/libexec/nux/unity_support_test /usr/lib/nux/unity_support_test
+	emake DESTDIR="${ED}" install || die
+	dosym /usr/libexec/nux/unity_support_test /usr/$(get_libdir)/nux/unity_support_test
 
 	## Install gfx hardware support test script ##
-	sed -e 's:xubuntu:xunity:g' \
-		-i debian/50_check_unity_support
+	sed -e "s:xubuntu:xunity:g" \
+		-e "s:/usr/lib/:/usr/$(get_libdir)/:g" \
+			-i debian/50_check_unity_support
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe debian/50_check_unity_support
 

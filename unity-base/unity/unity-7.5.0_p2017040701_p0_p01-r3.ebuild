@@ -253,6 +253,9 @@ src_install() {
 	# Configure input method (xim/ibus) #
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe "${FILESDIR}/70im-config"
+	# Some newer multilib profiles have different /usr/lib(32,64)/ paths so insert the correct one
+	sed -e "s:/usr/lib/:/usr/$(get_libdir)/:g" \
+		-i "${ED}/etc/X11/xinit/xinitrc.d/70im-config"
 	insinto /etc/xdg/autostart/
 	doins "${FILESDIR}/ibus-daemon.desktop"
 	# Fix conflict between ibus and indicator-keyboard #
