@@ -1,7 +1,6 @@
 #!/bin/bash
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-power/cpufrequtils/files/cpufrequtils-change.sh,v 1.3 2013/05/09 20:21:42 lxnay Exp $
 
 ret=0 opts= gov_opts= sep=
 for o in "${@}" ; do
