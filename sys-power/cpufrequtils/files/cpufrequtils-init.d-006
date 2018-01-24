@@ -1,5 +1,5 @@
 #!/sbin/runscript
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/sys-power/cpufrequtils/files/cpufrequtils-init.d-006,v 1.2 2011/07/21 19:47:14 mattst88 Exp $
 
