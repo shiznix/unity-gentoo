@@ -11,8 +11,8 @@ UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Qt wrapper for libindicate library"
 HOMEPAGE="https://launchpad.net/libindicate-qt/"
-SRC_URI="${UURL}/${PN}/${MY_P}.orig.tar.bz2
-	${UURL}/${PN}/${MY_P}${UVER}.debian.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}${UVER}.debian.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
