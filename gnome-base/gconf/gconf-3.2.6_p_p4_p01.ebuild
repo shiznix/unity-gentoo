@@ -4,7 +4,7 @@
 EAPI=6
 GNOME_ORG_MODULE="GConf"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{3_4,3_5} )
+PYTHON_COMPAT=( python{3_5,3_6} )
 PYTHON_REQ_USE="xml"
 
 URELEASE="artful"

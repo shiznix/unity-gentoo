@@ -3,7 +3,7 @@
 
 ## Enabled PYTHON_SINGLE_TARGET must match state in PYTHON_TARGETS ##
 
-app-editors/gedit -python_targets_python3_3			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_4" as set by /usr/portage/profiles/base/make.defaults
+app-editors/gedit -python_targets_python3_4			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_5" as set by /usr/portage/profiles/base/make.defaults
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
@@ -21,7 +21,7 @@ dev-libs/glib utils
 dev-libs/libdbusmenu gtk3
 dev-libs/keybinder python
 dev-libs/libgdata gnome
-dev-libs/libpeas -python_targets_python3_3			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_4" as set by /usr/portage/profiles/base/make.defaults
+dev-libs/libpeas -python_targets_python3_4			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_5" as set by /usr/portage/profiles/base/make.defaults
 dev-libs/libpcre pcre16
 dev-libs/libxml2 icu
 dev-libs/libxslt python

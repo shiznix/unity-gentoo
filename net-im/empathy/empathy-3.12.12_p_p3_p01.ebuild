@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 python{3_4,3_5} )
+PYTHON_COMPAT=( python2_7 python{3_5,3_6} )
 WANT_AUTOMAKE=1.14
 
 URELEASE="zesty"

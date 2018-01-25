@@ -4,7 +4,7 @@
 EAPI=6
 GNOME2_EAUTORECONF="yes"
 GNOME2_LA_PUNT="yes"
-#PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} ) # https://bugzilla.gnome.org/show_bug.cgi?id=783186
+#PYTHON_COMPAT=( python{2_7,3_5,3_6,3_6} ) # https://bugzilla.gnome.org/show_bug.cgi?id=783186
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="artful-updates"

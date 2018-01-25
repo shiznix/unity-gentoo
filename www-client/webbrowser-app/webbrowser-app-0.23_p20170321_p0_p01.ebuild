@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python3_4 )
+PYTHON_COMPAT=( python3_5 )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="zesty"
