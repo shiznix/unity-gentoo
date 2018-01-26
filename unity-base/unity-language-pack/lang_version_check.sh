@@ -1,12 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
 version_check() {
 	if [ ! -f /tmp/Sources-main-${URELEASE} ]; then
 		wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/main/source/Sources.gz -O /tmp/Sources-main-${URELEASE}.gz
 		gunzip /tmp/Sources-main-${URELEASE}.gz
 	fi
-	upstream_ver=`grep -A2 "Package: language-pack-${tag}-base" /tmp/Sources-main-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-	upstream_ver_gnome=`grep -A2 "Package: language-pack-gnome-${tag}-base" /tmp/Sources-main-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+	upstream_ver=`grep -A4 "Package: language-pack-${tag}-base" /tmp/Sources-main-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+	upstream_ver_gnome=`grep -A4 "Package: language-pack-gnome-${tag}-base" /tmp/Sources-main-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 
 	if [ "${local_ver}" = "${upstream_ver}" -a "${local_ver_gnome}" = "${upstream_ver_gnome}" ] ; then
 
@@ -21,7 +21,6 @@ version_check() {
 			else
 				echo -e "\033[1;35m  ... language flag is not supported\033[0m"
 			fi
-			continue;
 		fi
 		echo -e "  \033[0;32mLocal version:    language-pack-${tag}-base-${local_ver}"
 		echo "  Upstream version: language-pack-${tag}-base-${upstream_ver}"
