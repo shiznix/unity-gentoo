@@ -140,6 +140,7 @@ dev-util/umockdev
 ~media-fonts/ubuntu-font-family-0.83
 =media-gfx/eog-3.24*
 ~media-libs/giflib-4.2.3
+~media-libs/gexiv2-0.10.5
 =media-libs/libpng-1.6.31*
 =sec-policy/apparmor-profiles-2.10*
 =sys-apps/apparmor-2.10*
