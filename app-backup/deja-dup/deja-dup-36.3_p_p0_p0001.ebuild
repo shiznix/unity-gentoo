@@ -42,8 +42,6 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	$(vala_depend)"
 
-#export BUILD_DIR="${WORKDIR}/${P}-build}"
-
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
