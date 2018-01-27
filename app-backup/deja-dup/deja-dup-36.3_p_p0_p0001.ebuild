@@ -2,9 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+VALA_MIN_API_VERSION="0.36"
+VALA_MAX_API_VERSION="0.36"
 
 URELEASE="artful-updates"
-inherit cmake-utils gnome2 ubuntu-versionator vala
+inherit gnome-meson ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/d/${PN}"
 
@@ -40,33 +42,11 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	$(vala_depend)"
 
+#export BUILD_DIR="${WORKDIR}/${P}-build}"
+
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	sed -e '/RPATH/s:PKG_LIBEXECDIR:PKG_LIBDIR:g' \
-		-i CMakeLists.txt || die
 	vala_src_prepare
-	gnome2_src_prepare
-	cmake-utils_src_prepare
-}
-
-src_configure() {
-	local mycmakeargs=(
-		-DVALA_EXECUTABLE="${VALAC}"
-		-DENABLE_CCPANEL=ON
-		-DENABLE_PK=OFF
-		-DENABLE_UNITY=ON
-		-DENABLE_UNITY_CCPANEL=ON
-		-DCMAKE_INSTALL_SYSCONFDIR="${EPREFIX}"/etc
-		-DENABLE_NAUTILUS="$(usex nautilus)"
-		-DENABLE_TESTING="$(usex test)"
-	)
-	cmake-utils_src_configure
-}
-
-src_compile() {
-	cmake-utils_src_compile
-}
-
-src_install() {
-	cmake-utils_src_install
+	rm -v Makefile	# Force Makefile recreation so that 'builddir is correct #
+	gnome-meson_src_prepare
 }

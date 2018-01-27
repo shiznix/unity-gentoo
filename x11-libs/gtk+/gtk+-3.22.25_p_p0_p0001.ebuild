@@ -196,10 +196,6 @@ multilib_src_install_all() {
 	DOCS=( AUTHORS NEWS README )
 	einstalldocs
 
-	insinto /usr/share/glib-2.0/schemas
-	newins "${WORKDIR}"/debian/libgtk-3-common.gsettings-override \
-		10_libgtk-3-common.gschema.override
-
 	# Taken from Ubuntus at-spi2-atk package, needed for gtk3 menus to work with Unitys global appmenu #
 	exeinto /etc/X11/xinit/xinitrc.d
 	doexe "${FILESDIR}/90atk-adaptor"

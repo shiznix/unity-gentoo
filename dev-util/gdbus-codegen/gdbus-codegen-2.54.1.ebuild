@@ -26,11 +26,11 @@ S="${WORKDIR}/glib-${PV}/gio/gdbus-2.0/codegen"
 
 python_prepare_all() {
 	PATCHES=(
-		"${FILESDIR}/${PN}-2.40.0-sitedir.patch"
+		"${FILESDIR}/${PN}-2.54.2-sitedir.patch"
 	)
 	distutils-r1_python_prepare_all
 
-	sed -e 's:#!@PYTHON@:#!/usr/bin/env python:' gdbus-codegen.in > gdbus-codegen || die
+	sed -e 's:@PYTHON@:python:' gdbus-codegen.in > gdbus-codegen || die
 	cp "${FILESDIR}/setup.py-2.32.4" setup.py || die "cp failed"
 	sed -e "s/@PV@/${PV}/" -i setup.py || die "sed setup.py failed"
 }

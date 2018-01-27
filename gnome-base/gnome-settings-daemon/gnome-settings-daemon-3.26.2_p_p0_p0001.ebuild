@@ -31,9 +31,9 @@ COMMON_DEPEND="
 	>=dev-libs/glib-2.44.0:2[dbus]
 	dev-libs/libappindicator:=
 	>=x11-libs/gtk+-3.15.3:3[X]
-	>=gnome-base/gnome-desktop-3.11.1:3=
+	gnome-base/gnome-desktop:3=
 	>=gnome-base/gsettings-desktop-schemas-3.23.3
-	>=gnome-base/librsvg-2.36.2:2
+	gnome-base/librsvg:2
 	media-fonts/cantarell
 	media-libs/alsa-lib
 	media-libs/fontconfig
@@ -93,7 +93,9 @@ DEPEND="${COMMON_DEPEND}
 		$(python_gen_any_dep 'dev-python/pygobject:3[${PYTHON_USEDEP}]')
 		$(python_gen_any_dep 'dev-python/dbusmock[${PYTHON_USEDEP}]')
 		gnome-base/gnome-session )
+	app-text/docbook-xsl-stylesheets
 	dev-libs/libxml2:2
+	dev-libs/libxslt
 	sys-devel/gettext
 	>=dev-util/intltool-0.40
 	virtual/pkgconfig
@@ -106,15 +108,9 @@ DEPEND="${COMMON_DEPEND}
 # TypeErrors with python3; weird test errors with python2; all in power component that was made required now
 PATCHES=(
 	# Make colord and wacom optional; requires eautoreconf
-	"${FILESDIR}"/${PV}-optional.patch
+	"${FILESDIR}"/3.24.2-optional.patch
 	# Allow specifying udevrulesdir via configure, bug 509484; requires eautoreconf
-	"${FILESDIR}"/${PV}-udevrulesdir-configure.patch
-	# Fix uninstalled (during build) color plugin test run
-	"${FILESDIR}"/${PV}-fix-color-tests.patch
-	# Reduce memory usage by not initing GTK+ where not needed
-	"${FILESDIR}"/${PV}-remove-unneeded-gtk-init.patch
-	# Reduce memory usage by using a fake CSS theme instead of full Adwaita for GTK+ needing plugins; requires eautoreconf
-	"${FILESDIR}"/${PV}-reduce-memory-usage.patch
+	"${FILESDIR}"/3.24.2-udevrulesdir-configure.patch
 )
 
 python_check_deps() {

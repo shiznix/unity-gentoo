@@ -25,8 +25,6 @@ DEPEND="app-text/gnome-doc-utils
 	dev-libs/libxml2
 	gnome-extra/yelp"
 
-S="${WORKDIR}/trunk"
-
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eautoreconf

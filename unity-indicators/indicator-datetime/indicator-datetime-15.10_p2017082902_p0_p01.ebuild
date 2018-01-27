@@ -11,26 +11,24 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Date and Time Indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-datetime"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="+eds"
+IUSE=""
 RESTRICT="mirror"
 
 COMMON_DEPEND="
 	dev-libs/libaccounts-glib
 	dev-libs/libdbusmenu:=
 	dev-libs/libtimezonemap:=
+	gnome-extra/evolution-data-server:=
 	media-libs/gstreamer:1.0
 	sys-apps/util-linux
 	unity-indicators/ido:=
 	unity-indicators/indicator-messages
-	>=x11-libs/libnotify-0.7.6
-
-	eds? ( gnome-extra/evolution-data-server:= )"
+	>=x11-libs/libnotify-0.7.6"
 
 RDEPEND="${COMMON_DEPEND}
 	unity-base/unity-language-pack"
@@ -43,16 +41,13 @@ S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
+	eapply "${FILESDIR}/02-${PN}-remove-url-dispatcher_17.10.patch"
 
 	# Fix schema errors and sandbox violations #
-	eapply "${FILESDIR}/sandbox_violations_fix.diff"
-
-	eapply "${FILESDIR}/01-${PN}-add-custom-deps.patch"
-	eapply "${FILESDIR}/02-${PN}-remove-url-dispatcher.patch"
-	eapply "${FILESDIR}/02-${PN}-optional-eds.patch"
-
+	sed -e 's:SEND_ERROR:WARNING:g' \
+		-e '/Compiling GSettings schemas/,+1 d' \
+			-i cmake/UseGSettings.cmake
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	cmake-utils_src_prepare
@@ -63,7 +58,6 @@ src_configure() {
 		-DVALA_COMPILER=$VALAC
 		-DVAPI_GEN=$VAPIGEN
 		-DCMAKE_INSTALL_FULL_LOCALEDIR=/usr/share/locale
-		-DWITH_EDS="$(usex eds)"
 	)
 	cmake-utils_src_configure
 }

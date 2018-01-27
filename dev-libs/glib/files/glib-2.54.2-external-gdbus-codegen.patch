@@ -1,0 +1,101 @@
+From d4a7cb8d053daab95b8d250af6b21c81bc860777 Mon Sep 17 00:00:00 2001
+From: Sobhan Mohammadpour <mohammadpour.sobhan@gmail.com>
+Date: Sat, 16 Dec 2017 21:30:22 +0330
+Subject: [PATCH] glib-2.54.2 external codegen
+
+---
+ docs/reference/gio/meson.build                     | 4 +---
+ gio/meson.build                                    | 6 +++---
+ gio/tests/gdbus-object-manager-example/meson.build | 2 +-
+ gio/tests/meson.build                              | 2 +-
+ 4 files changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/docs/reference/gio/meson.build b/docs/reference/gio/meson.build
+index 7f04677..71b5e0c 100644
+--- a/docs/reference/gio/meson.build
++++ b/docs/reference/gio/meson.build
+@@ -121,7 +121,6 @@ if get_option('with-docs') != 'no'
+       'gsettings.xml',
+       'gresource.xml',
+       'gdbus.xml',
+-      'gdbus-codegen.xml',
+     ],
+     expand_content_files : [
+       'overview.xml',
+@@ -129,7 +128,6 @@ if get_option('with-docs') != 'no'
+       'migrating-gnome-vfs.xml',
+       'migrating-gconf.xml',
+       'migrating-gdbus.xml',
+-      'gdbus-codegen.xml',
+     ],
+     html_assets : [
+       'gvfs-overview.png',
+@@ -149,7 +147,7 @@ endif
+ if get_option('with-man') != 'no' and xsltproc.found()
+   manpages = ['gapplication', 'gio-querymodules', 'glib-compile-schemas',
+               'glib-compile-resources', 'gsettings', 'gresource', 'gdbus',
+-              'gio', 'gdbus-codegen']
++              'gio']
+   foreach page : manpages
+     custom_target(page + '-man',
+       input: page + '.xml',
+diff --git a/gio/meson.build b/gio/meson.build
+index 3252636..3c566ed 100644
+--- a/gio/meson.build
++++ b/gio/meson.build
+@@ -165,7 +165,7 @@ gdbus_sources = [
+ ]
+ 
+ # Generate gdbus-codegen
+-subdir('gdbus-2.0/codegen')
++#subdir('gdbus-2.0/codegen')
+ 
+ # Generate xdp-dbus.{c,h}
+ xdp_dbus_generated = custom_target('xdp-dbus',
+@@ -174,7 +174,7 @@ xdp_dbus_generated = custom_target('xdp-dbus',
+              'org.freedesktop.portal.NetworkMonitor.xml',
+              'org.freedesktop.portal.ProxyResolver.xml'],
+     output : ['xdp-dbus.h', 'xdp-dbus.c'],
+-    command : [python, gdbus_codegen,
++    command : [find_program('gdbus-codegen'),
+                '--interface-prefix', 'org.freedesktop.portal.',
+                '--output-directory', '@OUTDIR@',
+                '--generate-c-code', 'xdp-dbus',
+@@ -193,7 +193,7 @@ xdp_dbus_generated = custom_target('xdp-dbus',
+ gdbus_daemon_generated = custom_target('gdbus-daemon-generated',
+     input : ['dbus-daemon.xml'],
+     output : ['gdbus-daemon-generated.h', 'gdbus-daemon-generated.c'],
+-    command : [python, gdbus_codegen,
++    command : [find_program('gdbus-codegen'),
+                '--interface-prefix', 'org.',
+                '--output-directory', '@OUTDIR@',
+                '--generate-c-code', 'gdbus-daemon-generated',
+diff --git a/gio/tests/gdbus-object-manager-example/meson.build b/gio/tests/gdbus-object-manager-example/meson.build
+index 6303573..499bb9a 100644
+--- a/gio/tests/gdbus-object-manager-example/meson.build
++++ b/gio/tests/gdbus-object-manager-example/meson.build
+@@ -5,7 +5,7 @@ gdbus_example_objectmanager_generated = custom_target('gdbus-example-objectmanag
+             'gdbus-example-objectmanager-generated.c',
+             'gdbus-example-objectmanager-generated-org.gtk.GDBus.Example.ObjectManager.Animal.xml',
+             'gdbus-example-objectmanager-generated-org.gtk.GDBus.Example.ObjectManager.Cat.xml'],
+-  command : [python, gdbus_codegen,
++  command : [find_program('gdbus-codegen'),
+              '--interface-prefix', 'org.gtk.GDBus.Example.ObjectManager.',
+              '--c-namespace', 'Example',
+              '--c-generate-object-manager',
+diff --git a/gio/tests/meson.build b/gio/tests/meson.build
+index e149a4b..69a161e 100644
+--- a/gio/tests/meson.build
++++ b/gio/tests/meson.build
+@@ -145,7 +145,7 @@ if host_machine.system() != 'windows'
+         input :   ['test-codegen.xml'],
+         output :  ['gdbus-test-codegen-generated.h',
+                    'gdbus-test-codegen-generated.c'],
+-        command : [python, gdbus_codegen,
++		command : [find_program('gdbus-codegen'),
+                    '--interface-prefix', 'org.project.',
+                    '--output-directory', '@OUTDIR@',
+                    '--generate-c-code', 'gdbus-test-codegen-generated',
+-- 
+2.15.1
+

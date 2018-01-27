@@ -49,6 +49,10 @@ S="${WORKDIR}"
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
+
+	# Keep warnings as warnings, not failures #
+	sed -e 's:-Werror ::g' \
+		-i configure.ac
 	eautoreconf
 }
 

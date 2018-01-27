@@ -179,11 +179,6 @@ src_install() {
 	insinto /usr/share/upstart/systemd-session/upstart
 	doins debian/user/unity-settings-daemon.override
 
-	# Install gschema override settings #
-	insinto /usr/share/glib-2.0/schemas
-	newins debian/unity-settings-daemon.gsettings-override \
-		10_unity-settings-daemon.gschema.override
-
 	prune_libtool_files --modules
 }
 

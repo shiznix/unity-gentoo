@@ -1,0 +1,34 @@
+From f2f8ccb15cc6288455f4780d016789aa2e023d6d Mon Sep 17 00:00:00 2001
+From: Sobhan Mohammadpour <mohammadpour.sobhan@gmail.com>
+Date: Thu, 14 Dec 2017 17:10:50 +0330
+Subject: [PATCH] glib-2.54.2 external gdbus codegen
+
+--
+ gio/gdbus-2.0/codegen/gdbus-codegen.in | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
+
+diff --git a/gio/gdbus-2.0/codegen/gdbus-codegen.in b/gio/gdbus-2.0/codegen/gdbus-codegen.in
+index 8050981..c097702 100644
+--- a/gio/gdbus-2.0/codegen/gdbus-codegen.in
++++ b/gio/gdbus-2.0/codegen/gdbus-codegen.in
+@@ -28,16 +28,7 @@ filedir = os.path.dirname(__file__)
+ 
+ if srcdir is not None:
+     path = os.path.join(srcdir, 'gio', 'gdbus-2.0')
+-elif os.path.basename(filedir) == 'bin':
+-    # Make the prefix containing gdbus-codegen 'relocatable' at runtime by
+-    # adding /some/prefix/bin/../share/glib-2.0 to the python path
+-    path = os.path.join(filedir, '..', 'share', 'glib-2.0')
+ else:
+-    # Assume that the modules we need are in the current directory and add the
+-    # parent directory to the python path.
+-    path = os.path.join(filedir, '..')
+-
+-sys.path.insert(0, os.path.abspath(path))
+-from codegen import codegen_main
++	from gdbus_codegen import codegen_main
+ 
+ sys.exit(codegen_main.codegen_main())
+-- 
+2.15.1
+

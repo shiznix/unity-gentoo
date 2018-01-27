@@ -38,7 +38,7 @@ RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	unity-base/unity-language-pack
 	${PYTHON_DEPS}"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup

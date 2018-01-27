@@ -1,0 +1,100 @@
+diff -urN work/CMakeLists.txt work-patched/CMakeLists.txt
+--- work/CMakeLists.txt	2018-01-27 20:47:32.819817763 +1030
++++ work-patched/CMakeLists.txt	2018-01-27 20:48:14.639499255 +1030
+@@ -48,7 +48,6 @@
+                    libedataserver-1.2>=3.5
+                    gstreamer-1.0>=1.2
+                    libnotify>=0.7.6
+-                   url-dispatcher-1>=1
+                    properties-cpp>=0.0.1
+                    libaccounts-glib>=1.18
+                    messaging-menu>=12.10
+diff -urN work/include/datetime/actions-live.h work-patched/include/datetime/actions-live.h
+--- work/include/datetime/actions-live.h	2017-08-30 01:06:12.000000000 +0930
++++ work-patched/include/datetime/actions-live.h	2018-01-27 20:48:52.351105607 +1030
+@@ -56,7 +56,7 @@
+ protected:
+     virtual Desktop get_desktop();
+     virtual void execute_command(const std::string& command);
+-    virtual void dispatch_url(const std::string& url);
++//    virtual void dispatch_url(const std::string& url);
+ 
+     void unity8_open_appointment(const Appointment& appt, const DateTime& date);
+ };
+diff -urN work/src/actions-live.cpp work-patched/src/actions-live.cpp
+--- work/src/actions-live.cpp	2017-08-30 01:06:12.000000000 +0930
++++ work-patched/src/actions-live.cpp	2018-01-27 20:52:25.114405620 +1030
+@@ -20,7 +20,7 @@
+ #include <datetime/dbus-shared.h>
+ #include <datetime/actions-live.h>
+ 
+-#include <url-dispatcher.h>
++//#include <url-dispatcher.h>
+ 
+ #include <glib.h>
+ 
+@@ -52,11 +52,11 @@
+     }
+ }
+ 
+-void LiveActions::dispatch_url(const std::string& url)
++/*void LiveActions::dispatch_url(const std::string& url)
+ {
+     g_debug("Dispatching url '%s'", url.c_str());
+     url_dispatch_send(url.c_str(), nullptr, nullptr);
+-}
++}*/
+ 
+ /***
+ ****
+@@ -95,7 +95,7 @@
+ {
+     switch(get_desktop()) {
+         case LiveActions::UNITY8:
+-            dispatch_url("appid://ubuntu-clock-app/ubuntu-clock-app/current-user-version");
++//            dispatch_url("appid://ubuntu-clock-app/ubuntu-clock-app/current-user-version");
+             break;
+         case LiveActions::UNITY7:
+         default:
+@@ -120,9 +120,9 @@
+     switch(get_desktop()) {
+         case LiveActions::UNITY8:
+         {
+-            const auto utc = dt.to_timezone("UTC");
++/*            const auto utc = dt.to_timezone("UTC");
+             auto cmd = utc.format("calendar://startdate=%Y-%m-%dT%H:%M:%S+00:00");
+-            dispatch_url(cmd);
++            dispatch_url(cmd);*/
+             break;
+         }
+         case LiveActions::UNITY7:
+@@ -139,7 +139,7 @@
+ {
+     switch(get_desktop()) {
+     case LiveActions::UNITY8:
+-        dispatch_url("settings:///system/time-date");
++//        dispatch_url("settings:///system/time-date");
+         break;
+     case LiveActions::UNITY7:
+         execute_command("unity-control-center datetime");
+@@ -186,7 +186,7 @@
+ {
+     if (!appt.activation_url.empty())
+     {
+-        dispatch_url(appt.activation_url);
++//        dispatch_url(appt.activation_url);
+     }
+     else switch (appt.type)
+     {
+diff -urN work/tests/test-live-actions.cpp work-patched/tests/test-live-actions.cpp
+--- work/tests/test-live-actions.cpp	2017-08-30 01:06:12.000000000 +0930
++++ work-patched/tests/test-live-actions.cpp	2018-01-27 20:53:36.985482671 +1030
+@@ -39,7 +39,7 @@
+     LiveActions::Desktop m_desktop;
+ 
+     LiveActions::Desktop get_desktop() override { return m_desktop; }
+-    void dispatch_url(const std::string& url) override { last_url = url; }
++//    void dispatch_url(const std::string& url) override { last_url = url; }
+     void execute_command(const std::string& cmd) override { last_cmd = cmd; }
+ };
+ 

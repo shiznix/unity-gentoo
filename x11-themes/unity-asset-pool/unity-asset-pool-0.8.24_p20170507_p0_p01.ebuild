@@ -28,7 +28,7 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() { :; }
 src_configure() { :; }
@@ -39,13 +39,7 @@ src_install() {
 	doins -r launcher/* panel/*
 
 	insinto /usr/share/icons
-	doins -r unity-icon-theme unity-webapps-applications
-
-	insinto /usr/share/icons/hicolor/32x32/apps
-	doins account-plugins-icons/*
-
-	insinto /usr/share/icons/hicolor/128x128/apps
-	doins unity-webapps-applications/apps/128/*
+	doins -r unity-icon-theme
 
 	dodoc COPYRIGHT
 }

@@ -12,7 +12,7 @@ PYTHON_COMPAT=( python2_7 )
 GNOME2_LA_PUNT="yes"
 
 URELEASE="artful"
-inherit autotools bash-completion-r1 epunt-cxx flag-o-matic gnome2 libtool eutils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator
+inherit autotools bash-completion-r1 epunt-cxx flag-o-matic gnome-meson libtool eutils multilib pax-utils python-r1 toolchain-funcs versionator virtualx linux-info multilib-minimal ubuntu-versionator
 
 MY_P="${PN}2.0_${PV}"
 MY_PV="${PV}"
@@ -99,7 +99,10 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	# Prevent build failure in stage3 where pkgconfig is not available, bug #481056
 	mv -f "${WORKDIR}"/pkg-config-*/pkg.m4 "${S}"/m4macros/ || die
+	# Copy missing gengiotypefuncs.py
+	cp  "${FILESDIR}"/gengiotypefuncs.py "${S}"/gio/tests/ || die
 
+	# We need gengiotypefuncs
 	if use test; then
 		# Disable tests requiring dev-util/desktop-file-utils when not installed, bug #286629, upstream bug #629163
 		if ! has_version dev-util/desktop-file-utils ; then
@@ -128,7 +131,7 @@ src_prepare() {
 	fi
 
 	# gdbus-codegen is a separate package
-	eapply "${FILESDIR}"/${PN}-2.50.0-external-gdbus-codegen.patch
+	eapply "${FILESDIR}"/${PN}-2.54.2-external-gdbus-codegen.patch
 
 	# Add gettext support when loading .desktop files (taken from Ubuntu version)
 	epatch "${FILESDIR}"/01_gettext-desktopfiles.patch
@@ -139,15 +142,13 @@ src_prepare() {
 	sed -e '/${PYTHON}/d' \
 		-i glib/Makefile.{am,in} || die
 
-	# Also needed to prevent cross-compile failures, see bug #267603
-	eautoreconf
-
-	gnome2_src_prepare
+	gnome-meson_src_prepare
 
 	epunt_cxx
 }
 
 multilib_src_configure() {
+	# TODO is this still relevent?
 	# Avoid circular depend with dev-util/pkgconfig and
 	# native builds (cross-compiles won't need pkg-config
 	# in the target ROOT to work here)
@@ -177,26 +178,24 @@ multilib_src_configure() {
 
 	local myconf
 
-	case "${CHOST}" in
-		*-mingw*) myconf="${myconf} --with-threads=win32" ;;
-		*)        myconf="${myconf} --with-threads=posix" ;;
-	esac
+	# FIXME multilib automagic for libelf
+	# FIXME set systemtap/tapse/static-lib install dir and test it.
+	# FIXME no selinux, fam, xattr for now.
+	# FIXME is this still valid.
+	# libelf used only by the gresource bin ??
+	# FIXME enable docs if possible.
 
-	# libelf used only by the gresource bin
-	ECONF_SOURCE="${S}" gnome2_src_configure ${myconf} \
-		$(usex debug --enable-debug=yes ' ') \
-		$(use_enable xattr) \
-		$(use_enable fam) \
-		$(use_enable kernel_linux libmount) \
-		$(use_enable selinux) \
-		$(use_enable static-libs static) \
-		$(use_enable systemtap dtrace) \
-		$(use_enable systemtap systemtap) \
-		$(multilib_native_use_enable utils libelf) \
-		--disable-compile-warnings \
-		--enable-man \
-		--with-pcre=system \
-		--with-xml-catalog="${EPREFIX}/etc/xml/catalog"
+	use static-libs && myconf="-Ddefault_library='static'"
+	use debug && myconf="$myconf -Dbuildtype='debug'"
+
+	gnome-meson_src_configure \
+		${myconf} \
+		-Denable-libmount=$(usex kernel_linux yes no) \
+		$(gnome-meson_use systemtap dtrace) \
+		$(gnome-meson_use systemtap) \
+		-Dwith-pcre=system \
+		-Dwith-docs=no \
+		-Dwith-man=yes
 
 	if multilib_is_native_abi; then
 		local d
@@ -206,6 +205,10 @@ multilib_src_configure() {
 	fi
 }
 
+multilib_src_compile() {
+	gnome-meson_src_compile
+}
+# FIXME
 multilib_src_test() {
 	export XDG_CONFIG_DIRS=/etc/xdg
 	export XDG_DATA_DIRS=/usr/local/share:/usr/share
@@ -225,11 +228,12 @@ multilib_src_test() {
 	fi
 
 	# Need X for dbus-launch session X11 initialization
-	virtx emake check
+	virtx meson_src_test
 }
 
+# FIXME completentiondir
 multilib_src_install() {
-	gnome2_src_install completiondir="$(get_bashcompdir)"
+	gnome-meson_src_install completiondir="$(get_bashcompdir)"
 	keepdir /usr/$(get_libdir)/gio/modules
 }
 
@@ -248,10 +252,13 @@ multilib_src_install_all() {
 
 	# Don't install gdb python macros, bug 291328
 	rm -rf "${ED}/usr/share/gdb/" "${ED}/usr/share/glib-2.0/gdb/"
+
+	# Fix perms so can be run from portage sandbox #
+	fperms +x /usr/bin/glib-gettextize
 }
 
 pkg_preinst() {
-	gnome2_pkg_preinst
+	gnome-meson_pkg_preinst
 
 	# Make gschemas.compiled belong to glib alone
 	local cache="usr/share/glib-2.0/schemas/gschemas.compiled"
@@ -284,7 +291,7 @@ pkg_postinst() {
 	# force (re)generation of gschemas.compiled
 	GNOME2_ECLASS_GLIB_SCHEMAS="force"
 
-	gnome2_pkg_postinst
+	gnome-meson_pkg_postinst
 
 	multilib_pkg_postinst() {
 		gnome2_giomodule_cache_update \
@@ -301,7 +308,7 @@ pkg_postinst() {
 }
 
 pkg_postrm() {
-	gnome2_pkg_postrm
+	gnome-meson_pkg_postrm
 
 	if [[ -z ${REPLACED_BY_VERSION} ]]; then
 		multilib_pkg_postrm() {

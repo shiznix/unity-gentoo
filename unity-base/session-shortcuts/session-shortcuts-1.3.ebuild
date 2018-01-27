@@ -22,6 +22,8 @@ RESTRICT="mirror"
 DEPEND="dev-util/intltool
 	sys-devel/gettext"
 
+S="${WORKDIR}/${PN}-1.2"
+
 src_configure() {
 	./build.sh
 }

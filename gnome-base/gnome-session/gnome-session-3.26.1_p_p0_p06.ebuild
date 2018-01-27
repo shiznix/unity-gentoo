@@ -85,8 +85,7 @@ src_prepare() {
 	sed -e 's:buntu:nity:g' \
 		-i data/ubuntu.desktop.in \
 		-i data/ubuntu.session.desktop.in.in \
-		-i "${WORKDIR}/debian/data/ubuntu-session.target" \
-		-i "${WORKDIR}/debian/data/50-ubuntu.conf" || die
+		-i "${WORKDIR}/debian/data/unity-session.target" || die
 	sed -e 's:/usr/lib/gnome-session:/usr/libexec:g' \
 		-i data/ubuntu.desktop.in || die
 
@@ -148,7 +147,6 @@ src_install() {
 
 	# Set ubuntu naming to unity (this is important for XSESSION to DESKTOP_SESSION mapping when using 'startx') #
 	mv "${ED}usr/share/gnome-session/sessions/ubuntu.session" "${ED}usr/share/gnome-session/sessions/unity.session"
-	mv "${ED}usr/share/xsessions/ubuntu.desktop" "${ED}usr/share/xsessions/unity.desktop"
 
 	# Enables and fills $DESKTOP_SESSION variable for sessions started using 'startx'
 	exeinto /etc/X11/xinit/xinitrc.d/
@@ -164,10 +162,10 @@ src_install() {
 
 	# Install systemd unit files to enable starting desktop sessions via systemd #
 	systemd_douserunit "${WORKDIR}/debian/data/gnome-session.service"
-	systemd_newuserunit "${WORKDIR}/debian/data/ubuntu-session.target" unity-session.target
+	systemd_douserunit "${WORKDIR}/debian/data/unity-session.target"
 
 	insinto /etc/lightdm/lightdm.conf.d
-	newins "${WORKDIR}/debian/data/50-ubuntu.conf" 50-unity.conf
+	doins "${WORKDIR}/debian/data/50-unity.conf"
 
 	insinto /usr/share/upstart/systemd-session/upstart
 	doins "${WORKDIR}/debian/data/gnome-session.override"

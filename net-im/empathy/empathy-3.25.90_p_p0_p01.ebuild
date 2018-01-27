@@ -97,6 +97,8 @@ DEPEND="${COMMON_DEPEND}
 "
 PDEPEND=">=net-im/telepathy-mission-control-5.14"
 
+S="${WORKDIR}/${PN}-3.12.14"
+
 pkg_setup() {
 	python-any-r1_pkg_setup
 	export PYTHONIOENCODING=UTF-8 # See bug 489774

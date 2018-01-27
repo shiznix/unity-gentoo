@@ -32,7 +32,7 @@ DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
