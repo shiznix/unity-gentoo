@@ -40,7 +40,7 @@ RDEPEND="app-text/gnome-doc-utils
 	>=dev-libs/libsignon-glib-1.12
 	>=dev-util/desktop-file-utils-0.13
 	gnome-base/dconf
-	>=media-libs/gexiv2-0.4.90
+	>=media-libs/gexiv2-0.10.4
 	media-libs/gst-plugins-base:1.0
 	media-libs/gst-plugins-good:1.0
 	media-libs/gstreamer:1.0
