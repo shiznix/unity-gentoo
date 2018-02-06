@@ -74,6 +74,7 @@ app-eselect/eselect-opengl
 app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
+dev-lang/rust
 dev-lang/spidermonkey:38
 =dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest
 dev-libs/capnproto
@@ -91,11 +92,12 @@ dev-python/python-prctl
 ~dev-qt/qtlocation-5.6.1
 dev-util/cargo
 dev-util/umockdev
+mail-client/thunderbird
 ~media-fonts/ubuntu-font-family-0.83
 =media-gfx/eog-3.24*
 ~media-libs/giflib-4.2.3
 ~media-libs/gexiv2-0.10.5
-=media-libs/libpng-1.6.31*
+=media-libs/libpng-1.6*
 =sec-policy/apparmor-profiles-2.10*
 =sys-apps/apparmor-2.10*
 =sys-apps/apparmor-utils-2.10*
@@ -106,6 +108,8 @@ sys-fs/lxcfs
 sys-libs/db:5.1
 sys-libs/db:5.3
 =sys-libs/libapparmor-2.11*
+virtual/rust
+www-client/firefox
 =x11-drivers/xf86-input-evdev-2.10*
 x11-misc/xvfb-run
 x11-proto/glproto
