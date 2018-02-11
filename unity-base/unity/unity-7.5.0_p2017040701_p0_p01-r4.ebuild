@@ -96,6 +96,7 @@ src_prepare() {
 			-i tests/CMakeLists.txt
 	fi
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
+	epatch "${FILESDIR}/gcc-7.patch"
 	ubuntu-versionator_src_prepare
 
 	# Taken from http://ppa.launchpad.net/timekiller/unity-systrayfix/ubuntu/pool/main/u/unity/ #
