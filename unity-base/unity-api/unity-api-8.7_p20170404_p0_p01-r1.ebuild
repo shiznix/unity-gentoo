@@ -32,5 +32,6 @@ src_prepare() {
 	sed -e 's:set(LIB_INSTALL_PREFIX lib/${CMAKE_LIBRARY_ARCHITECTURE}):set(LIB_INSTALL_PREFIX ${CMAKE_INSTALL_LIBDIR}):g' \
 	-i ${S}/CMakeLists.txt || die
 
+	epatch "${FILESDIR}/gcc-7.patch"
 	cmake-utils_src_prepare
 }

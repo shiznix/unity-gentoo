@@ -1,0 +1,61 @@
+From: Yetoo1 <yetoohappy@gmail.com>
+Date: Sun, 12 Nov 2017 23:13:58 -0800
+Subject: [PATCH] Added #include <functional> to the top of FileIO.cpp,
+ DaemonImpl.cpp, and ResourcePtr_test.cpp only if the __GNUC__ macro is 7
+ meaning the gcc version is 7 so that the the gcc6 code can be ported over to
+ gcc7 while simultaneously being backwards compatible.
+
+---
+ src/unity/util/FileIO.cpp                              | 4 ++++
+ src/unity/util/internal/DaemonImpl.cpp                 | 4 ++++
+ test/gtest/unity/util/ResourcePtr/ResourcePtr_test.cpp | 4 ++++
+ 3 files changed, 12 insertions(+)
+
+diff --git a/src/unity/util/FileIO.cpp b/src/unity/util/FileIO.cpp
+index 2cd1aa2..9082756 100644
+--- a/src/unity/util/FileIO.cpp
++++ b/src/unity/util/FileIO.cpp
+@@ -27,6 +27,10 @@
+ #include <string.h>
+ #include <sys/stat.h>
+ 
++#if (__GNUC__ >= 7)
++#include <functional>
++#endif
++
+ using namespace std;
+ 
+ namespace unity
+diff --git a/src/unity/util/internal/DaemonImpl.cpp b/src/unity/util/internal/DaemonImpl.cpp
+index 6eaccfd..93f1ecb 100644
+--- a/src/unity/util/internal/DaemonImpl.cpp
++++ b/src/unity/util/internal/DaemonImpl.cpp
+@@ -31,6 +31,10 @@
+ #include <sstream>
+ #include <vector>
+ 
++#if (__GNUC__ >= 7)
++#include <functional>
++#endif
++
+ using namespace std;
+ 
+ namespace unity
+diff --git a/test/gtest/unity/util/ResourcePtr/ResourcePtr_test.cpp b/test/gtest/unity/util/ResourcePtr/ResourcePtr_test.cpp
+index 092ad46..ae8243c 100644
+--- a/test/gtest/unity/util/ResourcePtr/ResourcePtr_test.cpp
++++ b/test/gtest/unity/util/ResourcePtr/ResourcePtr_test.cpp
+@@ -22,6 +22,10 @@
+ 
+ #include <set>
+ 
++#if (__GNUC__ >= 7)
++#include <functional>
++#endif
++
+ using namespace std;
+ using namespace unity;
+ using namespace unity::util;
+-- 
+2.14.1
+

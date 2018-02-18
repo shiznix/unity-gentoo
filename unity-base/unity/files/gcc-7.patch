@@ -1,0 +1,102 @@
+diff --git a/a/CMakeLists.txt b/b/CMakeLists.txt
+index 03bbea3..249b8fc 100644
+--- a/a/CMakeLists.txt
++++ b/b/CMakeLists.txt
+@@ -209,7 +209,7 @@ if (BOOT_LOGGER)
+     SET (BOOT_LOGGER_FLAG "-DENABLE_LOGGER")
+ endif (BOOT_LOGGER)
+ 
+-SET (MAINTAINER_CXXFLAGS "-Werror -Wall -Wcast-align -Wempty-body -Wformat-security -Winit-self -Warray-bounds -Wno-error=deprecated-declarations")
++SET (MAINTAINER_CXXFLAGS "-Wall -Wcast-align -Wempty-body -Wformat-security -Winit-self -Warray-bounds -Wno-error=deprecated-declarations")
+ 
+ option (DISABLE_ERROR_ON_LOCAL_TYPEDEFS_WARNINGS "Disable errors when local typedefs are unused" ON)
+ if (DISABLE_ERROR_ON_LOCAL_TYPEDEFS_WARNINGS)
+diff --git a/a/UnityCore/GLibDBusProxy.h b/b/UnityCore/GLibDBusProxy.h
+index f0eb777..1fef979 100644
+--- a/a/UnityCore/GLibDBusProxy.h
++++ b/b/UnityCore/GLibDBusProxy.h
+@@ -31,6 +31,10 @@
+ #include "GLibWrapper.h"
+ #include "Variant.h"
+ 
++#if (__GNUC__ >= 7)
++#include <functional>
++#endif
++
+ namespace unity
+ {
+ namespace glib
+diff --git a/a/UnityCore/GLibDBusServer.h b/b/UnityCore/GLibDBusServer.h
+index b064c43..9c5d6ec 100644
+--- a/a/UnityCore/GLibDBusServer.h
++++ b/b/UnityCore/GLibDBusServer.h
+@@ -27,6 +27,10 @@
+ 
+ #include "GLibWrapper.h"
+ 
++#if (__GNUC__ >= 7)
++#include <functional>
++#endif
++
+ namespace unity
+ {
+ namespace glib
+diff --git a/a/UnityCore/GLibSignal.h b/b/UnityCore/GLibSignal.h
+index 392ff33..ab2ed75 100644
+--- a/a/UnityCore/GLibSignal.h
++++ b/b/UnityCore/GLibSignal.h
+@@ -27,6 +27,10 @@
+ #include <boost/noncopyable.hpp>
+ #include <glib-object.h>
+ 
++#if (__GNUC__ >= 7)
++#include <functional>
++#endif
++
+ namespace unity
+ {
+ namespace glib
+diff --git a/a/tests/test_application_launcher_icon.cpp b/b/tests/test_application_launcher_icon.cpp
+index 6c1a77c..15b7af3 100644
+--- a/a/tests/test_application_launcher_icon.cpp
++++ b/b/tests/test_application_launcher_icon.cpp
+@@ -33,6 +33,10 @@
+ #include "test_utils.h"
+ #include "test_standalone_wm.h"
+ 
++#if (__GNUC__ >= 7)
++#include <functional>
++#endif
++
+ using namespace testing;
+ using namespace testmocks;
+ using namespace unity;
+diff --git a/a/tests/test_service_gdbus_wrapper.cpp b/b/tests/test_service_gdbus_wrapper.cpp
+index e6993a2..a2c4363 100644
+--- a/a/tests/test_service_gdbus_wrapper.cpp
++++ b/b/tests/test_service_gdbus_wrapper.cpp
+@@ -1,5 +1,9 @@
+ #include "test_service_gdbus_wrapper.h"
+ 
++#if (__GNUC__ >= 7)
++#include <functional>
++#endif
++
+ namespace unity
+ {
+ namespace service
+diff --git a/a/unity-shared/DesktopApplicationManager.cpp b/b/unity-shared/DesktopApplicationManager.cpp
+index 0c22530..674a863 100644
+--- a/a/unity-shared/DesktopApplicationManager.cpp
++++ b/b/unity-shared/DesktopApplicationManager.cpp
+@@ -21,6 +21,10 @@
+ #include <NuxCore/Logger.h>
+ #include <UnityCore/DesktopUtilities.h>
+ 
++#if (__GNUC__ >= 7)
++#include <functional>
++#endif
++
+ namespace unity
+ {
+ namespace desktop
