@@ -52,6 +52,10 @@ src_prepare() {
 			|| die "sed failed"
 	fi
 
+	# FIXME: workaround upstream not respecting --without-apache-httpd
+	sed -e '/check: start-httpd/d' \
+		-i tests/Makefile.am tests/Makefile.in || die
+
 	use vala && vala_src_prepare
 	gnome2_src_prepare
 }

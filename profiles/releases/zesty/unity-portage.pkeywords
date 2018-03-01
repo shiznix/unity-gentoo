@@ -112,7 +112,6 @@ virtual/rust
 www-client/firefox
 =x11-drivers/xf86-input-evdev-2.10*
 x11-misc/xvfb-run
-x11-proto/glproto
 ~x11-libs/libdrm-2.4.67
 =x11-themes/adwaita-icon-theme-3.24*
 
