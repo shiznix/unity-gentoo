@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="cdr daap dbus html ipod libnotify libsecret lirc mtp nsplugin +python test +udev upnp-av visualizer webkit zeitgeist"
+IUSE="cdr daap dbus ipod libnotify libsecret lirc mtp nsplugin +python test +udev upnp-av visualizer zeitgeist"
 
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
@@ -26,7 +26,6 @@ REQUIRED_USE="
 	ipod? ( udev )
 	mtp? ( udev )
 	dbus? ( python )
-	webkit? ( python )
 	python? ( ^^ ( $(python_gen_useflags '*') ) )"
 
 # Tests failing for years without upstream caring at all
@@ -58,7 +57,6 @@ COMMON_DEPEND="
 		>=net-libs/libdmapsharing-2.9.19:3.0
 		media-plugins/gst-plugins-soup:1.0 )
 	libsecret? ( >=app-crypt/libsecret-0.18 )
-	html? ( >=net-libs/webkit-gtk-2.4:3 )
 	libnotify? ( >=x11-libs/libnotify-0.7.0 )
 	lirc? ( app-misc/lirc )
 	python? ( >=dev-python/pygobject-3.0:3[${PYTHON_USEDEP}] )
@@ -86,10 +84,7 @@ RDEPEND="${COMMON_DEPEND}
 		x11-libs/pango[introspection]
 
 		dbus? ( sys-apps/dbus )
-		libsecret? ( >=app-crypt/libsecret-0.18[introspection] )
-		webkit? (
-			dev-python/mako[${PYTHON_USEDEP}]
-			>=net-libs/webkit-gtk-2.4:3[introspection] ) )"
+		libsecret? ( >=app-crypt/libsecret-0.18[introspection] ) )"
 DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 	app-text/yelp-tools

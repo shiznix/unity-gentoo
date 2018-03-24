@@ -32,7 +32,7 @@ DEPEND="dev-libs/libappindicator
 	>=dev-python/python-distutils-extra-2.37
 	dev-python/pytz[${PYTHON_USEDEP}]
 	>=dev-python/pywapi-0.3.7[${PYTHON_USEDEP}]
-	x11-themes/gnome-icon-theme"
+	x11-themes/adwaita-icon-theme"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup

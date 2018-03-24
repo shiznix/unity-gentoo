@@ -20,7 +20,7 @@ SLOT="0"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="x11-themes/gnome-icon-theme
+RDEPEND="x11-themes/adwaita-icon-theme
 	x11-themes/hicolor-icon-theme"
 
 DEPEND="${RDEPEND}

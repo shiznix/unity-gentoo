@@ -69,7 +69,7 @@ COMMON_DEPEND="dev-libs/glib:2
 RDEPEND="${COMMON_DEPEND}
 	gnome-base/dconf
 	x11-themes/gnome-themes-standard
-	x11-themes/gnome-icon-theme
+	x11-themes/adwaita-icon-theme
 	x11-themes/gnome-icon-theme-symbolic
 	!<gnome-base/gnome-control-center-2.22
 	!<gnome-extra/gnome-color-manager-3.1.1

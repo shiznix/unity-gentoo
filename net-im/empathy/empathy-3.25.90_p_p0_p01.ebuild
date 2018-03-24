@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 LICENSE="GPL-2 CC-BY-SA-3.0 FDL-1.3 LGPL-2.1"
 SLOT="0"
 IUSE="debug +geoloc gnome +gnome-online-accounts +map spell test +v4l"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # False positives caused by nested configure scripts
@@ -37,7 +37,7 @@ COMMON_DEPEND="
 	>=app-crypt/libsecret-0.5
 	>=media-libs/libcanberra-0.25[gtk3]
 	>=net-libs/gnutls-2.8.5:=
-	>=net-libs/webkit-gtk-1.9.1:3
+	>=net-libs/webkit-gtk-2.10:4
 	>=x11-libs/libnotify-0.7:=
 
 	media-libs/gstreamer:1.0
