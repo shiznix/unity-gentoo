@@ -54,7 +54,7 @@ COMMON_DEPEND="
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/fontconfig:=
 	media-libs/freetype:=
-	>=media-libs/harfbuzz-1.5.0:=[icu(-)]
+	>=media-libs/harfbuzz-1.6.0:=[icu(-)]
 	media-libs/libjpeg-turbo:=
 	media-libs/libpng:=
 	system-libvpx? ( media-libs/libvpx:=[postproc,svc] )
@@ -118,6 +118,7 @@ DEPEND="${COMMON_DEPEND}
 	sys-apps/hwids[usb(+)]
 	>=sys-devel/bison-2.4.3
 	sys-devel/flex
+	>=sys-devel/clang-5
 	virtual/pkgconfig
 	dev-vcs/git
 	$(python_gen_any_dep '
@@ -161,25 +162,27 @@ GTK+ icon theme.
 "
 
 PATCHES=(
-        "${FILESDIR}/chromium-webrtc-r0.patch"
-        "${FILESDIR}/chromium-memcpy-r0.patch"
-	"${FILESDIR}/chromium-cups-r0.patch"
-        "${FILESDIR}/chromium-angle-r0.patch"
-        "${FILESDIR}/chromium-ffmpeg-r0.patch"
+	"${FILESDIR}/chromium-webrtc-r0.patch"
+	"${FILESDIR}/chromium-memcpy-r0.patch"
+	"${FILESDIR}/chromium-gn-r0.patch"
+	"${FILESDIR}/chromium-math.h-r0.patch"
+	"${FILESDIR}/chromium-clang-r3.patch"
+	"${FILESDIR}/chromium-stdint.patch"
+	"${FILESDIR}/chromium-ffmpeg-clang.patch"
 )
 
 pre_build_checks() {
-	if [[ ${MERGE_TYPE} != binary ]]; then
-		local -x CPP="$(tc-getCXX) -E"
-		if tc-is-clang && ! version_is_at_least "3.9.1" "$(clang-fullversion)"; then
-			# bugs: #601654
-			die "At least clang 3.9.1 is required"
-		fi
-		if tc-is-gcc && ! version_is_at_least 5.0 "$(gcc-version)"; then
-			# bugs: #535730, #525374, #518668, #600288, #627356
-			die "At least gcc 5.0 is required"
-		fi
-	fi
+	#if [[ ${MERGE_TYPE} != binary ]]; then
+	#	local -x CPP="$(tc-getCXX) -E"
+	#	if tc-is-clang && ! version_is_at_least "3.9.1" "$(clang-fullversion)"; then
+	#		# bugs: #601654
+	#		die "At least clang 3.9.1 is required"
+	#	fi
+	#	if tc-is-gcc && ! version_is_at_least 5.0 "$(gcc-version)"; then
+	#		# bugs: #535730, #525374, #518668, #600288, #627356
+	#		die "At least gcc 5.0 is required"
+	#	fi
+	#fi
 
 	# Check build requirements, bug #541816 and bug #471810 .
 	CHECKREQS_MEMORY="3G"
@@ -296,6 +299,7 @@ src_prepare() {
 		third_party/leveldatabase
 		third_party/libXNVCtrl
 		third_party/libaddressinput
+		third_party/libaom
 		third_party/libjingle
 		third_party/libphonenumber
 		third_party/libsecret
@@ -304,6 +308,7 @@ src_prepare() {
 		third_party/libwebm
 		third_party/libxml/chromium
 		third_party/libyuv
+		third_party/llvm
 		third_party/lss
 		third_party/lzma_sdk
 		third_party/markupsafe
@@ -330,6 +335,7 @@ src_prepare() {
 		third_party/protobuf
 		third_party/protobuf/third_party/six
 		third_party/qcms
+		third_party/s2cellid
 		third_party/sfntly
 		third_party/skia
 		third_party/skia/third_party/gif
@@ -352,6 +358,7 @@ src_prepare() {
 		third_party/zlib/google
 		url/third_party/mozilla
 		v8/src/third_party/valgrind
+		v8/src/third_party/utf8-decoder
 		v8/third_party/inspector_protocol
 
 		# gyp -> gn leftovers
@@ -402,6 +409,33 @@ src_configure() {
 
 	local myconf_gn=""
 
+	# Make sure the build system will use the right tools, bug #340795.
+	tc-export AR CC CXX NM
+
+	if ! tc-is-clang; then
+		# Force clang since gcc is pretty broken at the moment.
+		CC=${CHOST}-clang
+		CXX=${CHOST}-clang++
+		strip-unsupported-flags
+	fi
+
+	if tc-is-clang; then
+		myconf_gn+=" is_clang=true clang_use_chrome_plugins=false"
+	else
+		myconf_gn+=" is_clang=false"
+	fi
+
+	# Define a custom toolchain for GN
+	myconf_gn+=" custom_toolchain=\"//build/toolchain/linux/unbundle:default\""
+
+	if tc-is-cross-compiler; then
+		tc-export BUILD_{AR,CC,CXX,NM}
+		myconf_gn+=" host_toolchain=\"//build/toolchain/linux/unbundle:host\""
+		myconf_gn+=" v8_snapshot_toolchain=\"//build/toolchain/linux/unbundle:host\""
+	else
+		myconf_gn+=" host_toolchain=\"//build/toolchain/linux/unbundle:default\""
+	fi
+
 	# GN needs explicit config for Debug/Release as opposed to inferring it from build directory.
 	myconf_gn+=" is_debug=false"
 
@@ -418,7 +452,7 @@ src_configure() {
 	myconf_gn+=" enable_nacl=false"
 
 	# Use system-provided libraries.
-	# TODO: freetype (https://bugs.chromium.org/p/pdfium/issues/detail?id=733).
+	# TODO: freetype -- remove sources (https://bugs.chromium.org/p/pdfium/issues/detail?id=733).
 	# TODO: use_system_hunspell (upstream changes needed).
 	# TODO: use_system_libsrtp (bug #459932).
 	# TODO: use_system_protobuf (bug #525560).
@@ -428,6 +462,8 @@ src_configure() {
 	# libevent: https://bugs.gentoo.org/593458
 	local gn_system_libraries=(
 		flac
+		fontconfig
+		freetype
 		# Need harfbuzz_from_pkgconfig target
 		#harfbuzz-ng
 		libdrm
@@ -460,7 +496,6 @@ src_configure() {
 	myconf_gn+=" enable_hangout_services_extension=$(usex hangouts true false)"
 	myconf_gn+=" enable_widevine=$(usex widevine true false)"
 	myconf_gn+=" use_cups=$(usex cups true false)"
-	myconf_gn+=" use_gconf=false"
 	myconf_gn+=" use_gnome_keyring=$(usex gnome-keyring true false)"
 	myconf_gn+=" use_kerberos=$(usex kerberos true false)"
 	myconf_gn+=" use_pulseaudio=$(usex pulseaudio true false)"
@@ -468,12 +503,6 @@ src_configure() {
 	# TODO: link_pulseaudio=true for GN.
 
 	myconf_gn+=" fieldtrial_testing_like_official_build=true"
-
-	if tc-is-clang; then
-		myconf_gn+=" is_clang=true clang_use_chrome_plugins=false"
-	else
-		myconf_gn+=" is_clang=false"
-	fi
 
 	# Never use bundled gold binary. Disable gold linker flags for now.
 	# Do not use bundled clang.
@@ -539,22 +568,8 @@ src_configure() {
 		fi
 	fi
 
-	# Make sure the build system will use the right tools, bug #340795.
-	tc-export AR CC CXX NM
-
-	# Define a custom toolchain for GN
-	myconf_gn+=" custom_toolchain=\"//build/toolchain/linux/unbundle:default\""
-
-	if tc-is-cross-compiler; then
-		tc-export BUILD_{AR,CC,CXX,NM}
-		myconf_gn+=" host_toolchain=\"//build/toolchain/linux/unbundle:host\""
-		myconf_gn+=" v8_snapshot_toolchain=\"//build/toolchain/linux/unbundle:host\""
-	else
-		myconf_gn+=" host_toolchain=\"//build/toolchain/linux/unbundle:default\""
-	fi
-
 	# https://bugs.gentoo.org/588596
-	append-cxxflags $(test-flags-CXX -fno-delete-null-pointer-checks)
+	#append-cxxflags $(test-flags-CXX -fno-delete-null-pointer-checks)
 
 	# Bug 491582.
 	export TMPDIR="${WORKDIR}/temp"
@@ -587,6 +602,8 @@ src_configure() {
 src_compile() {
 	# Calling this here supports resumption via FEATURES=keepwork
 	python_setup
+
+	#"${EPYTHON}" tools/clang/scripts/update.py --force-local-build --gcc-toolchain /usr --skip-checkout --use-system-cmake --without-android || die
 
 	# Build mksnapshot and pax-mark it.
 	local x
