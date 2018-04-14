@@ -60,7 +60,7 @@ gnome-extra/gucharmap:2.90::gentoo
 ~virtual/libgudev-232::gentoo
 >=x11-libs/gtksourceview-3.24::gentoo
 >=x11-libs/libwnck-3.24::gentoo
->=x11-libs/pango-1.40.9::gentoo
+# >=x11-libs/pango-1.40.9::gentoo
 >=x11-libs/vte-0.48::gentoo
 >=x11-themes/adwaita-icon-theme-3.24::gentoo
 >=x11-wm/mutter-3.24::gentoo
