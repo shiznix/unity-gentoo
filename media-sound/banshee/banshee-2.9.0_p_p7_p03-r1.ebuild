@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+aac +cdda +bpm daap doc +encode ipod karma mtp test udev +web youtube"
+IUSE="+aac +cdda +bpm daap doc +encode ipod karma mtp test udev youtube"
 RESTRICT="mirror"
 
 RDEPEND="dev-lang/mono
@@ -57,10 +57,6 @@ RDEPEND="dev-lang/mono
 	mtp? (
 		media-libs/libmtp
 	)
-	web? (
-		net-libs/webkit-gtk:2
-		net-libs/libsoup:2.4
-	)
 	youtube? (
 		dev-dotnet/google-gdata-sharp
 	)
@@ -71,6 +67,11 @@ RDEPEND="dev-lang/mono
 		dev-dotnet/gtk-sharp-beans
 		dev-dotnet/gudev-sharp
 	)"
+## Upstream net-libs/webkit-gtk is an API mess with multiple vulnerabilities, disabled for now ##
+#	web? (
+#		net-libs/webkit-gtk:2
+#		net-libs/libsoup:2.4
+#	)
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 S="${WORKDIR}/${PN}-2.6.2"
@@ -112,7 +113,8 @@ src_configure() {
 		--enable-meego
 		--disable-ubuntuone
 		--enable-soundmenu
-		--disable-upnp"
+		--disable-upnp
+		--disable-webkit"	## Upstream net-libs/webkit-gtk is an API mess with multiple vulnerabilities, disabled for now ##
 
 	econf \
 		$(use_enable doc docs) \
@@ -121,7 +123,6 @@ src_configure() {
 		$(use_enable daap) \
 		$(use_enable ipod appledevice) \
 		$(use_enable karma) \
-		$(use_enable web webkit) \
 		$(use_enable youtube) \
 		$(use_enable udev gio) \
 		$(use_enable udev gio_hardware) \
