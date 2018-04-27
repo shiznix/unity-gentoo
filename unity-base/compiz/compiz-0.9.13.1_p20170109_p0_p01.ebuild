@@ -4,20 +4,24 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="artful"
+URELEASE="zesty"
 inherit gnome2-utils cmake-utils eutils python-r1 ubuntu-versionator xdummy
 
-UURL="mirror://unity/pool/universe/c/${PN}"
+UURL="mirror://unity/pool/main/c/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Compiz Fusion OpenGL window and compositing manager patched for the Unity desktop"
 HOMEPAGE="https://launchpad.net/compiz"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+
+## Ubuntu have deleted some Zesty tarballs from their archives ##
+#SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+#	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	https://launchpad.net/ubuntu/+archive/primary/+files/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0/${PV}"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+debug kde test"
 RESTRICT="mirror"
 
