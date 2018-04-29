@@ -43,7 +43,7 @@ COMMON_DEPEND="
 	x11-libs/libXext
 	x11-libs/libXrender
 
-	>=app-misc/tracker-1:=
+	>=app-misc/tracker-2.0:=
 	exif? ( >=media-libs/libexif-0.6.20 )
 	introspection? ( >=dev-libs/gobject-introspection-0.6.4:= )
 	selinux? ( >=sys-libs/libselinux-2 )
@@ -65,7 +65,6 @@ RDEPEND="${COMMON_DEPEND}
 
 PDEPEND="
 	gnome? ( x11-themes/adwaita-icon-theme )
-	>=gnome-extra/nautilus-tracker-tags-0.12
 	previewer? ( >=gnome-extra/sushi-0.1.9 )
 	sendto? ( >=gnome-extra/nautilus-sendto-3.0.1 )
 	>=gnome-base/gvfs-1.14[gtk]"
@@ -95,7 +94,7 @@ src_configure() {
 		-Denable-unity=true \
 		$(meson_use exif enable-exif) \
 		$(meson_use packagekit enable-packagekit) \
-		$(meson_use sendto nst-extension) \
+		$(meson_use sendto enable-nst-extension) \
 		$(meson_use selinux enable-selinux) \
 		$(meson_use xmp enable-xmp)
 }

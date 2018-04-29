@@ -100,7 +100,7 @@ src_prepare() {
 
 	# Taken from http://ppa.launchpad.net/timekiller/unity-systrayfix/ubuntu/pool/main/u/unity/ #
 	if use systray; then
-		epatch -p1 "${FILESDIR}/systray-fix_saucy.diff"
+		epatch -p1 "${FILESDIR}/systray-fix_artful.diff"
 	fi
 
 	# Setup Unity side launcher default applications #

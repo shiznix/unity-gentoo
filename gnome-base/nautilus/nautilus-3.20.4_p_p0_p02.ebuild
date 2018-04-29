@@ -7,12 +7,12 @@ GNOME2_LA_PUNT="yes"
 URELEASE="zesty"
 inherit autotools eutils gnome2 readme.gentoo-r1 virtualx ubuntu-versionator
 
-UURL="mirror://unity/pool/main/n/${PN}"
+#UURL="mirror://unity/pool/main/n/${PN}"
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
 HOMEPAGE="http://live.gnome.org/Nautilus"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/${MY_P}${UVER_PREFIX}.orig.tar.xz
+	https://launchpad.net/ubuntu/+archive/primary/+files/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"
