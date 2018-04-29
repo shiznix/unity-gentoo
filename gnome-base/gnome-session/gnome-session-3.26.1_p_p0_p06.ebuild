@@ -83,11 +83,10 @@ src_prepare() {
 
 	# Desktop Session is named 'unity' #
 	sed -e 's:buntu:nity:g' \
-		-i data/ubuntu.desktop.in \
 		-i data/ubuntu.session.desktop.in.in \
 		-i "${WORKDIR}/debian/data/unity-session.target" || die
 	sed -e 's:/usr/lib/gnome-session:/usr/libexec:g' \
-		-i data/ubuntu.desktop.in || die
+		-i data/unity.desktop.in || die
 
 	eautoreconf
 	gnome2_src_prepare
@@ -179,6 +178,10 @@ src_install() {
 		rm "${ED}usr/share/xsessions/gnome-xorg.desktop"
 		rm "${ED}usr/share/wayland-sessions/gnome.desktop"
 	fi
+
+	# Remove Ubuntu only session files #
+	rm "${ED}usr/share/wayland-sessions/ubuntu.desktop"
+	rm "${ED}usr/share/xsessions/ubuntu-xorg.desktop"
 }
 
 pkg_postinst() {

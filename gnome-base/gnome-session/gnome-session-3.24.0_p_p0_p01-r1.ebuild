@@ -9,12 +9,12 @@ inherit autotools eutils gnome2 systemd ubuntu-versionator
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UURL="mirror://unity/pool/main/g/${PN}"
+#UURL="mirror://unity/pool/main/g/${PN}"
 
 DESCRIPTION="Gnome session manager patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-session"
 SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.24/${PN}-${PV}.tar.xz
-	${UURL}/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.xz"
+	https://launchpad.net/ubuntu/+archive/primary/+files/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.xz"
 
 LICENSE="GPL-2 LGPL-2 FDL-1.1"
 SLOT="0"
