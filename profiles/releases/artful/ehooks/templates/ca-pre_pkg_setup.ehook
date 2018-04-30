@@ -8,6 +8,7 @@ ebuild_hook() {
 
 	local GCC_CURRENT=$(gcc --version | grep gcc | rev | cut -d ' ' -f 1 | rev)
 	[[ ${PROFILE_RELEASE} == zesty ]] && local GCC_MINIMUM="6.3.0"
+	[[ ${PROFILE_RELEASE} == artful ]] && local GCC_MINIMUM="6.4.0"
 
 	[[ ${GCC_CURRENT//./} -lt ${GCC_MINIMUM//./} ]] \
 		&& die "The selected '${PROFILE_RELEASE}' profile requires your system be built using >=sys-devel/gcc:${GCC_MINIMUM}, please consult the output of 'gcc-config -l'"

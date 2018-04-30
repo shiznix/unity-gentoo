@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+branding debug doc pch +systray test"
 RESTRICT="mirror"
 
@@ -35,6 +35,7 @@ RDEPEND="app-i18n/ibus[gtk,gtk2]
 	x11-themes/gtk-engines-murrine
 	x11-themes/unity-asset-pool"
 DEPEND="${RDEPEND}
+	!sys-apps/upstart
 	!unity-base/dconf-qt
 	dev-libs/boost:=
 	dev-libs/dee:=
@@ -61,7 +62,6 @@ DEPEND="${RDEPEND}
 	media-libs/clutter-gtk:1.0
 	media-libs/glew:=
 	sys-apps/dbus[systemd,user-session]
-	sys-apps/upstart
 	sys-auth/pambase
 	sys-libs/libnih[dbus]
 	unity-base/bamf:=
@@ -249,14 +249,17 @@ src_install() {
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
 
-	# Configure input method (xim/ibus) #
 	exeinto /etc/X11/xinit/xinitrc.d/
-	doexe "${FILESDIR}/70im-config"
-        # Some newer multilib profiles have different /usr/lib(32,64)/ paths so insert the correct one
-        sed -e "s:/usr/lib/:/usr/$(get_libdir)/:g" \
-                -i "${ED}/etc/X11/xinit/xinitrc.d/70im-config"
+	doexe "${FILESDIR}/70im-config"			# Configure input method (xim/ibus)
+	doexe "${FILESDIR}/99unity-session_systemd"	# Unity session environment setup and 'startx' launcher
+
+	# Some newer multilib profiles have different /usr/lib(32,64)/ paths so insert the correct one
+	sed -e "s:/usr/lib/:/usr/$(get_libdir)/:g" \
+		-i "${ED}/etc/X11/xinit/xinitrc.d/70im-config"
+
 	insinto /etc/xdg/autostart/
 	doins "${FILESDIR}/ibus-daemon.desktop"
+
 	# Fix conflict between ibus and indicator-keyboard #
 	#  default <Super+Space> now works to switch keyboard layouts #
 	insinto /usr/share/glib-2.0/schemas

@@ -1,13 +1,16 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=2
+EAPI=5
 
-inherit base mono
+URELEASE="artful"
+inherit base mono ubuntu-versionator
+
+UURL="mirror://unity/pool/universe/m/${PN}"
 
 DESCRIPTION="a cross platform Zero Configuration Networking library for Mono and .NET"
 HOMEPAGE="http://www.mono-project.com/Mono.Zeroconf"
-SRC_URI="http://banshee-project.org/files/${PN}/${P}.tar.bz2"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -18,6 +21,7 @@ RDEPEND=">=dev-lang/mono-2.0
 	>=net-dns/avahi-0.6[mono]"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
+RESTRICT="mirror"
 
 src_prepare() {
 	sed -e 's:mono/2.0:mono/2.0-api:g' \

@@ -1,13 +1,16 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=4
+EAPI=5
 
-inherit mono
+URELEASE="artful"
+inherit mono ubuntu-versionator
+
+UURL="mirror://unity/pool/universe/t/${PN}"
 
 DESCRIPTION="Taglib# 2.0 - Managed tag reader/writer"
-HOMEPAGE="http://download.banshee.fm/taglib-sharp/"
-SRC_URI="http://download.banshee-project.org/${PN}/${PV}/${P}.tar.bz2"
+HOMEPAGE="https://github.com/mono/taglib-sharp"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -17,6 +20,7 @@ IUSE=""
 RDEPEND="dev-lang/mono"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
+RESTRICT="mirror"
 
 DOCS="AUTHORS ChangeLog NEWS README"
 

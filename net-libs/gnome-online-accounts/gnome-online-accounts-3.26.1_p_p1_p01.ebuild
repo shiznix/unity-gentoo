@@ -18,7 +18,7 @@ LICENSE="LGPL-2+"
 SLOT="0/1"
 IUSE="debug gnome +introspection kerberos uoa vala"
 REQUIRED_USE="vala? ( introspection )"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # pango used in goaeditablelabel

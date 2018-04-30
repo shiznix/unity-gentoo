@@ -11,7 +11,7 @@ UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Dbus-binding leveraging C++-11"
 HOMEPAGE="http://launchpad.net/dbus-cpp"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"

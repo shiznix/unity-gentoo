@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-2+"
 SLOT="0"
 IUSE="+bluetooth +colord +cups fcitx +gnome-online-accounts +i18n input_devices_wacom kerberos v4l +webkit"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # False positives caused by nested configure scripts

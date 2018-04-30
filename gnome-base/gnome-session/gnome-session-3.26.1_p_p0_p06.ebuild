@@ -18,7 +18,7 @@ SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.26/${PN}-${PV}.tar.xz
 
 LICENSE="GPL-2 LGPL-2 FDL-1.1"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc elibc_FreeBSD ipv6 systemd wayland"
 RESTRICT="mirror"
 

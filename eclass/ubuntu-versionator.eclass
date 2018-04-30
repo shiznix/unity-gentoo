@@ -40,6 +40,7 @@ export VALA_USE_DEPEND="vapigen"
 [[ "${URELEASE}" == *yakkety* ]] && UVER_RELEASE="16.10"
 [[ "${URELEASE}" == *zesty* ]] && UVER_RELEASE="17.04"
 [[ "${URELEASE}" == *artful* ]] && UVER_RELEASE="17.10"
+[[ "${URELEASE}" == *bionic* ]] && UVER_RELEASE="18.04"
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
 PV="${PV%%[a-z]*}"	# For package-3.6.0a
@@ -159,6 +160,7 @@ ubuntu-versionator_pkg_setup() {
 	[[ "${PROFILE_RELEASE}" == xenial ]] && GCC_MINIMUM="5.4.0"
 	[[ "${PROFILE_RELEASE}" == yakkety ]] && GCC_MINIMUM="5.4.0"
 	[[ "${PROFILE_RELEASE}" == zesty ]] && GCC_MINIMUM="6.3.0"
+	[[ "${PROFILE_RELEASE}" == artful ]] && GCC_MINIMUM="6.4.0"
 	GCC_CURRENT=$(gcc-fullversion)
 
 	[[ ${GCC_CURRENT//./} -lt ${GCC_MINIMUM//./} ]] \

@@ -1,7 +1,0 @@
-# Mask all other releases #
->unity-base/unity-build-env-17.05
-<unity-base/unity-build-env-17.04
-
->unity-base/unity-meta-17.05
-<unity-base/unity-meta-17.04
-

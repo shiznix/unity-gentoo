@@ -1,0 +1,7 @@
+# Mask all other releases #
+>unity-base/unity-build-env-18.05
+<unity-base/unity-build-env-18.04
+
+>unity-base/unity-meta-18.05
+<unity-base/unity-meta-18.04
+

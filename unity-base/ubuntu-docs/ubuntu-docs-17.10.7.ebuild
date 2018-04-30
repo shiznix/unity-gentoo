@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}.tar.xz"
 
 LICENSE="CC-BY-SA-3.0"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 # This ebuild does not install any binaries
 RESTRICT="binchecks mirror strip"

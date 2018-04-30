@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="+colord debug fcitx +i18n input_devices_wacom nls packagekit +short-touchpad-timeout smartcard +udev"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="input_devices_wacom? ( udev )
 		packagekit? ( udev )
 		smartcard? ( udev )"
