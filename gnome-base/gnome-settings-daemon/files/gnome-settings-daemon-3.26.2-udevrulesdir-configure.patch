@@ -1,0 +1,30 @@
+diff -ru gnome-settings-daemon-3.25.92.old/configure.ac gnome-settings-daemon-3.25.92/configure.ac
+--- gnome-settings-daemon-3.25.92.old/configure.ac	2017-09-01 15:12:59.000000000 +0300
++++ gnome-settings-daemon-3.25.92/configure.ac	2017-09-06 16:15:18.909064333 +0300
+@@ -103,6 +103,15 @@
+ 	have_gudev=no
+ fi
+ AM_CONDITIONAL(HAVE_GUDEV, test x$have_gudev = xyes)
++dnl - Where to install udev rules
++dnl ---------------------------------------------------------------------------
++AC_ARG_WITH([udevrulesdir],
++            AS_HELP_STRING([--with-udevrulesdir=DIR], [Directory for udev rules files]),
++            [],
++            [with_udevrulesdir=$($PKG_CONFIG --variable=udevdir udev)/rules.d])
++AC_SUBST([udevrulesdir], [$with_udevrulesdir])
++
++dnl ---------------------------------------------------------------------------
+ 
+ dnl ---------------------------------------------------------------------------
+ dnl - ALSA integration (default enabled)
+diff -ru gnome-settings-daemon-3.25.92.old/plugins/rfkill/Makefile.am gnome-settings-daemon-3.25.92/plugins/rfkill/Makefile.am
+--- gnome-settings-daemon-3.25.92.old/plugins/rfkill/Makefile.am	2017-09-01 15:12:11.000000000 +0300
++++ gnome-settings-daemon-3.25.92/plugins/rfkill/Makefile.am	2017-09-06 16:15:53.826359745 +0300
+@@ -30,7 +30,6 @@
+ org.gnome.SettingsDaemon.Rfkill.desktop: $(desktop_in_files) Makefile
+ 	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
+ 
+-udevrulesdir = $(prefix)/lib/udev/rules.d
+ udevrules_DATA = 61-gnome-settings-daemon-rfkill.rules
+ 
+ EXTRA_DIST = $(udevrules_DATA) $(desktop_in_files)

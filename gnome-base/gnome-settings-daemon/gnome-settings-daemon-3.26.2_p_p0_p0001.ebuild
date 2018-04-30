@@ -24,7 +24,8 @@ KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="
 	input_devices_wacom? ( udev )
 	smartcard? ( udev )
-	test? ( ${PYTHON_REQUIRED_USE} )"
+	test? ( ${PYTHON_REQUIRED_USE} )
+	wayland? ( udev )"
 RESTRICT="mirror !test? ( test )"
 
 COMMON_DEPEND="
@@ -67,7 +68,7 @@ COMMON_DEPEND="
 		>=x11-libs/pango-1.20
 		x11-drivers/xf86-input-wacom
 		virtual/libgudev:= )
-	networkmanager? ( >=net-misc/networkmanager-1.0 )
+	networkmanager? ( >=net-misc/networkmanager-1.0:= )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
 	udev? ( virtual/libgudev:= )
 	wayland? ( dev-libs/wayland )
@@ -108,9 +109,11 @@ DEPEND="${COMMON_DEPEND}
 # TypeErrors with python3; weird test errors with python2; all in power component that was made required now
 PATCHES=(
 	# Make colord and wacom optional; requires eautoreconf
-	"${FILESDIR}"/3.24.2-optional.patch
+	"${FILESDIR}"/${PN}-3.24.3-optional.patch
 	# Allow specifying udevrulesdir via configure, bug 509484; requires eautoreconf
-	"${FILESDIR}"/3.24.2-udevrulesdir-configure.patch
+	"${FILESDIR}"/${PN}-3.26.2-udevrulesdir-configure.patch
+	# Fix build when Wayland is disabled
+	"${FILESDIR}"/${PN}-3.24.3-fix-without-gdkwayland.patch
 )
 
 python_check_deps() {
