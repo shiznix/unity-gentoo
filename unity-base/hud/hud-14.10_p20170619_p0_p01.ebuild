@@ -44,7 +44,7 @@ DEPEND="dev-cpp/gmock
 	$(vala_depend)
 	test? ( dev-util/dbus-test-runner )"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
