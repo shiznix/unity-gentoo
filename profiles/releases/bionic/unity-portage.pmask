@@ -1,5 +1,5 @@
 ## Global masks ##
->=media-libs/glew-2.0
+
 
 # mask gnome-3.26 packages
 =*/gnome*-*26*::gentoo
