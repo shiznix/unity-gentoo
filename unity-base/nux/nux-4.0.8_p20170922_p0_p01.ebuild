@@ -8,11 +8,13 @@ inherit autotools eutils ubuntu-versionator xdummy
 
 UURL="mirror://unity/pool/universe/n/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+GLEWMX="glew-1.13.0"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"
 HOMEPAGE="http://launchpad.net/nux"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz
+	mirror://sourceforge/glew/${GLEWMX}.tgz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0/4"
@@ -28,7 +30,6 @@ DEPEND="app-i18n/ibus
 	dev-libs/libpcre
 	dev-libs/libsigc++:2
 	gnome-base/gnome-common
-	<media-libs/glew-2.0.0:=
 	media-libs/libpng:0
 	sys-apps/pciutils
 	unity-base/geis
@@ -54,9 +55,18 @@ src_prepare() {
 	sed -e 's:-Werror ::g' \
 		-i configure.ac
 	eautoreconf
+
+	sed \
+		-e '/glew.lib.mx:/s|lib/$(LIB.SHARED.MX) ||' \
+		-e "s:\(@libname@|\).*mx:-l\1${WORKDIR}/${GLEWMX}/lib/\$(LIB.STATIC.MX):" \
+		-i ${WORKDIR}/${GLEWMX}/Makefile || die
 }
 
 src_configure() {
+	emake -C ${WORKDIR}/${GLEWMX} glew.lib.mx AR="$(tc-getAR)" STRIP=true CC="$(tc-getCC)" POPT="${CFLAGS}"
+	CXXFLAGS+=" -I${WORKDIR}/${GLEWMX}/include"
+	PKG_CONFIG_PATH="${WORKDIR}/${GLEWMX}"
+
 	use debug && \
 		myconf="${myconf}
 			--enable-debug=yes"
@@ -80,6 +90,7 @@ src_test() {
 
 src_install() {
 	emake DESTDIR="${ED}" install || die
+	sed -i 's:glewmx ::' "${ED}"/usr/$(get_libdir)/pkgconfig/* || die
 	dosym /usr/libexec/nux/unity_support_test /usr/$(get_libdir)/nux/unity_support_test
 
 	## Install gfx hardware support test script ##

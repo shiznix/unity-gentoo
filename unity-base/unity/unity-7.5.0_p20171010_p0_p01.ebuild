@@ -10,12 +10,14 @@ inherit cmake-utils distutils-r1 eutils gnome2-utils pam systemd toolchain-funcs
 
 UURL="mirror://unity/pool/universe/u/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+GLEWMX="glew-1.13.0"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
 HOMEPAGE="https://launchpad.net/unity"
 
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz
+	mirror://sourceforge/glew/${GLEWMX}.tgz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -191,6 +193,7 @@ src_configure() {
 		-DUSE_GSETTINGS=TRUE
 		-DCMAKE_INSTALL_PREFIX=/usr
 		-DCMAKE_SYSCONFDIR=/etc)
+	CXXFLAGS+=" -I${WORKDIR}/${GLEWMX}/include"
 	cmake-utils_src_configure || die
 }
 
