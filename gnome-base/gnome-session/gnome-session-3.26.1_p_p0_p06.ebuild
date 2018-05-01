@@ -57,6 +57,7 @@ COMMON_DEPEND="
 # sys-apps/dbus[X] is needed for session management
 RDEPEND="${COMMON_DEPEND}
 	>=gnome-base/gnome-settings-daemon-3.23.2
+	gnome-base/gnome-shell
 	>=gnome-base/gsettings-desktop-schemas-0.1.7
 	x11-themes/adwaita-icon-theme
 	sys-apps/dbus[X]
