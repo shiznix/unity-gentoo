@@ -5,7 +5,7 @@ EAPI=6
 VALA_MIN_API_VERSION="0.36"
 VALA_MAX_API_VERSION="0.36"
 
-URELEASE="artful-updates"
+URELEASE="artful-security"
 inherit gnome-meson ubuntu-versionator vala
 
 UURL="mirror://unity/pool/main/d/${PN}"

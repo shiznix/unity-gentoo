@@ -7,6 +7,7 @@ URELEASE="artful"
 inherit base mono ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/m/${PN}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="a cross platform Zero Configuration Networking library for Mono and .NET"
 HOMEPAGE="http://www.mono-project.com/Mono.Zeroconf"
