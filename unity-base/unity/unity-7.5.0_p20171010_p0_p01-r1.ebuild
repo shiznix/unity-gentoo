@@ -258,8 +258,11 @@ src_install() {
 	doexe "${FILESDIR}/99unity-session_systemd"	# Unity session environment setup and 'startx' launcher
 
 	# Some newer multilib profiles have different /usr/lib(32,64)/ paths so insert the correct one
-	sed -e "s:/usr/lib/:/usr/$(get_libdir)/:g" \
-		-i "${ED}/etc/X11/xinit/xinitrc.d/70im-config"
+	local fixlib=$(get_libdir)
+	sed -e "s:/usr/lib/:/usr/${fixlib}/:g" \
+		-i "${ED}/etc/X11/xinit/xinitrc.d/70im-config" || die
+	sed -e "/nux\/unity_support_test/{s/lib/${fixlib}/}" \
+		-i "${ED}/usr/${fixlib}/unity/compiz-profile-selector" || die
 
 	insinto /etc/xdg/autostart/
 	doins "${FILESDIR}/ibus-daemon.desktop"
