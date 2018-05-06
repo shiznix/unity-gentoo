@@ -2,7 +2,7 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="project">
-		<email>rickfharris@yahoo.com.au</email>
+		<email>larry@gentoo.org</email>
 		<name>unity-gentoo overlay</name>
 	</maintainer>
 	<upstream>
