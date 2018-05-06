@@ -143,16 +143,15 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 		fi ## End of checking for eapply and eautoreconf.
 
-		## Redirect stderr to stdout and logfile.
+#		## Redirect stderr to stdout and logfile.
 #		exec 3>&1
 #		ebuild_hook 2>&1 >&3 | tee "${log}"
 #		exec 3>&-
+#		[[ -s ${log} ]] \
+#			&& die "$(<${log})"
 
-		# temporary fix (no errors handling now)
+		## No errors handling (issue #193)
 		ebuild_hook
-
-		[[ -s ${log} ]] \
-			&& die "$(<${log})"
 
 		## Sanitize.
 		unset -f ebuild_hook
