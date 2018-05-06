@@ -17,7 +17,7 @@ LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-IUSE_LIGHTDM_GREETERS="gtk kde"
+IUSE_LIGHTDM_GREETERS="gtk"
 for greeters in ${IUSE_LIGHTDM_GREETERS}; do
 	IUSE+=" lightdm_greeters_${greeters}"
 done
@@ -56,7 +56,6 @@ DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 	$(vala_depend)"
 PDEPEND="lightdm_greeters_gtk? ( x11-misc/lightdm-gtk-greeter )
-	lightdm_greeters_kde? ( x11-misc/lightdm-kde )
 	lightdm_greeters_unity? ( unity-extra/unity-greeter )"
 DOCS=( NEWS )
 

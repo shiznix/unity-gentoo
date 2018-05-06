@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0/${PV}"
 KEYWORDS="~amd64 ~x86"
-IUSE="+debug kde test"
+IUSE="+debug test"
 RESTRICT="mirror"
 
 S="${WORKDIR}"
@@ -59,7 +59,6 @@ COMMONDEPEND="!!x11-wm/compiz
 	x11-libs/libSM
 	>=x11-libs/startup-notification-0.7
 	>=x11-wm/metacity-3.12
-	kde? ( >=kde-base/kwin-4.11.1 )
 	${PYTHON_DEPS}"
 
 DEPEND="${COMMONDEPEND}
@@ -112,9 +111,6 @@ src_prepare() {
 }
 
 src_configure() {
-	use kde && \
-		mycmakeargs+=(-DUSE_KDE4=ON) || \
-		mycmakeargs+=(-DUSE_KDE4=OFF)
 	use test && \
 		mycmakeargs+=(-DCOMPIZ_BUILD_TESTING=ON) || \
 		mycmakeargs+=(-DCOMPIZ_BUILD_TESTING=OFF)
@@ -128,6 +124,7 @@ src_configure() {
 		-DUSE_GSETTINGS=ON
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF
 		-DCOMPIZ_DEFAULT_PLUGINS="ccp")
+		-DUSE_KDE4=OFF
 	configuration() {
 		cmake-utils_src_configure
 	}
