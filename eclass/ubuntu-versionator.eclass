@@ -26,10 +26,15 @@ EXPORT_FUNCTIONS pkg_setup pkg_postinst
 ### GLOBAL ECLASS INHERIT DEFAULTS ##
 
 ## vala.eclass ##
-# Set base sane vala version for all packages requiring vala, override in ebuild if or when specific higher versions are needed #
-export VALA_MIN_API_VERSION=${VALA_MIN_API_VERSION:=0.32}	# Needs to be >=${minimal_supported_minor_version} from vala.eclass
-export VALA_MAX_API_VERSION=${VALA_MAX_API_VERSION:=0.32}
+# Set base sane vala version for all packages requiring vala, override in ebuild if or when specific higher/lower versions are needed #
+export VALA_MIN_API_VERSION=${VALA_MIN_API_VERSION:=0.36}	# Needs to be >=${minimal_supported_minor_version} from vala.eclass
+export VALA_MAX_API_VERSION=${VALA_MAX_API_VERSION:=0.36}
 export VALA_USE_DEPEND="vapigen"
+
+## Ubuntu delete superceded release tarballs from their mirrors if the release is not Long Term Supported (LTS) ##
+# Download tarballs from the always available Launchpad archive #
+UURL="https://launchpad.net/ubuntu/+archive/primary/+files"
+
 #---------------------------------------------------------------------------------------------------------------------------------#
 
 [[ "${URELEASE}" == *trusty* ]] && UVER_RELEASE="14.04"
