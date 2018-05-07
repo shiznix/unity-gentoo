@@ -3,11 +3,8 @@
 
 EAPI=6
 
-URELEASE="artful"
-inherit autotools gnome2-utils ubuntu-versionator
-
-UURL="mirror://unity/pool/universe/b/${PN}"
-UVER="-${PVR_MICRO}"
+URELEASE="bionic"
+inherit autotools gnome-meson ubuntu-versionator
 
 DESCRIPTION="Solus Project's Brisk Menu MATE Panel Applet"
 HOMEPAGE="https://github.com/solus-project/brisk-menu"
@@ -27,9 +24,10 @@ DEPEND="dev-libs/glib:2
 	sys-devel/gettext
 	x11-libs/gtk+:3"
 
-src_prepare() {
-	ubuntu-versionator_src_prepare
-	eautoreconf
+src_install() {
+	gnome-meson_src_install
+	# Delete some files that are only useful on Ubuntu
+	rm -rf "${D}"etc/apport
 }
 
 pkg_preinst() {

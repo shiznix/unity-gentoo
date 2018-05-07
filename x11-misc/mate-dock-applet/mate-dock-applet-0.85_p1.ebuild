@@ -4,13 +4,13 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools eutils python-r1 ubuntu-versionator
 UVER="-1"
 
 DESCRIPTION="Application dock for the MATE panel"
 HOMEPAGE="https://github.com/robint99/dock-applet"
-SRC_URI="https://github.com/robint99/mate-dock-applet/archive/V${PV}.tar.gz"
+SRC_URI="https://github.com/robint99/mate-dock-applet/archive/V${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

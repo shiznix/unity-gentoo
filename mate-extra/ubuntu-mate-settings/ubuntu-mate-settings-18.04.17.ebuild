@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/u/${PN}"
 UVER=
 
 DESCRIPTION="Default settings for Ubuntu MATE"

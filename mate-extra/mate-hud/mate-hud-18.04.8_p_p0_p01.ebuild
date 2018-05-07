@@ -5,10 +5,8 @@ EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit distutils-r1 eutils ubuntu-versionator
-
-UURL="mirror://unity/pool/universe/m/${PN}"
 
 DESCRIPTION="MATE menubar commands, like the Unity 7 Heads-Up Display (HUD)"
 HOMEPAGE="https://github.com/ubuntu-mate/mate-hud"

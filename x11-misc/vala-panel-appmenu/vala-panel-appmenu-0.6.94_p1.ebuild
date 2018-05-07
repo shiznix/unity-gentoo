@@ -2,18 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-VALA_MIN_API_VERSION="0.34"
-VALA_MAX_API_VERSION="0.36"
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit cmake-utils eutils gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://unity/pool/universe/v/${PN}"
+UVER="+repack1"
 
 DESCRIPTION="Global Menu plugin for xfce4 and vala-panel"
 HOMEPAGE="http://github.com/rilian-la-te/vala-panel-appmenu"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+SRC_URI="${UURL}/${MY_P}${UVER}.orig.tar.xz
+	${UURL}/${MY_P}${UVER}-${PVR_MICRO}.debian.tar.xz"
 
 LICENSE="LGPL-3"
 KEYWORDS="~amd64 ~x86"

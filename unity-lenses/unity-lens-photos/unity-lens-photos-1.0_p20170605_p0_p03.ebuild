@@ -5,10 +5,10 @@ EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit distutils-r1 eutils ubuntu-versionator
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="Photo lens for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-lens-photos"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 # Let people emerge this by default, bug #472932

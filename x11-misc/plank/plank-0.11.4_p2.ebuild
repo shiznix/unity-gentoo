@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit vala autotools ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/p/${PN}"
 UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Dock panel famious docky"
@@ -37,4 +36,10 @@ src_prepare() {
 	eautoreconf
 #	NOCONFIGURE=1 REQUIRED_PKG_CONFIG_VERSION=0.1 ./autogen.sh
 	vala_src_prepare
+}
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	# Delete some files that are only useful on Ubuntu
+	rm -rf "${ED}"{etc,usr/share}/apport
 }
