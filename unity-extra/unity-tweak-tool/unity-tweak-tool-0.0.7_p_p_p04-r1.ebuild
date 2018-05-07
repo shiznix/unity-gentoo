@@ -27,7 +27,6 @@ RDEPEND="dev-libs/glib:2
 	dev-python/python-distutils-extra[${PYTHON_USEDEP}]
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}
-	dev-libs/libunity-webapps
 	dev-util/intltool
 	gnome-base/gsettings-desktop-schemas
 	gnome-base/nautilus

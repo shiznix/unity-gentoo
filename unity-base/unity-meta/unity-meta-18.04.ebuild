@@ -13,7 +13,7 @@ URELEASE="bionic"
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
 KEYWORDS="~amd64 ~x86"
-IUSE="accessibility +chat +ehooks gnome gnome-extras +unity-extras +webapps +xdm"
+IUSE="accessibility +chat +ehooks gnome gnome-extras +unity-extras +xdm"
 RESTRICT="mirror"
 
 DEPEND="gnome-base/gnome-core-libs
@@ -43,13 +43,4 @@ DEPEND="gnome-base/gnome-core-libs
 	unity-extras? (
 		app-backup/deja-dup[nautilus]
 		unity-extra/unity-tweak-tool )
-	webapps? ( unity-base/webapps
-			x11-misc/webaccounts-browser-extension
-			x11-misc/webapps-greasemonkey )
-	!webapps? ( !net-libs/oxide-qt
-			!unity-base/webapps
-			!www-client/webbrowser-app
-			!x11-libs/unity-webapps-qml
-			!x11-misc/webaccounts-browser-extension
-			!x11-misc/webapps-greasemonkey )
 	xdm? ( || ( unity-extra/unity-greeter gnome-base/gdm ) )"
