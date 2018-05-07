@@ -6,7 +6,7 @@ EAPI=5
 URELEASE="artful"
 inherit mono ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/t/${PN}"
+UVER="-${PVR_PL_MAJOR}fakesync1build${PVR_PL_MINOR}"
 
 DESCRIPTION="Taglib# 2.0 - Managed tag reader/writer"
 HOMEPAGE="https://github.com/mono/taglib-sharp"

@@ -7,11 +7,12 @@ URELEASE="bionic"
 inherit cmake-utils eutils gnome2-utils ubuntu-versionator vala
 
 UVER="+repack1"
+UVER_SUFFIX="-1"
 
 DESCRIPTION="Global Menu plugin for xfce4 and vala-panel"
 HOMEPAGE="http://github.com/rilian-la-te/vala-panel-appmenu"
 SRC_URI="${UURL}/${MY_P}${UVER}.orig.tar.xz
-	${UURL}/${MY_P}${UVER}-${PVR_MICRO}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER}${UVER_SUFFIX}.debian.tar.xz"
 
 LICENSE="LGPL-3"
 KEYWORDS="~amd64 ~x86"

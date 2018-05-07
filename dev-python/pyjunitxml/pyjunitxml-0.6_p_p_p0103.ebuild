@@ -4,20 +4,19 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_5,3_6} )
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit distutils-r1 ubuntu-versionator
 
-UURL="mirror://unity/pool/main/p/${PN}"
-UVER="-${PVR_MICRO}"
+UVER="-${PVR_PL_MINOR}"
 
-DESCRIPTION="A library to manipulate gettext files (po and mo files)"
-HOMEPAGE="http://bitbucket.org/izi/polib/"
+DESCRIPTION="PyUnit extension for reporting in JUnit compatible XML"
+HOMEPAGE="https://launchpad.net/pyjunitxml"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
-LICENSE="MIT"
+LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="${PYTHON_DEPS}"
+S="${WORKDIR}/junitxml-${PV}"
