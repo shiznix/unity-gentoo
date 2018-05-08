@@ -87,7 +87,7 @@ dev-libs/capnproto
 dev-libs/folks
 =dev-libs/icu-59*
 dev-libs/libindicate-qt
-=dev-libs/nss-3.35*
+=dev-libs/nss-3.36*
 =dev-libs/nspr-4.18*
 =dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
@@ -256,7 +256,7 @@ x11-wm/metacity **
 
 
 # older versions are not compilable with gcc-6.3 (needed for re-compile)
-~sys-block/thin-provisioning-tools-0.7.2
+~sys-block/thin-provisioning-tools-0.7.5
 ~dev-util/colm-0.13.0.5 # (new) dependency of 'dev-util/ragel'
 ~dev-util/ragel-7.0.0.10
 ~x11-libs/wxGTK-3.0.2.0
