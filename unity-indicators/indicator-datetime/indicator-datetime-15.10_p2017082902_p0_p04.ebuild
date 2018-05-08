@@ -15,19 +15,20 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="+eds"
 RESTRICT="mirror"
 
 COMMON_DEPEND="
 	dev-libs/libaccounts-glib
 	dev-libs/libdbusmenu:=
 	dev-libs/libtimezonemap:=
-	gnome-extra/evolution-data-server:=
 	media-libs/gstreamer:1.0
 	sys-apps/util-linux
 	unity-indicators/ido:=
 	unity-indicators/indicator-messages
-	>=x11-libs/libnotify-0.7.6"
+	>=x11-libs/libnotify-0.7.6
+
+	eds? ( gnome-extra/evolution-data-server:= )"
 
 RDEPEND="${COMMON_DEPEND}
 	unity-base/unity-language-pack"
@@ -41,7 +42,8 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/02-${PN}-remove-url-dispatcher_17.10.patch"
+	eapply "${FILESDIR}/01-${PN}-remove-url-dispatcher_17.10.patch"
+	eapply "${FILESDIR}/02-${PN}-optional-eds_17.10.patch"
 
 	# Fix schema errors and sandbox violations #
 	sed -e 's:SEND_ERROR:WARNING:g' \
@@ -57,6 +59,7 @@ src_configure() {
 		-DVALA_COMPILER=$VALAC
 		-DVAPI_GEN=$VAPIGEN
 		-DCMAKE_INSTALL_FULL_LOCALEDIR=/usr/share/locale
+		-DWITH_EDS="$(usex eds)"
 	)
 	cmake-utils_src_configure
 }
