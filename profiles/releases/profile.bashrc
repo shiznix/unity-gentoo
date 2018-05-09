@@ -143,17 +143,25 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 		fi ## End of checking for eapply and eautoreconf.
 
-#		## Redirect stderr to stdout and logfile.
-#		exec 3>&1
-#		ebuild_hook 2>&1 >&3 | tee "${log}"
-#		exec 3>&-
-#		[[ -s ${log} ]] \
-#			&& die "$(<${log})"
+		## Output information messages to fd 3 instead of stderr (issue #193).
+		local msgfunc_names="einfo einfon ewarn ebegin __eend"
 
-		## No errors handling (issue #193)
-		ebuild_hook
+		for x in ${msgfunc_names}; do
+			source <(declare -f ${x} | sed "s/\(1>&\)2/\13/")
+		done
+
+		## Log errors to screen and logfile via fd 3.
+		exec 3>&1
+		ebuild_hook 2>&1 >&3 | tee "${log}"
+
+		[[ -s ${log} ]] \
+			&& die "$(<${log})"
 
 		## Sanitize.
+		exec 3>&-
+		for x in ${msgfunc_names}; do
+			source <(declare -f ${x} | sed "s/\(1>&\)3/\12/")
+		done
 		unset -f ebuild_hook
 		[[ ${EAPI} -lt 6 ]] && unset -f eapply
 		if [[ -n ${eautoreconf_names} ]]; then
