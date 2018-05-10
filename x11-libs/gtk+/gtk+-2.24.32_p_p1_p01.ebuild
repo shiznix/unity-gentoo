@@ -14,7 +14,8 @@ S="${WORKDIR}/${PN}-${PV}"
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz
+	https://dev.gentoo.org/~leio/distfiles/${PN}-${PV}-patchset.tar.xz"
 
 LICENSE="LGPL-2+"
 SLOT="2"
@@ -86,6 +87,10 @@ RDEPEND="${COMMON_DEPEND}
 	!<x11-libs/vte-0.28.2-r201:0
 	>=x11-themes/adwaita-icon-theme-3.14
 	x11-themes/gnome-themes-standard
+	|| (
+		x11-themes/gnome-themes-standard
+		x11-themes/gnome-themes-extra
+	)
 "
 # librsvg for svg icons (PDEPEND to avoid circular dep), bug #547710
 PDEPEND="
@@ -102,6 +107,11 @@ StartupMode=cwd"
 
 MULTILIB_CHOST_TOOLS=(
 	/usr/bin/gtk-query-immodules-2.0$(get_exeext)
+)
+
+PATCHES=(
+	# Upstream gtk-2-24 branch up to 2018-05-06 state, bug #650536 safety
+	"${WORKDIR}"/patches/ # requires eautoreconf
 )
 
 strip_builddir() {
@@ -126,6 +136,10 @@ src_prepare() {
 				-i "${WORKDIR}/debian/patches/series"
 	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}/fix-ubuntumenuproxy-build.patch"
+
+	# Various glib marshaller churn could break build against a different glib version, force regeneration
+	rm -v gdk/gdkmarshalers.{c,h} gtk/gtkmarshal.{c,h} gtk/gtkmarshalers.{c,h} \
+		perf/marshalers.{c,h} gtk/gtkaliasdef.c gtk/gtkalias.h || die
 
 	# Stop trying to build unmaintained docs, bug #349754, upstream bug #623150
 	strip_builddir SUBDIRS tutorial docs/Makefile.{am,in}
@@ -178,9 +192,6 @@ src_prepare() {
 
 	# Rely on split gtk-update-icon-cache package, bug #528810
 	eapply "${FILESDIR}"/${PN}-2.24.31-update-icon-cache.patch
-
-	# Fix beep when overwriting at the end of a gtkentry, from gtk-2-24 branch
-	eapply "${FILESDIR}"/${PN}-2.24.31-fix-gtkentry-beep.patch
 
 	eautoreconf
 	gnome2_src_prepare
