@@ -70,23 +70,19 @@ www-client/firefox			# Add Unity menubar and desktop launcher with quicklist and
 
 * Optional ehooks provided by 'unity-extra/ehooks' and managed via 'eselect ehooks':
 app-arch/file-roller			# Don't use GtkHeaderBar in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=739596)
-app-arch/file-roller-3.22		# Don't use GtkHeaderBar in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=739596), extension for Nautilus 3.20 (https://bugzilla.gnome.org/show_bug.cgi?id=770248)
 app-editors/gedit			# Don't use GtkHeaderBar decorations under Unity (https://bugzilla.gnome.org/show_bug.cgi?id=762332)
 app-office/libreoffice			# Add Human icon theme and make it the default, add custom icons (savemodified_{large,small}.png)
 app-text/evince				# Add traditional menu bar (https://bugzilla.gnome.org/show_bug.cgi?id=736419), use GtkHeaderBar as decoration only under gnome-shell (https://bugzilla.gnome.org/show_bug.cgi?id=736420)
 gnome-extra/gnome-calculator		# Don't use HeaderBars in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=712831)
-gnome-extra/gnome-calculator-3.22	# Don't use HeaderBars in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=712831)
 media-gfx/eog				# Add a traditional menu bar (https://bugzilla.gnome.org/749976, https://bugs.debian.org/793445), show traditional title bar in Unity
-media-gfx/eog-3.20			# Add a traditional menu bar (https://bugzilla.gnome.org/749976, https://bugs.debian.org/793445), show traditional title bar in Unity
 media-gfx/gnome-screenshot		# Use Ubuntu help instead of GNOME help, don't use GtkHeaderBar, show the save dialog by default, don't try and use the GNOME Shell D-Bus interface, add quicklist area-shot option
-media-gfx/shotwell			# Enable Unity support for version 0.24+, NOTE: you have to manually unmask media-gfx/shotwell::gentoo
 media-video/totem			# Add a traditional menubar (https://bugzilla.gnome.org/show_bug.cgi?id=749695), use traditional headerbar
 net-im/pidgin				# Add chat section into messaging menu (Available, Away, Busy, Invisible, Offline)
+www-client/firefox-52			# Extended Support Release until August 21, 2018. Add Unity menubar and desktop launcher with quicklist and translations
 x11-base/xorg-server-1.19		# Load nvidia proprietary driver automatically when installed, fall back to autoconfiguration for graphics drivers in some cases instead of letting X fail when configuration files are available
 x11-libs/vte:2.91			# Add the style context provider with FALLBACK priority, NOTE: use along with x11-terms/gnome-terminal ehook
 x11-misc/zim				# Install Ubuntu theme (/usr/share/icons/ubuntu-mono-{dark,light})
 x11-terms/gnome-terminal		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, https://bugs.launchpad.net/ubuntu/+source/gnome-terminal/+bug/1493964), NOTE: enable x11-libs/vte ehook as well to use theme background color
-x11-terms/gnome-terminal-3.22		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, https://bugs.launchpad.net/ubuntu/+source/gnome-terminal/+bug/1493964), NOTE: enable x11-libs/vte ehook as well to use theme background color
 
 * By design, some indicators or their features will not appear until they meet certain criteria
 	- indicator-messages	# Won't appear until a messaging type application is run first (eg. empathy, evolution (via indicator-evolution), pidgin, webapp)

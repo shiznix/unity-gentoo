@@ -1,5 +1,0 @@
-ebuild_hook() {
-	sed -i \
-		-e '/Check whether --enable-unity-support was given/c\enable_unity_support=yes' \
-		configure || die
-}
