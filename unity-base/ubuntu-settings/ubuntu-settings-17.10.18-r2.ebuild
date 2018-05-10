@@ -50,7 +50,8 @@ src_prepare() {
 		-e "/org.gnome.login-screen/,+2 d" \
 		-e "/org.gnome.mutter/,+6 d" \
 		-e "/org.gnome.rhythmbox.encoding-settings/,+2 d" \
-		-e "/org.gnome.shell/,+3 d" \
+		-e "/org.gnome.shell]/,+2 d" \
+		-e "/org.gnome.shell:/,+3 d" \
 		-e "/org.gnome.software/,+2 d" \
 		-e "s/:ubuntu\|:Unity//g" \
 		-i "${gschema}"
