@@ -77,15 +77,13 @@ DEPEND="${COMMON_DEPEND}
 # gnome-base/gdm does not provide gnome.desktop anymore
 
 src_prepare() {
-	# Remove gnome-shell from required components #
-	sed -e "s/org.gnome.Shell;//" \
-		-i "${WORKDIR}/debian/patches/50_ubuntu_sessions.patch" || die
-
 	ubuntu-versionator_src_prepare
 
 	# Desktop Session is named 'unity' #
+	sed -e 's/:ubuntu//' \
+		-i data/unity.session.desktop.in.in \
+		-i data/unity.desktop.in || die
 	sed -e 's:buntu:nity:g' \
-		-i data/ubuntu.session.desktop.in.in \
 		-i "${WORKDIR}/debian/data/unity-session.target" || die
 	sed -e 's:/usr/lib/gnome-session:/usr/libexec:g' \
 		-i data/unity.desktop.in || die
@@ -146,9 +144,6 @@ src_install() {
 	exeinto /etc/X11/xinit/xinitrc.d
 	newexe "${FILESDIR}/15-xdg-data-unity" 15-xdg-data-unity
 
-	# Set ubuntu naming to unity (this is important for XSESSION to DESKTOP_SESSION mapping when using 'startx') #
-	mv "${ED}usr/share/gnome-session/sessions/ubuntu.session" "${ED}usr/share/gnome-session/sessions/unity.session"
-
 	# Enables and fills $DESKTOP_SESSION variable for sessions started using 'startx'
 	exeinto /etc/X11/xinit/xinitrc.d/
 	newexe "${FILESDIR}/05-unity-desktop-session" 05-unity-desktop-session
@@ -184,6 +179,7 @@ src_install() {
 	# Remove Ubuntu only session files #
 	rm "${ED}usr/share/wayland-sessions/ubuntu.desktop"
 	rm "${ED}usr/share/xsessions/ubuntu-xorg.desktop"
+	rm "${ED}usr/share/gnome-session/sessions/ubuntu.session"
 }
 
 pkg_postinst() {
