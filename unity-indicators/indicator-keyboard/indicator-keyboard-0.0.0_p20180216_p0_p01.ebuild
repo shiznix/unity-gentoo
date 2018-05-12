@@ -3,8 +3,6 @@
 
 EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
-VALA_MIN_API_VERSION="0.32"
-VALA_MAX_API_VERSION="0.32"
 
 URELEASE="bionic"
 inherit autotools eutils flag-o-matic gnome2-utils python-r1 ubuntu-versionator vala

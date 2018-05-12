@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="bionic"
-inherit autotools eutils gnome2 systemd ubuntu-versionator
+inherit gnome2 meson systemd ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -29,7 +29,7 @@ COMMON_DEPEND="
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/gtk+-3.18.0:3
 	>=dev-libs/json-glib-0.10
-	>=gnome-base/gnome-desktop-3.18:3=
+	>=gnome-base/gnome-desktop-3.27.90:3
 	elibc_FreeBSD? ( dev-libs/libexecinfo )
 
 	media-libs/mesa[egl,gles2]
@@ -73,8 +73,6 @@ DEPEND="${COMMON_DEPEND}
 		app-text/xmlto
 		dev-libs/libxslt )
 "
-# gnome-common needed for eautoreconf
-# gnome-base/gdm does not provide gnome.desktop anymore
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
@@ -88,51 +86,32 @@ src_prepare() {
 	sed -e 's:/usr/lib/gnome-session:/usr/libexec:g' \
 		-i data/unity.desktop.in || die
 
-	eautoreconf
 	gnome2_src_prepare
 }
 
-src_configure() {
-	# 1. Avoid automagic on old upower releases
-	# 2. xsltproc is always checked due to man configure
-	#    switch, even if USE=-doc
-	# 3. Disable old gconf support as other distributions did long time
-	#    ago
-	gnome2_src_configure \
-		--disable-deprecation-flags \
-		--disable-gconf \
-		--enable-session-selector \
-		$(use_enable doc docbook-docs) \
-		$(use_enable ipv6) \
-		$(use_enable systemd) \
-		$(use_enable !systemd consolekit) \
-		UPOWER_CFLAGS="" \
-		UPOWER_LIBS=""
-		# gnome-session-selector pre-generated man page is missing
-		#$(usex !doc XSLTPROC=$(type -P true))
-}
-
 src_install() {
-	gnome2_src_install
+	meson_src_install
 
-	dodir /etc/X11/Sessions
-	exeinto /etc/X11/Sessions
-	doexe "${FILESDIR}/Gnome"
+#	gnome2_src_install
 
-	insinto /usr/share/applications
-	newins "${FILESDIR}/defaults.list-r3" gnome-mimeapps.list
+#	dodir /etc/X11/Sessions
+#	exeinto /etc/X11/Sessions
+#	doexe "${FILESDIR}/Gnome"
 
-	dodir /etc/X11/xinit/xinitrc.d/
-	exeinto /etc/X11/xinit/xinitrc.d/
-	newexe "${FILESDIR}/15-xdg-data-gnome-r1" 15-xdg-data-gnome
+#	insinto /usr/share/applications
+#	newins "${FILESDIR}/defaults.list-r3" gnome-mimeapps.list
+
+#	dodir /etc/X11/xinit/xinitrc.d/
+#	exeinto /etc/X11/xinit/xinitrc.d/
+#	newexe "${FILESDIR}/15-xdg-data-gnome-r1" 15-xdg-data-gnome
 
 	# This should be done here as discussed in bug #270852
-	newexe "${FILESDIR}/10-user-dirs-update-gnome-r1" 10-user-dirs-update-gnome
+#	newexe "${FILESDIR}/10-user-dirs-update-gnome-r1" 10-user-dirs-update-gnome
 
 	# Set XCURSOR_THEME from current dconf setting instead of installing
 	# default cursor symlink globally and affecting other DEs (bug #543488)
 	# https://bugzilla.gnome.org/show_bug.cgi?id=711703
-	newexe "${FILESDIR}/90-xcursor-theme-gnome" 90-xcursor-theme-gnome
+#	newexe "${FILESDIR}/90-xcursor-theme-gnome" 90-xcursor-theme-gnome
 
 #-----------------------------------------------------------------------------------#
 
@@ -185,7 +164,7 @@ src_install() {
 pkg_postinst() {
 	gnome2_pkg_postinst
 
-	if ! has_version gnome-base/gdm && ! has_version x11-misc/sddm; then
+	if ! has_version gnome-base/gdm && ! has_version kde-plasma/kdm; then
 		ewarn "If you use a custom .xinitrc for your X session,"
 		ewarn "make sure that the commands in the xinitrc.d scripts are run."
 	fi

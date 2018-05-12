@@ -99,7 +99,7 @@ src_prepare() {
 	DOCS="AUTHORS ChangeLog DOCUMENTERS INTERNALS \
 		MAINTAINERS MAINTAINERS.old NEWS README THANKS"
 
-	rm -v lib/rb-marshal.{c,h} || die # upstream bug 737831
+#	rm -v lib/rb-marshal.{c,h} || die # upstream bug 737831
 }
 
 src_configure() {

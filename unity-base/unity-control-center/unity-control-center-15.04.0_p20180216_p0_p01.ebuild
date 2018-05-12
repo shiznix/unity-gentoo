@@ -40,6 +40,7 @@ COMMON_DEPEND="
 	app-text/iso-codes
 	dev-libs/libpwquality
 	dev-libs/libtimezonemap
+	dev-libs/libwacom
 	dev-libs/libxml2:2
 	gnome-base/gnome-menus:3
 	gnome-base/libgtop:2=
@@ -105,7 +106,7 @@ RDEPEND="${COMMON_DEPEND}
 	cups? (
 		app-admin/system-config-printer
 		net-print/cups-pk-helper )
-	gnome-online-accounts? ( net-libs/gnome-online-accounts[uoa] )
+	gnome-online-accounts? ( net-libs/gnome-online-accounts )
 
 	!<gnome-base/gdm-2.91.94
 	!<gnome-extra/gnome-color-manager-3.1.2
@@ -136,17 +137,20 @@ DEPEND="${COMMON_DEPEND}
 S="${WORKDIR}"
 
 src_prepare() {
-	epatch "${FILESDIR}/01_${PN}-language-selector.patch"
+	ubuntu-versionator_src_prepare
+
+	# Fudge a pass on broken hostname-helper test (see https://bugzilla.gnome.org/show_bug.cgi?id=650342) #
+	echo > panels/info/hostnames-test.txt
+
+#	epatch "${FILESDIR}/01_${PN}-language-selector.patch" # FIXME: 4,772 line patch (who maintains?) doesn't apply cleanly anymore
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
-	epatch "${FILESDIR}/04_${PN}-optional-bt-colord-kerberos-wacom-webkit.patch"
+#	epatch "${FILESDIR}/04_${PN}-optional-bt-colord-kerberos-wacom-webkit.patch"
 
 	# If a .desktop file does not have inline translations, fall back #
 	#  to calling gettext #
 	find ${WORKDIR} -type f -name "unity*desktop.in.in" \
 		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
-	echo "X-GNOME-Gettext-Domain=language-selector" \
-		>> panels/langselector/language-selector.desktop.in.in
 
 	eautoreconf
 	gnome2_src_prepare

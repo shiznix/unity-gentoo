@@ -45,6 +45,8 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 	unity-indicators/indicator-application
 	x11-themes/ubuntu-wallpapers"
 
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
@@ -55,9 +57,6 @@ src_prepare() {
 	# patch 'at-spi-bus-launcher' path
 	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
                   "${S}"/src/unity-greeter.vala || die
-
-	# replace 'Ubuntu*' session with 'Unity' session to get right badge
-	sed -i -e "s:case \"ubuntu:case \"unity:" "${S}"/src/session-list.vala || die
 
 	vala_src_prepare
 	append-cflags -Wno-error

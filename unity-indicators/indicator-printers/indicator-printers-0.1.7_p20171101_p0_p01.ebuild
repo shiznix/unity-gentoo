@@ -31,7 +31,7 @@ DEPEND="app-admin/system-config-printer
 	x11-libs/gtk+:3
 	x11-libs/pango"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #

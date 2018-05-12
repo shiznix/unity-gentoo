@@ -8,7 +8,8 @@ inherit autotools eutils pam readme.gentoo-r1 systemd user ubuntu-versionator va
 
 DESCRIPTION="A lightweight display manager"
 HOMEPAGE="https://launchpad.net/lightdm"
-SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -64,7 +65,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-#	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 
 	sed -i -e 's:getgroups:lightdm_&:' tests/src/libsystem.c || die #412369
@@ -73,7 +73,9 @@ src_prepare() {
 	# Add support for settings GSettings/dconf defaults in the guest session. Just
 	# put the files in /etc/guest-session/gsettings/. The file format is the same
 	# as the regular GSettings override files.
-	epatch "${FILESDIR}"/guest-session-add-default-gsettings-support_1.22.0.patch
+	pushd "${WORKDIR}"
+		epatch "${FILESDIR}"/guest-session-add-default-gsettings-support_1.22.0.patch
+	popd
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
@@ -125,10 +127,10 @@ src_install() {
 
 	insinto /etc/${PN}/${PN}.conf.d
 	doins "${FILESDIR}"/50-display-setup.conf		# Executes lightdm-greeter-display-setup
-	doins debian/50-greeter-wrapper.conf			# Executes lightdm-greeter-session
+	doins "${WORKDIR}"/debian/50-greeter-wrapper.conf	# Executes lightdm-greeter-session
 
 	exeinto /usr/lib/${PN}
-	doexe debian/lightdm-greeter-session                    # Handle extraneous dbus processes (eliminates 2nd nm-applet icon)
+	doexe "${WORKDIR}"/debian/lightdm-greeter-session	# Handle extraneous dbus processes (eliminates 2nd nm-applet icon)
 	# script makes lightdm multi monitor sessions aware
 	# and enable first display as primary output
 	# all other monitors are aranged right of it in a row
@@ -142,7 +144,7 @@ src_install() {
 
 	# install guest-account script
 	exeinto /usr/bin
-	newexe debian/guest-account.sh guest-account || die
+	newexe "${WORKDIR}"/debian/guest-account.sh guest-account || die
 	# to work the script properly
 	exeinto /usr/share/lightdm/guest-session
 	doexe "${FILESDIR}"/setup.sh
