@@ -88,7 +88,7 @@ dev-libs/folks
 =dev-libs/icu-59*
 dev-libs/libindicate-qt
 =dev-libs/nss-3.36*
-=dev-libs/nspr-4.18*
+=dev-libs/nspr-4.19*
 =dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
