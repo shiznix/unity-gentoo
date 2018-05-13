@@ -1,5 +1,5 @@
---- a/device/u2f/u2f_ble_transaction.cc
-+++ b/device/u2f/u2f_ble_transaction.cc
+--- a/device/fido/u2f_ble_transaction.cc
++++ b/device/fido/u2f_ble_transaction.cc
 @@ -131,7 +131,7 @@
  
  void U2fBleTransaction::OnError() {
