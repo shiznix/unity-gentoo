@@ -1,0 +1,357 @@
+ configure.ac                            | 167 ++++++++++++++++++++++++++------
+ panels/Makefile.am                      |  10 +-
+ panels/info/cc-info-panel.c             |   8 ++
+ panels/user-accounts/um-realm-manager.c |   9 ++
+ 4 files changed, 161 insertions(+), 33 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index e0a31b1..0374295 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -139,8 +139,6 @@ PKG_CHECK_MODULES(APPEARANCE_PANEL, $COMMON_MODULES libxml-2.0 gnome-desktop-3.0
+ PKG_CHECK_MODULES(DATETIME_PANEL, $COMMON_MODULES timezonemap geonames
+                   polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION)
+ PKG_CHECK_MODULES(DISPLAY_PANEL, $COMMON_MODULES libunity-settings-daemon x11)
+-PKG_CHECK_MODULES(INFO_PANEL, $COMMON_MODULES libgtop-2.0 gl x11
+-		  polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION webkit2gtk-4.0)
+ PKG_CHECK_MODULES(KEYBOARD_PANEL, $COMMON_MODULES
+                   gnome-desktop-3.0 >= $GNOME_DESKTOP_REQUIRED_VERSION
+                   x11)
+@@ -150,7 +148,6 @@ PKG_CHECK_MODULES(MOUSE_PANEL, $COMMON_MODULES xi >= 1.2
+ PKG_CHECK_MODULES(NETWORK_PANEL, $COMMON_MODULES)
+ PKG_CHECK_MODULES(POWER_PANEL, $COMMON_MODULES upower-glib >= 0.9.1
+                   unity-settings-daemon)
+-PKG_CHECK_MODULES(COLOR_PANEL, $COMMON_MODULES colord >= 0.1.8)
+ PKG_CHECK_MODULES(PRINTERS_PANEL, $COMMON_MODULES
+                   polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION)
+ PKG_CHECK_MODULES(REGION_PANEL, $COMMON_MODULES
+@@ -172,13 +169,83 @@ PKG_CHECK_MODULES(USER_ACCOUNTS_PANEL, $COMMON_MODULES
+                   gdk-pixbuf-2.0 >= $GDKPIXBUF_REQUIRED_VERSION
+                   pwquality
+                   accountsservice >= $ACCOUNTSSERVICE_REQUIRED_VERSION)
+-PKG_CHECK_MODULES(BLUETOOTH_PANEL, $COMMON_MODULES)
+ 
+ AM_PROG_VALAC([0.20.0])
+ 
+ GDESKTOP_PREFIX=`$PKG_CONFIG --variable prefix gsettings-desktop-schemas`
+ AC_SUBST(GDESKTOP_PREFIX)
+ 
++# Check for webkit2gtk
++INFO_BASE_MODULES="libgtop-2.0
++ gl
++ x11
++ polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION"
++
++AC_ARG_ENABLE([webkit], [
++    AS_HELP_STRING([--disable-webkit], [disable webkit support])
++])
++AS_IF([test "x$enable_webkit" != "xno"], [
++    PKG_CHECK_MODULES([INFO_PANEL], [
++        $COMMON_MODULES
++        $INFO_BASE_MODULES
++        webkit2gtk-4.0
++    ], [
++        AC_DEFINE([BUILD_WEBKIT], [1], [
++            Show Legal Notice in info panel])
++    ])
++], [
++    PKG_CHECK_MODULES([INFO_PANEL], [
++        $COMMON_MODULES
++        $INFO_BASE_MODULES
++    ])
++])
++
++# Check for colord
++build_color=no
++AC_ARG_ENABLE([color],
++              AS_HELP_STRING([--disable-color],
++                             [disable color management panel]),
++              [],
++              [enable_color=auto])
++
++AS_IF([test "x$enable_color" != "xno"],
++      [PKG_CHECK_MODULES([COLOR_PANEL],
++                         [
++                           $COMMON_MODULES
++                           colord >= 0.1.8
++                         ], [
++                           AC_DEFINE(BUILD_COLOR, 1, [Define to 1 to build the Color panel])
++                           build_color=yes
++                         ], [
++                           AS_IF([test "x$enable_color" = "xyes"],
++                                 [AC_MSG_ERROR([colord support requested but not found])])
++                         ])
++      ])
++AM_CONDITIONAL(BUILD_COLOR, test "x$build_color" = "xyes")
++
++# Check for gnome-bluetooth
++have_bluetooth=no
++AC_ARG_ENABLE([bluetooth],
++              AS_HELP_STRING([--disable-bluetooth],
++                             [disable bluetooth management panel]),
++              [],
++              [enable_bluetooth=auto])
++
++AS_IF([test "x$enable_bluetooth" = "xyes"],
++      [PKG_CHECK_MODULES([BLUETOOTH_PANEL],
++                         [$COMMON_MODULES gnome-bluetooth-1.0 >= 3.18.2],
++                         [
++                           AC_DEFINE(BUILD_BLUETOOTH, 1, [Define to 1 to build the Bluetooth panel])
++                           have_bluetooth=yes
++                         ],
++                         [
++                           have_bluetooth=no
++                           AS_IF([test "x$enable_bluetooth" = "xyes"],
++                                 [AC_MSG_ERROR([bluetooth support requested but not found])])
++                         ])
++      ])
++AM_CONDITIONAL(BUILD_BLUETOOTH, [test "x$have_bluetooth" = "xyes"])
++
+ # Check for NetworkManager ~0.9
+ PKG_CHECK_MODULES(NETWORK_MANAGER, NetworkManager >= $NETWORK_MANAGER_REQUIRED_VERSION
+                   libnm-glib >= $NETWORK_MANAGER_REQUIRED_VERSION
+@@ -242,25 +309,40 @@ else
+ fi
+ AM_CONDITIONAL(BUILD_CHEESE, test x${have_cheese} = xyes)
+ 
++# Check for wacom
+ # wacom is disabled for s390/s390x and non Linux platforms (needs udev)
+-case $host_os in
+-  linux*)
+-    if test "$host_cpu" = s390 -o "$host_cpu" = s390x; then
+-      have_wacom=no
+-    else
+-      PKG_CHECK_MODULES(WACOM_PANEL, $COMMON_MODULES
+-                        unity-settings-daemon
+-                        xi >= 1.2 x11 libwacom >= $LIBWACOM_REQUIRED_VERSION
+-                        libunity-settings-daemon)
+-      AC_DEFINE(BUILD_WACOM, 1, [Define to 1 to build the Wacom panel])
+-      have_wacom=yes
+-    fi
+-    ;;
+-  *)
+-    have_wacom=no
+-    ;;
+-esac
+-AM_CONDITIONAL(BUILD_WACOM, [test x"$have_wacom" = x"yes"])
++have_wacom=no
++AS_CASE([$host_os],
++        [linux*],
++        [AS_IF([test "$host_cpu" = "s390" -o "$host_cpu" = "s390x"],
++               [have_wacom=no],
++               [
++                 AC_ARG_ENABLE([wacom],
++                               AS_HELP_STRING([--disable-wacom],
++                                              [disable wacom management panel]),
++                               [],
++                               [enable_wacom=yes])
++                 AS_IF([test "x$enable_wacom" = "xyes"],
++                       [PKG_CHECK_MODULES([WACOM_PANEL],
++                                          [
++                                            $COMMON_MODULES
++                                            unity-settings-daemon
++                                            xi >= 1.2 x11 libwacom >= $LIBWACOM_REQUIRED_VERSION
++                                            libunity-settings-daemon
++                                          ], [
++                                            have_wacom=yes
++                                            AC_DEFINE(BUILD_WACOM, 1, [Define to 1 to build the Wacom panel])
++                                            AC_DEFINE(HAVE_WACOM, 1, [Define to 1 if Wacom is supported])
++                                          ], [
++                                            have_wacom=no
++                                            AS_IF([test "x$enable_wacom" = "xyes"],
++                                                  [AC_MSG_ERROR([wacom support requested but not found])])
++                                          ])
++                       ])
++               ])
++        ],
++        [have_wacom=no])
++AM_CONDITIONAL(BUILD_WACOM, [test "x$have_wacom" = "xyes"])
+ 
+ # Online accounts
+ AC_ARG_ENABLE(onlineaccounts, AC_HELP_STRING([--disable-onlineaccounts], [disable online-accounts panel]),
+@@ -297,15 +379,25 @@ AC_DEFINE_UNQUOTED([ISO_CODES_PREFIX],["`$PKG_CONFIG --variable=prefix iso-codes
+ ISO_CODES=iso-codes
+ 
+ # Kerberos kerberos support
+-AC_PATH_PROG(KRB5_CONFIG, krb5-config, no)
+-if test "$KRB5_CONFIG" = "no"; then
+-  AC_MSG_ERROR([krb5-config executable not found in your path - should be installed with the kerberos libraries])
+-fi
+-
+-AC_MSG_CHECKING(for krb5 libraries and flags)
+-KRB5_CFLAGS="`$KRB5_CONFIG --cflags`"
+-KRB5_LIBS="`$KRB5_CONFIG --libs`"
+-AC_MSG_RESULT($KRB5_CFLAGS $KRB5_LIBS)
++AC_ARG_ENABLE([kerberos],
++              AS_HELP_STRING([--disable-kerberos],
++                             [disable kerberos support (default: enabled)]),
++              [],
++              [enable_kerberos=yes])
++
++AS_IF([test "x$enable_kerberos" != "xno"],
++      [
++        AC_PATH_PROG(KRB5_CONFIG, krb5-config, no)
++
++        AS_IF([test "x$KRB5_CONFIG" = "xno"],
++              AC_MSG_ERROR([krb5-config executable not found in your path - should be installed with the kerberos libraries]))
++
++        AC_MSG_CHECKING([for krb5 libraries and flags])
++        KRB5_CFLAGS="`$KRB5_CONFIG --cflags`"
++        KRB5_LIBS="`$KRB5_CONFIG --libs`"
++        AC_MSG_RESULT($KRB5_CFLAGS $KRB5_LIBS)
++        AC_DEFINE(HAVE_KERBEROS, 1, [defined if krb5 is available])
++      ])
+ 
+ AC_SUBST(KRB5_CFLAGS)
+ AC_SUBST(KRB5_LIBS)
+@@ -550,6 +642,19 @@ if test "x$enable_cups" = "xyes"; then
+ else
+ 	AC_MSG_NOTICE([   Printers panel disabled])
+ fi
++
++if test "x$build_color" = "xyes"; then
++	AC_MSG_NOTICE([** colord (Color panel)])
++else
++	AC_MSG_NOTICE([   Color panel disabled])
++fi
++
++if test "x$have_bluetooth" = "xyes"; then
++	AC_MSG_NOTICE([** gnome-bluetooth (Bluetooth panel)])
++else
++	AC_MSG_NOTICE([   Bluetooth panel disabled])
++fi
++
+ if test "x$have_cheese" = "xyes"; then
+ 	AC_MSG_NOTICE([** Cheese (Users panel webcam support)])
+ else
+diff --git a/panels/Makefile.am b/panels/Makefile.am
+index faf4088..71b6f47 100644
+--- a/panels/Makefile.am
++++ b/panels/Makefile.am
+@@ -4,7 +4,6 @@ SUBDIRS= \
+ 	datetime \
+ 	screen \
+ 	power \
+-	color \
+ 	display \
+ 	mouse \
+ 	region \
+@@ -13,9 +12,16 @@ SUBDIRS= \
+ 	keyboard \
+ 	universal-access \
+ 	user-accounts \
+-	bluetooth \
+ 	screen-sharing
+ 
++if BUILD_COLOR
++SUBDIRS += color
++endif
++
++if BUILD_BLUETOOTH
++SUBDIRS += bluetooth
++endif
++
+ if BUILD_WACOM
+ SUBDIRS += wacom
+ endif
+diff --git a/panels/info/cc-info-panel.c b/panels/info/cc-info-panel.c
+index 9bdd047..a0b1aa1 100644
+--- a/panels/info/cc-info-panel.c
++++ b/panels/info/cc-info-panel.c
+@@ -40,7 +40,9 @@
+ #include <GL/gl.h>
+ #include <GL/glx.h>
+ 
++#ifdef BUILD_WEBKIT
+ #include <webkit2/webkit2.h>
++#endif /* BUILD_WEBKIT */
+ 
+ #include "hostname-helper.h"
+ #include "gsd-disk-space-helper.h"
+@@ -733,6 +735,7 @@ on_section_changed (GtkTreeSelection  *selection,
+   gtk_tree_path_free (path);
+ }
+ 
++#ifdef BUILD_WEBKIT
+ static gboolean
+ on_decide_policy (WebKitWebView             *web_view,
+                   WebKitPolicyDecision      *decision,
+@@ -779,6 +782,7 @@ info_panel_setup_notice (CcInfoPanel  *self)
+   gtk_notebook_append_page (GTK_NOTEBOOK (WID ("notebook")), GTK_WIDGET (webView), NULL);
+   gtk_widget_show_all (GTK_WIDGET (webView));
+ }
++#endif /* BUILD_WEBKIT */
+ 
+ static void
+ default_app_changed (GtkAppChooserButton *button,
+@@ -1415,10 +1419,12 @@ info_panel_setup_selector (CcInfoPanel  *self)
+                       _("Removable Media"),
+                       -1);
+ 
++#ifdef BUILD_WEBKIT
+   gtk_list_store_append (model, &iter);
+   gtk_list_store_set (model, &iter, section_name_column,
+                       _("Legal Notice"),
+                       -1);
++#endif /* BUILD_WEBKIT */
+ 
+   g_signal_connect (selection, "changed",
+                     G_CALLBACK (on_section_changed), self);
+@@ -1944,7 +1950,9 @@ cc_info_panel_init (CcInfoPanel *self)
+   info_panel_setup_overview (self);
+   info_panel_setup_default_apps (self);
+   info_panel_setup_media (self);
++#ifdef BUILD_WEBKIT
+   info_panel_setup_notice (self);
++#endif /* BUILD_WEBKIT */
+ }
+ 
+ void
+diff --git a/panels/user-accounts/um-realm-manager.c b/panels/user-accounts/um-realm-manager.c
+index 169cd15..44e9660 100644
+--- a/panels/user-accounts/um-realm-manager.c
++++ b/panels/user-accounts/um-realm-manager.c
+@@ -23,7 +23,9 @@
+ 
+ #include "um-realm-manager.h"
+ 
++#ifdef HAVE_KERBEROS
+ #include <krb5/krb5.h>
++#endif
+ 
+ #include <glib.h>
+ #include <glib/gi18n.h>
+@@ -691,6 +693,7 @@ login_closure_free (gpointer data)
+         g_slice_free (LoginClosure, login);
+ }
+ 
++#ifdef HAVE_KERBEROS
+ static krb5_error_code
+ login_perform_kinit (krb5_context k5,
+                      const gchar *realm,
+@@ -754,12 +757,14 @@ login_perform_kinit (krb5_context k5,
+ 
+         return code;
+ }
++#endif /* HAVE_KERBEROS */
+ 
+ static void
+ kinit_thread_func (GSimpleAsyncResult *async,
+                    GObject *object,
+                    GCancellable *cancellable)
+ {
++#ifdef HAVE_KERBEROS
+         LoginClosure *login = g_simple_async_result_get_op_res_gpointer (async);
+         krb5_context k5 = NULL;
+         krb5_error_code code;
+@@ -837,6 +842,10 @@ kinit_thread_func (GSimpleAsyncResult *async,
+ 
+         if (k5)
+                 krb5_free_context (k5);
++#else /* HAVE_KERBEROS */
++        g_simple_async_result_set_error (async, UM_REALM_ERROR, UM_REALM_ERROR_GENERIC,
++                                         _("gnome-control-center was built without kerberos support"));
++#endif
+ }
+ 
+ void

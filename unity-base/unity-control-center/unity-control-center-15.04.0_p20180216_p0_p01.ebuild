@@ -145,7 +145,7 @@ src_prepare() {
 #	epatch "${FILESDIR}/01_${PN}-language-selector.patch" # FIXME: 4,772 line patch (who maintains?) doesn't apply cleanly anymore
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
-#	epatch "${FILESDIR}/04_${PN}-optional-bt-colord-kerberos-wacom-webkit.patch"
+	epatch "${FILESDIR}/04_${PN}-2018-optional-bt-colord-kerberos-wacom-webkit.patch"
 
 	# If a .desktop file does not have inline translations, fall back #
 	#  to calling gettext #
