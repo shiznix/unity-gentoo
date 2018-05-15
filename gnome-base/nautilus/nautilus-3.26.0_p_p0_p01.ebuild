@@ -76,7 +76,7 @@ src_prepare() {
 		-e 's:multiarch_fallback:#multiarch_fallback:g' \
 			-i "${WORKDIR}/debian/patches/series"
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/${PN}-optional-tracker.patch"
+	eapply "${FILESDIR}/${P/_*}-optional-tracker.patch"
 	if use previewer; then
 		DOC_CONTENTS="nautilus uses gnome-extra/sushi to preview media files.
 			To activate the previewer, select a file and press space; to
