@@ -197,8 +197,7 @@ src_install() {
 		"Numbers"
 		"Measurement"
 		"Paper"
-		"Imperial"
-		"Metric"
+		"measurement format"
 		"More…"
 		"No languages found"
 		"No regions found"
@@ -242,8 +241,8 @@ src_install() {
 			ls_src=${pofile/${ucc_po}/${ls_po}}
 			ls_src=${ls_src/gnome-}
 			for msgid in "${msgids[@]}"; do
-				if ! grep -q "^msgid\s\"${msgid}\"$" "${pofile}"; then
-					echo "$(awk "/^msgid\s\"${msgid}\"\$/ { p = 1 } p { print } /^\$/ { p = 0 }" "${gcc_src}" "${ls_src}" 2>/dev/null)" \
+				if ! grep -q "^\(msgid\|msgctxt\)\s\"${msgid}\"$" "${pofile}"; then
+					echo "$(awk "/^(msgid|msgctxt)\s\"${msgid}\"\$/ { p = 1 } p { print } /^\$/ { p = 0 }" "${gcc_src}" "${ls_src}" 2>/dev/null)" \
 						>> "${pofile}"
 				fi
 			done
