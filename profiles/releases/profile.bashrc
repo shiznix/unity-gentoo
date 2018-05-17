@@ -63,20 +63,19 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		"${optdir}"
 	)
 
-	for basedir in "${basedirs[@]}"; do
-		for pkg in "${basedir}"/${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{,:${SLOT%/*}}; do
-			if [[ -d ${pkg} ]]; then
+	for pkg in ${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{,:${SLOT%/*}}; do
+		for basedir in "${basedirs[@]}"; do
+			if [[ -d ${basedir}/${pkg} ]]; then
 				## Skip if source from ${optdir} not enabled.
 				if [[ ${basedir} == ${optdir} ]]; then
-					pkg=${pkg/ehooks/ehooks\/conf.d}
-					[[ -e ${pkg%/*}@${pkg##*/} ]] \
+					[[ -e ${optdir}/conf.d/${pkg%/*}@${pkg##*/} ]] \
 						|| break 2
 				fi
 
 				local prev_shopt=$(shopt -p nullglob)
 
 				shopt -s nullglob
-				EHOOK_SOURCE=( "${pkg/\/conf.d}"/*.ehook )
+				EHOOK_SOURCE=( "${basedir}/${pkg}"/*.ehook )
 				${prev_shopt}
 				break 2
 			fi
