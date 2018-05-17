@@ -1,14 +1,14 @@
  configure.ac                                       |   7 +
  panels/Makefile.am                                 |   1 +
- panels/common/Makefile.am                          |   1 +
- panels/common/cc-common-language.c                 | 629 ++++-----------
- panels/common/cc-common-language.h                 |   5 +-
- panels/common/cc-language-chooser.c                | 611 ++++++++------
- panels/common/cc-language-chooser.h                |  19 +-
+ panels/common/Makefile.am                          |   2 +
+ panels/common/cc-common-language.c                 | 626 ++++-----------
+ panels/common/cc-common-language.h                 |   2 +-
+ panels/common/cc-language-chooser.c                | 606 ++++++++------
+ panels/common/cc-language-chooser.h                |  10 +-
  panels/common/cc-util.c                            | 108 +++
  panels/common/cc-util.h                            |  28 +
- panels/common/language-chooser.ui                  | 146 ++--
- panels/keyboard/keyboard-general.c                 |   7 +-
+ panels/common/language-chooser.ui                  | 144 ++--
+ panels/keyboard/keyboard-general.c                 |   3 +-
  panels/langselector/Makefile.am                    |  48 ++
  panels/langselector/cc-format-chooser.c            | 588 ++++++++++++++
  panels/langselector/cc-format-chooser.h            |  36 +
@@ -29,7 +29,7 @@
  shell/Makefile.am                                  |   2 +
  shell/list-box-helper.c                            |  41 +
  shell/list-box-helper.h                            |  24 +
- 31 files changed, 3203 insertions(+), 906 deletions(-)
+ 31 files changed, 3193 insertions(+), 891 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
 index 572490e..6daa64e 100644
@@ -69,32 +69,23 @@ index 5ed02c6..625f628 100644
  	sound \
  	keyboard \
 diff --git a/panels/common/Makefile.am b/panels/common/Makefile.am
-index eeeac06..6a7e001 100644
+index eeeac06..a68d999 100644
 --- a/panels/common/Makefile.am
 +++ b/panels/common/Makefile.am
-@@ -8,6 +8,7 @@ AM_CPPFLAGS =						\
- 	$(PANEL_CFLAGS)					\
- 	$(LIBLANGUAGE_CFLAGS)				\
- 	-DDATADIR=\""$(datadir)"\"			\
-+	-DGNOMECC_UI_DIR="\"$(uidir)\""			\
- 	-DUIDIR=\""$(pkgdatadir)/ui"\"			\
- 	-DLIBLOCALEDIR=\""$(prefix)/lib/locale"\"       \
- 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"        \
+@@ -17,6 +17,8 @@ liblanguage_la_SOURCES =		\
+ 	gdm-languages.h 		\
+ 	gdm-languages.c 		\
+ 	locarchive.h			\
++	cc-util.c			\
++	cc-util.h			\
+ 	cc-common-language.c		\
+ 	cc-common-language.h		\
+ 	cc-language-chooser.c		\
 diff --git a/panels/common/cc-common-language.c b/panels/common/cc-common-language.c
-index 885afe1..98159d4 100644
+index 885afe1..a55df19 100644
 --- a/panels/common/cc-common-language.c
 +++ b/panels/common/cc-common-language.c
-@@ -13,8 +13,7 @@
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License
-- * along with this program; if not, write to the Free Software
-- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
-  *
-  * Written by: Matthias Clasen <mclasen@redhat.com>
-  */
-@@ -30,9 +29,10 @@
+@@ -30,9 +30,10 @@
  
  #include <fontconfig/fontconfig.h>
  
@@ -107,7 +98,7 @@ index 885afe1..98159d4 100644
  
  static gint
  cc_common_language_sort_languages (GtkTreeModel *model,
-@@ -90,6 +90,80 @@ cc_common_language_sort_languages (GtkTreeModel *model,
+@@ -90,6 +91,80 @@ cc_common_language_sort_languages (GtkTreeModel *model,
          return result;
  }
  
@@ -188,7 +179,7 @@ index 885afe1..98159d4 100644
  static gboolean
  iter_for_language (GtkTreeModel *model,
                     const gchar  *lang,
-@@ -100,7 +174,7 @@ iter_for_language (GtkTreeModel *model,
+@@ -100,7 +175,7 @@ iter_for_language (GtkTreeModel *model,
          char *name;
          char *language;
  
@@ -197,7 +188,7 @@ index 885afe1..98159d4 100644
          do {
                  gtk_tree_model_get (model, iter, LOCALE_COL, &l, -1);
                  if (g_strcmp0 (l, lang) == 0) {
-@@ -110,13 +184,13 @@ iter_for_language (GtkTreeModel *model,
+@@ -110,13 +185,13 @@ iter_for_language (GtkTreeModel *model,
                  g_free (l);
          } while (gtk_tree_model_iter_next (model, iter));
  
@@ -214,10 +205,11 @@ index 885afe1..98159d4 100644
                  }
  
                  gtk_list_store_insert_with_values (GTK_LIST_STORE (model),
-@@ -142,14 +216,6 @@ cc_common_language_get_iter_for_language (GtkTreeModel *model,
+@@ -141,14 +216,6 @@ cc_common_language_get_iter_for_language (GtkTreeModel *model,
+   return iter_for_language (model, lang, iter, FALSE);
  }
  
- gboolean
+-gboolean
 -cc_common_language_get_iter_for_region (GtkTreeModel *model,
 -                                        const gchar  *lang,
 -                                        GtkTreeIter  *iter)
@@ -225,11 +217,10 @@ index 885afe1..98159d4 100644
 -  return iter_for_language (model, lang, iter, TRUE);
 -}
 -
--gboolean
+ gboolean
  cc_common_language_has_font (const gchar *locale)
  {
-         const FcCharSet *charset;
-@@ -164,7 +230,7 @@ cc_common_language_has_font (const gchar *locale)
+@@ -164,7 +231,7 @@ cc_common_language_has_font (const gchar *locale)
          object_set = NULL;
          font_set = NULL;
  
@@ -238,7 +229,7 @@ index 885afe1..98159d4 100644
                  return FALSE;
  
          charset = FcLangGetCharSet ((FcChar8 *) language_code);
-@@ -207,501 +273,114 @@ cc_common_language_has_font (const gchar *locale)
+@@ -207,501 +274,114 @@ cc_common_language_has_font (const gchar *locale)
          return is_displayable;
  }
  
@@ -812,20 +803,10 @@ index 885afe1..98159d4 100644
          return ht;
  }
 diff --git a/panels/common/cc-common-language.h b/panels/common/cc-common-language.h
-index 9894988..af21f76 100644
+index 9894988..528eb6c 100644
 --- a/panels/common/cc-common-language.h
 +++ b/panels/common/cc-common-language.h
-@@ -13,8 +13,7 @@
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License
-- * along with this program; if not, write to the Free Software
-- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
-  *
-  * Written by: Matthias Clasen <mclasen@redhat.com>
-  */
-@@ -45,9 +44,9 @@ guint    cc_common_language_add_available_languages (GtkListStore     *store,
+@@ -45,9 +45,9 @@ guint    cc_common_language_add_available_languages (GtkListStore     *store,
                                                       GHashTable       *user_langs);
  gboolean cc_common_language_has_font                (const gchar  *locale);
  gchar   *cc_common_language_get_current_language    (void);
@@ -837,25 +818,10 @@ index 9894988..af21f76 100644
  
  void     cc_common_language_setup_list              (GtkWidget    *treeview,
 diff --git a/panels/common/cc-language-chooser.c b/panels/common/cc-language-chooser.c
-index 502dc59..93be3d7 100644
+index 502dc59..f62fcc6 100644
 --- a/panels/common/cc-language-chooser.c
 +++ b/panels/common/cc-language-chooser.c
-@@ -1,6 +1,6 @@
- /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
-  *
-- * Copyright 2009-2010  Red Hat, Inc,
-+ * Copyright (C) 2013 Red Hat, Inc
-  *
-  * This program is free software; you can redistribute it and/or modify
-  * it under the terms of the GNU General Public License as published by
-@@ -13,332 +13,469 @@
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License
-- * along with this program; if not, write to the Free Software
-- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
-  *
+@@ -19,326 +19,464 @@
   * Written by: Matthias Clasen <mclasen@redhat.com>
   */
  
@@ -1443,7 +1409,7 @@ index 502dc59..93be3d7 100644
 -        if (!g_file_test (filename, G_FILE_TEST_EXISTS))
 -                filename = "data/language-chooser.ui";
 -        if (!gtk_builder_add_from_file (builder, filename, &error)) {
-+        if (gtk_builder_add_from_file (builder, GNOMECC_UI_DIR "/language-chooser.ui", &error) == 0) {
++        if (gtk_builder_add_from_file (builder, UIDIR "/language-chooser.ui", &error) == 0) {
 +                g_object_unref (builder);
                  g_warning ("failed to load language chooser: %s", error->message);
                  g_error_free (error);
@@ -1555,28 +1521,10 @@ index 502dc59..93be3d7 100644
 +        set_locale_id (GTK_DIALOG (chooser), language);
  }
 diff --git a/panels/common/cc-language-chooser.h b/panels/common/cc-language-chooser.h
-index da557dc..5329e8b 100644
+index da557dc..ea630bf 100644
 --- a/panels/common/cc-language-chooser.h
 +++ b/panels/common/cc-language-chooser.h
-@@ -1,6 +1,6 @@
- /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
-  *
-- * Copyright 2009-2010  Red Hat, Inc,
-+ * Copyright (C) 2013 Red Hat, Inc
-  *
-  * This program is free software; you can redistribute it and/or modify
-  * it under the terms of the GNU General Public License as published by
-@@ -13,8 +13,7 @@
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License
-- * along with this program; if not, write to the Free Software
-- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
-  *
-  * Written by: Matthias Clasen <mclasen@redhat.com>
-  */
-@@ -23,16 +22,16 @@
+@@ -23,15 +23,15 @@
  #define __CC_LANGUAGE_CHOOSER_H__
  
  #include <gtk/gtk.h>
@@ -1588,18 +1536,15 @@ index da557dc..5329e8b 100644
 -
 -GtkWidget        *cc_language_chooser_new          (GtkWidget *parent,
 -                                                    gboolean   regions);
--void              cc_language_chooser_clear_filter (GtkWidget *chooser);
--gchar            *cc_language_chooser_get_language (GtkWidget *chooser);
 +GtkWidget   *cc_language_chooser_new          (GtkWidget   *parent);
-+void         cc_language_chooser_clear_filter (GtkWidget   *chooser);
+ void              cc_language_chooser_clear_filter (GtkWidget *chooser);
+-gchar            *cc_language_chooser_get_language (GtkWidget *chooser);
 +const gchar *cc_language_chooser_get_language (GtkWidget   *chooser);
 +void         cc_language_chooser_set_language (GtkWidget   *chooser,
 +                                               const gchar *language);
  
  G_END_DECLS
  
--#endif
-+#endif /* __CC_LANGUAGE_CHOOSER_H__ */
 diff --git a/panels/common/cc-util.c b/panels/common/cc-util.c
 new file mode 100644
 index 0000000..1c9cd0c
@@ -1749,12 +1694,11 @@ index 0000000..0a825ba
 +
 +#endif
 diff --git a/panels/common/language-chooser.ui b/panels/common/language-chooser.ui
-index a6ef96a..c8228bb 100644
+index a6ef96a..51222a6 100644
 --- a/panels/common/language-chooser.ui
 +++ b/panels/common/language-chooser.ui
 @@ -1,114 +1,78 @@
--<?xml version="1.0"?>
-+<?xml version="1.0" encoding="UTF-8"?>
+ <?xml version="1.0"?>
  <interface>
 -  <object class="GtkDialog" id="dialog">
 -    <property name="height_request">400</property>
@@ -1923,16 +1867,10 @@ index a6ef96a..c8228bb 100644
    </object>
  </interface>
 diff --git a/panels/keyboard/keyboard-general.c b/panels/keyboard/keyboard-general.c
-index 43920be..a9a78a2 100644
+index 43920be..2d5e45f 100644
 --- a/panels/keyboard/keyboard-general.c
 +++ b/panels/keyboard/keyboard-general.c
-@@ -56,15 +56,14 @@ set_rate (const GValue       *value,
- }
- 
- static gboolean
--layout_link_clicked (GtkLinkButton *button,
-+region_link_clicked (GtkLinkButton *button,
-                      CcPanel       *panel)
+@@ -61,10 +61,9 @@ layout_link_clicked (GtkLinkButton *button,
  {
    CcShell *shell;
    GError *error = NULL;
@@ -1944,18 +1882,9 @@ index 43920be..a9a78a2 100644
      {
        g_warning ("Failed to activate Region panel: %s", error->message);
        g_error_free (error);
-@@ -108,7 +107,7 @@ keyboard_general_init (CcPanel *panel, GtkBuilder *builder)
-                    G_SETTINGS_BIND_DEFAULT);
- 
-   g_signal_connect (WID ("linkbutton"), "activate-link",
--                    G_CALLBACK (layout_link_clicked), panel);
-+                    G_CALLBACK (region_link_clicked), panel);
- }
- 
- void
 diff --git a/panels/langselector/Makefile.am b/panels/langselector/Makefile.am
 new file mode 100644
-index 0000000..4f3503c
+index 0000000..68a750c
 --- /dev/null
 +++ b/panels/langselector/Makefile.am
 @@ -0,0 +1,48 @@
@@ -1965,9 +1894,9 @@ index 0000000..4f3503c
 +INCLUDES =						\
 +	$(PANEL_CFLAGS)					\
 +	$(LANGSELECTOR_PANEL_CFLAGS)			\
-+	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
-+	-DGNOMECC_DATA_DIR="\"$(pkgdatadir)\""		\
-+	-DGNOMECC_UI_DIR="\"$(uidir)\""			\
++	-DLIBLOCALEDIR=\""$(prefix)/lib/locale"\"       \
++	-DDATADIR=\""$(datadir)"\"			\
++	-DUIDIR=\""$(pkgdatadir)/ui"\"			\
 +	-I$(srcdir)/../common/				\
 +	$(NULL)
 +
@@ -2009,7 +1938,7 @@ index 0000000..4f3503c
 +-include $(top_srcdir)/git.mk
 diff --git a/panels/langselector/cc-format-chooser.c b/panels/langselector/cc-format-chooser.c
 new file mode 100644
-index 0000000..2029140
+index 0000000..234dd75
 --- /dev/null
 +++ b/panels/langselector/cc-format-chooser.c
 @@ -0,0 +1,588 @@
@@ -2528,7 +2457,7 @@ index 0000000..2029140
 +        GError *error = NULL;
 +
 +        builder = gtk_builder_new ();
-+        if (gtk_builder_add_from_file (builder, GNOMECC_UI_DIR "/format-chooser.ui", &error) == 0) {
++        if (gtk_builder_add_from_file (builder, UIDIR "/format-chooser.ui", &error) == 0) {
 +                g_object_unref (builder);
 +                g_warning ("failed to load format chooser: %s", error->message);
 +                g_error_free (error);
@@ -2645,7 +2574,7 @@ index 0000000..6b49c01
 +#endif /* __CC_FORMAT_CHOOSER_H__ */
 diff --git a/panels/langselector/cc-langselector-panel.c b/panels/langselector/cc-langselector-panel.c
 new file mode 100644
-index 0000000..ad7df1d
+index 0000000..67e6f10
 --- /dev/null
 +++ b/panels/langselector/cc-langselector-panel.c
 @@ -0,0 +1,892 @@
@@ -3465,7 +3394,7 @@ index 0000000..ad7df1d
 +}
 +
 +static gboolean
-+region_link_clicked (GtkLinkButton       *button,
++layout_link_clicked (GtkLinkButton       *button,
 +                     CcLangselectorPanel *self)
 +{
 +        CcLangselectorPanelPrivate *priv = self->priv;
@@ -3493,7 +3422,7 @@ index 0000000..ad7df1d
 +	priv->builder = gtk_builder_new ();
 +
 +	gtk_builder_add_from_file (priv->builder,
-+                                       GNOMECC_UI_DIR "/langselector.ui",
++                                       UIDIR "/langselector.ui",
 +                                       &error);
 +	if (error != NULL) {
 +		g_warning ("Error loading UI file: %s", error->message);
@@ -3524,7 +3453,7 @@ index 0000000..ad7df1d
 +        g_signal_connect_swapped (button, "clicked", G_CALLBACK (dismiss_notification), self);
 +
 +        g_signal_connect (WID ("linkbutton"), "activate-link",
-+                          G_CALLBACK (region_link_clicked), self);
++                          G_CALLBACK (layout_link_clicked), self);
 +
 +        setup_login_button (self);
 +        setup_language_section (self);
@@ -3968,7 +3897,7 @@ index 0000000..a722665
 +</interface>
 diff --git a/panels/langselector/langselector-module.c b/panels/langselector/langselector-module.c
 new file mode 100644
-index 0000000..e9c795d
+index 0000000..3a073c4
 --- /dev/null
 +++ b/panels/langselector/langselector-module.c
 @@ -0,0 +1,41 @@
@@ -4002,7 +3931,7 @@ index 0000000..e9c795d
 +void
 +g_io_module_load (GIOModule * module)
 +{
-+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
++	bindtextdomain (GETTEXT_PACKAGE, LIBLOCALEDIR);
 +	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 +
 +	/* register the panel */
@@ -4681,18 +4610,18 @@ index a7d8e83..0e3713e 100644
 +[type: gettext/glade]panels/langselector/langselector.ui
 +panels/langselector/unity-langselector-panel.desktop.in.in
 diff --git a/shell/Makefile.am b/shell/Makefile.am
-index 9a32746..5fd51cd 100644
+index 9a32746..695ba1e 100644
 --- a/shell/Makefile.am
 +++ b/shell/Makefile.am
-@@ -30,6 +30,8 @@ unity_control_center_SOURCES =			\
- 	cc-shell-model.h			\
- 	cc-shell-nav-bar.c			\
- 	cc-shell-nav-bar.h			\
+@@ -54,6 +54,8 @@ libunity_control_center_la_SOURCES =		\
+ 	cc-shell.h				\
+ 	cc-editable-entry.c			\
+ 	cc-editable-entry.h			\
 +	list-box-helper.h			\
 +	list-box-helper.c			\
- 	$(MARSHAL_FILES)
+ 	$(NULL)
  
- unity_control_center_LDADD =			\
+ libunity_control_center_la_LDFLAGS =		\
 diff --git a/shell/list-box-helper.c b/shell/list-box-helper.c
 new file mode 100644
 index 0000000..2a1f416

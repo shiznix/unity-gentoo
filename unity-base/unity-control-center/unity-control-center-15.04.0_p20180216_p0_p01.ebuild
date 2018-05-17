@@ -142,7 +142,7 @@ src_prepare() {
 	# Fudge a pass on broken hostname-helper test (see https://bugzilla.gnome.org/show_bug.cgi?id=650342) #
 	echo > panels/info/hostnames-test.txt
 
-#	epatch "${FILESDIR}/01_${PN}-language-selector.patch" # FIXME: 4,772 line patch (who maintains?) doesn't apply cleanly anymore
+	epatch "${FILESDIR}/01_${PN}-2018-language-selector.patch" # Based on g-c-c v3.24 Region & Language panel
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
 	epatch "${FILESDIR}/04_${PN}-2018-optional-bt-colord-kerberos-wacom-webkit.patch"
@@ -151,6 +151,8 @@ src_prepare() {
 	#  to calling gettext #
 	find ${WORKDIR} -type f -name "unity*desktop.in.in" \
 		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
+	echo "X-GNOME-Gettext-Domain=language-selector" \
+		>> panels/langselector/language-selector.desktop.in.in
 
 	eautoreconf
 	gnome2_src_prepare

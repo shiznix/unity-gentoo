@@ -137,7 +137,7 @@ DEPEND="${COMMON_DEPEND}
 S="${WORKDIR}"
 
 src_prepare() {
-	epatch "${FILESDIR}/01_${PN}-language-selector.patch"
+	epatch "${FILESDIR}/01_${PN}-2017-language-selector.patch" # Based on g-c-c v3.24 Region & Language panel
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
 	epatch "${FILESDIR}/04_${PN}-2017-optional-bt-colord-kerberos-wacom-webkit.patch"
