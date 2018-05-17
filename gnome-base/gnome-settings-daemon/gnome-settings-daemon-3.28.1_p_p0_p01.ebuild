@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-GNOME2_EAUTORECONF="yes"
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_5,3_6} )
 
@@ -50,7 +49,7 @@ COMMON_DEPEND="
 	>=app-misc/geoclue-2.3.1:2.0
 	>=dev-libs/libgweather-3.9.5:2=
 	>=sci-geosciences/geocode-glib-3.10
-	>=sys-auth/polkit-0.113
+	>=sys-auth/polkit-0.114
 
 	>=media-libs/lcms-2.2:2
 	>=x11-misc/colord-1.0.2:=
@@ -112,6 +111,5 @@ src_configure() {
 		$(meson_use smartcard)
 		$(meson_use wayland)
 	)
-
 	meson_src_configure
 }

@@ -18,58 +18,53 @@ x11-themes/mate-icon-theme
 x11-terms/mate-terminal
 x11-wm/marco
 
-# Unmask Gnome-3.26 #
-=*/gnome*-*24*::gentoo
-=gnome-base/*-*24*::gentoo
-=gnome-extra/*-*24*::gentoo
-=games-puzzle/*-*24*::gentoo
-=app-i18n/unicode-data-10*
->=app-accessibility/at-spi2-atk-2.24::gentoo
->=app-accessibility/at-spi2-core-2.24::gentoo
->=app-accessibility/orca-3.24::gentoo
->=app-arch/file-roller-3.24::gentoo
->=app-cdr/brasero-3.12::gentoo
->=app-editors/gedit-3.22::gentoo
-
-#=app-misc/tracker-2.0*::unity-gentoo
-
->=app-text/evince-3.24::gentoo
->=app-text/yelp-tools-3.24::gentoo
->=dev-cpp/gtkmm-3.24::gentoo
-dev-lang/vala:0.36::gentoo
->=dev-libs/atk-2.24::gentoo
->=dev-libs/gjs-1.48::gentoo
-~dev-libs/libgudev-232::gentoo
->=dev-libs/libgweather-3.24::gentoo
-~dev-libs/libusb-1.0.21::gentoo
-=dev-libs/vala-common-0.36*::gentoo
->=dev-python/pyatspi-2.24.0::gentoo
->=dev-python/pygobject-3.24::gentoo
->=dev-util/gtk-update-icon-cache-3.24::gentoo
->=dev-util/devhelp-3.24::gentoo
->=dev-vcs/gitg-3.24::gentoo
->=gnome-base/gvfs-1.32::gentoo
-gnome-extra/gucharmap:2.90::gentoo
-
-#=gnome-extra/nautilus-tracker-tags-2.0*::unity-gentoo
-
->=mail-client/evolution-3.24::gentoo
->=media-gfx/eog-3.24::gentoo
->=media-libs/clutter-gtk-1.8.4::gentoo
->=media-sound/sound-juicer-3.24::gentoo
->=media-video/cheese-3.24::gentoo
->=media-video/totem-3.24::gentoo
->=net-misc/vinagre-3.24::gentoo
->=net-wireless/gnome-bluetooth-3.24::gentoo
->=sci-geosciences/geocode-glib-3.24::gentoo
->=sys-apps/baobab-3.24::gentoo
-~virtual/libgudev-232::gentoo
->=x11-libs/gtksourceview-3.24::gentoo
->=x11-libs/libwnck-3.24::gentoo
-# >=x11-libs/pango-1.40.9::gentoo
->=x11-libs/vte-0.48::gentoo
->=x11-themes/adwaita-icon-theme-3.24::gentoo
->=x11-wm/mutter-3.24::gentoo
+# Unmask Gnome-3.28 #
+#=*/gnome*-*28*::gentoo
+#=gnome-base/*-*28*::gentoo
+#=gnome-extra/*-*28*::gentoo
+#=games-puzzle/*-*28*::gentoo
+#=app-i18n/unicode-data-10*
+#>=app-accessibility/at-spi2-atk-2.26::gentoo
+#>=app-accessibility/at-spi2-core-2.26::gentoo
+#>=app-accessibility/orca-3.28::gentoo
+#>=app-arch/file-roller-3.28::gentoo
+#>=app-cdr/brasero-3.12::gentoo
+#>=app-editors/gedit-3.28::gentoo
+#>=app-text/evince-3.28::gentoo
+#>=app-text/yelp-tools-3.28::gentoo
+#>=dev-cpp/gtkmm-3.28::gentoo
+#dev-lang/vala:0.40::gentoo
+#>=dev-libs/atk-2.29::gentoo
+#>=dev-libs/gjs-1.53::gentoo
+#~dev-libs/libgudev-232::gentoo
+#>=dev-libs/libgweather-3.28::gentoo
+#~dev-libs/libusb-1.0.21::gentoo
+#=dev-libs/vala-common-0.40*::gentoo
+#>=dev-python/pyatspi-2.26.0::gentoo
+#>=dev-python/pygobject-3.28::gentoo
+#>=dev-util/gtk-update-icon-cache-3.24::gentoo
+#>=dev-util/devhelp-3.28::gentoo
+#>=dev-vcs/gitg-3.26::gentoo
+#>=gnome-base/gvfs-1.37::gentoo
+#gnome-extra/gucharmap:2.90::gentoo
+#>=gnome-extra/evolution-data-server-3.28::gentoo
+#>=mail-client/evolution-3.28::gentoo
+#>=media-gfx/eog-3.28::gentoo
+#>=media-libs/clutter-gtk-1.8.4::gentoo
+#>=media-sound/sound-juicer-3.24::gentoo
+#>=media-video/cheese-3.28::gentoo
+#>=media-video/totem-3.26::gentoo
+#>=net-misc/vinagre-3.22::gentoo
+#>=net-wireless/gnome-bluetooth-3.28::gentoo
+#>=sci-geosciences/geocode-glib-3.25::gentoo
+#>=sys-apps/baobab-3.28::gentoo
+#~virtual/libgudev-232::gentoo
+#>=x11-libs/gtksourceview-3.24::gentoo
+#>=x11-libs/libwnck-3.24::gentoo
+## >=x11-libs/pango-1.42::gentoo
+#>=x11-libs/vte-0.52::gentoo
+#>=x11-themes/adwaita-icon-theme-3.28::gentoo
+#>=x11-wm/mutter-3.28::gentoo
 # >=media-plugins/grilo-plugins-0.2.16::gentoo
 
 ## Other packages keyword unmasking ##
@@ -80,9 +75,7 @@ app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
 dev-lang/rust
-dev-lang/spidermonkey:38
-dev-lang/vala:0.36::gentoo
-=dev-libs/boost-1.58*			# Version used by Unity upstream and needed for successful build of gmock/gtest
+dev-lang/spidermonkey:52
 dev-libs/capnproto
 dev-libs/folks
 =dev-libs/icu-59*
@@ -92,7 +85,6 @@ dev-libs/libindicate-qt
 =dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
-=dev-util/boost-build-1.58*
 dev-util/valgrind
 dev-python/python-prctl
 =dev-python/python-xlib-0.19*
@@ -109,12 +101,14 @@ mail-client/thunderbird
 =sys-apps/apparmor-2.10*
 =sys-apps/apparmor-utils-2.10*
 ~sys-apps/systemd-232			# Provides support for graphical(-pre)-session.target(.wants) systemd units used to start Unity desktop session
+=sys-auth/polkit-0.114*
 sys-devel/clang:4
 sys-devel/llvm:4
 sys-fs/lxcfs
 sys-libs/db:5.1
 sys-libs/db:5.3
 =sys-libs/libapparmor-2.10*
+sys-power/upower
 virtual/rust
 www-client/firefox
 =x11-drivers/xf86-input-evdev-2.10*
@@ -127,6 +121,7 @@ app-accessibility/onboard **
 app-arch/snapd **
 app-arch/snapd-glib **
 app-backup/deja-dup **
+app-text/evince **
 dev-cpp/gmock **
 dev-cpp/gtest **
 dev-libs/dee **
@@ -154,6 +149,7 @@ dev-util/cmake-extras **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
 gnome-base/gconf **
+gnome-base/gnome-control-center **
 gnome-base/gnome-core-apps **
 gnome-base/gnome-desktop **
 gnome-base/gnome-menus **
@@ -161,15 +157,21 @@ gnome-base/gnome-panel **
 gnome-base/gnome-settings-daemon **
 gnome-base/gsettings-desktop-schemas **
 gnome-base/nautilus **
+gnome-base/gnome-core-apps **
 gnome-base/gnome-session **
 gnome-extra/activity-log-manager **
+gnome-extra/gnome-color-manager **
+gnome-extra/evolution-data-server **
 gnome-extra/nm-applet **
 gnome-extra/polkit-gnome **
+mail-client/evolution **
 mail-client/thunderbird **
+media-gfx/eog **
 media-gfx/shotwell **
 media-sound/banshee **
 media-sound/pulseaudio **
 media-sound/rhythmbox **
+media-video/cheese **
 net-im/empathy **
 net-im/telepathy-mission-control **
 net-libs/account-plugins **

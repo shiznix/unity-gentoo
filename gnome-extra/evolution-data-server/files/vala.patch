@@ -1,0 +1,21 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -924,16 +924,8 @@
+ 		message(FATAL_ERROR "Vala bindings require introspection generation to be enabled, use -DENABLE_INTROSPECTION=ON to enable it, or disable Vala bindings with -DENABLE_VALA_BINDINGS=OFF")
+ 	endif(NOT ENABLE_INTROSPECTION)
+ 
+-	find_program(VALAC valac)
+-	if(NOT VALAC)
+-		message(FATAL_ERROR "The valac not found. Install it or disable Vala bindings with -DENABLE_VALA_BINDINGS=OFF")
+-	endif(NOT VALAC)
+-
+-	find_program(VAPIGEN vapigen)
+-	if(NOT VAPIGEN)
+-		message(FATAL_ERROR "The vapigen not found. Install it or disable Vala bindings with -DENABLE_VALA_BINDINGS=OFF")
+-	endif(NOT VAPIGEN)
+-
++	set(VALAC $ENV{VALAC})
++	set(VAPIGEN $ENV{VAPIGEN})
+ endif(ENABLE_VALA_BINDINGS)
+ 
+ # Generate the ${PROJECT_NAME}-config.h file

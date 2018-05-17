@@ -34,7 +34,7 @@ COMMON_DEPEND="
 	>=x11-libs/gtk+-3.15:3[X]
 	>=gnome-base/gsettings-desktop-schemas-3.15.4
 	>=gnome-base/gnome-desktop-3.17.4:3=
-	>=gnome-base/gnome-settings-daemon-3.8.3[colord?]
+	>=gnome-base/gnome-settings-daemon-3.8.3
 
 	app-admin/apg
 	app-text/iso-codes
