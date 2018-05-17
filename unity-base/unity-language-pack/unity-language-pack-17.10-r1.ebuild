@@ -197,6 +197,9 @@ src_install() {
 		"Numbers"
 		"Measurement"
 		"Paper"
+		"Imperial"
+		"Metric"
+		"More…"
 		"No languages found"
 		"No regions found"
 	)
