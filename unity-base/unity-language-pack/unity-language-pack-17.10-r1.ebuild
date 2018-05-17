@@ -193,9 +193,12 @@ src_install() {
 		"Preview"
 		"Dates"
 		"Times"
+		"Dates & Times"
 		"Numbers"
 		"Measurement"
 		"Paper"
+		"No languages found"
+		"No regions found"
 	)
 
 	local \

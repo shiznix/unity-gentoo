@@ -1,3 +1,15 @@
+From: c4pp4
+Date: Thu, 17 May 2018 22:50:28 +0200
+Subject: [PATCH] Integrate Language Support panel
+
+Intended for Unity Control Center 2018.
+Allow set up Language and Formats for Unity and Login Screen (unable to use
+Unity's language-selector as it needs a complete apt/dpkg enabled system).
+Based on Region & Language panel from Gnome Control Center version 3.24 and commit
+from version 3.25 (fb2989d - https://bugzilla.gnome.org/show_bug.cgi?id=687923).
+Show link to Text Entry panel and back to Language Support panel.
+Fix User Account panel when choosing Language.
+---
  configure.ac                                       |   7 +
  panels/Makefile.am                                 |   1 +
  panels/common/Makefile.am                          |   2 +
@@ -10,11 +22,11 @@
  panels/common/language-chooser.ui                  | 144 ++--
  panels/keyboard/keyboard-general.c                 |   3 +-
  panels/langselector/Makefile.am                    |  48 ++
- panels/langselector/cc-format-chooser.c            | 588 ++++++++++++++
+ panels/langselector/cc-format-chooser.c            | 585 ++++++++++++++
  panels/langselector/cc-format-chooser.h            |  36 +
  panels/langselector/cc-langselector-panel.c        | 892 +++++++++++++++++++++
  panels/langselector/cc-langselector-panel.h        |  71 ++
- panels/langselector/format-chooser.ui              | 342 ++++++++
+ panels/langselector/format-chooser.ui              | 339 ++++++++
  panels/langselector/langselector-module.c          |  41 +
  panels/langselector/langselector.ui                | 221 +++++
  .../unity-langselector-panel.desktop.in.in         |  11 +
@@ -26,7 +38,7 @@
  panels/user-accounts/data/user-accounts-dialog.ui  |  15 +-
  panels/user-accounts/um-user-panel.c               | 123 ++-
  po/POTFILES.in                                     |   6 +-
- 28 files changed, 3126 insertions(+), 891 deletions(-)
+ 28 files changed, 3120 insertions(+), 891 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
 index e0a31b1..14b3df6 100644
@@ -1935,10 +1947,10 @@ index 0000000..68a750c
 +-include $(top_srcdir)/git.mk
 diff --git a/panels/langselector/cc-format-chooser.c b/panels/langselector/cc-format-chooser.c
 new file mode 100644
-index 0000000..234dd75
+index 0000000..1d590b1
 --- /dev/null
 +++ b/panels/langselector/cc-format-chooser.c
-@@ -0,0 +1,588 @@
+@@ -0,0 +1,585 @@
 +/*
 + * Copyright (C) 2013 Red Hat, Inc.
 + *
@@ -1983,10 +1995,9 @@ index 0000000..234dd75
 +        GtkWidget *filter_entry;
 +        GtkWidget *list;
 +        GtkWidget *scrolledwindow;
-+        GtkWidget *full_date;
-+        GtkWidget *medium_date;
-+        GtkWidget *short_date;
++        GtkWidget *date;
 +        GtkWidget *time;
++        GtkWidget *date_time;
 +        GtkWidget *number;
 +        GtkWidget *measurement;
 +        GtkWidget *paper;
@@ -2022,10 +2033,9 @@ index 0000000..234dd75
 +        setlocale (LC_TIME, priv->region);
 +
 +        dt = g_date_time_new_now_local ();
-+        display_date (priv->full_date, dt, "%A %e %B %Y");
-+        display_date (priv->medium_date, dt, "%e %b %Y");
-+        display_date (priv->short_date, dt, "%x");
++        display_date (priv->date, dt, "%x");
 +        display_date (priv->time, dt, "%X");
++        display_date (priv->date_time, dt, "%c");
 +
 +        setlocale (LC_TIME, locale);
 +        g_free (locale);
@@ -2475,10 +2485,9 @@ index 0000000..234dd75
 +        priv->no_results = g_object_ref_sink (no_results_widget_new ());
 +        gtk_widget_show_all (priv->no_results);
 +
-+        priv->full_date = WID ("full-date-format");
-+        priv->medium_date = WID ("medium-date-format");
-+        priv->short_date = WID ("short-date-format");
++        priv->date = WID ("date-format");
 +        priv->time = WID ("time-format");
++        priv->date_time = WID ("date-time-format");
 +        priv->number = WID ("number-format");
 +        priv->measurement = WID ("measurement-format");
 +        priv->paper = WID ("paper-format");
@@ -3546,10 +3555,10 @@ index 0000000..139f470
 +#endif /* _CC_LANGSELECTOR_PANEL_H */
 diff --git a/panels/langselector/format-chooser.ui b/panels/langselector/format-chooser.ui
 new file mode 100644
-index 0000000..a722665
+index 0000000..197257a
 --- /dev/null
 +++ b/panels/langselector/format-chooser.ui
-@@ -0,0 +1,342 @@
+@@ -0,0 +1,339 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<interface>
 +  <!-- interface-requires gtk+ 3.0 -->
@@ -3699,11 +3708,11 @@ index 0000000..a722665
 +                  </packing>
 +                </child>
 +                <child>
-+                  <object class="GtkLabel" id="full-date-format">
++                  <object class="GtkLabel" id="date-format">
 +                    <property name="visible">True</property>
 +                    <property name="can_focus">False</property>
 +                    <property name="xalign">0</property>
-+                    <property name="label">Wednesday, January 23</property>
++                    <property name="label">23 January 2013</property>
 +                  </object>
 +                  <packing>
 +                    <property name="left_attach">1</property>
@@ -3713,35 +3722,7 @@ index 0000000..a722665
 +                  </packing>
 +                </child>
 +                <child>
-+                  <object class="GtkLabel" id="medium-date-format">
-+                    <property name="visible">True</property>
-+                    <property name="can_focus">False</property>
-+                    <property name="xalign">0</property>
-+                    <property name="label">23 January 2013</property>
-+                  </object>
-+                  <packing>
-+                    <property name="left_attach">1</property>
-+                    <property name="top_attach">2</property>
-+                    <property name="width">1</property>
-+                    <property name="height">1</property>
-+                  </packing>
-+                </child>
-+                <child>
-+                  <object class="GtkLabel" id="short-date-format">
-+                    <property name="visible">True</property>
-+                    <property name="can_focus">False</property>
-+                    <property name="xalign">0</property>
-+                    <property name="label">23/1/13</property>
-+                  </object>
-+                  <packing>
-+                    <property name="left_attach">1</property>
-+                    <property name="top_attach">3</property>
-+                    <property name="width">1</property>
-+                    <property name="height">1</property>
-+                  </packing>
-+                </child>
-+                <child>
-+                  <object class="GtkLabel" id="label4">
++                  <object class="GtkLabel" id="label1">
 +                    <property name="visible">True</property>
 +                    <property name="can_focus">False</property>
 +                    <property name="xalign">1</property>
@@ -3752,7 +3733,7 @@ index 0000000..a722665
 +                  </object>
 +                  <packing>
 +                    <property name="left_attach">0</property>
-+                    <property name="top_attach">4</property>
++                    <property name="top_attach">2</property>
 +                    <property name="width">1</property>
 +                    <property name="height">1</property>
 +                  </packing>
@@ -3766,7 +3747,38 @@ index 0000000..a722665
 +                  </object>
 +                  <packing>
 +                    <property name="left_attach">1</property>
-+                    <property name="top_attach">4</property>
++                    <property name="top_attach">2</property>
++                    <property name="width">1</property>
++                    <property name="height">1</property>
++                  </packing>
++                </child>
++                <child>
++                  <object class="GtkLabel" id="label4">
++                    <property name="visible">True</property>
++                    <property name="can_focus">False</property>
++                    <property name="xalign">1</property>
++                    <property name="label" translatable="yes">Dates &amp; Times</property>
++                    <style>
++                      <class name="dim-label"/>
++                    </style>
++                  </object>
++                  <packing>
++                    <property name="left_attach">0</property>
++                    <property name="top_attach">3</property>
++                    <property name="width">1</property>
++                    <property name="height">1</property>
++                  </packing>
++                </child>
++                <child>
++                  <object class="GtkLabel" id="date-time-format">
++                    <property name="visible">True</property>
++                    <property name="can_focus">False</property>
++                    <property name="xalign">0</property>
++                    <property name="label">Sun Wed  2 11:31:00 KST 2013</property>
++                  </object>
++                  <packing>
++                    <property name="left_attach">1</property>
++                    <property name="top_attach">3</property>
 +                    <property name="width">1</property>
 +                    <property name="height">1</property>
 +                  </packing>
@@ -3783,7 +3795,7 @@ index 0000000..a722665
 +                  </object>
 +                  <packing>
 +                    <property name="left_attach">0</property>
-+                    <property name="top_attach">5</property>
++                    <property name="top_attach">4</property>
 +                    <property name="width">1</property>
 +                    <property name="height">1</property>
 +                  </packing>
@@ -3800,7 +3812,7 @@ index 0000000..a722665
 +                  </object>
 +                  <packing>
 +                    <property name="left_attach">0</property>
-+                    <property name="top_attach">6</property>
++                    <property name="top_attach">5</property>
 +                    <property name="width">1</property>
 +                    <property name="height">1</property>
 +                  </packing>
@@ -3817,7 +3829,7 @@ index 0000000..a722665
 +                  </object>
 +                  <packing>
 +                    <property name="left_attach">0</property>
-+                    <property name="top_attach">7</property>
++                    <property name="top_attach">6</property>
 +                    <property name="width">1</property>
 +                    <property name="height">1</property>
 +                  </packing>
@@ -3831,7 +3843,7 @@ index 0000000..a722665
 +                  </object>
 +                  <packing>
 +                    <property name="left_attach">1</property>
-+                    <property name="top_attach">5</property>
++                    <property name="top_attach">4</property>
 +                    <property name="width">1</property>
 +                    <property name="height">1</property>
 +                  </packing>
@@ -3845,7 +3857,7 @@ index 0000000..a722665
 +                  </object>
 +                  <packing>
 +                    <property name="left_attach">1</property>
-+                    <property name="top_attach">6</property>
++                    <property name="top_attach">5</property>
 +                    <property name="width">1</property>
 +                    <property name="height">1</property>
 +                  </packing>
@@ -3859,16 +3871,10 @@ index 0000000..a722665
 +                  </object>
 +                  <packing>
 +                    <property name="left_attach">1</property>
-+                    <property name="top_attach">7</property>
++                    <property name="top_attach">6</property>
 +                    <property name="width">1</property>
 +                    <property name="height">1</property>
 +                  </packing>
-+                </child>
-+                <child>
-+                  <placeholder/>
-+                </child>
-+                <child>
-+                  <placeholder/>
 +                </child>
 +              </object>
 +              <packing>
