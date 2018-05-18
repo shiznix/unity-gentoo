@@ -92,26 +92,24 @@ src_prepare() {
 src_install() {
 	meson_src_install
 
-#	gnome2_src_install
+	dodir /etc/X11/Sessions
+	exeinto /etc/X11/Sessions
+	newexe "${FILESDIR}/Gnome-3.28" Gnome
 
-#	dodir /etc/X11/Sessions
-#	exeinto /etc/X11/Sessions
-#	doexe "${FILESDIR}/Gnome"
+	insinto /usr/share/applications
+	newins "${FILESDIR}/defaults.list-r3" gnome-mimeapps.list
 
-#	insinto /usr/share/applications
-#	newins "${FILESDIR}/defaults.list-r3" gnome-mimeapps.list
-
-#	dodir /etc/X11/xinit/xinitrc.d/
-#	exeinto /etc/X11/xinit/xinitrc.d/
-#	newexe "${FILESDIR}/15-xdg-data-gnome-r1" 15-xdg-data-gnome
+	dodir /etc/X11/xinit/xinitrc.d/
+	exeinto /etc/X11/xinit/xinitrc.d/
+	newexe "${FILESDIR}/15-xdg-data-gnome-r1" 15-xdg-data-gnome
 
 	# This should be done here as discussed in bug #270852
-#	newexe "${FILESDIR}/10-user-dirs-update-gnome-r1" 10-user-dirs-update-gnome
+	newexe "${FILESDIR}/10-user-dirs-update-gnome-r1" 10-user-dirs-update-gnome
 
 	# Set XCURSOR_THEME from current dconf setting instead of installing
 	# default cursor symlink globally and affecting other DEs (bug #543488)
 	# https://bugzilla.gnome.org/show_bug.cgi?id=711703
-#	newexe "${FILESDIR}/90-xcursor-theme-gnome" 90-xcursor-theme-gnome
+	newexe "${FILESDIR}/90-xcursor-theme-gnome" 90-xcursor-theme-gnome
 
 #-----------------------------------------------------------------------------------#
 
@@ -156,9 +154,9 @@ src_install() {
 	fi
 
 	# Remove Ubuntu only session files #
-	rm "${ED}usr/share/wayland-sessions/ubuntu.desktop"
-	rm "${ED}usr/share/xsessions/ubuntu-xorg.desktop"
-	rm "${ED}usr/share/gnome-session/sessions/ubuntu.session"
+	rm "${ED}"usr/share/wayland-sessions/ubuntu*.desktop
+	rm "${ED}"usr/share/xsessions/ubuntu*.desktop
+	rm "${ED}"usr/share/gnome-session/sessions/ubuntu.session
 }
 
 pkg_postinst() {
