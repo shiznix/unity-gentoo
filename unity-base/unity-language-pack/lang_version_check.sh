@@ -48,7 +48,7 @@ version_check() {
 
 	[ "${bump}" ] && [ -n "${local_ver}" -a -n "${upstream_ver}" ] && \
 		if [ "${local_ver}" != "${upstream_ver}" -o "${local_ver_gnome}" != "${upstream_ver_gnome}" ]; then
-			sed -e "s/\(${use_flag//_/-}.*\)${local_ver}.${local_ver_gnome}/\1${upstream_ver} ${upstream_ver_gnome}/g" -i "${ebuild}"
+			sed -e "s/\(setvar ${use_flag//_/-}.*\)${local_ver}.${local_ver_gnome}/\1${upstream_ver} ${upstream_ver_gnome}/" -i "${ebuild}"
 			echo -e "  \033[1;33m... local version bumped\033[0m"
 			bumped_flags+=" ${use_flag//_/-}"
 		fi
