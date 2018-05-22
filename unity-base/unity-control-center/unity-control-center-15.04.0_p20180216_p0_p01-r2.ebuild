@@ -80,7 +80,6 @@ COMMON_DEPEND="
 		>=net-print/cups-1.4[dbus]
 		|| ( >=net-fs/samba-3.6.14-r1[smbclient] >=net-fs/samba-4.0.0[client] ) )
 	fcitx? ( app-i18n/fcitx )
-	gnome-online-accounts? ( unity-base/gnome-control-center-signon )
 	i18n? (
 		>=app-i18n/ibus-1.5.2
 		>=gnome-base/libgnomekbd-3 )
@@ -118,7 +117,9 @@ RDEPEND="${COMMON_DEPEND}
 PDEPEND=">=gnome-base/gnome-session-2.91.6-r1
 	bluetooth? ( unity-indicators/indicator-bluetooth )"
 
-DEPEND="${COMMON_DEPEND}
+# Hard block unity-base/gnome-control-center-signon as it installs conflicting 'Online Accounts' settings tile (use GOA not UOA) #
+DEPEND="!!unity-base/gnome-control-center-signon
+	${COMMON_DEPEND}
 	x11-proto/xproto
 	x11-proto/xf86miscproto
 	x11-proto/kbproto

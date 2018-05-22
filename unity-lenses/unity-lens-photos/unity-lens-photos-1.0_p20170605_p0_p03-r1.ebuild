@@ -32,7 +32,6 @@ RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
 	dev-python/httplib2[${PYTHON_USEDEP}]
 	dev-python/oauthlib[${PYTHON_USEDEP}]
 	media-gfx/shotwell
-	net-libs/account-plugins
 	unity-base/unity
 	unity-base/unity-language-pack
 	${PYTHON_DEPS}"

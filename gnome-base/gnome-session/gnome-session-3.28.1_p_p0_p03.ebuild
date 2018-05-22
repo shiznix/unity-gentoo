@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit gnome2 meson systemd ubuntu-versionator
 
 MY_P="${PN}_${PV}"
