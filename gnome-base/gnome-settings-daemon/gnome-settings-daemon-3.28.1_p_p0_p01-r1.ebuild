@@ -23,7 +23,7 @@ RESTRICT="mirror"
 COMMON_DEPEND="
 	>=dev-libs/glib-2.44.0:2[dbus]
 	dev-libs/libappindicator:=
-	>=x11-libs/gtk+-3.15.3:3[X]
+	>=x11-libs/gtk+-3.15.3:3[wayland,X]
 	gnome-base/gnome-desktop:3=
 	>=gnome-base/gsettings-desktop-schemas-3.23.3
 	gnome-base/librsvg:2
