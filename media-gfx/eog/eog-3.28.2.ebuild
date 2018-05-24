@@ -15,7 +15,7 @@ SLOT="1"
 
 IUSE="debug +exif +introspection +jpeg lcms +svg tiff xmp"
 REQUIRED_USE="exif? ( jpeg )"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
 	>=dev-libs/glib-2.42.0:2[dbus]

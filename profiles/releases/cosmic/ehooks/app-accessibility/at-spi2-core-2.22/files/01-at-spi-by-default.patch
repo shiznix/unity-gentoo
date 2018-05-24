@@ -1,0 +1,13 @@
+Accessibility is now always started by default, ready for use
+
+--- a/bus/at-spi-dbus-bus.desktop.in
++++ b/bus/at-spi-dbus-bus.desktop.in
+@@ -2,8 +2,6 @@
+ Type=Application
+ Name=AT-SPI D-Bus Bus
+ Exec=@libexecdir@/at-spi-bus-launcher --launch-immediately
+-OnlyShowIn=GNOME;Unity;
+ NoDisplay=true
+-AutostartCondition=GSETTINGS org.gnome.desktop.interface toolkit-accessibility
+ X-GNOME-AutoRestart=true
+ X-GNOME-Autostart-Phase=Initialization

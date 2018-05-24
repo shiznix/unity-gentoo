@@ -15,7 +15,7 @@ LICENSE="|| ( LGPL-2 LGPL-3 ) CC-BY-SA-3.0 FDL-1.3+ OPENLDAP"
 SLOT="2.0"
 
 IUSE="+bogofilter crypt geolocation highlight ldap spamassassin spell ssl +weather"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # We need a graphical pinentry frontend to be able to ask for the GPG

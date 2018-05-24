@@ -1,10 +1,10 @@
-amd64	linux/amd64/17.0/artful	stable
-x86	linux/x86/17.0/artful	stable
+amd64	linux/amd64/17.0/bionic	stable
+x86	linux/x86/17.0/bionic	stable
 
-amd64	linux/amd64/17.0/bionic	dev
-x86	linux/x86/17.0/bionic	dev
+amd64	linux/amd64/17.0/cosmic	dev
+x86	linux/x86/17.0/cosmic	dev
 
 # Experimental SYMLINK_LIB=no profiles
 # Run app-portage/unsymlink-lib *before* switching the profile.
-amd64	linux/amd64/17.1/artful	exp
-amd64	linux/amd64/17.1/bionic exp
+amd64	linux/amd64/17.1/bionic	exp
+amd64	linux/amd64/17.1/cosmic exp

@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 SLOT="0/4.2.1"
 LICENSE="GPL-3"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc debug examples +icu static-libs test"
 RESTRICT="mirror"
 

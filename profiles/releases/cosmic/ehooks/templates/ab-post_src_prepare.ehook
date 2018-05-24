@@ -1,0 +1,3 @@
+ebuild_hook() {
+	eapply "${EHOOK_FILESDIR}"
+}

@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="artful artful-security artful-updates bionic bionic-security bionic-updates"
+RELEASES="bionic bionic-security bionic-updates cosmic cosmic-security cosmic-updates"
 SOURCES="main universe"
 
 sources_download() {

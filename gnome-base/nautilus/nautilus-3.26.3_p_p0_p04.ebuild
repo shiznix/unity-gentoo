@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"
 IUSE="exif gnome +introspection packagekit +previewer selinux sendto +tracker xmp"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 # FIXME: tests fails under Xvfb, but pass when building manually
 # "FAIL: check failed in nautilus-file.c, line 8307"
