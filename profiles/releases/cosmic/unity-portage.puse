@@ -46,8 +46,11 @@ gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 mate-base/mate -notification	# x11-misc/mate-notification-daemon collides with x11-misc/notify-osd
 mate-base/mate-menus python
-media-libs/clutter egl
+media-libs/clutter egl wayland	# Required by x11-libs/gtk+:3[wayland]
+media-libs/clutter-gtk wayland	# Required by x11-libs/gtk+:3[wayland]
+media-libs/cogl wayland		# Required by x11-libs/gtk+:3[wayland]
 media-libs/libmediaart -qt4 -qt5
+media-libs/mesa wayland		# Required by x11-libs/gtk+:3[wayland]
 media-libs/gst-plugins-base theora
 media-libs/harfbuzz icu
 media-libs/libvpx postproc svc
