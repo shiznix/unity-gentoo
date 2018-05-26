@@ -214,7 +214,6 @@ src_install() {
 		! -name ${gcc_po} \
 		! -name ${ls_po} \
 		! -name 'activity-log-manager.po' \
-		! -name 'account-plugins.po' \
 		! -name 'compiz.po' \
 		! -name 'ccsm.po' \
 		! -name 'credentials-control-center.po' \

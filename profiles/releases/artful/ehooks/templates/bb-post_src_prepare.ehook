@@ -1,4 +1,0 @@
-ebuild_hook() {
-	eapply "${EHOOK_FILESDIR}"
-	AT_NOELIBTOOLIZE="yes" eautoreconf
-}

@@ -25,7 +25,7 @@ DEPEND="dev-cpp/gmock
 	dev-libs/dee[${PYTHON_USEDEP}]
 	dev-libs/glib:2[${PYTHON_USEDEP}]
 	dev-libs/libdbusmenu:=
-	dev-libs/libdbusmenu-qt[qt5]
+	dev-libs/libdbusmenu-qt
 	dev-libs/libqtdbusmock
 	dev-perl/XML-Parser
 	dev-qt/qtcore:5

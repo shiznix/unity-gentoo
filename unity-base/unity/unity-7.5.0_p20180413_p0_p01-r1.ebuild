@@ -76,7 +76,6 @@ DEPEND="${RDEPEND}
 	x11-libs/startup-notification
 	unity-base/unity-gtk-module
 	virtual/pam
-	x11-misc/appmenu-qt
 	doc? ( app-doc/doxygen )
 	test? ( dev-cpp/gmock
 		dev-cpp/gtest

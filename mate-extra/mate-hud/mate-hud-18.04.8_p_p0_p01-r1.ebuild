@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python{3_5,3_6} )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="bionic"
-inherit distutils-r1 eutils ubuntu-versionator
+inherit distutils-r1 eutils gnome2-utils ubuntu-versionator
 
 DESCRIPTION="MATE menubar commands, like the Unity 7 Heads-Up Display (HUD)"
 HOMEPAGE="https://github.com/ubuntu-mate/mate-hud"
@@ -25,7 +25,6 @@ RDEPEND="dev-python/pygobject[${PYTHON_USEDEP}]
 	dev-python/python-xlib
 	unity-base/unity-gtk-module
 	x11-libs/gtk+:3
-	x11-misc/appmenu-qt
 	x11-misc/rofi
 	${PYTHON_DEPS}"
 DEPEND="${RDEPEND}"
@@ -47,4 +46,17 @@ src_prepare() {
 src_install() {
 	distutils-r1_src_install
 	python_fix_shebang "${ED}"
+}
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+	ubuntu-versionator_pkg_postinst
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
 }
