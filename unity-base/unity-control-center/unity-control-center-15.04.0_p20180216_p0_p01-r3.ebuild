@@ -40,7 +40,6 @@ COMMON_DEPEND="
 	app-text/iso-codes
 	dev-libs/libpwquality
 	dev-libs/libtimezonemap
-	dev-libs/libwacom
 	dev-libs/libxml2:2
 	gnome-base/gnome-menus:3
 	gnome-base/libgtop:2=
@@ -80,6 +79,7 @@ COMMON_DEPEND="
 		>=net-print/cups-1.4[dbus]
 		|| ( >=net-fs/samba-3.6.14-r1[smbclient] >=net-fs/samba-4.0.0[client] ) )
 	fcitx? ( app-i18n/fcitx )
+	gnome-online-accounts? ( net-libs/gnome-online-accounts )
 	i18n? (
 		>=app-i18n/ibus-1.5.2
 		>=gnome-base/libgnomekbd-3 )
@@ -105,7 +105,6 @@ RDEPEND="${COMMON_DEPEND}
 	cups? (
 		app-admin/system-config-printer
 		net-print/cups-pk-helper )
-	gnome-online-accounts? ( net-libs/gnome-online-accounts )
 
 	!<gnome-base/gdm-2.91.94
 	!<gnome-extra/gnome-color-manager-3.1.2
@@ -172,6 +171,7 @@ src_configure() {
 		$(use_enable i18n ibus) \
 		$(use_enable input_devices_wacom wacom) \
 		$(use_enable kerberos) \
+		$(use_enable gnome-online-accounts onlineaccounts) \
 		$(use_with v4l cheese) \
 		$(use_enable webkit)
 }
