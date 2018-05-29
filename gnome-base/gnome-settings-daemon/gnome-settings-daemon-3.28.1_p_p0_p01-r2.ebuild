@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+cups debug +networkmanager policykit -smartcard test +udev wayland"
+IUSE="+cups debug input_devices_wacom +networkmanager policykit -smartcard test +udev wayland"
 KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="udev"
 RESTRICT="mirror"
@@ -23,7 +23,7 @@ RESTRICT="mirror"
 COMMON_DEPEND="
 	>=dev-libs/glib-2.44.0:2[dbus]
 	dev-libs/libappindicator:=
-	>=x11-libs/gtk+-3.15.3:3[wayland,X]
+	>=x11-libs/gtk+-3.15.3:3[wayland?,X]
 	gnome-base/gnome-desktop:3=
 	>=gnome-base/gsettings-desktop-schemas-3.23.3
 	gnome-base/librsvg:2
@@ -54,10 +54,11 @@ COMMON_DEPEND="
 	>=media-libs/lcms-2.2:2
 	>=x11-misc/colord-1.0.2:=
 	cups? ( >=net-print/cups-1.4[dbus] )
-	>=dev-libs/libwacom-0.7
 	>=x11-libs/pango-1.20
-	x11-drivers/xf86-input-wacom
 	virtual/libgudev:=
+	input_devices_wacom? (
+		>=dev-libs/libwacom-0.7
+		x11-drivers/xf86-input-wacom )
 	networkmanager? ( >=net-misc/networkmanager-1.0 )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
 	udev? ( virtual/libgudev:= )
@@ -97,6 +98,7 @@ DEPEND="${COMMON_DEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+	eapply "${FILESDIR}/${P/_*}-optional-wacom-wayland.patch"
 	gnome2_src_prepare
 }
 
@@ -109,6 +111,7 @@ src_configure() {
 		$(meson_use cups)
 		$(meson_use networkmanager network_manager)
 		$(meson_use smartcard)
+		$(meson_use input_devices_wacom wacom)
 		$(meson_use wayland)
 	)
 	meson_src_configure
