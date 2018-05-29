@@ -46,11 +46,8 @@ gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 mate-base/mate -notification	# x11-misc/mate-notification-daemon collides with x11-misc/notify-osd
 mate-base/mate-menus python
-media-libs/clutter egl wayland	# Required by x11-libs/gtk+:3[wayland]
-media-libs/clutter-gtk wayland	# Required by x11-libs/gtk+:3[wayland]
-media-libs/cogl wayland		# Required by x11-libs/gtk+:3[wayland]
+media-libs/clutter egl
 media-libs/libmediaart -qt4 -qt5
-media-libs/mesa wayland		# Required by x11-libs/gtk+:3[wayland]
 media-libs/gst-plugins-base theora
 media-libs/harfbuzz icu
 media-libs/libvpx postproc svc
@@ -76,7 +73,6 @@ sys-libs/zlib minizip
 virtual/notification-daemon -gnome	# Needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
 www-client/firefox -gstreamer-0 -gtk2 -qt5
 x11-base/xorg-server dmx xvfb
-x11-libs/gtk+:3 wayland	# >=gnome-base/gnome-settings-daemon-3.28 requires <gdk/gdkwayland.h> to exist, even if 'wayland' USE is disabled
 x11-libs/libdrm libkms
 x11-libs/libxcb xkb
 x11-libs/topmenu-gtk mate
