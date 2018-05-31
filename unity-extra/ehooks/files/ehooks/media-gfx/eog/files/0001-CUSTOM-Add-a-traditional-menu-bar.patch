@@ -1,32 +1,20 @@
-From b7cf1b9c79f6c547ac8daec82d3fa851ceec839d Mon Sep 17 00:00:00 2001
-From: Lars Uebernickel <lars.uebernickel@canonical.com>
-Date: Fri, 25 Sep 2015 10:27:24 +0200
-Subject: [PATCH 1/2] Add a traditional menu bar
+Subject: [PATCH 1/2] Add a traditional menu bar (v3.28.2)
 Bug: https://bugzilla.gnome.org/749976
 Bug-Debian: https://bugs.debian.org/793445
-
 ---
- data/Makefile.am      |    1 
- data/eog-menubar.xml  |  209 ++++++++++++++++++++++++++++++++++++++++++++++++++
- po/POTFILES.in        |    1 
- src/eog-application.c |   35 ++++++++
- src/eog-window.c      |   59 +++++++-------
- src/eog.gresource.xml |    1 
- 6 files changed, 280 insertions(+), 26 deletions(-)
- create mode 100644 data/eog-menubar.xml
+ data/eog-menubar.ui   | 209 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ data/meson.build      |   1 +
+ po/POTFILES.in        |   1 +
+ src/eog-application.c |  35 +++++++++
+ src/eog-window.c      |  53 +++++++------
+ src/eog.gresource.xml |   1 +
+ 6 files changed, 277 insertions(+), 23 deletions(-)
 
---- a/data/Makefile.am
-+++ b/data/Makefile.am
-@@ -29,6 +29,7 @@ pkgconfig_DATA = eog.pc
- EXTRA_DIST =			\
- 	fullscreen-toolbar.ui	\
- 	eog.css			\
-+	eog-menubar.xml \
- 	eog-app-menu.xml	\
- 	eog-gear-menu.ui	\
- 	eog-image-properties-dialog.ui	\
+diff --git a/data/eog-menubar.ui b/data/eog-menubar.ui
+new file mode 100644
+index 0000000..277268c
 --- /dev/null
-+++ b/data/eog-menubar.xml
++++ b/data/eog-menubar.ui
 @@ -0,0 +1,209 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<interface>
@@ -237,19 +225,34 @@ Bug-Debian: https://bugs.debian.org/793445
 +    </submenu>
 +  </menu>
 +</interface>
+diff --git a/data/meson.build b/data/meson.build
+index 4f25e29..3c7a197 100644
+--- a/data/meson.build
++++ b/data/meson.build
+@@ -2,6 +2,7 @@ subdir('icons')
+ 
+ resource_data = files(
+   'pixmaps/thumbnail-frame.png',
++  'eog-menubar.ui',
+   'eog-app-menu.ui',
+   'eog-gear-menu.ui',
+   'eog-image-properties-dialog.ui',
+diff --git a/po/POTFILES.in b/po/POTFILES.in
+index 4743515..1383614 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
-@@ -1,6 +1,7 @@
+@@ -1,5 +1,6 @@
  # List of source files containing translatable strings.
  # Please keep this file sorted alphabetically.
- [encoding: UTF-8]
-+[type: gettext/glade]data/eog-menubar.xml
- [type: gettext/glade]data/eog-app-menu.xml
++data/eog-menubar.ui
+ data/eog-app-menu.ui
  data/eog.appdata.xml.in
  data/eog.desktop.in.in
+diff --git a/src/eog-application.c b/src/eog-application.c
+index 95ca9ac..95bbebe 100644
 --- a/src/eog-application.c
 +++ b/src/eog-application.c
-@@ -267,6 +267,29 @@ on_extension_removed (PeasExtensionSet *
+@@ -267,6 +267,29 @@ on_extension_removed (PeasExtensionSet *set,
  	eog_application_activatable_deactivate (EOG_APPLICATION_ACTIVATABLE (exten));
  }
  
@@ -279,7 +282,7 @@ Bug-Debian: https://bugs.debian.org/793445
  static void
  eog_application_startup (GApplication *application)
  {
-@@ -329,6 +352,18 @@ eog_application_startup (GApplication *a
+@@ -329,6 +352,18 @@ eog_application_startup (GApplication *application)
  			  G_CALLBACK (on_extension_removed), app);
  
  	peas_extension_set_call (app->priv->extensions, "activate");
@@ -298,9 +301,11 @@ Bug-Debian: https://bugs.debian.org/793445
  }
  
  static void
+diff --git a/src/eog-window.c b/src/eog-window.c
+index 4e91327..6eb7a4f 100644
 --- a/src/eog-window.c
 +++ b/src/eog-window.c
-@@ -4243,23 +4243,36 @@ eog_window_construct_ui (EogWindow *wind
+@@ -4299,23 +4299,36 @@ eog_window_construct_ui (EogWindow *window)
  	gtk_widget_show (priv->zoom_scale);
  #endif
  
@@ -308,19 +313,6 @@ Bug-Debian: https://bugs.debian.org/793445
 -	menu_image = gtk_image_new_from_icon_name ("open-menu-symbolic",
 -						   GTK_ICON_SIZE_BUTTON);
 -	gtk_button_set_image (GTK_BUTTON (menu_button), menu_image);
--
--	builder = gtk_builder_new_from_resource ("/org/gnome/eog/ui/eog-gear-menu.ui");
--	builder_object = gtk_builder_get_object (builder, "gear-menu");
--	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (menu_button),
--					G_MENU_MODEL (builder_object));
--
--	gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), menu_button);
--	gtk_widget_show (menu_button);
--
--	action = G_ACTION (g_property_action_new ("toggle-gear-menu",
--						  menu_button, "active"));
--	g_action_map_add_action (G_ACTION_MAP (window), action);
--	g_object_unref (action);
 +	priv->open_with_menu = g_menu_new ();
 +	priv->appinfo = g_ptr_array_new_with_free_func (g_object_unref);
 +
@@ -334,7 +326,11 @@ Bug-Debian: https://bugs.debian.org/793445
 +		builder_object = gtk_builder_get_object (builder, "gear-menu");
 +		gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (menu_button),
 +						G_MENU_MODEL (builder_object));
-+
+ 
+-	builder = gtk_builder_new_from_resource ("/org/gnome/eog/ui/eog-gear-menu.ui");
+-	builder_object = gtk_builder_get_object (builder, "gear-menu");
+-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (menu_button),
+-					G_MENU_MODEL (builder_object));
 +		gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), menu_button);
 +		gtk_widget_show (menu_button);
 +
@@ -344,17 +340,23 @@ Bug-Debian: https://bugs.debian.org/793445
 +				       G_MENU_MODEL (priv->open_with_menu));
 +		priv->gear_menu_builder = builder;
 +		builder = NULL;
-+
+ 
+-	gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), menu_button);
+-	gtk_widget_show (menu_button);
 +		action = G_ACTION (g_property_action_new ("toggle-gear-menu",
 +							  menu_button, "active"));
 +		g_action_map_add_action (G_ACTION_MAP (window), action);
 +		g_object_unref (action);
-+
+ 
+-	action = G_ACTION (g_property_action_new ("toggle-gear-menu",
+-						  menu_button, "active"));
+-	g_action_map_add_action (G_ACTION_MAP (window), action);
+-	g_object_unref (action);
 +	}
  
  	fullscreen_button = gtk_button_new_from_icon_name ("view-fullscreen-symbolic",
  							   GTK_ICON_SIZE_BUTTON);
-@@ -4270,15 +4283,6 @@ eog_window_construct_ui (EogWindow *wind
+@@ -4326,15 +4339,6 @@ eog_window_construct_ui (EogWindow *window)
  	gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), fullscreen_button);
  	gtk_widget_show (fullscreen_button);
  
@@ -370,7 +372,7 @@ Bug-Debian: https://bugs.debian.org/793445
  	priv->cbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
  	gtk_box_pack_start (GTK_BOX (priv->box), priv->cbox, TRUE, TRUE, 0);
  	gtk_widget_show (priv->cbox);
-@@ -5250,6 +5254,9 @@ eog_window_get_gear_menu_section (EogWin
+@@ -5306,6 +5310,9 @@ eog_window_get_gear_menu_section (EogWindow *window, const gchar *id)
  	GObject *object;
  	g_return_val_if_fail (EOG_IS_WINDOW (window), NULL);
  
@@ -380,13 +382,15 @@ Bug-Debian: https://bugs.debian.org/793445
  	object = gtk_builder_get_object (window->priv->gear_menu_builder, id);
  	if (object == NULL || !G_IS_MENU (object))
  		return NULL;
+diff --git a/src/eog.gresource.xml b/src/eog.gresource.xml
+index ea9b0a1..b279cc4 100644
 --- a/src/eog.gresource.xml
 +++ b/src/eog.gresource.xml
 @@ -14,6 +14,7 @@
    </gresource>
    <gresource prefix="/org/gnome/eog/gtk">
-     <file alias="menus.ui" compressed="true" preprocess="xml-stripblanks">eog-app-menu.xml</file>
-+    <file alias="menu/menus-traditional.ui" compressed="true" preprocess="xml-stripblanks">eog-menubar.xml</file>
+     <file alias="menus.ui" compressed="true" preprocess="xml-stripblanks">eog-app-menu.ui</file>
++    <file alias="menu/menus-traditional.ui" compressed="true" preprocess="xml-stripblanks">eog-menubar.ui</file>
      <file compressed="true" preprocess="xml-stripblanks">help-overlay.ui</file>
    </gresource>
  </gresources>
