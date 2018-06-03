@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/s/${PN}"
 UVER=
 
 DESCRIPTION="Allows shutdown, logout, and reboot from dash"

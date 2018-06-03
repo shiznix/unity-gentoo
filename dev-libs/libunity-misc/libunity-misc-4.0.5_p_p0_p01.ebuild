@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/libu/${PN}"
 UVER_PREFIX="+14.04.20140115"
 
 DESCRIPTION="Miscellaneous modules for the Unity desktop"

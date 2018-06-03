@@ -5,10 +5,8 @@ EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit gnome2-utils distutils-r1 ubuntu-versionator
-
-UURL="mirror://unity/pool/universe/o/${PN}"
 
 DESCRIPTION="Simple on-screen Keyboard with macros and easy layout creation"
 HOMEPAGE="https://launchpad.net/onboard"

@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools gnome2-utils multilib savedconfig ubuntu-versionator
 
-UURL="mirror://unity/pool/main/n/${PN}"
 UVER_PREFIX="+16.04.${PVR_MICRO}"
 
 DESCRIPTION="Canonical's on-screen-display notification agent"

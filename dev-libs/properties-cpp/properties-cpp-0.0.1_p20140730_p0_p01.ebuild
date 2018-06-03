@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/p/${PN}"
 UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="Simple convenience library for handling properties and signals in C++11"

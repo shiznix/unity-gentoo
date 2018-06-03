@@ -4,10 +4,9 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools eutils python-single-r1 ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/e/${PN}"
 UVER="-${PVR_PL_MINOR}"
 
 DESCRIPTION="Event Emulation for the uTouch Stack"

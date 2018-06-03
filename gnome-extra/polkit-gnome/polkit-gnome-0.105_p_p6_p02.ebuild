@@ -3,11 +3,10 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools ubuntu-versionator
 
 MY_PN="policykit-1-gnome"
-UURL="mirror://unity/pool/main/p/${MY_PN}"
 
 DESCRIPTION="A dbus session bus service that is used to bring up authentication dialogs"
 HOMEPAGE="http://www.freedesktop.org/wiki/Software/PolicyKit"

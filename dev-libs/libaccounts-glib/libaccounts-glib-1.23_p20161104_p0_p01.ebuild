@@ -4,10 +4,9 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_5,3_6} )
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools flag-o-matic python-r1 ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/liba/${PN}"
 UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Library for single signon for the Unity desktop"

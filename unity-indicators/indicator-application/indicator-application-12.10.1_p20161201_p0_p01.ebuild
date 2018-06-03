@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/i/${PN}"
 UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Application indicators used by the Unity desktop"

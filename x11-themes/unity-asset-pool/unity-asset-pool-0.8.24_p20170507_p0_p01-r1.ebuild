@@ -4,11 +4,10 @@
 EAPI=5
 GCONF_DEBUG="yes"
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit eutils gnome2 ubuntu-versionator
 
-UURL="mirror://unity/pool/main/u/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="Unity desktop icon theme"
 HOMEPAGE="https://launchpad.net/unity-asset-pool"

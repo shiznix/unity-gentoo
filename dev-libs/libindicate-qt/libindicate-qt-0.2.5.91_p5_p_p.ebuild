@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit virtualx cmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/libi/${PN}"
 UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Qt wrapper for libindicate library"

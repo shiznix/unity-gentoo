@@ -5,10 +5,8 @@ EAPI=6
 VALA_MIN_API_VERSION="0.34"
 VALA_MAX_API_VERSION="0.36"
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit cmake-utils eutils gnome2-utils ubuntu-versionator vala
-
-UURL="http://archive.ubuntu.com/ubuntu/pool/universe/v/${PN}"
 
 DESCRIPTION="Lightweight desktop panel"
 HOMEPAGE="http://github.com/rilian-la-te/vala-panel"

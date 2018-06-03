@@ -3,10 +3,9 @@
 
 EAPI=5
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit base mono ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/m/${PN}"
 UVER="-${PVR_MICRO}"
 
 DESCRIPTION="a cross platform Zero Configuration Networking library for Mono and .NET"

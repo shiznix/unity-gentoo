@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit ubuntu-versionator
 
-UURL="mirror://unity/pool/main/n/${PN}"
 UVER_PREFIX="+15.10.${PVR_MICRO}"
 
 DESCRIPTION="Icons for on-screen-display notification agent"

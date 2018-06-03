@@ -3,11 +3,10 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit qmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/s/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="Single Sign On framework for the Unity desktop"
 HOMEPAGE="https://launchpad.net/signon"

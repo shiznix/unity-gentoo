@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"

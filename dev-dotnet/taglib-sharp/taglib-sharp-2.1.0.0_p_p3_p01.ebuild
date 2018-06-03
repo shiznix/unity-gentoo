@@ -3,7 +3,7 @@
 
 EAPI=5
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit mono ubuntu-versionator
 
 UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"

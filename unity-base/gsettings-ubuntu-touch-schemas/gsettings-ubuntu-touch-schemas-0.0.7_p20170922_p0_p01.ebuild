@@ -3,11 +3,10 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools gnome2-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/main/g/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="GSettings desktop-wide schemas for the Unity desktop"
 HOMEPAGE="https://launchpad.net/gsettings-ubuntu-touch-schemas"

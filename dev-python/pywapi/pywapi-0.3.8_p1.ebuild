@@ -4,10 +4,9 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_5,3_6} )
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit distutils-r1 ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/p/${PN}"
 UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Python wrapper around different weather APIs"

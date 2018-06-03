@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools eutils ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/g/${PN}"
 UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Parse and query the geonames database dump"

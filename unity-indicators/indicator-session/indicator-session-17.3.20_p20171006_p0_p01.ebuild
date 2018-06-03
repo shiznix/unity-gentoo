@@ -3,11 +3,10 @@
 
 EAPI=6
 
-URELEASE="artful-updates"
+URELEASE="bionic"
 inherit cmake-utils gnome2-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/i/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="Indicator showing session management, status and user switching used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-session"

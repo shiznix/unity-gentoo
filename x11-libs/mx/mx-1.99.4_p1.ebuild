@@ -4,10 +4,9 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools eutils gnome2 ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/m/${PN}"
 UVER="-${PVR_MICRO}"
 
 DESCRIPTION="A widget toolkit using Clutter"

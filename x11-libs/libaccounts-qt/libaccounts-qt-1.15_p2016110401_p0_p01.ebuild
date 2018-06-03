@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit qmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/liba/${PN}"
 UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="QT library for Single Sign On framework for the Unity desktop"

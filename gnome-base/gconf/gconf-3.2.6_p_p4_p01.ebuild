@@ -7,10 +7,8 @@ GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_5,3_6} )
 PYTHON_REQ_USE="xml"
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit eutils gnome2 multilib-minimal python-r1 ubuntu-versionator
-
-UURL="mirror://unity/pool/universe/g/${PN}"
 
 DESCRIPTION="GNOME configuration system and daemon patched for the Unity desktop"
 HOMEPAGE="http://projects.gnome.org/gconf/"

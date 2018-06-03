@@ -5,10 +5,8 @@ EAPI=6
 VALA_MIN_API_VERSION="0.36"
 VALA_MAX_API_VERSION="0.36"
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
-
-UURL="mirror://unity/pool/universe/a/${PN}"
 
 DESCRIPTION="Blacklist configuration user interface for Zeitgeist"
 HOMEPAGE="https://launchpad.net/activity-log-manager"

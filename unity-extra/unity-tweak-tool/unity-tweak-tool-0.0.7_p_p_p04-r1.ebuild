@@ -6,8 +6,7 @@ PYTHON_COMPAT=( python{3_5,3_6} )
 
 inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 
-URELEASE="artful"
-UURL="mirror://unity/pool/universe/u/${PN}"
+URELEASE="bionic"
 UVER="ubuntu${PVR_PL_MINOR}"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"

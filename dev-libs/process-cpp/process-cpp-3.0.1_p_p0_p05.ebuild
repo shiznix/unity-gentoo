@@ -3,10 +3,8 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit cmake-utils ubuntu-versionator
-
-UURL="mirror://unity/pool/universe/p/${PN}"
 
 DESCRIPTION="C++11 library for handling processes"
 HOMEPAGE="http://launchpad.net/process-cpp"

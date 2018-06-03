@@ -4,10 +4,9 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit distutils-r1 ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/a/${PN}"
 UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Utility to write and run integration tests easily"

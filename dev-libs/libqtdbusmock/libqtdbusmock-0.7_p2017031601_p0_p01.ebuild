@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/libq/${PN}"
 UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Qt Bindings for python-dbusmock"

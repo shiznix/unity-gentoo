@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools eutils flag-o-matic gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://unity/pool/universe/i/${PN}"
 UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Indicator that collects messages that need a response used by the Unity desktop"

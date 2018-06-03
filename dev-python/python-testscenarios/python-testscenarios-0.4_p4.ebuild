@@ -4,10 +4,9 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit distutils-r1 ubuntu-versionator
 
-UURL="mirror://unity/pool/main/p/${PN}"
 UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Python unittest extension for running tests in different scenarios"

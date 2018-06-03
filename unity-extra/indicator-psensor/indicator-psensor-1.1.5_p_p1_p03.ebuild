@@ -3,11 +3,10 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit gnome2-utils ubuntu-versionator
 
 MY_PN="psensor"
-UURL="mirror://unity/pool/universe/p/${MY_PN}"
 
 DESCRIPTION="Indicator for monitoring hardware temperature used by the Unity desktop"
 HOMEPAGE="http://wpitchoune.net/psensor"

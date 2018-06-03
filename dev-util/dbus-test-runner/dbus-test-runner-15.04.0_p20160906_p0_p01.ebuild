@@ -3,10 +3,9 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools flag-o-matic ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/d/${PN}"
 UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Run executables under a new DBus session for testing"

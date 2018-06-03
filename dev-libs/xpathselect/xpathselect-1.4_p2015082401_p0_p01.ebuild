@@ -4,11 +4,10 @@
 EAPI=6
 GTESTVER="1.7.0"
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit cmake-utils ubuntu-versionator
 
 UVER_PREFIX="+15.10.${PVR_MICRO}"
-UURL="mirror://unity/pool/universe/x/${PN}"
 
 DESCRIPTION="Select objects in an object tree using XPath queries"
 HOMEPAGE="https://launchpad.net/xpathselect"

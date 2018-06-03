@@ -5,11 +5,10 @@ EAPI=6
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 MY_PN="classicmenu-indicator"
-UURL="mirror://unity/pool/universe/c/${MY_PN}"
 
 DESCRIPTION="Indicator to provide the main menu of Gnome2/Gnome Classic for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/classicmenu-indicator"

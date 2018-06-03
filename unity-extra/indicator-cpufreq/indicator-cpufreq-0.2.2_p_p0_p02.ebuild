@@ -4,10 +4,8 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
-
-UURL="mirror://unity/pool/universe/i/${PN}"
 
 DESCRIPTION="CPU frequency scaling indicator for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/classicmenu-indicator"

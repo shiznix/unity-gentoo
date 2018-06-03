@@ -3,11 +3,10 @@
 
 EAPI=6
 
-URELEASE="artful"
+URELEASE="bionic"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
-UURL="mirror://unity/pool/universe/i/${PN}"
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="System bluetooth indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-bluetooth"
