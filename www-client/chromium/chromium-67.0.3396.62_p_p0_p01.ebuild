@@ -28,13 +28,6 @@ IUSE="component-build cups gnome-keyring +hangouts jumbo-build kerberos neon pic
 RESTRICT="!system-ffmpeg? ( proprietary-codecs? ( bindist ) )
 	mirror"
 
-# Native Client binaries are compiled with different set of flags, bug #452066.
-QA_FLAGS_IGNORED=".*\.nexe"
-
-# Native Client binaries may be stripped by the build system, which uses the
-# right tools for it, bug #469144 .
-QA_PRESTRIPPED=".*\.nexe"
-
 COMMON_DEPEND="
 	app-accessibility/at-spi2-atk:2
 	app-arch/bzip2:=
@@ -59,7 +52,7 @@ COMMON_DEPEND="
 	>=media-libs/openh264-1.6.0:=
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? (
-		>=media-video/ffmpeg-3:=
+		>=media-video/ffmpeg-4:=
 		|| (
 			media-video/ffmpeg[-samba]
 			>=net-fs/samba-4.5.10-r1[-debug(-)]
@@ -119,21 +112,7 @@ DEPEND="${COMMON_DEPEND}
 	>=sys-devel/clang-5
 	virtual/pkgconfig
 	dev-vcs/git
-	$(python_gen_any_dep '
-		dev-python/beautifulsoup:python-2[${PYTHON_USEDEP}]
-		>=dev-python/beautifulsoup-4.3.2:4[${PYTHON_USEDEP}]
-		dev-python/html5lib[${PYTHON_USEDEP}]
-		dev-python/simplejson[${PYTHON_USEDEP}]
-	')
 "
-
-# Keep this in sync with the python_gen_any_dep call.
-python_check_deps() {
-	has_version --host-root "dev-python/beautifulsoup:python-2[${PYTHON_USEDEP}]" &&
-	has_version --host-root ">=dev-python/beautifulsoup-4.3.2:4[${PYTHON_USEDEP}]" &&
-	has_version --host-root "dev-python/html5lib[${PYTHON_USEDEP}]" &&
-	has_version --host-root "dev-python/simplejson[${PYTHON_USEDEP}]"
-}
 
 if ! has chromium_pkg_die ${EBUILD_DEATH_HOOKS}; then
 	EBUILD_DEATH_HOOKS+=" chromium_pkg_die";
@@ -162,7 +141,6 @@ PATCHES=(
 	"${FILESDIR}/chromium-webrtc-r0.patch"
 	"${FILESDIR}/chromium-memcpy-r0.patch"
 	"${FILESDIR}/chromium-math.h-r0.patch"
-	"${FILESDIR}/chromium-clang-r4.patch"
 	"${FILESDIR}/chromium-stdint.patch"
 	"${FILESDIR}/chromium-ffmpeg-r1.patch"
 	"${FILESDIR}/chromium-ffmpeg-clang.patch"
@@ -261,6 +239,7 @@ src_prepare() {
 		third_party/angle/third_party/spirv-headers
 		third_party/angle/third_party/spirv-tools
 		third_party/angle/third_party/vulkan-validation-layers
+		third_party/apple_apsl
 		third_party/blink
 		third_party/boringssl
 		third_party/boringssl/src/third_party/fiat
@@ -271,7 +250,10 @@ src_prepare() {
 		third_party/catapult
 		third_party/catapult/common/py_vulcanize/third_party/rcssmin
 		third_party/catapult/common/py_vulcanize/third_party/rjsmin
+		third_party/catapult/third_party/beautifulsoup4
+		third_party/catapult/third_party/html5lib-python
 		third_party/catapult/third_party/polymer
+		third_party/catapult/third_party/six
 		third_party/catapult/tracing/third_party/d3
 		third_party/catapult/tracing/third_party/gl-matrix
 		third_party/catapult/tracing/third_party/jszip
@@ -280,6 +262,8 @@ src_prepare() {
 		third_party/catapult/tracing/third_party/pako
 		third_party/ced
 		third_party/cld_3
+		third_party/crashpad
+		third_party/crashpad/crashpad/third_party/zlib
 		third_party/crc32c
 		third_party/cros_system_api
 		third_party/devscripts
@@ -340,6 +324,7 @@ src_prepare() {
 		third_party/qcms
 		third_party/s2cellid
 		third_party/sfntly
+		third_party/simplejson
 		third_party/skia
 		third_party/skia/third_party/gif
 		third_party/skia/third_party/vulkan
