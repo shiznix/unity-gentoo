@@ -16,7 +16,8 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="3/12" # subslot = libgnome-desktop-3 soname version
-IUSE="debug +introspection udev"
+# wayland - bug #624960 and issue #197
+IUSE="debug +introspection udev wayland"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -25,7 +26,7 @@ COMMON_DEPEND="
 	app-text/iso-codes
 	>=dev-libs/glib-2.44.0:2[dbus]
 	>=x11-libs/gdk-pixbuf-2.33.0:2[introspection?]
-	>=x11-libs/gtk+-3.3.6:3[X,introspection?]
+	>=x11-libs/gtk+-3.3.6:3[X,introspection?,wayland=]
 	x11-libs/cairo:=[X]
 	x11-libs/libX11
 	x11-misc/xkeyboard-config
@@ -37,6 +38,7 @@ COMMON_DEPEND="
 "
 RDEPEND="${COMMON_DEPEND}
 	!<gnome-base/gnome-desktop-2.32.1-r1:2[doc]
+	app-i18n/ibus[wayland=]
 "
 DEPEND="${COMMON_DEPEND}
 	app-text/docbook-xml-dtd:4.1.2
