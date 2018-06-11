@@ -16,13 +16,12 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="fcitx"
 RESTRICT="mirror"
 
 RDEPEND="gnome-extra/gucharmap:2.90
 	gnome-base/gnome-desktop:3="
 DEPEND="${RDEPEND}
-	>=app-i18n/fcitx-4.2.8.5
 	app-i18n/ibus[vala]
 	>=dev-libs/glib-2.37
 	dev-libs/libappindicator
@@ -36,6 +35,9 @@ DEPEND="${RDEPEND}
 	x11-libs/libxklavier
 	x11-libs/pango
 	x11-misc/lightdm
+
+	fcitx? ( >=app-i18n/fcitx-4.2.8.5 )
+
 	$(vala_depend)
 	${PYTHON_DEPS}"
 
@@ -43,6 +45,7 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+	eapply "${FILESDIR}/${PN}-optional-fcitx.patch"
 
 	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
 	#       (the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
@@ -60,7 +63,8 @@ src_prepare() {
 src_configure() {
 	python_copy_sources
 	configuration() {
-		econf
+		econf \
+			$(use_enable fcitx)
 	}
 	python_foreach_impl run_in_build_dir configuration
 }

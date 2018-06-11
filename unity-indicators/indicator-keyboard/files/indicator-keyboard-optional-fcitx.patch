@@ -1,0 +1,267 @@
+ configure.ac    | 22 +++++++++++++++++++++-
+ lib/Makefile.am |  9 ++++++---
+ lib/main.vala   | 27 +++++++++++++++++++++------
+ lib/source.vala | 16 ++++++++++++++++
+ 4 files changed, 64 insertions(+), 10 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 8a74c44..d1346d8 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -43,10 +43,30 @@ PKG_CHECK_MODULES([GNOME_DESKTOP], [gnome-desktop-3.0])
+ PKG_CHECK_MODULES([LIBXKLAVIER], [libxklavier])
+ PKG_CHECK_MODULES([LIBGNOMEKBD], [libgnomekbdui])
+ PKG_CHECK_MODULES([IBUS], [ibus-1.0])
+-PKG_CHECK_MODULES([FCITX_GCLIENT], [fcitx-gclient])
+ PKG_CHECK_MODULES([ACCOUNTSSERVICE], [accountsservice])
+ PKG_CHECK_MODULES([LIGHTDM], [liblightdm-gobject-1])
+ 
++# Check for fcitx
++build_fcitx=no
++AC_ARG_ENABLE([fcitx],
++              AS_HELP_STRING([--disable-fcitx],
++                             [disable fcitx support]),
++              [],
++              [enable_fcitx=auto])
++
++AS_IF([test "x$enable_fcitx" != "xno"],
++      [PKG_CHECK_MODULES([FCITX_GCLIENT],
++                         [fcitx-gclient],
++                         [
++                           AC_DEFINE(BUILD_FCITX, 1, [Define to 1 to support fcitx])
++                           build_fcitx=yes
++                         ], [
++                           AS_IF([test "x$enable_fcitx" = "xyes"],
++                                 [AC_MSG_ERROR([fcitx support requested but not found])])
++                         ])
++      ])
++AM_CONDITIONAL(BUILD_FCITX, test "x$build_fcitx" = "xyes")
++
+ SYSTEMD_USERDIR=`$PKG_CONFIG --variable=systemduserunitdir systemd`
+ AC_SUBST(SYSTEMD_USERDIR)
+ 
+diff --git a/lib/Makefile.am b/lib/Makefile.am
+index b3d2e90..b909838 100644
+--- a/lib/Makefile.am
++++ b/lib/Makefile.am
+@@ -26,7 +26,6 @@ indicator_keyboard_service_VALAFLAGS = $(AM_VALAFLAGS)            \
+                                        --pkg Xkl-1.0              \
+                                        --pkg Gkbd-3.0             \
+                                        --pkg ibus-1.0             \
+-                                       --pkg Fcitx-1.0            \
+                                        --pkg AccountsService-1.0  \
+                                        --pkg liblightdm-gobject-1
+ indicator_keyboard_service_CFLAGS = $(AM_CFLAGS)              \
+@@ -37,7 +36,6 @@ indicator_keyboard_service_CFLAGS = $(AM_CFLAGS)              \
+                                     $(LIBXKLAVIER_CFLAGS)     \
+                                     $(LIBGNOMEKBD_CFLAGS)     \
+                                     $(IBUS_CFLAGS)            \
+-                                    $(FCITX_GCLIENT_CFLAGS)   \
+                                     $(ACCOUNTSSERVICE_CFLAGS) \
+                                     $(LIGHTDM_CFLAGS)         \
+                                     $(COVERAGE_CFLAGS)        
+@@ -49,7 +47,12 @@ indicator_keyboard_service_LDFLAGS = $(AM_LDFLAGS)           \
+                                      $(LIBXKLAVIER_LIBS)     \
+                                      $(LIBGNOMEKBD_LIBS)     \
+                                      $(IBUS_LIBS)            \
+-                                     $(FCITX_GCLIENT_LIBS)   \
+                                      $(ACCOUNTSSERVICE_LIBS) \
+                                      $(LIGHTDM_LIBS)         \
+                                      $(COVERAGE_LDFLAGS)     
++
++if BUILD_FCITX
++   indicator_keyboard_service_VALAFLAGS += --pkg Fcitx-1.0
++   indicator_keyboard_service_CFLAGS += $(FCITX_GCLIENT_CFLAGS)
++   indicator_keyboard_service_LDFLAGS += $(FCITX_GCLIENT_LIBS)
++endif
+diff --git a/lib/main.vala b/lib/main.vala
+index 9b8268c..7f7183f 100644
+--- a/lib/main.vala
++++ b/lib/main.vala
+@@ -42,8 +42,10 @@ public class Indicator.Keyboard.Service : Object {
+ 	private ulong ibus_connected_id;
+ 	private uint panel_timeout;
+ 
++#if BUILD_FCITX
+ 	private Fcitx.InputMethod? fcitx;
+ 	private bool fcitx_initialized;
++#endif /* BUILD_FCITX */
+ 
+ 	private Source[]? sources;
+ 
+@@ -255,6 +257,7 @@ public class Indicator.Keyboard.Service : Object {
+ 		return ibus_panel;
+ 	}
+ 
++#if BUILD_FCITX
+ 	[DBus (visible = false)]
+ 	private Fcitx.InputMethod? get_fcitx () {
+ 		if (!fcitx_initialized) {
+@@ -273,6 +276,7 @@ public class Indicator.Keyboard.Service : Object {
+ 
+ 		return fcitx;
+ 	}
++#endif /* BUILD_FCITX */
+ 
+ 	[DBus (visible = false)]
+ 	public void up () {
+@@ -713,8 +717,11 @@ public class Indicator.Keyboard.Service : Object {
+ 					var source = sources[current];
+ 
+ 					if (source.is_xkb ||
+-					    (source.is_ibus && is_ibus_active ()) ||
+-					    (source.is_fcitx && is_fcitx_active ())) {
++					    (source.is_ibus && is_ibus_active ())
++#if BUILD_FCITX
++					    || (source.is_fcitx && is_fcitx_active ())
++#endif /* BUILD_FCITX */
++					    ) {
+ 						if (current != old_current) {
+ 							source_settings.set_uint ("current", current);
+ 						}
+@@ -742,6 +749,7 @@ public class Indicator.Keyboard.Service : Object {
+ 
+ 	[DBus (visible = false)]
+ 	private uint get_current () {
++#if BUILD_FCITX
+ 		if (is_fcitx_active () && get_fcitx () != null) {
+ 			string? engine = ((!) get_fcitx ()).current_im;
+ 
+@@ -774,6 +782,7 @@ public class Indicator.Keyboard.Service : Object {
+ 				}
+ 			}
+ 		}
++#endif /* BUILD_FCITX */
+ 
+ 		return source_settings.get_uint ("current");
+ 	}
+@@ -926,8 +935,11 @@ public class Indicator.Keyboard.Service : Object {
+ 
+ 			foreach (var source in sources) {
+ 				if (source.is_xkb ||
+-				    (source.is_ibus && is_ibus_active ()) ||
+-				    (source.is_fcitx && is_fcitx_active ())) {
++				    (source.is_ibus && is_ibus_active ())
++#if BUILD_FCITX
++				    || (source.is_fcitx && is_fcitx_active ())
++#endif /* BUILD_FCITX */
++				    ) {
+ 					length++;
+ 				}
+ 			}
+@@ -952,8 +964,11 @@ public class Indicator.Keyboard.Service : Object {
+ 				for (; offset > 0; offset--) {
+ 					do {
+ 						current = (current + jump) % sources.length;
+-					} while ((sources[current].is_ibus && !is_ibus_active ()) ||
+-					         (sources[current].is_fcitx && !is_fcitx_active ()));
++					} while ((sources[current].is_ibus && !is_ibus_active ())
++#if BUILD_FCITX
++						|| (sources[current].is_fcitx && !is_fcitx_active ())
++#endif /* BUILD_FCITX */
++						);
+ 				}
+ 
+ 				if (current != old_current) {
+diff --git a/lib/source.vala b/lib/source.vala
+index b00cbf2..ced0c82 100644
+--- a/lib/source.vala
++++ b/lib/source.vala
+@@ -20,11 +20,15 @@ public class Indicator.Keyboard.Source : Object {
+ 
+ 	private static Gnome.XkbInfo? xkb_info;
+ 	private static IBus.Bus? ibus_bus;
++#if BUILD_FCITX
+ 	private static Fcitx.InputMethod? fcitx_proxy;
++#endif /* BUILD_FCITX */
+ 
+ 	private string? xkb;
+ 	private string? ibus;
++#if BUILD_FCITX
+ 	private string? fcitx;
++#endif /* BUILD_FCITX */
+ 
+ 	private string? _name;
+ 	private string? _short_name;
+@@ -79,9 +83,11 @@ public class Indicator.Keyboard.Source : Object {
+ 		get { return ibus != null; }
+ 	}
+ 
++#if BUILD_FCITX
+ 	public bool is_fcitx {
+ 		get { return fcitx != null; }
+ 	}
++#endif /* BUILD_FCITX */
+ 
+ 	public Source (Variant variant, bool use_gtk = false) {
+ 		Object (use_gtk: use_gtk);
+@@ -96,8 +102,10 @@ public class Indicator.Keyboard.Source : Object {
+ 				xkb = name;
+ 			} else if (type == "ibus") {
+ 				ibus = name;
++#if BUILD_FCITX
+ 			} else if (type == "fcitx") {
+ 				fcitx = name;
++#endif /* BUILD_FCITX */
+ 			}
+ 		} else if (variant.is_of_type (new VariantType ("a{ss}"))) {
+ 			foreach (var pair in variant) {
+@@ -110,8 +118,10 @@ public class Indicator.Keyboard.Source : Object {
+ 					xkb = value;
+ 				} else if (key == "ibus") {
+ 					ibus = value;
++#if BUILD_FCITX
+ 				} else if (key == "fcitx") {
+ 					fcitx = value;
++#endif /* BUILD_FCITX */
+ 				}
+ 			}
+ 		}
+@@ -134,6 +144,7 @@ public class Indicator.Keyboard.Source : Object {
+ 		return (!) ibus_bus;
+ 	}
+ 
++#if BUILD_FCITX
+ 	private static Fcitx.InputMethod get_fcitx_proxy () throws Error {
+ 		if (fcitx_proxy == null) {
+ 			fcitx_proxy = new Fcitx.InputMethod (BusType.SESSION, DBusProxyFlags.NONE, 0);
+@@ -141,6 +152,7 @@ public class Indicator.Keyboard.Source : Object {
+ 
+ 		return (!) fcitx_proxy;
+ 	}
++#endif /* BUILD_FCITX */
+ 
+ 	private IBus.EngineDesc? get_engine () {
+ 		IBus.EngineDesc? engine = null;
+@@ -217,6 +229,7 @@ public class Indicator.Keyboard.Source : Object {
+ 			if (name == null || ((!) name).get_char () == '\0') {
+ 				name = ibus;
+ 			}
++#if BUILD_FCITX
+ 		} else if (fcitx != null) {
+ 			try {
+ 				var input_methods = get_fcitx_proxy ().get_imlist_nofree ();
+@@ -234,6 +247,7 @@ public class Indicator.Keyboard.Source : Object {
+ 			if (name == null || ((!) name).get_char () == '\0') {
+ 				name = fcitx;
+ 			}
++#endif /* BUILD_FCITX */
+ 		}
+ 
+ 		return name;
+@@ -258,6 +272,7 @@ public class Indicator.Keyboard.Source : Object {
+ 			if (short_name == null || ((!) short_name).get_char () == '\0') {
+ 				short_name = ibus;
+ 			}
++#if BUILD_FCITX
+ 		} else if (fcitx != null) {
+ 			try {
+ 				var input_methods = get_fcitx_proxy ().get_imlist_nofree ();
+@@ -275,6 +290,7 @@ public class Indicator.Keyboard.Source : Object {
+ 			if (short_name == null || ((!) short_name).get_char () == '\0') {
+ 				short_name = fcitx;
+ 			}
++#endif /* BUILD_FCITX */
+ 		}
+ 
+ 		return abbreviate (short_name);
