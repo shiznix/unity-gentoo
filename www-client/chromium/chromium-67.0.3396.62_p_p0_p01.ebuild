@@ -656,11 +656,6 @@ src_install() {
 	chromium_remove_language_paks
 	popd
 
-	if use widevine; then
-		# These will be provided by chrome-binary-plugins
-		rm out/Release/libwidevinecdm*.so || die
-	fi
-
 	insinto "${CHROMIUM_HOME}"
 	doins out/Release/*.bin
 	doins out/Release/*.pak

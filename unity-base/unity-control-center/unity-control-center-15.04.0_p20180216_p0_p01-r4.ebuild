@@ -116,8 +116,8 @@ RDEPEND="${COMMON_DEPEND}
 PDEPEND=">=gnome-base/gnome-session-2.91.6-r1
 	bluetooth? ( unity-indicators/indicator-bluetooth )"
 
-# Hard block unity-base/gnome-control-center-signon as it installs conflicting 'Online Accounts' settings tile (use GOA not UOA) #
-DEPEND="!!unity-base/gnome-control-center-signon
+# Soft block unity-base/gnome-control-center-signon as it installs conflicting 'Online Accounts' settings tile (use GOA not UOA) #
+DEPEND="!unity-base/gnome-control-center-signon
 	${COMMON_DEPEND}
 	x11-proto/xproto
 	x11-proto/xf86miscproto
