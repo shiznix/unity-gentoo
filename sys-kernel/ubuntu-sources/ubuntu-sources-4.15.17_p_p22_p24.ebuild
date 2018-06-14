@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_PN}_${BASE_PV}.orig.tar.gz
 	amd64? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/amd64-config.flavour.generic )
 	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/i386-config.flavour.generic )"
 LICENSE="GPL-2"
-#KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="binchecks mirror strip"
 S="${WORKDIR}/linux-$(get_version_component_range 1-2)"
@@ -57,6 +57,10 @@ src_prepare() {
 
 	# Omit building Ubuntu's VBox kernel modules, these are provided by package app-emulation/virtualbox-modules #
 	epatch -p1 "${FILESDIR}/omit-vbox.diff"
+
+	# Revert kernel commit https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1455cf8dbfd06aa7651dcfccbadb7a093944ca65 #
+	#	until systemd, userspace and kernel devs. can arrive at a working solution (broken bluetooth, racing systemd-udevd causing 100% CPU, stale USB devices, etc.) #
+	epatch -p1 "${FILESDIR}/revert-bind_unbind-uevents.patch"
 
 	sed -i -e "s:^\(EXTRAVERSION =\).*:\1 ${EXTRAVERSION}:" Makefile || die
 	sed -i -e 's:#export\tINSTALL_PATH:export\tINSTALL_PATH:' Makefile || die

@@ -1,0 +1,56 @@
+diff -urN linux-4.15/drivers/base/dd.c linux-4.15-patched/drivers/base/dd.c
+--- linux-4.15/drivers/base/dd.c	2018-01-29 07:50:33.000000000 +1030
++++ linux-4.15-patched/drivers/base/dd.c	2018-06-14 08:09:56.397080062 +0930
+@@ -285,8 +285,6 @@
+ 	if (dev->bus)
+ 		blocking_notifier_call_chain(&dev->bus->p->bus_notifier,
+ 					     BUS_NOTIFY_BOUND_DRIVER, dev);
+-
+-	kobject_uevent(&dev->kobj, KOBJ_BIND);
+ }
+ 
+ static int driver_sysfs_add(struct device *dev)
+@@ -886,8 +884,6 @@
+ 			blocking_notifier_call_chain(&dev->bus->p->bus_notifier,
+ 						     BUS_NOTIFY_UNBOUND_DRIVER,
+ 						     dev);
+-
+-		kobject_uevent(&dev->kobj, KOBJ_UNBIND);
+ 	}
+ }
+ 
+diff -urN linux-4.15/include/linux/kobject.h linux-4.15-patched/include/linux/kobject.h
+--- linux-4.15/include/linux/kobject.h	2018-01-29 07:50:33.000000000 +1030
++++ linux-4.15-patched/include/linux/kobject.h	2018-06-14 08:10:25.816234952 +0930
+@@ -57,8 +57,6 @@
+ 	KOBJ_MOVE,
+ 	KOBJ_ONLINE,
+ 	KOBJ_OFFLINE,
+-	KOBJ_BIND,
+-	KOBJ_UNBIND,
+ 	KOBJ_MAX
+ };
+ 
+diff -urN linux-4.15/lib/kobject_uevent.c linux-4.15-patched/lib/kobject_uevent.c
+--- linux-4.15/lib/kobject_uevent.c	2018-01-29 07:50:33.000000000 +1030
++++ linux-4.15-patched/lib/kobject_uevent.c	2018-06-14 08:11:28.444730956 +0930
+@@ -52,8 +52,6 @@
+ 	[KOBJ_MOVE] =		"move",
+ 	[KOBJ_ONLINE] =		"online",
+ 	[KOBJ_OFFLINE] =	"offline",
+-	[KOBJ_BIND] =		"bind",
+-	[KOBJ_UNBIND] =		"unbind",
+ };
+ 
+ static int kobject_action_type(const char *buf, size_t count,
+@@ -499,10 +497,6 @@
+ 		kobj->state_remove_uevent_sent = 1;
+ 		break;
+ 
+-	case KOBJ_UNBIND:
+-		zap_modalias_env(env);
+-		break;
+-
+ 	default:
+ 		break;
+ 	}
