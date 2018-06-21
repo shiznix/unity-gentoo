@@ -35,12 +35,7 @@ RDEPEND="system-libvncserver? ( >=net-libs/libvncserver-0.9.7[threads=,jpeg=,zli
 	x11-libs/libXext"
 DEPEND="${RDEPEND}
 	x11-libs/libXt
-	xinerama? ( x11-proto/xineramaproto )
-	x11-proto/inputproto
-	x11-proto/trapproto
-	x11-proto/recordproto
-	x11-proto/xproto
-	x11-proto/xextproto"
+	x11-base/xorg-proto"
 
 pkg_setup() {
 	if use avahi && ! use threads ; then

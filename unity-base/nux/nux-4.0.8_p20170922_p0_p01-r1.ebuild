@@ -32,14 +32,13 @@ DEPEND="app-i18n/ibus
 	media-libs/libpng:0
 	sys-apps/pciutils
 	unity-base/geis
+	x11-base/xorg-proto
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/libXcomposite
 	x11-libs/libXdamage
 	x11-libs/libXxf86vm
 	x11-libs/pango
-	x11-proto/dri2proto
-	x11-proto/glproto
 	doc? ( app-doc/doxygen )
 	test? ( dev-cpp/gmock
 		dev-cpp/gtest )"

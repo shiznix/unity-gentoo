@@ -119,9 +119,7 @@ PDEPEND=">=gnome-base/gnome-session-2.91.6-r1
 # Soft block unity-base/gnome-control-center-signon as it installs conflicting 'Online Accounts' settings tile (use GOA not UOA) #
 DEPEND="!unity-base/gnome-control-center-signon
 	${COMMON_DEPEND}
-	x11-proto/xproto
-	x11-proto/xf86miscproto
-	x11-proto/kbproto
+	x11-base/xorg-proto
 
 	dev-libs/libxml2:2
 	dev-libs/libxslt

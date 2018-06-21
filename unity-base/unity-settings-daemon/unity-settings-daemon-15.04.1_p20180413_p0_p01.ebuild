@@ -78,9 +78,7 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	dev-util/intltool
 	virtual/pkgconfig
-	x11-proto/inputproto
-	x11-proto/xf86miscproto
-	x11-proto/xproto"
+	x11-base/xorg-proto"
 
 S="${WORKDIR}"
 

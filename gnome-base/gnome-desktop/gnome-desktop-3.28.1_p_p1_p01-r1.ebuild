@@ -47,11 +47,11 @@ DEPEND="${COMMON_DEPEND}
 	>=dev-util/intltool-0.40.6
 	dev-util/itstool
 	sys-devel/gettext
-	x11-proto/xproto
+	x11-base/xorg-proto
 	virtual/pkgconfig
 "
 
-# Includes X11/Xatom.h in libgnome-desktop/gnome-bg.c which comes from xproto
+# Includes X11/Xatom.h in libgnome-desktop/gnome-bg.c which comes from x11-base/xorg-proto
 
 src_prepare() {
 	# Disable language patches #

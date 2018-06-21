@@ -37,9 +37,7 @@ DEPEND="dev-libs/libaccounts-glib:=
 	sys-devel/gettext
 	virtual/pkgconfig
 	x11-libs/gtk+:3
-	x11-proto/xproto
-	x11-proto/xf86miscproto
-	x11-proto/kbproto
+	x11-base/xorg-proto
 	$(vala_depend)"
 
 S="${WORKDIR}"

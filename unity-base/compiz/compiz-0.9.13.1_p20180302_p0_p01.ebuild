@@ -63,8 +63,7 @@ COMMONDEPEND="!!x11-wm/compiz
 DEPEND="${COMMONDEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig
-	x11-proto/damageproto
-	x11-proto/xineramaproto
+	x11-base/xorg-proto
 	test? ( dev-cpp/gtest
 		dev-cpp/gmock
 		sys-apps/xorg-gtest )"

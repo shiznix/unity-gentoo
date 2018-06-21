@@ -48,9 +48,7 @@ DEPEND="${RDEPEND}
 	>=dev-util/intltool-0.35
 	virtual/pkgconfig
 	test? ( app-text/docbook-xml-dtd:4.5 )
-	xinerama? ( x11-proto/xineramaproto )
-	x11-proto/xextproto
-	x11-proto/xproto"
+	x11-base/xorg-proto"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
