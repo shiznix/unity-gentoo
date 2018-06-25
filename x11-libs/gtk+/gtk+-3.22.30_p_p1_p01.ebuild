@@ -77,7 +77,7 @@ DEPEND="${COMMON_DEPEND}
 	>=sys-devel/gettext-0.19.7[${MULTILIB_USEDEP}]
 	virtual/pkgconfig[${MULTILIB_USEDEP}]
 	X? (
-		x11-base/xorg-proto[${MULTILIB_USEDEP}]
+		x11-base/xorg-proto
 	)
 	test? (
 		media-fonts/font-misc-misc

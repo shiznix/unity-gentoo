@@ -65,7 +65,7 @@ DEPEND="${COMMON_DEPEND}
 	>=sys-devel/gettext-0.18.3[${MULTILIB_USEDEP}]
 	>=virtual/pkgconfig-0-r1[${MULTILIB_USEDEP}]
 	!aqua? (
-			x11-base/xorg-proto[${MULTILIB_USEDEP}]
+			x11-base/xorg-proto
 	)
 	test? (
 		x11-themes/hicolor-icon-theme
