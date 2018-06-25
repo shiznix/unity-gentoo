@@ -6,7 +6,7 @@ EAPI=6
 GNOME2_LA_PUNT="yes"
 VALA_USE_DEPEND="vapigen"
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit ubuntu-versionator gnome2 vala
 
 DESCRIPTION="GNOME framework for accessing online accounts"
