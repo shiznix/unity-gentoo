@@ -151,7 +151,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		source <(declare -f die | sed -e "/${bugapnd}/a ${bugmsg}" -e "/${bugapnd}/a ${buglog}")
 
 		## Output information messages to fd 3 instead of stderr (issue #193).
-		local msgfunc_names="einfo einfon ewarn ebegin __eend"
+		local msgfunc_names="einfo einfon ewarn ebegin __eend __vecho"
 
 		for x in ${msgfunc_names}; do
 			source <(declare -f ${x} | sed "s/\(1>&\)2/\13/")
