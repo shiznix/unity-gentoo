@@ -21,7 +21,7 @@ for greeters in ${IUSE_LIGHTDM_GREETERS}; do
 done
 
 # add and enable 'unity' greeter by default
-IUSE+=" +lightdm_greeters_unity audit +introspection qt4 qt5 test"
+IUSE+=" +lightdm_greeters_unity audit +introspection qt5 test"
 RESTRICT="mirror"
 
 COMMON_DEPEND="dev-libs/glib:2
@@ -32,11 +32,6 @@ COMMON_DEPEND="dev-libs/glib:2
 	>=x11-libs/libxklavier-5
 	audit? ( sys-process/audit )
 	introspection? ( >=dev-libs/gobject-introspection-1 )
-	qt4? (
-		dev-qt/qtcore:4
-		dev-qt/qtdbus:4
-		dev-qt/qtgui:4
-		)
 	qt5? (
 		dev-qt/qtcore:5
 		dev-qt/qtdbus:5
@@ -94,10 +89,10 @@ src_configure() {
 	econf \
 		--localstatedir=/var \
 		--disable-static \
+		--disable-liblightdm-qt \
 		--enable-vala \
 		$(use_enable audit libaudit) \
 		$(use_enable introspection) \
-		$(use_enable qt4 liblightdm-qt) \
 		$(use_enable qt5 liblightdm-qt5) \
 		$(use_enable test tests) \
 		--with-html-dir="${EPREFIX}"/usr/share/doc/${PF}/html

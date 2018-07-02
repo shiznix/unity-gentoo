@@ -20,7 +20,6 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/libdbusmenu:=
 	dev-libs/libappindicator:3=
-	dev-libs/libindicate-qt
 	unity-base/bamf:=
 	x11-libs/gtk+:3
 	x11-libs/libwnck:1

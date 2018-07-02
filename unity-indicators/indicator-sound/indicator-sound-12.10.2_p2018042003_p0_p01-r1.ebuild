@@ -23,7 +23,6 @@ RDEPEND="sys-auth/polkit-pkla-compat
 DEPEND="${RDEPEND}
 	dev-libs/libappindicator
 	dev-libs/libgee:0
-	dev-libs/libindicate-qt
 	dev-libs/libdbusmenu:=
 	dev-libs/libqtdbusmock
 	dev-libs/libqtdbustest

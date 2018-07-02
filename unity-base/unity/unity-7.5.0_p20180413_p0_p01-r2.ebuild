@@ -45,7 +45,6 @@ DEPEND="${RDEPEND}
 	dev-libs/libdbusmenu:=
 	dev-libs/libffi
 	dev-libs/libindicate[gtk,introspection]
-	dev-libs/libindicate-qt
 	dev-libs/libindicator
 	dev-libs/libsigc++:2
 	dev-libs/libunity

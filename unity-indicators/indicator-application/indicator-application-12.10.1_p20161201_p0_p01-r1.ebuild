@@ -19,8 +19,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-libs/libappindicator:=
-	dev-libs/libdbusmenu:=
-	dev-libs/libindicate-qt"
+	dev-libs/libdbusmenu:="
 
 S="${WORKDIR}"
 
