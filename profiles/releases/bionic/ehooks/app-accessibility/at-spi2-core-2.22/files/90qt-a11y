@@ -1,9 +1,0 @@
-# -*- sh -*-
-# Xsession.d script to set the env variables to enable accessibility for Qt
-#
-# This file is sourced by Xsession(5), not executed.
-
-QT_ACCESSIBILITY=1
-QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
-
-export QT_ACCESSIBILITY QT_LINUX_ACCESSIBILITY_ALWAYS_ON

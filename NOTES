@@ -59,14 +59,16 @@ x11-wm/metacity				# Patched to support compiz window decoration
 
 * Reasons for maintaining ehooks:
 app-accessibility/at-spi2-core		# Start 'accessibility bus' by default (https://wiki.debian.org/accessibility-devel)
-app-accessibility/at-spi2-core-2.22	# Start 'accessibility bus' by default (https://wiki.debian.org/accessibility-devel) and fix 'WARNING: Application 'at-spi-dbus-bus.desktop' failed to register before timeout' causing a desktop lag when the Unity is initializing
-app-i18n/ibus				# Don't show notification if not upgrading from a previous version (https://bugs.launchpad.net/ibus/+bug/1255542)
+app-i18n/ibus				# Don't show notification if not upgrading from a previous version (LP #1255542)
 mail-client/thunderbird			# Add Unity menubar and desktop launcher with quicklist and translations
-media-fonts/ubuntu-font-family		# Keep Ubuntu medium font (e.g used by unity-indicators/indicator-keyboard)
+mate-base/mate-desktop			# Add gschema keys to support Global Menu (LP #1675956)
+mate-base/mate-panel			# Disable not working high dpi scaling and prevent menu-bar being hidden when Global Menus are enabled
+media-fonts/ubuntu-font-family		# Add Ubuntu medium font (e.g. used by unity-indicators/indicator-keyboard)
+media-sound/pulseaudio			# Disable flat volume (LP #1424195)
 net-irc/quassel				# Fix notification icon not appearing in Unity
-sys-apps/systemd			# Use legacy cgroup hierarchy as the default
-sys-auth/polkit				# Add fallback if agent is not running in a logind session, this fixes polkit with dbus-user-session (https://bugs.freedesktop.org/show_bug.cgi?id=96977)
+sys-auth/polkit-pkla-compat		# Fix localstatedir path (/var/lib)
 www-client/firefox			# Add Unity menubar and desktop launcher with quicklist and translations
+www-client/firefox-60			# Extended Support Release. Add Unity menubar and desktop launcher with quicklist and translations
 
 * Optional ehooks provided by 'unity-extra/ehooks' and managed via 'eselect ehooks':
 app-arch/file-roller			# Don't use GtkHeaderBar in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=739596)
@@ -82,7 +84,7 @@ www-client/firefox-52			# Extended Support Release until August 21, 2018. Add Un
 x11-base/xorg-server-1.19		# Load nvidia proprietary driver automatically when installed, fall back to autoconfiguration for graphics drivers in some cases instead of letting X fail when configuration files are available
 x11-libs/vte:2.91			# Add the style context provider with FALLBACK priority, NOTE: use along with x11-terms/gnome-terminal ehook
 x11-misc/zim				# Install Ubuntu theme (/usr/share/icons/ubuntu-mono-{dark,light})
-x11-terms/gnome-terminal		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, https://bugs.launchpad.net/ubuntu/+source/gnome-terminal/+bug/1493964), NOTE: enable x11-libs/vte ehook as well to use theme background color
+x11-terms/gnome-terminal		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, LP #1493964), NOTE: enable x11-libs/vte ehook as well to use theme background color
 
 * By design, some indicators or their features will not appear until they meet certain criteria
 	- indicator-messages	# Won't appear until a messaging type application is run first (eg. empathy, evolution (via indicator-evolution), pidgin, webapp)
