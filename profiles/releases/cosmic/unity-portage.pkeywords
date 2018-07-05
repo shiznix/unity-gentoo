@@ -80,7 +80,7 @@ dev-libs/capnproto
 dev-libs/folks
 =dev-libs/icu-59*
 dev-libs/libindicate-qt
-=dev-libs/nss-3.37*
+=dev-libs/nss-3.38*
 =dev-libs/nspr-4.19*
 =dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
