@@ -26,6 +26,7 @@ DEPEND="dev-libs/gobject-introspection
 	dev-libs/libxslt[python,${PYTHON_USEDEP}]
 	dev-libs/libxml2[${PYTHON_USEDEP}]
 	dev-util/gdbus-codegen
+	gnome-base/libgtop
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
 	x11-libs/libwnck:1
