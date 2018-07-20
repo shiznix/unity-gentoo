@@ -20,7 +20,6 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu[gtk3]
-	dev-libs/libindicate-qt
 	dev-libs/libunity:=
 	net-libs/telepathy-glib
 	unity-indicators/indicator-messages"
