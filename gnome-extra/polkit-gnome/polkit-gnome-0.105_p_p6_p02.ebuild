@@ -33,6 +33,9 @@ DOCS=( AUTHORS HACKING NEWS README TODO )
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# delete 'gnome debug check' due missing macro expansion
+	sed -i '/GNOME_DEBUG_CHECK/d' "${S}/configure.ac" || die
 	eautoreconf
 }
 
