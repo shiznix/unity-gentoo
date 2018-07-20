@@ -24,6 +24,7 @@ DEPEND="app-text/gnome-doc-utils
 	dev-libs/dbus-glib
 	dev-libs/glib:2
 	dev-libs/gobject-introspection
+	dev-libs/json-glib
 	dev-libs/libxml2:2
 	dev-util/gtk-doc
 	dev-util/intltool
