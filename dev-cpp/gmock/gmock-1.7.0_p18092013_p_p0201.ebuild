@@ -9,7 +9,6 @@ inherit libtool python-single-r1 ubuntu-versionator
 
 MY_PN="google-mock"
 MY_PV="${PV}"
-UURL="mirror://unity/pool/universe/g/${MY_PN}"
 UVER="-${PVR_MICRO}"
 UVER_SUFFIX="-${PVR_PL_MINOR}"
 
