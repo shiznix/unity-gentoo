@@ -21,11 +21,13 @@ RESTRICT="mirror"
 RDEPEND="sys-auth/polkit-pkla-compat
 	unity-base/gsettings-ubuntu-touch-schemas"
 DEPEND="${RDEPEND}
+	sys-apps/accountsservice
 	dev-libs/libappindicator
-	dev-libs/libgee:0
+	dev-libs/libgee:0.8
 	dev-libs/libdbusmenu:=
 	dev-libs/libqtdbusmock
 	dev-libs/libqtdbustest
+	dev-util/dbus-test-runner
 	media-sound/pulseaudio
 	unity-base/bamf:=
 	unity-base/unity-api
