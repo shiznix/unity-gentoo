@@ -28,6 +28,7 @@ COMMON_DEPEND="dev-libs/glib:2
 	dev-libs/libxml2
 	sys-apps/accountsservice
 	sys-libs/pam
+	x11-apps/xhost
 	x11-libs/libX11
 	>=x11-libs/libxklavier-5
 	audit? ( sys-process/audit )
