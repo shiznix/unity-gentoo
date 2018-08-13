@@ -36,7 +36,7 @@ DEPEND="dev-cpp/gmock
 	gnome-base/dconf
 	sys-libs/libnih[dbus]
 	unity-base/bamf:=
-	x11-libs/dee-qt[qt5]
+	x11-libs/dee-qt
 	x11-libs/gsettings-qt
 	x11-libs/gtk+:3
 	x11-libs/pango
