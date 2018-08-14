@@ -14,7 +14,7 @@ inherit check-reqs chromium-2 eutils gnome2-utils flag-o-matic multilib ninja-ut
 
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
-UURL="mirror://unity/pool/universe/c/${MY_PN}"
+#UURL="mirror://unity/pool/universe/c/${MY_PN}"
 
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
@@ -57,7 +57,7 @@ COMMON_DEPEND="
 			media-video/ffmpeg[-samba]
 			>=net-fs/samba-4.5.10-r1[-debug(-)]
 		)
-		!=net-fs/samba-4.5.12
+		!=net-fs/samba-4.5.12-r0
 		media-libs/opus:=
 	)
 	sys-apps/dbus:=
@@ -86,7 +86,6 @@ COMMON_DEPEND="
 "
 # For nvidia-drivers blocker, see bug #413637 .
 RDEPEND="${COMMON_DEPEND}
-	!=www-client/chromium-9999
 	!<www-plugins/chrome-binary-plugins-57
 	x11-misc/xdg-utils
 	virtual/opengl
@@ -143,7 +142,9 @@ PATCHES=(
 	"${FILESDIR}/chromium-math.h-r0.patch"
 	"${FILESDIR}/chromium-stdint.patch"
 	"${FILESDIR}/chromium-ffmpeg-r1.patch"
-	"${FILESDIR}/chromium-ffmpeg-clang.patch"
+	"${FILESDIR}/chromium-libjpeg-r0.patch"
+	"${FILESDIR}/chromium-cors-string-r0.patch"
+	"${FILESDIR}/chromium-libwebp-shim-r0.patch"
 )
 
 pre_build_checks() {
@@ -185,19 +186,18 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Chromecast is not fully combatible with Chromium and can crash the browser when WiFi is enabled
+	# Chromecast is not fully compatible with Chromium and can crash the browser when WiFi is enabled
 	# https://bugs.launchpad.net/ubuntu/+source/chromium-browser/+bug/1702407 #37
 	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833477
-	sed -i '/enable-chromecast-by-default.patch/d' "${WORKDIR}/debian/patches/series" || die
+#	sed -i '/enable-chromecast-by-default.patch/d' "${WORKDIR}/debian/patches/series" || die
 
 	# Disable selected patches #
 	sed \
 		`# Don't limit gcc version to 4.8` \
 			-e 's:use-gcc-versioned:#use-gcc-versioned:g' \
+		`# Fix clang compilation failure` \
+			-e 's:clang-601-atomics:#clang-601-atomics:g' \
 				-i "${WORKDIR}/debian/patches/series" || die
-
-	# Calling this here supports resumption via FEATURES=keepwork
-	python_setup
 
 	ubuntu-versionator_src_prepare
 
@@ -225,8 +225,11 @@ src_prepare() {
 		buildtools/third_party/libc++abi
 		chrome/third_party/mozilla_security_manager
 		courgette/third_party
+		net/third_party/http2
 		net/third_party/mozilla_security_manager
 		net/third_party/nss
+		net/third_party/quic
+		net/third_party/spdy
 		third_party/WebKit
 		third_party/analytics
 		third_party/angle
@@ -287,11 +290,11 @@ src_prepare() {
 		third_party/libXNVCtrl
 		third_party/libaddressinput
 		third_party/libaom
-		third_party/libaom/source/libaom/third_party/x86inc
 		third_party/libjingle
 		third_party/libphonenumber
 		third_party/libsecret
 		third_party/libsrtp
+		third_party/libsync
 		third_party/libudev
 		third_party/libwebm
 		third_party/libxml/chromium
@@ -317,16 +320,20 @@ src_prepare() {
 		third_party/pdfium/third_party/libpng16
 		third_party/pdfium/third_party/libtiff
 		third_party/pdfium/third_party/skia_shared
+		third_party/perfetto
 		third_party/ply
 		third_party/polymer
 		third_party/protobuf
 		third_party/protobuf/third_party/six
+		third_party/pyjson5
 		third_party/qcms
+		third_party/rnnoise
 		third_party/s2cellid
 		third_party/sfntly
 		third_party/simplejson
 		third_party/skia
 		third_party/skia/third_party/gif
+		third_party/skia/third_party/skcms
 		third_party/skia/third_party/vulkan
 		third_party/smhasher
 		third_party/spirv-headers
@@ -348,6 +355,7 @@ src_prepare() {
 		url/third_party/mozilla
 		v8/src/third_party/valgrind
 		v8/src/third_party/utf8-decoder
+		v8/third_party/antlr4
 		v8/third_party/inspector_protocol
 
 		# gyp -> gn leftovers
@@ -565,9 +573,10 @@ src_configure() {
 	mkdir -p -m 755 "${TMPDIR}" || die
 
 	# https://bugs.gentoo.org/654216
-	addpredict /dev/dri/
+	addpredict /dev/dri/ #nowarn
 
-	if ! use system-ffmpeg; then
+	#if ! use system-ffmpeg; then
+	if false; then
 		local build_ffmpeg_args=""
 		if use pic && [[ "${ffmpeg_target_arch}" == "ia32" ]]; then
 			build_ffmpeg_args+=" --disable-asm"
