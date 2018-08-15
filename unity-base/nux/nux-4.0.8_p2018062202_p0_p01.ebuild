@@ -3,10 +3,10 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit autotools eutils ubuntu-versionator xdummy
 
-UVER_PREFIX="+17.10.${PVR_MICRO}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 GLEWMX="glew-1.13.0"
 
 DESCRIPTION="Visual rendering toolkit for the Unity desktop"

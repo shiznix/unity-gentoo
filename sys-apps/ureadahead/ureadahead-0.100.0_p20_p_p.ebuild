@@ -33,6 +33,11 @@ CONFIG_CHECK="~FTRACE ~DEBUG_FS"
 src_prepare() {
 	# Ubuntu patchset #
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER}.diff" || die
+
+	# Fix "undefined reference to `major'" compile failures #
+	sed -e '/#include <sys\/stat.h>/a #include <sys\/sysmacros.h>' \
+		-i src/{pack,trace}.c
+
 	ubuntu-versionator_src_prepare
 	eautoreconf
 }
