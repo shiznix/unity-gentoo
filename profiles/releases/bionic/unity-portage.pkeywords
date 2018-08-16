@@ -91,7 +91,6 @@ dev-python/python-prctl
 ~dev-qt/qtlocation-5.6.1
 dev-util/cargo
 dev-util/umockdev
-mail-client/thunderbird
 =media-gfx/eog-3.24*
 ~media-libs/giflib-4.2.3
 ~media-libs/gexiv2-0.10.5
