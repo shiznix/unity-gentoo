@@ -26,6 +26,7 @@ DEPEND="doc? ( app-doc/doxygen )
 	dev-libs/process-cpp
 	sys-apps/dbus"
 
+S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
@@ -43,10 +44,15 @@ src_prepare() {
 			-i CMakeLists.txt
 
 	# Fix build errors using >=gcc-5.4.0 #
-	epatch -p1 "${FILESDIR}/dbus-cpp_fix-missing-random-include_LP1592814.diff"
+#	epatch -p1 "${FILESDIR}/dbus-cpp_fix-missing-random-include_LP1592814.diff"
 
 	# Disable '-Werror' #
 	sed -e 's/-Werror//g' \
 		-i CMakeLists.txt
 	cmake-utils_src_prepare
+}
+
+src_configure() {
+	mycmakeargs+=(-DDBUS_CPP_VERSION_MAJOR=5)
+	cmake-utils_src_configure
 }

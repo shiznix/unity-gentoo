@@ -10,8 +10,9 @@ DESCRIPTION="Run Android applications on any GNU/Linux operating system"
 HOMEPAGE="https://anbox.io/"
 EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 IMG_PATH="$(get_version_component_range 2)/$(get_version_component_range 3)/$(get_version_component_range 4)"
-IMG_REVISION="$(get_version_component_range 5)"
-SRC_URI="http://build.anbox.io/android-images/${IMG_PATH}/android_${IMG_REVISION}_amd64.img"
+#IMG_REVISION="$(get_version_component_range 5)"
+#SRC_URI="http://build.anbox.io/android-images/${IMG_PATH}/android_${IMG_REVISION}_amd64.img"
+SRC_URI="http://build.anbox.io/android-images/${IMG_PATH}/android_amd64.img"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -89,10 +90,6 @@ src_prepare() {
 
 	! use test && \
 		truncate -s0 cmake/FindGMock.cmake tests/CMakeLists.txt
-
-	# Remove deprecated syntax from udev rule #
-	sed -e 's: NAME="%k",::g' \
-		-i kernel/99-anbox.rules
 }
 
 src_install() {
@@ -125,9 +122,10 @@ src_install() {
 	newins snap/gui/icon.png anbox.png
 
 	insinto /var/lib/anbox
-	newins "${DISTDIR}/android_${IMG_REVISION}_amd64.img" android.img
+#	newins "${DISTDIR}/android_${IMG_REVISION}_amd64.img" android.img
+	newins "${DISTDIR}/android_amd64.img" android.img
 
-	udev_dorules kernel/99-anbox.rules
+	udev_dorules "${FILESDIR}/99-anbox.rules"
 }
 
 pkg_postinst() {
