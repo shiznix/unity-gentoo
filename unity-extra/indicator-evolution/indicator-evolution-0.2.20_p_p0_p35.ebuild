@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools gnome2-utils ubuntu-versionator
 
 MY_PN="evolution-indicator"
