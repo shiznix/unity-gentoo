@@ -13,7 +13,7 @@ URELEASE="bionic"
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
 KEYWORDS="~amd64 ~x86"
-IUSE="accessibility +chat +ehooks gnome gnome-extras +unity-extras +xdm"
+IUSE="accessibility +chat +ehooks gnome gnome-extras nocsd +unity-extras +xdm"
 RESTRICT="mirror"
 
 DEPEND="gnome-base/gnome-core-libs
@@ -40,6 +40,7 @@ DEPEND="gnome-base/gnome-core-libs
 	ehooks? ( unity-extra/ehooks )
 	gnome? ( gnome-base/gnome-core-apps )
 	gnome-extras? ( gnome-base/gnome-extra-apps )
+	nocsd? ( x11-misc/gtk3-nocsd )
 	unity-extras? (
 		app-backup/deja-dup[nautilus]
 		unity-extra/unity-tweak-tool )

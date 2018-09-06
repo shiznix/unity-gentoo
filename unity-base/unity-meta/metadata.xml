@@ -15,6 +15,7 @@
 		<flag name="ehooks">Ebuild hooks customizing packages for use with Unity desktop</flag>
 		<flag name="gnome">Gnome core applications such as gnome-terminal, totem, eog etc.</flag>
 		<flag name="gnome-extras">Gnome extra applications such as file-roller, evolution, gcalctool etc.</flag>
+		<flag name="nocsd">Disable Gtk+ 3 client side decorations (CSD)</flag>
 		<flag name="unity-extras">Unity extra applications deja-dup and unity-tweak-tool</flag>
 		<flag name="webapps">Desktop webapp integration. Where common webpages such as Facebook
 			and YouTube are seen as applications in the Dash, Launcher and indicators</flag>
