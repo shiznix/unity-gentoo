@@ -260,9 +260,6 @@ src_install() {
 	sed -e "/nux\/unity_support_test/{s/lib/${fixlib}/}" \
 		-i "${ED}/usr/${fixlib}/unity/compiz-profile-selector" || die
 
-	insinto /etc/xdg/autostart/
-	doins "${FILESDIR}/ibus-daemon.desktop"
-
 	# Fix conflict between ibus and indicator-keyboard #
 	#  default <Super+Space> now works to switch keyboard layouts #
 	insinto /usr/share/glib-2.0/schemas

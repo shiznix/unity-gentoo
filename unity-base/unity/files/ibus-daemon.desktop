@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=ibus-daemon
-Comment=Start 'ibus-daemon' if we are in a Unity desktop session
-Exec=ibus-daemon --daemonize --xim
-OnlyShowIn=Unity;
-Terminal=false
