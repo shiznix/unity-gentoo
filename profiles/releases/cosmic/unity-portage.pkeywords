@@ -85,6 +85,7 @@ dev-libs/libindicate-qt
 =dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
+dev-util/gn
 dev-util/valgrind
 dev-python/python-prctl
 =dev-python/python-xlib-0.19*

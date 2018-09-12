@@ -87,6 +87,7 @@ COMMON_DEPEND="
 # For nvidia-drivers blocker, see bug #413637 .
 RDEPEND="${COMMON_DEPEND}
 	!<www-plugins/chrome-binary-plugins-57
+	dev-util/gn
 	x11-misc/xdg-utils
 	virtual/opengl
 	virtual/ttf-fonts
@@ -141,10 +142,6 @@ PATCHES=(
 	"${FILESDIR}/chromium-memcpy-r0.patch"
 	"${FILESDIR}/chromium-math.h-r0.patch"
 	"${FILESDIR}/chromium-stdint.patch"
-	"${FILESDIR}/chromium-ffmpeg-r1.patch"
-	"${FILESDIR}/chromium-libjpeg-r0.patch"
-	"${FILESDIR}/chromium-cors-string-r0.patch"
-	"${FILESDIR}/chromium-libwebp-shim-r0.patch"
 )
 
 pre_build_checks() {
@@ -186,11 +183,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Chromecast is not fully compatible with Chromium and can crash the browser when WiFi is enabled
-	# https://bugs.launchpad.net/ubuntu/+source/chromium-browser/+bug/1702407 #37
-	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833477
-#	sed -i '/enable-chromecast-by-default.patch/d' "${WORKDIR}/debian/patches/series" || die
-
 	# Disable selected patches #
 	sed \
 		`# Don't limit gcc version to 4.8` \
@@ -198,7 +190,6 @@ src_prepare() {
 		`# Fix clang compilation failure` \
 			-e 's:clang-601-atomics:#clang-601-atomics:g' \
 				-i "${WORKDIR}/debian/patches/series" || die
-
 	ubuntu-versionator_src_prepare
 
 	# Remove 'warning: "_FORTIFY_SOURCE" redefined' messages by ensuring gcc's built-in #
@@ -231,6 +222,7 @@ src_prepare() {
 		net/third_party/quic
 		net/third_party/spdy
 		third_party/WebKit
+		third_party/abseil-cpp
 		third_party/analytics
 		third_party/angle
 		third_party/angle/src/common/third_party/base
@@ -241,6 +233,9 @@ src_prepare() {
 		third_party/angle/third_party/glslang
 		third_party/angle/third_party/spirv-headers
 		third_party/angle/third_party/spirv-tools
+		third_party/angle/third_party/vulkan-headers
+		third_party/angle/third_party/vulkan-loader
+		third_party/angle/third_party/vulkan-tools
 		third_party/angle/third_party/vulkan-validation-layers
 		third_party/apple_apsl
 		third_party/blink
@@ -382,22 +377,6 @@ src_prepare() {
 
 	# Remove most bundled libraries. Some are still needed.
 	build/linux/unbundle/remove_bundled_libraries.py "${keeplibs[@]}" --do-remove || die
-}
-
-bootstrap_gn() {
-	if tc-is-cross-compiler; then
-		local -x AR=${BUILD_AR}
-		local -x CC=${BUILD_CC}
-		local -x CXX=${BUILD_CXX}
-		local -x NM=${BUILD_NM}
-		local -x CFLAGS=${BUILD_CFLAGS}
-		local -x CXXFLAGS=${BUILD_CXXFLAGS}
-		local -x LDFLAGS=${BUILD_LDFLAGS}
-	fi
-	einfo "Building GN..."
-	set -- tools/gn/bootstrap/bootstrap.py -s -v --no-clean
-	echo "$@"
-	"$@" || die
 }
 
 src_configure() {
@@ -592,10 +571,8 @@ src_configure() {
 		popd > /dev/null || die
 	fi
 
-	bootstrap_gn
-
 	einfo "Configuring Chromium..."
-	set -- out/Release/gn gen --args="${myconf_gn} ${EXTRA_GN}" out/Release
+	set -- gn gen --args="${myconf_gn} ${EXTRA_GN}" out/Release
 	echo "$@"
 	"$@" || die
 }
