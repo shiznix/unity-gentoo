@@ -10,7 +10,7 @@ PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 # pkg-config
 GNOME2_LA_PUNT="yes"
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit autotools bash-completion-r1 epunt-cxx flag-o-matic gnome2 libtool linux-info multilib multilib-minimal pax-utils python-r1 toolchain-funcs versionator ubuntu-versionator virtualx
 
 MY_P="${PN}2.0_${PV}"
