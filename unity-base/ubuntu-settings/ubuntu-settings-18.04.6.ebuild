@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit gnome2-utils ubuntu-versionator
 
 UVER=
