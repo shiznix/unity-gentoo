@@ -38,6 +38,7 @@ dev-qt/qtquick1:5 webkit
 dev-qt/qtquickcontrols:5 widgets
 dev-qt/qtsql:5 sqlite
 dev-qt/qtwayland:5 egl
+dev-qt/qtwebchannel:5 qml
 dev-qt/qtwebkit:4 icu
 dev-qt/qtwebkit:5 icu qml libxml2 multimedia webp widgets xslt -gstreamer -gstreamer010
 dev-qt/qt-mobility organizer
