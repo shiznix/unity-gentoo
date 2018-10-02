@@ -74,7 +74,6 @@ app-eselect/eselect-opengl
 app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
-dev-lang/rust
 dev-lang/spidermonkey:52
 dev-libs/capnproto
 dev-libs/folks
@@ -90,7 +89,6 @@ dev-util/valgrind
 dev-python/python-prctl
 =dev-python/python-xlib-0.19*
 ~dev-qt/qtlocation-5.6.1
-dev-util/cargo
 dev-util/umockdev
 =media-gfx/eog-3.24*
 ~media-libs/giflib-4.2.3
@@ -109,7 +107,6 @@ sys-libs/db:5.1
 sys-libs/db:5.3
 =sys-libs/libapparmor-2.10*
 sys-power/upower
-virtual/rust
 www-client/firefox
 =x11-drivers/xf86-input-evdev-2.10*
 x11-misc/xvfb-run
