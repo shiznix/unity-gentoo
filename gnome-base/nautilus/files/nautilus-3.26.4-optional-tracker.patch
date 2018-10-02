@@ -1,0 +1,294 @@
+ config.h.meson                      |  1 +
+ meson.build                         | 10 +++++++---
+ meson_options.txt                   |  4 ++++
+ src/meson.build                     | 22 ++++++++++++++--------
+ src/nautilus-file-undo-operations.c |  4 ++++
+ src/nautilus-file.c                 |  3 +++
+ src/nautilus-file.h                 |  2 ++
+ src/nautilus-files-view.c           |  8 ++++++++
+ src/nautilus-search-engine.c        | 16 ++++++++++++++--
+ 9 files changed, 57 insertions(+), 13 deletions(-)
+
+diff --git a/config.h.meson b/config.h.meson
+index 9ddb88d..d727b51 100644
+--- a/config.h.meson
++++ b/config.h.meson
+@@ -7,6 +7,7 @@
+ #mesondefine HAVE_UNITY
+ #mesondefine ENABLE_DESKTOP
+ #mesondefine ENABLE_PACKAGEKIT
++#mesondefine ENABLE_TRACKER
+ #mesondefine LOCALEDIR
+ #mesondefine NAUTILUS_DATADIR
+ #mesondefine NAUTILUS_EXTENSIONDIR
+diff --git a/meson.build b/meson.build
+index 21991e9..3aaaa3c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -91,9 +91,13 @@ if get_option ('enable-unity')
+     conf.set10 ('HAVE_UNITY', true)
+ endif
+ 
+-tracker_sparql = dependency ('tracker-sparql-2.0', required: false)
+-if not tracker_sparql.found()
+-    tracker_sparql = dependency ('tracker-sparql-1.0')
++tracker_option = get_option ('enable-tracker')
++if tracker_option != 'false'
++    tracker_sparql = dependency ('tracker-sparql-2.0', required: (tracker_option == 'true'))
++    if not tracker_sparql.found()
++      tracker_sparql = dependency ('tracker-sparql-1.0', required: (tracker_option == 'true'))
++    endif
++    conf.set10 ('ENABLE_TRACKER', tracker_sparql.found())
+ endif
+ 
+ if get_option ('enable-xmp')
+diff --git a/meson_options.txt b/meson_options.txt
+index 2e4d0af..3249670 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -25,6 +25,10 @@ option ('enable-desktop',
+ option ('enable-packagekit',
+         type: 'boolean',
+         value: true)
++option ('enable-tracker',
++        type: 'combo',
++        choices: ['true', 'false', 'auto'],
++        value: 'auto')
+ option ('enable-gtk-doc',
+         type: 'boolean',
+         value: false)
+diff --git a/src/meson.build b/src/meson.build
+index a0bf109..e45edd4 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -258,15 +258,18 @@ libnautilus_sources = [
+     'nautilus-file-undo-operations.c',
+     'nautilus-file-undo-operations.h',
+     'nautilus-file-undo-manager.c',
+-    'nautilus-file-undo-manager.h',
+-    'nautilus-batch-rename-dialog.c',
+-    'nautilus-batch-rename-dialog.h',
+-    'nautilus-batch-rename-utilities.c',
+-    'nautilus-batch-rename-utilities.h',
+-    'nautilus-search-engine-tracker.c',
+-    'nautilus-search-engine-tracker.h'
++    'nautilus-file-undo-manager.h'
+ ]
+ 
++if tracker_option != 'false'
++    libnautilus_sources += ['nautilus-batch-rename-dialog.c',
++                            'nautilus-batch-rename-dialog.h',
++                            'nautilus-batch-rename-utilities.c',
++                            'nautilus-batch-rename-utilities.h',
++                            'nautilus-search-engine-tracker.c',
++                            'nautilus-search-engine-tracker.h']
++endif
++
+ nautilus_deps = [glib,
+                  gtk,
+                  autoar,
+@@ -280,13 +283,16 @@ nautilus_deps = [glib,
+                  nautilus_extension,
+                  x11,
+                  gmodule_no_export,
+-                 tracker_sparql,
+                  gio_unix]
+ 
+ if get_option ('enable-exif')
+     nautilus_deps += exif
+ endif
+ 
++if tracker_option != 'false'
++    nautilus_deps += tracker_sparql
++endif
++
+ if get_option ('enable-selinux')
+     nautilus_deps += selinux
+ endif
+diff --git a/src/nautilus-file-undo-operations.c b/src/nautilus-file-undo-operations.c
+index e833d05..87ee93f 100644
+--- a/src/nautilus-file-undo-operations.c
++++ b/src/nautilus-file-undo-operations.c
+@@ -31,8 +31,10 @@
+ #include "nautilus-file-operations.h"
+ #include "nautilus-file.h"
+ #include "nautilus-file-undo-manager.h"
++#ifdef ENABLE_TRACKER
+ #include "nautilus-batch-rename-dialog.h"
+ #include "nautilus-batch-rename-utilities.h"
++#endif /* ENABLE_TRACKER */
+ 
+ 
+ /* Since we use g_get_current_time for setting "orig_trash_time" in the undo
+@@ -1086,6 +1088,7 @@ nautilus_file_undo_info_rename_set_data_post (NautilusFileUndoInfoRename *self,
+     self->priv->new_file = g_object_ref (new_file);
+ }
+ 
++#ifdef ENABLE_TRACKER
+ /* batch rename */
+ G_DEFINE_TYPE (NautilusFileUndoInfoBatchRename, nautilus_file_undo_info_batch_rename, NAUTILUS_TYPE_FILE_UNDO_INFO);
+ 
+@@ -1303,6 +1306,7 @@ nautilus_file_undo_info_batch_rename_set_data_post (NautilusFileUndoInfoBatchRen
+ 
+     self->priv->new_display_names = g_list_reverse (self->priv->new_display_names);
+ }
++#endif /* ENABLE_TRACKER */
+ 
+ /* trash */
+ G_DEFINE_TYPE (NautilusFileUndoInfoTrash, nautilus_file_undo_info_trash, NAUTILUS_TYPE_FILE_UNDO_INFO)
+diff --git a/src/nautilus-file.c b/src/nautilus-file.c
+index 9416214..0321e61 100644
+--- a/src/nautilus-file.c
++++ b/src/nautilus-file.c
+@@ -2270,6 +2270,7 @@ nautilus_file_rename_handle_file_gone (NautilusFile                  *file,
+     return FALSE;
+ }
+ 
++#ifdef ENABLE_TRACKER
+ typedef struct
+ {
+     NautilusFileOperation *op;
+@@ -2475,6 +2476,8 @@ nautilus_file_batch_rename (GList                         *files,
+                        callback_data);
+ }
+ 
++#endif /* ENABLE_TRACKER */
++
+ static void
+ real_rename (NautilusFile                  *file,
+              const char                    *new_name,
+diff --git a/src/nautilus-file.h b/src/nautilus-file.h
+index 54fdcb3..338ce56 100644
+--- a/src/nautilus-file.h
++++ b/src/nautilus-file.h
+@@ -336,10 +336,12 @@ void                    nautilus_file_rename                            (Nautilu
+ 									 const char                     *new_name,
+ 									 NautilusFileOperationCallback   callback,
+ 									 gpointer                        callback_data);
++#ifdef ENABLE_TRACKER
+ void                    nautilus_file_batch_rename                      (GList                          *files,
+                                                                          GList                          *new_names,
+                                                                          NautilusFileOperationCallback   callback,
+                                                                          gpointer                        callback_data);
++#endif /* ENABLE_TRACKER */
+ void                    nautilus_file_cancel                            (NautilusFile                   *file,
+ 									 NautilusFileOperationCallback   callback,
+ 									 gpointer                        callback_data);
+diff --git a/src/nautilus-files-view.c b/src/nautilus-files-view.c
+index 87a4a42..19670ea 100644
+--- a/src/nautilus-files-view.c
++++ b/src/nautilus-files-view.c
+@@ -28,8 +28,10 @@
+ #include "nautilus-files-view.h"
+ 
+ #include "nautilus-application.h"
++#ifdef ENABLE_TRACKER
+ #include "nautilus-batch-rename-dialog.h"
+ #include "nautilus-batch-rename-utilities.h"
++#endif
+ #include "nautilus-error-reporting.h"
+ #include "nautilus-file-undo-manager.h"
+ #include "nautilus-floating-bar.h"
+@@ -6295,6 +6297,7 @@ real_action_rename (NautilusFilesView *view)
+             {
+                 invoke_external_bulk_rename_utility (view, selection);
+             }
++#ifdef ENABLE_TRACKER
+             else
+             {
+                 GdkCursor *cursor;
+@@ -6312,6 +6315,7 @@ real_action_rename (NautilusFilesView *view)
+ 
+                 gtk_widget_show (GTK_WIDGET (dialog));
+             }
++#endif
+         }
+         else
+         {
+@@ -7535,8 +7539,12 @@ real_update_actions_state (NautilusFilesView *view)
+         }
+         else
+         {
++#ifdef ENABLE_TRACKER
+             g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                                          nautilus_file_can_rename_files (selection));
++#else
++            g_simple_action_set_enabled (G_SIMPLE_ACTION (action), FALSE);
++#endif
+         }
+     }
+     else
+diff --git a/src/nautilus-search-engine.c b/src/nautilus-search-engine.c
+index 902d483..0700f02 100644
+--- a/src/nautilus-search-engine.c
++++ b/src/nautilus-search-engine.c
+@@ -32,11 +32,15 @@
+ #include "nautilus-search-engine-locate.h"
+ #include "nautilus-search-engine-simple.h"
+ #include "nautilus-search-engine-recent.h"
++#ifdef ENABLE_TRACKER
+ #include "nautilus-search-engine-tracker.h"
++#endif
+ 
+ typedef struct
+ {
++#ifdef ENABLE_TRACKER
+     NautilusSearchEngineTracker *tracker;
++#endif
+     NautilusSearchEngineRecent *recent;
+     NautilusSearchEngineLocate *locate;
+     NautilusSearchEngineSimple *simple;
+@@ -79,7 +83,9 @@ nautilus_search_engine_set_query (NautilusSearchProvider *provider,
+     engine = NAUTILUS_SEARCH_ENGINE (provider);
+     priv = nautilus_search_engine_get_instance_private (engine);
+ 
++#ifdef ENABLE_TRACKER
+     nautilus_search_provider_set_query (NAUTILUS_SEARCH_PROVIDER (priv->tracker), query);
++#endif
+     nautilus_search_provider_set_query (NAUTILUS_SEARCH_PROVIDER (priv->recent), query);
+     nautilus_search_provider_set_query (NAUTILUS_SEARCH_PROVIDER (priv->locate), query);
+     nautilus_search_provider_set_query (NAUTILUS_SEARCH_PROVIDER (priv->model), query);
+@@ -103,9 +109,10 @@ search_engine_start_real (NautilusSearchEngine *engine)
+ 
+     g_object_ref (engine);
+ 
++#ifdef ENABLE_TRACKER
+     nautilus_search_provider_start (NAUTILUS_SEARCH_PROVIDER (priv->tracker));
+     priv->providers_running++;
+-
++#endif
+     priv->providers_running++;
+     nautilus_search_provider_start (NAUTILUS_SEARCH_PROVIDER (priv->recent));
+ 
+@@ -172,7 +179,9 @@ nautilus_search_engine_stop (NautilusSearchProvider *provider)
+ 
+     DEBUG ("Search engine stop");
+ 
++#ifdef ENABLE_TRACKER
+     nautilus_search_provider_stop (NAUTILUS_SEARCH_PROVIDER (priv->tracker));
++#endif
+     nautilus_search_provider_stop (NAUTILUS_SEARCH_PROVIDER (priv->recent));
+     nautilus_search_provider_stop (NAUTILUS_SEARCH_PROVIDER (priv->locate));
+     nautilus_search_provider_stop (NAUTILUS_SEARCH_PROVIDER (priv->model));
+@@ -349,7 +358,9 @@ nautilus_search_engine_finalize (GObject *object)
+ 
+     g_hash_table_destroy (priv->uris);
+ 
++#ifdef ENABLE_TRACKER
+     g_clear_object (&priv->tracker);
++#endif
+     g_clear_object (&priv->recent);
+     g_clear_object (&priv->locate);
+     g_clear_object (&priv->model);
+@@ -405,9 +416,10 @@ nautilus_search_engine_init (NautilusSearchEngine *engine)
+     priv = nautilus_search_engine_get_instance_private (engine);
+     priv->uris = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+ 
++#ifdef ENABLE_TRACKER
+     priv->tracker = nautilus_search_engine_tracker_new ();
+     connect_provider_signals (engine, NAUTILUS_SEARCH_PROVIDER (priv->tracker));
+-
++#endif
+     priv->model = nautilus_search_engine_model_new ();
+     connect_provider_signals (engine, NAUTILUS_SEARCH_PROVIDER (priv->model));
+ 

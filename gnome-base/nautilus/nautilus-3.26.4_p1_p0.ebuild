@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 
 LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"
-IUSE="exif gnome +introspection packagekit +previewer selinux sendto xmp"
+IUSE="exif gnome +introspection packagekit +previewer selinux sendto +tracker xmp"
 KEYWORDS="~amd64 ~x86"
 
 # FIXME: tests fails under Xvfb, but pass when building manually
@@ -28,7 +28,6 @@ RESTRICT="mirror test"
 # and 2.30.0
 COMMON_DEPEND="
 	>=app-arch/gnome-autoar-0.2.1
-	>=app-misc/tracker-2.0:=
 	>=dev-libs/glib-2.51.2:2=[dbus]
 	>=x11-libs/pango-1.28.3
 	>=x11-libs/gtk+-3.22.6:3[introspection?]
@@ -46,6 +45,7 @@ COMMON_DEPEND="
 	exif? ( >=media-libs/libexif-0.6.20 )
 	introspection? ( >=dev-libs/gobject-introspection-0.6.4:= )
 	selinux? ( >=sys-libs/libselinux-2 )
+	tracker? ( >=app-misc/tracker-2.0:= )
 	xmp? ( >=media-libs/exempi-2.1.0:2 )"
 DEPEND="${COMMON_DEPEND}
 	>=dev-lang/perl-5
@@ -73,6 +73,7 @@ src_prepare() {
 		-e 's:multiarch_fallback:#multiarch_fallback:g' \
 			-i "${WORKDIR}/debian/patches/series"
 	ubuntu-versionator_src_prepare
+	eapply "${FILESDIR}/${P/_*}-optional-tracker.patch"
 	if use previewer; then
 		DOC_CONTENTS="nautilus uses gnome-extra/sushi to preview media files.
 			To activate the previewer, select a file and press space; to
@@ -92,6 +93,7 @@ src_configure() {
 		$(meson_use packagekit enable-packagekit) \
 		$(meson_use sendto enable-nst-extension) \
 		$(meson_use selinux enable-selinux) \
+		$(meson_use tracker enable-tracker) \
 		$(meson_use xmp enable-xmp)
 }
 
