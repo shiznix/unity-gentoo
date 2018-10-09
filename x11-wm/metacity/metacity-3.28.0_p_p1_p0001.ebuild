@@ -3,15 +3,13 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit eutils gnome2-utils ubuntu-versionator
-
-UVER="-${PVR_MICRO}"
 
 DESCRIPTION="GNOME default window manager"
 HOMEPAGE="http://blogs.gnome.org/metacity/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
