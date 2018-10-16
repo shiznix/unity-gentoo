@@ -28,7 +28,6 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu
-	dev-libs/libindicate-qt
 	>=dev-python/python-distutils-extra-2.37
 	dev-python/pytz[${PYTHON_USEDEP}]
 	>=dev-python/pywapi-0.3.7[${PYTHON_USEDEP}]
@@ -53,9 +52,9 @@ src_prepare() {
 src_install() {
 	distutils-r1_src_install
 
-	dodir /usr/share/doc/${PN}
-	docompress -x /usr/share/doc/${PN}
-	cp AUTHORS "${ED}usr/share/doc/${PN}/"
+	dodir /usr/share/doc/${PF}
+	docompress -x /usr/share/doc/${PF}
+	cp AUTHORS "${ED}usr/share/doc/${PF}/"
 
 	# Delete some files that are only useful on Ubuntu
 	rm -rf "${D}"etc/apport

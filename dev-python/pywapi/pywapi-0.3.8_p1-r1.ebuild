@@ -21,7 +21,6 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu
-	dev-libs/libindicate-qt
 	${PYTHON_DEPS}"
 
 src_install() {

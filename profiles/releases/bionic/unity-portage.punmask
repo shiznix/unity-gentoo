@@ -20,7 +20,6 @@ gnome-extra/zeitgeist                   # (b.g.o #629180)
 
 ## Gentoo dropping packages required by unity-base/unity (reason: depends on Qt4) ##
 dev-cpp/gmock
-dev-libs/libindicate-qt
 
 # Unmask overlay version
 dev-libs/dee::unity-gentoo
