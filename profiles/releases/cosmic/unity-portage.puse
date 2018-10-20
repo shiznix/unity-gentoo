@@ -64,7 +64,6 @@ net-libs/gnome-online-accounts uoa
 #net-misc/iputils -arping
 net-misc/openssh -bindist
 net-wireless/bluez user-session
-sys-auth/pambase lxcfs
 sys-apps/dbus user-session
 sys-apps/systemd nat pam
 #sys-libs/pam audit
