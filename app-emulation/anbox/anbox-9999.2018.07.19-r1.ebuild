@@ -53,7 +53,7 @@ DEPEND="${RDEPEND}
 	dev-libs/properties-cpp
 	dev-libs/protobuf
 	media-libs/glm
-	media-libs/libsdl2
+	media-libs/libsdl2[wayland]
 	media-libs/mesa[egl,gles2]
 	media-libs/sdl2-image
 	sys-apps/dbus
