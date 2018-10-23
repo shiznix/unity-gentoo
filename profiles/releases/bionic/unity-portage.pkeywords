@@ -78,11 +78,12 @@ dev-lang/spidermonkey:52
 dev-libs/capnproto
 dev-libs/folks
 =dev-libs/icu-59*
-=dev-libs/nss-3.38*
+=dev-libs/nss-3.39*
 =dev-libs/nspr-4.19*
 =dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
+~dev-util/cbindgen-0.6.6
 dev-util/gn
 dev-util/valgrind
 dev-python/python-prctl
