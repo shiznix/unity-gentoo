@@ -8,7 +8,7 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en-GB es es-419 et fa fi fil fr gu he
 	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk sl sr
 	sv sw ta te th tr uk vi zh-CN zh-TW"
 
-URELEASE="cosmic"
+URELEASE="cosmic-security"
 inherit check-reqs chromium-2 eutils gnome2-utils flag-o-matic multilib ninja-utils pax-utils \
 	portability python-any-r1 readme.gentoo-r1 toolchain-funcs ubuntu-versionator versionator virtualx xdg-utils
 
@@ -45,7 +45,7 @@ COMMON_DEPEND="
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/fontconfig:=
 	media-libs/freetype:=
-	>=media-libs/harfbuzz-1.6.0:=[icu(-)]
+	>=media-libs/harfbuzz-1.8.8:=[icu(-)]
 	media-libs/libjpeg-turbo:=
 	media-libs/libpng:=
 	system-libvpx? ( media-libs/libvpx:=[postproc,svc] )
@@ -105,14 +105,19 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/gn
 	>=dev-util/gperf-3.0.3
 	>=dev-util/ninja-1.7.2
-	>=net-libs/nodejs-6.9.4
+	>=net-libs/nodejs-7.6.0[inspector]
 	sys-apps/hwids[usb(+)]
 	>=sys-devel/bison-2.4.3
 	sys-devel/flex
-	>=sys-devel/clang-5
 	virtual/pkgconfig
 	dev-vcs/git
 "
+
+: ${CHROMIUM_FORCE_CLANG=yes}
+
+if [[ ${CHROMIUM_FORCE_CLANG} == yes ]]; then
+       DEPEND+=" >=sys-devel/clang-5"
+fi
 
 if ! has chromium_pkg_die ${EBUILD_DEATH_HOOKS}; then
 	EBUILD_DEATH_HOOKS+=" chromium_pkg_die";
@@ -142,6 +147,7 @@ PATCHES=(
 	"${FILESDIR}/chromium-memcpy-r0.patch"
 	"${FILESDIR}/chromium-math.h-r0.patch"
 	"${FILESDIR}/chromium-stdint.patch"
+	"${FILESDIR}/chromium-pdfium-stdlib-r0.patch"
 )
 
 pre_build_checks() {
@@ -184,12 +190,12 @@ pkg_setup() {
 
 src_prepare() {
 	# Disable selected patches #
-	sed \
-		`# Don't limit gcc version to 4.8` \
-			-e 's:use-gcc-versioned:#use-gcc-versioned:g' \
-		`# Fix clang compilation failure` \
-			-e 's:clang-601-atomics:#clang-601-atomics:g' \
-				-i "${WORKDIR}/debian/patches/series" || die
+#	sed \
+#		`# Don't limit gcc version to 4.8` \
+#			-e 's:use-gcc-versioned:#use-gcc-versioned:g' \
+#		`# Fix clang compilation failure` \
+#			-e 's:clang-601-atomics:#clang-601-atomics:g' \
+#				-i "${WORKDIR}/debian/patches/series" || die
 	ubuntu-versionator_src_prepare
 
 	# Remove 'warning: "_FORTIFY_SOURCE" redefined' messages by ensuring gcc's built-in #
@@ -221,6 +227,7 @@ src_prepare() {
 		net/third_party/nss
 		net/third_party/quic
 		net/third_party/spdy
+		net/third_party/uri_template
 		third_party/WebKit
 		third_party/abseil-cpp
 		third_party/analytics
@@ -285,6 +292,8 @@ src_prepare() {
 		third_party/libXNVCtrl
 		third_party/libaddressinput
 		third_party/libaom
+		third_party/libaom/source/libaom/third_party/vector
+		third_party/libaom/source/libaom/third_party/x86inc
 		third_party/libjingle
 		third_party/libphonenumber
 		third_party/libsecret
@@ -344,14 +353,21 @@ src_prepare() {
 		third_party/web-animations-js
 		third_party/webdriver
 		third_party/webrtc
+		third_party/webrtc/common_audio/third_party/fft4g
+		third_party/webrtc/common_audio/third_party/spl_sqrt_floor
+		third_party/webrtc/modules/third_party/fft
+		third_party/webrtc/modules/third_party/g711
+		third_party/webrtc/modules/third_party/g722
+		third_party/webrtc/rtc_base/third_party/base64
+		third_party/webrtc/rtc_base/third_party/sigslot
 		third_party/widevine
 		third_party/woff2
 		third_party/zlib/google
 		url/third_party/mozilla
 		v8/src/third_party/valgrind
 		v8/src/third_party/utf8-decoder
-		v8/third_party/antlr4
 		v8/third_party/inspector_protocol
+		v8/third_party/v8
 
 		# gyp -> gn leftovers
 		base/third_party/libevent
@@ -388,7 +404,7 @@ src_configure() {
 	# Make sure the build system will use the right tools, bug #340795.
 	tc-export AR CC CXX NM
 
-	if ! tc-is-clang; then
+	if [[ ${CHROMIUM_FORCE_CLANG} == yes ]] && ! tc-is-clang; then
 		# Force clang since gcc is pretty broken at the moment.
 		CC=${CHOST}-clang
 		CXX=${CHOST}-clang++
@@ -594,6 +610,10 @@ src_compile() {
 			pax-mark m "out/Release/${x}"
 		fi
 	done
+
+	# Work around broken deps
+	eninja -C out/Release gen/ui/accessibility/ax_enums.mojom.h
+	eninja -C out/Release gen/ui/accessibility/ax_enums.mojom-shared.h
 
 	# Even though ninja autodetects number of CPUs, we respect
 	# user's options, for debugging with -j 1 or any other reason.
