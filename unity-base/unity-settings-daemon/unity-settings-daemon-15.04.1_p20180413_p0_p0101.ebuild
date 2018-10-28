@@ -5,7 +5,7 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit autotools base eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"

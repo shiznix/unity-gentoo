@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit eutils gnome2-utils python-single-r1 ubuntu-versionator
 
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
