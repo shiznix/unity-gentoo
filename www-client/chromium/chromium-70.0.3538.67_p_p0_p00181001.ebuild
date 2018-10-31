@@ -45,7 +45,8 @@ COMMON_DEPEND="
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/fontconfig:=
 	media-libs/freetype:=
-	>=media-libs/harfbuzz-1.8.8:=[icu(-)]
+	>=media-libs/harfbuzz-1.8.8:0=[icu(-)]
+	<media-libs/harfbuzz-2.0.0:0
 	media-libs/libjpeg-turbo:=
 	media-libs/libpng:=
 	system-libvpx? ( media-libs/libvpx:=[postproc,svc] )
