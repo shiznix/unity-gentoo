@@ -1,0 +1,5 @@
+ebuild_hook() {
+	sed -i \
+		-e "/^Exec=/{s/env UBUNTU_MENUPROXY=0 //}" \
+		"${ED}/usr/share/applications/audacity.desktop" || die
+}
