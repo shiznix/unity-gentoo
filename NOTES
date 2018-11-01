@@ -77,10 +77,9 @@ app-text/evince				# Add traditional menu bar (https://bugzilla.gnome.org/show_b
 gnome-extra/gnome-calculator		# Don't use HeaderBars in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=712831)
 media-gfx/eog				# Add a traditional menu bar (https://bugzilla.gnome.org/749976, https://bugs.debian.org/793445), show traditional title bar in Unity
 media-gfx/gnome-screenshot		# Use Ubuntu help instead of GNOME help, don't use GtkHeaderBar, show the save dialog by default, don't try and use the GNOME Shell D-Bus interface, add quicklist area-shot option
+media-sound/audacity			# Fix exec command to use Unity menubar properly
 media-video/totem			# Add a traditional menubar (https://bugzilla.gnome.org/show_bug.cgi?id=749695), use traditional headerbar
 net-im/pidgin				# Add chat section into messaging menu (Available, Away, Busy, Invisible, Offline)
-www-client/firefox-52			# Extended Support Release until August 21, 2018. Add Unity menubar and desktop launcher with quicklist and translations
-x11-base/xorg-server-1.19		# Load nvidia proprietary driver automatically when installed, fall back to autoconfiguration for graphics drivers in some cases instead of letting X fail when configuration files are available
 x11-libs/vte:2.91			# Add the style context provider with FALLBACK priority, NOTE: use along with x11-terms/gnome-terminal ehook
 x11-misc/zim				# Install Ubuntu theme (/usr/share/icons/ubuntu-mono-{dark,light})
 x11-terms/gnome-terminal		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, LP #1493964), NOTE: enable x11-libs/vte ehook as well to use theme background color
