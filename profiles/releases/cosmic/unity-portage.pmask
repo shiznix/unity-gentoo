@@ -79,7 +79,6 @@ net-im/telepathy-mission-control::gentoo
 net-libs/gnome-online-accounts::gentoo
 net-libs/libsoup::gentoo
 sys-apps/accountsservice::gentoo
->=sys-auth/pambase-20150213-r2::gentoo  # temporarily disable rework of gnome-keyring support (https://bugs.gentoo.org/652194)
 sys-libs/libnih::gentoo
 www-client/chromium::gentoo
 x11-libs/gtk+::gentoo

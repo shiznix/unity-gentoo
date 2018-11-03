@@ -169,6 +169,13 @@ src_install() {
         pamd_mimic system-local-login ${PN}-greeter auth account password session #372229
         dopamd "${FILESDIR}"/${PN}-autologin #390863, #423163
 
+	# Add gnome-keyring support to automatically
+	# unlock the keyring once you log in. Issue #203
+	sed -i \
+		-e "/^auth/ a -auth\toptional\tpam_gnome_keyring.so" \
+		-e "/^session/ a -session\toptional\tpam_gnome_keyring.so auto_start" \
+		"${ED}/etc/pam.d/${PN}" || die
+
 	readme.gentoo_create_doc
 	systemd_dounit "${FILESDIR}/${PN}.service"
 
