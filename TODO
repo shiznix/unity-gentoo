@@ -3,5 +3,4 @@
 * Convert all ebuilds to EAPI=6 and remove use of base.eclass
 	('autotools-{multilib,utils}','gnome2','kde-4' and 'qt4-r2' block EAPI6 upgrade)
 	- See dev-libs/libwacom ebuild as example converting from old 'autotools-{multilib,utils}'
-* Remove Ubuntu One signon
 * Audit Gnome/Ubuntu Online Accounts support
