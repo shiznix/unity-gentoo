@@ -43,7 +43,7 @@ src_prepare() {
 	fi
 
 	sed -e "/org.gnome.crypto.pgp/,+2 d" \
-		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${URELEASE}.xml/}" \
+		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${URELEASE/-*}.xml/}" \
 		-e "/session-name/{s/ubuntu/unity/}" \
 		-e "/org.gnome.Epiphany/,+3 d" \
 		-e "/org.gnome.login-screen/,+2 d" \
