@@ -18,11 +18,11 @@ x11-themes/mate-icon-theme
 x11-terms/mate-terminal
 x11-wm/marco
 
-# Unmask Gnome-3.28 #
-#=*/gnome*-*28*::gentoo
-#=gnome-base/*-*28*::gentoo
-#=gnome-extra/*-*28*::gentoo
-#=games-puzzle/*-*28*::gentoo
+# Unmask Gnome-3.30 #
+#=*/gnome*-*30*::gentoo
+#=gnome-base/*-*30*::gentoo
+#=gnome-extra/*-*30*::gentoo
+#=games-puzzle/*-*30*::gentoo
 #=app-i18n/unicode-data-10*
 #>=app-accessibility/at-spi2-atk-2.26::gentoo
 #>=app-accessibility/at-spi2-core-2.26::gentoo

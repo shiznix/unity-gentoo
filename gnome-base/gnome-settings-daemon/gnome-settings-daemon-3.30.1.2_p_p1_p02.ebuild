@@ -5,7 +5,7 @@ EAPI=6
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_5,3_6} )
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit flag-o-matic gnome2 meson python-any-r1 systemd udev virtualx ubuntu-versionator
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2+"
 SLOT="0"
 IUSE="+cups debug input_devices_wacom +networkmanager policykit -smartcard test +udev wayland"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="udev"
 RESTRICT="mirror"
 
