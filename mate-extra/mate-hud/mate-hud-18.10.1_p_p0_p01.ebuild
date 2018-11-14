@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit distutils-r1 eutils gnome2-utils ubuntu-versionator
 
 DESCRIPTION="MATE menubar commands, like the Unity 7 Heads-Up Display (HUD)"

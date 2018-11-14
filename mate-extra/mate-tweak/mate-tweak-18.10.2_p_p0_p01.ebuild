@@ -5,10 +5,8 @@ EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit distutils-r1 eutils ubuntu-versionator
-
-UVER="-${PVR_MICRO}"
 
 DESCRIPTION="MATE desktop tweak tool"
 HOMEPAGE="https://github.com/ubuntu-mate/mate-tweak"

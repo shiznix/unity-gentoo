@@ -3,10 +3,10 @@
 
 EAPI=5
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit mono ubuntu-versionator
 
-UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Taglib# 2.0 - Managed tag reader/writer"
 HOMEPAGE="https://github.com/mono/taglib-sharp"

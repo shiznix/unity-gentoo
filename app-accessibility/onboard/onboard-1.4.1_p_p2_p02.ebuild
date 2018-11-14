@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit gnome2-utils distutils-r1 ubuntu-versionator
 
 DESCRIPTION="Simple on-screen Keyboard with macros and easy layout creation"

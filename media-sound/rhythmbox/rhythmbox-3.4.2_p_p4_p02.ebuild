@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 PYTHON_REQ_USE="xml"
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils gnome2-utils python-single-r1 multilib ubuntu-versionator virtualx
 
 DESCRIPTION="Music management and playback software for GNOME patched for the Unity desktop"

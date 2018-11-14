@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools gnome-meson ubuntu-versionator
 
 DESCRIPTION="Solus Project's Brisk Menu MATE Panel Applet"

@@ -3,10 +3,11 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit cmake-utils ubuntu-versionator
 
 UURL="mirror://unity/pool/universe/c/${PN}"
+UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
 UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="Extra CMake utility modules"
