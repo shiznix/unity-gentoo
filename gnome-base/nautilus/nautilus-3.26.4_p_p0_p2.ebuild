@@ -7,7 +7,7 @@ GNOME2_LA_PUNT="yes" # Needed with USE 'sendto'
 URELEASE="bionic-updates"
 inherit eutils gnome-meson readme.gentoo-r1 virtualx ubuntu-versionator
 
-UVER="-${PVR_PL_MAJOR}~ubuntu${UVER_RELEASE}.${PVR_MICRO}"
+UVER="-${PVR_PL_MAJOR}~ubuntu${UVER_RELEASE}.${PVR_PL_MINOR}"
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Nautilus"

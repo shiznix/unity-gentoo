@@ -48,6 +48,7 @@ dev-lang/vala:0.40::gentoo
 >=gnome-base/gvfs-1.37::gentoo
 gnome-extra/gucharmap:2.90::gentoo
 >=gnome-extra/evolution-data-server-3.28::gentoo
+>=gnome-extra/zenity-3.28::gentoo
 >=mail-client/evolution-3.28::gentoo
 >=media-gfx/eog-3.28::gentoo
 >=media-libs/clutter-gtk-1.8.4::gentoo
