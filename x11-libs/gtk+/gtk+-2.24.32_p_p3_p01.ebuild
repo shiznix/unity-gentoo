@@ -14,8 +14,7 @@ S="${WORKDIR}/${PN}-${PV}"
 DESCRIPTION="Gimp ToolKit patched for the Unity desktop"
 HOMEPAGE="http://www.gtk.org/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}-${UVER}.debian.tar.xz
-	https://dev.gentoo.org/~leio/distfiles/${PN}-${PV}-patchset.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="LGPL-2+"
 SLOT="2"
@@ -103,11 +102,6 @@ StartupMode=cwd"
 
 MULTILIB_CHOST_TOOLS=(
 	/usr/bin/gtk-query-immodules-2.0$(get_exeext)
-)
-
-PATCHES=(
-	# Upstream gtk-2-24 branch up to 2018-05-06 state, bug #650536 safety
-	"${WORKDIR}"/patches/ # requires eautoreconf
 )
 
 strip_builddir() {

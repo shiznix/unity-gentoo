@@ -33,6 +33,7 @@ x11-wm/marco
 # >=app-cdr/brasero-3.12::gentoo
 >=app-editors/gedit-3.28::gentoo
 >=app-text/evince-3.28::gentoo
+app-text/gspell::gentoo
 # >=app-text/yelp-tools-3.18::gentoo
 # >=dev-cpp/gtkmm-3.22::gentoo
 dev-lang/vala:0.40::gentoo
@@ -47,6 +48,7 @@ dev-lang/vala:0.40::gentoo
 >=dev-util/gtk-update-icon-cache-3.24::gentoo
 >=dev-util/devhelp-3.26::gentoo
 >=dev-vcs/gitg-3.30::gentoo
+games-board/gnome*::gentoo
 >=gnome-base/gvfs-1.32::gentoo
 gnome-extra/gucharmap:2.90::gentoo
 >=gnome-extra/evolution-data-server-3.26::gentoo

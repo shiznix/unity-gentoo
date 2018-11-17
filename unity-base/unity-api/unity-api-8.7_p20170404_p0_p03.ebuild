@@ -10,7 +10,8 @@ UVER_PREFIX="+17.04.${PVR_MICRO}"
 
 DESCRIPTION="API for Unity shell integration"
 HOMEPAGE="https://launchpad.net/unity-api"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -28,6 +29,8 @@ S="${WORKDIR}"
 export QT_SELECT=5
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+
 	sed -e 's:set(LIB_INSTALL_PREFIX lib/${CMAKE_LIBRARY_ARCHITECTURE}):set(LIB_INSTALL_PREFIX ${CMAKE_INSTALL_LIBDIR}):g' \
 	-i ${S}/CMakeLists.txt || die
 

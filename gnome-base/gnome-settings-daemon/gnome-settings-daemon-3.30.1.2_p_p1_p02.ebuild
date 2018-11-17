@@ -95,7 +95,7 @@ DEPEND="${COMMON_DEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/${P/_*}-optional-wacom-wayland.patch"
+	eapply "${FILESDIR}/${PN}-3.28.1-optional-wacom-wayland.patch"
 	gnome2_src_prepare
 }
 

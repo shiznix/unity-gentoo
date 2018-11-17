@@ -26,6 +26,7 @@ COMMON_DEPEND="
 	>=x11-libs/gtk+-3.16.0:3[introspection?]
 	gnome-base/gsettings-desktop-schemas
 	>=x11-libs/cairo-1.10:=
+	>=app-text/gspell-1.6.0
 	>=app-text/poppler-0.33:=[cairo]
 	djvu? ( >=app-text/djvu-3.5.22:= )
 	dvi? (

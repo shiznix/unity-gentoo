@@ -80,11 +80,11 @@ src_prepare() {
 	# Desktop Session is named 'unity' #
 	sed -e 's/:ubuntu//' \
 		-i data/unity.session.desktop.in.in \
-		-i data/unity.desktop.in || die
+		-i data/unity.desktop.in.in || die
 	sed -e 's:buntu:nity:g' \
 		-i "${WORKDIR}/debian/data/unity-session.target" || die
 	sed -e 's:/usr/lib/gnome-session:/usr/libexec:g' \
-		-i data/unity.desktop.in || die
+		-i data/unity.desktop.in.in || die
 
 	gnome2_src_prepare
 }
