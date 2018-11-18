@@ -3,7 +3,8 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+## Keep at Xenial as it's the last version that contains Unity Help ##
+#URELEASE="xenial"
 inherit autotools eutils gnome2-utils ubuntu-versionator
 
 UVER=
@@ -14,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}.tar.xz"
 
 LICENSE="CC-BY-SA-3.0"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 # This ebuild does not install any binaries
 RESTRICT="binchecks mirror strip"
