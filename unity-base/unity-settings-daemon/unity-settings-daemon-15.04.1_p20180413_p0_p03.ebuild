@@ -5,7 +5,7 @@ EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
-URELEASE="cosmic"
+URELEASE="cosmic-updates"
 inherit autotools base eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 
 UVER_PREFIX="+18.04.${PVR_MICRO}"

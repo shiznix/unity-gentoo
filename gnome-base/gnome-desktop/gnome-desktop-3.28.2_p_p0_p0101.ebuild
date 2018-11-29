@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic-updates"
+URELEASE="bionic-security"
 inherit autotools gnome2 ubuntu-versionator virtualx
 
 MY_PN="${PN}3"
