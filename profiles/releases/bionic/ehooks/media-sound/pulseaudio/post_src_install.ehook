@@ -1,6 +1,0 @@
-## Disable flat volume (LP #1424195).
-ebuild_hook() {
-	sed -i \
-		-e "s/; \(flat-volumes = \)yes/\1no/" \
-		"${ED}/etc/pulse/daemon.conf" || die
-}
