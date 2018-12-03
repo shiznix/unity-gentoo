@@ -105,6 +105,13 @@ DEPEND="${COMMON_DEPEND}
 	gnome-base/gnome-common
 "
 
+src_prepare() {
+	## Backport 3.30 to fix https://gitlab.gnome.org/GNOME/gnome-control-center/issues/49 (resolves issue #204) ##
+	sed -e "s:0700:'0700':" \
+		-i meson.build || die
+	gnome2_src_prepare
+}
+
 src_configure() {
 	#TODO: there are some problems with cheese support
 	local emesonargs=(
