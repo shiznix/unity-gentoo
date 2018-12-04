@@ -218,13 +218,23 @@ multilib_src_install() {
 multilib_src_install_all() {
 	einstalldocs
 
-	python_replicate_script "${ED}"/usr/bin/gtester-report
+	# These are installed by dev-util/glib-utils
+	# TODO: With patching we might be able to get rid of the python-any deps and removals, and test depend on glib-utils instead; revisit with meson
+	rm "${ED}usr/bin/glib-genmarshal" || die
+	rm "${ED}usr/share/man/man1/glib-genmarshal.1" || die
+	rm "${ED}usr/bin/glib-mkenums" || die
+	rm "${ED}usr/share/man/man1/glib-mkenums.1" || die
+	rm "${ED}usr/bin/gtester-report" || die
+	rm "${ED}usr/share/man/man1/gtester-report.1" || die
 
 	# Do not install charset.alias even if generated, leave it to libiconv
-	rm -f "${ED}/usr/lib/charset.alias"
+	rm -f "${ED}/usr/$(get_libdir)/charset.alias"
 
 	# Don't install gdb python macros, bug 291328
 	rm -rf "${ED}/usr/share/gdb/" "${ED}/usr/share/glib-2.0/gdb/"
+
+	# Completely useless with or without USE static-libs, people need to use pkg-config
+	find "${ED}" -name '*.la' -delete || die
 }
 
 pkg_preinst() {
