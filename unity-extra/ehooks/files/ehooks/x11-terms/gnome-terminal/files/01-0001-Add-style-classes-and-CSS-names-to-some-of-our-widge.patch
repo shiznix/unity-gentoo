@@ -1,15 +1,14 @@
-From 7294dbc3c04321ff718f197c9793fb954007c8e7 Mon Sep 17 00:00:00 2001
 From: Iain Lane <iain@orangesquash.org.uk>
 Date: Fri, 24 Jun 2016 14:51:22 +0100
 Subject: [PATCH] Add style classes and CSS names to some of our widgets
 
 ---
- src/terminal-notebook.c         | 6 ++++++
- src/terminal-screen.c           | 7 ++++++-
- 3 files changed, 18 insertions(+), 1 deletion(-)
+ src/terminal-notebook.c | 6 ++++++
+ src/terminal-screen.c   | 7 +++++++
+ 2 files changed, 13 insertions(+)
 
-Index: b/src/terminal-notebook.c
-===================================================================
+diff --git a/src/terminal-notebook.c b/src/terminal-notebook.c
+index 4e7d56a..490a29a 100644
 --- a/src/terminal-notebook.c
 +++ b/src/terminal-notebook.c
 @@ -32,6 +32,8 @@
@@ -21,7 +20,7 @@ Index: b/src/terminal-notebook.c
  #define TERMINAL_NOTEBOOK_GET_PRIVATE(notebook)(G_TYPE_INSTANCE_GET_PRIVATE ((notebook), TERMINAL_TYPE_NOTEBOOK, TerminalNotebookPrivate))
  
  struct _TerminalNotebookPrivate
-@@ -446,11 +448,15 @@
+@@ -460,11 +462,15 @@ static void
  terminal_notebook_init (TerminalNotebook *notebook)
  {
    TerminalNotebookPrivate *priv;
@@ -37,11 +36,11 @@ Index: b/src/terminal-notebook.c
  }
  
  static void
-Index: b/src/terminal-screen.c
-===================================================================
+diff --git a/src/terminal-screen.c b/src/terminal-screen.c
+index e3bce1a..c36f3d9 100644
 --- a/src/terminal-screen.c
 +++ b/src/terminal-screen.c
-@@ -123,6 +123,8 @@
+@@ -124,6 +124,8 @@ enum
    TARGET_TAB
  };
  
@@ -50,7 +49,7 @@ Index: b/src/terminal-screen.c
  static void terminal_screen_constructed (GObject             *object);
  static void terminal_screen_dispose     (GObject             *object);
  static void terminal_screen_finalize    (GObject             *object);
-@@ -369,9 +371,14 @@
+@@ -422,9 +424,14 @@ terminal_screen_init (TerminalScreen *screen)
    guint i;
    uuid_t u;
    char uuidstr[37];

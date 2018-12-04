@@ -391,3 +391,47 @@ Index: evince-3.22.1/po/POTFILES.in
  [type: gettext/glade]shell/help-overlay.ui
 +[type: gettext/glade]shell/traditional-menus.ui
  evince.appdata.xml.in
+Index: evince-3.22.1/shell/ev-window-title.c
+===================================================================
+--- evince-3.22.1.orig/shell/ev-window-title.c
++++ evince-3.22.1/shell/ev-window-title.c
+@@ -29,6 +29,8 @@
+ #define EV_BACKEND_PS  "PSDocument"
+ #define EV_BACKEND_PDF "PdfDocument"
+ 
++gboolean in_desktop (const gchar *name);
++
+ typedef struct
+ {
+ 	const gchar *backend;
+@@ -105,6 +107,30 @@ ev_window_title_sanitize_title (EvWindow
+ 	}
+ }
+ 
++gboolean
++in_desktop (const gchar *name)
++{
++	const gchar *desktop_name_list;
++	gchar **names;
++	gboolean in_list = FALSE;
++	gint i;
++
++	desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
++	if (!desktop_name_list)
++		return FALSE;
++
++	names = g_strsplit (desktop_name_list, ":", -1);
++	for (i = 0; names[i] && !in_list; i++)
++		if (strcmp (names[i], name) == 0) {
++			in_list = TRUE;
++			break;
++		}
++	g_strfreev (names);
++
++	return in_list;
++}
++
++
+ static void
+ ev_window_title_update (EvWindowTitle *window_title)
+ {

@@ -1,2 +1,2 @@
 Add traditional menu bar. https://bugzilla.gnome.org/show_bug.cgi?id=736419
-Use GtkHeaderBar as decoration only under gnome-shell. https://bugzilla.gnome.org/show_bug.cgi?id=736420
+Require unity-base/unity-meta[nocsd]

@@ -1,19 +1,20 @@
-Description: draw proper background under the scrollbar
-Author: Marco Trevisan <marco.trevisan@canonical.com>
+From: Marco Trevisan <marco.trevisan@canonical.com>
+Date: Sat, 20 Jan 2018 18:48:39 -0500
+Subject: draw proper background under the scrollbar
+
 Forwarded: yes, https://bugzilla.gnome.org/show_bug.cgi?id=754796
 Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/gnome-terminal/+bug/1493964
-
 ---
- src/terminal-screen-container.c |   28 ++++++++++++++++++--
- src/terminal-screen.c           |   56 +++++++++++++++++++++++++++++++++++++++-
- src/terminal-screen.h           |    2 +
+ src/terminal-screen-container.c | 28 +++++++++++++++++++--
+ src/terminal-screen.c           | 56 ++++++++++++++++++++++++++++++++++++++++-
+ src/terminal-screen.h           |  2 ++
  3 files changed, 83 insertions(+), 3 deletions(-)
 
-Index: b/src/terminal-screen-container.c
-===================================================================
+diff --git a/src/terminal-screen-container.c b/src/terminal-screen-container.c
+index 73d9b06..5a9b8de 100644
 --- a/src/terminal-screen-container.c
 +++ b/src/terminal-screen-container.c
-@@ -109,9 +109,25 @@
+@@ -109,9 +109,25 @@ terminal_screen_container_init (TerminalScreenContainer *container)
    priv->vscrollbar_policy = GTK_POLICY_AUTOMATIC;
  }
  
@@ -39,7 +40,7 @@ Index: b/src/terminal-screen-container.c
    TerminalScreenContainer *container = TERMINAL_SCREEN_CONTAINER (object);
    TerminalScreenContainerPrivate *priv = container->priv;
  
-@@ -139,9 +155,12 @@
+@@ -139,9 +155,12 @@ terminal_screen_container_constructed (GObject *object)
  }
  #else
    priv->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -54,7 +55,7 @@ Index: b/src/terminal-screen-container.c
  
    gtk_box_pack_start (GTK_BOX (priv->hbox), GTK_WIDGET (priv->screen), TRUE, TRUE, 0);
    gtk_box_pack_start (GTK_BOX (priv->hbox), priv->vscrollbar, FALSE, FALSE, 0);
-@@ -151,6 +170,11 @@
+@@ -151,6 +170,11 @@ terminal_screen_container_constructed (GObject *object)
  #endif
  
    _terminal_screen_update_scrollbar (priv->screen);
@@ -66,11 +67,11 @@ Index: b/src/terminal-screen-container.c
  }
  
  static void
-Index: b/src/terminal-screen.c
-===================================================================
+diff --git a/src/terminal-screen.c b/src/terminal-screen.c
+index 9d9bc83..1c677a0 100644
 --- a/src/terminal-screen.c
 +++ b/src/terminal-screen.c
-@@ -92,6 +92,8 @@
+@@ -94,6 +94,8 @@ struct _TerminalScreenPrivate
    int child_pid;
    GSList *match_tags;
    guint launch_child_source_id;
@@ -79,7 +80,7 @@ Index: b/src/terminal-screen.c
  };
  
  enum
-@@ -109,7 +111,9 @@
+@@ -111,7 +113,9 @@ enum {
    PROP_ICON_TITLE,
    PROP_ICON_TITLE_SET,
    PROP_TITLE,
@@ -90,7 +91,7 @@ Index: b/src/terminal-screen.c
  };
  
  enum
-@@ -457,6 +461,12 @@
+@@ -520,6 +524,12 @@ terminal_screen_get_property (GObject *object,
        case PROP_TITLE:
          g_value_set_string (value, terminal_screen_get_title (screen));
          break;
@@ -103,7 +104,7 @@ Index: b/src/terminal-screen.c
        default:
          G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
          break;
-@@ -482,6 +492,8 @@
+@@ -545,6 +555,8 @@ terminal_screen_set_property (GObject *object,
        case PROP_ICON_TITLE:
        case PROP_ICON_TITLE_SET:
        case PROP_TITLE:
@@ -112,7 +113,7 @@ Index: b/src/terminal-screen.c
          /* not writable */
        default:
          G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-@@ -588,6 +600,20 @@
+@@ -651,6 +663,20 @@ terminal_screen_class_init (TerminalScreenClass *klass)
                           G_TYPE_STRV,
                           G_PARAM_READWRITE | G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB));
  
@@ -133,7 +134,7 @@ Index: b/src/terminal-screen.c
    g_type_class_add_private (object_class, sizeof (TerminalScreenPrivate));
  
    gtk_widget_class_install_style_property (widget_class,
-@@ -798,6 +824,22 @@
+@@ -861,6 +887,22 @@ terminal_screen_get_icon_title_set (TerminalScreen *screen)
    return vte_terminal_get_icon_title (VTE_TERMINAL (screen)) != NULL;
  }
  
@@ -156,7 +157,7 @@ Index: b/src/terminal-screen.c
  static void
  terminal_screen_profile_changed_cb (GSettings     *profile,
                                      const char    *prop_name,
-@@ -1046,6 +1088,18 @@
+@@ -1113,6 +1155,18 @@ update_color_scheme (TerminalScreen *screen)
    vte_terminal_set_color_highlight (VTE_TERMINAL (screen), highlight_bgp);
    vte_terminal_set_color_highlight_foreground (VTE_TERMINAL (screen), highlight_fgp);
  
@@ -175,11 +176,11 @@ Index: b/src/terminal-screen.c
    update_toplevel_transparency (screen);
  }
  
-Index: b/src/terminal-screen.h
-===================================================================
+diff --git a/src/terminal-screen.h b/src/terminal-screen.h
+index ff19f7e..ae45e76 100644
 --- a/src/terminal-screen.h
 +++ b/src/terminal-screen.h
-@@ -107,6 +107,8 @@
+@@ -107,6 +107,8 @@ char **      terminal_screen_get_initial_environment (TerminalScreen  *screen);
  const char* terminal_screen_get_title          (TerminalScreen *screen);
  const char* terminal_screen_get_icon_title     (TerminalScreen *screen);
  gboolean    terminal_screen_get_icon_title_set (TerminalScreen *screen);
