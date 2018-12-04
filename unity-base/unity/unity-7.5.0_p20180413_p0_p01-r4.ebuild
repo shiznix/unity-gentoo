@@ -34,6 +34,7 @@ RDEPEND="app-i18n/ibus[gtk,gtk2]
 	x11-themes/humanity-icon-theme
 	x11-themes/gtk-engines-murrine
 	x11-themes/unity-asset-pool"
+## <media-libs/mesa-18.2.5 is required due to header conflicts with media-libs/glew (see https://github.com/shiznix/unity-gentoo/issues/205) ##
 DEPEND="${RDEPEND}
 	!sys-apps/upstart
 	!unity-base/dconf-qt
@@ -60,6 +61,7 @@ DEPEND="${RDEPEND}
 	gnome-extra/polkit-gnome:0
 	media-libs/clutter-gtk:1.0
 	media-libs/glew:=
+	<media-libs/mesa-18.2.5
 	sys-apps/dbus[systemd,user-session]
 	sys-auth/pambase
 	sys-libs/libnih[dbus]

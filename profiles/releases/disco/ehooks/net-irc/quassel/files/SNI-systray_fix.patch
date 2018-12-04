@@ -1,0 +1,14 @@
+diff -urN quassel-0.9.3/interfaces/org.kde.StatusNotifierItem.xml quassel-0.9.3-patched/interfaces/org.kde.StatusNotifierItem.xml
+--- quassel-0.9.3/interfaces/org.kde.StatusNotifierItem.xml	2014-03-26 09:24:54.000000000 +1030
++++ quassel-0.9.3-patched/interfaces/org.kde.StatusNotifierItem.xml	2014-06-08 07:43:51.936441875 +0930
+@@ -8,6 +8,10 @@
+     <property name="Status" type="s" access="read"/>
+     <property name="WindowId" type="i" access="read"/>
+ 
++    <!-- An additional path to add to the theme search path to find the icons specified above. -->
++    <property name="IconThemePath" type="s" access="read"/>	
++    <property name="Menu" type="o" access="read"/>
++    <property name="ItemIsMenu" type="b" access="read"/>
+ 
+     <!-- main icon -->
+     <!-- names are preferred over pixmaps -->

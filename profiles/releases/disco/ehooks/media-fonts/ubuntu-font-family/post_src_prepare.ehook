@@ -1,0 +1,7 @@
+## Keep Ubuntu Medium font
+ebuild_hook() {
+	if [[ -n ${A} ]]; then
+		cd ${WORKDIR}
+		unpack ${A}
+	fi
+}

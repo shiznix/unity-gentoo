@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="bionic bionic-security bionic-updates cosmic cosmic-security cosmic-updates"
+RELEASES="bionic bionic-security bionic-updates cosmic cosmic-security cosmic-updates disco disco-security disco-updates"
 SOURCES="main universe"
 
 sources_download() {
@@ -232,6 +232,7 @@ uver() {
 	[[ "${URELEASE}" == *artful* ]] && UVER_RELEASE="17.10"
 	[[ "${URELEASE}" == *bionic* ]] && UVER_RELEASE="18.04"
 	[[ "${URELEASE}" == *cosmic* ]] && UVER_RELEASE="18.10"
+	[[ "${URELEASE}" == *disco* ]] && UVER_RELEASE="19.04"
 	PVR=`echo "${packbasename}" | sed -e 's/.*-\([0-9]\)/\1/' -e 's:-r[0-9].*$::g'`
 	PVR="_${PVR#*_}"
 
