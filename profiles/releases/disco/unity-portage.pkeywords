@@ -123,8 +123,6 @@ x11-misc/xvfb-run
 
 ## Overlay missing keyword unmasking ##
 app-accessibility/onboard **
-app-arch/snapd **
-app-arch/snapd-glib **
 app-backup/deja-dup **
 app-text/evince **
 dev-cpp/gmock **
@@ -152,6 +150,7 @@ dev-python/python-testscenarios **
 dev-util/cmake-extras **
 dev-util/dbus-test-runner **
 dev-util/gdbus-codegen **
+dev-util/glib-utils **
 gnome-base/gconf **
 gnome-base/gnome-control-center **
 gnome-base/gnome-core-apps **

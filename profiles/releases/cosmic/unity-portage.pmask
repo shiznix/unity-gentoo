@@ -52,6 +52,7 @@ dev-libs/libappindicator::gentoo
 dev-libs/libdbusmenu::gentoo
 dev-libs/libindicator::gentoo
 dev-util/gdbus-codegen::gentoo
+dev-util/glib-utils::gentoo
 
 gnome-base/gconf::gentoo
 gnome-base/gnome-core-apps::gentoo

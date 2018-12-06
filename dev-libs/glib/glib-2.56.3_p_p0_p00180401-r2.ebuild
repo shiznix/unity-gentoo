@@ -26,10 +26,6 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="LGPL-2.1+"
 SLOT="2/$(get_version_component_range 2-3)"
 IUSE="dbus debug fam kernel_linux +mime selinux static-libs systemtap test utils xattr"
-REQUIRED_USE="
-	utils? ( ${PYTHON_REQUIRED_USE} )
-	test? ( ${PYTHON_REQUIRED_USE} )
-"
 
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
@@ -42,16 +38,17 @@ RDEPEND="
 	!<dev-util/gdbus-codegen-${PV}
 	>=dev-libs/libpcre-8.13:3[${MULTILIB_USEDEP},static-libs?]
 	>=virtual/libiconv-0-r1[${MULTILIB_USEDEP}]
-	>=virtual/libffi-3.0.13-r1[${MULTILIB_USEDEP}]
+	>=virtual/libffi-3.0.13-r1:=[${MULTILIB_USEDEP}]
 	>=virtual/libintl-0-r2[${MULTILIB_USEDEP}]
 	>=sys-libs/zlib-1.2.8-r1[${MULTILIB_USEDEP}]
 	kernel_linux? ( sys-apps/util-linux[${MULTILIB_USEDEP}] )
 	selinux? ( >=sys-libs/libselinux-2.2.2-r5[${MULTILIB_USEDEP}] )
 	xattr? ( >=sys-apps/attr-2.4.47-r1[${MULTILIB_USEDEP}] )
 	fam? ( >=virtual/fam-0-r1[${MULTILIB_USEDEP}] )
-	${PYTHON_DEPS}
-	virtual/libelf:0=
-	>=dev-util/gdbus-codegen-${PV}
+	utils? (
+		>=dev-util/gdbus-codegen-${PV}
+		virtual/libelf:0=
+	)
 "
 DEPEND="${RDEPEND}
 	app-text/docbook-xml-dtd:4.1.2
@@ -59,19 +56,24 @@ DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.11
 	>=dev-util/gtk-doc-am-1.20
 	systemtap? ( >=dev-util/systemtap-1.3 )
+	${PYTHON_DEPS}
 	test? (
 		sys-devel/gdb
-		${PYTHON_DEPS}
+		>=dev-util/gdbus-codegen-${PV}
 		>=sys-apps/dbus-1.2.14 )
 	!<dev-util/gtk-doc-1.15-r2
 "
-PDEPEND="!<gnome-base/gvfs-1.6.4-r990
+# Migration of glib-genmarshal, glib-mkenums and gtester-report to a separate
+# python depending package, which can be buildtime depended in packages that
+# need these tools, without pulling in python at runtime.
+RDEPEND="${RDEPEND}
+	>=dev-util/glib-utils-$(get_version_component_range 1-2)"
+PDEPEND="
 	dbus? ( gnome-base/dconf )
 	mime? ( x11-misc/shared-mime-info )
 "
 # shared-mime-info needed for gio/xdgmime, bug #409481
 # dconf is needed to be able to save settings, bug #498436
-# Earlier versions of gvfs do not work with glib
 
 MULTILIB_CHOST_TOOLS=(
 	/usr/bin/gio-querymodules$(get_exeext)
@@ -87,6 +89,7 @@ pkg_setup() {
 		fi
 		linux-info_pkg_setup
 	fi
+	python-any-r1_pkg_setup
 }
 
 src_prepare() {
@@ -128,7 +131,6 @@ src_prepare() {
 	eautoreconf
 
 	gnome2_src_prepare
-
 	epunt_cxx
 }
 
@@ -143,6 +145,8 @@ multilib_src_configure() {
 		fi
 		export LIBFFI_CFLAGS="-I$(echo /usr/$(get_libdir)/libffi-*/include)"
 		export LIBFFI_LIBS="-lffi"
+		export PCRE_CFLAGS=" " # test -n "$PCRE_CFLAGS" needs to pass
+		export PCRE_LIBS="-lpcre"
 	fi
 
 	# These configure tests don't work when cross-compiling.
@@ -176,6 +180,7 @@ multilib_src_configure() {
 		$(use_enable systemtap dtrace) \
 		$(use_enable systemtap systemtap) \
 		$(multilib_native_use_enable utils libelf) \
+		--with-python=${EPYTHON} \
 		--disable-compile-warnings \
 		--enable-man \
 		--with-pcre=system \
@@ -194,6 +199,7 @@ multilib_src_test() {
 	export XDG_DATA_DIRS=/usr/local/share:/usr/share
 	export G_DBUS_COOKIE_SHA1_KEYRING_DIR="${T}/temp"
 	export LC_TIME=C # bug #411967
+	unset GSETTINGS_BACKEND # bug #596380
 	python_setup
 
 	# Related test is a bit nitpicking
@@ -211,7 +217,7 @@ multilib_src_test() {
 }
 
 multilib_src_install() {
-	gnome2_src_install completiondir="$(get_bashcompdir)"
+	emake DESTDIR="${D}" completiondir="$(get_bashcompdir)" install
 	keepdir /usr/$(get_libdir)/gio/modules
 }
 
@@ -251,7 +257,7 @@ pkg_preinst() {
 
 	multilib_pkg_preinst() {
 		# Make giomodule.cache belong to glib alone
-		local cache="usr/$(get_libdir)/gio/giomodule.cache"
+		local cache="usr/$(get_libdir)/gio/modules/giomodule.cache"
 
 		if [[ -e ${EROOT}${cache} ]]; then
 			cp "${EROOT}"${cache} "${ED}"/${cache} || die
@@ -260,7 +266,11 @@ pkg_preinst() {
 		fi
 	}
 
-	multilib_foreach_abi multilib_pkg_preinst
+	# Don't run the cache ownership when cross-compiling, as it would end up with an empty cache
+	# file due to inability to create it and GIO might not look at any of the modules there
+	if ! tc-is-cross-compiler ; then
+		multilib_foreach_abi multilib_pkg_preinst
+	fi
 }
 
 pkg_postinst() {
@@ -273,7 +283,14 @@ pkg_postinst() {
 		gnome2_giomodule_cache_update \
 			|| die "Update GIO modules cache failed (for ${ABI})"
 	}
-	multilib_foreach_abi multilib_pkg_postinst
+	if ! tc-is-cross-compiler ; then
+		multilib_foreach_abi multilib_pkg_postinst
+	else
+		ewarn "Updating of GIO modules cache skipped due to cross-compilation."
+		ewarn "You might want to run gio-querymodules manually on the target for"
+		ewarn "your final image for performance reasons and re-run it when packages"
+		ewarn "installing GIO modules get upgraded or added to the image."
+	fi
 }
 
 pkg_postrm() {
@@ -281,7 +298,7 @@ pkg_postrm() {
 
 	if [[ -z ${REPLACED_BY_VERSION} ]]; then
 		multilib_pkg_postrm() {
-			rm -f "${EROOT}"usr/$(get_libdir)/gio/giomodule.cache
+			rm -f "${EROOT}"usr/$(get_libdir)/gio/modules/giomodule.cache
 		}
 		multilib_foreach_abi multilib_pkg_postrm
 		rm -f "${EROOT}"usr/share/glib-2.0/schemas/gschemas.compiled
