@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6,3_7} )
 GNOME_ORG_MODULE="glib"
 
-inherit gnome.org python-single-r1
+inherit autotools gnome.org python-single-r1
 
 DESCRIPTION="Build utilities for GLib using projects"
 HOMEPAGE="https://www.gtk.org/"
@@ -22,11 +22,20 @@ RDEPEND="${PYTHON_DEPS}
 "
 DEPEND="${RDEPEND}"
 
-src_configure() { :; }
+src_prepare() {
+	eautoreconf
+	default
+}
+
+src_configure() {
+	econf
+}
 
 src_compile() {
 	sed -e "s:@VERSION@:${PV}:g;s:@PYTHON@:python:g" gobject/glib-genmarshal.in > gobject/glib-genmarshal
 	sed -e "s:@VERSION@:${PV}:g;s:@PYTHON@:python:g" gobject/glib-mkenums.in > gobject/glib-mkenums
+	emake -C docs/reference/glib
+	emake -C docs/reference/gobject
 }
 
 src_install() {
