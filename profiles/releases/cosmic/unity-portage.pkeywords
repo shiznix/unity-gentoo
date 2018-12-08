@@ -20,11 +20,19 @@ x11-themes/mate-themes-meta
 x11-terms/mate-terminal
 x11-wm/marco
 
-# Unmask Gnome-3.30 #
+# Unmask up to Gnome-3.30 #
 =*/gnome*-*30*::gentoo
+=*/gnome*-*28*::gentoo
+=*/gnome*-*26*::gentoo
 =gnome-base/*-*30*::gentoo
+=gnome-base/*-*28*::gentoo
+=gnome-base/*-*26*::gentoo
 =gnome-extra/*-*30*::gentoo
+=gnome-extra/*-*28*::gentoo
+=gnome-extra/*-*26*::gentoo
 =games-puzzle/*-*30*::gentoo
+=games-puzzle/*-*28*::gentoo
+=games-puzzle/*-*26*::gentoo
 =app-i18n/unicode-data-10*
 >=app-accessibility/at-spi2-atk-2.26::gentoo
 >=app-accessibility/at-spi2-core-2.26::gentoo
@@ -65,6 +73,8 @@ media-sound/pulseaudio::gentoo
 # >=net-wireless/gnome-bluetooth-3.20::gentoo
 # >=sci-geosciences/geocode-glib-3.24::gentoo
 >=sys-apps/baobab-3.26::gentoo
+=sys-fs/udisks-2.7*::gentoo
+=sys-libs/libblockdev-2.19*::gentoo
 # ~virtual/libgudev-232::gentoo
 # >=x11-libs/gtksourceview-3.24::gentoo
 >=x11-libs/libwnck-3.30::gentoo
