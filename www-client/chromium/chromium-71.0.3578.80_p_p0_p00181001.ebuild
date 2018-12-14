@@ -1,7 +1,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python2_7 )
 
 CHROMIUM_LANGS="am ar bg bn ca cs da de el en-GB es es-419 et fa fi fil fr gu he
@@ -9,8 +9,8 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en-GB es es-419 et fa fi fil fr gu he
 	sv sw ta te th tr uk vi zh-CN zh-TW"
 
 URELEASE="cosmic-security"
-inherit check-reqs chromium-2 eutils gnome2-utils flag-o-matic multilib ninja-utils pax-utils \
-	portability python-any-r1 readme.gentoo-r1 toolchain-funcs ubuntu-versionator versionator virtualx xdg-utils
+inherit check-reqs chromium-2 desktop eutils flag-o-matic multilib ninja-utils pax-utils \
+	portability python-any-r1 readme.gentoo-r1 toolchain-funcs ubuntu-versionator xdg-utils
 
 MY_PN="chromium-browser"
 MY_P="${MY_PN}_${PV}"
@@ -29,10 +29,10 @@ RESTRICT="!system-ffmpeg? ( proprietary-codecs? ( bindist ) )
 	mirror"
 
 COMMON_DEPEND="
-	app-accessibility/at-spi2-atk:2
+	>=app-accessibility/at-spi2-atk-2.26:2
 	app-arch/bzip2:=
 	cups? ( >=net-print/cups-1.3.11:= )
-	dev-libs/atk
+	>=dev-libs/atk-2.26
 	dev-libs/expat:=
 	dev-libs/glib:2
 	system-icu? ( >=dev-libs/icu-59:= )
@@ -40,13 +40,12 @@ COMMON_DEPEND="
 	dev-libs/libxslt:=
 	dev-libs/nspr:=
 	>=dev-libs/nss-3.26:=
-	>=dev-libs/re2-0.2016.05.01:=
+	>=dev-libs/re2-0.2016.11.01:=
 	gnome-keyring? ( >=gnome-base/libgnome-keyring-3.12:= )
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/fontconfig:=
 	media-libs/freetype:=
-	>=media-libs/harfbuzz-1.8.8:0=[icu(-)]
-	<media-libs/harfbuzz-2.0.0:0
+	>=media-libs/harfbuzz-2.0.0:0=[icu(-)]
 	media-libs/libjpeg-turbo:=
 	media-libs/libpng:=
 	system-libvpx? ( media-libs/libvpx:=[postproc,svc] )
@@ -98,6 +97,8 @@ RDEPEND="${COMMON_DEPEND}
 # dev-vcs/git - https://bugs.gentoo.org/593476
 # sys-apps/sandbox - https://crbug.com/586444
 DEPEND="${COMMON_DEPEND}
+"
+BDEPEND="
 	>=app-arch/gzip-1.7
 	!arm? (
 		dev-lang/yasm
@@ -114,10 +115,10 @@ DEPEND="${COMMON_DEPEND}
 	dev-vcs/git
 "
 
-: ${CHROMIUM_FORCE_CLANG=yes}
+: ${CHROMIUM_FORCE_CLANG=no}
 
 if [[ ${CHROMIUM_FORCE_CLANG} == yes ]]; then
-       DEPEND+=" >=sys-devel/clang-5"
+	BDEPEND+=" >=sys-devel/clang-5"
 fi
 
 if ! has chromium_pkg_die ${EBUILD_DEATH_HOOKS}; then
@@ -148,7 +149,8 @@ PATCHES=(
 	"${FILESDIR}/chromium-memcpy-r0.patch"
 	"${FILESDIR}/chromium-math.h-r0.patch"
 	"${FILESDIR}/chromium-stdint.patch"
-	"${FILESDIR}/chromium-pdfium-stdlib-r0.patch"
+	"${FILESDIR}/chromium-harfbuzz-r0.patch"
+	"${FILESDIR}/chromium-71-gcc-0.patch"
 )
 
 pre_build_checks() {
@@ -167,14 +169,12 @@ pre_build_checks() {
 	# Check build requirements, bug #541816 and bug #471810 .
 	CHECKREQS_MEMORY="3G"
 	CHECKREQS_DISK_BUILD="5G"
-	eshopts_push -s extglob
-	if is-flagq '-g?(gdb)?([1-9])'; then
+	if ( shopt -s extglob; is-flagq '-g?(gdb)?([1-9])' ); then
 		CHECKREQS_DISK_BUILD="25G"
 		if ! use component-build; then
 			CHECKREQS_MEMORY="16G"
 		fi
 	fi
-	eshopts_pop
 	check-reqs_pkg_setup
 }
 
@@ -190,13 +190,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Disable selected patches #
-#	sed \
-#		`# Don't limit gcc version to 4.8` \
-#			-e 's:use-gcc-versioned:#use-gcc-versioned:g' \
-#		`# Fix clang compilation failure` \
-#			-e 's:clang-601-atomics:#clang-601-atomics:g' \
-#				-i "${WORKDIR}/debian/patches/series" || die
 	ubuntu-versionator_src_prepare
 
 	# Remove 'warning: "_FORTIFY_SOURCE" redefined' messages by ensuring gcc's built-in #
@@ -287,6 +280,7 @@ src_prepare() {
 		third_party/iccjpeg
 		third_party/inspector_protocol
 		third_party/jinja2
+		third_party/jsoncpp
 		third_party/jstemplate
 		third_party/khronos
 		third_party/leveldatabase
@@ -342,6 +336,7 @@ src_prepare() {
 		third_party/skia/third_party/vulkan
 		third_party/smhasher
 		third_party/spirv-headers
+		third_party/SPIRV-Tools
 		third_party/spirv-tools-angle
 		third_party/sqlite
 		third_party/swiftshader
@@ -527,6 +522,10 @@ src_configure() {
 	elif [[ $myarch = x86 ]] ; then
 		myconf_gn+=" target_cpu=\"x86\""
 		ffmpeg_target_arch=ia32
+
+		# This is normally defined by compiler_cpu_abi in
+		# build/config/compiler/BUILD.gn, but we patch that part out.
+		append-flags -msse2 -mfpmath=sse -mmmx
 	elif [[ $myarch = arm64 ]] ; then
 		myconf_gn+=" target_cpu=\"arm64\""
 		ffmpeg_target_arch=arm64
@@ -595,10 +594,16 @@ src_configure() {
 }
 
 src_compile() {
+	# Final link uses lots of file descriptors.
+	ulimit -n 2048
+
 	# Calling this here supports resumption via FEATURES=keepwork
 	python_setup
 
 	#"${EPYTHON}" tools/clang/scripts/update.py --force-local-build --gcc-toolchain /usr --skip-checkout --use-system-cmake --without-android || die
+
+	# Work around broken deps
+	eninja -C out/Release gen/ui/accessibility/ax_enums.mojom{,-shared}.h
 
 	# Build mksnapshot and pax-mark it.
 	local x
@@ -611,10 +616,6 @@ src_compile() {
 			pax-mark m "out/Release/${x}"
 		fi
 	done
-
-	# Work around broken deps
-	eninja -C out/Release gen/ui/accessibility/ax_enums.mojom.h
-	eninja -C out/Release gen/ui/accessibility/ax_enums.mojom-shared.h
 
 	# Even though ninja autodetects number of CPUs, we respect
 	# user's options, for debugging with -j 1 or any other reason.
@@ -726,12 +727,20 @@ pkg_preinst() {
 }
 
 pkg_postrm() {
-	gnome2_icon_cache_update
+	if type gtk-update-icon-cache &>/dev/null; then
+		ebegin "Updating GTK icon cache"
+		gtk-update-icon-cache "${EROOT}/usr/share/icons/hicolor"
+		eend $?
+	fi
 	xdg_desktop_database_update
 }
 
 pkg_postinst() {
-	gnome2_icon_cache_update
+	if type gtk-update-icon-cache &>/dev/null; then
+		ebegin "Updating GTK icon cache"
+		gtk-update-icon-cache "${EROOT}/usr/share/icons/hicolor"
+		eend $?
+	fi
 	xdg_desktop_database_update
 	readme.gentoo_print_elog
 	ubuntu-versionator_pkg_postinst
