@@ -14,7 +14,8 @@ HOMEPAGE="https://wiki.gnome.org/Projects/GnomeOnlineAccounts"
 
 LICENSE="LGPL-2+"
 SLOT="0/1"
-IUSE="debug gnome +introspection kerberos" # telepathy"
+IUSE="debug gnome +introspection kerberos vala" # telepathy"
+REQUIRED_USE="vala? ( introspection )"
 #KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 
 # pango used in goaeditablelabel
@@ -36,7 +37,7 @@ RDEPEND="
 
 	introspection? ( >=dev-libs/gobject-introspection-0.6.2:= )
 	kerberos? (
-		app-crypt/gcr:0=
+		app-crypt/gcr:0=[gtk]
 		app-crypt/mit-krb5 )
 "
 #	telepathy? ( net-libs/telepathy-glib )
@@ -44,9 +45,10 @@ RDEPEND="
 PDEPEND="gnome? ( >=gnome-base/gnome-control-center-3.2[gnome-online-accounts(+)] )"
 
 DEPEND="${RDEPEND}
-	$(vala_depend)
+	vala? ( $(vala_depend) )
 	dev-libs/libxslt
 	>=dev-util/gtk-doc-am-1.3
+	>=dev-util/gdbus-codegen-2.30.0
 	>=dev-util/intltool-0.50.1
 	sys-devel/gettext
 	virtual/pkgconfig
@@ -61,12 +63,12 @@ QA_CONFIGURE_OPTIONS=".*"
 
 src_prepare() {
 	gnome2_src_prepare
-	vala_src_prepare
+	use vala && vala_src_prepare
 }
 
 src_configure() {
 	# TODO: Give users a way to set the G/FB/Windows Live secrets
-	# telepathy optional support is really a badly one, bug #494456
+	# telepathy optional support is really a badly one, bug #494456 - now default disabled upstream - revisit soon
 	gnome2_src_configure \
 		--disable-static \
 		--enable-backend \
@@ -81,9 +83,12 @@ src_configure() {
 		--enable-owncloud \
 		--enable-pocket \
 		--enable-telepathy \
+		--enable-todoist \
 		--enable-windows-live \
 		$(usex debug --enable-debug=yes ' ') \
-		$(use_enable kerberos)
+		$(use_enable kerberos) \
+		$(use_enable introspection) \
+		$(use_enable vala)
 		#$(use_enable telepathy)
 	# gudev & cheese from sub-configure is overriden
 	# by top level configure, and disabled so leave it like that
