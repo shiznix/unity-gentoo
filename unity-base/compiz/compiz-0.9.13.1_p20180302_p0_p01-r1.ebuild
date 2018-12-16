@@ -142,7 +142,7 @@ src_test() {
 src_compile() {
 	# Disable unitymtgrabhandles plugin #
 	sed -e "s:unitymtgrabhandles;::g" \
-		-i "${CMAKE_USE_DIR}/debian/unity.ini"
+		-i "${CMAKE_USE_DIR}"/debian/unity{,-lowgfx}.ini
 #	sed -e "s:unitymtgrabhandles,::g" \
 #		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gconf-defaults"
 	sed -e "s:'unitymtgrabhandles',::g" \
@@ -189,6 +189,7 @@ src_install() {
 		insinto /etc/compizconfig
 		newins debian/compizconfig config
 		doins debian/unity.ini
+		doins debian/unity-lowgfx.ini
 
 		# Compiz profile upgrade helper files for ensuring smooth upgrades from older configuration files #
 		insinto /etc/compizconfig/upgrades/
