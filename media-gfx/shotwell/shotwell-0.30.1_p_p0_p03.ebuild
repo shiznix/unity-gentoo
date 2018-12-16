@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic-updates"
 inherit eutils gnome2 multilib toolchain-funcs vala ubuntu-versionator
 
 DESCRIPTION="Open source photo manager for GNOME patched for the Unity desktop"
@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
