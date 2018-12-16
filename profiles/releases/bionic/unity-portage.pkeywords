@@ -49,7 +49,7 @@ dev-lang/vala:0.40::gentoo
 >=dev-util/gtk-update-icon-cache-3.24::gentoo
 >=dev-util/devhelp-3.28::gentoo
 >=dev-vcs/gitg-3.26::gentoo
->=gnome-base/gvfs-1.37::gentoo
+>=gnome-base/gvfs-1.32::gentoo
 gnome-base/librsvg::gentoo
 gnome-extra/gucharmap:2.90::gentoo
 >=gnome-extra/evolution-data-server-3.28::gentoo
