@@ -13,7 +13,7 @@ URELEASE="bionic"
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
 KEYWORDS="~amd64 ~x86"
-IUSE="accessibility +chat +ehooks gnome gnome-extras nocsd +unity-extras +xdm"
+IUSE="accessibility +chat +ehooks gnome gnome-extras +nocsd +unity-extras +xdm"
 RESTRICT="mirror"
 
 DEPEND="gnome-base/gnome-core-libs
