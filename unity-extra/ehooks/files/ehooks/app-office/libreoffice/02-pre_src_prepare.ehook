@@ -7,8 +7,8 @@ ebuild_hook() {
 
 	## Configure with Human theme.
 	sed -i \
-		-e "/with_theme=/{s/\(hicontrast\)/\1 human/}" \
-		-e "/real_theme=/{s/\(hicontrast\)/\1|human/}" \
+		-e "/with_theme=/{s/\(elementary\)/\1 human/}" \
+		-e "/real_theme=/{s/\(elementary\)/\1|human/}" \
 		configure.ac || die
 
 	## Make Human theme the default.
