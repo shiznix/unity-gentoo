@@ -77,10 +77,12 @@ pkg_setup() {
 }
 
 src_prepare() {
+	eapply "${FILESDIR}"/icu61-compat.patch
 	eapply "${FILESDIR}"/vala.patch
 
 	use vala && vala_src_prepare
 	cmake-utils_src_prepare
+#        gnome2_src_prepare
 }
 
 src_configure() {
