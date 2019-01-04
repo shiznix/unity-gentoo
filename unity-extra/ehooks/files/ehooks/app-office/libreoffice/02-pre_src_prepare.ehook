@@ -14,5 +14,6 @@ ebuild_hook() {
 	## Make Human theme the default.
 	sed -i \
 		-e "/FALLBACK_ICON_THEME_ID/{s/tango/human/}" \
+		-e "/r = /{s/elementary/human/}" \
 		vcl/source/app/IconThemeSelector.cxx || die
 }
