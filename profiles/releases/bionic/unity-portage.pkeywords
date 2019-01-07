@@ -64,6 +64,7 @@ gnome-extra/gucharmap:2.90::gentoo
 >=net-wireless/gnome-bluetooth-3.28::gentoo
 >=sci-geosciences/geocode-glib-3.25::gentoo
 >=sys-apps/baobab-3.28::gentoo
+sys-apps/bubblewrap::gentoo
 ~virtual/libgudev-232::gentoo
 >=x11-libs/gtksourceview-3.24::gentoo
 >=x11-libs/libwnck-3.24::gentoo

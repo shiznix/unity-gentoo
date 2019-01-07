@@ -74,6 +74,7 @@ media-sound/pulseaudio::gentoo
 # >=net-wireless/gnome-bluetooth-3.20::gentoo
 # >=sci-geosciences/geocode-glib-3.24::gentoo
 >=sys-apps/baobab-3.26::gentoo
+sys-apps/bubblewrap::gentoo
 =sys-fs/udisks-2.7*::gentoo
 =sys-libs/libblockdev-2.19*::gentoo
 # ~virtual/libgudev-232::gentoo

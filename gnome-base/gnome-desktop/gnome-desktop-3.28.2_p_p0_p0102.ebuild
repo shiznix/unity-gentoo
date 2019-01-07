@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="3/12" # subslot = libgnome-desktop-3 soname version
 # wayland - bug #624960 and issue #197
-IUSE="debug +introspection udev wayland"
+IUSE="debug +introspection seccomp udev wayland"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -32,12 +32,14 @@ COMMON_DEPEND="
 	x11-misc/xkeyboard-config
 	>=gnome-base/gsettings-desktop-schemas-3.5.91
 	introspection? ( >=dev-libs/gobject-introspection-0.9.7:= )
+	seccomp? ( sys-libs/libseccomp )
 	udev? (
 		sys-apps/hwids
 		virtual/libudev:= )
 "
 RDEPEND="${COMMON_DEPEND}
 	!<gnome-base/gnome-desktop-2.32.1-r1:2[doc]
+	seccomp? ( sys-apps/bubblewrap )
 	app-i18n/ibus[wayland=]
 "
 DEPEND="${COMMON_DEPEND}
