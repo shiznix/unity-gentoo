@@ -1,0 +1,22 @@
+From: c4pp4
+Date: Sun, 13 Jan 2019 04:56:11 +0100
+Subject: thumbnailers: fix evince, ffmpegthumbnailer...
+
+Add /etc/ld.so.cache into bubblewrap arguments
+as some thumbnailers need to read from the list of shared objects.
+---
+ libgnome-desktop/gnome-desktop-thumbnail-script.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/libgnome-desktop/gnome-desktop-thumbnail-script.c b/libgnome-desktop/gnome-desktop-thumbnail-script.c
+index 14e2fed..1e0e0f4 100644
+--- a/libgnome-desktop/gnome-desktop-thumbnail-script.c
++++ b/libgnome-desktop/gnome-desktop-thumbnail-script.c
+@@ -526,6 +526,7 @@ add_bwrap (GPtrArray   *array,
+ 	    "--setenv", "GIO_USE_VFS", "local",
+ 	    "--unshare-all",
+ 	    "--die-with-parent",
++	    "--ro-bind", "/etc/ld.so.cache", "/etc/ld.so.cache",
+ 	    NULL);
+ 
+   add_env (array, "G_MESSAGES_DEBUG");

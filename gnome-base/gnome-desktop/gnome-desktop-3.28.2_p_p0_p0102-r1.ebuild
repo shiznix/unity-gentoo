@@ -60,6 +60,9 @@ src_prepare() {
 	sed -i '/ubuntu_language.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/ubuntu_language_list_from_SUPPORTED.patch/d' "${WORKDIR}/debian/patches/series" || die
 
+	# fix thumbnailers using shared objects #
+	eapply "${FILESDIR}"/thumbnailers.patch
+
 	ubuntu-versionator_src_prepare
 	eautoreconf
 	gnome2_src_prepare
