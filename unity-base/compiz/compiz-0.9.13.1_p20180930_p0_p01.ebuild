@@ -61,6 +61,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	${PYTHON_DEPS}"
 
 DEPEND="${COMMONDEPEND}
+	dev-python/cython[${PYTHON_USEDEP}]
 	sys-devel/gettext
 	virtual/pkgconfig
 	x11-base/xorg-proto
