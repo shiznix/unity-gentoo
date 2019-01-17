@@ -99,6 +99,9 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/unity-7.5.0_fix-missing-functional-includes.patch"
 	ubuntu-versionator_src_prepare
 
+	# Fix authentication failure when switching user sessions (LP #1733557) #
+	eapply "${FILESDIR}/authentication-failure-fix.patch"
+
 	# Taken from http://ppa.launchpad.net/timekiller/unity-systrayfix/ubuntu/pool/main/u/unity/ #
 	if use systray; then
 		epatch -p1 "${FILESDIR}/systray-fix_artful.diff"

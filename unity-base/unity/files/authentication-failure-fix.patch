@@ -1,0 +1,28 @@
+From: c4pp4
+Date: Wed, 16 Jan 2019 22:18:00 +0100
+Subject: [PATCH 1/1] Fix authentication failure when switching user sessions
+
+Terminate already started PAM transaction and let it try to init the new
+one as it's unable to start authentication.
+
+Bug-Ubuntu: https://launchpad.net/bugs/1733557
+---
+ lockscreen/UserAuthenticatorPam.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/lockscreen/UserAuthenticatorPam.cpp b/lockscreen/UserAuthenticatorPam.cpp
+index 463d8f9..8fad03a 100644
+--- a/lockscreen/UserAuthenticatorPam.cpp
++++ b/lockscreen/UserAuthenticatorPam.cpp
+@@ -46,6 +46,8 @@ bool UserAuthenticatorPam::AuthenticateStart(std::string const& username,
+   if (pam_handle_)
+   {
+     LOG_ERROR(logger) << "Unable to start authentication because another one has already been started";
++    pam_end(pam_handle_, PAM_TRY_AGAIN);
++    pam_handle_ = nullptr;
+     return false;
+   }
+ 
+-- 
+2.19.2
+
