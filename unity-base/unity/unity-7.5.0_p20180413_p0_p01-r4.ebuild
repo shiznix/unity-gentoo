@@ -188,10 +188,8 @@ src_configure() {
 	mycmakeargs+=(-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_PLUGIN_INSTALL_TYPE=package
-		-DCOMPIZ_INSTALL_GCONF_SCHEMA_DIR=/etc/gconf/schemas
-		-DUSE_GSETTINGS=TRUE
-		-DCMAKE_INSTALL_PREFIX=/usr
-		-DCMAKE_SYSCONFDIR=/etc)
+		-DCMAKE_INSTALL_SYSCONFDIR=/etc
+		-DCMAKE_INSTALL_LOCALSTATEDIR=/var)
 	CXXFLAGS+=" -I${WORKDIR}/${GLEWMX}/include"
 	cmake-utils_src_configure || die
 }
@@ -275,7 +273,7 @@ src_install() {
 	doins "${FILESDIR}/15-xdg-data-kde"
 
 	# Clean up pam file installation as used in lockscreen (LP# 1305440) #
-	rm -rf "${ED}usr/etc/pam.d"
+	rm -rf "${ED}etc/pam.d"
 	pamd_mimic system-local-login ${PN} auth account session
 
 	# Set base desktop user privileges #
