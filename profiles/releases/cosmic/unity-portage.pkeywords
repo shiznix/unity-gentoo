@@ -69,7 +69,7 @@ media-sound/paprefs::gentoo
 media-sound/pulseaudio::gentoo
 # >=media-sound/sound-juicer-3.24::gentoo
 >=media-video/cheese-3.28::gentoo
-# >=media-video/totem-3.24::gentoo
+>=media-video/totem-3.30::gentoo
 # >=net-misc/vinagre-3.22::gentoo
 # >=net-wireless/gnome-bluetooth-3.20::gentoo
 # >=sci-geosciences/geocode-glib-3.24::gentoo
