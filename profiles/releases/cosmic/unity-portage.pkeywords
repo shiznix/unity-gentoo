@@ -87,6 +87,15 @@ sys-apps/bubblewrap::gentoo
 media-libs/grilo:0.3::gentoo
 media-plugins/grilo-plugins:0.3::gentoo
 
+# www-client/firefox related #
+dev-lang/rust::gentoo
+=dev-libs/nss-3.42*::gentoo
+~dev-util/cbindgen-0.6.7::gentoo
+media-libs/libvpx:0/5::gentoo
+~media-libs/libwebp-1.0.1::gentoo
+=virtual/cargo-1.30*::gentoo
+=virtual/rust-1.30*::gentoo
+
 ## Other packages keyword unmasking ##
 app-admin/cgmanager
 app-eselect/eselect-opengl
@@ -98,8 +107,6 @@ dev-lang/spidermonkey:52
 dev-libs/capnproto
 dev-libs/folks
 =dev-libs/icu-59*
-=dev-libs/nss-3.42*
-=dev-libs/nspr-4.19*
 =dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
