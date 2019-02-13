@@ -1,5 +1,6 @@
 ## Global masks ##
 
+>=mail-client/thunderbird-60.5.0        # Temporarily mask until unity-menubar.patch is ready.
 
 # mask gnome-3.32 packages
 =*/gnome*-*32*::gentoo
