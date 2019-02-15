@@ -27,10 +27,13 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# Show new conversation popup when enabled by plugin extension #
-	#   Libnotify Popups. Make possible to close conversation window #
-	#   opened by Unity's Messaging Menu. (LP #1339405) #
-	eapply "${FILESDIR}"/fix_popup_and_close.patch
+	# LP #1339405: #
+	# Show new message/conversation popup when enabled by plugin extension #
+	#   Libnotify Popups (fix debian/patches/ubuntu_notify_support.patch). #
+	eapply "${FILESDIR}"/0001-Fix-Ubuntu-notify-support.patch
+	# Make possible to close conversation window opened by Unity Messaging #
+	#   Menu (debian/patches/messaging_menu.patch). #
+	eapply "${FILESDIR}"/0002-Fix-Unity-Messaging-Menu.patch
 
 	eautoreconf
 }

@@ -1,11 +1,13 @@
-From: c4pp4
-Date: Thu, 09 Nov 2017 00:07:57 +0100
-Subject: [PATCH 1/2] Fix debian/patches/ubuntu_notify_support.patch
+From a6c648c6401a9f7db2b077fd8b5a38a4501bc6a2 Mon Sep 17 00:00:00 2001
+From: c4pp4 <c4pp4@seznam.cz>
+Date: Thu, 14 Feb 2019 22:56:15 +0100
+Subject: [PATCH 1/2] Fix Ubuntu notify support
 
-Show new conversation popup when enabled by plugin extension Libnotify
-Popups.
+Show new message/conversation popup when enabled by plugin extension
+Libnotify Popups (fix debian/patches/ubuntu_notify_support.patch).
 
-https://launchpad.net/bugs/1339405
+Bug-Ubuntu: https://launchpad.net/bugs/1339405
+Signed-off-by: c4pp4 <c4pp4@seznam.cz>
 ---
  src/pidgin-libnotify.c | 19 +++++--------------
  1 file changed, 5 insertions(+), 14 deletions(-)
@@ -61,44 +63,6 @@ index bfb516c..71c5872 100644
  
  	if (name_blacklisted(account, sender)) return;
  
----
-From: c4pp4
-Date: Thu, 09 Nov 2017 00:08:38 +0100
-Subject: [PATCH 2/2] Fix debian/patches/messaging_menu.patch
+-- 
+2.19.2
 
-Make possible to close conversation window opened by Unity's Messaging
-Menu.
-
-https://launchpad.net/bugs/1339405
----
- src/pidgin-libnotify.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
-
-diff --git a/src/pidgin-libnotify.c b/src/pidgin-libnotify.c
-index 71c5872..bb45dcc 100644
---- a/src/pidgin-libnotify.c
-+++ b/src/pidgin-libnotify.c
-@@ -1235,21 +1235,12 @@ messaging_source_activated_cb (MessagingMenuApp *app,
- 							   gpointer          user_data)
- {
- 	PurpleConversation *conv;
--	PidginConversation *gtkconv;
- 	purple_debug_info (PLUGIN_ID, "SOURCE activated '%s'\n", source_id);
- 	/* find conversation with given source id */
- 	conv = messaging_conversation_for_unique_id (source_id);
- 
--	if (conv) {
--		gtkconv = PIDGIN_CONVERSATION (conv);
--		if (gtkconv == NULL) {
--			purple_debug_warning (PLUGIN_ID, "NULL gtkconv '%s'\n", source_id);
--			return;
--		}
--		pidgin_conv_switch_active_conversation(conv);
--		pidgin_conv_window_switch_gtkconv(gtkconv->win, gtkconv);
--		gtk_window_present(GTK_WINDOW(gtkconv->win->window));
--	}
-+	g_return_if_fail(conv != NULL);
-+	pidgin_conv_present_conversation(conv);
- }
- 
- static gboolean
