@@ -81,8 +81,8 @@ dev-lang/rust::gentoo
 ~dev-util/cbindgen-0.6.7::gentoo
 media-libs/libvpx:0/5::gentoo
 ~media-libs/libwebp-1.0.1::gentoo
-=virtual/cargo-1.30*::gentoo
-=virtual/rust-1.30*::gentoo
+virtual/cargo::gentoo
+virtual/rust::gentoo
 
 ## Other packages keyword unmasking ##
 app-admin/cgmanager
