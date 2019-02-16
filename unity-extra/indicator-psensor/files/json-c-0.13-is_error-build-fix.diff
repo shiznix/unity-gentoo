@@ -1,0 +1,11 @@
+diff -urN psensor-1.1.5/src/rsensor.c psensor-1.1.5-patched/src/rsensor.c
+--- psensor-1.1.5/src/rsensor.c	2016-06-07 00:07:30.000000000 +0930
++++ psensor-1.1.5-patched/src/rsensor.c	2019-02-16 16:55:44.552122486 +1030
+@@ -20,6 +20,7 @@
+ #include <libintl.h>
+ #define _(str) gettext(str)
+ 
++#include <bits.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>

@@ -37,6 +37,11 @@ DEPEND="dev-libs/glib:2
 S="${WORKDIR}/${MY_PN}-${PV}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
+src_prepare() {
+	epatch -p1 "${FILESDIR}/json-c-0.13-is_error-build-fix.diff"
+	ubuntu-versionator_src_prepare
+}
+
 src_configure() {
 	econf \
 		$(use_enable nls)
