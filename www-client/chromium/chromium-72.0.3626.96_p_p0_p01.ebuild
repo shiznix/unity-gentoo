@@ -8,7 +8,7 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en-GB es es-419 et fa fi fil fr gu he
 	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk sl sr
 	sv sw ta te th tr uk vi zh-CN zh-TW"
 
-URELEASE="cosmic-security"
+URELEASE="disco"
 inherit check-reqs chromium-2 desktop eutils flag-o-matic multilib ninja-utils pax-utils \
 	portability python-any-r1 readme.gentoo-r1 toolchain-funcs ubuntu-versionator xdg-utils
 
@@ -19,12 +19,13 @@ MY_P="${MY_PN}_${PV}"
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
 SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}.tar.xz
+	https://dev.gentoo.org/~floppym/dist/chromium-webrtc-includes-r1.patch.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
-IUSE="component-build cups gnome-keyring +hangouts jumbo-build kerberos neon pic +proprietary-codecs pulseaudio selinux +suid +system-ffmpeg +system-icu +system-libvpx +tcmalloc widevine"
+IUSE="+closure-compile component-build cups gnome-keyring +hangouts jumbo-build kerberos neon pic +proprietary-codecs pulseaudio selinux +suid +system-ffmpeg +system-icu +system-libvpx +tcmalloc widevine"
 RESTRICT="!system-ffmpeg? ( proprietary-codecs? ( bindist ) )
 	mirror"
 
@@ -105,14 +106,15 @@ BDEPEND="
 	)
 	dev-lang/perl
 	dev-util/gn
+	dev-vcs/git
 	>=dev-util/gperf-3.0.3
 	>=dev-util/ninja-1.7.2
 	>=net-libs/nodejs-7.6.0[inspector]
 	sys-apps/hwids[usb(+)]
 	>=sys-devel/bison-2.4.3
 	sys-devel/flex
+	closure-compile? ( virtual/jre )
 	virtual/pkgconfig
-	dev-vcs/git
 "
 
 : ${CHROMIUM_FORCE_CLANG=no}
@@ -149,8 +151,6 @@ PATCHES=(
 	"${FILESDIR}/chromium-memcpy-r0.patch"
 	"${FILESDIR}/chromium-math.h-r0.patch"
 	"${FILESDIR}/chromium-stdint.patch"
-	"${FILESDIR}/chromium-harfbuzz-r0.patch"
-	"${FILESDIR}/chromium-71-gcc-0.patch"
 )
 
 pre_build_checks() {
@@ -199,6 +199,10 @@ src_prepare() {
 	# Calling this here supports resumption via FEATURES=keepwork
 	python_setup
 
+	pushd third_party/webrtc >/dev/null || die
+		eapply "${WORKDIR}"/chromium-webrtc-includes-r1.patch
+	popd >/dev/null || die
+
 	mkdir -p third_party/node/linux/node-linux-x64/bin || die
 	ln -s "${EPREFIX}"/usr/bin/node third_party/node/linux/node-linux-x64/bin/node || die
 
@@ -222,12 +226,11 @@ src_prepare() {
 		net/third_party/quic
 		net/third_party/spdy
 		net/third_party/uri_template
-		third_party/WebKit
 		third_party/abseil-cpp
-		third_party/analytics
 		third_party/angle
 		third_party/angle/src/common/third_party/base
 		third_party/angle/src/common/third_party/smhasher
+		third_party/angle/src/common/third_party/xxhash
 		third_party/angle/src/third_party/compiler
 		third_party/angle/src/third_party/libXNVCtrl
 		third_party/angle/src/third_party/trace_event
@@ -261,6 +264,7 @@ src_prepare() {
 		third_party/catapult/tracing/third_party/pako
 		third_party/ced
 		third_party/cld_3
+		third_party/closure_compiler
 		third_party/crashpad
 		third_party/crashpad/crashpad/third_party/zlib
 		third_party/crc32c
@@ -271,7 +275,6 @@ src_prepare() {
 		third_party/flatbuffers
 		third_party/flot
 		third_party/freetype
-		third_party/glslang-angle
 		third_party/google_input_tools
 		third_party/google_input_tools/third_party/closure_library
 		third_party/google_input_tools/third_party/closure_library/third_party/closure
@@ -305,6 +308,7 @@ src_prepare() {
 		third_party/mesa
 		third_party/metrics_proto
 		third_party/modp_b64
+		third_party/nasm
 		third_party/node
 		third_party/node/node_modules/polymer-bundler/lib/third_party/UglifyJS2
 		third_party/openmax_dl
@@ -337,7 +341,6 @@ src_prepare() {
 		third_party/smhasher
 		third_party/spirv-headers
 		third_party/SPIRV-Tools
-		third_party/spirv-tools-angle
 		third_party/sqlite
 		third_party/swiftshader
 		third_party/swiftshader/third_party/llvm-subzero
@@ -345,7 +348,6 @@ src_prepare() {
 		third_party/unrar
 		third_party/usrsctp
 		third_party/vulkan
-		third_party/vulkan-validation-layers
 		third_party/web-animations-js
 		third_party/webdriver
 		third_party/webrtc
@@ -481,6 +483,7 @@ src_configure() {
 	myconf_gn+=" use_system_harfbuzz=true"
 
 	# Optional dependencies.
+	myconf_gn+=" closure_compile=$(usex closure-compile true false)"
 	myconf_gn+=" enable_hangout_services_extension=$(usex hangouts true false)"
 	myconf_gn+=" enable_widevine=$(usex widevine true false)"
 	myconf_gn+=" use_cups=$(usex cups true false)"
@@ -515,6 +518,22 @@ src_configure() {
 	myconf_gn+=" google_default_client_id=\"${google_default_client_id}\""
 	myconf_gn+=" google_default_client_secret=\"${google_default_client_secret}\""
 
+	# Avoid CFLAGS problems, bug #352457, bug #390147.
+	if ! use custom-cflags; then
+		replace-flags "-Os" "-O2"
+		strip-flags
+
+		# Prevent linker from running out of address space, bug #471810 .
+		if use x86; then
+			filter-flags "-g*"
+		fi
+
+		# Prevent libvpx build failures. Bug 530248, 544702, 546984.
+		if [[ ${myarch} == amd64 || ${myarch} == x86 ]]; then
+			filter-flags -mno-mmx -mno-sse2 -mno-ssse3 -mno-sse4.1 -mno-avx -mno-avx2
+		fi
+	fi
+
 	local myarch="$(tc-arch)"
 	if [[ $myarch = amd64 ]] ; then
 		myconf_gn+=" target_cpu=\"x64\""
@@ -543,22 +562,6 @@ src_configure() {
 
 	# Disable fatal linker warnings, bug 506268.
 	myconf_gn+=" fatal_linker_warnings=false"
-
-	# Avoid CFLAGS problems, bug #352457, bug #390147.
-	if ! use custom-cflags; then
-		replace-flags "-Os" "-O2"
-		strip-flags
-
-		# Prevent linker from running out of address space, bug #471810 .
-		if use x86; then
-			filter-flags "-g*"
-		fi
-
-		# Prevent libvpx build failures. Bug 530248, 544702, 546984.
-		if [[ ${myarch} == amd64 || ${myarch} == x86 ]]; then
-			filter-flags -mno-mmx -mno-sse2 -mno-ssse3 -mno-sse4.1 -mno-avx -mno-avx2
-		fi
-	fi
 
 	# https://bugs.gentoo.org/588596
 	#append-cxxflags $(test-flags-CXX -fno-delete-null-pointer-checks)
