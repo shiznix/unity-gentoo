@@ -59,7 +59,7 @@ dev-lang/vala:0.40::gentoo
 games-board/gnome*::gentoo
 >=gnome-base/gvfs-1.32::gentoo
 gnome-base/librsvg::gentoo
-gnome-extra/gucharmap:2.90::gentoo
+# gnome-extra/gucharmap:2.90::gentoo
 >=gnome-extra/evolution-data-server-3.26::gentoo
 >=gnome-extra/zenity-3.28::gentoo
 >=mail-client/evolution-3.26::gentoo
