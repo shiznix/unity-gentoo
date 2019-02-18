@@ -14,7 +14,7 @@
 >=app-editors/gedit-3.30::gentoo
 >=app-text/evince-3.30::gentoo
 >=app-text/yelp-tools-3.30::gentoo
-#>=dev-cpp/gtkmm-3.22::gentoo
+>=dev-cpp/gtkmm-3.24::gentoo
 >=dev-libs/libgweather-3.30::gentoo
 #>=dev-python/pyatspi-2.20.0::gentoo
 >=dev-python/pygobject-3.30::gentoo
