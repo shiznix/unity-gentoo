@@ -1,28 +1,122 @@
-From: c4pp4
-Date: Wed, 16 Jan 2019 22:18:00 +0100
-Subject: [PATCH 1/1] Fix authentication failure when switching user sessions
+https://code.launchpad.net/~azzar1/unity/+git/unity/+merge/363124
 
-Terminate already started PAM transaction and let it try to init the new
-one as it's unable to start authentication.
+Andrea Azzarone
+
+locksreen: cancel authentication if externally unlocked
+
+The lockscreen can be externellay unlocked. This happens e.g. when
+you unlock the session from LightDM or from the CLI. We need to
+cancel the authentication in order to ensure that the next one does
+not fail.
 
 Bug-Ubuntu: https://launchpad.net/bugs/1733557
 ---
- lockscreen/UserAuthenticatorPam.cpp | 2 ++
- 1 file changed, 2 insertions(+)
 
+diff --git a/lockscreen/LockScreenController.cpp b/lockscreen/LockScreenController.cpp
+index 8f6e7bc..907a130 100644
+--- a/lockscreen/LockScreenController.cpp
++++ b/lockscreen/LockScreenController.cpp
+@@ -536,6 +536,8 @@ void Controller::OnUnlockRequested()
+ 
+   HideBlankWindow();
+   HideShields();
++
++  user_authenticator_->AuthenticateCancel();
+ }
+ 
+ void Controller::HideShields()
+diff --git a/lockscreen/UserAuthenticator.h b/lockscreen/UserAuthenticator.h
+index e30ce2f..60e8684 100644
+--- a/lockscreen/UserAuthenticator.h
++++ b/lockscreen/UserAuthenticator.h
+@@ -43,6 +43,7 @@ public:
+ 
+   // Authenticate the user in a background thread.
+   virtual bool AuthenticateStart(std::string const& username, AuthenticateEndCallback const&) = 0;
++  virtual void AuthenticateCancel() = 0;
+ 
+   sigc::signal<void> start_failed;
+   sigc::signal<void, std::string, PromiseAuthCodePtr const&> echo_on_requested;
 diff --git a/lockscreen/UserAuthenticatorPam.cpp b/lockscreen/UserAuthenticatorPam.cpp
-index 463d8f9..8fad03a 100644
+index 463d8f9..d1d6c27 100644
 --- a/lockscreen/UserAuthenticatorPam.cpp
 +++ b/lockscreen/UserAuthenticatorPam.cpp
-@@ -46,6 +46,8 @@ bool UserAuthenticatorPam::AuthenticateStart(std::string const& username,
-   if (pam_handle_)
-   {
-     LOG_ERROR(logger) << "Unable to start authentication because another one has already been started";
-+    pam_end(pam_handle_, PAM_TRY_AGAIN);
-+    pam_handle_ = nullptr;
-     return false;
+@@ -50,6 +50,7 @@ bool UserAuthenticatorPam::AuthenticateStart(std::string const& username,
    }
  
--- 
-2.19.2
-
+   first_prompt_ = true;
++  cancelled_ = false;
+   username_ = username;
+   authenticate_cb_ = authenticate_cb;
+ 
+@@ -64,6 +65,18 @@ bool UserAuthenticatorPam::AuthenticateStart(std::string const& username,
+   return !error;
+ }
+ 
++void UserAuthenticatorPam::AuthenticateCancel()
++{
++  if (!pam_handle_)
++  {
++    LOG_DEBUG(logger) << "Unable to cancel authentication because none has been started";
++    return;
++  }
++
++  LOG_DEBUG(logger) << "Cancelling the authentication";
++  cancelled_ = true;
++}
++
+ gpointer UserAuthenticatorPam::AuthenticationThreadFunc(gpointer data)
+ {
+   auto self = static_cast<UserAuthenticatorPam*>(data);
+@@ -92,7 +105,10 @@ gpointer UserAuthenticatorPam::AuthenticationThreadFunc(gpointer data)
+ 
+   pam_end(self->pam_handle_, self->status_);
+   self->pam_handle_ = nullptr;
+-  self->source_manager_.AddTimeout(0, [self] {   self->authenticate_cb_(self->status_ == PAM_SUCCESS); return false; });
++
++  if (!self->cancelled_)
++    self->source_manager_.AddTimeout(0, [self] {   self->authenticate_cb_(self->status_ == PAM_SUCCESS); return false; });
++
+   return nullptr;
+ }
+ 
+@@ -188,9 +204,17 @@ int UserAuthenticatorPam::ConversationFunction(int num_msg,
+     auto future = promise->get_future();
+     pam_response* resp_item = &tmp_response[i++];
+     resp_item->resp_retcode = 0;
+-    resp_item->resp = strdup(future.get().c_str());
++    resp_item->resp = nullptr;
++
++    std::future_status status;
++    do
++    {
++        status = future.wait_for(std::chrono::seconds(1));
++        if (status == std::future_status::ready)
++          resp_item->resp = strdup(future.get().c_str());
++    } while (status != std::future_status::ready && !user_auth->cancelled_);
+ 
+-    if (!resp_item->resp)
++    if (!resp_item->resp || user_auth->cancelled_)
+     {
+       raise_error = true;
+       break;
+diff --git a/lockscreen/UserAuthenticatorPam.h b/lockscreen/UserAuthenticatorPam.h
+index 82273cd..4043cd4 100644
+--- a/lockscreen/UserAuthenticatorPam.h
++++ b/lockscreen/UserAuthenticatorPam.h
+@@ -39,6 +39,7 @@ class UserAuthenticatorPam : public UserAuthenticator
+ public:
+   UserAuthenticatorPam() = default;
+   bool AuthenticateStart(std::string const& username, AuthenticateEndCallback const&) override;
++  void AuthenticateCancel() override;
+ 
+ private:
+   UserAuthenticatorPam(UserAuthenticatorPam const&) = delete;
+@@ -57,6 +58,7 @@ private:
+ 
+   int status_ = 0;
+   bool first_prompt_ = true;
++  bool cancelled_ = false;
+   pam_handle* pam_handle_ = nullptr;
+   glib::SourceManager source_manager_;
+ };
