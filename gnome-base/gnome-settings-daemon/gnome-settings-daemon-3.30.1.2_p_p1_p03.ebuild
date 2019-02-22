@@ -5,7 +5,7 @@ EAPI=6
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_5,3_6} )
 
-URELEASE="cosmic"
+URELEASE="cosmic-updates"
 inherit flag-o-matic gnome2 meson python-any-r1 systemd udev virtualx ubuntu-versionator
 
 DESCRIPTION="Gnome Settings Daemon patched for the Unity desktop"

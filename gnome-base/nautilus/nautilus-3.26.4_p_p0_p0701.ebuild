@@ -4,7 +4,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes" # Needed with USE 'sendto'
 
-URELEASE="cosmic"
+URELEASE="cosmic-updates"
 inherit eutils gnome-meson readme.gentoo-r1 virtualx ubuntu-versionator
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"

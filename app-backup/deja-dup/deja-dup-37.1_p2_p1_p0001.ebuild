@@ -3,10 +3,10 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit gnome-meson ubuntu-versionator vala
 
-UVER="-${PVR_PL_MAJOR}fakesync${PVR_PL_MINOR}"
+UVER="-${PVR_MICRO}fakesync${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 
 DESCRIPTION="Simple backup tool using duplicity back-end"
 HOMEPAGE="https://launchpad.net/deja-dup/"

@@ -5,7 +5,7 @@ EAPI=6
 GNOME2_LA_PUNT="yes"
 GNOME_ORG_MODULE="network-manager-applet"
 
-URELEASE="bionic"
+URELEASE="bionic-updates"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 MY_P="${GNOME_ORG_MODULE}_${PV}"
