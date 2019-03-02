@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 MY_PN="classicmenu-indicator"

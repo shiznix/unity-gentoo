@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools ubuntu-versionator
 
 MY_PN="policykit-1-gnome"

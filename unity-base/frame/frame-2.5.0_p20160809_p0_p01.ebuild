@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils ubuntu-versionator
 
 UVER_PREFIX="daily13.06.05+16.10.${PVR_MICRO}"

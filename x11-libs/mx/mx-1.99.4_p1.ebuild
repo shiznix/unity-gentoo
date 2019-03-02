@@ -4,7 +4,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UVER="-${PVR_MICRO}"

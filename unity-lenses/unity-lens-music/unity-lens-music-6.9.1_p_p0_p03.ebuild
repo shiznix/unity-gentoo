@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils ubuntu-versionator vala
 
 UVER_PREFIX="+16.04"

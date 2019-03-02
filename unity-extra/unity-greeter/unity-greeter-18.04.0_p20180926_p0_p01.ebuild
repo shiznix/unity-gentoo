@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 IUSE="accessibility battery +branding networkmanager nls"
 RESTRICT="mirror"
@@ -45,7 +45,7 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 	unity-indicators/indicator-application
 	x11-themes/ubuntu-wallpapers"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}/${PN}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

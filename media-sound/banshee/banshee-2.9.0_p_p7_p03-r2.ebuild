@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit eutils autotools mono-env fdo-mime gnome2-utils versionator ubuntu-versionator
 
 UVER_PREFIX="+really2.6.2"

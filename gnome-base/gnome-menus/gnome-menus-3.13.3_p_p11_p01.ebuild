@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools gnome2 ubuntu-versionator
 
 DESCRIPTION="The GNOME menu system, implementing the F.D.O cross-desktop spec, patched for the Unity desktop"

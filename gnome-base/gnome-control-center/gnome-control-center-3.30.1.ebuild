@@ -12,7 +12,7 @@ HOMEPAGE="https://git.gnome.org/browse/gnome-control-center/"
 LICENSE="GPL-2+"
 SLOT="2"
 IUSE="+i18n v4l wayland"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 # False positives caused by nested configure scripts
 QA_CONFIGURE_OPTIONS=".*"

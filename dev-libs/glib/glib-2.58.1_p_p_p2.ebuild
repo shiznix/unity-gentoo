@@ -27,7 +27,7 @@ LICENSE="LGPL-2.1+"
 SLOT="2/$(get_version_component_range 2-3)"
 IUSE="dbus debug fam kernel_linux +mime selinux static-libs systemtap test utils xattr"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # Added util-linux multilib dependency to have libmount support (which

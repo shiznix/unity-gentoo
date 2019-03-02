@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
 UVER_PREFIX="+17.04.${PVR_MICRO}"

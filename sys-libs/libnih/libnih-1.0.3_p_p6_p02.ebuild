@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit versionator eutils autotools toolchain-funcs multilib flag-o-matic ubuntu-versionator
 
 DESCRIPTION="Light-weight 'standard library' of C functions"

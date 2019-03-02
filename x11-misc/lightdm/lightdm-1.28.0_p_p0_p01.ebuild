@@ -13,7 +13,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 IUSE_LIGHTDM_GREETERS="gtk"
 for greeters in ${IUSE_LIGHTDM_GREETERS}; do

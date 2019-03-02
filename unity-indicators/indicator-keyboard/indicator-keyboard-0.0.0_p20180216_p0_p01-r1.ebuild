@@ -4,10 +4,10 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils flag-o-matic gnome2-utils python-r1 ubuntu-versionator vala
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+18.04.${PVR_MICRO}"
 
 DESCRIPTION="Keyboard indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-keyboard"

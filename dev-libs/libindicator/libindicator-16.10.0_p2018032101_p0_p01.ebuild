@@ -3,13 +3,13 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils ubuntu-versionator
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+18.04.${PVR_MICRO}"
 
 DESCRIPTION="A set of symbols and convenience functions that all indicators would like to use"
 HOMEPAGE="https://launchpad.net/libindicator"

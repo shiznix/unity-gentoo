@@ -14,7 +14,7 @@ SRC_URI="https://github.com/robint99/mate-dock-applet/archive/V${PV}.tar.gz -> $
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 DEPEND=">=sys-devel/automake-1.15:1.15"

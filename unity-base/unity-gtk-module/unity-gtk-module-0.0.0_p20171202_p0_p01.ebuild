@@ -4,10 +4,10 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils python-r1 ubuntu-versionator
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+18.04.${PVR_MICRO}"
 
 DESCRIPTION="GTK+ module for exporting old-style menus as GMenuModels"
 HOMEPAGE="https://launchpad.net/unity-gtk-module"

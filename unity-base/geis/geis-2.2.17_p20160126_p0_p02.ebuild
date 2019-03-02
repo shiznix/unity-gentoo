@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils python-r1 ubuntu-versionator
 
 UVER_PREFIX="+16.04.${PVR_MICRO}"

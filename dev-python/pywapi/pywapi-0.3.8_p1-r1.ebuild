@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_5,3_6} )
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit distutils-r1 ubuntu-versionator
 
 UVER="-${PVR_MICRO}"

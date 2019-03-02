@@ -18,7 +18,7 @@ LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="3/12" # subslot = libgnome-desktop-3 soname version
 # wayland - bug #624960 and issue #197
 IUSE="debug +introspection seccomp udev wayland"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # cairo[X] needed for gnome-bg

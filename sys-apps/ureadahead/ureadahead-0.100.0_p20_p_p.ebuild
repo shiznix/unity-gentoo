@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils linux-info systemd ubuntu-versionator
 
 UVER="-${PVR_MICRO}"

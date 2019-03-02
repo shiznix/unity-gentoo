@@ -5,10 +5,10 @@ EAPI="5"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools base eutils gnome2 ubuntu-versionator vala
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+18.04.${PVR_MICRO}"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"

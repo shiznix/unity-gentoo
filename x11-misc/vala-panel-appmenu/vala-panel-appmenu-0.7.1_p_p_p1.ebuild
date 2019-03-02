@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}${UVER}.orig.tar.xz
 	${UURL}/${MY_P}${UVER}${UVER_SUFFIX}.debian.tar.xz"
 
 LICENSE="LGPL-3"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+vala-panel mate xfce +wnck"
 REQUIRED_USE="|| ( xfce vala-panel )"
@@ -38,18 +38,24 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+
+	# Remove RPM support as build will fail #
+	sed -e '/RPM/d' -i CMakeLists.txt
+
 	vala_src_prepare
 	cmake-utils_src_prepare
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DMATE=$(usex mate)
-		-DVALAPANEL=$(usex vala-panel)
-		-DWNCK=$(usex wnck)
-		-DXFCE=$(usex xfce)
-		-DGSETTINGS_COMPILE=OFF
-		-DMAKE_BOLD_APPNAME=ON
+		-DENABLE_BUDGIE=OFF \
+		-DENABLE_MATE=$(usex mate) \
+		-DENABLE_WNCK=$(usex wnck) \
+		-DENABLE_XFCE=$(usex xfce) \
+		-DENABLE_VALAPANEL=$(usex vala-panel) \
+		-DENABLE_REGISTRAR=ON \
+		-DENABLE_UNITY_GTK_MODULE=OFF \
+		-DGSETTINGS_COMPILE=OFF \
 		-DVALA_EXECUTABLE="${VALAC}"
 	)
 	cmake-utils_src_configure

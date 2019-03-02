@@ -5,7 +5,7 @@ EAPI=5
 PYTHON_COMPAT=( python{2_7,3_5,3_6} )
 AUTOTOOLS_AUTORECONF=y
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools-utils eutils python-r1 ubuntu-versionator vala
 
 MY_P="${PN}_${PV}"

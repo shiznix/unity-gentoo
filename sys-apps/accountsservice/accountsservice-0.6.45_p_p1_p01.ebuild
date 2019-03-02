@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils gnome2-utils systemd vala ubuntu-versionator
 
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"

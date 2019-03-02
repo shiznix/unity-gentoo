@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit cmake-utils ubuntu-versionator
 
 UVER_PREFIX="+17.04.${PVR_MICRO}"

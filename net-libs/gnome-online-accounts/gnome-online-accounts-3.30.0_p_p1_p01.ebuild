@@ -16,7 +16,7 @@ LICENSE="LGPL-2+"
 SLOT="0/1"
 IUSE="debug gnome +introspection kerberos vala" # telepathy"
 REQUIRED_USE="vala? ( introspection )"
-#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 
 # pango used in goaeditablelabel
 # libsoup used in goaoauthprovider

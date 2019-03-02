@@ -5,7 +5,7 @@ EAPI=6
 VALA_MIN_API_VERSION="0.36"
 VALA_MAX_API_VERSION="0.36"
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
 DESCRIPTION="Blacklist configuration user interface for Zeitgeist"

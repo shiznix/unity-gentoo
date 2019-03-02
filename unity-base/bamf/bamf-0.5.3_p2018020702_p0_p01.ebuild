@@ -4,10 +4,10 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="bionic"
+URELEASE="cosmic"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala xdummy
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+18.04.${PVR_MICRO}"
 
 DESCRIPTION="BAMF Application Matching Framework"
 HOMEPAGE="https://launchpad.net/bamf"
