@@ -40,6 +40,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
+	>=sys-devel/automake-1.15:1.15
 	>=sys-devel/gettext-0.19
 	virtual/pkgconfig
 "
