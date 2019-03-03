@@ -42,8 +42,11 @@ src_prepare() {
 	echo "CONFIG+=nostrip" >> "${S}"/tests/tests.pro
 
 	use test || \
-		sed -e 's:tests/tests.pro tests/cpptest.pro::g' \
-			-i "${S}"/gsettings-qt.pro
+		sed -i \
+			-e "s:\(GSettings/gsettings-qt.pro\) \\\:\1:" \
+			-e "/tests.pro/d" \
+			-e "/cpptest.pro/d" \
+			"${S}"/gsettings-qt.pro
 }
 
 src_configure() {
