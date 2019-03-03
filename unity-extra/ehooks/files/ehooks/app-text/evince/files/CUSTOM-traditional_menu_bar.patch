@@ -12,8 +12,8 @@ https://bugzilla.gnome.org/show_bug.cgi?id=736419
 
 Index: evince-3.22.1/shell/ev-application.c
 ===================================================================
---- evince-3.22.1.orig/shell/ev-application.c
-+++ evince-3.22.1/shell/ev-application.c
+--- a/shell/ev-application.c	2018-11-13 02:38:48.000000000 +0100
++++ b/shell/ev-application.c	2019-03-03 02:24:29.742584027 +0100
 @@ -44,12 +44,15 @@
  #include "ev-media-player-keys.h"
  #endif /* ENABLE_DBUS */
@@ -30,7 +30,7 @@ Index: evince-3.22.1/shell/ev-application.c
  
  #ifdef ENABLE_DBUS
          EvEvinceApplication *skeleton;
-@@ -1040,6 +1043,26 @@ app_about_cb (GSimpleAction *action,
+@@ -939,6 +942,26 @@
  }
  
  static void
@@ -56,10 +56,10 @@ Index: evince-3.22.1/shell/ev-application.c
 +static void
  ev_application_startup (GApplication *gapplication)
  {
-         const GActionEntry app_menu_actions[] = {
-@@ -1099,6 +1122,25 @@ ev_application_startup (GApplication *ga
-                                          app_menu_actions, G_N_ELEMENTS (app_menu_actions),
-                                          application);
+         const gchar *action_accels[] = {
+@@ -995,6 +1018,25 @@
+ 
+         G_APPLICATION_CLASS (ev_application_parent_class)->startup (gapplication);
  
 +        if (!in_desktop ("GNOME")) {
 +                GtkBuilder *builder;
@@ -85,11 +85,11 @@ Index: evince-3.22.1/shell/ev-application.c
  }
 Index: evince-3.22.1/shell/ev-application.h
 ===================================================================
---- evince-3.22.1.orig/shell/ev-application.h
-+++ evince-3.22.1/shell/ev-application.h
-@@ -75,6 +75,8 @@ void              ev_application_show_he
-                                                       GdkScreen       *screen,
-                                                       const char      *topic);
+--- a/shell/ev-application.h	2018-11-13 02:38:48.000000000 +0100
++++ b/shell/ev-application.h	2019-03-03 02:24:29.743584031 +0100
+@@ -74,6 +74,8 @@
+                                                       GdkScreen     *screen,
+                                                       guint32        timestamp);
  
 +gboolean          ev_application_has_traditional_menus (EvApplication *application);
 +
@@ -109,18 +109,18 @@ Index: evince-3.22.1/shell/evince.gresource.xml.in
  </gresources>
 Index: evince-3.22.1/shell/ev-window.c
 ===================================================================
---- evince-3.22.1.orig/shell/ev-window.c
-+++ evince-3.22.1/shell/ev-window.c
-@@ -634,6 +634,8 @@ update_chrome_visibility (EvWindow *wind
+--- a/shell/ev-window.c	2018-11-13 03:58:44.000000000 +0100
++++ b/shell/ev-window.c	2019-03-03 02:27:37.042451064 +0100
+@@ -665,6 +665,8 @@
  
- 	set_widget_visibility (priv->toolbar, toolbar);
- 	set_widget_visibility (priv->sidebar, sidebar);
+ 	if (toolbar && ev_document_model_get_fullscreen (priv->model))
+ 		ev_window_fullscreen_show_toolbar (window);
 +
 +	gtk_application_window_set_show_menubar (GTK_APPLICATION_WINDOW (window), !presentation);
  }
  
  static void
-@@ -7075,7 +7077,6 @@ ev_window_new (void)
+@@ -7763,7 +7765,6 @@
  	ev_window = GTK_WIDGET (g_object_new (EV_TYPE_WINDOW,
  					      "type", GTK_WINDOW_TOPLEVEL,
                                                "application", g_application_get_default (),
@@ -130,9 +130,9 @@ Index: evince-3.22.1/shell/ev-window.c
  	return ev_window;
 Index: evince-3.22.1/shell/Makefile.am
 ===================================================================
---- evince-3.22.1.orig/shell/Makefile.am
-+++ evince-3.22.1/shell/Makefile.am
-@@ -174,7 +174,8 @@ EXTRA_DIST = \
+--- a/shell/Makefile.am	2018-10-23 20:48:09.000000000 +0200
++++ b/shell/Makefile.am	2019-03-03 02:24:29.748584055 +0100
+@@ -172,7 +172,8 @@
  	evince-icon.rc \
  	evince.gresource.xml.in \
  	ev-gdbus.xml \
@@ -383,19 +383,18 @@ Index: evince-3.22.1/shell/traditional-menus.ui
 +</interface>
 Index: evince-3.22.1/po/POTFILES.in
 ===================================================================
---- evince-3.22.1.orig/po/POTFILES.in
-+++ evince-3.22.1/po/POTFILES.in
-@@ -65,4 +65,5 @@ shell/ev-zoom-action.c
+--- a/po/POTFILES.in	2018-11-13 02:38:48.000000000 +0100
++++ b/po/POTFILES.in	2019-03-03 02:26:21.273100082 +0100
+@@ -64,3 +64,4 @@
+ shell/ev-zoom-action.c
+ shell/help-overlay.ui
  shell/main.c
- [type: gettext/glade]shell/evince-menus.ui
- [type: gettext/glade]shell/help-overlay.ui
-+[type: gettext/glade]shell/traditional-menus.ui
- evince.appdata.xml.in
++shell/traditional-menus.ui
 Index: evince-3.22.1/shell/ev-window-title.c
 ===================================================================
---- evince-3.22.1.orig/shell/ev-window-title.c
-+++ evince-3.22.1/shell/ev-window-title.c
-@@ -29,6 +29,8 @@
+--- a/shell/ev-window-title.c	2018-10-23 20:48:09.000000000 +0200
++++ b/shell/ev-window-title.c	2019-03-03 02:24:29.749584059 +0100
+@@ -32,6 +32,8 @@
  #define EV_BACKEND_PS  "PSDocument"
  #define EV_BACKEND_PDF "PdfDocument"
  
@@ -404,7 +403,7 @@ Index: evince-3.22.1/shell/ev-window-title.c
  typedef struct
  {
  	const gchar *backend;
-@@ -105,6 +107,30 @@ ev_window_title_sanitize_title (EvWindow
+@@ -93,6 +95,30 @@
  	}
  }
  

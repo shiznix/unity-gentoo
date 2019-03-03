@@ -2,9 +2,9 @@ Description: Use Ubuntu help instead of GNOME help
 
 Index: gnome-screenshot-3.3.91/src/screenshot-utils.c
 ===================================================================
---- gnome-screenshot-3.3.91.orig/src/screenshot-utils.c	2012-03-05 16:48:12.000000000 +0100
-+++ gnome-screenshot-3.3.91/src/screenshot-utils.c	2012-03-13 20:48:21.073565050 +0100
-@@ -713,7 +713,7 @@
+--- a/src/screenshot-utils.c	2018-09-04 00:47:58.000000000 +0200
++++ b/src/screenshot-utils.c	2019-03-03 02:09:49.870567031 +0100
+@@ -714,7 +714,7 @@
    GError *error = NULL;
  
    gtk_show_uri (gtk_window_get_screen (parent),
