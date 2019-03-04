@@ -111,6 +111,7 @@ dev-lang/spidermonkey:52
 dev-libs/capnproto
 dev-libs/folks
 =dev-libs/icu-59*
+dev-libs/libdbusmenu-qt
 =dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
@@ -153,7 +154,6 @@ dev-cpp/gtest **
 dev-libs/dee **
 dev-libs/dbus-cpp **
 dev-libs/libaccounts-glib **
-dev-libs/libdbusmenu-qt **
 dev-libs/libindicator **
 dev-libs/libtimezonemap **
 dev-libs/glib **
