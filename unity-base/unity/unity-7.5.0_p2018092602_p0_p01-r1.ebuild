@@ -1,3 +1,4 @@
+
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
@@ -34,7 +35,6 @@ RDEPEND="app-i18n/ibus[gtk,gtk2]
 	x11-themes/humanity-icon-theme
 	x11-themes/gtk-engines-murrine
 	x11-themes/unity-asset-pool"
-## <media-libs/mesa-18.2.5 is required due to header conflicts with media-libs/glew (see https://github.com/shiznix/unity-gentoo/issues/205) ##
 DEPEND="${RDEPEND}
 	!sys-apps/upstart
 	!unity-base/dconf-qt
@@ -61,7 +61,7 @@ DEPEND="${RDEPEND}
 	gnome-extra/polkit-gnome:0
 	media-libs/clutter-gtk:1.0
 	media-libs/glew:=
-	<media-libs/mesa-18.2.5
+	media-libs/mesa
 	sys-apps/dbus[systemd,user-session]
 	sys-auth/pambase
 	sys-libs/libnih[dbus]
@@ -101,6 +101,11 @@ src_prepare() {
 
 	# Fix authentication failure when switching user sessions (LP #1733557) #
 	eapply "${FILESDIR}/authentication-failure-fix.patch"
+
+	# Fix build failure with >=media-libs/mesa-18.2.5 due to header conflicts with media-libs/glew (see https://github.com/shiznix/unity-gentoo/issues/205) #
+	pushd "${WORKDIR}/${GLEWMX}"
+		epatch -p1 "${FILESDIR}/glew-1.13.0-mesa-compat.patch"
+	popd
 
 	# Taken from http://ppa.launchpad.net/timekiller/unity-systrayfix/ubuntu/pool/main/u/unity/ #
 	if use systray; then

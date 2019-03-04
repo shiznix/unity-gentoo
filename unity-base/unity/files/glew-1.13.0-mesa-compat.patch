@@ -1,0 +1,20 @@
+diff -urN glew-1.13.0/include/GL/glew.h glew-1.13.0-patched/include/GL/glew.h
+--- glew-1.13.0/include/GL/glew.h	2015-08-10 21:17:22.000000000 +0930
++++ glew-1.13.0-patched/include/GL/glew.h	2019-03-04 18:59:32.065742298 +1030
+@@ -93,7 +93,7 @@
+ #if defined(__REGAL_H__)
+ #error Regal.h included before glew.h
+ #endif
+-#if defined(__glext_h_) || defined(__GLEXT_H_)
++#if defined(__glext_h_) || defined(__GLEXT_H_) || defined(__gl_glext_h_)
+ #error glext.h included before glew.h
+ #endif
+ #if defined(__gl_ATI_h_)
+@@ -109,6 +109,7 @@
+ #define __X_GL_H
+ #define __glext_h_
+ #define __GLEXT_H_
++#define __gl_glext_h_
+ #define __gl_ATI_h_
+ 
+ #if defined(_WIN32)
