@@ -146,13 +146,6 @@ theme that covers the appropriate MIME types, and configure this as your
 GTK+ icon theme.
 "
 
-PATCHES=(
-	"${FILESDIR}/chromium-webrtc-r0.patch"
-	"${FILESDIR}/chromium-memcpy-r0.patch"
-	"${FILESDIR}/chromium-math.h-r0.patch"
-	"${FILESDIR}/chromium-stdint.patch"
-)
-
 pre_build_checks() {
 	#if [[ ${MERGE_TYPE} != binary ]]; then
 	#	local -x CPP="$(tc-getCXX) -E"
@@ -190,6 +183,12 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# Disable selected patches #
+	sed \
+		`# Already handled by chromium-webrtc-includes-r1.patch below` \
+		-e 's:add-missing-cstring-include:#add-missing-cstring-include:g' \
+			-i "${WORKDIR}/debian/patches/series"
+
 	ubuntu-versionator_src_prepare
 
 	# Remove 'warning: "_FORTIFY_SOURCE" redefined' messages by ensuring gcc's built-in #
@@ -200,7 +199,7 @@ src_prepare() {
 	python_setup
 
 	pushd third_party/webrtc >/dev/null || die
-		eapply "${WORKDIR}"/chromium-webrtc-includes-r1.patch
+	eapply "${WORKDIR}"/chromium-webrtc-includes-r1.patch
 	popd >/dev/null || die
 
 	mkdir -p third_party/node/linux/node-linux-x64/bin || die
@@ -518,6 +517,8 @@ src_configure() {
 	myconf_gn+=" google_default_client_id=\"${google_default_client_id}\""
 	myconf_gn+=" google_default_client_secret=\"${google_default_client_secret}\""
 
+	local myarch="$(tc-arch)"
+
 	# Avoid CFLAGS problems, bug #352457, bug #390147.
 	if ! use custom-cflags; then
 		replace-flags "-Os" "-O2"
@@ -534,7 +535,6 @@ src_configure() {
 		fi
 	fi
 
-	local myarch="$(tc-arch)"
 	if [[ $myarch = amd64 ]] ; then
 		myconf_gn+=" target_cpu=\"x64\""
 		ffmpeg_target_arch=x64
