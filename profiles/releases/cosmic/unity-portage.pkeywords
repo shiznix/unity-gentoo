@@ -39,6 +39,7 @@ x11-wm/marco
 # >=app-accessibility/orca-3.24::gentoo
 >=app-arch/file-roller-3.26::gentoo
 # >=app-cdr/brasero-3.12::gentoo
+>=app-crypt/seahorse-3.30::gentoo
 >=app-editors/gedit-3.28::gentoo
 >=app-text/evince-3.28::gentoo
 app-text/gspell::gentoo
@@ -78,6 +79,7 @@ sys-apps/bubblewrap::gentoo
 =sys-fs/udisks-2.7*::gentoo
 =sys-libs/libblockdev-2.19*::gentoo
 # ~virtual/libgudev-232::gentoo
+=x11-libs/gdk-pixbuf-2.38*::gentoo
 # >=x11-libs/gtksourceview-3.24::gentoo
 >=x11-libs/libwnck-3.30::gentoo
 # >=x11-libs/pango-1.42::gentoo

@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+cups debug input_devices_wacom +networkmanager policykit -smartcard test +udev wayland"
+IUSE="+colord +cups debug input_devices_wacom +networkmanager policykit -smartcard test +udev wayland"
 KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="udev"
 RESTRICT="mirror"
@@ -50,9 +50,9 @@ COMMON_DEPEND="
 	>=dev-libs/libgweather-3.9.5:2=
 	>=sci-geosciences/geocode-glib-3.10
 	>=sys-auth/polkit-0.114
-
-	>=media-libs/lcms-2.2:2
-	>=x11-misc/colord-1.0.2:=
+	colord? (
+		>=x11-misc/colord-1.0.2:=
+		>=media-libs/lcms-2.2:2 )
 	cups? ( >=net-print/cups-1.4[dbus] )
 	>=x11-libs/pango-1.20
 	virtual/libgudev:=
