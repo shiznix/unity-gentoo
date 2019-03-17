@@ -1,0 +1,73 @@
+diff -urN gnome-settings-daemon-3.30.1.2/meson.build gnome-settings-daemon-3.30.1.2-patched/meson.build
+--- gnome-settings-daemon-3.30.1.2/meson.build	2019-03-17 19:32:46.528710995 +1030
++++ gnome-settings-daemon-3.30.1.2-patched/meson.build	2019-03-17 19:35:37.471747780 +1030
+@@ -83,7 +83,6 @@
+ add_project_arguments(common_flags + compiler_flags, language: 'c')
+ 
+ accountsservice_dep = dependency('accountsservice')
+-colord_dep = dependency('colord', version: '>= 1.0.2')
+ geocode_glib_dep = dependency('geocode-glib-1.0', version: '>= 3.10.0')
+ gio_dep = dependency('gio-2.0', version: '>= 2.53.0')
+ gio_unix_dep = dependency('gio-unix-2.0')
+@@ -130,6 +129,12 @@
+ endif
+ config_h.set10('HAVE_GUDEV', enable_gudev)
+ 
++# Check for colord
++enable_colord = get_option('colord')
++if enable_colord
++  colord_dep = dependency('colord', version: '>= 1.0.2')
++endif
++
+ has_timerfd_create = cc.has_function('timerfd_create')
+ config_h.set10('HAVE_TIMERFD', has_timerfd_create)
+ 
+@@ -142,8 +147,8 @@
+ endif
+ config_h.set10('HAVE_WAYLAND', enable_wayland)
+ 
+-# wacom (disabled for s390/s390x and non Linux platforms)
+-enable_wacom = host_is_linux_not_s390
++# wacom
++enable_wacom = get_option('wacom')
+ if enable_wacom
+   assert(enable_gudev, 'GUDev support is required for wacom support.')
+   libwacom_dep = dependency('libwacom', version: '>= 0.7')
+diff -urN gnome-settings-daemon-3.30.1.2/meson_options.txt gnome-settings-daemon-3.30.1.2-patched/meson_options.txt
+--- gnome-settings-daemon-3.30.1.2/meson_options.txt	2018-10-05 04:16:28.000000000 +0930
++++ gnome-settings-daemon-3.30.1.2-patched/meson_options.txt	2019-03-17 19:37:25.915421515 +1030
+@@ -3,10 +3,12 @@
+ 
+ option('alsa', type: 'boolean', value: true, description: 'build with ALSA support (not optional on Linux platforms)')
+ option('gudev', type: 'boolean', value: true, description: 'build with gudev device support (not optional on Linux platforms)')
++option('colord', type: 'boolean', value: true, description: 'build with colord support')
+ option('cups', type: 'boolean', value: true, description: 'build with CUPS support')
+ option('network_manager', type: 'boolean', value: true, description: 'build with NetworkManager support (not optional on Linux platforms)')
+ option('rfkill', type: 'boolean', value: true, description: 'build with rfkill support (not optional on Linux platforms)')
+ option('smartcard', type: 'boolean', value: true, description: 'build with smartcard support')
++option('wacom', type: 'boolean', value: true, description: 'build with Wacom devices support')
+ option('wayland', type: 'boolean', value: true, description: 'build with Wayland support')
+ 
+ option('experimental_suspend_then_hibernate', type: 'boolean', value: false, description: 'use suspend-then-hibernate if available (NOT recommended)')
+diff -urN gnome-settings-daemon-3.30.1.2/plugins/meson.build gnome-settings-daemon-3.30.1.2-patched/plugins/meson.build
+--- gnome-settings-daemon-3.30.1.2/plugins/meson.build	2018-10-05 04:16:28.000000000 +0930
++++ gnome-settings-daemon-3.30.1.2-patched/plugins/meson.build	2019-03-17 19:37:51.202452065 +1030
+@@ -1,7 +1,6 @@
+ enabled_plugins = [
+   ['a11y-settings', 'A11ySettings'],
+   ['clipboard', 'Clipboard'],
+-  ['color', 'Color'],
+   ['datetime', 'Datetime'],
+   ['dummy', ''],
+   ['power', 'Power'],
+@@ -15,6 +14,10 @@
+   ['xsettings', 'XSettings']
+ ]
+ 
++if enable_colord
++  enabled_plugins += [['color', 'Color']]
++endif
++
+ if enable_smartcard
+   enabled_plugins += [['smartcard', 'Smartcard']]
+ endif

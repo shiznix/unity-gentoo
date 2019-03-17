@@ -1,0 +1,32 @@
+From 538abdcc5058483c9cc8e7543b35b5d707cfdb41 Mon Sep 17 00:00:00 2001
+From: Mart Raudsepp <leio@gentoo.org>
+Date: Sat, 2 Mar 2019 15:35:56 +0200
+Subject: [PATCH 3/4] build: Allow udev and NM optional on Linux
+
+---
+ meson.build | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 41e0b840..e04a4e12 100644
+--- a/meson.build
++++ b/meson.build
+@@ -124,7 +124,6 @@ config_h.set10('USE_SUSPEND_THEN_HIBERNATE', use_suspend_then_hibernate)
+ # GUdev integration (default enabled)
+ enable_gudev = get_option('gudev')
+ if enable_gudev
+-  assert(enable_gudev, 'GUdev is not optional on Linux platforms')
+   gudev_dep = dependency('gudev-1.0')
+ endif
+ config_h.set10('HAVE_GUDEV', enable_gudev)
+@@ -194,7 +193,6 @@ endif
+ 
+ # Sharing plugin
+ enable_network_manager = get_option('network_manager')
+-assert(enable_network_manager or not host_is_linux, 'NetworkManager support is not optional on Linux platforms')
+ if enable_network_manager
+   # network manager
+   libnm_dep = dependency('libnm', version: '>= 1.0')
+-- 
+2.17.0
+
