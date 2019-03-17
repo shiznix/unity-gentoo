@@ -30,7 +30,7 @@ COMMON_DEPEND="
 	dev-libs/libappindicator:=
 	gnome-base/gnome-desktop:3=
 	>=gnome-base/gsettings-desktop-schemas-3.27.90
-	>=x11-libs/gtk+-3.15.3:3[X,wayland]
+	>=x11-libs/gtk+-3.15.3:3[X,wayland=]
 	media-libs/alsa-lib
 	media-libs/fontconfig
 	media-libs/libcanberra[gtk3]
