@@ -22,8 +22,9 @@ diff -Nur a/panels/printers/unity-printers-panel.desktop.in.in b/panels/printers
  _Name=Printers
  _Comment=Change printer settings
 -Exec=unity-control-center printers
+-Icon=printer
 +Exec=system-config-printer
- Icon=printer
++Icon=printer1
  Terminal=false
  Type=Application
  StartupNotify=true
@@ -31,7 +32,7 @@ diff -Nur a/panels/printers/unity-printers-panel.desktop.in.in b/panels/printers
  Categories=GNOME;GTK;Settings;HardwareSettings;X-Unity-Settings-Panel;
 -OnlyShowIn=GNOME;
 -X-Unity-Settings-Panel=printers
-+OnlyShowIn=GNOME;Unity;
++OnlyShowIn=Unity;
 +X-Unity-Settings-Panel=printing
  # Translators: those are keywords for the printing control-center panel
  _Keywords=Printer;Queue;Print;Paper;Ink;Toner;
