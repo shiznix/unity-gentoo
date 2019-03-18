@@ -3,7 +3,10 @@ ebuild_hook() {
 		>> "${PN}.desktop.in"
 
 	sed -i \
-		-e "s:\(self.PrintersWindow.set_title(_(\"\)Print Settings:\1Printers:" \
+		-e "s:\(NotShowIn=KDE;GNOME;Cinnamon;\):\1Unity;:" \
+		"print-applet.desktop.in"
+
+	sed -i \
 		-e "s:\(self.AboutDialog.set_\)\(icon_name('printer\):\1logo_\21:" \
 		"${PN}.py"
 }
