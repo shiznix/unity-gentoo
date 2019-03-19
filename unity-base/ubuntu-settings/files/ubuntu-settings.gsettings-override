@@ -48,7 +48,7 @@ mouse-button-modifier = "<Alt>"
 theme = "Ambiance"
 titlebar-font = "Ubuntu Bold 11"
 action-middle-click-titlebar = "lower"
-titlebar-uses-system-font = "false"
+titlebar-uses-system-font = false
 
 [org.gnome.eog.ui]
 sidebar = false
@@ -63,8 +63,6 @@ default-zoom-level = "small"
 
 [org.gnome.nautilus.preferences]
 open-folder-on-dnd-hover = false
-sort-directories-first = true
-enable-interactive-search = true
 
 [org.gnome.settings-daemon.plugins.power]
 button-power = "interactive"
