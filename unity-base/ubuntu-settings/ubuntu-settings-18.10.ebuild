@@ -4,59 +4,35 @@
 EAPI=6
 
 URELEASE="cosmic"
-inherit gnome2-utils ubuntu-versionator
-
-UVER=
+inherit gnome2-utils
 
 DESCRIPTION="Default settings for the Unity"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/ubuntu-settings"
-SRC_URI="${UURL}/${MY_P}.tar.xz"
+SRC_URI=""
 
 LICENSE="GPL-2+"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+ubuntu-cursor +ubuntu-sounds"
-RESTRICT="binchecks mirror strip"
 
-DEPEND="media-fonts/ubuntu-font-family
-        x11-themes/ubuntu-themes
-        x11-themes/ubuntu-wallpapers
+DEPEND=""
+RDEPEND="media-fonts/ubuntu-font-family
+	x11-themes/ubuntu-themes
+	x11-themes/ubuntu-wallpapers
 	ubuntu-cursor? ( x11-themes/vanilla-dmz-xcursors )
 	ubuntu-sounds? ( x11-themes/ubuntu-sounds )"
 
-src_prepare() {
-	ubuntu-versionator_src_prepare
-
-	gschema="debian/ubuntu-settings.gsettings-override"
-
-	if use ubuntu-cursor; then
-		sed -e "/cursor-theme/{s/DMZ-White/Vanilla-DMZ/}" \
-			-i "${gschema}"
-	else
-		sed -e "/cursor-theme/d" \
-			-i "${gschema}"
-	fi
-
-	if ! use ubuntu-sounds; then
-		sed -e "/org.gnome.desktop.sound/,+2 d" \
-			-i "${gschema}"
-	fi
-
-	sed -e "/org.gnome.crypto.pgp/,+2 d" \
-		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${URELEASE/-*}.xml/}" \
-		-e "/session-name/{s/ubuntu/unity/}" \
-		-e "/org.gnome.Epiphany/,+3 d" \
-		-e "/org.gnome.login-screen/,+2 d" \
-		-e "/org.gnome.mutter/,+6 d" \
-		-e "/org.gnome.rhythmbox.encoding-settings/,+2 d" \
-		-e "/org.gnome.shell]/,+2 d" \
-		-e "/org.gnome.shell:/,+3 d" \
-		-e "/org.gnome.software/,+2 d" \
-		-e "s/:ubuntu\|:Unity//g" \
-		-i "${gschema}"
-}
+S="${FILESDIR}"
 
 src_install() {
+	local \
+		gschema="10_ubuntu-settings.gschema.override" \
+		gschema_dir="/usr/share/glib-2.0/schemas"
+
+	insinto "${gschema_dir}"
+	newins "${FILESDIR}"/ubuntu-settings.gsettings-override \
+		"${gschema}"
+
 	if use ubuntu-cursor; then
 		# Do the following only if there #
 		#  is no file collision detected #
@@ -68,11 +44,22 @@ src_install() {
 			insinto "${index_dir}"
 			doins "${FILESDIR}"/index.theme
 		fi
+	else
+		sed -i \
+			-e "/cursor-theme/d" \
+			"${ED}${gschema_dir}/${gschema}"
 	fi
 
-	insinto /usr/share/glib-2.0/schemas
-	newins "${gschema}" \
-		10_ubuntu-settings.gschema.override
+	if ! use ubuntu-sounds; then
+		sed -i \
+			-e "/org.gnome.desktop.sound/,+2 d" \
+			"${ED}${gschema_dir}/${gschema}"
+	fi
+
+	sed -i \
+		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${URELEASE/-*}.xml/}" \
+		-e "/\[org./{s/]/:Unity]/}" \
+		"${ED}${gschema_dir}/${gschema}"
 }
 
 pkg_preinst() {

@@ -1,0 +1,93 @@
+##########################
+# unity specific session #
+##########################
+
+[org.gnome.desktop.background]
+show-desktop-icons = true
+picture-uri = "file:///usr/share/backgrounds/warty-final-ubuntu.png"
+
+[org.gnome.desktop.interface]
+gtk-theme = "Ambiance"
+icon-theme = "ubuntu-mono-dark"
+cursor-theme = "Vanilla-DMZ"
+font-name = "Ubuntu 11"
+monospace-font-name = "Ubuntu Mono 13"
+
+[org.gnome.desktop.peripherals.touchpad]
+tap-to-click = true
+
+[org.gnome.desktop.sound]
+theme-name = "ubuntu"
+
+[org.gnome.desktop.session]
+session-name= "unity"
+
+[org.gnome.desktop.wm.keybindings]
+maximize = ['<Primary><Super>Up','<Super>Up','<Primary><Alt>KP_5']
+minimize = ['<Primary><Alt>KP_0']
+move-to-corner-ne = ['<Primary><Alt>KP_Prior']
+move-to-corner-nw = ['<Primary><Alt>KP_Home']
+move-to-corner-se = ['<Primary><Alt>KP_Next']
+move-to-corner-sw = ['<Primary><Alt>KP_End']
+move-to-side-e = ['<Primary><Alt>KP_Right']
+move-to-side-n = ['<Primary><Alt>KP_Up']
+move-to-side-s = ['<Primary><Alt>KP_Down']
+move-to-side-w = ['<Primary><Alt>KP_Left']
+toggle-maximized = ['<Primary><Alt>KP_5']
+toggle-shaded = ['<Primary><Alt>s']
+unmaximize = ['<Primary><Super>Down','<Super>Down','<Alt>F5']
+show-desktop = ['<Primary><Super>d','<Primary><Alt>d','<Super>d']
+switch-to-workspace-up = ['<Control><Alt>Up']
+switch-to-workspace-down = ['<Control><Alt>Down']
+move-to-workspace-up = ['<Shift><Control><Alt>Up']
+move-to-workspace-down = ['<Shift><Control><Alt>Down']
+
+[org.gnome.desktop.wm.preferences]
+button-layout = "close,minimize,maximize:"
+mouse-button-modifier = "<Alt>"
+theme = "Ambiance"
+titlebar-font = "Ubuntu Bold 11"
+action-middle-click-titlebar = "lower"
+titlebar-uses-system-font = "false"
+
+[org.gnome.eog.ui]
+sidebar = false
+
+[org.gnome.nautilus.desktop]
+home-icon-visible = false
+trash-icon-visible = false
+volumes-visible = false
+
+[org.gnome.nautilus.icon-view]
+default-zoom-level = "small"
+
+[org.gnome.nautilus.preferences]
+open-folder-on-dnd-hover = false
+sort-directories-first = true
+enable-interactive-search = true
+
+[org.gnome.settings-daemon.plugins.power]
+button-power = "interactive"
+button-sleep = "suspend"
+critical-battery-action = "suspend"
+power-button-action = "interactive"
+
+[org.gnome.settings-daemon.plugins.xsettings]
+antialiasing = "rgba"
+hinting = "slight"
+
+[org.gnome.settings-daemon.plugins.media-keys]
+screensaver = "<Control><Alt>l"
+
+[org.gnome.settings-daemon.plugins.print-notifications]
+active = false
+
+[org.gnome.settings-daemon.plugins.updates]
+active = false
+
+[org.gnome.settings-daemon.plugins.background]
+active = false
+
+[org.gtk.Settings.FileChooser]
+sort-directories-first = true
+startup-mode = "cwd"
