@@ -123,6 +123,7 @@ dev-util/umockdev
 =media-gfx/eog-3.24*
 ~media-libs/giflib-4.2.3
 ~media-libs/gexiv2-0.10.5
+=media-libs/harfbuzz-2.2*
 =media-libs/libpng-1.6*
 =net-misc/networkmanager-1.2*
 =sec-policy/apparmor-profiles-2.10*

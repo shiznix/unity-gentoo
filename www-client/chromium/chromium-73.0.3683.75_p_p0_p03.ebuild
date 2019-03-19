@@ -19,7 +19,6 @@ MY_P="${MY_PN}_${PV}"
 DESCRIPTION="Open-source version of Google Chrome web browser patched for the Unity desktop"
 HOMEPAGE="http://chromium.org/"
 SRC_URI="https://commondatastorage.googleapis.com/chromium-browser-official/${PN}-${PV}.tar.xz
-	https://dev.gentoo.org/~floppym/dist/chromium-webrtc-includes-r1.patch.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="BSD"
@@ -46,7 +45,7 @@ COMMON_DEPEND="
 	>=media-libs/alsa-lib-1.0.19:=
 	media-libs/fontconfig:=
 	media-libs/freetype:=
-	>=media-libs/harfbuzz-2.0.0:0=[icu(-)]
+	>=media-libs/harfbuzz-2.2.0:0=[icu(-)]
 	media-libs/libjpeg-turbo:=
 	media-libs/libpng:=
 	system-libvpx? ( media-libs/libvpx:=[postproc,svc] )
@@ -146,18 +145,23 @@ theme that covers the appropriate MIME types, and configure this as your
 GTK+ icon theme.
 "
 
+PATCHES=(
+	"${FILESDIR}/chromium-73-gcc-0.patch"
+	"${FILESDIR}/chromium-73-gcc-1.patch"
+	"${FILESDIR}/chromium-73-gcc-2.patch"
+	"${FILESDIR}/chromium-73-gcc-3.patch"
+	"${FILESDIR}/chromium-73-gcc-4.patch"
+	"${FILESDIR}/chromium-73-gcc-5.patch"
+	"${FILESDIR}/chromium-73-gcc-6.patch"
+)
+
 pre_build_checks() {
-	#if [[ ${MERGE_TYPE} != binary ]]; then
-	#	local -x CPP="$(tc-getCXX) -E"
-	#	if tc-is-clang && ! version_is_at_least "3.9.1" "$(clang-fullversion)"; then
-	#		# bugs: #601654
-	#		die "At least clang 3.9.1 is required"
-	#	fi
-	#	if tc-is-gcc && ! version_is_at_least 5.0 "$(gcc-version)"; then
-	#		# bugs: #535730, #525374, #518668, #600288, #627356
-	#		die "At least gcc 5.0 is required"
-	#	fi
-	#fi
+	if [[ ${MERGE_TYPE} != binary ]]; then
+		local -x CPP="$(tc-getCXX) -E"
+		if tc-is-gcc && ! ver_test "$(gcc-version)" -ge 8.0; then
+			die "At least gcc 8.0 is required"
+		fi
+	fi
 
 	# Check build requirements, bug #541816 and bug #471810 .
 	CHECKREQS_MEMORY="3G"
@@ -185,10 +189,9 @@ pkg_setup() {
 src_prepare() {
 	# Disable selected patches #
 	sed \
-		`# Already handled by chromium-webrtc-includes-r1.patch below` \
-		-e 's:add-missing-cstring-include:#add-missing-cstring-include:g' \
+		`# Already handled by Gentoo's GCC patches` \
+		-e 's:fix-sqrtf-missing-definition:#fix-sqrtf-missing-definition:g' \
 			-i "${WORKDIR}/debian/patches/series"
-
 	ubuntu-versionator_src_prepare
 
 	# Remove 'warning: "_FORTIFY_SOURCE" redefined' messages by ensuring gcc's built-in #
@@ -197,10 +200,6 @@ src_prepare() {
 		-i build/toolchain/gcc_toolchain.gni || die
 	# Calling this here supports resumption via FEATURES=keepwork
 	python_setup
-
-	pushd third_party/webrtc >/dev/null || die
-	eapply "${WORKDIR}"/chromium-webrtc-includes-r1.patch
-	popd >/dev/null || die
 
 	mkdir -p third_party/node/linux/node-linux-x64/bin || die
 	ln -s "${EPREFIX}"/usr/bin/node third_party/node/linux/node-linux-x64/bin/node || die
@@ -219,11 +218,9 @@ src_prepare() {
 		buildtools/third_party/libc++abi
 		chrome/third_party/mozilla_security_manager
 		courgette/third_party
-		net/third_party/http2
 		net/third_party/mozilla_security_manager
 		net/third_party/nss
 		net/third_party/quic
-		net/third_party/spdy
 		net/third_party/uri_template
 		third_party/abseil-cpp
 		third_party/angle
@@ -334,6 +331,7 @@ src_prepare() {
 		third_party/sfntly
 		third_party/simplejson
 		third_party/skia
+		third_party/skia/include/third_party/vulkan
 		third_party/skia/third_party/gif
 		third_party/skia/third_party/skcms
 		third_party/skia/third_party/vulkan
@@ -342,6 +340,7 @@ src_prepare() {
 		third_party/SPIRV-Tools
 		third_party/sqlite
 		third_party/swiftshader
+		third_party/swiftshader/third_party/llvm-7.0
 		third_party/swiftshader/third_party/llvm-subzero
 		third_party/swiftshader/third_party/subzero
 		third_party/unrar
@@ -361,6 +360,7 @@ src_prepare() {
 		third_party/woff2
 		third_party/zlib/google
 		url/third_party/mozilla
+		v8/src/third_party/siphash
 		v8/src/third_party/valgrind
 		v8/src/third_party/utf8-decoder
 		v8/third_party/inspector_protocol
