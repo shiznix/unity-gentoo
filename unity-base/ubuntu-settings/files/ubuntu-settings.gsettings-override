@@ -69,6 +69,7 @@ button-power = "interactive"
 button-sleep = "suspend"
 critical-battery-action = "suspend"
 power-button-action = "interactive"
+sleep-inactive-ac-timeout = 0
 
 [org.gnome.settings-daemon.plugins.xsettings]
 antialiasing = "rgba"
