@@ -3,15 +3,13 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit ubuntu-versionator
-
-UURL="mirror://unity/pool/main/u/${PN}"
 UVER=
 
 DESCRIPTION="Default audio theme for the Unity"
 HOMEPAGE="https://launchpad.net/ubuntu-sounds"
-SRC_URI="${UURL}/${MY_P}.tar.gz"
+SRC_URI="${UURL}/${MY_P}.tar.xz"
 
 LICENSE="CC-BY-NC-SA-2.0"
 KEYWORDS="~amd64 ~x86"

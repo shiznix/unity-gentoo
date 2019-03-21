@@ -3,15 +3,13 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="cosmic-updates"
 inherit gnome-meson ubuntu-versionator vala
-
-UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Simple backup tool using duplicity back-end"
 HOMEPAGE="https://launchpad.net/deja-dup/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"

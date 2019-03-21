@@ -4,10 +4,8 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit eutils gnome2-utils python-single-r1 ubuntu-versionator
-
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Monochrome icons for the Unity desktop (default icon theme)"
 HOMEPAGE="https://launchpad.net/ubuntu-themes"
@@ -27,8 +25,6 @@ DEPEND="${RDEPEND}
 	dev-util/intltool
 	sys-devel/gettext
 	virtual/pkgconfig"
-
-S="${WORKDIR}"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup

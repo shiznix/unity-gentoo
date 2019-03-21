@@ -65,6 +65,7 @@ gnome-base/librsvg::gentoo
 >=gnome-extra/zenity-3.28::gentoo
 >=mail-client/evolution-3.26::gentoo
 >=media-gfx/eog-3.26::gentoo
+media-fonts/cantarell::gentoo
 # >=media-libs/clutter-gtk-1.8.4::gentoo
 media-sound/paprefs::gentoo
 media-sound/pulseaudio::gentoo
@@ -92,9 +93,11 @@ media-plugins/grilo-plugins:0.3::gentoo
 # www-client/firefox related #
 dev-lang/rust::gentoo
 =dev-libs/nss-3.42*::gentoo
-~dev-util/cbindgen-0.6.7::gentoo
+dev-util/cbindgen::gentoo
+media-libs/dav1d::gentoo
+media-libs/libaom::gentoo
 media-libs/libvpx:0/5::gentoo
-~media-libs/libwebp-1.0.1::gentoo
+media-libs/libwebp::gentoo
 virtual/cargo::gentoo
 virtual/rust::gentoo
 
@@ -105,7 +108,7 @@ app-eselect/eselect-opengl
 app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
-dev-lang/spidermonkey:52
+dev-lang/spidermonkey:60
 dev-libs/capnproto
 dev-libs/folks
 =dev-libs/icu-59*
@@ -113,7 +116,6 @@ dev-libs/libdbusmenu-qt
 =dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
-~dev-util/cbindgen-0.6.6
 dev-util/gn
 dev-util/valgrind
 dev-python/python-prctl
