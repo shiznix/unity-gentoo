@@ -99,9 +99,6 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/unity-7.5.0_fix-missing-functional-includes.patch"
 	ubuntu-versionator_src_prepare
 
-	# Fix authentication failure when switching user sessions (LP #1733557) #
-	eapply "${FILESDIR}/authentication-failure-fix.patch"
-
 	# Fix build failure with >=media-libs/mesa-18.2.5 due to header conflicts with media-libs/glew (see https://github.com/shiznix/unity-gentoo/issues/205) #
 	pushd "${WORKDIR}/${GLEWMX}"
 		epatch -p1 "${FILESDIR}/glew-1.13.0-mesa-compat.patch"
