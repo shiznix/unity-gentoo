@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="cosmic"
-inherit autotools gnome-meson ubuntu-versionator
+inherit autotools meson ubuntu-versionator
 
 DESCRIPTION="Solus Project's Brisk Menu MATE Panel Applet"
 HOMEPAGE="https://github.com/solus-project/brisk-menu"
@@ -25,7 +25,7 @@ DEPEND="dev-libs/glib:2
 	x11-libs/gtk+:3"
 
 src_install() {
-	gnome-meson_src_install
+	meson_src_install
 	# Delete some files that are only useful on Ubuntu
 	rm -rf "${D}"etc/apport
 }

@@ -5,7 +5,7 @@ EAPI=6
 GNOME2_LA_PUNT="yes" # Needed with USE 'sendto'
 
 URELEASE="cosmic-updates"
-inherit eutils gnome-meson readme.gentoo-r1 virtualx ubuntu-versionator
+inherit eutils meson readme.gentoo-r1 virtualx ubuntu-versionator
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Nautilus"
@@ -77,12 +77,11 @@ src_prepare() {
 			To activate the previewer, select a file and press space; to
 			close the previewer, press space again."
 	fi
-	gnome-meson_src_prepare
 }
 
 src_configure() {
 	# FIXME no doc useflag??
-	gnome-meson_src_configure \
+	meson_src_configure \
 		-Denable-desktop=true \
 		-Denable-gtk-doc=true \
 		-Denable-profiling=false \
@@ -101,14 +100,14 @@ src_test() {
 
 src_install() {
 	use previewer && readme.gentoo_create_doc
-	gnome-meson_src_install
+	meson_src_install
 
 	insinto /usr/share/applications/
 	doins "${WORKDIR}"/debian/*.desktop
 }
 
 pkg_postinst() {
-	gnome-meson_pkg_postinst
+	meson_pkg_postinst
 
 	if use previewer; then
 		readme.gentoo_print_elog

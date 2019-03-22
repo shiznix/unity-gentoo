@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="cosmic-updates"
-inherit gnome-meson ubuntu-versionator vala
+inherit meson ubuntu-versionator vala
 
 DESCRIPTION="Simple backup tool using duplicity back-end"
 HOMEPAGE="https://launchpad.net/deja-dup/"
@@ -43,5 +43,4 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	rm -v Makefile	# Force Makefile recreation so that 'builddir is correct #
-	gnome-meson_src_prepare
 }
