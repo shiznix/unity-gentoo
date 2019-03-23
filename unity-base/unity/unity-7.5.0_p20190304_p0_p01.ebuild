@@ -265,11 +265,6 @@ src_install() {
 	sed -e "/nux\/unity_support_test/{s/lib/${fixlib}/}" \
 		-i "${ED}/usr/${fixlib}/unity/compiz-profile-selector" || die
 
-	# Fix conflict between ibus and indicator-keyboard #
-	#  default <Super+Space> now works to switch keyboard layouts #
-	insinto /usr/share/glib-2.0/schemas
-	doins "${FILESDIR}/10_ibus-unity-gentoo.gschema.override"
-
 	# Allow zeitgeist-fts to find KDE *.desktop files, so that KDE applications show in Dash 'Recently Used' (see LP# 1251915) #
 	#  (refer https://developer.gnome.org/gio/stable/gio-Desktop-file-based-GAppInfo.html#g-desktop-app-info-new)
 	#	This has the unwanted side effect of creating duplicate entries for KDE applications in the Search and Applications lense #

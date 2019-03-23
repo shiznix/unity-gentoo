@@ -1,8 +1,0 @@
-[org.freedesktop.ibus.general]
-use-system-keyboard-layout=true
-
-[org.freedesktop.ibus.general.hotkey]
-triggers=[]
-
-[org.freedesktop.ibus.panel]
-show-icon-on-systray=false
