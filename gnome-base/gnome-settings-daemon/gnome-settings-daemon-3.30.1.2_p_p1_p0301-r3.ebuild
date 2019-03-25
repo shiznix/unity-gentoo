@@ -104,6 +104,11 @@ pkg_setup() {
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
+	# Disable 'sleep-inactive-ac-timeout' by default so that LightDM doesn't suspend desktop PCs after '1200' seconds (20 mins) if no-one has logged in' #
+	# Is there a better way? LightDM doesn't seem to respect gschema.override files like a desktop login does #
+	sed -e 's:<default>1200</default>:<default>0</default>:' \
+		-i data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
+
 	# Taken from https://dev.gentoo.org/~leio/distfiles/ patchset #
 	eapply "${FILESDIR}/0003-build-Allow-udev-and-NM-optional-on-Linux.patch"
 	eapply "${FILESDIR}/0004-build-Make-colord-and-wacom-optional-and-controllabl.patch"

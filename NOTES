@@ -36,7 +36,10 @@ gnome-base/gnome-desktop		# Patched to sync user selected background to accounts
 gnome-base/gnome-extra-apps		# Included to pull in lower version of www-client/epiphany (higher version requires higher version of x11-libs/gtk+:3)
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
-gnome-base/gnome-settings-daemon	# unity-settings-daemon relies on files created from patchset, compiz at runtime needs 'terminal' key in 'org.gnome.settings-daemon.plugins.media-keys' schema
+gnome-base/gnome-settings-daemon	# unity-settings-daemon relies on files created from patchset
+					# compiz at runtime needs 'terminal' key in 'org.gnome.settings-daemon.plugins.media-keys' schema
+					# unity-greeter at runtime needs 'active' key in 'org.gnome.settings-daemon.plugins.housekeeping' schema
+
 gnome-base/gsettings-desktop-schemas	# Includes Unity desktop settings patches
 gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/activity-log-manager	# Adds unity-control-center integration
