@@ -1,0 +1,5 @@
+[com.canonical.unity-greeter:unity-greeter]
+logo = ''
+
+[org.gnome.desktop.interface:unity-greeter]
+icon-theme = "ubuntu-mono-dark"

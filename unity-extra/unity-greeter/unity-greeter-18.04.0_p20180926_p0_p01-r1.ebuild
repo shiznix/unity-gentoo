@@ -74,14 +74,22 @@ src_install() {
 	# due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
 
+	local \
+		gschema="10_unity-greeter.gschema.override" \
+		gschema_dir="/usr/share/glib-2.0/schemas"
+
+	insinto "${gschema_dir}"
+	newins "${FILESDIR}"/unity-greeter.gsettings-override \
+		"${gschema}"
+
 	# Branding #
 	insinto /usr/share/unity-greeter
 	newins "${FILESDIR}/gentoo_logo.png" logo.png
 	if use branding; then
 		newins "${FILESDIR}/gentoo_cof.png" cof.png # Gentoo logo for multi monitor usage #
-	else
-		insinto /usr/share/glib-2.0/schemas
-		doins "${FILESDIR}/50_unity-greeter.gschema.override"
+		sed -i \
+			-e "/com.canonical.unity-greeter:unity-greeter/,+2 d" \
+			"${ED}${gschema_dir}/${gschema}"
 	fi
 
 	# Install polkit privileges config #
