@@ -3,3 +3,8 @@ logo = ''
 
 [org.gnome.desktop.interface:unity-greeter]
 icon-theme = "ubuntu-mono-dark"
+
+[org.gnome.settings-daemon.plugins.power:unity-greeter]
+button-sleep = "suspend"
+critical-battery-action = "suspend"
+sleep-inactive-ac-timeout = 0
