@@ -50,15 +50,12 @@ src_install() {
 			"${ED}${gschema_dir}/${gschema}"
 	fi
 
-	if ! use ubuntu-sounds; then
-		sed -i \
-			-e "/org.gnome.desktop.sound/,+2 d" \
-			"${ED}${gschema_dir}/${gschema}"
-	fi
+	! use ubuntu-sounds && sed -i \
+		-e "/org.gnome.desktop.sound/,+2 d" \
+		"${ED}${gschema_dir}/${gschema}"
 
 	sed -i \
 		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${URELEASE/-*}.xml/}" \
-		-e "/\[org./{s/]/:Unity]/}" \
 		"${ED}${gschema_dir}/${gschema}"
 }
 
