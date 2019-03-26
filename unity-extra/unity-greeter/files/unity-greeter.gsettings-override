@@ -1,6 +1,8 @@
 [com.canonical.unity-greeter:unity-greeter]
 logo = ''
+play-ready-sound=false
 
+## nm-applet and indicator-keyboard icon theme ##
 [org.gnome.desktop.interface:unity-greeter]
 icon-theme = "ubuntu-mono-dark"
 
@@ -8,3 +10,7 @@ icon-theme = "ubuntu-mono-dark"
 button-sleep = "suspend"
 critical-battery-action = "suspend"
 sleep-inactive-ac-timeout = 0
+
+## libnotify font rendering (nm-applet notification) ##
+[org.gnome.settings-daemon.plugins.xsettings:unity-greeter]
+antialiasing = "rgba"

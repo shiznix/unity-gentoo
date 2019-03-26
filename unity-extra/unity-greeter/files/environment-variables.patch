@@ -3,11 +3,11 @@ From: c4pp4 <c4pp4@seznam.cz>
 Date: Mon, 25 Mar 2019 02:59:20 +0100
 Subject: [PATCH 1/1] Fix environment variables
 
-Set XDG_CURRENT_DESKTOP to use an icon theme according to gsettings
-override per session. Package unity-greeter-17.04.0-0ubuntu1 includes
-"Move indicator launching from upstart to systemd" and this change is
-causing the indicator-keyboard icon to not correspond with keyboard
-layout.
+Set XDG_CURRENT_DESKTOP environment variable to use an icon theme
+according to gsettings override per session. Import DISPLAY environment
+variable into the systemd manager environment block to show nm-applet
+notifications and fix keyboard layout to correspond with
+indicator-keyboard icon.
 
 Signed-off-by: c4pp4 <c4pp4@seznam.cz>
 ---
@@ -24,11 +24,11 @@ index a683836..81fcc22 100644
  
 +        try
 +        {
-+            Process.spawn_command_line_sync ("systemctl --user import-environment");
++            Process.spawn_command_line_sync ("systemctl --user import-environment DISPLAY");
 +        }
 +        catch (Error e)
 +        {
-+            warning ("Error importing environment variables: %s", e.message);
++            warning ("Error importing environment variable DISPLAY: %s", e.message);
 +        }
 +
 +        Environment.set_variable ("XDG_CURRENT_DESKTOP", "unity-greeter", false);

@@ -10,6 +10,7 @@
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
 	<use>
-		<flag name="battery">Build power state indicator for login screen</flag>
+		<flag name="battery">Use power state indicator for login screen</flag>
+		<flag name="sound">Use sound indicator for login screen</flag>
 	</use>
 </pkgmetadata>

@@ -16,7 +16,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-IUSE="accessibility battery +branding networkmanager nls"
+IUSE="accessibility +battery +branding +networkmanager nls +sound"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/libindicator
@@ -34,6 +34,7 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 			app-accessibility/orca )
 	battery? ( unity-indicators/indicator-power )
 	networkmanager? ( >=gnome-extra/nm-applet-0.9.8.0 )
+	sound? ( unity-indicators/indicator-sound )
 	>=app-eselect/eselect-lightdm-0.1
 	>=gnome-base/gsettings-desktop-schemas-3.8
 	media-fonts/ubuntu-font-family
@@ -41,7 +42,6 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 	unity-base/unity-language-pack
 	unity-indicators/indicator-session
 	unity-indicators/indicator-datetime
-	unity-indicators/indicator-sound
 	unity-indicators/indicator-application
 	x11-themes/ubuntu-wallpapers"
 
@@ -50,13 +50,33 @@ S="${WORKDIR}/${PN}"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# import environment variables before indicator-keyboard starts
-	#  (fix keyboard layout to correspond with indicator-keyboard icon)
+	# use icon theme according to gsettings override per session
+	# show nm-applet notification
+	# fix keyboard layout to correspond with indicator-keyboard icon
 	eapply "${FILESDIR}"/environment-variables.patch
 
 	# patch 'at-spi-bus-launcher' path
-	sed -i -e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
-                  "${S}"/src/unity-greeter.vala || die
+	sed -i \
+		-e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
+		"${S}"/src/unity-greeter.vala || die
+
+	! use battery && sed -i \
+		-e "s/ indicator-power//" \
+		src/unity-greeter.vala
+
+	! use networkmanager && sed -i \
+		-e "/command_line_async (\"nm-applet\")/d" \
+		src/unity-greeter.vala
+
+	if use sound; then
+		sed -i \
+			-e "s/\"system-ready\"/\"dialog-question\"/" \
+			src/unity-greeter.vala
+	else
+		sed -i \
+			-e "s/ indicator-sound//" \
+			src/unity-greeter.vala
+	fi
 
 	vala_src_prepare
 	append-cflags -Wno-error
@@ -88,9 +108,18 @@ src_install() {
 	if use branding; then
 		newins "${FILESDIR}/gentoo_cof.png" cof.png # Gentoo logo for multi monitor usage #
 		sed -i \
-			-e "/com.canonical.unity-greeter:unity-greeter/,+2 d" \
+			-e "/logo/d" \
 			"${ED}${gschema_dir}/${gschema}"
 	fi
+
+	use sound && sed -i \
+		-e "/play-ready-sound/d" \
+		"${ED}${gschema_dir}/${gschema}"
+
+	# Remove schema override if it's not used #
+	use sound && use branding && sed -i \
+		-e "/com.canonical.unity-greeter:unity-greeter/,+1 d" \
+		"${ED}${gschema_dir}/${gschema}"
 
 	# Install polkit privileges config #
 	insinto /var/lib/polkit-1/localauthority/10-vendor.d
