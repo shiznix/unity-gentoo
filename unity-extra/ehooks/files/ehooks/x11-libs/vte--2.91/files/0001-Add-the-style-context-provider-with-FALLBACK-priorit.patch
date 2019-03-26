@@ -8,15 +8,17 @@ on VteTerminal widgets. The other one is at FALLBACK priority and is for
 colours. This can be overridden by the theme.
 
 This reverts commit bd86e7637d89a55941674756e3e223c82aee2305.
+
+Bug-Upstream: https://bugzilla.gnome.org/show_bug.cgi?id=740123
 ---
  src/vtegtk.cc | 11 +++++++++++
  1 file changed, 11 insertions(+)
 
 diff --git a/src/vtegtk.cc b/src/vtegtk.cc
-index 516e042..fd3ea2b 100644
+index 89e3d7a..0e26909 100644
 --- a/src/vtegtk.cc
 +++ b/src/vtegtk.cc
-@@ -67,6 +67,7 @@
+@@ -68,6 +68,7 @@
  
  struct _VteTerminalClassPrivate {
          GtkStyleProvider *style_provider;
@@ -24,7 +26,7 @@ index 516e042..fd3ea2b 100644
  };
  
  #ifdef VTE_DEBUG
-@@ -382,6 +383,9 @@ vte_terminal_init(VteTerminal *terminal)
+@@ -394,6 +395,9 @@ vte_terminal_init(VteTerminal *terminal)
          context = gtk_widget_get_style_context(&terminal->widget);
          gtk_style_context_add_provider (context,
                                          VTE_TERMINAL_GET_CLASS (terminal)->priv->style_provider,
@@ -34,15 +36,15 @@ index 516e042..fd3ea2b 100644
                                          GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
  
  	/* Initialize private data. NOTE: place is zeroed */
-@@ -416,6 +420,7 @@ vte_terminal_get_property (GObject *object,
+@@ -442,6 +446,7 @@ vte_terminal_get_property (GObject *object,
                  case PROP_HADJUSTMENT:
-                         g_value_set_object (value, impl->m_hadjustment);
+                         g_value_set_object (value, widget->get_hadjustment());
                          break;
 +
                  case PROP_VADJUSTMENT:
-                         g_value_set_object (value, impl->m_vadjustment);
+                         g_value_set_object (value, widget->get_vadjustment());
                          break;
-@@ -1645,6 +1650,7 @@ vte_terminal_class_init(VteTerminalClass *klass)
+@@ -1669,6 +1674,7 @@ vte_terminal_class_init(VteTerminalClass *klass)
          klass->priv = G_TYPE_CLASS_GET_PRIVATE (klass, VTE_TYPE_TERMINAL, VteTerminalClassPrivate);
  
          klass->priv->style_provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
@@ -50,7 +52,7 @@ index 516e042..fd3ea2b 100644
          gtk_css_provider_load_from_data (GTK_CSS_PROVIDER (klass->priv->style_provider),
                                           "VteTerminal, " VTE_TERMINAL_CSS_NAME " {\n"
                                           "padding: 1px 1px 1px 1px;\n"
-@@ -1653,6 +1659,11 @@ vte_terminal_class_init(VteTerminalClass *klass)
+@@ -1677,6 +1683,11 @@ vte_terminal_class_init(VteTerminalClass *klass)
                                           "}\n",
                                           -1, NULL);
  
