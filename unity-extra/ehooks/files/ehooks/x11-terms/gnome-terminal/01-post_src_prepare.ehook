@@ -4,6 +4,7 @@ ebuild_hook() {
 	else
 		eapply "${EHOOK_FILESDIR}"
 
+		# Turn on 5% transparency by default #
 		sed -i \
 			-e "/use-transparent-background/{n;s/false/true/;}" \
 			-e "/background-transparency-percent/{n;s/0//;}" \
