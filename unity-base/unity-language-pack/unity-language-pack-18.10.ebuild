@@ -213,16 +213,10 @@ src_install() {
 	find "${S}" -type f \
 		! -name ${gcc_po} \
 		! -name ${ls_po} \
-		! -name 'activity-log-manager.po' \
-		! -name 'compiz.po' \
-		! -name 'ccsm.po' \
-		! -name 'hud.po' \
 		! -name 'indicator-*' \
 		! -name 'libdbusmenu.po' \
-		! -name 'onboard.po' \
 		! -name 'ubuntu-help.po' \
 		! -name 'unity*' \
-		! -name 'ureadahead.po' \
 			-delete || die
 	find "${S}" -mindepth 1 -type d -empty -delete || die
 
