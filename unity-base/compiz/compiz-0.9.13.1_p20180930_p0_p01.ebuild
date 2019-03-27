@@ -211,10 +211,6 @@ src_install() {
 		doexe "${FILESDIR}/compiz.reset"
 	popd &> /dev/null
 
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
-
 	# Setup gconf defaults #
 #	dodir /etc/gconf/2
 #	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path 2> /dev/null`" ]; then
