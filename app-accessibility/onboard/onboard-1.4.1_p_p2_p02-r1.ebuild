@@ -19,7 +19,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 # Let people emerge this by default, bug #472932
-IUSE+=" +python_single_target_python3_5 python_single_target_python3_6"
+IUSE+=" python_single_target_python3_5 +python_single_target_python3_6"
 RESTRICT="mirror"
 
 RDEPEND="app-accessibility/at-spi2-core
@@ -48,19 +48,10 @@ pkg_setup() {
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	distutils-r1_src_prepare
-
-	# If a .desktop file does not have inline translations, fall back #
-	#  to calling gettext #
-	find ${WORKDIR} -type f -name "*.desktop*" \
-		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
 }
 
 src_install() {
 	distutils-r1_src_install
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_preinst() {
