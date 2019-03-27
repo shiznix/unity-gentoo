@@ -149,8 +149,6 @@ src_prepare() {
 	#  to calling gettext #
 	find ${WORKDIR} -type f -name "unity*desktop.in.in" \
 		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
-	echo "X-GNOME-Gettext-Domain=language-selector" \
-		>> panels/langselector/language-selector.desktop.in.in
 
 	eautoreconf
 	gnome2_src_prepare
