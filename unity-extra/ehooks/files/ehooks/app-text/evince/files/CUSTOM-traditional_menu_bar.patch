@@ -146,7 +146,7 @@ Index: evince-3.22.1/shell/traditional-menus.ui
 ===================================================================
 --- /dev/null
 +++ evince-3.22.1/shell/traditional-menus.ui
-@@ -0,0 +1,234 @@
+@@ -0,0 +1,230 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<!--
 +  Copyright © 2014 Canonical Ltd.
@@ -186,12 +186,8 @@ Index: evince-3.22.1/shell/traditional-menus.ui
 +      <section>
 +        <item>
 +          <attribute name="label" translatable="yes">_Save a Copy…</attribute>
-+          <attribute name="action">win.save-copy</attribute>
++          <attribute name="action">win.save-as</attribute>
 +          <attribute name="accel">&lt;Ctrl&gt;S</attribute>
-+        </item>
-+        <item>
-+          <attribute name="label" translatable="yes">Send _To…</attribute>
-+          <attribute name="action">win.send-to</attribute>
 +        </item>
 +        <item>
 +          <attribute name="label" translatable="yes">Open Containing _Folder</attribute>
@@ -370,12 +366,12 @@ Index: evince-3.22.1/shell/traditional-menus.ui
 +        </item>
 +        <item>
 +          <attribute name="label" translatable="yes">_Help</attribute>
-+          <attribute name="action">app.help</attribute>
++          <attribute name="action">win.help</attribute>
 +          <attribute name="accel">F1</attribute>
 +        </item>
 +        <item>
 +          <attribute name="label" translatable="yes">_About</attribute>
-+          <attribute name="action">app.about</attribute>
++          <attribute name="action">win.about</attribute>
 +        </item>
 +      </section>
 +    </submenu>
