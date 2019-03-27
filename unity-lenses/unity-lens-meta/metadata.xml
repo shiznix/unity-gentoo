@@ -14,6 +14,7 @@
 		<flag name="files">Files/folders lens for the Dash</flag>
 		<flag name="music">Music collection lens for the Dash</flag>
 		<flag name="photos">Photo collection lens for the Dash</flag>
+		<flag name="plugins">Additional scopes for the Dash</flag>
 		<flag name="video">Online and local video collection lens for the Dash</flag>
 	</use>
 </pkgmetadata>
