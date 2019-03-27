@@ -1,14 +1,25 @@
-# Description: If a .desktop file does not have inline translations, fall back to calling gettext.
-## Description: add some description
-## Origin/Author: add some origin or author
-## Bug: bug URL
-# Ubuntu: https://launchpad.net/bugs/3935
-# Upstream: http://bugzilla.gnome.org/show_bug.cgi?id=569829
-Index: b/glib/gkeyfile.c
-===================================================================
+From: Debian GNOME Maintainers
+ <pkg-gnome-maintainers@lists.alioth.debian.org>
+Date: Wed, 13 Jun 2007 10:52:27 +0200
+Subject: If a .desktop file does not have inline translations,
+ fall back to calling gettext
+
+Patch from OpenSUSE via Ubuntu, original author unknown. Martin Pitt and
+Vincent Untz appear to be the main authors.
+
+Bug: https://bugzilla.gnome.org/show_bug.cgi?id=569829
+Bug-Ubuntu: https://launchpad.net/bugs/3935
+Applied-upstream: no, rejected because "this will be solved soon" (in 2013)
+---
+ glib/gkeyfile.c | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ glib/gkeyfile.h |  4 ++++
+ 2 files changed, 76 insertions(+)
+
+diff --git a/glib/gkeyfile.c b/glib/gkeyfile.c
+index ae3bbbc..f1475d7 100644
 --- a/glib/gkeyfile.c
 +++ b/glib/gkeyfile.c
-@@ -460,6 +460,7 @@
+@@ -511,6 +511,7 @@ struct _GKeyFile
    GKeyFileFlags flags;
  
    gchar **locales;
@@ -16,7 +27,7 @@ Index: b/glib/gkeyfile.c
  
    volatile gint ref_count;
  };
-@@ -584,6 +585,7 @@
+@@ -635,6 +636,7 @@ g_key_file_init (GKeyFile *key_file)
    key_file->list_separator = ';';
    key_file->flags = 0;
    key_file->locales = g_strdupv ((gchar **)g_get_language_names ());
@@ -24,7 +35,7 @@ Index: b/glib/gkeyfile.c
  }
  
  static void
-@@ -603,6 +605,12 @@
+@@ -654,6 +656,12 @@ g_key_file_clear (GKeyFile *key_file)
        key_file->parse_buffer = NULL;
      }
  
@@ -37,7 +48,7 @@ Index: b/glib/gkeyfile.c
    tmp = key_file->groups;
    while (tmp != NULL)
      {
-@@ -818,6 +826,11 @@
+@@ -873,6 +881,11 @@ g_key_file_load_from_fd (GKeyFile       *key_file,
        return FALSE;
      }
  
@@ -49,7 +60,7 @@ Index: b/glib/gkeyfile.c
    return TRUE;
  }
  
-@@ -923,6 +936,11 @@
+@@ -929,6 +942,11 @@ g_key_file_load_from_file (GKeyFile       *key_file,
        return FALSE;
      }
  
@@ -61,7 +72,7 @@ Index: b/glib/gkeyfile.c
    return TRUE;
  }
  
-@@ -2108,6 +2126,8 @@
+@@ -2208,6 +2226,8 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
    GError *key_file_error;
    gchar **languages;
    gboolean free_languages = FALSE;
@@ -70,7 +81,7 @@ Index: b/glib/gkeyfile.c
    gint i;
  
    g_return_val_if_fail (key_file != NULL, NULL);
-@@ -2129,6 +2149,24 @@
+@@ -2229,6 +2249,25 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
        free_languages = FALSE;
      }
    
@@ -85,7 +96,8 @@ Index: b/glib/gkeyfile.c
 +   * have some side-effects.  Since this is a corner case, let's ignore it. */
 +  msg_locale = setlocale (LC_MESSAGES, NULL);
 +  try_gettext = msg_locale && key_file->gettext_domain &&
-+                strcmp (group_name, G_KEY_FILE_DESKTOP_GROUP) == 0 &&
++                (strcmp (group_name, G_KEY_FILE_DESKTOP_GROUP) == 0 ||
++                 g_str_has_prefix (group_name, G_KEY_FILE_DESKTOP_ACTION_GROUP_PREFIX)) &&
 +                (strcmp (key, G_KEY_FILE_DESKTOP_KEY_NAME) == 0 ||
 +                 strcmp (key, G_KEY_FILE_DESKTOP_KEY_FULLNAME) == 0 ||
 +                 strcmp (key, G_KEY_FILE_DESKTOP_KEY_GENERIC_NAME) == 0 ||
@@ -95,7 +107,7 @@ Index: b/glib/gkeyfile.c
    for (i = 0; languages[i]; i++)
      {
        candidate_key = g_strdup_printf ("%s[%s]", key, languages[i]);
-@@ -2145,6 +2183,39 @@
+@@ -2245,6 +2284,39 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
        translated_value = NULL;
     }
  
@@ -135,11 +147,19 @@ Index: b/glib/gkeyfile.c
    /* Fallback to untranslated key
     */
    if (!translated_value)
-Index: b/glib/gkeyfile.h
-===================================================================
+diff --git a/glib/gkeyfile.h b/glib/gkeyfile.h
+index 7a10048..aef9113 100644
 --- a/glib/gkeyfile.h
 +++ b/glib/gkeyfile.h
-@@ -310,6 +310,9 @@
+@@ -298,6 +298,7 @@ gboolean  g_key_file_remove_group           (GKeyFile             *key_file,
+ 
+ /* Defines for handling freedesktop.org Desktop files */
+ #define G_KEY_FILE_DESKTOP_GROUP                "Desktop Entry"
++#define G_KEY_FILE_DESKTOP_ACTION_GROUP_PREFIX  "Desktop Action"
+ 
+ #define G_KEY_FILE_DESKTOP_KEY_TYPE             "Type"
+ #define G_KEY_FILE_DESKTOP_KEY_VERSION          "Version"
+@@ -320,6 +321,9 @@ gboolean  g_key_file_remove_group           (GKeyFile             *key_file,
  #define G_KEY_FILE_DESKTOP_KEY_URL              "URL"
  #define G_KEY_FILE_DESKTOP_KEY_DBUS_ACTIVATABLE "DBusActivatable"
  #define G_KEY_FILE_DESKTOP_KEY_ACTIONS          "Actions"
