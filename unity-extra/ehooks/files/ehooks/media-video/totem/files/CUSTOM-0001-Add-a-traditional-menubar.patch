@@ -20,7 +20,7 @@ Conflicts:
 ---
  data/totem.ui            |  164 --------------------------------------------
  po/POTFILES.in           |    3 
- src/Makefile.am          |    8 +-
+# src/Makefile.am          |    8 +-
  src/grilo.gresource.xml  |    5 +
  src/menus-appmenu.ui     |  109 +++++++++++++++++++++++++++++
  src/menus-common.ui      |   60 ++++++++++++++++
@@ -217,23 +217,23 @@ Conflicts:
  src/backend/bacon-time-label.c
  src/backend/bacon-video-widget.c
  src/backend/bacon-video-widget-gst-missing-plugins.c
---- a/src/Makefile.am
-+++ b/src/Makefile.am
-@@ -54,7 +54,13 @@ libtotem_player_la_CFLAGS =	\
- 
- # Totem main library (used for main player; separate to allow gtk-doc to be used)
- BUILT_SOURCES = griloresources.h griloresources.c
--EXTRA_DIST = grilo.gresource.xml totemmaintoolbar.ui totemselectiontoolbar.ui grilo.ui totem-grilo.conf
-+EXTRA_DIST = grilo.gresource.xml \
-+	     totemmaintoolbar.ui \
-+	     totemselectiontoolbar.ui \
-+	     grilo.ui totem-grilo.conf \
-+	     menus-appmenu.ui \
-+	     menus-traditional.ui \
-+	     menus-common.ui
- 
- griloresources.h: grilo.gresource.xml
- 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
+#--- a/src/Makefile.am
+#+++ b/src/Makefile.am
+#@@ -54,7 +54,13 @@ libtotem_player_la_CFLAGS =	\
+# 
+# # Totem main library (used for main player; separate to allow gtk-doc to be used)
+# BUILT_SOURCES = griloresources.h griloresources.c
+#-EXTRA_DIST = grilo.gresource.xml totemmaintoolbar.ui totemselectiontoolbar.ui grilo.ui totem-grilo.conf
+#+EXTRA_DIST = grilo.gresource.xml \
+#+	     totemmaintoolbar.ui \
+#+	     totemselectiontoolbar.ui \
+#+	     grilo.ui totem-grilo.conf \
+#+	     menus-appmenu.ui \
+#+	     menus-traditional.ui \
+#+	     menus-common.ui
+# 
+# griloresources.h: grilo.gresource.xml
+# 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
 --- a/src/grilo.gresource.xml
 +++ b/src/grilo.gresource.xml
 @@ -6,4 +6,9 @@
@@ -591,7 +591,7 @@ Conflicts:
 +          <attribute name="action">app.shortcuts</attribute>
 +        </item>
 +        <item>
-+          <attribute name="label" translatable="yes">_Contents</attribute>
++          <attribute name="label" translatable="yes">_Help</attribute>
 +          <attribute name="action">app.help</attribute>
 +          <attribute name="accel">F1</attribute>
 +        </item>

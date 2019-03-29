@@ -1,5 +1,5 @@
 ebuild_hook() {
-	unpack "${EHOOK_FILESDIR}"/languages-global-menu-artful.tar.xz
+	unpack "${EHOOK_FILESDIR}"/languages-global-menu-xenial.tar.xz
 
 	echo " * Merging available languages..."
 
@@ -13,7 +13,6 @@ ebuild_hook() {
 			sed -i -e '/msgid \"\"/,/^$/d' "${po_ext}"
 			cat "${po_ext}" >> "${po_orig}"
 			msguniq --use-first -o "${po_orig}" "${po_orig}"
-			msgfmt -o "${po_orig/.po/.gmo}" "${po_orig}"
 		fi
 	done
 }

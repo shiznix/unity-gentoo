@@ -1,2 +1,3 @@
-Add a traditional menu bar. https://bugzilla.gnome.org/749976 https://bugs.debian.org/793445
-Require unity-base/unity-meta[nocsd]
+! Requires unity-base/unity-meta[nocsd]
+Add traditional menu bar. https://bugzilla.gnome.org/749976 https://bugs.debian.org/793445
+Add menu translations.
