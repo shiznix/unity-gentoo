@@ -27,7 +27,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	!!x11-libs/libcompizconfig
 	!!x11-plugins/compiz-plugins-main
 	dev-libs/boost:=[${PYTHON_USEDEP}]
-	dev-libs/glib:2[${PYTHON_USEDEP}]
+	dev-libs/glib:2
 	dev-cpp/glibmm
 	dev-libs/libxml2[${PYTHON_USEDEP}]
 	dev-libs/libxslt[${PYTHON_USEDEP}]
