@@ -67,7 +67,6 @@ src_prepare() {
 src_configure() {
 	mycmakeargs+=( -DENABLE_TESTS="$(usex test)"
 			-DENABLE_DOCUMENTATION="$(usex doc)"
-			-DENABLE_MEMCHECK_OPTION=ON
 			-DENABLE_BAMF=ON
 			-DVALA_COMPILER=$(type -P valac-${VALA_MIN_API_VERSION})
 			-DVAPI_GEN=$(type -P vapigen-${VALA_MIN_API_VERSION})
