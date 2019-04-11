@@ -1,7 +1,7 @@
-Ebuild hooks in /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks
-are always applied.
-Ebuild hooks in /etc/portage/ehooks are provided by unity-extra/ehooks
-and managed by app-eselect/eselect-ehooks.
+* Ebuild hooks in /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks
+	are always applied.
+* Ebuild hooks in /etc/portage/ehooks are provided by 'unity-extra/ehooks'
+	and managed via 'app-eselect/eselect-ehooks'.
 
 Basedir search order:
 	1) /var/lib/layman/unity-gentoo/profiles/${PROFILE_RELEASE}/ehooks
@@ -12,25 +12,25 @@ e.g. package app-arch/file-roller-3.22.3
 	1) ${basedir}/app-arch/file-roller-3.22.3-r0
 	2) ${basedir}/app-arch/file-roller-3.22.3
 	3) ${basedir}/app-arch/file-roller-3.22
-	3) ${basedir}/app-arch/file-roller-3
-	4) ${basedir}/app-arch/file-roller
+	4) ${basedir}/app-arch/file-roller-3
+	5) ${basedir}/app-arch/file-roller
 	- all of the above may be optionally followed by a slot:
 		${basedir}/app-arch/file-roller-3.22.3-r0:0
 		${basedir}/app-arch/file-roller-3.22:0
 		${basedir}/app-arch/file-roller:0
-	- empty pkgdir excludes package
+	- empty pkgdir EXCLUDES package
 
 File format to trigger ebuild hook:
 	{pre,post}_${EBUILD_PHASE_FUNC}.ehook
-	1) pre_pkg_setup.ehook
-	2) post_pkg_setup.ehook
-	3) pre_src_unpack.ehook
-	4) post_src_unpack.ehook
-	5) pre_src_prepare.ehook
-	6) post_src_prepare.ehook
-	7) pre_src_configure.ehook
-	8) post_src_configure.ehook
-	9) pre_src_compile.ehook
+	1)  pre_pkg_setup.ehook
+	2)  post_pkg_setup.ehook
+	3)  pre_src_unpack.ehook
+	4)  post_src_unpack.ehook
+	5)  pre_src_prepare.ehook
+	6)  post_src_prepare.ehook
+	7)  pre_src_configure.ehook
+	8)  post_src_configure.ehook
+	9)  pre_src_compile.ehook
 	10) post_src_compile.ehook
 	11) pre_src_install.ehook
 	12) post_src_install.ehook
@@ -38,7 +38,7 @@ File format to trigger ebuild hook:
 	14) post_pkg_preinst.ehook
 	15) pre_pkg_postinst.ehook
 	16) post_pkg_postinst.ehook
-	- it's possible to use filename prefix and sort it:
+	- it's possible to use filename prefix and sort it for better overview:
 		[...]pre_src_prepare.ehook
 		01_pre_src_prepare.ehook
 		aa-pre_src_prepare.ehook

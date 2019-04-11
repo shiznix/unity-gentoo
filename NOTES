@@ -45,6 +45,7 @@ gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/activity-log-manager	# Adds unity-control-center integration
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
+gnome-extra/zeitgeist			# Removed from main tree, patched to perform VACUUM SQLite database on startups every 10 days and to pre-populate the log with some events so that the dash isn't empty on first run
 media-gfx/shotwell			# Patched for integration with Unity online accounts
 media-sound/banshee			# Patched/compiled for indicator-sound support, Meego UI and other Ubuntu UI improvements
 media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu quicklist, Magnatune and other Ubuntu UI improvements
@@ -61,31 +62,32 @@ x11-wm/metacity				# Patched to support compiz window decoration
 
 * Reasons for maintaining ehooks:
 app-accessibility/at-spi2-core		# Start 'accessibility bus' by default (https://wiki.debian.org/accessibility-devel)
-app-i18n/ibus				# Don't show notification if not upgrading from a previous version (LP #1255542)
+app-admin/system-config-printer		# Fix Unity Control Center icon and About dialog icon
+dev-lang/mono-4.4			# Fix as it's not able to build with current stable dev-libs/glibc versions
+dev-lang/mono-4.8			# Fix media-sound/banshee not launching on dev-lang/mono-4.8
 mail-client/thunderbird			# Add Unity menubar and desktop launcher with quicklist and translations
 mate-base/mate-desktop			# Add gschema keys to support Global Menu (LP #1675956)
 mate-base/mate-panel			# Disable not working high dpi scaling and prevent menu-bar being hidden when Global Menus are enabled
 media-fonts/ubuntu-font-family		# Add Ubuntu medium font (e.g. used by unity-indicators/indicator-keyboard)
-media-sound/pulseaudio			# Disable flat volume (LP #1424195)
 net-irc/quassel				# Fix notification icon not appearing in Unity
 sys-auth/polkit-pkla-compat		# Fix localstatedir path (/var/lib)
 www-client/firefox			# Add Unity menubar and desktop launcher with quicklist and translations
 www-client/firefox-60			# Extended Support Release. Add Unity menubar and desktop launcher with quicklist and translations
 
 * Optional ehooks provided by 'unity-extra/ehooks' and managed via 'eselect ehooks':
-app-arch/file-roller			# Don't use GtkHeaderBar in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=739596)
-app-editors/gedit			# Don't use GtkHeaderBar decorations under Unity (https://bugzilla.gnome.org/show_bug.cgi?id=762332)
 app-office/libreoffice			# Add Human icon theme and make it the default, add custom icons (savemodified_{large,small}.png)
-app-text/evince				# Add traditional menu bar (https://bugzilla.gnome.org/show_bug.cgi?id=736419), use GtkHeaderBar as decoration only under gnome-shell (https://bugzilla.gnome.org/show_bug.cgi?id=736420)
-gnome-extra/gnome-calculator		# Don't use HeaderBars in Unity (https://bugzilla.gnome.org/show_bug.cgi?id=712831)
-media-gfx/eog				# Add a traditional menu bar (https://bugzilla.gnome.org/749976, https://bugs.debian.org/793445), show traditional title bar in Unity
+app-text/evince				# Add traditional menu bar (https://bugzilla.gnome.org/show_bug.cgi?id=736419), add menu translations
+media-gfx/eog				# Add traditional menu bar (https://bugzilla.gnome.org/749976, https://bugs.debian.org/793445), add menu translations
 media-gfx/gnome-screenshot		# Use Ubuntu help instead of GNOME help, don't use GtkHeaderBar, show the save dialog by default, don't try and use the GNOME Shell D-Bus interface, add quicklist area-shot option
 media-sound/audacity			# Fix exec command to use Unity menubar properly
-media-video/totem			# Add a traditional menubar (https://bugzilla.gnome.org/show_bug.cgi?id=749695), use traditional headerbar
+media-video/totem			# Add traditional menubar (https://bugzilla.gnome.org/show_bug.cgi?id=749695)
 net-im/pidgin				# Add chat section into messaging menu (Available, Away, Busy, Invisible, Offline)
-x11-libs/vte:2.91			# Add the style context provider with FALLBACK priority, NOTE: use along with x11-terms/gnome-terminal ehook
+x11-libs/vte:2.91			# Add the style context provider with FALLBACK priority
+					# NOTE: use along with x11-terms/gnome-terminal ehook
+
 x11-misc/zim				# Install Ubuntu theme (/usr/share/icons/ubuntu-mono-{dark,light})
-x11-terms/gnome-terminal		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, LP #1493964), NOTE: enable x11-libs/vte ehook as well to use theme background color
+x11-terms/gnome-terminal		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, LP #1493964)
+					# NOTE: enable x11-libs/vte ehook as well to use theme background color
 
 * By design, some indicators or their features will not appear until they meet certain criteria
 	- indicator-messages	# Won't appear until a messaging type application is run first (eg. empathy, evolution (via indicator-evolution), pidgin, webapp)
