@@ -1,0 +1,14 @@
+Description: Never default to using the custom title bar. Chromium should
+  integrate, not be a special little snowflake.
+
+--- a/ui/base/x/x11_util.cc
++++ b/ui/base/x/x11_util.cc
+@@ -963,6 +963,8 @@ bool HasWMSpecProperty(const base::flat_
+ }
+ 
+ bool GetCustomFramePrefDefault() {
++  return false;
++
+   // If the window manager doesn't support enough of EWMH to tell us its name,
+   // assume that it doesn't want custom frames. For example, _NET_WM_MOVERESIZE
+   // is needed for frame-drag-initiated window movement.

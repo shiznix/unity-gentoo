@@ -1,0 +1,3 @@
+ebuild_hook() {
+	domenu "${EHOOK_FILESDIR}/chromium-browser-chromium.desktop"
+}
