@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="cosmic"
-inherit cmake-utils gnome2-utils ubuntu-versionator
+inherit cmake-utils gnome2-utils ubuntu-versionator xdg-utils
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"
 
@@ -60,6 +60,8 @@ src_prepare() {
 src_install() {
 	cmake-utils_src_install
 
+	use help && domenu "${FILESDIR}/unity-yelp.desktop"
+
 	# Remove all installed language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	rm -rf "${ED}usr/share/locale"
@@ -73,9 +75,12 @@ pkg_preinst() {
 pkg_postinst() {
 	gnome2_schemas_update
 	gnome2_icon_cache_update
+	xdg_desktop_database_update
+	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {
 	gnome2_schemas_update
 	gnome2_icon_cache_update
+	xdg_desktop_database_update
 }

@@ -178,7 +178,7 @@ src_unpack() {
 
 src_install() {
 	# langselector panel msgids
-	local -a msgids=(
+	local -a ls_msgids=(
 		"Language Support"
 		"Configure multiple and native language support on your system"
 		"Login _Screen"
@@ -203,11 +203,19 @@ src_install() {
 		"No regions found"
 	)
 
+	# Unity help desktop launcher msgids
+	local -a is_msgids=(
+		"Unity Help"
+		"Get help with Unity"
+	)
+
 	local \
-		pofile msgid gcc_src ls_src \
+		pofile msgid gcc_src ls_src ylp_src \
 		ucc_po="unity-control-center.po" \
 		gcc_po="gnome-control-center-2.0.po" \
-		ls_po="language-selector.po"
+		ls_po="language-selector.po" \
+		is_po="indicator-session.po" \
+		ylp_po="yelp.po"
 
 	# Remove all translations except those we need
 	find "${S}" -type f \
@@ -217,6 +225,7 @@ src_install() {
 		! -name 'libdbusmenu.po' \
 		! -name 'ubuntu-help.po' \
 		! -name 'unity*' \
+		! -name ${ylp_po} \
 			-delete || die
 	find "${S}" -mindepth 1 -type d -empty -delete || die
 
@@ -224,13 +233,14 @@ src_install() {
 		find "${S}" -type f -name "*.po" \
 			! -name "${gcc_po}" \
 			! -name "${ls_po}" \
+			! -name "${ylp_po}" \
 	); do
 		# Add translations for langselector panel
 		if [[ ${pofile##*/} == ${ucc_po} ]]; then
 			gcc_src=${pofile/${ucc_po}/${gcc_po}}
 			ls_src=${pofile/${ucc_po}/${ls_po}}
 			ls_src=${ls_src/gnome-}
-			for msgid in "${msgids[@]}"; do
+			for msgid in "${ls_msgids[@]}"; do
 				if ! grep -q "^\(msgid\|msgctxt\)\s\"${msgid}\"$" "${pofile}"; then
 					echo "$(awk "/^(msgid|msgctxt)\s\"${msgid}\"\$/ { p = 1 } p { print } /^\$/ { p = 0 }" "${gcc_src}" "${ls_src}" 2>/dev/null)" \
 						>> "${pofile}"
@@ -239,9 +249,25 @@ src_install() {
 			rm "${gcc_src}" "${ls_src}" 2>/dev/null
 		fi
 
+		# Add translations for Unity help desktop launcher
+		if [[ ${pofile##*/} == ${is_po} ]]; then
+			ylp_src=${pofile/${is_po}/${ylp_po}}
+			for msgid in "${is_msgids[@]}"; do
+				sed -i \
+					-e "s/GNOME/Unity/g" \
+					"${ylp_src}"
+				if ! grep -q "^\(msgid\|msgctxt\)\s\"${msgid}\"$" "${pofile}"; then
+					echo "$(awk "/^(msgid|msgctxt)\s\"${msgid}\"\$/ { p = 1 } p { print } /^\$/ { p = 0 }" "${ylp_src}" 2>/dev/null)" \
+						>> "${pofile}"
+				fi
+			done
+			rm "${ylp_src}" 2>/dev/null
+		fi
+
 		msgfmt -o "${pofile%.po}.mo" "${pofile}"
 		rm "${pofile}"
 	done
+
 	insinto /usr/share/locale
 	doins -r "${S}"/language-pack-*-base/data/*
 }

@@ -63,6 +63,7 @@ src_prepare() {
 	# Fix pre-populator
 	sed -i \
 		-e "s/gcalctool/org.gnome.Calculator/" \
+		-e "s/yelp/unity-yelp/" \
 		"${WORKDIR}/debian/patches/pre_populator.patch" || die
 
 	ubuntu-versionator_src_prepare
