@@ -51,11 +51,9 @@ media-sound/banshee			# Patched/compiled for indicator-sound support, Meego UI a
 media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu quicklist, Magnatune and other Ubuntu UI improvements
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 net-im/telepathy-mission-control	# Enables Ubuntu libaccounts-sso integration
-net-libs/gnome-online-accounts		# Allow access to Gnome Online Accounts (GOA) via Ubuntu Online Accounts (UOA)
 net-libs/libsoup			# Portage tree version forces '--without-gnome' and has removed net-libs/libsoup-gnome which provided '--with-gnome'
 sys-apps/accountsservice		# Requires patching for SetInputSources as needed by unity-indicators/indicator-keyboard and u-c-c text entry settings
 sys-kernel/ubuntu-sources		# Patched with Ubuntu's complete kernel patchset to add support for sys-apps/ureadahead
-www-client/chromium			# Required to support Unity Launcher icon effects (no duplicate icons, quicklist menu, progress bar, window title bar fixes etc.)
 x11-libs/gtk+				# Needed for global appmenu
 x11-misc/lightdm			# Custom fixes for Xsession profile sourcing and multi-monitor display
 x11-wm/metacity				# Patched to support compiz window decoration

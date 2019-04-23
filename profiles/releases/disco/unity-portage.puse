@@ -60,7 +60,6 @@ media-video/ffmpeg opus
 net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
 net-libs/libgadu gnutls
 net-libs/libproxy -kde
-net-libs/gnome-online-accounts uoa
 #net-misc/iputils -arping
 net-misc/openssh -bindist
 net-wireless/bluez user-session

@@ -75,7 +75,6 @@ gnome-extra/polkit-gnome::gentoo
 media-gfx/shotwell::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
-net-libs/gnome-online-accounts::gentoo
 net-libs/libsoup::gentoo
 sys-apps/accountsservice::gentoo
 sys-libs/libnih::gentoo

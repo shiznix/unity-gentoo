@@ -205,7 +205,6 @@ media-video/cheese **
 net-im/empathy **
 net-im/telepathy-mission-control **
 net-libs/geonames **
-net-libs/gnome-online-accounts **
 net-libs/telepathy-indicator **
 sys-apps/accountsservice **
 sys-apps/upstart **
@@ -258,8 +257,6 @@ unity-lenses/unity-lens-music **
 unity-lenses/unity-lens-photos **
 unity-lenses/unity-lens-video **
 unity-scopes/unity-scope-home **
-www-client/webbrowser-app **
-www-client/firefox **
 x11-libs/content-hub **
 x11-libs/dee-qt **
 x11-libs/gsettings-qt **
