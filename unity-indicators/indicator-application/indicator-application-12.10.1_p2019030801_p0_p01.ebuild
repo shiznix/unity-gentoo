@@ -3,10 +3,10 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="cosmic-updates"
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
-UVER_PREFIX="+17.04.${PVR_MICRO}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Application indicators used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-application"
