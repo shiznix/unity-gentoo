@@ -170,6 +170,9 @@ src_prepare() {
 	# Fix build error: ‘std::vector’ has not been declared #
 	epatch -p1 "${FILESDIR}/unity-7.5.0_fix-missing-vector-includes.diff"
 
+	# Don't use drop-down menu icon from Adwaita theme as it's too dark since v3.30 #
+	sed -i "s/go-down-symbolic/drop-down-symbolic/" decorations/DecorationsMenuDropdown.cpp
+
 	cmake-utils_src_prepare
 }
 
