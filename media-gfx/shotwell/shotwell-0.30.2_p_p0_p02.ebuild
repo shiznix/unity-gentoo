@@ -4,7 +4,7 @@
 EAPI=6
 VALA_MIN_API_VERSION="0.40"
 
-URELEASE="cosmic-updates"
+URELEASE="disco"
 inherit gnome.org gnome2-utils meson vala xdg ubuntu-versionator
 
 DESCRIPTION="Open source photo manager for GNOME"
@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="opencv udev"
 
 COMMON_DEPEND="

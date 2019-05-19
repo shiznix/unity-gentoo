@@ -3,15 +3,17 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco-updates"
 inherit gnome2-utils
+
+UVER=
 
 DESCRIPTION="Default settings for the Unity"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/ubuntu-settings"
 SRC_URI=""
 
 LICENSE="GPL-2+"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+ubuntu-cursor +ubuntu-sounds"
 
