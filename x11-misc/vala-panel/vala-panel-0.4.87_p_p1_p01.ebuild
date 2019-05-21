@@ -9,7 +9,7 @@ URELEASE="disco"
 inherit cmake-utils eutils gnome2-utils ubuntu-versionator vala
 
 UVER="+dfsg1"
-UVER_SUFFIX="-${PVR_PL_MINOR}"
+UVER_SUFFIX="-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 
 # vala-panel needs 'cmake/FallbackVersion.cmake' to build but this is provided by vala-panel-appmenu #
 #  thus creating a circular dependency, so copy it from the vala-panel-appmenu tarball #
