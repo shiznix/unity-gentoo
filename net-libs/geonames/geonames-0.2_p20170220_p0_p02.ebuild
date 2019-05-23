@@ -21,7 +21,7 @@ RESTRICT="mirror"
 DEPEND="dev-libs/glib:2
 	dev-util/gtk-doc"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

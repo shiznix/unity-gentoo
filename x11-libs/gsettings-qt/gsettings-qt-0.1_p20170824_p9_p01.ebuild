@@ -21,11 +21,7 @@ SLOT="0"
 IUSE="test"
 RESTRICT="mirror"
 
-## Previous installed version of x11-libs/gsettings-qt will cause build failure ##
-#	/usr/lib64/qt5/bin/qmlplugindump: relocation error: /usr/lib64/qt5/qml/GSettings.1.0/libGSettingsQmlPlugin.so:
-#		symbol _ZN15QQmlPropertyMap15allocatePrivateEv version Qt_5 not defined in file libQt5Qml.so.5 with link time reference
-DEPEND="!!<x11-libs/gsettings-qt-${MY_PV}
-	dev-libs/glib:2
+DEPEND="dev-libs/glib:2
 	dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5
 	test? ( dev-qt/qttest:5 )"

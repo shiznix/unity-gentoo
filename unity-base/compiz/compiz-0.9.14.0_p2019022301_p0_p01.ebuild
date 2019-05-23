@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
+#PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{3_5,3_6} )
 
 URELEASE="disco"
 inherit gnome2-utils cmake-utils eutils python-r1 ubuntu-versionator xdummy
@@ -19,7 +20,7 @@ SLOT="0/${PV}"
 IUSE="+debug test"
 RESTRICT="mirror"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${PN}"
 
 COMMONDEPEND="!!x11-wm/compiz
 	!!x11-libs/compiz-bcop
@@ -75,16 +76,15 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/xvinfo"
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}${UVER_SUFFIX}.diff"        # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 
 	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
 	#	(the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
 	# Workaround by changing into a re-defined "${S}" #
-	mkdir "${WORKDIR}/${P}"
-	mv "${WORKDIR}"/* "${WORKDIR}/${P}" &> /dev/null
-	export S="${WORKDIR}/${P}"
-	cd "${S}"
+#	mkdir "${WORKDIR}/${P}"
+#	mv "${WORKDIR}"/* "${WORKDIR}/${P}" &> /dev/null
+#	export S="${WORKDIR}/${P}"
+#	cd "${S}"
 
 	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
 	sed -e 's:xubuntu:xunity:g' \
@@ -101,6 +101,10 @@ src_prepare() {
 	# Disable -Werror #
 	sed -e 's:-Werror::g' \
 		-i cmake/CompizCommon.cmake || die
+
+	# Gentoo 'cython3' binary is called 'cython' #
+	sed -e 's:cython3:cython:g' \
+		-i compizconfig/compizconfig-python/CMakeLists.txt || die
 
 	# Need to do a 'python_foreach_impl' run from python-r1 eclass to workaround corrupt generated python shebang for /usr/bin/ccsm #
 	#  Due to the way CMake invokes distutils setup.py, shebang will be inherited from the sandbox leading to runtime failure #
@@ -140,8 +144,6 @@ src_compile() {
 	# Disable unitymtgrabhandles plugin #
 	sed -e "s:unitymtgrabhandles;::g" \
 		-i "${CMAKE_USE_DIR}"/debian/unity{,-lowgfx}.ini
-#	sed -e "s:unitymtgrabhandles,::g" \
-#		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gconf-defaults"
 	sed -e "s:'unitymtgrabhandles',::g" \
 		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gsettings-override"
 
@@ -182,21 +184,20 @@ src_install() {
 		exeinto /etc/X11/xinit/xinitrc.d/
 		doexe debian/65compiz_profile-on-session
 
+## PROVIDED BY unity-base/unity ##
 		# Unity Compiz profile configuration file #
-		insinto /etc/compizconfig
-		newins debian/compizconfig config
-		doins debian/unity.ini
-		doins debian/unity-lowgfx.ini
+#		insinto /etc/compizconfig
+#		newins debian/compizconfig config
+#		doins debian/unity.ini
+#		doins debian/unity-lowgfx.ini
 
 		# Compiz profile upgrade helper files for ensuring smooth upgrades from older configuration files #
-		insinto /etc/compizconfig/upgrades/
-		doins debian/profile_upgrades/*.upgrade
+#		insinto /etc/compizconfig/upgrades/
+#		doins debian/profile_upgrades/*.upgrade
+##################################
+
 		insinto /usr/lib/compiz/migration/
 		doins postinst/convert-files/*.convert
-
-#		# Default GConf settings #
-#		insinto /usr/share/gconf/defaults
-#		newins debian/compiz-gnome.gconf-defaults 10_compiz-gnome
 
 		# Default GSettings settings #
 		insinto /usr/share/glib-2.0/schemas
@@ -206,16 +207,6 @@ src_install() {
 		exeinto /usr/bin
 		doexe "${FILESDIR}/compiz.reset"
 	popd &> /dev/null
-
-	# Setup gconf defaults #
-#	dodir /etc/gconf/2
-#	if [ -z "`grep gconf.xml.unity /etc/gconf/2/local-defaults.path 2> /dev/null`" ]; then
-#		echo "/etc/gconf/gconf.xml.unity" >> ${D}etc/gconf/2/local-defaults.path
-#	fi
-#	dodir /etc/gconf/gconf.xml.unity 2> /dev/null
-#	/usr/bin/update-gconf-defaults \
-#		--source="${ED}usr/share/gconf/defaults" \
-#			--destination="${ED}etc/gconf/gconf.xml.unity" || die
 }
 
 pkg_preinst() {

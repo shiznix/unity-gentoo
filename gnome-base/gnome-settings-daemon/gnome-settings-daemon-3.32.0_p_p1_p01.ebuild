@@ -15,12 +15,11 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+colord +cups debug elogind input_devices_wacom +networkmanager policykit smartcard systemd test +udev wayland"
+IUSE="+colord +cups debug kernel_linux +networkmanager policykit -smartcard test +udev wayland"
 #KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="
-        ^^ ( elogind systemd )
-        input_devices_wacom? ( udev )
-        wayland? ( udev )
+	udev
+	kernel_linux? ( networkmanager )
 "
 RESTRICT="mirror"
 
@@ -53,61 +52,54 @@ COMMON_DEPEND="
 	>=dev-libs/libgweather-3.9.5:2=
 	>=sci-geosciences/geocode-glib-3.10
 	>=sys-auth/polkit-0.114
-	colord? (
-		>=x11-misc/colord-1.0.2:=
-		>=media-libs/lcms-2.2:2 )
+
+	>=media-libs/lcms-2.2:2
+	>=x11-misc/colord-1.0.2:=
 	cups? ( >=net-print/cups-1.4[dbus] )
+	>=dev-libs/libwacom-0.7
+	>=x11-libs/pango-1.20
+	x11-drivers/xf86-input-wacom
 	virtual/libgudev:=
-	input_devices_wacom? ( >=dev-libs/libwacom-0.7
-		>=x11-libs/pango-1.20.0
-		x11-drivers/xf86-input-wacom )
 	networkmanager? ( >=net-misc/networkmanager-1.0 )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
 	udev? ( virtual/libgudev:= )
 	wayland? ( dev-libs/wayland )
 "
-# logind needed for power and session management, bug #464944
-# gnome-session-3.27.90 and gdm-3.27.9 adapt to A11yKeyboard component removal (moved to shell dealing with it)
+
+# Themes needed by g-s-d, gnome-shell, gtk+:3 apps to work properly
+# <gnome-color-manager-3.1.1 has file collisions with g-s-d-3.1.x
+# <gnome-power-manager-3.1.3 has file collisions with g-s-d-3.1.x
+# systemd needed for power and session management, bug #464944
 RDEPEND="${COMMON_DEPEND}
 	gnome-base/dconf
-	elogind? ( sys-auth/elogind )
-	systemd? ( sys-apps/systemd )
 	!<gnome-base/gnome-session-3.27.90
 	!<gnome-base/gdm-3.27.90
 "
-# rfkill requires linux/rfkill.h, thus linux-headers dep, not os-headers. If this package wants to work on other kernels, we need to make rfkill conditional instead
+
+# xproto-7.0.15 needed for power plugin
+# FIXME: tests require dbus-mock
 DEPEND="${COMMON_DEPEND}
 	sys-kernel/linux-headers
 	dev-util/glib-utils
 	dev-util/gdbus-codegen
 	x11-base/xorg-proto
-	${PYTHON_DEPS}
+	cups? ( sys-apps/sed )
 	test? (
+		${PYTHON_DEPS}
 		$(python_gen_any_dep 'dev-python/pygobject:3[${PYTHON_USEDEP}]')
-		$(python_gen_any_dep 'dev-python/dbusmock[${PYTHON_USEDEP}]')
 		gnome-base/gnome-session )
 	>=sys-devel/gettext-0.19.8
+	app-text/docbook-xsl-stylesheets
+	dev-libs/libxml2:2
+	dev-libs/libxslt
+	sys-devel/gettext
+	>=dev-util/intltool-0.40
 	virtual/pkgconfig
+	x11-base/xorg-proto
 "
-
-python_check_deps() {
-	if use test; then
-		has_version "dev-python/pygobject:3[${PYTHON_USEDEP}]" &&
-		has_version "dev-python/dbusmock[${PYTHON_USEDEP}]"
-	fi
-}
-
-pkg_setup() {
-	python-any-r1_pkg_setup
-}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-
-	# Taken from https://dev.gentoo.org/~leio/distfiles/ patchset #
-	eapply "${FILESDIR}/0003-build-Allow-udev-and-NM-optional-on-Linux.patch"
-	eapply "${FILESDIR}/0004-build-Make-colord-and-wacom-optional-and-controllabl.patch"
-
 	gnome2_src_prepare
 }
 
@@ -121,13 +113,9 @@ src_configure() {
 		-Dalsa=true
 		$(meson_use udev gudev)
 		$(meson_use cups)
-		$(meson_use colord)
 		$(meson_use networkmanager network_manager)
-		-Drfkill=true
 		$(meson_use smartcard)
-		$(meson_use input_devices_wacom wacom)
 		$(meson_use wayland)
-		-Dexperimental_suspend_then_hibernate=false
 	)
 	meson_src_configure
 }

@@ -1,0 +1,19 @@
+## Taken from ubuntu-versionator_pkg_setup.
+ebuild_hook() {
+	if [[ -z ${UNITY_BUILD_OK} ]]; then
+		has_version unity-base/unity-build-env:0/${PROFILE_RELEASE} \
+			|| die "'${PROFILE_RELEASE}' profile detected, please run 'emerge unity-base/unity-build-env:0/${PROFILE_RELEASE}' to setup package masking"
+		export UNITY_BUILD_OK=1
+	fi
+
+	local GCC_CURRENT=$(gcc --version | grep gcc | rev | cut -d ' ' -f 1 | rev)
+	[[ ${PROFILE_RELEASE} == zesty ]] && local GCC_MINIMUM="6.3.0"
+	[[ ${PROFILE_RELEASE} == artful ]] && local GCC_MINIMUM="6.4.0"
+	[[ ${PROFILE_RELEASE} == cosmic ]] && local GCC_MINIMUM="8.2.0"
+
+	[[ ${GCC_CURRENT//./} -lt ${GCC_MINIMUM//./} ]] \
+		&& die "The selected '${PROFILE_RELEASE}' profile requires your system be built using >=sys-devel/gcc:${GCC_MINIMUM}, please consult the output of 'gcc-config -l'"
+
+	[[ -n $(ld -v | grep gold) ]] \
+		&& die "The selected 'ld' library linker must be set to 'ld.bfd' due to link failures using other experimental linkers, as root do 'binutils-config --linker ld.bfd'"
+}

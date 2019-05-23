@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="disco"
-inherit gnome2 ubuntu-versionator
+inherit autotools gnome2 ubuntu-versionator
 
 DESCRIPTION="Collection of GSettings schemas for GNOME desktop"
 HOMEPAGE="http://www.gnome.org/"
@@ -31,6 +31,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+	eautoreconf
 	gnome2_src_prepare
 }
 

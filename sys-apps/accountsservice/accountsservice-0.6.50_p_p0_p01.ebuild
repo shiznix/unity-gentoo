@@ -68,3 +68,9 @@ src_configure() {
 		$(use_enable systemd) \
 		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
 }
+
+src_install() {
+	emake DESTDIR="${ED}" install
+	keepdir /var/lib/AccountsService/icons
+	keepdir /var/lib/AccountsService/users
+}

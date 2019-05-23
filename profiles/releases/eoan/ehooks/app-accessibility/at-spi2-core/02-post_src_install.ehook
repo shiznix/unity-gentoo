@@ -1,0 +1,5 @@
+## Enable QT4 and QT5 accessibility by default.
+ebuild_hook() {
+	exeinto /etc/X11/xinit/xinitrc.d
+	doexe "${EHOOK_FILESDIR}"/90qt-a11y
+}

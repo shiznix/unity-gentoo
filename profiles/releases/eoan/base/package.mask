@@ -1,0 +1,7 @@
+# Mask all other releases #
+>unity-base/unity-build-env-19.11
+<unity-base/unity-build-env-19.10
+
+>unity-base/unity-meta-19.11
+<unity-base/unity-meta-19.10
+

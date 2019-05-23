@@ -3,7 +3,7 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{2_7,3_3,3_5,3_6} )
+PYTHON_COMPAT=( python{3_5,3_6} )
 VALA_USE_DEPEND="vapigen"
 
 inherit gnome2 multilib-minimal python-any-r1 vala
@@ -14,7 +14,7 @@ HOMEPAGE="https://wiki.gnome.org/Projects/libsoup"
 LICENSE="LGPL-2+"
 SLOT="2.4"
 
-IUSE="debug gssapi +introspection samba ssl test vala"
+IUSE="debug gssapi +introspection samba ssl test +vala"
 REQUIRED_USE="vala? ( introspection )"
 
 KEYWORDS="alpha amd64 arm ~arm64 hppa ia64 ~mips ppc ppc64 ~sh ~sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x86-solaris"
@@ -23,6 +23,7 @@ RDEPEND="
 	>=dev-libs/glib-2.34.3:2[${MULTILIB_USEDEP}]
 	>=dev-libs/libxml2-2.9.1-r4:2[${MULTILIB_USEDEP}]
 	>=dev-db/sqlite-3.8.2:3[${MULTILIB_USEDEP}]
+	>=net-libs/libpsl-0.20.0[${MULTILIB_USEDEP}]
 	>=net-libs/glib-networking-2.38.2[ssl?,${MULTILIB_USEDEP}]
 	gssapi? ( virtual/krb5[${MULTILIB_USEDEP}] )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.5:= )
@@ -31,8 +32,9 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
 	!!net-libs/libsoup-gnome
-	>=dev-util/intltool-0.35
+	dev-util/glib-utils
 	>=dev-util/gtk-doc-am-1.20
+	>=dev-util/intltool-0.35
 	sys-devel/gettext
 	>=virtual/pkgconfig-0-r1[${MULTILIB_USEDEP}]
 	test? ( >=dev-libs/glib-2.40:2[${MULTILIB_USEDEP}] )

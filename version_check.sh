@@ -233,6 +233,7 @@ uver() {
 	[[ "${URELEASE}" == *bionic* ]] && UVER_RELEASE="18.04"
 	[[ "${URELEASE}" == *cosmic* ]] && UVER_RELEASE="18.10"
 	[[ "${URELEASE}" == *disco* ]] && UVER_RELEASE="19.04"
+	[[ "${URELEASE}" == *eoan* ]] && UVER_RELEASE="19.10"
 	PVR=`echo "${packbasename}" | sed -e 's/.*-\([0-9]\)/\1/' -e 's:-r[0-9].*$::g'`
 	PVR="_${PVR#*_}"
 

@@ -1,0 +1,5 @@
+ebuild_hook() {
+	sed -i \
+		-e "\:^localstatedir:{s:/var/lib:/var:}" \
+		{,test/}Makefile || die
+}

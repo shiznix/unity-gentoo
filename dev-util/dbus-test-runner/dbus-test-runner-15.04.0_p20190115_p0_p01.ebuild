@@ -18,7 +18,7 @@ SLOT="0"
 IUSE="test"
 RESTRICT="mirror"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${PN}-ubuntu-disco-3574.1"
 
 RDEPEND=">=dev-libs/dbus-glib-0.98
 	>=dev-libs/glib-2.34"
