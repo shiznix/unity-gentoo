@@ -23,7 +23,7 @@ SLOT="0"
 IUSE="+branding debug doc pch +systray test"
 RESTRICT="mirror"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${PN}"
 
 RDEPEND="app-i18n/ibus[gtk,gtk2]
 	>=sys-apps/systemd-232
@@ -94,7 +94,6 @@ src_prepare() {
 		sed -e 's:set (DUMMY_XORG_TEST_RUNNER.*:set (DUMMY_XORG_TEST_RUNNER /bin/true):g' \
 			-i tests/CMakeLists.txt
 	fi
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	epatch -p1 "${FILESDIR}/unity-7.5.0_fix-missing-functional-includes.patch"
 	ubuntu-versionator_src_prepare
 
@@ -105,7 +104,7 @@ src_prepare() {
 
 	# Taken from http://ppa.launchpad.net/timekiller/unity-systrayfix/ubuntu/pool/main/u/unity/ #
 	if use systray; then
-		epatch -p1 "${FILESDIR}/systray-fix_artful.diff"
+		epatch -p1 "${FILESDIR}/systray-fix_disco.diff"
 	fi
 
 	# Setup Unity side launcher default applications #
@@ -167,7 +166,7 @@ src_prepare() {
 				die "Sed failed for data/unity7.service.in"
 
 	# Fix build error: ‘std::vector’ has not been declared #
-	epatch -p1 "${FILESDIR}/unity-7.5.0_fix-missing-vector-includes.diff"
+#	epatch -p1 "${FILESDIR}/unity-7.5.0_fix-missing-vector-includes.diff"
 
 	# Don't use drop-down menu icon from Adwaita theme as it's too dark since v3.30 #
 	sed -i "s/go-down-symbolic/drop-down-symbolic/" decorations/DecorationsMenuDropdown.cpp

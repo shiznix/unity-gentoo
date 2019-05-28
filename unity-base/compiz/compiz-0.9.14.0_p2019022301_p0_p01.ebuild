@@ -30,10 +30,10 @@ COMMONDEPEND="!!x11-wm/compiz
 	dev-libs/glib:2
 	dev-cpp/glibmm
 	dev-libs/libxml2[${PYTHON_USEDEP}]
-	dev-libs/libxslt[${PYTHON_USEDEP}]
+	dev-libs/libxslt
 	dev-libs/protobuf
+	dev-python/cython[${PYTHON_USEDEP}]
 	dev-python/python-distutils-extra[${PYTHON_USEDEP}]
-	dev-python/pyrex[${PYTHON_USEDEP}]
 	gnome-base/gconf
 	>=gnome-base/gsettings-desktop-schemas-3.8
 	>=gnome-base/librsvg-2.14.0:2

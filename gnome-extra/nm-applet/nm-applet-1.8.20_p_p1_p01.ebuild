@@ -65,6 +65,7 @@ src_configure() {
 		--disable-more-warnings
 		--disable-static
 		--localstatedir=/var
+		--with-libnm-gtk=yes
 		$(use_enable introspection)
 		$(use_with gcr)
 		$(use_with modemmanager wwan)
