@@ -3,7 +3,6 @@
 
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
-VALA_MIN_API_VERSION=0.22
 
 URELEASE="disco"
 inherit bash-completion-r1 python-r1 vala ubuntu-versionator versionator xdg

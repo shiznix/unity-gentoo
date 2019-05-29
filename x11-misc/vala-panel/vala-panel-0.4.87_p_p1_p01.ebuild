@@ -2,8 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-VALA_MIN_API_VERSION="0.34"
-VALA_MAX_API_VERSION="0.36"
 
 URELEASE="disco"
 inherit cmake-utils eutils gnome2-utils ubuntu-versionator vala
@@ -18,6 +16,7 @@ VALA_PANEL_APPMENU_VER="0.7.1"
 DESCRIPTION="Lightweight desktop panel"
 HOMEPAGE="http://github.com/rilian-la-te/vala-panel"
 SRC_URI="${UURL}/${MY_P}${UVER}.orig.tar.xz
+	${UURL}/${MY_P}${UVER}${UVER_SUFFIX}.debian.tar.xz
 	${UURL}/vala-panel-appmenu_${VALA_PANEL_APPMENU_VER}+dfsg1.orig.tar.xz"
 
 LICENSE="LGPL-3"

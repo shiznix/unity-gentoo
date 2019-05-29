@@ -266,6 +266,7 @@ x11-libs/libaccounts-qt **
 x11-misc/lightdm **
 x11-misc/lightdm-kde **
 x11-misc/notify-osd **
+x11-misc/vala-panel **
 x11-themes/humanity-icon-theme **
 x11-themes/notify-osd-icons **
 x11-themes/ubuntu-themes **
