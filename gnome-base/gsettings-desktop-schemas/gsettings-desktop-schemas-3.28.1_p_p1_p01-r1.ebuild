@@ -19,7 +19,7 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
 	introspection? ( dev-libs/gobject-introspection )
-	unity-base/ubuntu-settings
+	unity-base/unity-settings
 	x11-themes/gnome-backgrounds
 	x11-themes/gtk-engines-unico
 	x11-themes/ubuntu-themes

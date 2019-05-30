@@ -224,13 +224,13 @@ unity-base/signon **
 unity-base/signon-keyring-extension **
 unity-base/signon-ui **
 unity-base/ubuntu-docs **
-unity-base/ubuntu-settings **
 unity-base/unity **
 unity-base/unity-api **
 unity-base/unity-control-center **
 unity-base/unity-gtk-module **
 unity-base/unity-language-pack **
 unity-base/unity-scopes-api **
+unity-base/unity-settings **
 unity-base/unity-settings-daemon **
 unity-extra/glipper **
 unity-extra/indicator-psensor **

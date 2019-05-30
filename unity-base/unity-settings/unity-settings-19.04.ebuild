@@ -3,14 +3,14 @@
 
 EAPI=6
 
-URELEASE="disco-updates"
+URELEASE="disco"
 inherit gnome2-utils
 
 UVER=
 
 DESCRIPTION="Default settings for the Unity"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/ubuntu-settings"
-SRC_URI=""
+SRC_URI="" ## We are providing own gschema overrides based on Zesty ##
 
 LICENSE="GPL-2+"
 #KEYWORDS="~amd64 ~x86"
@@ -28,11 +28,11 @@ S="${FILESDIR}"
 
 src_install() {
 	local \
-		gschema="10_ubuntu-settings.gschema.override" \
+		gschema="10_unity-settings.gschema.override" \
 		gschema_dir="/usr/share/glib-2.0/schemas"
 
 	insinto "${gschema_dir}"
-	newins "${FILESDIR}"/ubuntu-settings.gsettings-override \
+	newins "${FILESDIR}"/unity-settings.gsettings-override \
 		"${gschema}"
 
 	if use ubuntu-cursor; then
