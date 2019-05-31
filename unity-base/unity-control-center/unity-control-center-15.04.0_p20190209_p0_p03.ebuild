@@ -140,10 +140,10 @@ src_prepare() {
 	# Fudge a pass on broken hostname-helper test (see https://bugzilla.gnome.org/show_bug.cgi?id=650342) #
 	echo > panels/info/hostnames-test.txt
 
-	epatch "${FILESDIR}/01_${PN}-2018-language-selector.patch" # Based on g-c-c v3.24 Region & Language panel
+#	epatch "${FILESDIR}/01_${PN}-2018-language-selector.patch" # Based on g-c-c v3.24 Region & Language panel
 	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
 	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
-	epatch "${FILESDIR}/04_${PN}-2018-optional-bt-colord-kerberos-wacom-webkit.patch"
+	epatch "${FILESDIR}/04_${PN}-2019-optional-bt-colord-kerberos-wacom-webkit.patch"
 
 	# If a .desktop file does not have inline translations, fall back #
 	#  to calling gettext #
@@ -184,6 +184,9 @@ src_install() {
 
 	# Remove /usr/share/pixmaps/faces/ as is provided by gnome-base/gnome-control-center #
 	rm -rf "${ED}usr/share/pixmaps/faces"
+
+	# Remove cc-remote-login-helper as is provided by gnome-base/gnome-control-center #
+	rm "${ED}usr/libexec/cc-remote-login-helper" 2> /dev/null
 }
 
 pkg_preinst() { gnome2_icon_savelist; }
