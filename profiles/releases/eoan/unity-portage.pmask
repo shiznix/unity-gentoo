@@ -68,6 +68,7 @@ gnome-base/gnome-settings-daemon::gentoo
 gnome-base/gsettings-desktop-schemas::gentoo
 gnome-base/nautilus::gentoo
 gnome-extra/activity-log-manager::gentoo
+gnome-extra/nemo::gentoo
 gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
 

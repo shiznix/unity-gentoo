@@ -127,7 +127,7 @@ dev-python/python-prctl
 =dev-python/python-xlib-0.19*
 ~dev-qt/qtlocation-5.6.1
 dev-util/umockdev
-=media-gfx/eog-3.24*
+gnome-extra/nemo
 ~media-libs/giflib-4.2.3
 ~media-libs/gexiv2-0.10.5
 =media-libs/harfbuzz-2.2*
@@ -149,6 +149,7 @@ www-client/firefox
 =x11-drivers/xf86-input-evdev-2.10*
 x11-misc/xvfb-run
 ~x11-libs/libdrm-2.4.67
+x11-libs/xapps
 =x11-themes/adwaita-icon-theme-3.24*
 
 ## Overlay missing keyword unmasking ##
@@ -194,6 +195,7 @@ gnome-base/gnome-session **
 gnome-extra/activity-log-manager **
 gnome-extra/gnome-color-manager **
 gnome-extra/evolution-data-server **
+gnome-extra/nemo **
 gnome-extra/nm-applet **
 gnome-extra/polkit-gnome **
 mail-client/evolution **

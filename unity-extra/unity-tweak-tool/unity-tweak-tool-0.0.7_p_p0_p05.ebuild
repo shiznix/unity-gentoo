@@ -28,7 +28,7 @@ RDEPEND="dev-libs/glib:2
 DEPEND="${RDEPEND}
 	dev-util/intltool
 	gnome-base/gsettings-desktop-schemas
-	gnome-base/nautilus
+	gnome-extra/nemo
 	sys-devel/gettext
 	unity-base/compiz
 	unity-base/hud
@@ -73,6 +73,9 @@ src_prepare() {
 	# Include /usr/share/cursors/xorg-x11/ in the paths to check for cursor themes as Gentoo #
 	#  installs cursor themes in both /usr/share/cursors/xorg-x11/ and /usr/share/icons/ #
 	epatch -p1 "${FILESDIR}/xorg-cursor-themes-path.diff"
+
+	# Switch from using gnome-base/nautilus to gnome-extra/nemo as >=Gnome-3.32 has nautilus no longer capable of managing desktop background icons #
+	epatch -p1 "${FILESDIR}/migrate-nautilus_to_nemo.diff"
 
 	distutils-r1_src_prepare
 }

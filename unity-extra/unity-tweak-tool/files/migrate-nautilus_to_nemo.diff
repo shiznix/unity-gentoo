@@ -1,0 +1,480 @@
+diff -urN unity-tweak-tool-0.0.7/data/overview.ui unity-tweak-tool-0.0.7-patched/data/overview.ui
+--- unity-tweak-tool-0.0.7/data/overview.ui	2016-03-28 14:54:07.000000000 +1030
++++ unity-tweak-tool-0.0.7-patched/data/overview.ui	2019-05-31 15:09:43.884629783 +0930
+@@ -271,57 +271,6 @@
+               </packing>
+             </child>
+             <child>
+-              <object class="GtkButton" id="b_unity-webapps">
+-                <property name="width_request">90</property>
+-                <property name="visible">True</property>
+-                <property name="can_focus">False</property>
+-                <property name="receives_default">True</property>
+-                <property name="relief">none</property>
+-                <signal name="clicked" handler="on_b_unity-webapps_clicked" swapped="no"/>
+-                <child>
+-                  <object class="GtkBox" id="box_b_unity-webapps">
+-                    <property name="visible">True</property>
+-                    <property name="can_focus">False</property>
+-                    <property name="valign">start</property>
+-                    <property name="orientation">vertical</property>
+-                    <property name="spacing">6</property>
+-                    <child>
+-                      <object class="GtkImage" id="i_unity-webapps">
+-                        <property name="visible">True</property>
+-                        <property name="can_focus">False</property>
+-                        <property name="pixbuf">media/48/unity-settings-webapps.svg</property>
+-                        <property name="pixel_size">48</property>
+-                      </object>
+-                      <packing>
+-                        <property name="expand">True</property>
+-                        <property name="fill">True</property>
+-                        <property name="position">0</property>
+-                      </packing>
+-                    </child>
+-                    <child>
+-                      <object class="GtkLabel" id="l_unity-webapps">
+-                        <property name="visible">True</property>
+-                        <property name="can_focus">False</property>
+-                        <property name="label" translatable="yes">Web Apps</property>
+-                        <property name="justify">center</property>
+-                        <property name="ellipsize">end</property>
+-                      </object>
+-                      <packing>
+-                        <property name="expand">False</property>
+-                        <property name="fill">True</property>
+-                        <property name="position">1</property>
+-                      </packing>
+-                    </child>
+-                  </object>
+-                </child>
+-              </object>
+-              <packing>
+-                <property name="expand">False</property>
+-                <property name="fill">True</property>
+-                <property name="position">4</property>
+-              </packing>
+-            </child>
+-            <child>
+               <object class="GtkButton" id="b_unity-additional">
+                 <property name="width_request">90</property>
+                 <property name="visible">True</property>
+diff -urN unity-tweak-tool-0.0.7/data/unitytweak.ui unity-tweak-tool-0.0.7-patched/data/unitytweak.ui
+--- unity-tweak-tool-0.0.7/data/unitytweak.ui	2016-03-28 14:54:07.000000000 +1030
++++ unity-tweak-tool-0.0.7-patched/data/unitytweak.ui	2019-05-31 15:10:22.082520833 +0930
+@@ -107,15 +107,6 @@
+                               </object>
+                             </child>
+                             <child>
+-                              <object class="GtkMenuItem" id="menuitem_unity_webapps">
+-                                <property name="visible">True</property>
+-                                <property name="can_focus">False</property>
+-                                <property name="label" translatable="yes">Web Apps</property>
+-                                <property name="use_underline">True</property>
+-                                <signal name="activate" handler="on_menuitem_unity_webapps_activate" swapped="no"/>
+-                              </object>
+-                            </child>
+-                            <child>
+                               <object class="GtkMenuItem" id="menuitem_unity_additional">
+                                 <property name="visible">True</property>
+                                 <property name="can_focus">False</property>
+diff -urN unity-tweak-tool-0.0.7/data/unity.ui unity-tweak-tool-0.0.7-patched/data/unity.ui
+--- unity-tweak-tool-0.0.7/data/unity.ui	2016-03-28 14:54:07.000000000 +1030
++++ unity-tweak-tool-0.0.7-patched/data/unity.ui	2019-05-31 15:08:18.273630710 +0930
+@@ -2136,171 +2136,6 @@
+           </packing>
+         </child>
+         <child>
+-          <object class="GtkBox" id="box_unity_webapps">
+-            <property name="visible">True</property>
+-            <property name="can_focus">False</property>
+-            <property name="orientation">vertical</property>
+-            <property name="spacing">6</property>
+-            <child>
+-              <object class="GtkLabel" id="l_webapps_general">
+-                <property name="visible">True</property>
+-                <property name="can_focus">False</property>
+-                <property name="margin_left">12</property>
+-                <property name="margin_top">6</property>
+-                <property name="label" translatable="yes">General</property>
+-                <property name="xalign">0</property>
+-                <attributes>
+-                  <attribute name="weight" value="bold"/>
+-                </attributes>
+-              </object>
+-              <packing>
+-                <property name="expand">False</property>
+-                <property name="fill">True</property>
+-                <property name="position">0</property>
+-              </packing>
+-            </child>
+-            <child>
+-              <object class="GtkGrid" id="grid_switch_unity_webapps">
+-                <property name="visible">True</property>
+-                <property name="can_focus">False</property>
+-                <property name="margin_left">12</property>
+-                <child>
+-                  <object class="GtkSwitch" id="switch_unity_webapps">
+-                    <property name="visible">True</property>
+-                    <property name="can_focus">False</property>
+-                    <property name="tooltip_markup" translatable="yes">Enable prompts for webapp integration when visiting supported websites?</property>
+-                    <property name="tooltip_text" translatable="yes">Enable prompts for webapp integration when visiting supported websites?</property>
+-                    <property name="halign">start</property>
+-                    <signal name="notify::active" handler="on_switch_unity_webapps_active_notify" swapped="no"/>
+-                  </object>
+-                  <packing>
+-                    <property name="left_attach">1</property>
+-                    <property name="top_attach">0</property>
+-                  </packing>
+-                </child>
+-                <child>
+-                  <object class="GtkLabel" id="l_switch_unity_webapps">
+-                    <property name="width_request">130</property>
+-                    <property name="visible">True</property>
+-                    <property name="can_focus">False</property>
+-                    <property name="margin_right">6</property>
+-                    <property name="label" translatable="yes">Integration prompts:</property>
+-                    <property name="xalign">1</property>
+-                  </object>
+-                  <packing>
+-                    <property name="left_attach">0</property>
+-                    <property name="top_attach">0</property>
+-                  </packing>
+-                </child>
+-              </object>
+-              <packing>
+-                <property name="expand">False</property>
+-                <property name="fill">True</property>
+-                <property name="position">2</property>
+-              </packing>
+-            </child>
+-            <child>
+-              <object class="GtkLabel" id="l_domains_preauthorized">
+-                <property name="width_request">150</property>
+-                <property name="visible">True</property>
+-                <property name="can_focus">False</property>
+-                <property name="halign">start</property>
+-                <property name="margin_left">12</property>
+-                <property name="label" translatable="yes">Preauthorized domains</property>
+-                <property name="xalign">1</property>
+-                <attributes>
+-                  <attribute name="weight" value="bold"/>
+-                </attributes>
+-              </object>
+-              <packing>
+-                <property name="expand">False</property>
+-                <property name="fill">True</property>
+-                <property name="position">3</property>
+-              </packing>
+-            </child>
+-            <child>
+-              <object class="GtkBox" id="box_preauthorized">
+-                <property name="visible">True</property>
+-                <property name="can_focus">False</property>
+-                <property name="orientation">vertical</property>
+-                <child>
+-                  <object class="GtkCheckButton" id="check_preauthorized_amazon">
+-                    <property name="label" translatable="yes">Amazon</property>
+-                    <property name="visible">True</property>
+-                    <property name="can_focus">False</property>
+-                    <property name="receives_default">False</property>
+-                    <property name="margin_left">18</property>
+-                    <property name="xalign">0</property>
+-                    <property name="draw_indicator">True</property>
+-                    <signal name="toggled" handler="on_check_preauthorized_amazon_toggled" swapped="no"/>
+-                  </object>
+-                  <packing>
+-                    <property name="expand">False</property>
+-                    <property name="fill">True</property>
+-                    <property name="position">0</property>
+-                  </packing>
+-                </child>
+-                <child>
+-                  <object class="GtkCheckButton" id="check_preauthorized_ubuntuone">
+-                    <property name="label" translatable="yes">Ubuntu One</property>
+-                    <property name="visible">True</property>
+-                    <property name="can_focus">False</property>
+-                    <property name="receives_default">False</property>
+-                    <property name="margin_left">18</property>
+-                    <property name="xalign">0</property>
+-                    <property name="draw_indicator">True</property>
+-                    <signal name="toggled" handler="on_check_preauthorized_ubuntuone_toggled" swapped="no"/>
+-                  </object>
+-                  <packing>
+-                    <property name="expand">False</property>
+-                    <property name="fill">True</property>
+-                    <property name="position">1</property>
+-                  </packing>
+-                </child>
+-              </object>
+-              <packing>
+-                <property name="expand">False</property>
+-                <property name="fill">True</property>
+-                <property name="position">4</property>
+-              </packing>
+-            </child>
+-            <child>
+-              <object class="GtkButton" id="b_unity_webapps_reset">
+-                <property name="label" translatable="yes">Restore defaults</property>
+-                <property name="visible">True</property>
+-                <property name="can_focus">False</property>
+-                <property name="receives_default">True</property>
+-                <property name="tooltip_markup" translatable="yes">Restore the default Unity Webapps settings.</property>
+-                <property name="tooltip_text" translatable="yes">Restore the default Unity Webapps settings.</property>
+-                <property name="halign">start</property>
+-                <property name="margin_left">12</property>
+-                <property name="margin_top">6</property>
+-                <property name="margin_bottom">12</property>
+-                <signal name="clicked" handler="on_b_unity_webapps_reset_clicked" swapped="no"/>
+-              </object>
+-              <packing>
+-                <property name="expand">False</property>
+-                <property name="fill">True</property>
+-                <property name="position">15</property>
+-              </packing>
+-            </child>
+-          </object>
+-          <packing>
+-            <property name="position">4</property>
+-          </packing>
+-        </child>
+-        <child type="tab">
+-          <object class="GtkLabel" id="l_page_webapps">
+-            <property name="visible">True</property>
+-            <property name="can_focus">False</property>
+-            <property name="label" translatable="yes">Web Apps</property>
+-          </object>
+-          <packing>
+-            <property name="position">4</property>
+-            <property name="tab_fill">False</property>
+-          </packing>
+-        </child>
+-        <child>
+           <object class="GtkBox" id="box_unity_additional">
+             <property name="visible">True</property>
+             <property name="can_focus">False</property>
+diff -urN unity-tweak-tool-0.0.7/UnityTweakTool/section/spaghetti/gsettings.py unity-tweak-tool-0.0.7-patched/UnityTweakTool/section/spaghetti/gsettings.py
+--- unity-tweak-tool-0.0.7/UnityTweakTool/section/spaghetti/gsettings.py	2016-03-28 14:54:07.000000000 +1030
++++ unity-tweak-tool-0.0.7-patched/UnityTweakTool/section/spaghetti/gsettings.py	2019-05-31 14:58:29.679355387 +0930
+@@ -70,12 +70,6 @@
+     test_schema(schema)
+     return Gio.Settings(schema)
+ 
+-def unity_webapps(child = None):
+-    schema = 'com.canonical.unity'
+-    schema = schema+'.'+child if child else schema
+-    test_schema(schema)
+-    return Gio.Settings(schema)
+-
+ def canonical(child):
+     schema = 'com.canonical.'+child
+     test_schema(schema)
+@@ -91,6 +85,11 @@
+     test_schema(schema)
+     return Gio.Settings(schema)
+ 
++def nemo(child):
++    schema = 'org.nemo.'+child
++    test_schema(schema)
++    return Gio.Settings(schema)
++
+ def color_to_hash(c,alpha=1):
+     """Convert a Gdk.Color or Gdk.RGBA object to hex representation, overriding the alpha if asked"""
+     if isinstance(c, Gdk.Color):
+@@ -114,7 +113,7 @@
+ 
+ antialiasing = gnome('settings-daemon.plugins.xsettings')
+ background = gnome('desktop.background')
+-desktop = gnome('nautilus.desktop')
++desktop = nemo('desktop')
+ interface = gnome('desktop.interface')
+ lockdown = gnome('desktop.lockdown')
+ wm = gnome('desktop.wm.preferences')
+@@ -136,4 +135,3 @@
+ lens_apps = unity('ApplicationsLens')
+ lens_files = unity('FilesLens')
+ runner = unity('Runner')
+-webapps = unity_webapps('webapps')
+diff -urN unity-tweak-tool-0.0.7/UnityTweakTool/section/spaghetti/unity.py unity-tweak-tool-0.0.7-patched/UnityTweakTool/section/spaghetti/unity.py
+--- unity-tweak-tool-0.0.7/UnityTweakTool/section/spaghetti/unity.py	2016-03-28 14:54:07.000000000 +1030
++++ unity-tweak-tool-0.0.7-patched/UnityTweakTool/section/spaghetti/unity.py	2019-05-31 14:56:26.615795178 +0930
+@@ -140,12 +140,6 @@
+ 
+         del model, launcher_switcher_forward, iter_launcher_switcher_forward, launcher_switcher_prev, iter_launcher_switcher_prev
+ 
+-
+-        # ====== Unity Webapps helpers ===== #
+-        # Preauthorized domains
+-        self.ui['check_preauthorized_amazon'].set_active(True if 'amazon.ca' in gsettings.webapps.get_strv('preauthorized-domains') else False)
+-        self.ui['check_preauthorized_ubuntuone'].set_active(True if 'one.ubuntu.com' in gsettings.webapps.get_strv('preauthorized-domains') else False)
+-
+         # ====== Unity additional helpers ======= #
+         model = self.ui['list_unity_additional_accelerators']
+ 
+@@ -309,56 +303,6 @@
+ 
+ #----- END: Switch -----
+ 
+-#----- BEGIN: Webapps -----
+-    # Preauthorized domains - Amazon
+-    def on_check_preauthorized_amazon_toggled(self, widget):
+-        if self.ui['check_preauthorized_amazon'].get_active() == False:
+-            preauthorized = gsettings.webapps.get_strv('preauthorized-domains')
+-            amazonca = 'amazon.ca'
+-            if amazonca in preauthorized:
+-                amazonlist = ['amazon.ca', 'amazon.cn', 'amazon.com', 'amazon.co.uk', 'amazon.de', 'amazon.es', 'amazon.fr', 'amazon.it', 'www.amazon.ca', 'www.amazon.cn', 'www.amazon.com', 'www.amazon.co.uk', 'www.amazon.de', 'www.amazon.es', 'www.amazon.fr', 'www.amazon.it']
+-                for amazon in amazonlist:
+-                    preauthorized.remove(amazon)
+-                    gsettings.webapps.set_strv('preauthorized-domains', preauthorized)
+-            elif amazonca not in preauthorized:
+-                pass
+-        else:
+-            preauthorized = gsettings.webapps.get_strv('preauthorized-domains')
+-            amazonca = 'amazon.ca'
+-            if amazonca not in preauthorized:
+-                amazonlist = ['amazon.ca', 'amazon.cn', 'amazon.com', 'amazon.co.uk', 'amazon.de', 'amazon.es', 'amazon.fr', 'amazon.it', 'www.amazon.ca', 'www.amazon.cn', 'www.amazon.com', 'www.amazon.co.uk', 'www.amazon.de', 'www.amazon.es', 'www.amazon.fr', 'www.amazon.it']
+-                for amazon in amazonlist:
+-                    preauthorized.append(amazon)
+-                    gsettings.webapps.set_strv('preauthorized-domains', preauthorized)
+-            elif amazonca in preauthorized:
+-                pass
+-
+-    # Preauthorized domains - Ubuntu One
+-    def on_check_preauthorized_ubuntuone_toggled(self, widget):
+-        if self.ui['check_preauthorized_ubuntuone'].get_active() == False:
+-            preauthorized = gsettings.webapps.get_strv('preauthorized-domains')
+-            ubuntuone = 'one.ubuntu.com'
+-            if ubuntuone in preauthorized:
+-                preauthorized.remove(ubuntuone)
+-                gsettings.webapps.set_strv('preauthorized-domains', preauthorized)
+-            elif ubuntuone not in preauthorized:
+-                pass
+-        else:
+-            preauthorized = gsettings.webapps.get_strv('preauthorized-domains')
+-            ubuntuone = 'one.ubuntu.com'
+-            if ubuntuone not in preauthorized:
+-                preauthorized.append(ubuntuone)
+-                gsettings.webapps.set_strv('preauthorized-domains', preauthorized)
+-            elif ubuntuone in preauthorized:
+-                pass
+-
+-    # Reset button
+-    def on_b_unity_webapps_reset_clicked(self, widget):
+-        gsettings.webapps.reset('preauthorized-domains')
+-        self.refresh()
+-
+-#----- END: Webapps -----
+-
+ #----- BEGIN: Additional -----
+     # keyboard widgets in unity-additional
+ 
+diff -urN unity-tweak-tool-0.0.7/UnityTweakTool/section/system.py unity-tweak-tool-0.0.7-patched/UnityTweakTool/section/system.py
+--- unity-tweak-tool-0.0.7/UnityTweakTool/section/system.py	2016-03-28 14:54:07.000000000 +1030
++++ unity-tweak-tool-0.0.7-patched/UnityTweakTool/section/system.py	2019-05-31 14:27:23.194254900 +0930
+@@ -44,7 +44,7 @@
+ tb_home_folder= ToggleButton({
+     'id'        : 'tb_home_folder',
+     'builder'   : System.builder,
+-    'schema'    : 'org.gnome.nautilus.desktop',
++    'schema'    : 'org.nemo.desktop',
+     'path'      : None,
+     'key'       : 'home-icon-visible',
+     'type'      : 'boolean',
+@@ -55,7 +55,7 @@
+ tb_network= ToggleButton({
+     'id'        : 'tb_network',
+     'builder'   : System.builder,
+-    'schema'    : 'org.gnome.nautilus.desktop',
++    'schema'    : 'org.nemo.desktop',
+     'path'      : None,
+     'key'       : 'network-icon-visible',
+     'type'      : 'boolean',
+@@ -66,7 +66,7 @@
+ tb_trash= ToggleButton({
+     'id'        : 'tb_trash',
+     'builder'   : System.builder,
+-    'schema'    : 'org.gnome.nautilus.desktop',
++    'schema'    : 'org.nemo.desktop',
+     'path'      : None,
+     'key'       : 'trash-icon-visible',
+     'type'      : 'boolean',
+@@ -77,7 +77,7 @@
+ tb_devices= ToggleButton({
+     'id'        : 'tb_devices',
+     'builder'   : System.builder,
+-    'schema'    : 'org.gnome.nautilus.desktop',
++    'schema'    : 'org.nemo.desktop',
+     'path'      : None,
+     'key'       : 'volumes-visible',
+     'type'      : 'boolean',
+diff -urN unity-tweak-tool-0.0.7/UnityTweakTool/section/unity.py unity-tweak-tool-0.0.7-patched/UnityTweakTool/section/unity.py
+--- unity-tweak-tool-0.0.7/UnityTweakTool/section/unity.py	2016-03-28 14:54:07.000000000 +1030
++++ unity-tweak-tool-0.0.7-patched/UnityTweakTool/section/unity.py	2019-05-31 14:48:03.760641130 +0930
+@@ -661,51 +661,6 @@
+                     check_minimizedwindows_switch,
+                     check_autoexposewindows])
+ 
+-#=============== WEB APPS ==========================
+-
+-
+-switch_unity_webapps= Switch({
+-    'id'        : 'switch_unity_webapps',
+-    'builder'   : Unity.builder,
+-    'schema'    : 'com.canonical.unity.webapps',
+-    'path'      : None,
+-    'key'       : 'integration-allowed',
+-    'type'      : 'boolean',
+-    'map'       : {True:True,False:False},
+-    'dependants': []
+-})
+-
+-# XXX : functors
+-# check_preauthorized_amazon= CheckBox({
+-#     'id'        : 'check_preauthorized_amazon',
+-#     'builder'   : Unity.builder,
+-#     'schema'    : 'com.canonical.unity.webapps',
+-#     'path'      : None,
+-#     'key'       : 'preauthorized-domains',
+-#     'type'      : 'strv',
+-#     'map'       : {True:True,False:False},
+-#     'dependants': []
+-# })
+-
+-# check_preauthorized_ubuntuone= CheckBox({
+-#     'id'        : 'check_preauthorized_ubuntuone',
+-#     'builder'   : Unity.builder,
+-#     'schema'    : 'com.canonical.unity.webapps',
+-#     'path'      : None,
+-#     'key'       : 'preauthorized-domains',
+-#     'type'      : 'strv',
+-#     'map'       : {True:True,False:False},
+-#     'dependants': []
+-# })
+-
+-# TODO:
+-# check_preauthorized_amazon
+-# check_preauthorized_ubuntuone
+-
+-WebappsIcons=Tab([switch_unity_webapps])
+-
+-#=============== ADDITIONAL ==========================
+-
+ check_hud_store_data= CheckBox({
+     'id'        : 'check_hud_store_data',
+     'builder'   : Unity.builder,
+@@ -768,7 +723,6 @@
+ DashIcons.enable_restore('b_unity_dash_reset')
+ PanelIcons.enable_restore('b_unity_panel_reset')
+ SwitcherIcons.enable_restore('b_unity_switcher_reset')
+-WebappsIcons.enable_restore('b_unity_webapps_reset')
+ AdditionalIcons.enable_restore('b_unity_additional_reset')
+ 
+ # Each page must be added using add_page
+@@ -776,7 +730,6 @@
+ Unity.add_page(DashIcons)
+ Unity.add_page(PanelIcons)
+ Unity.add_page(SwitcherIcons)
+-Unity.add_page(WebappsIcons)
+ Unity.add_page(AdditionalIcons)
+ 
+ # XXX : Spaghetti bridge

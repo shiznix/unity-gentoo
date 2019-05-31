@@ -57,6 +57,7 @@ DEPEND="${RDEPEND}
 	gnome-base/gnome-menus:3
 	gnome-base/gnome-session[systemd]
 	gnome-base/gsettings-desktop-schemas
+	gnome-extra/nemo
 	gnome-extra/polkit-gnome:0
 	media-libs/clutter-gtk:1.0
 	media-libs/glew:=
@@ -297,6 +298,10 @@ src_install() {
 	for each in {datetime,keyboard,power,session,sound}; do
 		dosym $(systemd_get_userunitdir)/indicator-${each}.service $(systemd_get_userunitdir)/unity-panel-service-lockscreen.service.wants/indicator-${each}.service
 	done
+
+	# >=Gnome-3.32 means Nautilus can no longer manage the desktop background and icons, so autostart gnome-extra/nemo instead #
+	[[ ! -e /etc/xdg/autostart/nemo-autostart.desktop ]] && \
+		dosym /usr/share/applications/nemo-autostart.desktop /etc/xdg/autostart/nemo-autostart.desktop
 }
 
 pkg_preinst() {

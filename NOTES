@@ -41,6 +41,7 @@ gnome-base/gnome-settings-daemon	# unity-settings-daemon relies on files created
 gnome-base/gsettings-desktop-schemas	# Includes Unity desktop settings patches
 gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
 gnome-extra/activity-log-manager	# Adds unity-control-center integration
+gnome-extra/nemo			# Patches nemo-autostart.desktop to allow starting in Unity desktop
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 gnome-extra/zeitgeist			# Removed from main tree, patched to perform VACUUM SQLite database on startups every 10 days and to pre-populate the log with some events so that the dash isn't empty on first run
