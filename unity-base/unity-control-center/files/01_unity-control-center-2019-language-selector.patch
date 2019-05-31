@@ -1,65 +1,76 @@
+From d1e90491737a3ea90ae994a20e0b5f010d2c5cff Mon Sep 17 00:00:00 2001
 From: c4pp4
-Date: Thu, 17 May 2018 22:23:06 +0200
-Subject: [PATCH] Integrate Language Support panel
+Date: Fri, 31 May 2019 20:20:55 +0200
+Subject: [PATCH 1/1] Integrate 'Language Support' panel
 
-Intended for Unity Control Center 2017.
-Allow set up Language and Formats for Unity and Login Screen (unable to use
-Unity's language-selector as it needs a complete apt/dpkg enabled system).
-Based on Region & Language panel from Gnome Control Center version 3.24 and commit
-from version 3.25 (fb2989d - https://bugzilla.gnome.org/show_bug.cgi?id=687923).
-Show link to Text Entry panel and back to Language Support panel.
-Fix User Account panel when choosing Language.
+Allow set up Language and Formats for Unity and Login Screen (it's
+unable to use the original language-selector as it needs a complete
+apt/dpkg system). It's based on Region & Language panel from Gnome
+Control Center version 3.24 and commit from version 3.25 (fb2989d -
+https://bugzilla.gnome.org/show_bug.cgi?id=687923). Aditionally add link
+to 'Text Entry' panel and back to 'Language Support' panel and fix
+'User Accounts' panel when choosing language.
+
+Signed-off-by: c4pp4
 ---
- configure.ac                                       |   7 +
- panels/Makefile.am                                 |   1 +
- panels/common/Makefile.am                          |   2 +
- panels/common/cc-common-language.c                 | 626 ++++-----------
- panels/common/cc-common-language.h                 |   2 +-
- panels/common/cc-language-chooser.c                | 606 ++++++++------
- panels/common/cc-language-chooser.h                |  10 +-
- panels/common/cc-util.c                            | 108 +++
- panels/common/cc-util.h                            |  28 +
- panels/common/language-chooser.ui                  | 144 ++--
- panels/keyboard/keyboard-general.c                 |   3 +-
- panels/langselector/Makefile.am                    |  48 ++
- panels/langselector/cc-format-chooser.c            | 585 ++++++++++++++
- panels/langselector/cc-format-chooser.h            |  36 +
- panels/langselector/cc-langselector-panel.c        | 892 +++++++++++++++++++++
- panels/langselector/cc-langselector-panel.h        |  71 ++
- panels/langselector/format-chooser.ui              | 339 ++++++++
- panels/langselector/langselector-module.c          |  41 +
- panels/langselector/langselector.ui                | 221 +++++
- .../unity-langselector-panel.desktop.in.in         |  11 +
- panels/region/gnome-region-panel-formats.c         |   2 +-
- panels/region/gnome-region-panel-input.c           |  38 +-
- panels/region/gnome-region-panel-lang.c            |   2 +-
- panels/region/unity-region-panel-fcitx.ui          |  21 +-
- panels/region/unity-region-panel-ibus.ui           |  23 +-
- panels/user-accounts/data/user-accounts-dialog.ui  |  15 +-
- panels/user-accounts/um-user-panel.c               | 123 ++-
- po/POTFILES.in                                     |   6 +-
- shell/Makefile.am                                  |   2 +
- shell/list-box-helper.c                            |  41 +
- shell/list-box-helper.h                            |  24 +
- 31 files changed, 3187 insertions(+), 891 deletions(-)
+ configure.ac                                  |   7 +
+ panels/Makefile.am                            |   1 +
+ panels/common/Makefile.am                     |   2 +
+ panels/common/cc-common-language.c            | 626 +++---------
+ panels/common/cc-common-language.h            |   2 +-
+ panels/common/cc-language-chooser.c           | 606 +++++++-----
+ panels/common/cc-language-chooser.h           |  10 +-
+ panels/common/cc-util.c                       | 108 +++
+ panels/common/cc-util.h                       |  28 +
+ panels/common/language-chooser.ui             | 144 ++-
+ panels/keyboard/keyboard-general.c            |   3 +-
+ panels/langselector/Makefile.am               |  48 +
+ panels/langselector/cc-format-chooser.c       | 585 ++++++++++++
+ panels/langselector/cc-format-chooser.h       |  36 +
+ panels/langselector/cc-langselector-panel.c   | 892 ++++++++++++++++++
+ panels/langselector/cc-langselector-panel.h   |  71 ++
+ panels/langselector/format-chooser.ui         | 339 +++++++
+ panels/langselector/langselector-module.c     |  41 +
+ panels/langselector/langselector.ui           | 221 +++++
+ .../unity-langselector-panel.desktop.in.in    |  11 +
+ panels/region/gnome-region-panel-formats.c    |   2 +-
+ panels/region/gnome-region-panel-input.c      |  38 +-
+ panels/region/gnome-region-panel-lang.c       |   2 +-
+ panels/region/unity-region-panel-fcitx.ui     |  21 +-
+ panels/region/unity-region-panel-ibus.ui      |  23 +-
+ .../data/user-accounts-dialog.ui              |  15 +-
+ panels/user-accounts/um-user-panel.c          | 123 ++-
+ po/POTFILES.in                                |   6 +-
+ 28 files changed, 3120 insertions(+), 891 deletions(-)
+ create mode 100644 panels/common/cc-util.c
+ create mode 100644 panels/common/cc-util.h
+ create mode 100644 panels/langselector/Makefile.am
+ create mode 100644 panels/langselector/cc-format-chooser.c
+ create mode 100644 panels/langselector/cc-format-chooser.h
+ create mode 100644 panels/langselector/cc-langselector-panel.c
+ create mode 100644 panels/langselector/cc-langselector-panel.h
+ create mode 100644 panels/langselector/format-chooser.ui
+ create mode 100644 panels/langselector/langselector-module.c
+ create mode 100644 panels/langselector/langselector.ui
+ create mode 100644 panels/langselector/unity-langselector-panel.desktop.in.in
 
 diff --git a/configure.ac b/configure.ac
-index 572490e..6daa64e 100644
+index e4206aa..ce2b177 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -159,6 +159,11 @@ PKG_CHECK_MODULES(REGION_PANEL, $COMMON_MODULES
-                   $IBUS_MODULE
-                   $FCITX_MODULE
+@@ -146,6 +146,11 @@ PKG_CHECK_MODULES(INFO_PANEL, $COMMON_MODULES libgtop-2.0 gl x11
+ PKG_CHECK_MODULES(KEYBOARD_PANEL, $COMMON_MODULES
+                   gnome-desktop-3.0 >= $GNOME_DESKTOP_REQUIRED_VERSION
                    x11)
 +PKG_CHECK_MODULES(LANGSELECTOR_PANEL, $COMMON_MODULES
 +                  polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION
 +                  gnome-desktop-3.0 >= $GNOME_DESKTOP_REQUIRED_VERSION
 +                  x11
 +                  accountsservice >= $ACCOUNTSSERVICE_REQUIRED_VERSION)
- PKG_CHECK_MODULES(SCREEN_PANEL, $COMMON_MODULES)
- PKG_CHECK_MODULES(SOUND_PANEL, $COMMON_MODULES libxml-2.0
-                   libcanberra-gtk3 >= $CANBERRA_REQUIRED_VERSION
-@@ -428,6 +433,8 @@ panels/keyboard/unity-keyboard-panel.desktop.in
+ PKG_CHECK_MODULES(MEDIA_PANEL, $COMMON_MODULES)
+ PKG_CHECK_MODULES(MOUSE_PANEL, $COMMON_MODULES xi >= 1.2
+                   unity-settings-daemon x11)
+@@ -460,6 +465,8 @@ panels/keyboard/unity-keyboard-panel.desktop.in
  panels/keyboard/unity-keybindings.pc
  panels/region/Makefile
  panels/region/unity-region-panel.desktop.in
@@ -69,7 +80,7 @@ index 572490e..6daa64e 100644
  panels/mouse/unity-mouse-panel.desktop.in
  panels/sound/Makefile
 diff --git a/panels/Makefile.am b/panels/Makefile.am
-index 5ed02c6..625f628 100644
+index 45a2ddb..8041481 100644
 --- a/panels/Makefile.am
 +++ b/panels/Makefile.am
 @@ -8,6 +8,7 @@ SUBDIRS= \
@@ -79,7 +90,7 @@ index 5ed02c6..625f628 100644
 +	langselector \
  	info \
  	sound \
- 	keyboard \
+ 	sharing \
 diff --git a/panels/common/Makefile.am b/panels/common/Makefile.am
 index eeeac06..a68d999 100644
 --- a/panels/common/Makefile.am
@@ -4602,10 +4613,10 @@ index cda837b..238110a 100644
          button = get_widget (d, "autologin-switch");
          g_signal_connect (button, "notify::active", G_CALLBACK (autologin_changed), d);
 diff --git a/po/POTFILES.in b/po/POTFILES.in
-index a7d8e83..0e3713e 100644
+index 80b302b..d271728 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
-@@ -142,4 +142,8 @@ shell/unitycc.directory.in
+@@ -145,4 +145,8 @@ shell/unitycc.directory.in
  panels/display/cc-rr-labeler.c
  panels/region/keyboard-shortcuts.c
  [type: gettext/glade]panels/region/gnome-region-panel.ui
@@ -4615,93 +4626,6 @@ index a7d8e83..0e3713e 100644
 +panels/langselector/cc-langselector-panel.c
 +[type: gettext/glade]panels/langselector/langselector.ui
 +panels/langselector/unity-langselector-panel.desktop.in.in
-diff --git a/shell/Makefile.am b/shell/Makefile.am
-index 9a32746..695ba1e 100644
---- a/shell/Makefile.am
-+++ b/shell/Makefile.am
-@@ -54,6 +54,8 @@ libunity_control_center_la_SOURCES =		\
- 	cc-shell.h				\
- 	cc-editable-entry.c			\
- 	cc-editable-entry.h			\
-+	list-box-helper.h			\
-+	list-box-helper.c			\
- 	$(NULL)
- 
- libunity_control_center_la_LDFLAGS =		\
-diff --git a/shell/list-box-helper.c b/shell/list-box-helper.c
-new file mode 100644
-index 0000000..2a1f416
---- /dev/null
-+++ b/shell/list-box-helper.c
-@@ -0,0 +1,41 @@
-+/*
-+ * Copyright (C) 2014 Red Hat, Inc
-+ *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include "list-box-helper.h"
-+
-+void
-+cc_list_box_update_header_func (GtkListBoxRow *row,
-+                                GtkListBoxRow *before,
-+                                gpointer user_data)
-+{
-+  GtkWidget *current;
-+
-+  if (before == NULL)
-+    {
-+      gtk_list_box_row_set_header (row, NULL);
-+      return;
-+    }
-+
-+  current = gtk_list_box_row_get_header (row);
-+  if (current == NULL)
-+    {
-+      current = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
-+      gtk_widget_show (current);
-+      gtk_list_box_row_set_header (row, current);
-+    }
-+}
-diff --git a/shell/list-box-helper.h b/shell/list-box-helper.h
-new file mode 100644
-index 0000000..884322d
---- /dev/null
-+++ b/shell/list-box-helper.h
-@@ -0,0 +1,24 @@
-+/*
-+ * Copyright (C) 2014 Red Hat, Inc
-+ *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include <gtk/gtk.h>
-+
-+void
-+cc_list_box_update_header_func (GtkListBoxRow *row,
-+                                GtkListBoxRow *before,
-+                                gpointer user_data);
+-- 
+2.21.0
+
