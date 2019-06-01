@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="disco-security"
 inherit gnome2 meson ubuntu-versionator
 
 MY_PN="${PN}3"
