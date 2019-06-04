@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="LGPL-2.1 LGPL-3"
 SLOT="3/1.0.0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="+mono test"
+IUSE="java mono test"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/dbus-glib
@@ -34,6 +34,7 @@ DEPEND="dev-libs/dbus-glib
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
 
+	java? ( dev-java/jayatana )
 	mono? ( dev-dotnet/gtk-sharp:2 )
 
 	$(vala_depend)
