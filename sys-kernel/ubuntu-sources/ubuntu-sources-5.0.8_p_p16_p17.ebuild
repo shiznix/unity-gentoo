@@ -4,7 +4,7 @@
 EAPI=5	# kernel-2.eclass unsupported for EAPI6
 ETYPE="sources"
 
-URELEASE="disco-security"
+URELEASE="disco-updates"
 inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"

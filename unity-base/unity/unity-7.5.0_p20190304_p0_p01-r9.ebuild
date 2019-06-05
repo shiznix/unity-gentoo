@@ -267,13 +267,6 @@ src_install() {
 	sed -e "/nux\/unity_support_test/{s/lib/${fixlib}/}" \
 		-i "${ED}/usr/${fixlib}/unity/compiz-profile-selector" || die
 
-	# Allow zeitgeist-fts to find KDE *.desktop files, so that KDE applications show in Dash 'Recently Used' (see LP# 1251915) #
-	#  (refer https://developer.gnome.org/gio/stable/gio-Desktop-file-based-GAppInfo.html#g-desktop-app-info-new)
-	#	This has the unwanted side effect of creating duplicate entries for KDE applications in the Search and Applications lense #
-	dosym /usr/share/applications/kde4/ /usr/share/kde4/applications
-	insinto /etc/X11/xinit/xinitrc.d
-	doins "${FILESDIR}/15-xdg-data-kde"
-
 	# Clean up pam file installation as used in lockscreen (LP# 1305440) #
 	rm -rf "${ED}etc/pam.d"
 	pamd_mimic system-local-login ${PN} auth account session
@@ -300,8 +293,7 @@ src_install() {
 	done
 
 	# >=Gnome-3.32 means Nautilus can no longer manage the desktop background and icons, so autostart gnome-extra/nemo instead #
-	[[ ! -e /etc/xdg/autostart/nemo-autostart.desktop ]] && \
-		dosym /usr/share/applications/nemo-autostart.desktop /etc/xdg/autostart/nemo-autostart.desktop
+	dosym /usr/share/applications/nemo-autostart.desktop /etc/xdg/autostart/unity-nemo-autostart.desktop
 }
 
 pkg_preinst() {
