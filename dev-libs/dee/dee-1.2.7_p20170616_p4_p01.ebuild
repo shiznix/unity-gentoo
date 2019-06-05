@@ -16,7 +16,8 @@ UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="Provide objects allowing to create Model-View-Controller type programs across DBus"
 HOMEPAGE="https://launchpad.net/dee/"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 SLOT="0/4.2.1"
 LICENSE="GPL-3"
