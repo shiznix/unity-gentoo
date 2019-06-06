@@ -292,7 +292,7 @@ index f30776a..16c54e1 100644
 +static gboolean
 +progress_ui_handler_disable_unity_urgency (UnityLauncherEntry *entry)
 +{
-+	g_return_if_fail (entry);
++	g_return_val_if_fail (entry, FALSE);
 +
 +	unity_launcher_entry_set_urgent (entry, FALSE);
 +	return FALSE;
@@ -328,7 +328,7 @@ index f30776a..16c54e1 100644
 +static DbusmenuMenuitem *
 +progress_ui_handler_build_unity_quicklist (NemoProgressUIHandler *self)
 +{
-+	g_return_if_fail (self);
++	g_return_val_if_fail (self, NULL);
 +	GList *l;
 +
 +	for (l = unity_quicklist_get_launcher_entries (self->priv->unity_quicklist_handler); l; l = l->next) {
@@ -525,7 +525,7 @@ index 0000000..9969be5
 +#include "unity-quicklist-handler.h"
 +
 +#include "nemo-application.h"
-+#include "nemo-window-private.h"
++#include "nemo-bookmark-list.h"
 +
 +#include <eel/eel-string.h>
 +#include <gdk/gdkx.h>
@@ -541,7 +541,7 @@ index 0000000..9969be5
 +	g_return_if_fail (NEMO_IS_BOOKMARK (bookmark));
 +
 +	GFile *locations[2];
-+	GList *windows, *l;
++	GList *l;
 +	NemoApplication *application;
 +
 +	locations[0] = nemo_bookmark_get_location (bookmark);
@@ -561,7 +561,7 @@ index 0000000..9969be5
 +}
 +
 +static void
-+unity_bookmarks_handler_remove_bookmark_quicklists () {
++unity_bookmarks_handler_remove_bookmark_quicklists (void) {
 +
 +	GList *children, *l;
 +
@@ -616,7 +616,7 @@ index 0000000..9969be5
 +}
 +
 +static void
-+unity_bookmarks_handler_refresh_bookmarks ()
++unity_bookmarks_handler_refresh_bookmarks (void)
 +{
 +	unity_bookmarks_handler_remove_bookmark_quicklists ();
 +	unity_bookmarks_handler_update_bookmarks ();

@@ -294,6 +294,10 @@ src_install() {
 
 	# >=Gnome-3.32 means Nautilus can no longer manage the desktop background and icons, so autostart gnome-extra/nemo instead #
 	dosym /usr/share/applications/nemo-autostart.desktop /etc/xdg/autostart/unity-nemo-autostart.desktop
+	# Taken from unity-session-3.32.0-1ubuntu1 disco package #
+	insinto /usr/share/nemo/actions
+	doins "${FILESDIR}/nemo/change-background-unity.nemo_action"
+	doins "${FILESDIR}/nemo/set-as-background-unity.nemo_action"
 }
 
 pkg_preinst() {
