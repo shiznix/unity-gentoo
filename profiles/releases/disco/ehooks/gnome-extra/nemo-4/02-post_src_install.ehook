@@ -1,9 +1,0 @@
-ebuild_hook() {
-	sed -i \
-		-e "/StartupNotify/{s/false/true/}" \
-		"${ED%/}/usr/share/applications/${PN}.desktop" || die
-
-	sed -i \
-		-e "/OnlyShowIn/{s/;/;Unity;/}" \
-		"${ED%/}/usr/share/applications/${PN}-autostart.desktop" || die
-}

@@ -1,0 +1,18 @@
+ebuild_hook() {
+	sed -i \
+		-e "/StartupNotify/{s/false/true/}" \
+		"${ED%/}/usr/share/applications/${PN}.desktop" || die
+
+	# Allow Nemo to manage Unity desktop and icons #
+	sed -i \
+		-e "/OnlyShowIn/{s/;/;Unity;/}" \
+		"${ED%/}/usr/share/applications/${PN}-autostart.desktop" || die
+
+	# >=Gnome-3.32 means Nautilus can no longer manage the desktop background and icons, so autostart gnome-extra/nemo instead #
+	dosym /usr/share/applications/nemo-autostart.desktop /etc/xdg/autostart/unity-nemo-autostart.desktop
+
+	# Taken from unity-session-3.32.0-1ubuntu1 disco package #
+	insinto /usr/share/nemo/actions
+	doins "${EHOOK_FILESDIR}/change-background-unity.nemo_action"
+	doins "${EHOOK_FILESDIR}/set-as-background-unity.nemo_action"
+}

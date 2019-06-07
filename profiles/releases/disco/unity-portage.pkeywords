@@ -66,7 +66,6 @@ games-board/gnome*::gentoo
 gnome-base/librsvg::gentoo
 # gnome-extra/gucharmap:2.90::gentoo
 >=gnome-extra/evolution-data-server-3.26::gentoo
-~gnome-extra/nemo-4.0.6::gentoo
 >=gnome-extra/zenity-3.28::gentoo
 >=mail-client/evolution-3.26::gentoo
 media-fonts/cantarell::gentoo
@@ -90,7 +89,6 @@ sys-apps/bubblewrap::gentoo
 >=x11-libs/libwnck-3.30::gentoo
 # >=x11-libs/pango-1.42::gentoo
 >=x11-libs/vte-0.52::gentoo
-~x11-libs/xapps-1.4.2::gentoo # gnome-extra/nemo dep
 >=x11-themes/adwaita-icon-theme-3.26::gentoo
 >=x11-wm/mutter-3.26::gentoo
 media-libs/grilo:0.3::gentoo
@@ -197,7 +195,6 @@ gnome-base/gnome-session **
 gnome-extra/activity-log-manager **
 gnome-extra/gnome-color-manager **
 gnome-extra/evolution-data-server **
-gnome-extra/nemo **
 gnome-extra/nm-applet **
 gnome-extra/polkit-gnome **
 mail-client/evolution **
