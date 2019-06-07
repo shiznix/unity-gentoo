@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="cosmic cosmic-security cosmic-updates disco disco-security disco-updates"
+RELEASES="cosmic cosmic-security cosmic-updates disco disco-security disco-updates eoan eoan-security eoan-updates"
 SOURCES="main universe"
 
 sources_download() {

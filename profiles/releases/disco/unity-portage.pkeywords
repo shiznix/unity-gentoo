@@ -199,6 +199,10 @@ gnome-extra/nm-applet **
 gnome-extra/polkit-gnome **
 mail-client/evolution **
 mail-client/thunderbird **
+mate-extra/brisk-menu **
+mate-extra/mate-hud **
+mate-extra/mate-tweak **
+mate-extra/ubuntu-mate-settings **
 media-gfx/eog **
 media-gfx/shotwell **
 media-sound/banshee **
@@ -267,6 +271,7 @@ x11-libs/gtk+:3 **
 x11-libs/libaccounts-qt **
 x11-misc/lightdm **
 x11-misc/lightdm-kde **
+x11-misc/mate-dock-applet **
 x11-misc/notify-osd **
 x11-misc/vala-panel **
 x11-themes/humanity-icon-theme **

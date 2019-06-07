@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="disco-updates"
 
 inherit gnome.org gnome2-utils meson readme.gentoo-r1 ubuntu-versionator virtualx xdg
 

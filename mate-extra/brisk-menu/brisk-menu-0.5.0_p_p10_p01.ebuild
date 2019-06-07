@@ -3,14 +3,15 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools meson ubuntu-versionator
 
-UVER="-${PVR_PL_MINOR}"
+#UVER="-${PVR_PL_MINOR}"
 
 DESCRIPTION="Solus Project's Brisk Menu MATE Panel Applet"
 HOMEPAGE="https://github.com/solus-project/brisk-menu"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2 CC-BY-SA-4.0"
 SLOT="0"
@@ -26,10 +27,14 @@ DEPEND="dev-libs/glib:2
 	sys-devel/gettext
 	x11-libs/gtk+:3"
 
+src_prepare() {
+	ubuntu-versionator_src_prepare
+}
+
 src_install() {
 	meson_src_install
 	# Delete some files that are only useful on Ubuntu
-	rm -rf "${D}"etc/apport
+	rm -rf "${ED}"etc/apport
 }
 
 pkg_preinst() {
