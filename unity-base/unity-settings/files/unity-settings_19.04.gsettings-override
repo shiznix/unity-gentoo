@@ -6,8 +6,11 @@
 show-desktop-icons = false
 picture-uri = "file:///usr/share/backgrounds/warty-final-ubuntu.png"
 
-[org.nemo.desktop:Unity]
+# cannot provide per-desktop overrides for localised key #
+[org.nemo.desktop]
 font = "Ubuntu 11"
+
+[org.nemo.desktop:Unity]
 show-desktop-icons = true
 
 [org.gnome.desktop.interface:Unity]
