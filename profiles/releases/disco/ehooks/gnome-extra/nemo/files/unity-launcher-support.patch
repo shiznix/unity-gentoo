@@ -3,7 +3,11 @@ From: c4pp4
 Date: Thu, 6 Jun 2019 13:55:23 +0200
 Subject: [PATCH 1/1] Add Unity Launcher support
 
+List bookmarks in the context menu and display a bar on the icon during
+copies.
 Taken from Nautilus Xenial patchset (12_unity_launcher_support.patch).
+The quicklist bookmark plugin only works if the application is running,
+see https://launchpad.net/bugs/1720594.
 
 Signed-off-by: c4pp4
 ---
