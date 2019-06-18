@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{3_5,3_6} )
 
 URELEASE="cosmic"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala xdummy
@@ -23,7 +23,7 @@ RESTRICT="mirror"
 DEPEND="dev-libs/gobject-introspection
 	dev-libs/libdbusmenu[gtk3]
 	dev-libs/libunity[${PYTHON_USEDEP}]
-	dev-libs/libxslt[python,${PYTHON_USEDEP}]
+	dev-libs/libxslt[python]
 	dev-libs/libxml2[${PYTHON_USEDEP}]
 	dev-util/gdbus-codegen
 	gnome-base/libgtop

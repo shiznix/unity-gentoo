@@ -42,9 +42,9 @@ COMMON_DEPEND="
 	dev-libs/json-glib
 
 	visualizer? (
-		>=media-libs/clutter-1.8:1.0
-		>=media-libs/clutter-gst-1.9.92:2.0
-		>=media-libs/clutter-gtk-1.0:1.0
+		media-libs/clutter
+		media-libs/clutter-gst
+		media-libs/clutter-gtk
 		>=x11-libs/mx-1.0.1:1.0
 		media-plugins/gst-plugins-libvisual:1.0 )
 	cdr? ( >=app-cdr/brasero-2.91.90 )
