@@ -21,7 +21,8 @@ IUSE=""
 IUSE+=" +python_single_target_python3_5 python_single_target_python3_6"
 RESTRICT="mirror"
 
-RDEPEND="dev-python/psutil[${PYTHON_USEDEP}]
+RDEPEND="dev-python/distro[${PYTHON_USEDEP}]
+	dev-python/psutil[${PYTHON_USEDEP}]
 	dev-python/pygobject[${PYTHON_USEDEP}]
 	dev-python/setproctitle[${PYTHON_USEDEP}]
 	gnome-base/dconf

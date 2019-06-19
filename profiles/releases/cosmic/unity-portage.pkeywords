@@ -9,6 +9,7 @@ app-arch/engrampa
 app-editors/pluma
 app-text/atril
 dev-libs/libmateweather
+dev-python/distro
 media-gfx/eom
 x11-misc/mate-notification-daemon
 x11-misc/mozo

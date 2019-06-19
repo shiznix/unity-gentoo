@@ -42,6 +42,10 @@ src_prepare() {
 	# Remove RPM support as build will fail #
 	sed -e '/RPM/d' -i CMakeLists.txt
 
+	# Remove gio-addons as also done in x11-misc/vala-panel #
+	rm -v vapi/gio-addons-2.0.vapi
+	sed -e '/gio-addons-2.0/d' -i lib/CMakeLists.txt
+
 	vala_src_prepare
 	cmake-utils_src_prepare
 }
