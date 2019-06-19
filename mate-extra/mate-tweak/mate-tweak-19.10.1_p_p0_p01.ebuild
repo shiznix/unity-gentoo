@@ -62,12 +62,12 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	## Correct paths in mate-tweak script ##
-	sed -e "s:/usr/lib/mate-panel/appmenu-mate:/usr/libexec/mate-panel/appmenu-mate:g" \
-		-e "s:brisk-menu/brisk-menu:brisk-menu:g" \
+	sed -e "s:brisk-menu/brisk-menu:brisk-menu:g" \
 		-e "s:/usr/lib/mate-netbook/mate-window-picker-applet:/usr/libexec/mate-window-picker-applet:g" \
 		-e "s:/usr/lib/MULTIARCH:MULTIARCH:g" \
 		-e "s:'/usr/lib/' + self.multiarch + :self.multiarch + :g" \
 		-e "/self.multiarch = sysconfig.get_config_var/c\        self.multiarch = os.path.join('/','usr','libexec')" \
+		-e "s:self.multiarch + '/mate-panel/libappmenu-mate.so':'/usr/lib/mate-panel/libappmenu-mate.so':g" \
 			-i mate-tweak || die
 	distutils-r1_src_prepare
 }
