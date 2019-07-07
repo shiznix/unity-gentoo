@@ -32,6 +32,7 @@ RDEPEND="dev-python/distro[${PYTHON_USEDEP}]
 	mate-extra/mate-hud
 	mate-extra/mate-indicator-applet
 	mate-extra/mate-media
+	mate-extra/mate-menu
 	mate-extra/mate-netbook
 	mate-extra/ubuntu-mate-settings
 	unity-base/compiz
