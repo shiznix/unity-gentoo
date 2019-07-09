@@ -1,0 +1,23 @@
+ebuild_hook() {
+	## Add Human icon theme.
+	mv "${WORKDIR}"/human icon-themes
+
+	## Add custom icons.
+	cp "${EHOOK_FILESDIR}"/custom-icons/savemodified_{large,small}.png icon-themes/human/res
+
+	## Configure with Human icon theme.
+	sed -i \
+		-e "/with_theme=/{s/\(elementary\)/\1 human/}" \
+		-e "/|tango)/{s/\(elementary\)/\1|human/}" \
+		configure.ac || die
+
+	## Make Human icon theme the default.
+	sed -i \
+		-e "/r = /{s/elementary/human/}" \
+		vcl/source/app/IconThemeSelector.cxx || die
+
+	## Use Tango icon theme as the fallback for Human icon theme.
+	sed -i \
+		-e "s/\(sResult = \"\";\)/\1\nelse if (rsStyle == \"human\")\nsResult = \"tango\";/" \
+		vcl/source/image/ImplImageTree.cxx || die
+}

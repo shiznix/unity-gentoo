@@ -1,0 +1,31 @@
+From: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Fri, 7 Sep 2018 17:27:22 +0200
+Subject: Add quicklist area-shot option
+
+---
+ src/org.gnome.Screenshot.desktop.in | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/src/org.gnome.Screenshot.desktop.in b/src/org.gnome.Screenshot.desktop.in
+index 73b4d02..4e2643b 100644
+--- a/src/org.gnome.Screenshot.desktop.in
++++ b/src/org.gnome.Screenshot.desktop.in
+@@ -14,7 +14,9 @@ NotShowIn=KDE;
+ X-GNOME-Bugzilla-Bugzilla=GNOME
+ X-GNOME-Bugzilla-Product=gnome-utils
+ X-GNOME-Bugzilla-Component=screenshot
+-Actions=screen-shot;window-shot;
++# Disable broken actions https://pad.lv/1720262
++# Actions=screen-shot;window-shot;area-shot
++Actions=screen-shot;
+ DBusActivatable=true
+ 
+ [Desktop Action screen-shot]
+@@ -24,3 +26,7 @@ Exec=gnome-screenshot
+ [Desktop Action window-shot]
+ Name=Take a Screenshot of the Current Window
+ Exec=gnome-screenshot -w
++
++[Desktop Action area-shot]
++Name=Take a Screenshot of a Selected Area
++Exec=gnome-screenshot -a

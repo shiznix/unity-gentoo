@@ -1,3 +1,0 @@
-ebuild_hook() {
-	unpack "${EHOOK_FILESDIR}"/human-icon-theme.tar.xz
-}

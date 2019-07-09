@@ -1,0 +1,66 @@
+From: Iain Lane <iain@orangesquash.org.uk>
+Date: Fri, 24 Jun 2016 14:51:22 +0100
+Subject: [PATCH] Add style classes and CSS names to some of our widgets
+
+---
+ src/terminal-notebook.c | 6 ++++++
+ src/terminal-screen.c   | 7 +++++++
+ 2 files changed, 13 insertions(+)
+
+diff --git a/src/terminal-notebook.c b/src/terminal-notebook.c
+index 006922f..3823329 100644
+--- a/src/terminal-notebook.c
++++ b/src/terminal-notebook.c
+@@ -32,6 +32,8 @@
+ #include "terminal-schemas.h"
+ #include "terminal-libgsystem.h"
+ 
++#define TERMINAL_NOTEBOOK_STYLE_CLASS "terminal-notebook"
++
+ #define TERMINAL_NOTEBOOK_GET_PRIVATE(notebook)(G_TYPE_INSTANCE_GET_PRIVATE ((notebook), TERMINAL_TYPE_NOTEBOOK, TerminalNotebookPrivate))
+ 
+ struct _TerminalNotebookPrivate
+@@ -389,11 +391,15 @@ static void
+ terminal_notebook_init (TerminalNotebook *notebook)
+ {
+   TerminalNotebookPrivate *priv;
++  GtkStyleContext *context;
+ 
+   priv = notebook->priv = TERMINAL_NOTEBOOK_GET_PRIVATE (notebook);
+ 
+   priv->active_screen = NULL;
+   priv->policy = GTK_POLICY_AUTOMATIC;
++
++  context = gtk_widget_get_style_context (GTK_WIDGET (notebook));
++  gtk_style_context_add_class (context, TERMINAL_NOTEBOOK_STYLE_CLASS);
+ }
+ 
+ static void
+diff --git a/src/terminal-screen.c b/src/terminal-screen.c
+index 76a7c06..a7082ab 100644
+--- a/src/terminal-screen.c
++++ b/src/terminal-screen.c
+@@ -122,6 +122,8 @@ enum
+   TARGET_TAB
+ };
+ 
++#define TERMINAL_SCREEN_STYLE_CLASS "terminal-screen"
++
+ static void terminal_screen_constructed (GObject             *object);
+ static void terminal_screen_dispose     (GObject             *object);
+ static void terminal_screen_finalize    (GObject             *object);
+@@ -404,9 +406,14 @@ terminal_screen_init (TerminalScreen *screen)
+   guint i;
+   uuid_t u;
+   char uuidstr[37];
++  GtkStyleContext *context;
+ 
+   priv = screen->priv = G_TYPE_INSTANCE_GET_PRIVATE (screen, TERMINAL_TYPE_SCREEN, TerminalScreenPrivate);
+ 
++  context = gtk_widget_get_style_context (GTK_WIDGET (screen));
++
++  gtk_style_context_add_class (context, TERMINAL_SCREEN_STYLE_CLASS);
++
+   uuid_generate (u);
+   uuid_unparse (u, uuidstr);
+   priv->uuid = g_strdup (uuidstr);

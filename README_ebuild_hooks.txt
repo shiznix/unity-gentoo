@@ -1,26 +1,36 @@
-* Ebuild hooks in /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks
-	are always applied.
-* Ebuild hooks in /etc/portage/ehooks are provided by 'unity-extra/ehooks'
-	and managed via 'app-eselect/eselect-ehooks'.
+EBUILD HOOKS
 
-Basedir search order:
-	1) /var/lib/layman/unity-gentoo/profiles/${PROFILE_RELEASE}/ehooks
-	2) /etc/portage/ehooks
+* Patching system looking for existence of {pre,post}_${EBUILD_PHASE_FUNC}.ehook
+  and run it to perform ebuild hook. Mimic the function of eapply_user
+  and /etc/portage/patches/ so we can custom patch packages we don't need
+  to maintain. Loosly based on eapply_user function from /usr/lib/portage/python*/phase-helpers.sh
+  and https://wiki.gentoo.org/wiki//etc/portage/patches#Enabling_.2Fetc.2Fportage.2Fpatches_for_all_ebuilds.
 
-Pkgdir search order:
-e.g. package app-arch/file-roller-3.22.3
+* Ebuild hooks are located in /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks directory
+
+* Optional ebuild hooks are managed via unity-extra/ehooks USE-flags
+  and ehook_use and ehook_require query functions (see below)
+
+* Updates or changes are managed via /usr/bin/ehooks.
+  /usr/bin/ehooks is a symlink to /var/lib/layman/unity-gentoo/ehooks_check.sh script.
+  It looks for ebuild hooks changes and generates emerge command needed to apply the changes.
+	- usage:
+		ehooks [OPTION]
+	- options:
+		-c, --check	generate emerge command when changes found
+		-r, --reset	set ebuild hooks changes as applied
+
+* pkgdir search order:
+  e.g. package app-arch/file-roller-3.22.3:0
 	1) ${basedir}/app-arch/file-roller-3.22.3-r0
 	2) ${basedir}/app-arch/file-roller-3.22.3
 	3) ${basedir}/app-arch/file-roller-3.22
 	4) ${basedir}/app-arch/file-roller-3
 	5) ${basedir}/app-arch/file-roller
-	- all of the above may be optionally followed by a slot:
-		${basedir}/app-arch/file-roller-3.22.3-r0:0
-		${basedir}/app-arch/file-roller-3.22:0
-		${basedir}/app-arch/file-roller:0
+	6) ${basedir}/app-arch/file-roller:0
 	- empty pkgdir EXCLUDES package
 
-File format to trigger ebuild hook:
+* File format to trigger ebuild hook:
 	{pre,post}_${EBUILD_PHASE_FUNC}.ehook
 	1)  pre_pkg_setup.ehook
 	2)  post_pkg_setup.ehook
@@ -38,28 +48,45 @@ File format to trigger ebuild hook:
 	14) post_pkg_preinst.ehook
 	15) pre_pkg_postinst.ehook
 	16) post_pkg_postinst.ehook
+	- it's possible to use more files in one phase:
+		01-pre_pkg_setup.ehook
+		02-pre_pkg_setup.ehook (e.g. symlink to ../templates/ca-pre_pkg_setup.ehook)
 	- it's possible to use filename prefix and sort it for better overview:
-		[...]pre_src_prepare.ehook
+		[...anything...]pre_src_prepare.ehook
 		01_pre_src_prepare.ehook
 		aa-pre_src_prepare.ehook
 
-File body:
+* File body:
 	ebuild_hook() {
 		[COMMANDS...]
 	}
-	- templates are in ${basedir}/templates
+	- templates are in .../ehooks/templates directory
 	- command to apply patches in 'prepare' phase:
 		eapply "${EHOOK_FILESDIR}"
-	- command to trigger eautoreconf in pre_src_prepare:
+	- command to trigger eautoreconf in pre_src_prepare phase:
 		eautoreconf
-	- and in post_src_prepare:
+	- and in post_src_prepare phase:
 		AT_NOELIBTOOLIZE="yes" eautoreconf
+	- it's possible to use any ebuild functions
 	- errors log is located at ${T}/ehook.log
 
-${EHOOK_FILESDIR}
+* ${EHOOK_FILESDIR}
 	- path to ${pkgdir}/files
 	- used for patches and miscellaneous files
 
-Patch file format:
+* Patch file format:
 	- extensions: *.patch or *.diff
 	- use filename prefix to control apply order
+
+* Query functions:
+	ehook_use [USE-flag]
+	- it returns a true value if unity-extra/ehooks USE-flag is declared
+	- e.g. if ehook_use nemo_noroot; then...
+	  see gnome-extra/nemo 02-pre_src_prepare.ehook
+
+	ehook_require [USE-flag]
+	- it skips the rest of the related ebuild hooks if unity-extra/ehooks USE-flag is not declared
+	- it should be the first command of ebuild hooks
+	- e.g. ehook_require gnome-terminal_theme
+	  see x11-terms/gnome-terminal 01-post_src_prepare.ehook
+	    and x11-libs/vte:2.91 01-pre_src_prepare.ehook

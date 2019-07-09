@@ -1,0 +1,21 @@
+ebuild_hook() {
+	ehook_require evince_menu
+
+	unpack "${EHOOK_FILESDIR}"/global-menu-translations-artful.tar.xz
+
+	einfo "  Merging available translations..."
+
+	local po_ext po_orig
+	local -a po_files=( po/* )
+
+	for po_ext in "${po_files[@]}"; do
+	        po_orig=${po_ext/po/${P%%_*}\/po}
+
+		if [[ -f ${po_orig} ]]; then
+			sed -i -e '/msgid \"\"/,/^$/d' "${po_ext}"
+			cat "${po_ext}" >> "${po_orig}"
+			msguniq --use-first -o "${po_orig}" "${po_orig}"
+			msgfmt -o "${po_orig/.po/.gmo}" "${po_orig}"
+		fi
+	done
+}

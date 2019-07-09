@@ -1,0 +1,432 @@
+From 8b2440b23466b2b9e30a92122b4ed9496484ae54 Mon Sep 17 00:00:00 2001
+From: Lars Uebernickel <lars.uebernickel@canonical.com>
+Date: Thu, 30 Jan 2014 15:13:38 +0100
+Subject: Add traditional menu bar
+
+This menu bar will only be shown when the desktop requests this through
+the gtk-shell-shows-app-menu and gtk-shell-shows-menubar settings.
+
+The view and action menus are hidden when the menubar is shown.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=736419
+
+Index: evince-3.22.1/shell/ev-application.c
+===================================================================
+--- a/shell/ev-application.c	2018-11-13 02:38:48.000000000 +0100
++++ b/shell/ev-application.c	2019-03-03 02:24:29.742584027 +0100
+@@ -44,12 +44,15 @@
+ #include "ev-media-player-keys.h"
+ #endif /* ENABLE_DBUS */
+ 
++extern gboolean in_desktop (const gchar *name);
++
+ struct _EvApplication {
+ 	GtkApplication base_instance;
+ 
+ 	gchar *uri;
+ 
+ 	gchar *dot_dir;
++	GMenu *bookmarks_menu;
+ 
+ #ifdef ENABLE_DBUS
+         EvEvinceApplication *skeleton;
+@@ -939,6 +942,26 @@
+ }
+ 
+ static void
++ev_application_update_bookmarks_menu (EvApplication *application)
++{
++        GtkWindow *window;
++
++        /* The bookmarks menu has two sections: the first one contains
++         * the "Add Bookmark" menu item and the second one is filled
++         * with the active window's bookmarks.
++         */
++
++        if (g_menu_model_get_n_items (G_MENU_MODEL (application->bookmarks_menu)) == 2)
++                g_menu_remove (application->bookmarks_menu, 1);
++
++        window = gtk_application_get_active_window (GTK_APPLICATION (application));
++        if (window) {
++                g_menu_append_section (application->bookmarks_menu, NULL,
++                                       ev_window_get_bookmarks_menu (EV_WINDOW (window)));
++        }
++}
++
++static void
+ ev_application_startup (GApplication *gapplication)
+ {
+         const gchar *action_accels[] = {
+@@ -995,6 +1018,25 @@
+ 
+         G_APPLICATION_CLASS (ev_application_parent_class)->startup (gapplication);
+ 
++        if (!in_desktop ("GNOME")) {
++                GtkBuilder *builder;
++                GError *error = NULL;
++
++                builder = gtk_builder_new ();
++                gtk_builder_add_from_resource (builder, "/org/gnome/evince/gtk/traditional-menus.ui", &error);
++                g_assert_no_error (error);
++
++                gtk_application_set_app_menu (GTK_APPLICATION (application), NULL);
++                gtk_application_set_menubar (GTK_APPLICATION (application),
++                                             G_MENU_MODEL (gtk_builder_get_object (builder, "menubar")));
++
++                application->bookmarks_menu = G_MENU (gtk_builder_get_object (builder, "bookmarks"));
++                g_signal_connect_swapped (application, "notify::active-window",
++                                          G_CALLBACK (ev_application_update_bookmarks_menu), application);
++                ev_application_update_bookmarks_menu (application);
++                g_object_unref (builder);
++        }
++
+         for (it = action_accels; it[0]; it += g_strv_length ((gchar **)it) + 1)
+                 gtk_application_set_accels_for_action (GTK_APPLICATION (application), it[0], &it[1]);
+ }
+Index: evince-3.22.1/shell/ev-application.h
+===================================================================
+--- a/shell/ev-application.h	2018-11-13 02:38:48.000000000 +0100
++++ b/shell/ev-application.h	2019-03-03 02:24:29.743584031 +0100
+@@ -74,6 +74,8 @@
+                                                       GdkScreen     *screen,
+                                                       guint32        timestamp);
+ 
++gboolean          ev_application_has_traditional_menus (EvApplication *application);
++
+ G_END_DECLS
+ 
+ #endif /* !EV_APPLICATION_H */
+Index: evince-3.22.1/shell/evince.gresource.xml.in
+===================================================================
+--- evince-3.22.1.orig/shell/evince.gresource.xml.in
++++ evince-3.22.1/shell/evince.gresource.xml.in
+@@ -21,5 +21,6 @@
+     <file alias="ui/evince.css" compressed="true">@EVINCE_CSS@</file>
+     <file alias="ui/thumbnail-frame.png" compressed="true">thumbnail-frame.png</file>
+     <file alias="gtk/menus.ui" compressed="true" preprocess="xml-stripblanks">evince-menus.ui</file>
++    <file alias="gtk/traditional-menus.ui" compressed="true" preprocess="xml-stripblanks">traditional-menus.ui</file>
+   </gresource>
+ </gresources>
+Index: evince-3.22.1/shell/ev-window.c
+===================================================================
+--- a/shell/ev-window.c	2018-11-13 03:58:44.000000000 +0100
++++ b/shell/ev-window.c	2019-03-03 02:27:37.042451064 +0100
+@@ -665,6 +665,8 @@
+ 
+ 	if (toolbar && ev_document_model_get_fullscreen (priv->model))
+ 		ev_window_fullscreen_show_toolbar (window);
++
++	gtk_application_window_set_show_menubar (GTK_APPLICATION_WINDOW (window), !presentation);
+ }
+ 
+ static void
+@@ -7763,7 +7765,6 @@
+ 	ev_window = GTK_WIDGET (g_object_new (EV_TYPE_WINDOW,
+ 					      "type", GTK_WINDOW_TOPLEVEL,
+                                               "application", g_application_get_default (),
+-					      "show-menubar", FALSE,
+ 					      NULL));
+ 
+ 	return ev_window;
+Index: evince-3.22.1/shell/Makefile.am
+===================================================================
+--- a/shell/Makefile.am	2018-10-23 20:48:09.000000000 +0200
++++ b/shell/Makefile.am	2019-03-03 02:24:29.748584055 +0100
+@@ -172,7 +172,8 @@
+ 	evince-icon.rc \
+ 	evince.gresource.xml.in \
+ 	ev-gdbus.xml \
+-	ev-daemon-gdbus.xml
++	ev-daemon-gdbus.xml \
++	traditional-menus.ui
+ 
+ GRESOURCE_XML_IN_FILES = evince.gresource.xml.in
+ GRESOURCE_XML_FILE = $(GRESOURCE_XML_IN_FILES:.xml.in=.xml)
+Index: evince-3.22.1/shell/traditional-menus.ui
+===================================================================
+--- /dev/null
++++ evince-3.22.1/shell/traditional-menus.ui
+@@ -0,0 +1,230 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++  Copyright © 2014 Canonical Ltd.
++
++  This program is free software; you can redistribute it and/or modify
++  it under the terms of the GNU General Public License as published by
++  the Free Software Foundation; either version 3, or (at your option)
++  any later version.
++
++  This program is distributed in the hope conf it will be useful,
++  but WITHOUT ANY WARRANTY; without even the implied warranty of
++  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  GNU General Public License for more details.
++
++  You should have received a copy of the GNU General Public License
++  along with this program; if not, write to the Free Software
++  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
++
++  Author: Lars Uebernickel <lars.uebernickel@canonical.com>
++-->
++<interface>
++  <menu id="menubar">
++    <submenu>
++      <attribute name="label" translatable="yes">_File</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Open…</attribute>
++          <attribute name="action">win.open</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;O</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Op_en a Copy</attribute>
++          <attribute name="action">win.open-copy</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;N</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Save a Copy…</attribute>
++          <attribute name="action">win.save-as</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;S</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Open Containing _Folder</attribute>
++          <attribute name="action">win.open-containing-folder</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Print…</attribute>
++          <attribute name="action">win.print</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;P</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">P_roperties…</attribute>
++          <attribute name="action">win.show-properties</attribute>
++          <attribute name="accel">&lt;Alt&gt;Return</attribute>
++        </item>
++      </section>
++      <item>
++        <link name="section" id="recent">
++        </link>
++      </item>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Close</attribute>
++          <attribute name="action">win.close</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;W</attribute>
++        </item>
++      </section>
++    </submenu>
++    <submenu>
++      <attribute name="label" translatable="yes">_Edit</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Copy</attribute>
++          <attribute name="action">win.copy</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;C</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Select _All</attribute>
++          <attribute name="action">win.select-all</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;A</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Find</attribute>
++          <attribute name="action">win.find</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;F</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Rotate _Left</attribute>
++          <attribute name="action">win.rotate-left</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;Left</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Rotate _Right</attribute>
++          <attribute name="action">win.rotate-right</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;Right</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Save Current Settings as _Default</attribute>
++          <attribute name="action">win.save-settings</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;T</attribute>
++        </item>
++      </section>
++    </submenu>
++    <submenu>
++      <attribute name="label" translatable="yes">_View</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Continuous</attribute>
++          <attribute name="action">win.continuous</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Dual</attribute>
++          <attribute name="action">win.dual-page</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Side _Pane</attribute>
++          <attribute name="action">win.show-side-pane</attribute>
++          <attribute name="accel">F9</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Fullscreen</attribute>
++          <attribute name="action">win.fullscreen</attribute>
++          <attribute name="accel">F11</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Pre_sentation</attribute>
++          <attribute name="action">win.presentation</attribute>
++          <attribute name="accel">F5</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Zoom _In</attribute>
++          <attribute name="action">win.zoom-in</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;plus</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Zoom _Out</attribute>
++          <attribute name="action">win.zoom-out</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;minus</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Odd Pages Left</attribute>
++          <attribute name="action">win.dual-odd-left</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Inverted Colors</attribute>
++          <attribute name="action">win.inverted-colors</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;I</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Reload</attribute>
++          <attribute name="action">win.reload</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;R</attribute>
++        </item>
++      </section>
++    </submenu>
++    <submenu>
++      <attribute name="label" translatable="yes">_Go</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Previous Page</attribute>
++          <attribute name="action">win.go-previous-page</attribute>
++          <attribute name="accel">p</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Next Page</attribute>
++          <attribute name="action">win.go-next-page</attribute>
++          <attribute name="accel">n</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_First Page</attribute>
++          <attribute name="action">win.go-first-page</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;Home</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Last Page</attribute>
++          <attribute name="action">win.go-last-page</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;End</attribute>
++        </item>
++      </section>
++    </submenu>
++    <submenu id="bookmarks">
++        <attribute name="label" translatable="yes">_Bookmarks</attribute>
++        <section>
++          <item>
++            <attribute name="label" translatable="yes">_Add Bookmark</attribute>
++            <attribute name="action">win.add-bookmark</attribute>
++          </item>
++        </section>
++    </submenu>
++    <submenu>
++      <attribute name="label" translatable="yes">_Help</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
++          <attribute name="action">win.show-help-overlay</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Help</attribute>
++          <attribute name="action">win.help</attribute>
++          <attribute name="accel">F1</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_About</attribute>
++          <attribute name="action">win.about</attribute>
++        </item>
++      </section>
++    </submenu>
++  </menu>
++</interface>
+Index: evince-3.22.1/po/POTFILES.in
+===================================================================
+--- a/po/POTFILES.in	2018-11-13 02:38:48.000000000 +0100
++++ b/po/POTFILES.in	2019-03-03 02:26:21.273100082 +0100
+@@ -64,3 +64,4 @@
+ shell/ev-zoom-action.c
+ shell/help-overlay.ui
+ shell/main.c
++shell/traditional-menus.ui
+Index: evince-3.22.1/shell/ev-window-title.c
+===================================================================
+--- a/shell/ev-window-title.c	2018-10-23 20:48:09.000000000 +0200
++++ b/shell/ev-window-title.c	2019-03-03 02:24:29.749584059 +0100
+@@ -32,6 +32,8 @@
+ #define EV_BACKEND_PS  "PSDocument"
+ #define EV_BACKEND_PDF "PdfDocument"
+ 
++gboolean in_desktop (const gchar *name);
++
+ typedef struct
+ {
+ 	const gchar *backend;
+@@ -93,6 +95,30 @@
+ 	}
+ }
+ 
++gboolean
++in_desktop (const gchar *name)
++{
++	const gchar *desktop_name_list;
++	gchar **names;
++	gboolean in_list = FALSE;
++	gint i;
++
++	desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
++	if (!desktop_name_list)
++		return FALSE;
++
++	names = g_strsplit (desktop_name_list, ":", -1);
++	for (i = 0; names[i] && !in_list; i++)
++		if (strcmp (names[i], name) == 0) {
++			in_list = TRUE;
++			break;
++		}
++	g_strfreev (names);
++
++	return in_list;
++}
++
++
+ static void
+ ev_window_title_update (EvWindowTitle *window_title)
+ {
