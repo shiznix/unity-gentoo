@@ -13,7 +13,7 @@ URELEASE="cosmic"
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
 KEYWORDS="~amd64 ~x86"
-IUSE="accessibility +chat +ehooks gnome gnome-extras +nocsd +unity-extras +xdm"
+IUSE="accessibility +chat gnome gnome-extras +nocsd +unity-extras +xdm"
 RESTRICT="mirror"
 
 DEPEND="gnome-base/gnome-core-libs
@@ -24,6 +24,7 @@ DEPEND="gnome-base/gnome-core-libs
 	unity-base/unity
 	unity-base/unity-build-env
 	unity-base/unity-control-center
+	unity-extra/ehooks
 	unity-indicators/unity-indicators-meta
 	unity-lenses/unity-lens-meta
 	x11-misc/notify-osd
@@ -37,7 +38,6 @@ DEPEND="gnome-base/gnome-core-libs
 	chat? (
 		net-im/empathy
 		net-libs/telepathy-indicator )
-	ehooks? ( unity-extra/ehooks )
 	gnome? ( gnome-base/gnome-core-apps )
 	gnome-extras? ( gnome-base/gnome-extra-apps )
 	nocsd? ( x11-misc/gtk3-nocsd )
