@@ -75,13 +75,13 @@ for x in "${dirs[@]}"; do
 	m=${m%/}
 	m=${m#*/ehooks/}
 	## Get package SLOT.
-	[[ ${m} == *":"+([0-9,.]) ]] && slot="${m#*:}" || slot=""
+	[[ ${m} == *":"+([0-9.]) ]] && slot="${m#*:}" || slot=""
 	m="${m%:*}"
 
 	## Search for installed package(s).
 	prev_shopt=$(shopt -p nullglob)
 	shopt -s nullglob
-	pkg=( "${sys_db}${m}-"[0-9]*/ )
+	[[ -d ${sys_db}${m} ]] && pkg=( "${sys_db}${m}" ) || pkg=( "${sys_db}${m}"{-[0-9],.[0-9],-r[0-9]}*/ )
 	${prev_shopt}
 
 	for n in "${pkg[@]}"; do
@@ -119,7 +119,7 @@ ewarn() {
 
 echo
 if [[ -n ${EHOOK_UPDATE[@]} ]]; then
-	ewarn "Rebuild packages affected by the ebuild hooks changes:"
+	ewarn "Rebuild the packages affected by the ebuild hooks changes:"
 	ewarn "emerge -1 ${EHOOK_UPDATE[@]}"
 else
 	echo " ${color_green}${color_bold}*${color_norm} No rebuild needed"
