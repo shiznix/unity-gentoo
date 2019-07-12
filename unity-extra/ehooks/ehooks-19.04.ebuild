@@ -47,22 +47,22 @@ pkg_preinst() {
 		use "${x}" && portageq has_version / unity-extra/ehooks["${x}"] && continue
 		use "${x}" || portageq has_version / unity-extra/ehooks["${x}"] || continue
 
-		## Search for ehook(s) using changed USE-flag.
+		## Get ebuild hooks containing recently changed USE-flag.
 		prev_shopt=$(shopt -p nullglob)
 		shopt -s nullglob
 		ehk=( $(fgrep -l "${x}" "$(/usr/bin/portageq get_repo_path / unity-gentoo)"/profiles/releases/"${URELEASE}"/ehooks/*/*/*.ehook) )
 		${prev_shopt}
 
 		for m in "${ehk[@]}"; do
-			## Get CATEGORY/PACKAGE.
+			## Get ${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}} from ebuild hook's path.
 			m=${m%/*.ehook}
 			m=${m#*/ehooks/}
-			## Get package SLOT.
-			[[ ${m} == *":"+([0-9,.]) ]] && slot="${m#*:}" || slot=""
+			## Get ${SLOT}.
+			[[ ${m} == *":"+([0-9.]) ]] && slot="${m#*:}" || slot=""
 			m="${m%:*}"
 
-			## Search for installed package(s).
-			prev_shopt=$(shopt -p nullglob)
+			## Get installed packages affected by the ebuild hook.
+			prev_shopt=$(shopt -p nullglob) ## don't use extglob
 			shopt -s nullglob
 			[[ -d ${sys_db}${m} ]] && pkg=( "${sys_db}${m}" ) || pkg=( "${sys_db}${m}"{-[0-9],.[0-9],-r[0-9]}*/ )
 			${prev_shopt}
@@ -71,7 +71,7 @@ pkg_preinst() {
 				## Try another package if slots differ.
 				[[ -z ${slot} ]] || fgrep -qsx "${slot}" "${n}/SLOT" || continue
 
-				## Get =CATEGORY/PACKAGE-VERSION.
+				## Get =${CATEGORY}/${PF} from package's ${sys_db} path.
 				n="${n%/}"
 				n="${n#${sys_db}}"
 				EHOOK_UPDATE+=( "=${n}" )
