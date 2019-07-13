@@ -6,7 +6,7 @@ EBUILD HOOKS
   to maintain. Loosly based on eapply_user function from /usr/lib/portage/python*/phase-helpers.sh
   and https://wiki.gentoo.org/wiki//etc/portage/patches#Enabling_.2Fetc.2Fportage.2Fpatches_for_all_ebuilds.
 
-* Ebuild hooks are located in /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks directory
+* Ebuild hooks are located in basedir=/var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks directory
 
 * Optional ebuild hooks are managed via unity-extra/ehooks USE-flags
   and ehook_use and ehook_require query functions (see below)
@@ -20,14 +20,18 @@ EBUILD HOOKS
 		-c, --check	generate emerge command when changes found
 		-r, --reset	set ebuild hooks changes as applied
 
-* pkgdir search order:
-  e.g. package app-arch/file-roller-3.22.3:0
-	1) ${basedir}/app-arch/file-roller-3.22.3-r0
-	2) ${basedir}/app-arch/file-roller-3.22.3
-	3) ${basedir}/app-arch/file-roller-3.22
-	4) ${basedir}/app-arch/file-roller-3
-	5) ${basedir}/app-arch/file-roller
-	6) ${basedir}/app-arch/file-roller:0
+* Package's ebuild hooks search order:
+  e.g. package app-arch/file-roller-3.22.3-r0:0
+	 1) ${basedir}/app-arch/file-roller-3.22.3-r0:0
+	 2) ${basedir}/app-arch/file-roller-3.22.3-r0
+	 3) ${basedir}/app-arch/file-roller-3.22.3:0
+	 4) ${basedir}/app-arch/file-roller-3.22.3
+	 5) ${basedir}/app-arch/file-roller-3.22:0
+	 6) ${basedir}/app-arch/file-roller-3.22
+	 7) ${basedir}/app-arch/file-roller-3:0
+	 8) ${basedir}/app-arch/file-roller-3
+	 9) ${basedir}/app-arch/file-roller:0
+	10) ${basedir}/app-arch/file-roller
 	- empty pkgdir EXCLUDES package
 
 * File format to trigger ebuild hook:

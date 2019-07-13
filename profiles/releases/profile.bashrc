@@ -52,7 +52,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		pkg \
 		basedir="$(/usr/bin/portageq get_repo_path / unity-gentoo)/profiles/releases/${PROFILE_RELEASE}/ehooks"
 
-	for pkg in ${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{,:${SLOT%/*}}; do
+	for pkg in ${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{:${SLOT%/*},}; do
 		if [[ -d ${basedir}/${pkg} ]]; then
 			local prev_shopt=$(shopt -p nullglob)
 			shopt -s nullglob
