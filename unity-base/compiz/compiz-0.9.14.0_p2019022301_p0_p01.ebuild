@@ -86,6 +86,11 @@ src_prepare() {
 #	export S="${WORKDIR}/${P}"
 #	cd "${S}"
 
+	# Gentoo's www-client/chromium Window Class ID is "Chromium-browser-chromium" for CCSM's Composite plugin "Undirect" list #
+	#  Fixes desktop freeze when returning from fullscreen video when using proprietary gfx drivers #
+	sed -e 's:!(class=chromium-browser):!(class=chromium-browser) \&amp; !(class=Chromium-browser-chromium):g' \
+		-i plugins/composite/composite.xml.in
+
 	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
 	sed -e 's:xubuntu:xunity:g' \
 		-i debian/65compiz_profile-on-session || die
