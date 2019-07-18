@@ -4,14 +4,14 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6,3_7} )
 
-URELEASE="disco"
+URELEASE="disco-updates"
 #TODO most of those classes are not used
 inherit meson bash-completion-r1 epunt-cxx flag-o-matic gnome2 libtool linux-info \
 	multilib multilib-minimal pax-utils python-single-r1 toolchain-funcs ubuntu-versionator versionator virtualx
 
 MY_P="${PN}2.0_${PV}"
 MY_PV="${PV}"
-UVER="-${PVR_PL_MINOR}"
+#UVER="-${PVR_PL_MINOR}"
 #S="${WORKDIR}/${PN}-${PV}"
 
 # Until bug #537330 glib is a reverse dependency of pkgconfig and, then
