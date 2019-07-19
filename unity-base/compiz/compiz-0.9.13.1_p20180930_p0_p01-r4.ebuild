@@ -87,10 +87,11 @@ src_prepare() {
 	export S="${WORKDIR}/${P}"
 	cd "${S}"
 
-	# Gentoo's www-client/chromium Window Class ID is "Chromium-browser-chromium" for CCSM's Composite plugin "Undirect" list #
+	# Gentoo's www-client/chromium Window Class ID is "Chromium-browser-chromium" for CCSMs Composite plugin "Undirect" list #
 	#	www-client/google-chrome Window Class ID is "Google-chrome"
+	#       media-tv/kodi Window Class ID is "Kodi"
 	#  Fixes desktop freeze when returning from fullscreen video when using proprietary gfx drivers #
-	sed -e 's:!(class=chromium-browser):!(class=chromium-browser) \&amp; !(class=Chromium-browser-chromium) \&amp; !(class=Google-chrome):g' \
+	sed -e 's:!(class=chromium-browser):!(class=chromium-browser) \&amp; !(class=Chromium-browser-chromium) \&amp; !(class=Google-chrome) \&amp; !(class=Kodi):g' \
 		-i plugins/composite/composite.xml.in
 
 	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
@@ -101,7 +102,7 @@ src_prepare() {
 	sed '/add_subdirectory (config)/d' \
 		-i compizconfig/libcompizconfig/CMakeLists.txt || die
 
-	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
+	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to "append-cppflags -DNDEBUG" #
 	#	resulting in compiz window placement not working #
 	export CMAKE_BUILD_TYPE=none
 
