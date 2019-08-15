@@ -63,13 +63,12 @@ dev-lang/mono-4.4			# Fix as it's not able to build with current stable dev-libs
 dev-lang/mono-4.8			# Fix media-sound/banshee not launching on dev-lang/mono-4.8
 gnome-extra/nemo			# Patches nemo-autostart.desktop to allow starting in Unity desktop
 mail-client/thunderbird			# Add Unity menubar and desktop launcher with quicklist and translations
-mate-base/mate-desktop			# Add gschema keys to support Global Menu (LP #1675956)
 mate-base/mate-panel			# Disable not working high dpi scaling and prevent menu-bar being hidden when Global Menus are enabled
 media-fonts/ubuntu-font-family		# Add Ubuntu medium font (e.g. used by unity-indicators/indicator-keyboard)
 net-irc/quassel				# Fix notification icon not appearing in Unity
 sys-auth/polkit-pkla-compat		# Fix localstatedir path (/var/lib)
+www-client/chromium			# Required to support Unity Launcher icon effects (no duplicate icons, quicklist menu, progress bar, window title bar fixes etc.)
 www-client/firefox			# Add Unity menubar and desktop launcher with quicklist and translations
-www-client/firefox-60			# Extended Support Release. Add Unity menubar and desktop launcher with quicklist and translations
 
 * Optional ebuild hooks managed via unity-extra/ehooks USE-flags:
 app-office/libreoffice			# Add Human icon theme and make it the default
