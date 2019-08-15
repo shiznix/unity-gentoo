@@ -27,15 +27,17 @@ src_install() {
 
 pkg_preinst() {
 	local \
+		count=1 \
 		sys_db="/var/db/pkg/" \
-		count=0 \
-		x m n slot prev_shopt
+		repo_dir pkg_flag sys_flag x m n slot prev_shopt
 
 	local -a \
 		ehk=() pkg=() \
 		indicator=( "|" "/" "-" "\\" )
 
-	printf "%s  " "Looking for USE-flag changes"
+	printf "%s" "Looking for USE-flag changes ${indicator[0]}"
+
+	repo_dir="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
 
 	for x in ${IUSE}; do
 		## Progress indicator.
@@ -44,13 +46,14 @@ pkg_preinst() {
 		count=$((count + 1))
 
 		## Try another USE-flag if there is no change.
-		use "${x}" && portageq has_version / unity-extra/ehooks["${x}"] && continue
-		use "${x}" || portageq has_version / unity-extra/ehooks["${x}"] || continue
+		use "${x}" && pkg_flag=1 || pkg_flag=0
+		portageq has_version / unity-extra/ehooks["${x}"] && sys_flag=1 || sys_flag=0
+		[[ ${pkg_flag} -eq ${sys_flag} ]] && continue
 
 		## Get ebuild hooks containing recently changed USE-flag.
 		prev_shopt=$(shopt -p nullglob)
 		shopt -s nullglob
-		ehk=( $(fgrep -l "${x}" "$(/usr/bin/portageq get_repo_path / unity-gentoo)"/profiles/releases/"${URELEASE}"/ehooks/*/*/*.ehook) )
+		ehk=( $(fgrep -l "${x}" "${repo_dir}"/profiles/releases/"${URELEASE}"/ehooks/*/*/*.ehook) )
 		${prev_shopt}
 
 		for m in "${ehk[@]}"; do
@@ -79,15 +82,15 @@ pkg_preinst() {
 		done
 	done
 
-	## Remove duplicates.
-	EHOOK_UPDATE=( $(printf "%s\n" "${EHOOK_UPDATE[@]}" | sort -u) )
-
 	printf "\b\b%s\n" "... done!"
 }
 
 pkg_postinst() {
 	echo
 	if [[ -n ${EHOOK_UPDATE[@]} ]]; then
+		## Remove duplicates.
+		EHOOK_UPDATE=( $(printf "%s\n" "${EHOOK_UPDATE[@]}" | sort -u) )
+
 		ewarn "Rebuild the packages affected by the USE-flag changes:"
 		ewarn "emerge -1 ${EHOOK_UPDATE[@]}"
 	else

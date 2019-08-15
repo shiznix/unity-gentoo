@@ -2,7 +2,6 @@
 
 color_norm=$(tput sgr0)
 color_bold=$(tput bold)
-color_green=$(tput setaf 2)
 color_blue=$(tput setaf 4)
 color_cyan=$(tput setaf 6)
 
@@ -31,7 +30,7 @@ case $1 in
 		echo "		Generate emerge command when changes found."
 		echo
 		echo "	${color_blue}${color_bold}-r${color_norm}, ${color_blue}${color_bold}--reset${color_norm}"
-		echo "		Set ebuild hooks changes as applied."
+		echo "		Set ebuild hooks changes as applied (reset modification time)."
 		echo
 		exit 1
 esac
@@ -49,8 +48,13 @@ indicator() {
 
 printf "%s  " "Looking for ebuild hooks changes"
 
-arr=( "nzero" )
+indicator
+
+repo_dir="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
+urelease="$(readlink /etc/portage/make.profile | awk -F/ '{print $(NF-0)}')"
 wcard="*/*/"
+
+arr=( "nzero" )
 
 ## Get all ebuild hooks (sub)directories.
 while [[ -n ${arr[@]} ]]; do
@@ -58,7 +62,7 @@ while [[ -n ${arr[@]} ]]; do
 
 	prev_shopt=$(shopt -p nullglob)
 	shopt -s nullglob
-	arr=( "$(/usr/bin/portageq get_repo_path / unity-gentoo)"/profiles/releases/"$(readlink /etc/portage/make.profile | awk -F/ '{print $(NF-0)}')"/ehooks/${wcard} )
+	arr=( "${repo_dir}"/profiles/releases/"${urelease}"/ehooks/${wcard} )
 	${prev_shopt}
 
 	ehk+=( "${arr[@]}" )
@@ -88,7 +92,6 @@ for x in "${ehk[@]}"; do
 
 	for n in "${pkg[@]}"; do
 		## Try another package if modification time is newer or equal than the ebuild hook's (sub)directory time.
-		## TODO: check for modification time of templates.
 		sys_date=$(date -r "${n}" "+%s")
 		[[ ${sys_date} -ge $(date -r "${x}" "+%s") ]] && continue
 
@@ -100,7 +103,9 @@ for x in "${ehk[@]}"; do
 		[[ -z ${req} ]] || portageq has_version / unity-extra/ehooks["${req/ehook_require }"] || continue
 
 		## Set ebuild hook's modification time equal to package's time when --reset option given.
-		[[ -n ${reset} ]] && touch -m -t $(date -d @"${sys_date}" +%Y%m%d%H%M.%S) "${x}" && continue
+		[[ -n ${reset} ]] && touch -m -t $(date -d @"${sys_date}" +%Y%m%d%H%M.%S) "${x}" 2>/dev/null && reset="applied" && continue
+		## Get ownership of file when 'touch: cannot touch "${x}": Permission denied' and quit.
+		[[ -n ${reset} ]] && reset=$(stat -c "%U:%G" "${x}") && break 2
 
 		## Get =${CATEGORY}/${PF} from package's ${sys_db} path.
 		n="${n%/}"
@@ -109,10 +114,13 @@ for x in "${ehk[@]}"; do
 	done
 done
 
-# Remove duplicates.
-EHOOK_UPDATE=( $(printf "%s\n" "${EHOOK_UPDATE[@]}" | sort -u) )
+printf "\b\b%s\n\n" "... done!"
 
-printf "\b\b%s\n" "... done!"
+einfo() {
+	local color_green=$(tput setaf 2)
+
+	echo " ${color_green}${color_bold}*${color_norm} $*"
+}
 
 ewarn() {
 	local color_yellow=$(tput setaf 3)
@@ -120,11 +128,26 @@ ewarn() {
 	echo " ${color_yellow}${color_bold}*${color_norm} $*"
 }
 
-echo
 if [[ -n ${EHOOK_UPDATE[@]} ]]; then
+	# Remove duplicates.
+	EHOOK_UPDATE=( $(printf "%s\n" "${EHOOK_UPDATE[@]}" | sort -u) )
+
 	ewarn "Rebuild the packages affected by the ebuild hooks changes:"
 	ewarn "emerge -1 ${EHOOK_UPDATE[@]}"
 else
-	echo " ${color_green}${color_bold}*${color_norm} No rebuild needed"
+	case ${reset} in
+		"")
+			einfo "No rebuild needed"
+			;;
+		applied)
+			einfo "Reset applied"
+			;;
+		yes)
+			einfo "Reset not needed"
+			;;
+		*)
+			ewarn "Permission denied to apply reset (ownership ${reset})"
+			;;
+	esac
 fi
 echo

@@ -18,7 +18,7 @@ EBUILD HOOKS
 		ehooks [OPTION]
 	- options:
 		-c, --check	generate emerge command when changes found
-		-r, --reset	set ebuild hooks changes as applied
+		-r, --reset	set ebuild hooks changes as applied (reset modification time)
 
 * Package's ebuild hooks search order:
   e.g. package app-arch/file-roller-3.22.3-r0:0
