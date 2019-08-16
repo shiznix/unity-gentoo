@@ -31,3 +31,8 @@ src_prepare() {
 	eautoreconf
 	append-flags -Wno-error
 }
+
+src_install() {
+	default
+	prune_libtool_files
+}

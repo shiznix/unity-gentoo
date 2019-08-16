@@ -114,4 +114,6 @@ src_install() {
 	# perform VACUUM SQLite database on startups every 10 days
 	exeinto /usr/libexec/${PN}
 	doexe "${WORKDIR}/debian/zeitgeist-maybe-vacuum"
+
+	prune_libtool_files
 }

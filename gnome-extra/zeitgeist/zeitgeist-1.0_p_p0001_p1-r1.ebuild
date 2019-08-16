@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="LGPL-2+ LGPL-3+ GPL-2+"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+datahub downloads-monitor +fts introspection nls sql-debug telepathy"
 RESTRICT="mirror"
 
@@ -116,4 +116,6 @@ src_install() {
 	# perform VACUUM SQLite database on startups every 10 days
 	exeinto /usr/libexec/${PN}
 	doexe "${WORKDIR}/debian/zeitgeist-maybe-vacuum"
+
+	prune_libtool_files
 }

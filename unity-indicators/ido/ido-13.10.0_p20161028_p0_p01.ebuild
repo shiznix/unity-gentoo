@@ -34,3 +34,8 @@ src_prepare() {
 	append-cflags -Wno-error
 	eautoreconf
 }
+
+src_install() {
+	default
+	prune_libtool_files
+}
