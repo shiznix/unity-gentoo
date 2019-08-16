@@ -147,9 +147,11 @@ src_install() {
 	dodir /usr/share/lightdm/guest-session/skel
 
 	# Add guest session GSettings defaults
-	g_settings_path="/etc/guest-session/gsettings/"
-	insinto ${g_settings_path}
-	doins "${FILESDIR}"/99_default.gschema.override
+	gsettings_path="/etc/guest-session/gsettings/"
+	local gschema="99_default"
+	insinto ${gsettings_path}
+	newins "${FILESDIR}/${gschema}".gsettings-override \
+		"${gschema}".gschema.override
 
 	# Install systemd tmpfiles.d file
 	insinto /usr/lib/tmpfiles.d
@@ -190,7 +192,7 @@ pkg_postinst() {
 	elog "and set 'allow-guest=true'."
 	elog
 	elog "Guest session GSettings defaults can be"
-	elog "found in '${g_settings_path}'."
+	elog "found in '${gsettings_path}'."
 	elog "You can place your settings over here."
 	elog "Higher numbered files have higher priority."
 	elog

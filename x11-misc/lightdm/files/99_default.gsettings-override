@@ -1,2 +1,2 @@
 [org.gnome.desktop.lockdown]
-disable-lock-screen=true
+disable-lock-screen = true

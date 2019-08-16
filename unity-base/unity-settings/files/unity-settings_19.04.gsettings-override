@@ -1,33 +1,31 @@
-##########################
-# unity specific session #
-##########################
+## Unity specific session ##
 
 [org.gnome.desktop.background:Unity]
 show-desktop-icons = false
-picture-uri = "file:///usr/share/backgrounds/warty-final-ubuntu.png"
+picture-uri = 'file:///usr/share/backgrounds/warty-final-ubuntu.png'
 
 # cannot provide per-desktop overrides for localised key #
 [org.nemo.desktop]
-font = "Ubuntu 11"
+font = 'Ubuntu 11'
 
 [org.nemo.desktop:Unity]
 show-desktop-icons = true
 
 [org.gnome.desktop.interface:Unity]
-gtk-theme = "Ambiance"
-icon-theme = "ubuntu-mono-dark"
-cursor-theme = "Vanilla-DMZ"
-font-name = "Ubuntu 11"
-monospace-font-name = "Ubuntu Mono 13"
+gtk-theme = 'Ambiance'
+icon-theme = 'ubuntu-mono-dark'
+cursor-theme = 'Vanilla-DMZ'
+font-name = 'Ubuntu 11'
+monospace-font-name = 'Ubuntu Mono 13'
 
 [org.gnome.desktop.peripherals.touchpad:Unity]
 tap-to-click = true
 
 [org.gnome.desktop.sound:Unity]
-theme-name = "ubuntu"
+theme-name = 'ubuntu'
 
 [org.gnome.desktop.session:Unity]
-session-name= "unity"
+session-name = 'unity'
 
 [org.gnome.desktop.wm.keybindings:Unity]
 maximize = ['<Primary><Super>Up','<Super>Up','<Primary><Alt>KP_5']
@@ -50,11 +48,11 @@ move-to-workspace-up = ['<Shift><Control><Alt>Up']
 move-to-workspace-down = ['<Shift><Control><Alt>Down']
 
 [org.gnome.desktop.wm.preferences:Unity]
-button-layout = "close,minimize,maximize:"
-mouse-button-modifier = "<Alt>"
-theme = "Ambiance"
-titlebar-font = "Ubuntu Bold 11"
-action-middle-click-titlebar = "lower"
+button-layout = 'close,minimize,maximize:'
+mouse-button-modifier = '<Alt>'
+theme = 'Ambiance'
+titlebar-font = 'Ubuntu Bold 11'
+action-middle-click-titlebar = 'lower'
 titlebar-uses-system-font = false
 
 [org.gnome.eog.ui:Unity]
@@ -66,28 +64,28 @@ trash-icon-visible = false
 volumes-visible = false
 
 [org.gnome.nautilus.icon-view:Unity]
-default-zoom-level = "small"
+default-zoom-level = 'small'
 
 [org.gnome.nautilus.preferences:Unity]
 open-folder-on-dnd-hover = false
 
 [org.gnome.settings-daemon.plugins.power:Unity]
-button-power = "interactive"
-button-sleep = "suspend"
-critical-battery-action = "suspend"
-power-button-action = "interactive"
+button-power = 'interactive'
+button-sleep = 'suspend'
+critical-battery-action = 'suspend'
+power-button-action = 'interactive'
 sleep-inactive-ac-timeout = 0
 
 [org.gnome.settings-daemon.plugins.xsettings:Unity]
-antialiasing = "rgba"
-hinting = "slight"
+antialiasing = 'rgba'
+hinting = 'slight'
 
 [org.gnome.settings-daemon.plugins.media-keys:Unity]
-screensaver = "<Control><Alt>l"
+screensaver = '<Control><Alt>l'
 
 [org.gnome.settings-daemon.plugins.print-notifications:Unity]
 active = false
 
 [org.gtk.Settings.FileChooser:Unity]
 sort-directories-first = true
-startup-mode = "cwd"
+startup-mode = 'cwd'
