@@ -68,3 +68,8 @@ src_configure() {
 		$(use_enable systemd) \
 		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
 }
+
+src_install() {
+	default
+	prune_libtool_files
+}

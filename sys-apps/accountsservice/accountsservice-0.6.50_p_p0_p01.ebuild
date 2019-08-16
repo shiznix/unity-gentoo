@@ -73,4 +73,6 @@ src_install() {
 	emake DESTDIR="${ED}" install
 	keepdir /var/lib/AccountsService/icons
 	keepdir /var/lib/AccountsService/users
+
+	prune_libtool_files
 }
