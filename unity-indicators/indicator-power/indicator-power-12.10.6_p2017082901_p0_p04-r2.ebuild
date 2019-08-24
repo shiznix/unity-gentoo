@@ -23,6 +23,7 @@ DEPEND="${RDEPEND}
 	dev-libs/glib:2
 	dev-libs/libappindicator
 	dev-libs/libdbusmenu
+	dev-util/cmake-extras
 	sys-power/upower
 	unity-base/unity-settings-daemon"
 
