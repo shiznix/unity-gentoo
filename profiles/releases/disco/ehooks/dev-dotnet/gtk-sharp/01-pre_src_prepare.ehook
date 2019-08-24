@@ -1,0 +1,5 @@
+ebuild_hook() {
+	# Cater for 'lib64' on newer systems where 'lib' may no longer be a symlink to 'lib64' #
+	sed -e "s:lib:$(get_libdir):g" \
+		-i {generator,parser}/gapi*.in
+}
