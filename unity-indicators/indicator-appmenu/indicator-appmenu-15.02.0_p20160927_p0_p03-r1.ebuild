@@ -30,7 +30,7 @@ S="${WORKDIR}"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eautoreconf
-	append-cflags -Wno-error
+	append-cflags -Wno-error=incompatible-pointer-types
 }
 
 src_install() {
