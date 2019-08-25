@@ -29,7 +29,7 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eautoreconf
-	append-flags -Wno-error
+	append-flags -Wno-error=deprecated-declarations
 }
 
 src_install() {
