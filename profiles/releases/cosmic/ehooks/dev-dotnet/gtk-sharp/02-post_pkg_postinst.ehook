@@ -1,14 +1,1 @@
-## Taken from ubuntu-versionator_pkg_postinst.
-ebuild_hook() {
-	if [[ -x /usr/bin/bamf-index-create ]]; then
-		einfo "Checking bamf-2.index"
-		/usr/bin/bamf-index-create triggered
-	fi
-
-	if [[ $(systemctl is-enabled ureadahead-collect.service 2>/dev/null) == enabled ]] \
-		&& [[ -w /var/lib/ureadahead/pack ]] \
-		&& [[ -d ${ED%/}/etc ]]; then
-			elog "Ureadahead will be reprofiled on next reboot"
-			rm -f /var/lib/ureadahead/pack /var/lib/ureadahead/*.pack 2>/dev/null
-	fi
-}
+../../templates/cb-post_pkg_postinst.ehook
