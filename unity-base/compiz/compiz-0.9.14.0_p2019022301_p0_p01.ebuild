@@ -101,6 +101,10 @@ src_prepare() {
 	sed '/add_subdirectory (config)/d' \
 		-i compizconfig/libcompizconfig/CMakeLists.txt || die
 
+	# Fix libdir #
+	sed "s:/lib/:/$(get_libdir)/:g" \
+		-i compizconfig/compizconfig-python/CMakeLists.txt || die
+
 	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to "append-cppflags -DNDEBUG" #
 	#	resulting in compiz window placement not working #
 	export CMAKE_BUILD_TYPE=none
@@ -203,7 +207,7 @@ src_install() {
 #		doins debian/profile_upgrades/*.upgrade
 ##################################
 
-		insinto /usr/lib/compiz/migration/
+		insinto /usr/$(get_libdir)/compiz/migration/
 		doins postinst/convert-files/*.convert
 
 		# Default GSettings settings #
