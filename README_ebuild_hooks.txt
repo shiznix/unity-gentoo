@@ -1,10 +1,12 @@
 EBUILD HOOKS
 
-* Patching system looking for existence of {pre,post}_${EBUILD_PHASE_FUNC}.ehook
-  and run it to perform ebuild hook. Mimic the function of eapply_user
+* It's a patching system that looks for existence of {pre,post}_${EBUILD_PHASE_FUNC}.ehook
+  and run it to perform ebuild hook. It mimics the function of eapply_user
   and /etc/portage/patches/ so we can custom patch packages we don't need
-  to maintain. Loosly based on eapply_user function from /usr/lib/portage/python*/phase-helpers.sh
-  and https://wiki.gentoo.org/wiki//etc/portage/patches#Enabling_.2Fetc.2Fportage.2Fpatches_for_all_ebuilds.
+  to maintain. It's loosly based on eapply_user function from /usr/lib/portage/python*/phase-helpers.sh
+  and https://wiki.gentoo.org/wiki//etc/portage/patches#Enabling_.2Fetc.2Fportage.2Fpatches_for_all_ebuilds
+
+  see /var/lib/layman/unity-gentoo/profiles/releases/profile.bashrc
 
 * Ebuild hooks are located in basedir=/var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks directory
 
@@ -32,6 +34,7 @@ EBUILD HOOKS
 	 8) ${basedir}/app-arch/file-roller-3
 	 9) ${basedir}/app-arch/file-roller:0
 	10) ${basedir}/app-arch/file-roller
+
 	- empty pkgdir EXCLUDES package
 
 * File format to trigger ebuild hook:
@@ -52,9 +55,12 @@ EBUILD HOOKS
 	14) post_pkg_preinst.ehook
 	15) pre_pkg_postinst.ehook
 	16) post_pkg_postinst.ehook
-	- it's possible to use more files in one phase:
+
+	- it's possible to use more files in one phase
+	  see net-im/pidgin:
 		01-pre_pkg_setup.ehook
-		02-pre_pkg_setup.ehook (e.g. symlink to ../templates/ca-pre_pkg_setup.ehook)
+		02-pre_pkg_setup.ehook
+
 	- it's possible to use filename prefix and sort it for better overview:
 		[...anything...]pre_src_prepare.ehook
 		01_pre_src_prepare.ehook
@@ -64,14 +70,22 @@ EBUILD HOOKS
 	ebuild_hook() {
 		[COMMANDS...]
 	}
+
+	- it's possible to use any ebuild functions
+
 	- templates are in .../ehooks/templates directory
+	  the preferred way of using templates are symbolic links:
+		ln -s ../../templates/cb-post_pkg_postinst.ehook 04-post_pkg_postinst.ehook
+
 	- command to apply patches in 'prepare' phase:
 		eapply "${EHOOK_FILESDIR}"
-	- command to trigger eautoreconf in pre_src_prepare phase:
+
+	- command to trigger 'eautoreconf'
+	  in pre_src_prepare phase:
 		eautoreconf
-	- and in post_src_prepare phase:
+	  and in post_src_prepare phase:
 		AT_NOELIBTOOLIZE="yes" eautoreconf
-	- it's possible to use any ebuild functions
+
 	- errors log is located at ${T}/ehook.log
 
 * ${EHOOK_FILESDIR}
@@ -85,12 +99,24 @@ EBUILD HOOKS
 * Query functions:
 	ehook_use [USE-flag]
 	- it returns a true value if unity-extra/ehooks USE-flag is declared
-	- e.g. if ehook_use nemo_noroot; then...
-	  see gnome-extra/nemo 02-pre_src_prepare.ehook
+	- e.g. 'if ehook_use nemo_noroot; then'...
+	  see gnome-extra/nemo:
+		02-pre_src_prepare.ehook
+
+		ebuild_hook() {
+			if ehook_use nemo_noroot; then
+				sed -i \
+					-e "/gboolean show_open_as_root/{s/no_selection_or_one_dir/FALSE/}" \
+					src/nemo-view.c || die
+				einfo "  Open as Root context menu action removed"
+			fi
+		}
 
 	ehook_require [USE-flag]
 	- it skips the rest of the related ebuild hooks if unity-extra/ehooks USE-flag is not declared
 	- it should be the first command of ebuild hooks
-	- e.g. ehook_require gnome-terminal_theme
-	  see x11-terms/gnome-terminal 01-post_src_prepare.ehook
-	    and x11-libs/vte:2.91 01-pre_src_prepare.ehook
+	- e.g. 'ehook_require gnome-terminal_theme'
+	  see x11-terms/gnome-terminal:
+		01-post_src_prepare.ehook
+	  and x11-libs/vte:2.91:
+		01-pre_src_prepare.ehook
