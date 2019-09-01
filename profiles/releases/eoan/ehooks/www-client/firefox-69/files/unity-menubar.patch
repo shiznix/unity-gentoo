@@ -5242,8 +5242,8 @@
 --- a/widget/gtk/components.conf
 +++ b/widget/gtk/components.conf
 @@ -75,6 +75,14 @@ Classes = [
-         'type': 'nsTransferable',
-         'headers': ['/widget/nsTransferable.h'],
+         'headers': ['/widget/gtk/nsApplicationChooser.h'],
+         'processes': ProcessSelector.MAIN_PROCESS_ONLY,
      },
 +    {
 +        'cid': '{0B3FE5AA-BC72-4303-85AE-76365DF1251D}',
