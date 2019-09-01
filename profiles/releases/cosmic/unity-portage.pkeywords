@@ -93,8 +93,8 @@ media-plugins/grilo-plugins:0.3::gentoo
 
 # www-client/firefox related #
 dev-lang/rust::gentoo
-=dev-libs/nspr-4.21*::gentoo
-=dev-libs/nss-3.45*::gentoo
+=dev-libs/nspr-4.22*::gentoo
+=dev-libs/nss-3.46*::gentoo
 dev-util/cbindgen::gentoo
 media-libs/dav1d::gentoo
 media-libs/libaom::gentoo
