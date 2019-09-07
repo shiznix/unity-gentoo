@@ -6,7 +6,6 @@ EAPI=6
 URELEASE="artful"
 inherit cmake-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/d/${PN}"
 UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Dbus-binding leveraging C++-11"
