@@ -1,39 +1,40 @@
 EBUILD HOOKS
 
 * It's a patching system that looks for existence of {pre,post}_${EBUILD_PHASE_FUNC}.ehook
-  and run it to perform ebuild hook. It mimics the function of eapply_user
-  and /etc/portage/patches/ so we can custom patch packages we don't need
-  to maintain. It's loosly based on eapply_user function from /usr/lib/portage/python*/phase-helpers.sh
-  and https://wiki.gentoo.org/wiki//etc/portage/patches#Enabling_.2Fetc.2Fportage.2Fpatches_for_all_ebuilds
+  and runs it to perform hook. It provides a way to patch packages we don't need to maintain.
+  It's loosly based on eapply_user function from /usr/lib/portage/python*/phase-helpers.sh script
+  and pre_src_prepare function from https://wiki.gentoo.org/wiki//etc/portage/patches link.
 
-  see /var/lib/layman/unity-gentoo/profiles/releases/profile.bashrc
+  see profiles/releases/profile.bashrc
 
-* Ebuild hooks are located in basedir=/var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks directory
+* Overlay's ebuild hooks are located in profiles/releases/${PROFILE_RELEASE}/ehooks directory.
 
 * Optional ebuild hooks are managed via unity-extra/ehooks USE-flags
-  and ehook_use and ehook_require query functions (see below)
+  and ehook_use and ehook_require query functions (see below).
 
-* Updates or changes are managed via /usr/bin/ehooks.
-  /usr/bin/ehooks is a symlink to /var/lib/layman/unity-gentoo/ehooks_check.sh script.
-  It looks for ebuild hooks changes and generates emerge command needed to apply the changes.
+* Updates or changes are managed via /usr/bin/ehooks. It looks for ebuild
+  hooks changes and generates emerge command needed to apply the changes.
+  It's a symlink to /var/lib/layman/unity-gentoo/ehooks_check.sh script.
+
 	- usage:
 		ehooks [OPTION]
 	- options:
 		-c, --check	generate emerge command when changes found
-		-r, --reset	set ebuild hooks changes as applied (reset modification time)
+		-r, --reset	set changes as applied (reset modification time)
 
-* Package's ebuild hooks search order:
-  e.g. package app-arch/file-roller-3.22.3-r0:0
-	 1) ${basedir}/app-arch/file-roller-3.22.3-r0:0
-	 2) ${basedir}/app-arch/file-roller-3.22.3-r0
-	 3) ${basedir}/app-arch/file-roller-3.22.3:0
-	 4) ${basedir}/app-arch/file-roller-3.22.3
-	 5) ${basedir}/app-arch/file-roller-3.22:0
-	 6) ${basedir}/app-arch/file-roller-3.22
-	 7) ${basedir}/app-arch/file-roller-3:0
-	 8) ${basedir}/app-arch/file-roller-3
-	 9) ${basedir}/app-arch/file-roller:0
-	10) ${basedir}/app-arch/file-roller
+* Search order:
+  e.g. package app-arch/file-roller-3.22.3-r0:0/0
+
+	 1) app-arch/file-roller-3.22.3-r0:0
+	 2) app-arch/file-roller-3.22.3-r0
+	 3) app-arch/file-roller-3.22.3:0
+	 4) app-arch/file-roller-3.22.3
+	 5) app-arch/file-roller-3.22:0
+	 6) app-arch/file-roller-3.22
+	 7) app-arch/file-roller-3:0
+	 8) app-arch/file-roller-3
+	 9) app-arch/file-roller:0
+	10) app-arch/file-roller
 
 	- empty pkgdir EXCLUDES package
 
@@ -99,7 +100,7 @@ EBUILD HOOKS
 * Query functions:
 	ehook_use [USE-flag]
 	- it returns a true value if unity-extra/ehooks USE-flag is declared
-	- e.g. 'if ehook_use nemo_noroot; then'...
+	- e.g. 'if ehook_use nemo_noroot; then'
 	  see gnome-extra/nemo:
 		02-pre_src_prepare.ehook
 
@@ -120,3 +121,11 @@ EBUILD HOOKS
 		01-post_src_prepare.ehook
 	  and x11-libs/vte:2.91:
 		01-pre_src_prepare.ehook
+
+* EHOOK_PATH variable defines the location of additional ebuild hooks. It provides a way
+  for users to apply their own ebuild hooks. It's set through /etc/portage/make.conf
+  - e.g. EHOOK_PATH="/home/ehooks"
+
+  - EHOOK_PATH's pkgdir overrides overlay's pkgdir
+  - for pkgdir naming rules see 'Search order' above
+  - empty pkgdir disables overlay's pkgdir

@@ -97,9 +97,9 @@ pkg_postinst() {
 		einfo "No rebuild needed"
 	fi
 
-	if [[ -d /etc/portage/ehooks ]]; then
+	if [[ -d /etc/portage/ehooks/conf.d ]]; then
 		echo
-		echo " * Note: You can safely remove '/etc/portage/ehooks' directory as it's not used anymore"
+		echo " * Note: You can safely remove '/etc/portage/ehooks/conf.d' directory as it's not used anymore"
 	fi
 	echo
 }

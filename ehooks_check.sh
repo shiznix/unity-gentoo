@@ -23,14 +23,15 @@ case $1 in
 		echo "	${color_blue}${color_bold}ehooks${color_norm} [${color_cyan}OPTION${color_norm}]"
 		echo
 		echo "${color_blue}${color_bold}DESCRIPTION${color_norm}"
-		echo "	/usr/bin/${color_blue}${color_bold}ehooks${color_norm} is a symlink to /var/lib/layman/unity-gentoo/ehooks_check.sh script. It looks for ebuild hooks changes and generates emerge command needed to apply the changes."
+		echo "	It looks for ebuild hooks changes and generates emerge command needed to apply the changes."
+		echo "	/usr/bin/${color_blue}${color_bold}ehooks${color_norm} is a symlink to /var/lib/layman/unity-gentoo/ehooks_check.sh script."
 		echo
 		echo "${color_blue}${color_bold}OPTIONS${color_norm}"
 		echo "	${color_blue}${color_bold}-c${color_norm}, ${color_blue}${color_bold}--check${color_norm}"
 		echo "		Generate emerge command when changes found."
 		echo
 		echo "	${color_blue}${color_bold}-r${color_norm}, ${color_blue}${color_bold}--reset${color_norm}"
-		echo "		Set ebuild hooks changes as applied (reset modification time)."
+		echo "		Set changes as applied (reset modification time)."
 		echo
 		exit 1
 esac
