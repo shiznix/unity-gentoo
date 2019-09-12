@@ -53,13 +53,19 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		basedir="$(/usr/bin/portageq get_repo_path / unity-gentoo)/profiles/releases/${PROFILE_RELEASE}/ehooks"
 
 	for pkg in ${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{:${SLOT%/*},}; do
-		if [[ -d ${basedir}/${pkg} ]]; then
-			local prev_shopt=$(shopt -p nullglob)
-			shopt -s nullglob
-			EHOOK_SOURCE=( "${basedir}/${pkg}"/*.ehook )
-			${prev_shopt}
-			break
+		if [[ -d ${EHOOK_PATH:=${basedir}}/${pkg} ]]; then
+			true
+		elif [[ -d ${basedir}/${pkg} ]]; then
+			EHOOK_PATH="${basedir}"
+		else
+			continue
 		fi
+
+		local prev_shopt=$(shopt -p nullglob)
+		shopt -s nullglob
+		EHOOK_SOURCE=( "${EHOOK_PATH}/${pkg}"/*.ehook )
+		${prev_shopt}
+		break
 	done
 
 	## Process EHOOK_SOURCE.
@@ -105,6 +111,10 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 		## Process current phase ebuild hook.
 		if [[ ${x} == *"${FUNCNAME[1]}.ehook" ]]; then
+
+		## Warn when ebuild hook is not readable.
+		[[ ! -r ${x} ]] \
+			&& ewarn "${x##*/}: not readable" && continue
 
 		source "${x}" 2>"${log}"
 		[[ -s ${log} ]] \
