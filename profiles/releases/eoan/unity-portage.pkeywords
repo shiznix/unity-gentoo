@@ -68,6 +68,7 @@ gnome-base/librsvg::gentoo
 # gnome-extra/gucharmap:2.90::gentoo
 >=gnome-extra/evolution-data-server-3.26::gentoo
 >=gnome-extra/zenity-3.28::gentoo
+gui-libs/libhandy::gentoo
 >=mail-client/evolution-3.26::gentoo
 media-fonts/cantarell::gentoo
 >=media-gfx/eog-3.26::gentoo
