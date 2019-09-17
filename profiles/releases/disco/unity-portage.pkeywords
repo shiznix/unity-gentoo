@@ -74,7 +74,7 @@ media-fonts/cantarell::gentoo
 >=media-gfx/eog-3.26::gentoo
 # >=media-libs/clutter-gtk-1.8.4::gentoo
 media-sound/paprefs::gentoo
-media-sound/pulseaudio::gentoo
+#media-sound/pulseaudio::gentoo
 # >=media-sound/sound-juicer-3.24::gentoo
 >=media-video/cheese-3.28::gentoo
 # >=media-video/totem-3.24::gentoo
