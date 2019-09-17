@@ -26,7 +26,7 @@ DEPEND="dev-libs/glib:2
 	gnome-base/gconf
 	gnome-base/libgtop
 	net-misc/curl
-	sys-apps/lm_sensors
+	sys-apps/lm-sensors
 	x11-libs/cairo
 	x11-libs/gtk+:3
 	x11-libs/libnotify
