@@ -36,6 +36,7 @@ COMMON_DEPEND="
 	extensions? ( media-video/totem[-nautilus] )
 "
 DEPEND="${COMMON_DEPEND}
+	dev-libs/libunity
 	>=dev-util/gdbus-codegen-2.51.2
 	dev-util/glib-utils
 	gtk-doc? (
