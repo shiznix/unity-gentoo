@@ -1,10 +1,5 @@
 ## Global masks ##
 
-# Keep Disco g-s-d at 3.30 for now as media keys stop working unless bumped to 3.34 along with x11-wm/mutter and gnome-base/gnome-desktop
-#   gsd-media-keys: Failed to grab accelerators: GDBus.Error:org.freedesktop.DBus.Error.InvalidArgs:
-#     Type of message, “(a(suu))”, does not match expected type “(a(su))” (16)
->=gnome-base/gnome-settings-daemon-3.32.0
-
 # mask gnome-3.34 packages
 =*/gnome*-*34*::gentoo
 =gnome-base/*-*34*::gentoo

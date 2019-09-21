@@ -53,6 +53,25 @@ src_install() {
 	default
 	save_config src/{bubble,defaults,dnd}.c
 	rm -f "${ED}"/usr/share/${PN}/icons/*/*/*/README
+
+	# kde-plasma/plasma-workspace provides a similar DBUS service that conflicts #
+	#  by advertising the same 'org.freedesktop.Notifications' name on DBUS #
+	#  This can cause dbus to fail both services in turn causing multimedia keys function to fail #
+	#  Other side-effect symptoms include nm-applet displaying incorrect network connectivity state and mouse cursor slow to appear on login #
+	if [ -n "$(grep org.freedesktop.Notifications$ /usr/share/dbus-1/services/* | grep -v org.freedesktop.Notifications.service)" ]; then
+		einfo
+		einfo "Conflicting notification service(s) have been found in /usr/share/dbus-1/services/"
+		einfo " Installing workaround as /etc/xdg/autostart/notify-osd.desktop"
+		einfo "Consider removing duplicate entries and re-emerging x11-misc/notify-osd"
+		einfo " to have notifications work at Display Manager login"
+		einfo "Review conflicting notification service(s) below:"
+		einfo
+		einfo "$(grep org.freedesktop.Notifications$ /usr/share/dbus-1/services/* | grep -v org.freedesktop.Notifications.service)"
+		einfo
+		rm -f "${ED}"/usr/share/dbus-1/services/org.freedesktop.Notifications.service
+		insinto /etc/xdg/autostart
+		doins "${FILESDIR}/notify-osd.desktop"
+	fi
 }
 
 pkg_preinst() {

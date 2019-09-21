@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Unity Notifications Daemon
+Exec=sh -c "/usr/lib64/notify-osd/notify-osd &"
+OnlyShowIn=Unity;
+NoDisplay=true
+X-GNOME-Autostart-Phase=DisplayServer
