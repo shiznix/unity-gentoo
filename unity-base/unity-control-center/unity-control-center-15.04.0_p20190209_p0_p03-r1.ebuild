@@ -12,7 +12,8 @@ UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Unity Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -135,6 +136,7 @@ DEPEND="!unity-base/gnome-control-center-signon
 S="${WORKDIR}"
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"      # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 
 	# Fudge a pass on broken hostname-helper test (see https://bugzilla.gnome.org/show_bug.cgi?id=650342) #
