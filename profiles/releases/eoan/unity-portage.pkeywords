@@ -186,6 +186,7 @@ dev-util/glib-utils **
 gnome-base/gconf **
 gnome-base/gnome-control-center **
 gnome-base/gnome-core-apps **
+gnome-base/gnome-core-libs **
 gnome-base/gnome-desktop **
 gnome-base/gnome-menus **
 gnome-base/gnome-panel **
