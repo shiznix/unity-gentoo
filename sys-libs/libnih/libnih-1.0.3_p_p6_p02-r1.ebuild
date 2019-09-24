@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="cosmic"
-inherit versionator eutils autotools toolchain-funcs multilib flag-o-matic ubuntu-versionator
+inherit versionator eutils autotools toolchain-funcs multilib flag-o-matic usr-ldscript ubuntu-versionator
 
 DESCRIPTION="Light-weight 'standard library' of C functions"
 HOMEPAGE="https://launchpad.net/libnih"
@@ -26,6 +26,8 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	epatch "${FILESDIR}"/${PN}-1.0.3-optional-dbus.patch
+	epatch "${FILESDIR}"/${PN}-1.0.3-pkg-config.patch
+	epatch "${FILESDIR}"/${PN}-1.0.3-signal-race.patch
 	eautoreconf
 }
 
