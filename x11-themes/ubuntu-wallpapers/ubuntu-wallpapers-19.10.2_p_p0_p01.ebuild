@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
