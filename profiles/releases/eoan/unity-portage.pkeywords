@@ -112,7 +112,6 @@ virtual/rust::gentoo
 app-admin/cgmanager
 app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
-app-emulation/lxc
 ~dev-cpp/gflags-2.1.2
 ~dev-dotnet/libgdiplus-2.10.9
 dev-lang/spidermonkey:60

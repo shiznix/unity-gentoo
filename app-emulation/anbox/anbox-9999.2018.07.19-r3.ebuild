@@ -16,17 +16,17 @@ SRC_URI="http://build.anbox.io/android-images/${IMG_PATH}/android_amd64.img
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="test privileged playstore"
+IUSE="test privileged +playstore"
 RESTRICT="mirror"
 
 ## Anbox makes use of LXC containers ##
 # File and directory permissions are set by LXC as either a 'privileged' or 'unprivileged' container #
 # For fperms to be correct inside the Anbox container, LXC must start the container as 'unprivileged' #
 #  Otherwise fperms will appear corrupt as 'u1_<uid>' and 'u1_<gid>' #
-# LXC hardcodes the use of sys-apps/shadow 'newuidmap' and 'newgidmap' (if they exist on the host) to map UID/GID inside the container #
-#	LXC requires correct setup of /etc/subuid and /etc/subgid files
-#	Anbox usually run inside a 'snap' environment, relies on LXC not detecting 'newuidmap' and 'newgidmap' on the host system, #
+# LXC hardcodes the use of sys-apps/shadow 'newuidmap' and 'newgidmap' (if they exist on the host) to map UID/GID from host to container #
+#	Anbox usually run confined inside a 'snap' environment, relies on LXC not detecting 'newuidmap' and 'newgidmap' on the host system, #
 #		leading to LXC then falling through to directly setup UID/GID mapping itself #
+#			 eliminating the need for correct setup of /etc/subuid and /etc/subgid files #
 # DEBUGGING:
 #	LXC tools can be used to test the container:
 #		lxc-start -P /var/lib/anbox/containers/ -n default -F
@@ -41,11 +41,15 @@ RESTRICT="mirror"
 #	Bind mounts as desktop user	/var/lib/anbox/cache on /var/lib/anbox/rootfs/cache
 #					/var/lib/anbox/data on /var/lib/anbox/rootfs/data
 # anbox.desktop automatically starts 'anbox session-manger' and launches the windowed Android Application Manager
+##
+# 'anbox session-manager' does the following:
+#	Sets up LXC container config and writes it out to /var/lib/anbox/containers/default/config
 
 RDEPEND="dev-util/android-tools
 	net-firewall/iptables"
+# '<app-emulation/lxc-3[cgmanager]' due to https://github.com/anbox/anbox/issues/669 #
 DEPEND="${RDEPEND}
-	app-emulation/lxc[cgmanager]
+	<app-emulation/lxc-3[cgmanager]
 	dev-libs/boost:=[threads]
 	dev-libs/dbus-cpp
 	dev-libs/glib:2
@@ -106,9 +110,13 @@ src_install() {
 	# 'anbox-container-manager.service' is started as root #
 	insinto $(systemd_get_systemunitdir)
 	doins "${FILESDIR}/anbox-container-manager.service"
+
+	## '+privileged' not recommended as permissions are corrupted (see above notes) - causes 'su' to fail in 'adb shell' ##
 	use privileged && \
 		sed -e 's:--daemon --data-path:--daemon --privileged --data-path:g' \
-			-i $(systemd_get_systemunitdir)/anbox-container-manager.service
+			-i "${ED}/$(systemd_get_systemunitdir)/anbox-container-manager.service"
+
+
 	dosym $(systemd_get_systemunitdir)/anbox-container-manager.service \
 		$(systemd_get_systemunitdir)/default.target.wants/anbox-container-manager.service
 
@@ -122,6 +130,7 @@ src_install() {
 	# 'anbox-launch' wrapper script to start 'session-manager' and anbox appmgr #
 	exeinto /usr/bin
 	doexe "${FILESDIR}/anbox-launch"
+	doexe "${FILESDIR}/anbox-lxc_mk-subuid_gid"
 
 	# anbox.desktop and icon #
 	insinto /usr/share/applications
@@ -142,14 +151,15 @@ pkg_postinst() {
 		if [ ! -e /etc/subuid ] || [ ! -e /etc/subuid ]; then
 			elog
 			elog "Oops...no /etc/subuid or /etc/subgid files have been detected on the system"
-			elog "LXC unprivileged container support requires correct setup of /etc/subuid and /etc/subgid files so that it can use"
+			elog "LXC unprivileged container support requires permission mapping files /etc/subuid and /etc/subgid so that it can use"
 			elog " sys-apps/shadow's 'newuidmap' and 'newgidmap' to map UIDs/GIDs from the host to the container"
 			elog " See here -> https://stgraber.org/2014/01/17/lxc-1-0-unprivileged-containers/"
-			elog "TLDR? Here is a working example of /etc/subgid and /etc/subuid files (both have the same content):"
+			elog "TLDR? Here is an example of /etc/subgid and /etc/subuid files (both have the same content):"
 			elog "	root:100000:65536"
-			elog "	root:1000:2"
 			elog "	<username>:100000:65536"
-			elog "	<username>:1000:2"
+			elog "There is a helper script /usr/bin/anbox-lxc_mk-subuid_gid which will create the correct"
+			elog " /etc/subuid and /etc/subgid content based on Anbox's /var/lib/anbox/containers/default/config"
+			elog " You may need to run 'anbox session-manager' to create /var/lib/anbox/containers/default/config first"
 			elog
 		fi
 	fi
@@ -248,10 +258,60 @@ END
 	# Enable OpenGLES #
 	echo "ro.opengles.version=131072" | tee -a "squashfs-root/system/build.prop"
 
+	# Fix absent audio by exposing media codecs #
+	cp "${FILESDIR}/media_codecs.xml" "squashfs-root/system/etc/"
+
 	# Re-author modified android.img #
 	mksquashfs squashfs-root "${REAUTHDIR}/android_playstore.img" -b 131072 -comp xz -Xbcj x86 || die
 	mv "${REAUTHDIR}/android_playstore.img" /var/lib/anbox/ || die
 	rm /var/lib/anbox/android.img &> /dev/null
 	ln -s /var/lib/anbox/android_playstore.img /var/lib/anbox/android.img
 	elog "Success! New GoogleApps + ARM enabled image has been installed at /var/lib/anbox/android.img"
+	elog "If 'anbox-container-manager.service' is already running, it will need restarting to reload the new android.img"
+	elog
+	elog "To run Anbox, as root:"
+	elog " # systemctl start anbox-container-manager"
+	elog "Then as desktop user:"
+	elog " $ anbox session-manager"
+	elog " $ anbox launch --package=org.anbox.appmgr --component=org.anbox.appmgr.AppViewActivity"
+
+	elog
+	elog "Problem: Google Playstore won't let me login"
+	elog "Solution: Connect to running Anbox Android system and issue the following:"
+	elog " $ adb shell"
+	elog " $ pm grant com.google.android.gms android.permission.ACCESS_FINE_LOCATION"
+	elog
+
+	# Default network routing is missing on boot (see https://github.com/anbox/anbox/issues/443)
+	#  it'd be preferrable to either fix the problem or automate a workaround to this but seems to be an IPv6 related issue
+	# Anbox doesnt use LXC to set the container gateway but instead has 'anbox container-manager' write the gateway info
+	#  to the Android system '/data/misc/ethernet/ipconfig.txt' file and relies on Android to read and set the gateway routing on boot
+	#
+	# See the following Android system.log snippet failing to bring up eth0 and set default routing:
+	# D CommandListener: Trying to bring up eth0
+	# D ConnectivityService: registerNetworkAgent NetworkAgentInfo{ ni{[type: Ethernet[], state: CONNECTED/CONNECTED, reason: (unspecified),
+	#   extra: aa:f2:30:6b:ac:34, failover: false, available: true, roaming: false, metered: false]}  network{100}  nethandle{429513165534}
+	#   lp{{InterfaceName: eth0 LinkAddresses: [192.168.250.2/24,]  Routes: [192.168.250.0/24 -> 0.0.0.0 eth0,0.0.0.0/0 -> 192.168.250.1 eth0,]
+	#   DnsAddresses: [8.8.8.8,] Domains: null MTU: 0}}  nc{[ Transports: ETHERNET Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN
+	#   LinkUpBandwidth>=100000Kbps LinkDnBandwidth>=100000Kbps]}  Score{30}  everValidated{false}  lastValidated{false}  created{false}
+	#   lingering{false} explicitlySelected{false} acceptUnvalidated{false} everCaptivePortalDetected{false} lastCaptivePortalDetected{false} }
+	# D EthernetNetworkFactory: exiting ipProvisioningThread(eth0): mNetworkInfo=[type: Ethernet[], state: CONNECTED/CONNECTED, reason: (unspecified),
+	#   extra: aa:f2:30:6b:ac:34, failover: false, available: true, roaming: false, metered: false]
+	# D ConnectivityService: Adding iface eth0 to network 100
+	# E Netd    : failed to add interface eth0 to netId 100
+	# E ConnectivityService: Exception adding interface: java.lang.IllegalStateException: command '11 network interface add 100 eth0'
+	#   failed with '400 11 addInterfaceToNetwork() failed (Address family not supported by protocol)'
+	# E Netd    : interface eth0 not assigned to any netId
+	# ConnectivityService: Exception in addRoute for non-gateway: java.lang.IllegalStateException:
+	#   command '12 network route add 100 eth0 192.168.250.0/24' failed with '400 12 addRoute() failed (No such device)'
+	# E Netd    : interface eth0 not assigned to any netId
+	# E ConnectivityService: Exception in addRoute for gateway: java.lang.IllegalStateException:
+	#   command '13 network route add 100 eth0 0.0.0.0/0 192.168.250.1' failed with '400 13 addRoute() failed (No such device)'
+	elog "Problem: Internet inaccessible from within Anbox Android system"
+	elog "Solution: Connect to running Anbox Android system and issue the following:"
+	elog " $ adb shell"
+	elog " $ su"
+	elog " # ip route add default dev eth0 via 192.168.250.1"
+	elog " # ip rule add pref 32766 table main"
+	elog " # ip rule add pref 32767 table local"
 }

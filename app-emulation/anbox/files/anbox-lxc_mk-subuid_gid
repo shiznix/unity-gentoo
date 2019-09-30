@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Generates suitable content for LXC's /etc/subuid and /etc/subgid lxc.id_map permission files #
+#  using UID/GIDs that Anbox is expecting from it's generated /var/lib/anbox/containers/default/config LXC config #
+
+grep lxc.id_map /var/lib/anbox/containers/default/config | awk '{print "root:"$5":"$6}' | uniq && \
+	grep lxc.id_map /var/lib/anbox/containers/default/config | awk '{print "<username>:"$5":"$6}' | uniq
