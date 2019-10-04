@@ -44,6 +44,10 @@ RESTRICT="mirror"
 ##
 # 'anbox session-manager' does the following:
 #	Sets up LXC container config and writes it out to /var/lib/anbox/containers/default/config
+##
+# Anbox does not use LXC to set the container gateway but instead has 'anbox container-manager' write the gateway info
+#  to the Android system '/data/misc/ethernet/ipconfig.txt' file and relies on Android /system/etc/init/netd.rc service to read and set the gateway routing on boot
+##
 
 RDEPEND="dev-util/android-tools
 	net-firewall/iptables"
@@ -73,23 +77,31 @@ DEPEND="${RDEPEND}
 CONFIG_CHECK="
 	~ANDROID_BINDER_IPC
 	~ASHMEM
-	~NAMESPACES
-	~IPC_NS
-	~NET_NS
-	~PID_NS
-	~USER_NS
-	~UTS_NS
+	~BINFMT_MISC
 	~BRIDGE
+	~IP_MROUTE_MULTIPLE_TABLES
 	~IP_NF_IPTABLES
 	~IP_NF_MANGLE
 	~IP_NF_NAT
+	~IP6_NF_NAT
+	~IP6_NF_TARGET_MASQUERADE
+	~IPC_NS
+	~IPV6_MULTIPLE_TABLES
+	~IPV6_MROUTE
+	~NAMESPACES
+	~NET_KEY
+	~NET_NS
+	~NETLINK_DIAG
 	~NF_NAT_MASQUERADE
-	~NETFILTER_XT_MATCH_COMMENT
-	~NETFILTER_XT_TARGET_CHECKSUM
-	~BINFMT_MISC
+	~NF_SOCKET_IPV4
+	~NF_SOCKET_IPV6
+	~PACKET_DIAG
+	~PID_NS
 	~SQUASHFS
 	~SQUASHFS_XZ
 	~TUN
+	~USER_NS
+	~UTS_NS
 	~VETH
 "
 
@@ -268,50 +280,19 @@ END
 	ln -s /var/lib/anbox/android_playstore.img /var/lib/anbox/android.img
 	elog "Success! New GoogleApps + ARM enabled image has been installed at /var/lib/anbox/android.img"
 	elog "If 'anbox-container-manager.service' is already running, it will need restarting to reload the new android.img"
+
 	elog
 	elog "To run Anbox, as root:"
 	elog " # systemctl start anbox-container-manager"
 	elog "Then as desktop user:"
 	elog " $ anbox session-manager"
 	elog " $ anbox launch --package=org.anbox.appmgr --component=org.anbox.appmgr.AppViewActivity"
-
+	elog
+	elog "To install APKs: 'adb install myapp.apk'"
+	elog "To copy files: 'adb push somefile /sdcard'"
 	elog
 	elog "Problem: Google Playstore won't let me login"
 	elog "Solution: Connect to running Anbox Android system and issue the following:"
 	elog " $ adb shell"
 	elog " $ pm grant com.google.android.gms android.permission.ACCESS_FINE_LOCATION"
-	elog
-
-	# Default network routing is missing on boot (see https://github.com/anbox/anbox/issues/443)
-	#  it'd be preferrable to either fix the problem or automate a workaround to this but seems to be an IPv6 related issue
-	# Anbox doesnt use LXC to set the container gateway but instead has 'anbox container-manager' write the gateway info
-	#  to the Android system '/data/misc/ethernet/ipconfig.txt' file and relies on Android to read and set the gateway routing on boot
-	#
-	# See the following Android system.log snippet failing to bring up eth0 and set default routing:
-	# D CommandListener: Trying to bring up eth0
-	# D ConnectivityService: registerNetworkAgent NetworkAgentInfo{ ni{[type: Ethernet[], state: CONNECTED/CONNECTED, reason: (unspecified),
-	#   extra: aa:f2:30:6b:ac:34, failover: false, available: true, roaming: false, metered: false]}  network{100}  nethandle{429513165534}
-	#   lp{{InterfaceName: eth0 LinkAddresses: [192.168.250.2/24,]  Routes: [192.168.250.0/24 -> 0.0.0.0 eth0,0.0.0.0/0 -> 192.168.250.1 eth0,]
-	#   DnsAddresses: [8.8.8.8,] Domains: null MTU: 0}}  nc{[ Transports: ETHERNET Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN
-	#   LinkUpBandwidth>=100000Kbps LinkDnBandwidth>=100000Kbps]}  Score{30}  everValidated{false}  lastValidated{false}  created{false}
-	#   lingering{false} explicitlySelected{false} acceptUnvalidated{false} everCaptivePortalDetected{false} lastCaptivePortalDetected{false} }
-	# D EthernetNetworkFactory: exiting ipProvisioningThread(eth0): mNetworkInfo=[type: Ethernet[], state: CONNECTED/CONNECTED, reason: (unspecified),
-	#   extra: aa:f2:30:6b:ac:34, failover: false, available: true, roaming: false, metered: false]
-	# D ConnectivityService: Adding iface eth0 to network 100
-	# E Netd    : failed to add interface eth0 to netId 100
-	# E ConnectivityService: Exception adding interface: java.lang.IllegalStateException: command '11 network interface add 100 eth0'
-	#   failed with '400 11 addInterfaceToNetwork() failed (Address family not supported by protocol)'
-	# E Netd    : interface eth0 not assigned to any netId
-	# ConnectivityService: Exception in addRoute for non-gateway: java.lang.IllegalStateException:
-	#   command '12 network route add 100 eth0 192.168.250.0/24' failed with '400 12 addRoute() failed (No such device)'
-	# E Netd    : interface eth0 not assigned to any netId
-	# E ConnectivityService: Exception in addRoute for gateway: java.lang.IllegalStateException:
-	#   command '13 network route add 100 eth0 0.0.0.0/0 192.168.250.1' failed with '400 13 addRoute() failed (No such device)'
-	elog "Problem: Internet inaccessible from within Anbox Android system"
-	elog "Solution: Connect to running Anbox Android system and issue the following:"
-	elog " $ adb shell"
-	elog " $ su"
-	elog " # ip route add default dev eth0 via 192.168.250.1"
-	elog " # ip rule add pref 32766 table main"
-	elog " # ip rule add pref 32767 table local"
 }
