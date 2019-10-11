@@ -51,9 +51,8 @@ RESTRICT="mirror"
 
 RDEPEND="dev-util/android-tools
 	net-firewall/iptables"
-# '<app-emulation/lxc-3[cgmanager]' due to https://github.com/anbox/anbox/issues/669 #
 DEPEND="${RDEPEND}
-	<app-emulation/lxc-3[cgmanager]
+	>=app-emulation/lxc-3.0.1
 	dev-libs/boost:=[threads]
 	dev-libs/glib:2
 	dev-libs/properties-cpp
