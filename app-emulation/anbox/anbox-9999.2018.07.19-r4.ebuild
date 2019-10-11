@@ -71,8 +71,7 @@ DEPEND="${RDEPEND}
 			app-arch/unzip
 			net-misc/curl
 			sys-fs/squashfs-tools )
-	test? ( dev-cpp/gmock
-		dev-cpp/gtest )"
+	test? ( dev-cpp/gtest )"
 
 CONFIG_CHECK="
 	~ANDROID_BINDER_IPC
@@ -189,7 +188,7 @@ pkg_config() {
 	REAUTHDIR="/tmp/anbox-reauth"
 	rm -rf "${REAUTHDIR}" &> /dev/null
 	mkdir "${REAUTHDIR}" && cd "${REAUTHDIR}" || die
-	local OPENGAPPS_RELEASEDATE="$(curl -s https://api.github.com/repos/opengapps/x86_64/releases/latest | head -n 10 | grep tag_name | grep -o "\"[0-9][0-9]*\"" | grep -o "[0-9]*")" 
+	local OPENGAPPS_RELEASEDATE="$(curl -s https://api.github.com/repos/opengapps/x86_64/releases/latest | head -n 10 | grep tag_name | grep -o "\"[0-9][0-9]*\"" | grep -o "[0-9]*")"
 	wget "https://sourceforge.net/projects/opengapps/files/x86_64/${OPENGAPPS_RELEASEDATE}/open_gapps-x86_64-7.1-mini-${OPENGAPPS_RELEASEDATE}.zip" || die
 
 	# Exract Anbox.img #
