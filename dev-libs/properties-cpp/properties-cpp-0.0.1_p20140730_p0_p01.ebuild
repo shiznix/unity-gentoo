@@ -1,38 +1,36 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-URELEASE="cosmic"
-inherit cmake-utils ubuntu-versionator
+inherit cmake-utils
 
-UVER_PREFIX="+14.10.${PVR_MICRO}"
-
-DESCRIPTION="Simple convenience library for handling properties and signals in C++11"
+DESCRIPTION="A very simple convenience library for handling properties and signals in C++11"
 HOMEPAGE="https://launchpad.net/properties-cpp"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+
+if [[ ${PV} == 9999 ]]; then
+	inherit bzr
+	SRC_URI=""
+	KEYWORDS=""
+	EBZR_REPO_URI="https://code.launchpad.net/~phablet-team/${PN}/trunk"
+else
+	MY_PV="${PV:0:5}+14.10.${PV:7:8}"
+	MY_P="${PN}-${MY_PV}"
+	SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/${PN}_${MY_PV}.orig.tar.gz"
+	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	S="${WORKDIR}/${MY_P}"
+fi
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="doc test"
-RESTRICT="mirror"
+IUSE="test"
 
-DEPEND="doc? ( app-doc/doxygen )
-        test? ( dev-cpp/gtest
-                dev-cpp/gmock )
-        dev-libs/boost"
+DEPEND=""
+RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-MAKEOPTS="${MAKEOPTS} -j1"
-
-src_prepare() {
-	ubuntu-versionator_src_prepare
-	use doc || \
-		sed -i 's:add_subdirectory(doc)::g' \
-			-i "${S}/CMakeLists.txt"
-	use test || \
-		sed -i 's:add_subdirectory(tests)::g' \
-			-i "${S}/CMakeLists.txt"
+src_prepare(){
+	use !test && truncate -s 0 tests/CMakeLists.txt
 	cmake-utils_src_prepare
 }
+
+
