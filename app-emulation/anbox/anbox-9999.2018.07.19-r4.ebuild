@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -55,7 +55,6 @@ RDEPEND="dev-util/android-tools
 DEPEND="${RDEPEND}
 	<app-emulation/lxc-3[cgmanager]
 	dev-libs/boost:=[threads]
-	dev-libs/dbus-cpp
 	dev-libs/glib:2
 	dev-libs/properties-cpp
 	dev-libs/protobuf
@@ -126,7 +125,6 @@ src_install() {
 	use privileged && \
 		sed -e 's:--daemon --data-path:--daemon --privileged --data-path:g' \
 			-i "${ED}/$(systemd_get_systemunitdir)/anbox-container-manager.service"
-
 
 	dosym $(systemd_get_systemunitdir)/anbox-container-manager.service \
 		$(systemd_get_systemunitdir)/default.target.wants/anbox-container-manager.service
