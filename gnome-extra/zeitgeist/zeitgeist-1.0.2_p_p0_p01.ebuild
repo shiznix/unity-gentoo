@@ -61,6 +61,8 @@ src_prepare() {
 	# Fix pre-populator
 	sed -i \
 		-e "s/gcalctool/org.gnome.Calculator/" \
+		-e "s/gedit/org.gnome.gedit/" \
+		-e "s/totem/org.gnome.Totem/" \
 		-e "s/yelp/unity-yelp/" \
 		"${WORKDIR}/debian/patches/pre_populator.patch" || die
 
