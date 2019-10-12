@@ -34,6 +34,9 @@ pkg_setup() {
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
+
+	## set eog fullscreen toolbar background ##
+	echo -e "\n/* eog fullscreen toolbar background */\ntoolbar {\n background-color: @bg_color;\n}" >> Ambiance/gtk-3.20/gtk-widgets.css
 }
 
 src_configure() { :; }
