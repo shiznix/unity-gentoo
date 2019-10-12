@@ -4,13 +4,14 @@
 EAPI=6
 
 URELEASE="cosmic"
-inherit cmake-utils ubuntu-versionator
+inherit cmake-utils
 
-UVER_PREFIX="+14.10.${PVR_MICRO}"
+MY_PV="${PV:0:5}+14.10.${PV:7:8}"
+MY_P="${PN}-${MY_PV}"
 
 DESCRIPTION="Simple convenience library for handling properties and signals in C++11"
 HOMEPAGE="https://launchpad.net/properties-cpp"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/${PN}_${MY_PV}.orig.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -18,21 +19,16 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc test"
 RESTRICT="mirror"
 
-DEPEND="doc? ( app-doc/doxygen )
+DEPEND="dev-libs/boost
+	doc? ( app-doc/doxygen )
         test? ( dev-cpp/gtest
-                dev-cpp/gmock )
-        dev-libs/boost"
+                dev-cpp/gmock )"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}/${MY_P}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	ubuntu-versionator_src_prepare
-	use doc || \
-		sed -i 's:add_subdirectory(doc)::g' \
-			-i "${S}/CMakeLists.txt"
-	use test || \
-		sed -i 's:add_subdirectory(tests)::g' \
-			-i "${S}/CMakeLists.txt"
+	use !doc && truncate -s0 doc/CMakeLists.txt
+	use !test && truncate -s0 tests/CMakeLists.txt
 	cmake-utils_src_prepare
 }

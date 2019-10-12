@@ -55,7 +55,6 @@ RDEPEND="dev-util/android-tools
 DEPEND="${RDEPEND}
 	<app-emulation/lxc-3[cgmanager]
 	dev-libs/boost:=[threads]
-	dev-libs/dbus-cpp
 	dev-libs/glib:2
 	dev-libs/properties-cpp
 	dev-libs/protobuf
@@ -128,7 +127,6 @@ src_install() {
 		sed -e 's:--daemon --data-path:--daemon --privileged --data-path:g' \
 			-i "${ED}/$(systemd_get_systemunitdir)/anbox-container-manager.service"
 
-
 	dosym $(systemd_get_systemunitdir)/anbox-container-manager.service \
 		$(systemd_get_systemunitdir)/default.target.wants/anbox-container-manager.service
 
@@ -189,7 +187,7 @@ pkg_config() {
 	REAUTHDIR="/tmp/anbox-reauth"
 	rm -rf "${REAUTHDIR}" &> /dev/null
 	mkdir "${REAUTHDIR}" && cd "${REAUTHDIR}" || die
-	local OPENGAPPS_RELEASEDATE="$(curl -s https://api.github.com/repos/opengapps/x86_64/releases/latest | head -n 10 | grep tag_name | grep -o "\"[0-9][0-9]*\"" | grep -o "[0-9]*")" 
+	local OPENGAPPS_RELEASEDATE="$(curl -s https://api.github.com/repos/opengapps/x86_64/releases/latest | head -n 10 | grep tag_name | grep -o "\"[0-9][0-9]*\"" | grep -o "[0-9]*")"
 	wget "https://sourceforge.net/projects/opengapps/files/x86_64/${OPENGAPPS_RELEASEDATE}/open_gapps-x86_64-7.1-mini-${OPENGAPPS_RELEASEDATE}.zip" || die
 
 	# Exract Anbox.img #
