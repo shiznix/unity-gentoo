@@ -65,13 +65,13 @@ DEPEND="${RDEPEND}
 	sys-apps/dbus
 	sys-libs/libcap
 	sys-apps/systemd[nat]
+	dev-cpp/gtest
 	playstore? ( app-arch/lzip
 			app-arch/tar
 			app-arch/unzip
 			net-misc/curl
 			sys-fs/squashfs-tools )
-	test? ( dev-cpp/gmock
-		dev-cpp/gtest )"
+	test? ( dev-cpp/gmock )"
 
 CONFIG_CHECK="
 	~ANDROID_BINDER_IPC
