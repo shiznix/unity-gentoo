@@ -42,6 +42,11 @@ DEPEND="${COMMON_DEPEND}
 	$(vala_depend)"
 
 src_prepare() {
+	# Make Deja Dup appear in unity-control-center #
+	sed -i \
+		-e "/Categories/{s/X-GNOME-Utilities/Settings;X-GNOME-SystemSettings;X-Unity-Settings-Panel\nX-Unity-Settings-Panel=deja-dup/}" \
+		data/org.gnome.DejaDup.desktop
+
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	rm -v Makefile	# Force Makefile recreation so that 'builddir is correct #
