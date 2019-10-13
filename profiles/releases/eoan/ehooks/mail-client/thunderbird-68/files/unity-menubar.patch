@@ -14,7 +14,7 @@
              <menu id="file-menu" label="&fileMenu.label;"
 --- a/browser/base/content/browser.js
 +++ b/browser/base/content/browser.js
-@@ -5979,11 +5979,17 @@ function onViewToolbarsPopupShowing(aEve
+@@ -7008,11 +7008,17 @@ function onViewToolbarsPopupShowing(aEve
  
    let toolbarNodes = gNavToolbox.querySelectorAll("toolbar");
  
@@ -30,8 +30,8 @@
 +    }
 +
      let menuItem = document.createXULElement("menuitem");
-     let hidingAttribute = toolbar.getAttribute("type") == "menubar" ?
-                           "autohide" : "collapsed";
+     let hidingAttribute =
+       toolbar.getAttribute("type") == "menubar" ? "autohide" : "collapsed";
 --- a/browser/components/places/content/places.xul
 +++ b/browser/components/places/content/places.xul
 @@ -166,7 +166,7 @@
@@ -5240,9 +5240,9 @@
  def verify():
 --- a/widget/gtk/components.conf
 +++ b/widget/gtk/components.conf
-@@ -75,6 +75,14 @@ Classes = [
-         'type': 'nsTransferable',
-         'headers': ['/widget/nsTransferable.h'],
+@@ -82,6 +82,14 @@ Classes = [
+         'headers': ['/widget/gtk/nsApplicationChooser.h'],
+         'processes': ProcessSelector.MAIN_PROCESS_ONLY,
      },
 +    {
 +        'cid': '{0B3FE5AA-BC72-4303-85AE-76365DF1251D}',
