@@ -26,7 +26,7 @@ COMMON_DEPEND="
 	unity-base/unity-control-center
 	x11-libs/gtk+:3
 	x11-libs/libnotify
-	app-backup/duplicity
+	>=app-backup/duplicity-0.7.14
 	dev-libs/dbus-glib
 	nautilus? ( gnome-base/nautilus )"
 RDEPEND="${COMMON_DEPEND}
