@@ -34,7 +34,7 @@ src_unpack() {
 
 	# Add translations #
 	cd "${P%%_*}" || die
-	unpack "${FILESDIR}"/languages-artful.tar.xz
+	unpack "${FILESDIR}"/translations-artful.tar.xz
 }
 
 src_prepare() {

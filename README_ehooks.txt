@@ -7,7 +7,8 @@ EBUILD HOOKS
 
   see profiles/releases/profile.bashrc
 
-* Overlay's ebuild hooks are located in profiles/releases/${PROFILE_RELEASE}/ehooks directory.
+* Overlay's ebuild hooks are located
+  in /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks directory.
 
 * Optional ebuild hooks are managed via unity-extra/ehooks USE-flags
   and ehook_use and ehook_require query functions (see below).
@@ -22,8 +23,8 @@ EBUILD HOOKS
 		-c, --check	generate emerge command when changes found
 		-r, --reset	set changes as applied (reset modification time)
 
-* Search order:
-  e.g. package app-arch/file-roller-3.22.3-r0:0/0
+* Directory name and search order:
+  - e.g. package app-arch/file-roller-3.22.3-r0:0/0
 
 	 1) app-arch/file-roller-3.22.3-r0:0
 	 2) app-arch/file-roller-3.22.3-r0
@@ -36,7 +37,7 @@ EBUILD HOOKS
 	 9) app-arch/file-roller:0
 	10) app-arch/file-roller
 
-	- empty pkgdir EXCLUDES package
+	- empty directory EXCLUDES package
 
 * File format to trigger ebuild hook:
 	{pre,post}_${EBUILD_PHASE_FUNC}.ehook
@@ -126,6 +127,8 @@ EBUILD HOOKS
   for users to apply their own ebuild hooks. It's set through /etc/portage/make.conf
   - e.g. EHOOK_PATH="/home/ehooks"
 
-  - EHOOK_PATH's pkgdir overrides overlay's pkgdir
-  - for pkgdir naming rules see 'Search order' above
-  - empty pkgdir disables overlay's pkgdir
+  - own directory OVERRIDES overlay's directory of the same name
+  - own empty directory DISABLES overlay's directory of the same name
+  - e.g. /home/ehooks/app-arch/file-roller
+         overrides or disables
+         /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks/app-arch/file-roller
