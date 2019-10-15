@@ -54,6 +54,7 @@ RDEPEND="dev-util/android-tools
 # '<app-emulation/lxc-3[cgmanager]' due to https://github.com/anbox/anbox/issues/669 #
 DEPEND="${RDEPEND}
 	<app-emulation/lxc-3[cgmanager]
+	dev-cpp/gtest
 	dev-libs/boost:=[threads]
 	dev-libs/glib:2
 	dev-libs/properties-cpp
@@ -70,8 +71,7 @@ DEPEND="${RDEPEND}
 			app-arch/unzip
 			net-misc/curl
 			sys-fs/squashfs-tools )
-	test? ( dev-cpp/gmock
-		dev-cpp/gtest )"
+	test? ( dev-cpp/gmock )"
 
 CONFIG_CHECK="
 	~ANDROID_BINDER_IPC
