@@ -8,6 +8,8 @@ DISTUTILS_SINGLE_IMPL=1
 URELEASE="eoan"
 inherit distutils-r1 eutils ubuntu-versionator
 
+UVER="-${PVR_PL_MINOR}"
+
 DESCRIPTION="MATE desktop tweak tool"
 HOMEPAGE="https://github.com/ubuntu-mate/mate-tweak"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz"

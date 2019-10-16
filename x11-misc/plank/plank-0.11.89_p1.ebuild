@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="eoan"
 inherit vala autotools ubuntu-versionator
 
 UVER="-${PVR_MICRO}"

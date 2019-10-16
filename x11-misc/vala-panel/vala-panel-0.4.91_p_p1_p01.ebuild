@@ -2,10 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-VALA_MIN_API_VERSION="0.34"
-VALA_MAX_API_VERSION="0.36"
 
-URELEASE="cosmic"
+URELEASE="eoan"
 inherit cmake-utils eutils gnome2-utils ubuntu-versionator vala
 
 UVER="+dfsg1"
@@ -13,15 +11,16 @@ UVER_SUFFIX="-${PVR_PL_MINOR}"
 
 # vala-panel needs 'cmake/FallbackVersion.cmake' to build but this is provided by vala-panel-appmenu #
 #  thus creating a circular dependency, so copy it from the vala-panel-appmenu tarball #
-VALA_PANEL_APPMENU_VER="0.7.1"
+VALA_PANEL_APPMENU_VER="0.7.3"
 
 DESCRIPTION="Lightweight desktop panel"
 HOMEPAGE="http://github.com/rilian-la-te/vala-panel"
 SRC_URI="${UURL}/${MY_P}${UVER}.orig.tar.xz
+	${UURL}/${MY_P}${UVER}${UVER_SUFFIX}.debian.tar.xz
 	${UURL}/vala-panel-appmenu_${VALA_PANEL_APPMENU_VER}+dfsg1.orig.tar.xz"
 
 LICENSE="LGPL-3"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+wnck +X"
 RESTRICT="mirror"

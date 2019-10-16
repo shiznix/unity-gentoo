@@ -3,11 +3,11 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="eoan"
 inherit cmake-utils eutils gnome2-utils ubuntu-versionator vala
 
 UVER="+dfsg1"
-UVER_SUFFIX="-${PVR_PL_MINOR}"
+UVER_SUFFIX="-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 
 DESCRIPTION="Global Menu plugin for xfce4 and vala-panel"
 HOMEPAGE="http://github.com/rilian-la-te/vala-panel-appmenu"

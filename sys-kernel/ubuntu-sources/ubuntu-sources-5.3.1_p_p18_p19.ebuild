@@ -15,14 +15,15 @@ UURL="mirror://unity/pool/main/l/${MY_PN}"
 
 DESCRIPTION="Ubuntu patched kernel sources"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/linux"
-SRC_URI="${UURL}/${MY_PN}_${BASE_PV}-${UVER}.tar.gz
+SRC_URI="${UURL}/${MY_PN}_${BASE_PV}.orig.tar.gz
+	${UURL}/${MY_PN}_${BASE_PV}-${UVER}.diff.gz
 	amd64? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/amd64-config.flavour.generic )
 	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/i386-config.flavour.generic )"
 LICENSE="GPL-2"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 RESTRICT="binchecks mirror strip"
-S="${WORKDIR}/linux"
+S="${WORKDIR}/linux-$(get_version_component_range 1-2)"
 
 pkg_setup() {
 	case $ARCH in
@@ -48,7 +49,7 @@ src_unpack() {
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	# Ubuntu patchset (don't use epatch so we can easily see what files get patched) #
-#	cat "${WORKDIR}/${MY_PN}_${BASE_PV}-${UVER}.diff" | patch -p1 || die	# As of >=5.3 Ubuntu releases pre-patched kernel tarballs
+	cat "${WORKDIR}/${MY_PN}_${BASE_PV}-${UVER}.diff" | patch -p1 || die
 
 	# Fix from LP# 1630990 (header syntax error with !CONFIG_SECURITYFS) #
 	sed -e 's/const struct inode_operations \*iops))$/const struct inode_operations *iops)/' \

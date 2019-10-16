@@ -5,16 +5,16 @@ EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="cosmic"
+URELEASE="eoan"
 inherit distutils-r1 eutils gnome2-utils ubuntu-versionator
 
 DESCRIPTION="MATE menubar commands, like the Unity 7 Heads-Up Display (HUD)"
 HOMEPAGE="https://github.com/ubuntu-mate/mate-hud"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 
 # Let people emerge this by default, bug #472932
 IUSE+=" +python_single_target_python3_5 python_single_target_python3_6"

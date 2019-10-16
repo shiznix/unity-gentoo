@@ -3,8 +3,10 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="eoan"
 inherit autotools meson ubuntu-versionator
+
+UVER="-${PVR_PL_MINOR}"
 
 DESCRIPTION="Solus Project's Brisk Menu MATE Panel Applet"
 HOMEPAGE="https://github.com/solus-project/brisk-menu"

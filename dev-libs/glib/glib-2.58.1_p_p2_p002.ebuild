@@ -8,12 +8,12 @@ EAPI="6"
 PYTHON_COMPAT=( python{2_7,3_5,3_6} )
 GNOME2_EAUTORECONF=yes
 
-URELEASE="cosmic"
+URELEASE="cosmic-security"
 inherit autotools bash-completion-r1 epunt-cxx flag-o-matic gnome2 libtool linux-info multilib multilib-minimal pax-utils python-any-r1 toolchain-funcs versionator ubuntu-versionator virtualx
 
 MY_P="${PN}2.0_${PV}"
 MY_PV="${PV}"
-UVER="-${PVR_PL_MINOR}"
+#UVER="-${PVR_PL_MINOR}"
 #S="${WORKDIR}/${PN}-${PV}"
 
 DESCRIPTION="The GLib library of C routines patched for the Unity desktop"
