@@ -51,7 +51,9 @@ RESTRICT="mirror"
 
 RDEPEND="dev-util/android-tools
 	net-firewall/iptables"
+
 # '<app-emulation/lxc-3[cgmanager]' due to https://github.com/anbox/anbox/issues/669 #
+# '<media-libs/mesa-19.2[egl,gles2]' due to https://github.com/anbox/anbox/issues/1266 #
 DEPEND="${RDEPEND}
 	<app-emulation/lxc-3[cgmanager]
 	dev-cpp/gtest
@@ -61,7 +63,7 @@ DEPEND="${RDEPEND}
 	dev-libs/protobuf
 	media-libs/glm
 	media-libs/libsdl2[wayland]
-	media-libs/mesa[egl,gles2]
+	<media-libs/mesa-19.2[egl,gles2]
 	media-libs/sdl2-image
 	sys-apps/dbus
 	sys-libs/libcap
