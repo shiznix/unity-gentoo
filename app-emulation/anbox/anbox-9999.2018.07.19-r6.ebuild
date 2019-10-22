@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -16,7 +16,8 @@ SRC_URI="http://build.anbox.io/android-images/${IMG_PATH}/android_amd64.img
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="test privileged +playstore"
+IUSE="test privileged +playstore wayland X"
+REQUIRED_USE="|| ( wayland X )"
 RESTRICT="mirror"
 
 ## Anbox makes use of LXC containers ##
@@ -52,16 +53,14 @@ RESTRICT="mirror"
 RDEPEND="dev-util/android-tools
 	net-firewall/iptables"
 
-# '<app-emulation/lxc-3[cgmanager]' due to https://github.com/anbox/anbox/issues/669 #
 DEPEND="${RDEPEND}
-	<app-emulation/lxc-3[cgmanager]
+	>=app-emulation/lxc-3.0.1
 	dev-cpp/gtest
 	dev-libs/boost:=[threads]
 	dev-libs/glib:2
 	dev-libs/properties-cpp
 	dev-libs/protobuf
 	media-libs/glm
-	media-libs/libsdl2[wayland]
 	media-libs/mesa[egl,gles2]
 	media-libs/sdl2-image
 	sys-apps/dbus
@@ -72,7 +71,10 @@ DEPEND="${RDEPEND}
 			app-arch/unzip
 			net-misc/curl
 			sys-fs/squashfs-tools )
-	test? ( dev-cpp/gmock )"
+	test? ( dev-cpp/gmock )
+	wayland? ( media-libs/libsdl2[wayland] )
+	X? ( media-libs/libsdl2[X] )
+"
 
 CONFIG_CHECK="
 	~ANDROID_BINDER_IPC
@@ -114,6 +116,14 @@ src_prepare() {
 	cmake-utils_src_prepare
 	! use test && \
 		truncate -s0 cmake/FindGMock.cmake tests/CMakeLists.txt
+}
+
+src_configure() {
+	local mycmakeargs=(
+		-DENABLE_WAYLAND="$(usex wayland)"
+		-DENABLE_X11="$(usex X)"
+	)
+	cmake-utils_src_configure
 }
 
 src_install() {
