@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -16,7 +16,8 @@ SRC_URI="http://build.anbox.io/android-images/${IMG_PATH}/android_amd64.img
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="test privileged +playstore"
+IUSE="+playstore privileged test wayland +X"
+REQUIRED_USE="|| ( wayland X )"
 RESTRICT="mirror"
 
 ## Anbox makes use of LXC containers ##
@@ -41,10 +42,9 @@ RESTRICT="mirror"
 #	Bind mounts as desktop user	/var/lib/anbox/cache on /var/lib/anbox/rootfs/cache
 #					/var/lib/anbox/data on /var/lib/anbox/rootfs/data
 # anbox.desktop automatically starts 'anbox session-manger' and launches the windowed Android Application Manager
-##
-# 'anbox session-manager' does the following:
-#	Sets up LXC container config and writes it out to /var/lib/anbox/containers/default/config
-##
+#
+# 'anbox session-manager' sets up LXC container config and writes it out to /var/lib/anbox/containers/default/config
+#
 # Anbox does not use LXC to set the container gateway but instead has 'anbox container-manager' write the gateway info
 #  to the Android system '/data/misc/ethernet/ipconfig.txt' file and relies on Android /system/etc/init/netd.rc service to read and set the gateway routing on boot
 ##
@@ -52,16 +52,15 @@ RESTRICT="mirror"
 RDEPEND="dev-util/android-tools
 	net-firewall/iptables"
 
-# '<app-emulation/lxc-3[cgmanager]' due to https://github.com/anbox/anbox/issues/669 #
 DEPEND="${RDEPEND}
-	<app-emulation/lxc-3[cgmanager]
+	>=app-emulation/lxc-3
 	dev-cpp/gtest
 	dev-libs/boost:=[threads]
 	dev-libs/glib:2
 	dev-libs/properties-cpp
 	dev-libs/protobuf
 	media-libs/glm
-	media-libs/libsdl2[wayland]
+	media-libs/libsdl2[wayland?,X?]
 	media-libs/mesa[egl,gles2]
 	media-libs/sdl2-image
 	sys-apps/dbus
@@ -116,6 +115,14 @@ src_prepare() {
 		truncate -s0 cmake/FindGMock.cmake tests/CMakeLists.txt
 }
 
+src_configure() {
+	local mycmakeargs=(
+		-DENABLE_WAYLAND="$(usex wayland)"
+		-DENABLE_X11="$(usex X)"
+	)
+	cmake-utils_src_configure
+}
+
 src_install() {
 	cmake-utils_src_install
 
@@ -155,6 +162,8 @@ src_install() {
 	dosym /var/lib/anbox/android_amd64.img /var/lib/anbox/android.img
 
 	udev_dorules "${FILESDIR}/99-anbox.rules"
+
+	dodoc README.md COPYING.GPL AUTHORS docs/*
 }
 
 pkg_postinst() {
@@ -192,7 +201,7 @@ pkg_config() {
 	wget "https://sourceforge.net/projects/opengapps/files/x86_64/${OPENGAPPS_RELEASEDATE}/open_gapps-x86_64-7.1-mini-${OPENGAPPS_RELEASEDATE}.zip" || die
 
 	# Exract Anbox.img #
-	unsquashfs "${DISTDIR}/android_amd64.img" || die
+	unsquashfs /var/lib/anbox/android_amd64.img || die
 
 	# Extract and copy OpenGapps APK files to Anbox.img #
 	unzip -d opengapps open_gapps-x86_64-7.1-mini-${OPENGAPPS_RELEASEDATE}.zip || die
