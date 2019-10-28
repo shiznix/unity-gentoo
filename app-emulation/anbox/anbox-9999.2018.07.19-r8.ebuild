@@ -16,7 +16,7 @@ SRC_URI="http://build.anbox.io/android-images/${IMG_PATH}/android_amd64.img
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+playstore privileged test wayland +X"
+IUSE="+playstore privileged softrender test wayland +X"
 REQUIRED_USE="|| ( wayland X )"
 RESTRICT="mirror"
 
@@ -50,8 +50,8 @@ RESTRICT="mirror"
 ##
 
 RDEPEND="dev-util/android-tools
-	net-firewall/iptables"
-
+	net-firewall/iptables
+	softrender? ( media-libs/swiftshader )"
 DEPEND="${RDEPEND}
 	>=app-emulation/lxc-3
 	dev-cpp/gtest
@@ -110,9 +110,12 @@ pkg_setup() {
 }
 
 src_prepare() {
-	cmake-utils_src_prepare
+	# Set a default path to Swiftshader libs (can still be overridden with 'SWIFTSHADER_PATH' env variable) #
+	sed -e 's/utils::get_env_value("SWIFTSHADER_PATH"/utils::get_env_value("SWIFTSHADER_PATH", "\/usr\/lib\/swiftshader"/' \
+		-i src/anbox/graphics/gl_renderer_server.cpp
 	! use test && \
 		truncate -s0 cmake/FindGMock.cmake tests/CMakeLists.txt
+	cmake-utils_src_prepare
 }
 
 src_configure() {
@@ -156,13 +159,17 @@ src_install() {
 	insinto /usr/share/pixmaps
 	newins snap/gui/icon.png anbox.png
 
-	# anbox-container-manager.service defaults to use android.img #
 	insinto /var/lib/anbox
+	if use playstore; then
+		doins "${DISTDIR}/houdini_y.sfs"
+		doins "${DISTDIR}/houdini_z.sfs"
+	fi
+	doins "${FILESDIR}/media_codecs.xml"
 	doins "${DISTDIR}/android_amd64.img"
+	# anbox-container-manager.service defaults to use android.img #
 	dosym /var/lib/anbox/android_amd64.img /var/lib/anbox/android.img
 
 	udev_dorules "${FILESDIR}/99-anbox.rules"
-
 	dodoc README.md COPYING.GPL AUTHORS docs/*
 }
 
@@ -183,7 +190,23 @@ pkg_postinst() {
 			elog
 		fi
 	fi
+
+        elog
+        elog "To run Anbox, as root:"
+        elog " # systemctl start anbox-container-manager"
+        elog "Then as desktop user:"
+        elog " $ EGL_PLATFORM=\$XDG_SESSION_TYPE anbox session-manager --gles-driver=host"
+        elog " $ anbox launch --package=org.anbox.appmgr --component=org.anbox.appmgr.AppViewActivity"
+	if use softrender; then
+	        elog "To run Anbox using software rendering, run 'session-manager' as follows, as desktop user:"
+	        elog " $ ANBOX_FORCE_SOFTWARE_RENDERING=true EGL_PLATFORM=\$XDG_SESSION_TYPE anbox session-manager --gles-driver=host"
+	fi
+        elog
+        elog "To install APKs: 'adb install myapp.apk'"
+        elog "To copy files: 'adb push somefile /sdcard'"
+
 	if use playstore; then
+		elog
 		elog "To install Google Playstore and ARM app support, close any instances of Anbox and execute:"
 		elog "  emerge --config =${CATEGORY}/${PF}"
 		elog "  This will download and install the latest GoogleApps into Anbox's default android.img"
@@ -220,7 +243,7 @@ pkg_config() {
 	popd
 
 	# Extract and copy 32-bit houdini_y to Anbox.img #
-	unsquashfs -d houdini_y "${DISTDIR}/houdini_y.sfs" || die
+	unsquashfs -d houdini_y /var/lib/anbox/houdini_y.sfs || die
 	LIBDIR="squashfs-root/system/lib"
 	mkdir -p "${LIBDIR}/arm"
 	cp -r houdini_y/* "${LIBDIR}/arm"
@@ -228,7 +251,7 @@ pkg_config() {
 	mv "${LIBDIR}/arm/libhoudini.so" "${LIBDIR}/libhoudini.so"
 
 	# Extract and copy 64-bit houdini_z to Anbox.img #
-	unsquashfs -d houdini_z "${DISTDIR}/houdini_z.sfs" || die
+	unsquashfs -d houdini_z /var/lib/anbox/houdini_z.sfs || die
 	LIBDIR64="squashfs-root/system/lib64"
 	mkdir -p "${LIBDIR64}/arm64"
 	cp -r houdini_z/* "${LIBDIR64}/arm64"
@@ -279,25 +302,16 @@ END
 	echo "ro.opengles.version=131072" | tee -a "squashfs-root/system/build.prop"
 
 	# Fix absent audio by exposing media codecs #
-	cp "${FILESDIR}/media_codecs.xml" "squashfs-root/system/etc/"
+	cp "/var/lib/anbox/media_codecs.xml" "squashfs-root/system/etc/"
 
 	# Re-author modified android.img #
 	mksquashfs squashfs-root "${REAUTHDIR}/android_playstore.img" -b 131072 -comp xz -Xbcj x86 || die
 	mv "${REAUTHDIR}/android_playstore.img" /var/lib/anbox/ || die
 	rm /var/lib/anbox/android.img &> /dev/null
 	ln -s /var/lib/anbox/android_playstore.img /var/lib/anbox/android.img
+	elog
 	elog "Success! New GoogleApps + ARM enabled image has been installed at /var/lib/anbox/android.img"
 	elog "If 'anbox-container-manager.service' is already running, it will need restarting to reload the new android.img"
-
-	elog
-	elog "To run Anbox, as root:"
-	elog " # systemctl start anbox-container-manager"
-	elog "Then as desktop user:"
-	elog " $ EGL_PLATFORM=\$XDG_SESSION_TYPE anbox session-manager --gles-driver=host"
-	elog " $ anbox launch --package=org.anbox.appmgr --component=org.anbox.appmgr.AppViewActivity"
-	elog
-	elog "To install APKs: 'adb install myapp.apk'"
-	elog "To copy files: 'adb push somefile /sdcard'"
 	elog
 	elog "Problem: Google Playstore won't let me login"
 	elog "Solution: Connect to running Anbox Android system and issue the following:"

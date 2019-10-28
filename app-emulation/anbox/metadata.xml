@@ -7,10 +7,10 @@
 	</maintainer>
 	<use>
 		<flag name="playstore">
-			Install Google proprietary openGAPPS including Google Play.
+			Install Google Playstore from https://opengapps.org
 		</flag>
 		<flag name="privileged">
-			Decides if lxc will run conteiner as privileged or unprivileged. Recommended option is unprivileged.
+			Decides if lxc will run container as privileged or unprivileged (recommended option is unprivileged)
 		</flag>
 	</use>
 	<upstream>
