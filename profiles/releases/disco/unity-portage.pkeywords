@@ -27,6 +27,7 @@ x11-wm/marco
 =*/gnome*-*28*::gentoo
 =*/gnome*-*26*::gentoo
 =gnome-base/*-*32*::gentoo
+=gnome-base/*-*31*::gentoo
 =gnome-base/*-*30*::gentoo
 =gnome-base/*-*28*::gentoo
 =gnome-base/*-*26*::gentoo
@@ -66,18 +67,18 @@ games-board/gnome*::gentoo
 >=gnome-base/gvfs-1.32::gentoo
 gnome-base/librsvg::gentoo
 # gnome-extra/gucharmap:2.90::gentoo
->=gnome-extra/evolution-data-server-3.26::gentoo
->=gnome-extra/zenity-3.28::gentoo
+>=gnome-extra/evolution-data-server-3.32::gentoo
+>=gnome-extra/zenity-3.30::gentoo
 gui-libs/libhandy::gentoo
->=mail-client/evolution-3.26::gentoo
+>=mail-client/evolution-3.32::gentoo
 media-fonts/cantarell::gentoo
->=media-gfx/eog-3.26::gentoo
+>=media-gfx/eog-3.32::gentoo
 # >=media-libs/clutter-gtk-1.8.4::gentoo
 media-sound/paprefs::gentoo
 #media-sound/pulseaudio::gentoo
 # >=media-sound/sound-juicer-3.24::gentoo
->=media-video/cheese-3.28::gentoo
-# >=media-video/totem-3.24::gentoo
+>=media-video/cheese-3.32::gentoo
+>=media-video/totem-3.32::gentoo
 # >=net-misc/vinagre-3.22::gentoo
 # >=net-wireless/gnome-bluetooth-3.20::gentoo
 # >=sci-geosciences/geocode-glib-3.24::gentoo

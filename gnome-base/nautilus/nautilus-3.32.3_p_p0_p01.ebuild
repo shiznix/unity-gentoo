@@ -33,7 +33,6 @@ COMMON_DEPEND="
 	x11-libs/libX11
 	>=dev-libs/libxml2-2.7.8:2
 	introspection? ( >=dev-libs/gobject-introspection-1.54:= )
-	extensions? ( media-video/totem[-nautilus] )
 "
 DEPEND="${COMMON_DEPEND}
 	dev-libs/libunity
