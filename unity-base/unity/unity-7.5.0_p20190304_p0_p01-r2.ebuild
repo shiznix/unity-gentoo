@@ -38,7 +38,7 @@ RDEPEND="app-i18n/ibus[gtk,gtk2]
 DEPEND="${RDEPEND}
 	!sys-apps/upstart
 	!unity-base/dconf-qt
-	dev-libs/boost:=
+	>=dev-libs/boost-1.71:=
 	dev-libs/dee:=
 	dev-libs/dbus-glib
 	dev-libs/icu:=
@@ -143,9 +143,13 @@ src_prepare() {
 	sed -e '/killall -9 unity-panel-service/,+1d' \
 		-i UnityCore/DBusIndicators.cpp || die "Sed failed for UnityCore/DBusIndicators.cpp"
 
-	# Include directly iostream needed for std::cout #
-	sed -e 's/.*<fstream>.*/#include <iostream>\n&/' \
-		-i unity-shared/DebugDBusInterface.cpp || die "Sed failed for unity-shared/DebugDBusInterface.cpp"
+	# Include directly iostream needed for std::ostream #
+	sed -s 's/.*GLibWrapper.h.*/#include <iostream>\n&/' \
+		-i UnityCore/GLibWrapper.cpp || die "Sed failed for UnityCore/GLibWrapper.cpp"
+￼
+	# New stable dev-libs/boost-1.71 compatibility changes #
+	sed -s 's:boost/utility.hpp:boost/next_prior.hpp:g' \
+		-i launcher/FavoriteStorePrivate.cpp || die
 
 	# DESKTOP_SESSION and SESSION is 'unity' not 'ubuntu' #
 	sed -e 's:SESSION=ubuntu:SESSION=unity:g' \
