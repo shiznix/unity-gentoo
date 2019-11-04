@@ -146,7 +146,7 @@ src_prepare() {
 	# Include directly iostream needed for std::ostream #
 	sed -s 's/.*GLibWrapper.h.*/#include <iostream>\n&/' \
 		-i UnityCore/GLibWrapper.cpp || die "Sed failed for UnityCore/GLibWrapper.cpp"
-￼
+
 	# New stable dev-libs/boost-1.71 compatibility changes #
 	sed -s 's:boost/utility.hpp:boost/next_prior.hpp:g' \
 		-i launcher/FavoriteStorePrivate.cpp || die
