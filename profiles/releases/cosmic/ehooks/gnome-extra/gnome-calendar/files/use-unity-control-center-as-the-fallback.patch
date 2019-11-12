@@ -1,4 +1,4 @@
-From 9918cd388d210245bd307bba0da3ec5f4fa4137d Mon Sep 17 00:00:00 2001
+From 5e859d4975e26f47811ec20961d70c33dff79991 Mon Sep 17 00:00:00 2001
 From: c4pp4
 Date: Tue, 12 Nov 2019 13:04:52 +0100
 Subject: [PATCH 1/1] Use unity-control-center as the fallback
@@ -8,14 +8,14 @@ is not available.
 
 Signed-off-by: c4pp4
 ---
- src/gcal-source-dialog.c | 57 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 56 insertions(+), 1 deletion(-)
+ src/gcal-source-dialog.c | 59 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 1 deletion(-)
 
 diff --git a/src/gcal-source-dialog.c b/src/gcal-source-dialog.c
-index b1aa1d9..cabc0aa 100644
+index b1aa1d9..6d74fe5 100644
 --- a/src/gcal-source-dialog.c
 +++ b/src/gcal-source-dialog.c
-@@ -691,6 +691,52 @@ build_dbus_parameters (const gchar *action,
+@@ -691,6 +691,54 @@ build_dbus_parameters (const gchar *action,
    return g_variant_new_tuple (params2, 3);
  }
  
@@ -50,10 +50,12 @@ index b1aa1d9..cabc0aa 100644
 +  gchar *command;
 +  GError *error = NULL;
 +
-+  if (action && arg)
-+    command = g_strconcat (cc_uoa, " ", action, " ", arg, NULL);
-+  else
++  if (!action && !arg)
 +    command = g_strconcat (cc_uoa, NULL);
++  else if (action && !arg)
++    command = g_strconcat (cc_uoa, " ", action, NULL);
++  else if (action && arg)
++    command = g_strconcat (cc_uoa, " ", action, " ", arg, NULL);
 +
 +  g_spawn_command_line_async (command, &error);
 +  g_free(command);
@@ -68,7 +70,7 @@ index b1aa1d9..cabc0aa 100644
  static void
  spawn_goa_with_args (const gchar *action,
                       const gchar *arg)
-@@ -712,7 +758,9 @@ spawn_goa_with_args (const gchar *action,
+@@ -712,7 +760,9 @@ spawn_goa_with_args (const gchar *action,
        return;
      }
  
@@ -79,7 +81,7 @@ index b1aa1d9..cabc0aa 100644
                            "Activate",
                            build_dbus_parameters (action, arg),
                            G_DBUS_CALL_FLAGS_NONE,
-@@ -720,6 +768,13 @@ spawn_goa_with_args (const gchar *action,
+@@ -720,6 +770,13 @@ spawn_goa_with_args (const gchar *action,
                            NULL,
                            NULL);
  
