@@ -1,6 +1,6 @@
-From 5e859d4975e26f47811ec20961d70c33dff79991 Mon Sep 17 00:00:00 2001
+From 6c76e08278fbfbf6b2af84435fddfd94f6fe6fd7 Mon Sep 17 00:00:00 2001
 From: c4pp4
-Date: Tue, 12 Nov 2019 13:04:52 +0100
+Date: Wed, 13 Nov 2019 02:53:16 +0100
 Subject: [PATCH 1/1] Use unity-control-center as the fallback
 
 Try to use unity-control-center as the fallback when gnome-control-center
@@ -8,14 +8,14 @@ is not available.
 
 Signed-off-by: c4pp4
 ---
- src/gcal-source-dialog.c | 59 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 58 insertions(+), 1 deletion(-)
+ src/gcal-source-dialog.c | 56 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 55 insertions(+), 1 deletion(-)
 
 diff --git a/src/gcal-source-dialog.c b/src/gcal-source-dialog.c
-index b1aa1d9..6d74fe5 100644
+index b1aa1d9..60e983e 100644
 --- a/src/gcal-source-dialog.c
 +++ b/src/gcal-source-dialog.c
-@@ -691,6 +691,54 @@ build_dbus_parameters (const gchar *action,
+@@ -691,6 +691,50 @@ build_dbus_parameters (const gchar *action,
    return g_variant_new_tuple (params2, 3);
  }
  
@@ -43,22 +43,18 @@ index b1aa1d9..6d74fe5 100644
 +}
 +
 +static void
-+spawn_uoa (const gchar *action,
-+           const gchar *arg)
++spawn_uoa_with_args (const gchar *action,
++                     const gchar *arg)
 +{
-+  const gchar *cc_uoa = "unity-control-center online-accounts";
-+  gchar *command;
++  const gchar* const command[] = { "unity-control-center",
++                                   "online-accounts",
++                                   action, arg, NULL };
 +  GError *error = NULL;
 +
-+  if (!action && !arg)
-+    command = g_strconcat (cc_uoa, NULL);
-+  else if (action && !arg)
-+    command = g_strconcat (cc_uoa, " ", action, NULL);
-+  else if (action && arg)
-+    command = g_strconcat (cc_uoa, " ", action, " ", arg, NULL);
-+
-+  g_spawn_command_line_async (command, &error);
-+  g_free(command);
++  g_spawn_async (NULL, (gchar**) command,
++                 NULL,
++                 G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL,
++                 NULL, NULL, NULL, &error);
 +
 +  if (error != NULL)
 +  {
@@ -70,31 +66,31 @@ index b1aa1d9..6d74fe5 100644
  static void
  spawn_goa_with_args (const gchar *action,
                       const gchar *arg)
-@@ -712,7 +760,9 @@ spawn_goa_with_args (const gchar *action,
+@@ -712,13 +756,23 @@ spawn_goa_with_args (const gchar *action,
        return;
      }
  
--  g_dbus_proxy_call_sync (proxy,
-+  GVariant *variant;
++  GError *error = NULL;
 +
-+  variant = g_dbus_proxy_call_sync (proxy,
+   g_dbus_proxy_call_sync (proxy,
                            "Activate",
                            build_dbus_parameters (action, arg),
                            G_DBUS_CALL_FLAGS_NONE,
-@@ -720,6 +770,13 @@ spawn_goa_with_args (const gchar *action,
+                           -1,
                            NULL,
-                           NULL);
+-                          NULL);
++                          &error);
++
++  if (error != NULL)
++  {
++    g_error_free (error);
++
++    if (in_desktop("Unity"))
++      spawn_uoa_with_args (action, arg);
++  }
  
-+  if (!variant && in_desktop("Unity"))
-+    {
-+      spawn_uoa (action, arg);
-+    }
-+
-+  g_variant_unref (variant);
-+
    g_clear_object (&proxy);
  }
- 
 -- 
 2.23.0
 

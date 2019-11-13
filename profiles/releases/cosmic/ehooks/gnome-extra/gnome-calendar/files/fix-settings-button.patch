@@ -1,0 +1,38 @@
+From 540b572ff497ed8fb70cc323bd1a10e835831d09 Mon Sep 17 00:00:00 2001
+From: c4pp4
+Date: Wed, 13 Nov 2019 02:27:15 +0100
+Subject: [PATCH 1/1] Fix "Settings" button
+
+Open online account settings with appropriate account_id when button
+"Settings" is clicked.
+
+Signed-off-by: c4pp4
+---
+ src/gcal-source-dialog.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/gcal-source-dialog.c b/src/gcal-source-dialog.c
+index b1aa1d9..bec3517 100644
+--- a/src/gcal-source-dialog.c
++++ b/src/gcal-source-dialog.c
+@@ -335,7 +335,7 @@ add_source (GcalManager *manager,
+         {
+           ESourceGoa *goa = e_source_get_extension (parent, E_SOURCE_EXTENSION_GOA);
+ 
+-          g_object_set_data (G_OBJECT (row), "account-id", (gpointer) e_source_goa_get_account_id (goa));
++          g_object_set_data (G_OBJECT (self->account_label), "account-id", (gpointer) e_source_goa_get_account_id (goa));
+         }
+ 
+       gtk_container_add (GTK_CONTAINER (self->calendars_listbox), row);
+@@ -843,7 +843,7 @@ settings_button_clicked (GtkWidget *button,
+   /* Selects the account to open */
+   account_id = g_object_get_data (G_OBJECT (self->account_label), "account-id");
+ 
+-  spawn_goa_with_args ((gchar*) account_id, NULL);
++  spawn_goa_with_args (account_id, NULL);
+ }
+ 
+ static void
+-- 
+2.23.0
+
