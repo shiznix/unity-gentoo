@@ -105,7 +105,7 @@ virtual/rust::gentoo
 
 ## Other packages keyword unmasking ##
 app-admin/cgmanager
-~app-backup/duplicity-0.7.14            # deja-dup
+~app-backup/duplicity-0.7.19            # deja-dup
 app-eselect/eselect-opengl
 ~app-admin/packagekit-base-0.8.15
 ~dev-cpp/gflags-2.1.2
