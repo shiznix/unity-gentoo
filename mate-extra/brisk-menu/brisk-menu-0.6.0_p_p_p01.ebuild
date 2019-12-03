@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="eoan"
-inherit autotools meson ubuntu-versionator
+inherit autotools gnome2-utils meson ubuntu-versionator
 
 UVER="-${PVR_PL_MINOR}"
 

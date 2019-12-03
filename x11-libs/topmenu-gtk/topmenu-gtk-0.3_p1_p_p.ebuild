@@ -6,7 +6,6 @@ EAPI=6
 URELEASE="artful"
 inherit autotools gnome2-utils ubuntu-versionator
 
-UURL="mirror://unity/pool/universe/t/${PN}"
 UVER="-${PVR_MICRO}"
 
 DESCRIPTION="A Gtk+ module and Mate/Xfce/LXDE panel applets for a global menubar"

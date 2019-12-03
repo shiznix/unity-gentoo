@@ -39,8 +39,9 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# Remove RPM support as build will fail #
-	sed -e '/RPM/d' -i CMakeLists.txt
+	# Remove build failure triggers #
+	sed -e '/RPM/d' \
+		-e '/subprojects/d' -i CMakeLists.txt
 
 	# Remove gio-addons as also done in x11-misc/vala-panel #
 	rm -v vapi/gio-addons-2.0.vapi
