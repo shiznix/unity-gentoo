@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 
 ## conf source ##
 LSVER="0.190" ## language-selector package version
-SRC_URI+="${UURL/\/f\/${PN}}/l/language-selector/language-selector_${LSVER}.tar.xz"
+SRC_URI+=" ${UURL/\/f\/${PN}}/l/language-selector/language-selector_${LSVER}.tar.xz"
 
 LICENSE="OFL-1.1"
 SLOT="0"
@@ -45,7 +45,7 @@ FONT_CONF=(
 )
 
 src_install() {
-	! use extra find "${WORKDIR}" -type f -name "*.ttc" \
+	! use extra && find "${WORKDIR}" -type f -name "*.ttc" \
 		! -name "*CJK-Regular.ttc" \
 		! -name "*CJK-Bold.ttc" \
 			-delete
