@@ -9,4 +9,27 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="gnome">Gnome backgrounds</flag>
+		<flag name="karmic">Ubuntu Karmic backgrounds</flag>
+		<flag name="lucid">Ubuntu Lucid backgrounds</flag>
+		<flag name="maverick">Ubuntu Maverick backgrounds</flag>
+		<flag name="natty">Ubuntu Natty backgrounds</flag>
+		<flag name="oneiric">Ubuntu Oneiric backgrounds</flag>
+		<flag name="precise">Ubuntu Precise backgrounds</flag>
+		<flag name="quantal">Ubuntu Quantal backgrounds</flag>
+		<flag name="raring">Ubuntu Raring backgrounds</flag>
+		<flag name="saucy">Ubuntu Saucy backgrounds</flag>
+		<flag name="trusty">Ubuntu Trusty backgrounds</flag>
+		<flag name="utopic">Ubuntu Utopic backgrounds</flag>
+		<flag name="vivid">Ubuntu Vivid backgrounds</flag>
+		<flag name="wily">Ubuntu Wily backgrounds</flag>
+		<flag name="xenial">Ubuntu Xenial backgrounds</flag>
+		<flag name="yakkety">Ubuntu Yakkety backgrounds</flag>
+		<flag name="zesty">Ubuntu Zesty backgrounds</flag>
+		<flag name="artful">Ubuntu Artful backgrounds</flag>
+		<flag name="bionic">Ubuntu Bionic backgrounds</flag>
+		<flag name="cosmic">Ubuntu Cosmic backgrounds</flag>
+		<flag name="disco">Ubuntu Disco backgrounds</flag>
+	</use>
 </pkgmetadata>

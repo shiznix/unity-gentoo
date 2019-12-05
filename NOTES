@@ -44,6 +44,7 @@ gnome-extra/activity-log-manager	# Adds unity-control-center integration
 gnome-extra/nm-applet			# Shows nm-applet in indicator panel
 gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 gnome-extra/zeitgeist			# Removed from main tree, patched to perform VACUUM SQLite database on startups every 10 days and to pre-populate the log with some events so that the dash isn't empty on first run
+media-fonts/fonts-noto-cjk		# Repacked version with reduced size
 media-gfx/shotwell			# Patched for integration with Unity online accounts
 media-sound/banshee			# Patched/compiled for indicator-sound support, Meego UI and other Ubuntu UI improvements
 media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu quicklist, Magnatune and other Ubuntu UI improvements

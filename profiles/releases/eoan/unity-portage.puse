@@ -76,3 +76,4 @@ x11-libs/libxcb xkb
 x11-libs/topmenu-gtk mate
 x11-misc/vala-panel-appmenu mate
 x11-misc/x11vnc dummy
+x11-themes/ubuntu-wallpapers -gnome
