@@ -69,7 +69,9 @@ src_install() {
 
 	local \
 		dash="'files.scope','video.scope','music.scope','photos.scope'," \
-		dlen=${#dash}
+		dlen
+
+	dlen=${#dash}
 
 	use files || dash="${dash/\'files.scope\',}"
 	use music || dash="${dash/\'music.scope\',}"
