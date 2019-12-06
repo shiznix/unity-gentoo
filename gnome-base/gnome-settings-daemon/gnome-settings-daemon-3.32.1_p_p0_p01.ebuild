@@ -15,50 +15,52 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+colord +cups debug input_devices_wacom kernel_linux +networkmanager policykit -smartcard test +udev wayland"
+IUSE="+colord +cups debug input_devices_wacom kernel_linux +networkmanager policykit schemas -smartcard test +udev wayland"
 #KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="
 	udev
 	kernel_linux? ( networkmanager )
+	schemas ( !colord !cups !input_devices_wacom !smartcard !wayland )
 "
 RESTRICT="mirror"
 
 COMMON_DEPEND="
-	>=sci-geosciences/geocode-glib-3.10
-	>=dev-libs/glib-2.53.0:2[dbus]
-	dev-libs/libappindicator:=
-	gnome-base/gnome-desktop:3=
 	>=gnome-base/gsettings-desktop-schemas-3.27.90
-	>=x11-libs/gtk+-3.15.3:3[X,wayland=]
-	media-libs/alsa-lib
-	media-libs/fontconfig
-	media-libs/libcanberra[gtk3]
-	>=media-sound/pulseaudio-2[glib]
-	sys-apps/accountsservice
-	>=sys-power/upower-0.99:=
-	x11-libs/cairo
-	x11-libs/gdk-pixbuf:2
-	>=x11-libs/libnotify-0.7.3:=
-	x11-libs/libX11
-	x11-libs/libxkbfile
-	x11-libs/libXi
-	x11-libs/libXext
-	x11-libs/libXfixes
-	x11-libs/libXtst
-	x11-libs/libXxf86misc
-	x11-misc/xkeyboard-config
 
-	>=app-misc/geoclue-2.3.1:2.0
-	>=dev-libs/libgweather-3.9.5:2=
-	>=sci-geosciences/geocode-glib-3.10
-	>=sys-auth/polkit-0.114
+	schemas? (
+		>=dev-libs/glib-2.53.0:2[dbus]
+		dev-libs/libappindicator:=
+		gnome-base/gnome-desktop:3=
+		>=x11-libs/gtk+-3.15.3:3[X,wayland=]
+		media-libs/alsa-lib
+		media-libs/fontconfig
+		media-libs/libcanberra[gtk3]
+		>=media-sound/pulseaudio-2[glib]
+		sys-apps/accountsservice
+		>=sys-power/upower-0.99:=
+		x11-libs/cairo
+		x11-libs/gdk-pixbuf:2
+		>=x11-libs/libnotify-0.7.3:=
+		x11-libs/libX11
+		x11-libs/libxkbfile
+		x11-libs/libXi
+		x11-libs/libXext
+		x11-libs/libXfixes
+		x11-libs/libXtst
+		x11-libs/libXxf86misc
+		x11-misc/xkeyboard-config
 
+		>=app-misc/geoclue-2.3.1:2.0
+		>=dev-libs/libgweather-3.9.5:2=
+		>=sci-geosciences/geocode-glib-3.10
+		>=sys-auth/polkit-0.114
+
+		>=x11-libs/pango-1.20
+		virtual/libgudev:= )
 	colord? (
 		>=x11-misc/colord-1.0.2:=
 		>=media-libs/lcms-2.2:2 )
 	cups? ( >=net-print/cups-1.4[dbus] )
-	>=x11-libs/pango-1.20
-	virtual/libgudev:=
 	input_devices_wacom? ( >=dev-libs/libwacom-0.7
 		>=x11-libs/pango-1.20.0
 		x11-drivers/xf86-input-wacom )
@@ -104,6 +106,8 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	eapply "${FILESDIR}/3.32-colord_wacom_networkmanager-optional.patch"
 	gnome2_src_prepare
+
+	use schemas && eapply "${FILESDIR}/${PN}-3.32-schemas.diff"
 }
 
 src_configure() {
