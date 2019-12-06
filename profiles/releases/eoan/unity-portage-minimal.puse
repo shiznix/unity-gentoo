@@ -16,6 +16,7 @@ gnome-base/nautilus -exif
 x11-misc/notify-osd minimal
 
 ## main tree related
+app-crypt/pinentry -qt5
 app-i18n/ibus -emoji -unicode
 dev-qt/qtdeclarative -widgets
 dev-qt/qtgui -libinput
