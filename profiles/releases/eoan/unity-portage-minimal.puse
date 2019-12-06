@@ -1,0 +1,28 @@
+*/* -accessibility -bluetooth -colord -cups -eds -fcitx -gnome-online-accounts -modemmanager
+
+## unity related
+unity-base/unity -hud
+unity-base/unity-meta -apps -fonts -games -utils
+unity-base/unity-control-center -kerberos -samba -v4l -webkit
+unity-base/unity-settings -files -music -photos -ubuntu-sounds -video
+unity-indicators/indicator-keyboard -charmap
+unity-indicators/indicator-power -powerman
+unity-indicators/indicator-session -help
+unity-lenses/unity-lens-meta -files -music -photos -plugins -video
+
+## overlay related
+gnome-base/gnome-session -xdg-dirs
+gnome-base/nautilus -exif
+x11-misc/notify-osd minimal
+
+## main tree related
+app-i18n/ibus -emoji -unicode
+dev-qt/qtdeclarative -widgets
+dev-qt/qtgui -libinput
+gnome-base/gvfs -cdda -fuse
+media-libs/clutter -egl
+media-libs/gst-plugins-base -theora
+media-libs/harfbuzz -graphite
+media-libs/libsndfile minimal
+net-misc/networkmanager -ppp -wext
+sys-fs/lvm2 -thin

@@ -12,7 +12,7 @@ UVER=
 LICENSE="GPL-2"
 SLOT="0/${URELEASE}"
 KEYWORDS="amd64 x86"
-IUSE=""
+IUSE="minimal"
 
 pkg_setup() {
 	mkdir -p "${S}"
@@ -31,8 +31,12 @@ src_install() {
 	for pfile in {env,keywords,mask,unmask,use}; do
 		dodir "/etc/portage/package.${pfile}"
 		dosym "${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/unity-portage.p${pfile}" \
-			"/etc/portage/package.${pfile}/unity-portage.p${pfile}" || die
+			"/etc/portage/package.${pfile}/0000_unity-portage.p${pfile}" || die
 	done
+
+	use minimal \
+		&& dosym "${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/unity-portage-minimal.puse" \
+			"/etc/portage/package.${pfile}/0001_unity-portage-minimal.puse"
 
 	dodir "/etc/portage/env"
 	for envconf in $(ls -1 ${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/env/* | awk -F/ '{print $NF}'); do
