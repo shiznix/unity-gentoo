@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility +apps chat extras +fonts +games +utils +xdm"
 RESTRICT="mirror"
 
-GVER="3.30*"
+GVER="3.32*"
 
 
 DEPEND="unity-base/unity-build-env
@@ -54,7 +54,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		( net-im/empathy net-libs/telepathy-indicator ) ) )
 	extras? (
 		app-cdr/brasero
-		=gnome-base/dconf-editor-${GVER}
+		=gnome-base/dconf-editor-3.30*
 		gnome-extra/gnome-search-tool
 		sys-block/gparted
 		unity-extra/unity-tweak-tool )
@@ -91,8 +91,8 @@ RDEPEND="gnome-base/gnome-core-libs
 		media-fonts/urw-fonts )
 	games? (
 		=games-board/gnome-mahjongg-3.22*
-		=games-board/gnome-mines-${GVER}
-		=games-puzzle/gnome-sudoku-${GVER} )
+		=games-board/gnome-mines-3.30*
+		=games-puzzle/gnome-sudoku-3.30* )
 	utils? (
 		app-admin/gnome-system-log
 		app-backup/deja-dup[nautilus]
@@ -102,7 +102,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		=app-text/evince-3.32*
 		=gnome-extra/gnome-calculator-${GVER}
 		=gnome-extra/gnome-calendar-${GVER}
-		=gnome-extra/gnome-power-manager-${GVER}
+		=gnome-extra/gnome-power-manager-3.30*
 		=gnome-extra/gnome-system-monitor-${GVER}
 		gnome-extra/gucharmap:2.90
 		=gnome-extra/yelp-${GVER}
@@ -114,7 +114,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		net-misc/remmina
 		=net-misc/vino-3.22*
 		net-p2p/transmission[ayatana]
-		=sys-apps/baobab-${GVER}
+		=sys-apps/baobab-3.30*
 		=sys-apps/gnome-disk-utility-${GVER}
 		unity-indicators/indicator-keyboard[charmap]
 		unity-indicators/indicator-power[powerman]
