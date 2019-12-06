@@ -9,4 +9,7 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="powerman">Enable Gnome Power Manager</flag>
+	</use>
 </pkgmetadata>

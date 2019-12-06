@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="3/12" # subslot = libgnome-desktop-3 soname version
 # wayland - bug #624960 and issue #197
-IUSE="debug +introspection seccomp udev wayland"
+IUSE="debug doc +introspection seccomp udev wayland"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -51,6 +51,8 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext
 	x11-base/xorg-proto
 	virtual/pkgconfig
+
+	doc? ( app-text/yelp-tools )
 "
 
 # Includes X11/Xatom.h in libgnome-desktop/gnome-bg.c which comes from x11-base/xorg-proto
@@ -73,9 +75,9 @@ src_configure() {
 	gnome2_src_configure \
 		--disable-static \
 		--with-gnome-distributor=Gentoo \
-		--enable-desktop-docs \
 		$(usex debug --enable-debug=yes ' ') \
 		$(use_enable debug debug-tools) \
+		$(use_enable doc desktop-docs) \
 		$(use_enable introspection) \
 		$(use_enable udev)
 }

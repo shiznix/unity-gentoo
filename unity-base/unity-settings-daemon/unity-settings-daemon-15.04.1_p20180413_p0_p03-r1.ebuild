@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="+colord debug fcitx +i18n input_devices_wacom nls packagekit +short-touchpad-timeout smartcard +udev"
+IUSE="+colord debug +fcitx +i18n input_devices_wacom nls packagekit +short-touchpad-timeout smartcard +udev"
 KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="input_devices_wacom? ( udev )
 		packagekit? ( udev )
@@ -31,7 +31,6 @@ COMMON_DEPEND="dev-libs/glib:2
 	gnome-base/gnome-desktop:3=
 	gnome-base/gsettings-desktop-schemas
 	gnome-base/librsvg
-	media-fonts/cantarell
 	media-libs/fontconfig
 	media-libs/lcms:2
 	media-libs/libcanberra[gtk3]
@@ -69,7 +68,6 @@ RDEPEND="${COMMON_DEPEND}
 	gnome-base/dconf
 	x11-themes/gnome-themes-standard
 	x11-themes/adwaita-icon-theme
-	x11-themes/gnome-icon-theme-symbolic
 	!<gnome-base/gnome-control-center-2.22
 	!<gnome-extra/gnome-color-manager-3.1.1
 	!<gnome-extra/gnome-power-manager-3.1.3"

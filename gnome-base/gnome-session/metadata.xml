@@ -10,7 +10,6 @@
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
 	<use>
-		<flag name="gconf">Optional support for <pkg>gnome-base/gconf</pkg>
-			configuration storage system</flag>
+		<flag name="xdg-dirs">Manage user directories (Desktop, Music...)</flag>
 	</use>
 </pkgmetadata>

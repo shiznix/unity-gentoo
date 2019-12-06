@@ -17,7 +17,7 @@ SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.32/${PN}-${PV}.tar.xz
 LICENSE="GPL-2 LGPL-2 FDL-1.1"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="doc elibc_FreeBSD ipv6 systemd wayland"
+IUSE="doc elibc_FreeBSD ipv6 systemd wayland +xdg-dirs"
 RESTRICT="mirror"
 
 # x11-misc/xdg-user-dirs{,-gtk} are needed to create the various XDG_*_DIRs, and
@@ -43,11 +43,12 @@ COMMON_DEPEND="
 	x11-libs/libXext
 	x11-libs/libXrender
 	x11-libs/libXtst
-	x11-misc/xdg-user-dirs
-	x11-misc/xdg-user-dirs-gtk
 	x11-apps/xdpyinfo
 
 	systemd? ( >=sys-apps/systemd-183:0= )
+	xdg-dirs? (
+		x11-misc/xdg-user-dirs
+		x11-misc/xdg-user-dirs-gtk )
 "
 # Pure-runtime deps from the session files should *NOT* be added here
 # Otherwise, things like gdm pull in gnome-shell

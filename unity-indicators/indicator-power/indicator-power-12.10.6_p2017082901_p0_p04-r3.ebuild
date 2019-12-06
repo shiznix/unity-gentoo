@@ -15,10 +15,10 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="+powerman"
 RESTRICT="mirror"
 
-RDEPEND="gnome-extra/gnome-power-manager"
+RDEPEND="powerman? ( gnome-extra/gnome-power-manager )"
 DEPEND="${RDEPEND}
 	dev-libs/glib:2
 	dev-libs/libappindicator
@@ -36,6 +36,10 @@ src_prepare() {
 
 	# Disable url-dispatcher when not using unity8-desktop-session
 	eapply "${FILESDIR}/disable-url-dispatcher.diff"
+
+	# Deactivate gnome-power-statistics launcher
+	! use powerman \
+		&& eapply "${FILESDIR}/disable-powerman.diff"
 
 	cmake-utils_src_prepare
 }

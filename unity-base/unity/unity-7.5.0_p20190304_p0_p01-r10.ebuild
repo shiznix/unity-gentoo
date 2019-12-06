@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.xz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="+branding debug doc pch +systray test"
+IUSE="+branding debug doc +hud pch +systray test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}"
@@ -33,10 +33,12 @@ RDEPEND="app-i18n/ibus[gtk,gtk2]
 	unity-base/unity-language-pack
 	x11-themes/humanity-icon-theme
 	x11-themes/gtk-engines-murrine
-	x11-themes/unity-asset-pool"
+	x11-themes/unity-asset-pool
+	hud? ( unity-base/hud )"
 DEPEND="${RDEPEND}
 	!sys-apps/upstart
 	!unity-base/dconf-qt
+	dev-libs/appstream-glib
 	>=dev-libs/boost-1.71:=
 	dev-libs/dee:=
 	dev-libs/dbus-glib
@@ -52,7 +54,6 @@ DEPEND="${RDEPEND}
 	dev-libs/xpathselect
 	dev-python/gconf-python
 	gnome-base/gconf
-	app-text/yelp-tools
 	gnome-base/gnome-desktop:3=
 	gnome-base/gnome-menus:3
 	gnome-base/gnome-session[systemd]

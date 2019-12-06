@@ -10,6 +10,7 @@
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
 	<use>
+		<flag name="hud">Enable the backend for Unity's HUD</flag>
 		<flag name="systray">Enable system tray support in the Unity menu bar</flag>
 	</use>
 </pkgmetadata>

@@ -16,11 +16,12 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="fcitx"
+IUSE="+charmap +fcitx"
 RESTRICT="mirror"
 
-RDEPEND="gnome-extra/gucharmap:2.90
-	gnome-base/gnome-desktop:3="
+RDEPEND="gnome-base/gnome-desktop:3=
+
+	charmap? ( gnome-extra/gucharmap )"
 DEPEND="${RDEPEND}
 	app-i18n/ibus[vala]
 	>=dev-libs/glib-2.37
@@ -46,6 +47,10 @@ S="${WORKDIR}"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eapply "${FILESDIR}/${PN}-optional-fcitx.patch"
+
+	! use charmap && sed -i \
+		-e "/Character Map/d" \
+		lib/indicator-menu.vala
 
 	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
 	#       (the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #

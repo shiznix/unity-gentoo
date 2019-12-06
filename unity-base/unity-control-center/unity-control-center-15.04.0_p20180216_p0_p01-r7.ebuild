@@ -16,7 +16,8 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+bluetooth +colord +cups fcitx +gnome-online-accounts +i18n input_devices_wacom kerberos v4l +webkit"
+IUSE="+bluetooth +colord +cups +fcitx +gnome-online-accounts +i18n input_devices_wacom +kerberos +samba +v4l +webkit"
+REQUIRED_USE="samba? ( cups )"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -75,9 +76,8 @@ COMMON_DEPEND="
 	colord? (
 		>=x11-misc/colord-0.1.34:0=
 		>=x11-libs/colord-gtk-0.1.24 )
-	cups? (
-		>=net-print/cups-1.4[dbus]
-		|| ( >=net-fs/samba-3.6.14-r1[smbclient] >=net-fs/samba-4.0.0[client] ) )
+	cups? (	>=net-print/cups-1.4[dbus]
+		samba? ( || ( >=net-fs/samba-3.6.14-r1[smbclient] >=net-fs/samba-4.0.0[client] ) ) )
 	fcitx? ( app-i18n/fcitx )
 	gnome-online-accounts? ( net-libs/gnome-online-accounts )
 	i18n? (
@@ -95,7 +95,6 @@ COMMON_DEPEND="
 RDEPEND="${COMMON_DEPEND}
 	|| ( ( app-admin/openrc-settingsd sys-auth/consolekit ) >=sys-apps/systemd-31 )
 	>=sys-apps/accountsservice-0.6.39
-	x11-themes/gnome-icon-theme-symbolic
 
 	gnome-extra/mousetweaks
 	unity-base/gsettings-ubuntu-touch-schemas

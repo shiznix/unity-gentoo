@@ -14,11 +14,11 @@ SRC_URI="${UURL}/${MY_P}.tar.xz"
 LICENSE="CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="extra"
 RESTRICT="mirror"
 
 RDEPEND="x11-themes/adwaita-icon-theme
-	x11-themes/tangerine-icon-theme"
+	extra? ( x11-themes/tangerine-icon-theme )"
 
 src_install() {
 	insinto /usr/share/icons

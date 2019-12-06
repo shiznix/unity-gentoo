@@ -4,6 +4,7 @@
 ## Enabled PYTHON_SINGLE_TARGET must match state in PYTHON_TARGETS ##
 
 app-editors/gedit -python_targets_python3_4			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_5" as set by /usr/portage/profiles/base/make.defaults
+app-accessibility/brltty python                                 # orca
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
 app-cdr/brasero nautilus
@@ -15,12 +16,14 @@ app-i18n/fcitx -autostart
 app-i18n/ibus dconf gtk gtk2 python vala -gconf
 
 app-text/gtkspell vala
+dev-db/sqlite secure-delete                                     # firefox
 dev-lang/python sqlite
 dev-libs/folks vala
 dev-libs/glib utils
 dev-libs/libdbusmenu gtk3
 dev-libs/keybinder python
 dev-libs/libgdata gnome
+dev-libs/liblouis python                                        # orca
 dev-libs/libpeas -python_targets_python3_4			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_5" as set by /usr/portage/profiles/base/make.defaults
 dev-libs/libpcre pcre16
 dev-libs/libxml2 icu
@@ -58,11 +61,14 @@ media-sound/rhythmbox zeitgeist
 #media-sound/pulseaudio bluetooth
 media-video/ffmpeg opus
 net-im/pidgin dbus gadu groupwise gstreamer idn meanwhile networkmanager sasl silc zephyr -eds
+net-libs/gnome-online-accounts -gnome
 net-libs/libgadu gnutls
 net-libs/libproxy -kde
 #net-misc/iputils -arping
 net-misc/openssh -bindist
+net-p2p/transmission ayatana
 net-wireless/bluez user-session
+net-wireless/wpa_supplicant -qt5
 sys-apps/dbus user-session
 sys-apps/systemd nat pam
 #sys-libs/pam audit
@@ -76,4 +82,5 @@ x11-libs/libxcb xkb
 x11-libs/topmenu-gtk mate
 x11-misc/vala-panel-appmenu mate
 x11-misc/x11vnc dummy
+x11-terms/gnome-terminal -gnome-shell
 x11-themes/ubuntu-wallpapers -gnome

@@ -1,0 +1,23 @@
+diff -Nur a/src/service.c b/src/service.c
+--- a/src/service.c	2017-08-29 17:36:01.000000000 +0200
++++ b/src/service.c	2019-12-03 12:50:50.779615269 +0100
+@@ -512,7 +512,7 @@
+     item = g_menu_item_new (label, NULL);
+     g_free (label);
+ 
+-    g_menu_item_set_attribute (item, "x-canonical-type", "s", "com.canonical.indicator.basic");
++//    g_menu_item_set_attribute (item, "x-canonical-type", "s", "com.canonical.indicator.basic");
+ 
+     if ((icon = indicator_power_device_get_gicon (device)))
+       {
+@@ -906,8 +906,8 @@
+ 
+   GActionEntry entries[] = {
+     { "activate-settings", on_settings_activated },
+-    { "activate-phone-settings", on_phone_settings_activated },
+-    { "activate-statistics", on_statistics_activated, "s" }
++    { "activate-phone-settings", on_phone_settings_activated }
++//    { "activate-statistics", on_statistics_activated, "s" }
+   };
+ 
+   p->actions = g_simple_action_group_new ();

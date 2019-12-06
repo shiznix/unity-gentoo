@@ -20,7 +20,6 @@ RESTRICT="mirror"
 
 RDEPEND="unity-base/unity-language-pack"
 DEPEND="${RDEPEND}
-	app-admin/system-config-printer
 	dev-cpp/gtest
 	dev-libs/glib:2
 	dev-libs/libappindicator:=

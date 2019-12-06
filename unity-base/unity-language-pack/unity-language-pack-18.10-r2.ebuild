@@ -6,14 +6,16 @@ EAPI=6
 URELEASE="cosmic"
 inherit ubuntu-versionator
 
+UURL="http://archive.ubuntu.com/ubuntu/pool/main/l"
+
 DESCRIPTION="Language translations pack for Unity desktop"
 HOMEPAGE="https://translations.launchpad.net/ubuntu"
-
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/l"
+SRC_URI=""
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+IUSE=""
 RESTRICT="mirror"
 
 DEPEND="sys-devel/gettext"
@@ -168,13 +170,10 @@ for use_flag in ${IUSE_L10N}; do
 		${UURL}/language-pack-gnome-${tag}-base/language-pack-gnome-${tag}-base_${ver_gnome}.tar.${compress} )"
 done
 
-S="${WORKDIR}"
+REQUIRED_USE="|| ( ${IUSE} )"
+IUSE="${IUSE/l10n_en/+l10n_en}"
 
-src_unpack() {
-	[[ -n ${A} ]] \
-		&& unpack ${A} \
-		|| die "At least one L10N USE_EXPAND flag must be set!"
-}
+S="${WORKDIR}"
 
 src_install() {
 	# langselector panel msgids

@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER}${UVER_PREFIX}.tar.xz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="nls"
+IUSE="+bluetooth +files nls"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
@@ -35,15 +35,17 @@ DEPEND="${RDEPEND}
 	unity-base/overlay-scrollbar
 	unity-base/unity
 	unity-base/unity-settings-daemon
-	unity-indicators/indicator-bluetooth
 	unity-indicators/indicator-datetime
 	unity-indicators/indicator-power
 	unity-indicators/indicator-session
 	unity-indicators/indicator-sound
 	unity-lenses/unity-lens-applications
-	unity-lenses/unity-lens-files
 	virtual/pkgconfig
 	x11-misc/notify-osd
+
+	bluetooth? ( unity-indicators/unity-indicators-meta[bluetooth] )
+	files? ( unity-lenses/unity-lens-meta[files] )
+
 	${PYTHON_DEPS}"
 
 S="${WORKDIR}/${PN}-${PV}${UVER}"
@@ -73,6 +75,14 @@ src_prepare() {
 	# Include /usr/share/cursors/xorg-x11/ in the paths to check for cursor themes as Gentoo #
 	#  installs cursor themes in both /usr/share/cursors/xorg-x11/ and /usr/share/icons/ #
 	epatch -p1 "${FILESDIR}/xorg-cursor-themes-path.diff"
+
+	! use bluetooth && sed -i \
+		-e "/indicator.bluetooth/d" \
+		UnityTweakTool/section/spaghetti/gsettings.py
+
+	! use files && sed -i \
+		-e "/FilesLens/d" \
+		UnityTweakTool/section/spaghetti/gsettings.py
 
 	distutils-r1_src_prepare
 }
