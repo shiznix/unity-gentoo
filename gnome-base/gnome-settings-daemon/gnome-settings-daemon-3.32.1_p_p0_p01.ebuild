@@ -27,7 +27,7 @@ RESTRICT="mirror"
 COMMON_DEPEND="
 	>=gnome-base/gsettings-desktop-schemas-3.27.90
 
-	schemas? (
+	!schemas? (
 		>=dev-libs/glib-2.53.0:2[dbus]
 		dev-libs/libappindicator:=
 		gnome-base/gnome-desktop:3=
