@@ -10,7 +10,12 @@
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
 	<use>
+		<flag name="files">Enable Files lens in Dash</flag>
+		<flag name="lowgfx">Enable Low Graphics Mode</flag>
+		<flag name="music">Enable Music lens in Dash</flag>
+		<flag name="photos">Enable Photos lens in Dash</flag>
 		<flag name="ubuntu-cursor">Enable DMZ-White - Ubuntu's default cursor theme</flag>
 		<flag name="ubuntu-sounds">Enable Ubuntu's default audio theme</flag>
+		<flag name="video">Enable Video lens in Dash</flag>
 	</use>
 </pkgmetadata>

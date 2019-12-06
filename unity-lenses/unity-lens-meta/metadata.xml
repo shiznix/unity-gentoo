@@ -10,7 +10,6 @@
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
 	<use>
-		<flag name="applications">Applications lens for the Dash</flag>
 		<flag name="files">Files/folders lens for the Dash</flag>
 		<flag name="music">Music collection lens for the Dash</flag>
 		<flag name="photos">Photo collection lens for the Dash</flag>

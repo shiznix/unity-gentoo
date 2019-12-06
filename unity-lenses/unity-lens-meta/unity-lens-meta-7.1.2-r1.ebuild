@@ -9,14 +9,16 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+applications +files +music +photos +plugins +video"
+IUSE="+files +music +photos +plugins +video"
 RESTRICT="mirror"
 
-DEPEND="applications? ( unity-lenses/unity-lens-applications )
+DEPEND="unity-lenses/unity-lens-applications
+	unity-scopes/unity-scope-home
+
 	files? ( unity-lenses/unity-lens-files )
 	music? ( unity-lenses/unity-lens-music )
 	photos? ( unity-lenses/unity-lens-photos )
 	plugins? ( unity-scopes/smart-scopes )
-	video? ( unity-lenses/unity-lens-video )
-	unity-scopes/unity-scope-home"
+	video? ( unity-lenses/unity-lens-video )"
 RDEPEND="${DEPEND}"
+PDEPEND="unity-base/unity-settings[files=,music=,photos=,video=]"

@@ -26,7 +26,7 @@ done
 
 LICENSE="CC-BY-SA-3.0"
 KEYWORDS="amd64 x86"
-SLOT="0"
+SLOT="0/${URELEASE}"
 IUSE="gnome ${CODE_NAME}"
 RESTRICT="mirror"
 
