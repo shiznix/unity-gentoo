@@ -1,0 +1,13 @@
+ebuild_hook() {
+	ehook_require fontconfig_adjust
+
+	find "${ED}" -type f -name "*.ttf" \
+		! -name "TakaoPGothic.ttf" \
+			-delete
+
+	local template_dir="/etc/fonts/conf.avail"
+
+	rm "${ED%/}${template_dir}"/*
+	insinto "${template_dir}"
+	doins "${EHOOK_FILESDIR}"/65-fonts-takao-pgothic.conf
+}

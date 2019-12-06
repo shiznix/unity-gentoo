@@ -1,0 +1,41 @@
+ebuild_hook() {
+	local \
+		f \
+		template_dir="/etc/fonts/conf.avail" \
+		symlink_dir="/etc/fonts/conf.d"
+
+	local -a files=(
+		10-antialias.conf
+		10-hinting-slight.conf
+		10-scale-bitmap-fonts.conf
+		11-lcdfilter-default.conf
+		20-unhint-small-vera.conf
+		30-metric-aliases.conf
+		40-nonlatin.conf
+		45-generic.conf
+		45-latin.conf
+		49-sansserif.conf
+		50-user.conf
+		51-local.conf
+		60-generic.conf
+		60-latin.conf
+		65-fonts-persian.conf
+		65-khmer.conf
+		65-nonlatin.conf
+		69-unifont.conf
+		70-no-bitmaps.conf
+		80-delicious.conf
+		90-synthetic.conf
+	)
+
+	insinto "${template_dir}"
+	doins "${EHOOK_FILESDIR}/${files[0]}"
+
+	einfo "Creating fontconfig configuration symlinks ..."
+	for f in "${files[@]}"; do
+		if [[ ! -L ${ED%/}${symlink_dir}/${f} ]] && [[ -f ${ED%/}${template_dir}/${f} ]]; then
+			echo " * ${f}"
+			dosym "../conf.avail/${f}" "${symlink_dir}/${f}"
+		fi
+	done
+}

@@ -1,0 +1,15 @@
+ebuild_hook() {
+	if ehook_use fontconfig_adjust; then
+
+	local f="30-opensymbol.conf"
+
+	einfo "Creating fontconfig configuration symlink ..."
+	echo " * ${f}"
+
+	insinto /etc/fonts/conf.avail
+	newins "${ED%/}/usr/$(get_libdir)"/libreoffice/share/fonts/truetype/fc_local.conf "${f}"
+
+	dosym "../conf.avail/${f}" "/etc/fonts/conf.d/${f}"
+
+	fi ## end of ehook_use fontconfig_adjust
+}

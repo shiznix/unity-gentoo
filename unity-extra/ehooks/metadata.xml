@@ -13,6 +13,7 @@
 		<flag name="audacity_menu">Add Unity's Global menu for <pkg>media-sound/audacity</pkg></flag>
 		<flag name="eog_menu">Add Unity's Global menu for <pkg>media-gfx/eog</pkg></flag>
 		<flag name="evince_menu">Add Unity's Global menu for <pkg>app-text/evince</pkg></flag>
+		<flag name="fontconfig_adjust">Adjust fonts configuration according to Ubuntu</flag>
 		<flag name="gnome-screenshot_adjust">Adjust <pkg>media-gfx/gnome-screenshot</pkg> when running under Unity</flag>
 		<flag name="gnome-terminal_theme">Add Unity's theme for <pkg>x11-terms/gnome-terminal</pkg></flag>
 		<flag name="libreoffice_theme">Add Ubuntu's Human icon theme for <pkg>app-office/libreoffice</pkg></flag>

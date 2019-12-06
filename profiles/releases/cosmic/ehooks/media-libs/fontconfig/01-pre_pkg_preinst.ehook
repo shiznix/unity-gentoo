@@ -1,0 +1,39 @@
+ebuild_hook() {
+	ehook_require fontconfig_adjust
+
+	local \
+		f \
+		symlink_dir="/etc/fonts/conf.d"
+
+	local -a \
+		f_remove=() \
+		files=(
+			10-autohint.conf
+			10-hinting-full.conf
+			10-hinting-medium.conf
+			10-hinting-none.conf
+			10-no-sub-pixel.conf
+			10-sub-pixel-bgr.conf
+			10-sub-pixel-rgb.conf
+			10-sub-pixel-vbgr.conf
+			10-sub-pixel-vrgb.conf
+			10-unhinted.conf
+			11-lcdfilter-legacy.conf
+			11-lcdfilter-light.conf
+			25-unhint-nonlatin.conf
+			70-yes-bitmaps.conf
+		)
+
+	for f in "${files[@]}"; do
+		[[ -L ${EROOT%/}${symlink_dir}/${f} ]] \
+			&& f_remove+=( ${f} )
+	done
+
+	if [[ -n ${f_remove[@]} ]]; then
+		ewarn "Cleaning useless symlinks in ${EROOT%/}${symlink_dir} ..."
+		for f in "${f_remove[@]}"; do
+			echo " * ${f}"
+			rm "${EROOT%/}${symlink_dir}/${f}"
+		done
+	fi
+}

@@ -1,0 +1,19 @@
+# Create fontconfig configuration symlinks #
+
+ebuild_hook() {
+	ehook_require fontconfig_adjust
+
+	local \
+		f \
+		symlink_dir="/etc/fonts/conf.d"
+
+	einfo "Creating fontconfig configuration symlinks ..."
+	for f in "${ED%/}"/etc/fonts/conf.avail/*; do
+		f=${f##*/}
+		[[ -d ${ED%/}${symlink_dir} ]] || dodir "${symlink_dir}"
+		if [[ ! -L ${ED%/}${symlink_dir}/${f} ]]; then
+			echo " * ${f}"
+			dosym "../conf.avail/${f}" "${symlink_dir}/${f}"
+		fi
+	done
+}

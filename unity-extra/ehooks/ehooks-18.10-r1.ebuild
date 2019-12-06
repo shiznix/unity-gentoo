@@ -13,9 +13,11 @@ LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-IUSE="audacity_menu eog_menu evince_menu gnome-screenshot_adjust gnome-terminal_theme libreoffice_theme pidgin_chat totem_menu zim_theme"
+IUSE="+audacity_menu +eog_menu +evince_menu +fontconfig_adjust +gnome-screenshot_adjust +gnome-terminal_theme +libreoffice_theme +pidgin_chat +totem_menu +zim_theme"
 
-DEPEND=""
+DEPEND="unity-base/unity-build-env"
+RDEPEND="fontconfig_adjust? (
+		media-libs/freetype:2[adobe-cff,cleartype_hinting,-bindist,-infinality] )"
 
 S=${WORKDIR}
 
@@ -40,6 +42,8 @@ pkg_preinst() {
 	repo_dir="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
 
 	for x in ${IUSE}; do
+		x="${x#+}"
+
 		## Progress indicator.
 		[[ ${count} -eq 4 ]] && count=0
 		printf "\b\b %s" "${indicator[${count}]}"

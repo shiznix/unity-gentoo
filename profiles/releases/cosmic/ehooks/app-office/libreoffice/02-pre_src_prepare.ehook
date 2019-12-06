@@ -1,4 +1,6 @@
 ebuild_hook() {
+	if ehook_use libreoffice_theme; then
+
 	## Add Human icon theme.
 	mv "${WORKDIR}"/human icon-themes
 
@@ -20,4 +22,6 @@ ebuild_hook() {
 	sed -i \
 		-e "s/\(sResult = \"\";\)/\1\nelse if (rsStyle == \"human\")\nsResult = \"tango\";/" \
 		vcl/source/image/ImplImageTree.cxx || die
+
+	fi ## end of ehook_use libreoffice_theme
 }

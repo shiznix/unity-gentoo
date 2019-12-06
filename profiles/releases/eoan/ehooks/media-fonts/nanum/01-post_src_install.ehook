@@ -1,0 +1,15 @@
+ebuild_hook() {
+	ehook_require fontconfig_adjust
+
+	find "${ED}" -type f -name "*.ttf" \
+		! -name "NanumBarunGothic.ttf" \
+		! -name "NanumBarunGothicBold.ttf" \
+		! -name "NanumGothic.ttf" \
+		! -name "NanumGothicBold.ttf" \
+		! -name "NanumMyeongjo.ttf" \
+		! -name "NanumMyeongjoBold.ttf" \
+			-delete
+
+	insinto /etc/fonts/conf.avail
+	doins "${EHOOK_FILESDIR}"/90-fonts-nanum.conf
+}

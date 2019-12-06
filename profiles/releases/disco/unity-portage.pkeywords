@@ -131,6 +131,7 @@ dev-python/python-prctl
 ~dev-qt/qtlocation-5.6.1
 dev-util/umockdev
 gnome-extra/nemo
+media-fonts/nanum
 ~media-libs/giflib-4.2.3
 ~media-libs/gexiv2-0.10.5
 =media-libs/harfbuzz-2.2*

@@ -1,0 +1,3 @@
+ebuild_hook() {
+	rm -r "${ED%/}"/usr/share/icons
+}
