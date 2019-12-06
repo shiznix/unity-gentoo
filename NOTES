@@ -29,7 +29,6 @@ dev-libs/libdbusmenu			# See "Using portage tree libindicate packages" item abov
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
-gnome-base/gnome-core-apps		# Included to pull in lower versions of empathy, gnome-menus and nautilus
 gnome-base/gnome-core-libs		# Included to pull in lower version of x11-libs/gtk+:3
 gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
 gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode

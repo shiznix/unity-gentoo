@@ -8,7 +8,7 @@ inherit ubuntu-versionator
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity packages"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-URELEASE="disco"
+URELEASE="cosmic"
 
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"

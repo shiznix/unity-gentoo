@@ -5,7 +5,7 @@ EAPI=6
 GNOME2_LA_PUNT="yes" # Needed with USE 'sendto'
 
 URELEASE="cosmic-updates"
-inherit eutils meson readme.gentoo-r1 virtualx ubuntu-versionator
+inherit eutils meson readme.gentoo-r1 virtualx ubuntu-versionator xdg
 
 DESCRIPTION="A file manager for the GNOME desktop patched for the Unity desktop"
 HOMEPAGE="https://wiki.gnome.org/Apps/Nautilus"
@@ -77,6 +77,8 @@ src_prepare() {
 			To activate the previewer, select a file and press space; to
 			close the previewer, press space again."
 	fi
+
+	default
 }
 
 src_configure() {
@@ -107,7 +109,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	meson_pkg_postinst
+	xdg_pkg_postinst
 
 	if use previewer; then
 		readme.gentoo_print_elog
