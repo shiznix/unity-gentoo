@@ -26,4 +26,5 @@ media-libs/gst-plugins-base -theora
 media-libs/harfbuzz -graphite
 media-libs/libsndfile minimal
 net-misc/networkmanager -ppp -wext
+net-wireless/wpa_supplicant -qt5
 sys-fs/lvm2 -thin

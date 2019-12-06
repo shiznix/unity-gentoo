@@ -69,7 +69,6 @@ net-libs/libproxy -kde
 net-misc/openssh -bindist
 net-p2p/transmission ayatana
 net-wireless/bluez user-session
-net-wireless/wpa_supplicant -qt5
 sys-apps/dbus user-session
 sys-apps/systemd nat pam
 #sys-libs/pam audit
