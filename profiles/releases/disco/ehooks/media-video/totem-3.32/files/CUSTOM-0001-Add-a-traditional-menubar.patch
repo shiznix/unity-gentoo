@@ -1,0 +1,744 @@
+From 684dd62ef6674c75d8059c048098c817e766b192 Mon Sep 17 00:00:00 2001
+From: Lars Uebernickel <lars.uebernickel@canonical.com>
+Date: Thu, 21 May 2015 21:46:45 +0200
+Subject: [PATCH] Add a traditional menubar
+---
+ data/totem.ui            | 167 ------------------------------------
+ po/POTFILES.in           |   3 +
+ src/grilo.gresource.xml  |   5 ++
+ src/menus-appmenu.ui     | 113 +++++++++++++++++++++++++
+ src/menus-common.ui      |  62 ++++++++++++++
+ src/menus-traditional.ui | 177 +++++++++++++++++++++++++++++++++++++++
+ src/totem-object.c       |  43 +++++-----
+ 7 files changed, 382 insertions(+), 188 deletions(-)
+ create mode 100644 src/menus-appmenu.ui
+ create mode 100644 src/menus-common.ui
+ create mode 100644 src/menus-traditional.ui
+
+diff --git a/data/totem.ui b/data/totem.ui
+index 00d6201..c42a6db 100644
+--- a/data/totem.ui
++++ b/data/totem.ui
+@@ -4,173 +4,6 @@
+ <interface>
+ <requires lib="gtk+" version="3.11"/>
+ 
+-<menu id="appmenu">
+-	<section id="python-console-placeholder"/>
+-	<section>
+-		<item>
+-			<attribute name="label" translatable="yes">Prefere_nces</attribute>
+-			<attribute name="action">app.preferences</attribute>
+-		</item>
+-		<item>
+-			<attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+-			<attribute name="action">app.shortcuts</attribute>
+-		</item>
+-		<item>
+-			<attribute name="label" translatable="yes">_Help</attribute>
+-			<attribute name="action">app.help</attribute>
+-			<attribute name="accel">F1</attribute>
+-		</item>
+-	</section>
+-</menu>
+-
+-<menu id="addmenu">
+-	<section>
+-		<item>
+-			<attribute name="label" translatable="yes">Add _Local Video…</attribute>
+-			<attribute name="action">app.open</attribute>
+-			<attribute name="accel">&lt;Ctrl&gt;O</attribute>
+-		</item>
+-		<item>
+-			<attribute name="label" translatable="yes">Add _Web Video…</attribute>
+-			<attribute name="action">app.open-location</attribute>
+-			<attribute name="accel">&lt;Ctrl&gt;L</attribute>
+-		</item>
+-	</section>
+-</menu>
+-
+-<menu id="playermenu">
+-	<section>
+-		<section id="save-placeholder"/>
+-		<section id="burn-placeholder"/>
+-	</section>
+-	<section>
+-		<section id="screenshot-placeholder"/>
+-	</section>
+-	<section>
+-		<submenu>
+-			<attribute name="label" translatable="yes">_Aspect Ratio</attribute>
+-			<section>
+-				<item>
+-					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Auto</attribute>
+-					<attribute name="action">app.aspect-ratio</attribute>
+-					<attribute name="target" type="i">0</attribute>
+-				</item>
+-				<item>
+-					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Square</attribute>
+-					<attribute name="action">app.aspect-ratio</attribute>
+-					<attribute name="target" type="i">1</attribute>
+-				</item>
+-				<item>
+-					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">4∶3 (TV)</attribute>
+-					<attribute name="action">app.aspect-ratio</attribute>
+-					<attribute name="target" type="i">2</attribute>
+-				</item>
+-				<item>
+-					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">16∶9 (Widescreen)</attribute>
+-					<attribute name="action">app.aspect-ratio</attribute>
+-					<attribute name="target" type="i">3</attribute>
+-				</item>
+-				<item>
+-					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">2.11∶1 (DVB)</attribute>
+-					<attribute name="action">app.aspect-ratio</attribute>
+-					<attribute name="target" type="i">4</attribute>
+-				</item>
+-			</section>
+-		</submenu>
+-		<item>
+-			<attribute name="label" translatable="yes">Zoom In</attribute>
+-			<attribute name="action">app.zoom</attribute>
+-		</item>
+-		<section id="rotation-placeholder"/>
+-		<item>
+-			<attribute name="label" translatable="yes">Switch An_gles</attribute>
+-			<attribute name="action">app.next-angle</attribute>
+-			<attribute name="accel">&lt;Ctrl&gt;G</attribute>
+-		</item>
+-	</section>
+-	<section>
+-		<submenu>
+-			<attribute name="label" translatable="yes">_Languages</attribute>
+-			<section id="languages-placeholder"/>
+-		</submenu>
+-		<submenu>
+-			<attribute name="label" translatable="yes">S_ubtitles</attribute>
+-			<section>
+-				<item>
+-					<attribute name="label" translatable="yes">_Select Text Subtitles…</attribute>
+-					<attribute name="action">app.select-subtitle</attribute>
+-				</item>
+-				<section id="subtitle-download-placeholder"/>
+-				<section id="subtitles-placeholder"/>
+-			</section>
+-		</submenu>
+-	</section>
+-	<section>
+-		<item>
+-			<attribute name="label" translatable="yes">Prefere_nces</attribute>
+-			<attribute name="action">app.preferences</attribute>
+-		</item>
+-		<item>
+-			<attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+-			<attribute name="action">app.shortcuts</attribute>
+-		</item>
+-	</section>
+-	<section>
+-		<section id="properties-placeholder"/>
+-	</section>
+-	<section>
+-		<item>
+-			<attribute name="label" translatable="yes">_Eject</attribute>
+-			<attribute name="action">app.eject</attribute>
+-			<attribute name="accel">&lt;Ctrl&gt;E</attribute>
+-			<attribute name="hidden-when">action-disabled</attribute>
+-		</item>
+-	</section>
+-</menu>
+-
+-<menu id="gomenu">
+-	<section>
+-		<item>
+-			<attribute name="label" translatable="yes">_Repeat</attribute>
+-			<attribute name="action">app.repeat</attribute>
+-		</item>
+-	</section>
+-	<section>
+-		<item>
+-			<attribute name="label" translatable="yes">_DVD Menu</attribute>
+-			<attribute name="action">app.dvd-root-menu</attribute>
+-			<attribute name="accel">&lt;Ctrl&gt;M</attribute>
+-			<attribute name="hidden-when">action-disabled</attribute>
+-		</item>
+-		<item>
+-			<attribute name="label" translatable="yes">_Title Menu</attribute>
+-			<attribute name="action">app.dvd-title-menu</attribute>
+-			<attribute name="hidden-when">action-disabled</attribute>
+-		</item>
+-		<item>
+-			<attribute name="label" translatable="yes">A_udio Menu</attribute>
+-			<attribute name="action">app.dvd-audio-menu</attribute>
+-			<attribute name="hidden-when">action-disabled</attribute>
+-		</item>
+-		<item>
+-			<attribute name="label" translatable="yes">_Angle Menu</attribute>
+-			<attribute name="action">app.dvd-angle-menu</attribute>
+-			<attribute name="hidden-when">action-disabled</attribute>
+-		</item>
+-		<item>
+-			<attribute name="label" translatable="yes">_Chapter Menu</attribute>
+-			<attribute name="action">app.dvd-chapter-menu</attribute>
+-			<attribute name="hidden-when">action-disabled</attribute>
+-		</item>
+-	</section>
+-	<section>
+-		<section id="skipto-placeholder"/>
+-	</section>
+-	<section id="variable-rate-placeholder">
+-		<attribute name="label" translatable="yes">Speed</attribute>
+-	</section>
+-</menu>
+-
+ <object class="GtkAdjustment" id="tmw_seek_adjustment">
+   <property name="lower">0</property>
+   <property name="upper">0</property>
+diff --git a/po/POTFILES.in b/po/POTFILES.in
+index 4ae3b70..089aee8 100644
+--- a/po/POTFILES.in
++++ b/po/POTFILES.in
+@@ -9,6 +9,9 @@ data/preferences.ui
+ data/shortcuts.ui
+ data/totem.ui
+ data/uri.ui
++src/menus-appmenu.ui
++src/menus-common.ui
++src/menus-traditional.ui
+ src/backend/bacon-time-label.c
+ src/backend/bacon-video-widget.c
+ src/backend/bacon-video-widget-gst-missing-plugins.c
+diff --git a/src/grilo.gresource.xml b/src/grilo.gresource.xml
+index 2186e86..aa5cc43 100644
+--- a/src/grilo.gresource.xml
++++ b/src/grilo.gresource.xml
+@@ -6,4 +6,9 @@
+     <file compressed="true">grilo.ui</file>
+     <file compressed="true">totem-grilo.conf</file>
+   </gresource>
++  <gresource prefix="/org/gnome/Totem">
++    <file alias="gtk/menus-appmenu.ui" preprocess="xml-stripblanks">menus-appmenu.ui</file>
++    <file alias="gtk/menus-traditional.ui" preprocess="xml-stripblanks">menus-traditional.ui</file>
++    <file alias="gtk/menus-common.ui" preprocess="xml-stripblanks">menus-common.ui</file>
++  </gresource>
+ </gresources>
+diff --git a/src/menus-appmenu.ui b/src/menus-appmenu.ui
+new file mode 100644
+index 0000000..b2fbec9
+--- /dev/null
++++ b/src/menus-appmenu.ui
+@@ -0,0 +1,113 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<interface>
++
++<menu id="appmenu">
++	<section id="python-console-placeholder"/>
++	<section>
++		<item>
++			<attribute name="label" translatable="yes">Prefere_nces</attribute>
++			<attribute name="action">app.preferences</attribute>
++		</item>
++		<item>
++			<attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
++			<attribute name="action">app.shortcuts</attribute>
++		</item>
++		<item>
++			<attribute name="label" translatable="yes">_Help</attribute>
++			<attribute name="action">app.help</attribute>
++			<attribute name="accel">F1</attribute>
++		</item>
++	</section>
++</menu>
++
++<menu id="playermenu">
++	<section>
++		<section id="save-placeholder"/>
++		<section id="burn-placeholder"/>
++	</section>
++	<section>
++		<section id="screenshot-placeholder"/>
++	</section>
++	<section>
++		<submenu>
++			<attribute name="label" translatable="yes">_Aspect Ratio</attribute>
++			<section>
++				<item>
++					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Auto</attribute>
++					<attribute name="action">app.aspect-ratio</attribute>
++					<attribute name="target" type="i">0</attribute>
++				</item>
++				<item>
++					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Square</attribute>
++					<attribute name="action">app.aspect-ratio</attribute>
++					<attribute name="target" type="i">1</attribute>
++				</item>
++				<item>
++					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">4∶3 (TV)</attribute>
++					<attribute name="action">app.aspect-ratio</attribute>
++					<attribute name="target" type="i">2</attribute>
++				</item>
++				<item>
++					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">16∶9 (Widescreen)</attribute>
++					<attribute name="action">app.aspect-ratio</attribute>
++					<attribute name="target" type="i">3</attribute>
++				</item>
++				<item>
++					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">2.11∶1 (DVB)</attribute>
++					<attribute name="action">app.aspect-ratio</attribute>
++					<attribute name="target" type="i">4</attribute>
++				</item>
++			</section>
++		</submenu>
++		<item>
++			<attribute name="label" translatable="yes">Zoom In</attribute>
++			<attribute name="action">app.zoom</attribute>
++		</item>
++		<section id="rotation-placeholder"/>
++		<item>
++			<attribute name="label" translatable="yes">Switch An_gles</attribute>
++			<attribute name="action">app.next-angle</attribute>
++			<attribute name="accel">&lt;Ctrl&gt;G</attribute>
++		</item>
++	</section>
++	<section>
++		<submenu>
++			<attribute name="label" translatable="yes">_Languages</attribute>
++			<section id="languages-placeholder"/>
++		</submenu>
++		<submenu>
++			<attribute name="label" translatable="yes">S_ubtitles</attribute>
++			<section>
++				<item>
++					<attribute name="label" translatable="yes">_Select Text Subtitles…</attribute>
++					<attribute name="action">app.select-subtitle</attribute>
++				</item>
++				<section id="subtitle-download-placeholder"/>
++				<section id="subtitles-placeholder"/>
++			</section>
++		</submenu>
++	</section>
++	<section>
++		<item>
++			<attribute name="label" translatable="yes">Prefere_nces</attribute>
++			<attribute name="action">app.preferences</attribute>
++		</item>
++		<item>
++			<attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
++			<attribute name="action">app.shortcuts</attribute>
++		</item>
++	</section>
++	<section>
++		<section id="properties-placeholder"/>
++	</section>
++	<section>
++		<item>
++			<attribute name="label" translatable="yes">_Eject</attribute>
++			<attribute name="action">app.eject</attribute>
++			<attribute name="accel">&lt;Ctrl&gt;E</attribute>
++			<attribute name="hidden-when">action-disabled</attribute>
++		</item>
++	</section>
++</menu>
++
++</interface>
+diff --git a/src/menus-common.ui b/src/menus-common.ui
+new file mode 100644
+index 0000000..9f4444c
+--- /dev/null
++++ b/src/menus-common.ui
+@@ -0,0 +1,62 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<interface>
++
++<menu id="addmenu">
++	<section>
++		<item>
++			<attribute name="label" translatable="yes">Add _Local Video…</attribute>
++			<attribute name="action">app.open</attribute>
++			<attribute name="accel">&lt;Ctrl&gt;O</attribute>
++		</item>
++		<item>
++			<attribute name="label" translatable="yes">Add _Web Video…</attribute>
++			<attribute name="action">app.open-location</attribute>
++			<attribute name="accel">&lt;Ctrl&gt;L</attribute>
++		</item>
++	</section>
++</menu>
++
++<menu id="gomenu">
++	<section>
++		<item>
++			<attribute name="label" translatable="yes">_Repeat</attribute>
++			<attribute name="action">app.repeat</attribute>
++		</item>
++	</section>
++	<section>
++		<item>
++			<attribute name="label" translatable="yes">_DVD Menu</attribute>
++			<attribute name="action">app.dvd-root-menu</attribute>
++			<attribute name="accel">&lt;Ctrl&gt;M</attribute>
++			<attribute name="hidden-when">action-disabled</attribute>
++		</item>
++		<item>
++			<attribute name="label" translatable="yes">_Title Menu</attribute>
++			<attribute name="action">app.dvd-title-menu</attribute>
++			<attribute name="hidden-when">action-disabled</attribute>
++		</item>
++		<item>
++			<attribute name="label" translatable="yes">A_udio Menu</attribute>
++			<attribute name="action">app.dvd-audio-menu</attribute>
++			<attribute name="hidden-when">action-disabled</attribute>
++		</item>
++		<item>
++			<attribute name="label" translatable="yes">_Angle Menu</attribute>
++			<attribute name="action">app.dvd-angle-menu</attribute>
++			<attribute name="hidden-when">action-disabled</attribute>
++		</item>
++		<item>
++			<attribute name="label" translatable="yes">_Chapter Menu</attribute>
++			<attribute name="action">app.dvd-chapter-menu</attribute>
++			<attribute name="hidden-when">action-disabled</attribute>
++		</item>
++	</section>
++	<section>
++		<section id="skipto-placeholder"/>
++	</section>
++	<section id="variable-rate-placeholder">
++		<attribute name="label" translatable="yes">Speed</attribute>
++	</section>
++</menu>
++
++</interface>
+diff --git a/src/menus-traditional.ui b/src/menus-traditional.ui
+new file mode 100644
+index 0000000..ff19e7a
+--- /dev/null
++++ b/src/menus-traditional.ui
+@@ -0,0 +1,177 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<interface>
++
++  <menu id="menubar">
++    <submenu>
++      <attribute name="label" translatable="yes">_Movie</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Add _Local Video…</attribute>
++          <attribute name="action">app.open</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;O</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Add _Web Video…</attribute>
++          <attribute name="action">app.open-location</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;L</attribute>
++        </item>
++        <section id="save-placeholder"/>
++      </section>
++      <section>
++        <section id="burn-placeholder"/>
++      </section>
++      <section>
++        <section id="properties-placeholder"/>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Eject</attribute>
++          <attribute name="action">app.eject</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;E</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Play / Pause</attribute>
++          <attribute name="action">app.play</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;space</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Quit</attribute>
++          <attribute name="action">app.quit</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;Q</attribute>
++        </item>
++      </section>
++    </submenu>
++
++    <submenu>
++      <attribute name="label" translatable="yes">_Edit</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Repeat</attribute>
++          <attribute name="action">app.repeat</attribute>
++        </item>
++      </section>
++      <section>
++        <section id="screenshot-placeholder"/>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Prefere_nces</attribute>
++          <attribute name="action">app.preferences</attribute>
++        </item>
++      </section>
++    </submenu>
++
++    <submenu>
++      <attribute name="label" translatable="yes">_View</attribute>
++      <section>
++        <submenu>
++          <attribute name="label" translatable="yes">_Aspect Ratio</attribute>
++          <section>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Auto</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">0</attribute>
++            </item>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Square</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">1</attribute>
++            </item>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">4∶3 (TV)</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">2</attribute>
++            </item>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">16∶9 (Widescreen)</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">3</attribute>
++            </item>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">2.11∶1 (DVB)</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">4</attribute>
++            </item>
++          </section>
++        </submenu>
++        <item>
++          <attribute name="label" translatable="yes">Zoom In</attribute>
++          <attribute name="action">app.zoom</attribute>
++        </item>
++        <section id="rotation-placeholder"/>
++        <item>
++          <attribute name="label" translatable="yes">Switch An_gles</attribute>
++          <attribute name="action">app.next-angle</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;G</attribute>
++        </item>
++      </section>
++      <section>
++        <submenu>
++          <attribute name="label" translatable="yes">_Languages</attribute>
++          <section id="languages-placeholder"/>
++        </submenu>
++        <submenu>
++          <attribute name="label" translatable="yes">S_ubtitles</attribute>
++          <section>
++            <item>
++              <attribute name="label" translatable="yes">_Select Text Subtitles…</attribute>
++              <attribute name="action">app.select-subtitle</attribute>
++            </item>
++            <section id="subtitle-download-placeholder"/>
++            <section id="subtitles-placeholder"/>
++          </section>
++        </submenu>
++      </section>
++    </submenu>
++
++    <submenu>
++      <attribute name="label" translatable="yes">_Go</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_DVD Menu</attribute>
++          <attribute name="action">app.dvd-root-menu</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;M</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Title Menu</attribute>
++          <attribute name="action">app.dvd-title-menu</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">A_udio Menu</attribute>
++          <attribute name="action">app.dvd-audio-menu</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Angle Menu</attribute>
++          <attribute name="action">app.dvd-angle-menu</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Chapter Menu</attribute>
++          <attribute name="action">app.dvd-chapter-menu</attribute>
++        </item>
++      </section>
++      <section>
++        <section id="skipto-placeholder"/>
++      </section>
++    </submenu>
++
++    <submenu>
++      <attribute name="label" translatable="yes">_Help</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
++          <attribute name="action">app.shortcuts</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Help</attribute>
++          <attribute name="action">app.help</attribute>
++          <attribute name="accel">F1</attribute>
++        </item>
++      </section>
++    </submenu>
++  </menu>
++
++</interface>
+diff --git a/src/totem-object.c b/src/totem-object.c
+index 93be4fa..5541804 100644
+--- a/src/totem-object.c
++++ b/src/totem-object.c
+@@ -638,14 +638,7 @@ GMenu *
+ totem_object_get_menu_section (TotemObject *totem,
+ 			       const char  *id)
+ {
+-	GObject *object;
+-	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
+-
+-	object = gtk_builder_get_object (totem->xml, id);
+-	if (object == NULL || !G_IS_MENU (object))
+-		return NULL;
+-
+-	return G_MENU (object);
++	return gtk_application_get_menu_by_id (GTK_APPLICATION (totem), id);
+ }
+ 
+ /**
+@@ -665,7 +658,7 @@ totem_object_empty_menu_section (TotemObject *totem,
+ 
+ 	g_return_if_fail (TOTEM_IS_OBJECT (totem));
+ 
+-	menu = G_MENU (gtk_builder_get_object (totem->xml, id));
++	menu = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), id);
+ 	g_return_if_fail (menu != NULL);
+ 
+ 	while (g_menu_model_get_n_items (G_MENU_MODEL (menu)) > 0) {
+@@ -1021,7 +1014,8 @@ totem_object_set_main_page (TotemObject *totem,
+ 			      "custom-title", NULL,
+ 			      NULL);
+ 		gtk_widget_show (totem->fullscreen_button);
+-		gtk_widget_show (totem->gear_button);
++		if (gtk_application_prefers_app_menu (GTK_APPLICATION (totem)))
++			gtk_widget_show (totem->gear_button);
+ 		gtk_widget_hide (totem->add_button);
+ 		gtk_widget_hide (totem->main_menu_button);
+ 		bacon_video_widget_show_popup (totem->bvw);
+@@ -1044,7 +1038,8 @@ totem_object_set_main_page (TotemObject *totem,
+ 		g_clear_object (&totem->custom_title);
+ 		gtk_widget_show (totem->main_menu_button);
+ 		gtk_widget_hide (totem->fullscreen_button);
+-		gtk_widget_hide (totem->gear_button);
++		if (gtk_application_prefers_app_menu (GTK_APPLICATION (totem)))
++			gtk_widget_hide (totem->gear_button);
+ 		if (totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo)) == TOTEM_GRILO_PAGE_RECENT)
+ 			gtk_widget_show (totem->add_button);
+ 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
+@@ -3448,6 +3443,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
+ 	case GDK_KEY_Menu:
+ 	case GDK_KEY_F10:
+ 		bacon_video_widget_show_popup (totem->bvw);
++		if (gtk_application_prefers_app_menu (GTK_APPLICATION (totem))) {
+ 		if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN) {
+ 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->gear_button),
+ 						      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->gear_button)));
+@@ -3455,6 +3451,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
+ 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->fullscreen_gear_button),
+ 						      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->fullscreen_gear_button)));
+ 		}
++		}
+ 		break;
+ 	case GDK_KEY_Time:
+ 		bacon_video_widget_show_popup (totem->bvw);
+@@ -3809,7 +3806,7 @@ totem_callback_connect (TotemObject *totem)
+ 	GtkWidget *item;
+ 	GtkBox *box;
+ 	GAction *gaction;
+-	GMenuModel *menu;
++	GMenu *menu;
+ 	GtkPopover *popover;
+ 
+ 	/* Menu items */
+@@ -3856,8 +3853,8 @@ totem_callback_connect (TotemObject *totem)
+ 
+ 	/* Go button */
+ 	item = g_object_get_data (totem->controls, "go_button");
+-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
+-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
++	menu = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "gomenu");
++	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), G_MENU_MODEL (menu));
+ 	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
+ 	gtk_popover_set_transitions_enabled (GTK_POPOVER (popover), FALSE);
+ 	gtk_widget_set_size_request (GTK_WIDGET (popover), 175, -1);
+@@ -3877,24 +3874,26 @@ totem_callback_connect (TotemObject *totem)
+ 	gtk_widget_show (item);
+ 
+ 	/* Player menu */
++	if (gtk_application_prefers_app_menu (GTK_APPLICATION (totem))) {
+ 	item = totem->gear_button = totem_interface_create_header_button (totem->header,
+ 									  gtk_menu_button_new (),
+ 									  "view-more-symbolic",
+ 									  GTK_PACK_END);
+-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
+-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
++		menu = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "playermenu");
++		gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), G_MENU_MODEL (menu));
+ 	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
+ 	gtk_popover_set_transitions_enabled (GTK_POPOVER (popover), FALSE);
+ 	g_signal_connect (G_OBJECT (item), "toggled",
+ 			  G_CALLBACK (popup_menu_shown_cb), totem);
++	}
+ 
+ 	/* Add button */
+ 	item = totem->add_button = totem_interface_create_header_button (totem->header,
+ 									 gtk_menu_button_new (),
+ 									 "list-add-symbolic",
+ 									 GTK_PACK_START);
+-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "addmenu");
+-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
++	menu = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "addmenu");
++	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), G_MENU_MODEL (menu));
+ 	gtk_widget_show (item);
+ 
+ 	g_signal_connect (G_OBJECT (totem->header), "notify::search-mode",
+@@ -4007,7 +4006,7 @@ static void
+ add_fullscreen_toolbar (TotemObject *totem)
+ {
+ 	GtkWidget *container, *item;
+-	GMenuModel *menu;
++	GMenu *menu;
+ 
+ 	container = GTK_WIDGET (bacon_video_widget_get_header_controls_object (totem->bvw));
+ 
+@@ -4029,6 +4028,7 @@ add_fullscreen_toolbar (TotemObject *totem)
+ 						     GTK_PACK_END);
+ 	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
+ 
++	if (gtk_application_prefers_app_menu (GTK_APPLICATION (totem))) {
+ 	item = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
+ 	gtk_header_bar_pack_end (GTK_HEADER_BAR (totem->fullscreen_header), item);
+ 	gtk_style_context_add_class (gtk_widget_get_style_context (item), "header-bar-separator");
+@@ -4037,11 +4037,12 @@ add_fullscreen_toolbar (TotemObject *totem)
+ 						     gtk_menu_button_new (),
+ 						     "view-more-symbolic",
+ 						     GTK_PACK_END);
+-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
+-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
++		menu = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "playermenu");
++		gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), G_MENU_MODEL (menu));
+ 	g_signal_connect (G_OBJECT (item), "toggled",
+ 			  G_CALLBACK (popup_menu_shown_cb), totem);
+ 	totem->fullscreen_gear_button = item;
++	}
+ 
+ 	gtk_container_add (GTK_CONTAINER (container), totem->fullscreen_header);
+ 	gtk_widget_show_all (totem->fullscreen_header);
+-- 
+2.23.0
+

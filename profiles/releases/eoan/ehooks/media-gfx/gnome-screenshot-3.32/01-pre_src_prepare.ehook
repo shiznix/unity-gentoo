@@ -1,0 +1,7 @@
+ebuild_hook() {
+	ehook_require gnome-screenshot_adjust
+
+	sed -i \
+		-e "s/gnome-help/ubuntu-help/" \
+		src/screenshot-utils.c
+}
