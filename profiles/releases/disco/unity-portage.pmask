@@ -27,7 +27,7 @@
 >=media-video/cheese-3.34::gentoo
 >=media-video/totem-3.34::gentoo
 #>=net-misc/vinagre-3.22::gentoo
->=net-wireless/gnome-bluetooth-3.34::gentoo
+#>=net-wireless/gnome-bluetooth-3.34::gentoo
 >=sci-geosciences/geocode-glib-3.34::gentoo
 >=sys-apps/baobab-3.34::gentoo
 >=www-client/epiphany-3.34::gentoo
