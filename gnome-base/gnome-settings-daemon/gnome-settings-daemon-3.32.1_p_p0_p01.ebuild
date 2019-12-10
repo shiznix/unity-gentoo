@@ -20,7 +20,7 @@ IUSE="+colord +cups debug input_devices_wacom kernel_linux +networkmanager polic
 REQUIRED_USE="
 	udev
 	kernel_linux? ( networkmanager )
-	schemas ( !colord !cups !input_devices_wacom !smartcard !wayland )
+	schemas? ( !colord !cups !input_devices_wacom !smartcard !wayland )
 "
 RESTRICT="mirror"
 
