@@ -2,8 +2,16 @@
 */* -consolekit -packagekit -tracker -webapps networkmanager qt5 systemd vala zeitgeist
 
 ## Enabled PYTHON_SINGLE_TARGET must match state in PYTHON_TARGETS ##
+# PYTHON_SINGLE_TARGET="python3_6" and PYTHON_TARGETS="python2_7 python3_6" as set by /usr/portage/profiles/base/make.defaults
+#  So all packages that have only PYTHON_TARGETS="python2_7" must explicitly set 'python_single_target_python2_7' USE flag
+app-emulation/anbox python_single_target_python2_7
+dev-cpp/gtest python_single_target_python2_7
+dev-libs/libappindicator python_single_target_python2_7
+unity-base/evemu python_single_target_python2_7
+unity-extra/indicator-weather python_single_target_python2_7
+x11-themes/ubuntu-themes python_single_target_python2_7
 
-app-editors/gedit -python_targets_python3_4			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_5" as set by /usr/portage/profiles/base/make.defaults
+
 app-accessibility/brltty python                                 # orca
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
@@ -16,7 +24,9 @@ app-i18n/fcitx -autostart
 app-i18n/ibus dconf gtk gtk2 python vala -gconf
 
 app-text/gtkspell vala
-dev-db/sqlite secure-delete                                     # firefox
+
+#dev-db/sqlite secure-delete    # firefox               # Breaks net-irc/quassel[-postgres]
+
 dev-lang/python sqlite
 dev-libs/folks vala
 dev-libs/glib utils
@@ -24,7 +34,6 @@ dev-libs/libdbusmenu gtk3
 dev-libs/keybinder python
 dev-libs/libgdata gnome
 dev-libs/liblouis python                                        # orca
-dev-libs/libpeas -python_targets_python3_4			# PYTHON_TARGETS is currently PYTHON_TARGETS="python2_7 python3_5" as set by /usr/portage/profiles/base/make.defaults
 dev-libs/libpcre pcre16
 dev-libs/libxml2 icu
 dev-libs/libxslt python
@@ -46,7 +55,9 @@ dev-qt/qtwebkit:4 icu
 dev-qt/qtwebkit:5 icu qml libxml2 multimedia webp widgets xslt -gstreamer -gstreamer010
 dev-qt/qt-mobility organizer
 gnome-base/gnome-extra-apps -shotwell   # Meta ebuild that pulls in higer version of shotwell than provided by overlay
-gnome-base/gnome-settings-daemon schemas -colord -cups -policykit
+
+#gnome-base/gnome-settings-daemon schemas -colord -cups -policykit      # Breaks gnome-base/gnome-control-center dep on g-s-d[colord]
+
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 mate-base/mate -notification	# x11-misc/mate-notification-daemon collides with x11-misc/notify-osd

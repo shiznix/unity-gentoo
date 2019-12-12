@@ -90,9 +90,9 @@ RDEPEND="gnome-base/gnome-core-libs
 		media-fonts/tibetan-machine-font
 		media-fonts/urw-fonts )
 	games? (
-		=games-board/gnome-mahjongg-3.22*
-		=games-board/gnome-mines-3.30*
-		=games-puzzle/gnome-sudoku-3.30* )
+		games-board/gnome-mahjongg
+		games-board/gnome-mines
+		games-puzzle/gnome-sudoku )
 	utils? (
 		app-admin/gnome-system-log
 		app-backup/deja-dup[nautilus]
@@ -106,15 +106,15 @@ RDEPEND="gnome-base/gnome-core-libs
 		=gnome-extra/gnome-system-monitor-${GVER}
 		gnome-extra/gucharmap:2.90
 		=gnome-extra/yelp-${GVER}
-		=media-gfx/eog-3.28*
+		media-gfx/eog
 		=media-gfx/gnome-font-viewer-${GVER}
 		=media-gfx/gnome-screenshot-${GVER}
 		=media-gfx/simple-scan-${GVER}
 		=media-video/cheese-${GVER}
 		net-misc/remmina
-		=net-misc/vino-3.22*
+		net-misc/vino
 		net-p2p/transmission[ayatana]
-		=sys-apps/baobab-3.30*
+		sys-apps/baobab
 		=sys-apps/gnome-disk-utility-${GVER}
 		unity-indicators/indicator-keyboard[charmap]
 		unity-indicators/indicator-power[powerman]
