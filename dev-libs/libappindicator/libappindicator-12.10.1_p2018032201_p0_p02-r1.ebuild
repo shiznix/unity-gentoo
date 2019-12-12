@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="LGPL-2.1 LGPL-3"
 SLOT="3/1.0.0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="java mono test"
+IUSE="+introspection java mono test"
 RESTRICT="mirror"
 
 DEPEND="dev-libs/dbus-glib
@@ -34,6 +34,7 @@ DEPEND="dev-libs/dbus-glib
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
 
+	introspection? ( >=dev-libs/gobject-introspection-1:= )
 	java? ( dev-java/jayatana )
 	mono? ( dev-dotnet/gtk-sharp:2 )
 
@@ -81,6 +82,7 @@ src_configure() {
 			--libdir=/usr/$(get_libdir) \
 			--disable-static \
 			--with-gtk=2 \
+			$(use_enable introspection ) \
 			$(use_enable mono ) \
 			$(use_enable test tests ) \
 			$(use_enable test mono-test ) || die
@@ -93,6 +95,7 @@ src_configure() {
 			--libdir=/usr/$(get_libdir) \
 			--disable-static \
 			--with-gtk=3 \
+			$(use_enable introspection ) \
 			$(use_enable mono ) \
 			$(use_enable test tests ) \
 			$(use_enable test mono-test ) || die

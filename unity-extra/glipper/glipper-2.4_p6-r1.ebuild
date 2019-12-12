@@ -22,7 +22,7 @@ RESTRICT="mirror"
 
 RDEPEND="!x11-misc/glipper
 	dev-libs/keybinder:0[python]
-	dev-libs/libappindicator[${PYTHON_USEDEP}]
+	dev-libs/libappindicator
 	dev-python/gconf-python[${PYTHON_USEDEP}]
 	dev-python/pycrypto
 	dev-python/pygtk:2[${PYTHON_USEDEP}]
