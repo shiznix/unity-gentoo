@@ -52,9 +52,6 @@ dev-qt/qtwebkit:4 icu
 dev-qt/qtwebkit:5 icu qml libxml2 multimedia webp widgets xslt -gstreamer -gstreamer010
 dev-qt/qt-mobility organizer
 gnome-base/gnome-extra-apps -shotwell   # Meta ebuild that pulls in higer version of shotwell than provided by overlay
-
-#gnome-base/gnome-settings-daemon schemas -colord -cups -policykit      # Breaks gnome-base/gnome-control-center dep on g-s-d[colord]
-
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 mail-client/thunderbird -system-sqlite  # dev-db/sqlite[secure-delete] breaks net-irc/quassel[-postgres]
