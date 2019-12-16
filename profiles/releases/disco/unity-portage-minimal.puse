@@ -12,6 +12,7 @@ unity-lenses/unity-lens-meta -files -music -photos -plugins -video
 
 ## overlay related
 gnome-base/gnome-session -xdg-dirs
+gnome-base/gnome-settings-daemon schemas
 gnome-base/nautilus -exif
 x11-misc/notify-osd minimal
 

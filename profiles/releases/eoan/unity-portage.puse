@@ -24,9 +24,6 @@ app-i18n/fcitx -autostart
 app-i18n/ibus dconf gtk gtk2 python vala -gconf
 
 app-text/gtkspell vala
-
-#dev-db/sqlite secure-delete    # firefox               # Breaks net-irc/quassel[-postgres]
-
 dev-lang/python sqlite
 dev-libs/folks vala
 dev-libs/glib utils
@@ -60,6 +57,7 @@ gnome-base/gnome-extra-apps -shotwell   # Meta ebuild that pulls in higer versio
 
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
+mail-client/thunderbird -system-sqlite  # dev-db/sqlite[secure-delete] breaks net-irc/quassel[-postgres]
 mate-base/mate -notification	# x11-misc/mate-notification-daemon collides with x11-misc/notify-osd
 mate-base/mate-menus python
 media-libs/clutter egl
@@ -87,6 +85,7 @@ sys-libs/talloc python
 sys-libs/zlib minizip
 #unity-base/unity-settings-daemon input_devices_wacom	# Wacom/colord/bluetooth is no longer optional for 'unity-base/unity-control-center'
 virtual/notification-daemon -gnome	# Needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
+www-client/firefox -system-sqlite       # dev-db/sqlite[secure-delete] breaks net-irc/quassel[-postgres]
 x11-base/xorg-server dmx xvfb
 x11-libs/libdrm libkms
 x11-libs/libxcb xkb
