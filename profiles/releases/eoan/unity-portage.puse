@@ -2,11 +2,12 @@
 */* -consolekit -packagekit -tracker -webapps networkmanager qt5 systemd vala zeitgeist
 
 ## Enabled PYTHON_SINGLE_TARGET must match state in PYTHON_TARGETS ##
-# PYTHON_SINGLE_TARGET="python3_6" and PYTHON_TARGETS="python2_7 python3_6" as set by /usr/portage/profiles/base/make.defaults
-#  So all packages that have only PYTHON_TARGETS="python2_7" must explicitly set 'python_single_target_python2_7' USE flag
+# PYTHON_SINGLE_TARGET="python3_6" and PYTHON_TARGETS="python2_7 python3_6" are set by /usr/portage/profiles/base/make.defaults
+#  So all packages that have only PYTHON_TARGETS="python2_7" must now also explicitly set 'python_single_target_python2_7' USE flag
 app-emulation/anbox python_single_target_python2_7
 dev-cpp/gtest python_single_target_python2_7
 dev-libs/libappindicator python_single_target_python2_7
+dev-util/gtk-doc python_single_target_python2_7
 unity-base/evemu python_single_target_python2_7
 unity-extra/indicator-weather python_single_target_python2_7
 x11-themes/ubuntu-themes python_single_target_python2_7
