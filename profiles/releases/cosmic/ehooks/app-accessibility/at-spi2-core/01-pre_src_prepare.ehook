@@ -1,7 +1,0 @@
-## Accessibility is now always started by default, ready for use.
-ebuild_hook() {
-	sed -i \
-		-e "/OnlyShowIn/d" \
-		-e "/AutostartCondition/d" \
-		bus/at-spi-dbus-bus.desktop.in || die
-}

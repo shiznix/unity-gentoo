@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0/${PV}"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug test"
 REQUIRED_USE="test? ( debug )"
 RESTRICT="mirror"

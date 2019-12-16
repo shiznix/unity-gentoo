@@ -16,7 +16,7 @@ LICENSE="GPL-3+ LGPL-2.1+"
 SLOT="0"
 IUSE="+extensions gnome gtk-doc +introspection packagekit previewer seccomp selinux sendto"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 RESTRICT="mirror"
 

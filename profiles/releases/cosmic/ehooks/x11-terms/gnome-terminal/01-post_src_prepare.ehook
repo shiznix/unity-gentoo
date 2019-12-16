@@ -1,9 +1,0 @@
-ebuild_hook() {
-	ehook_require gnome-terminal_theme
-
-	# Turn on 5% transparency by default #
-	sed -i \
-		-e "/use-transparent-background/{n;s/false/true/;}" \
-		-e "/background-transparency-percent/{n;s/0//;}" \
-		src/org.gnome.Terminal.gschema.xml
-}

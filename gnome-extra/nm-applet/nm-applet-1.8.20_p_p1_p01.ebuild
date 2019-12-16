@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2+"
 SLOT="0"
 IUSE="gcr +introspection +modemmanager selinux systemd teamd"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 RDEPEND=">=app-crypt/libsecret-0.18

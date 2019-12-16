@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 # Let people emerge this by default, bug #472932
 IUSE+=" +python_single_target_python3_5 python_single_target_python3_6"

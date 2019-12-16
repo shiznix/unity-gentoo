@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${PN}_${PV}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
@@ -29,7 +29,7 @@ DEPEND="dev-libs/dee:=
 	unity-base/unity
 	$(vala_depend)"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

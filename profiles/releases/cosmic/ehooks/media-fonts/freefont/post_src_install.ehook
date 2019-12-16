@@ -1,5 +1,0 @@
-ebuild_hook() {
-	ehook_require fontconfig_adjust
-
-	find "${ED}" -type f -name "*.otf" -delete
-}

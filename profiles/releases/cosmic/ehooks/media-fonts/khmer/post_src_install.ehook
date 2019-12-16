@@ -1,8 +1,0 @@
-ebuild_hook() {
-	ehook_require fontconfig_adjust
-
-	find "${ED}" -type f -name "*.ttf" \
-		! -name "KhmerOS.ttf" \
-		! -name "KhmerOS_sys.ttf" \
-			-delete
-}
