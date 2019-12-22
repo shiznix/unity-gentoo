@@ -29,7 +29,7 @@
 #>=net-misc/vinagre-3.22::gentoo
 #>=net-wireless/gnome-bluetooth-3.34::gentoo
 >=sci-geosciences/geocode-glib-3.34::gentoo
->=sys-apps/baobab-3.34::gentoo
+#>=sys-apps/baobab-3.34::gentoo
 >=www-client/epiphany-3.34::gentoo
 #>=x11-libs/gtksourceview-3.24::gentoo
 #>=x11-libs/libwnck-3.24::gentoo
