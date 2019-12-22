@@ -55,6 +55,9 @@ src_prepare () {
 
 	eapply "${FILESDIR}/${PN}-optional-mono.patch"
 
+	# gio-unix-2.0 needs to be explicitly set so gtk-2.0 can find gio-unix-2.0 includes #
+	sed '/gio-2.0/a gio-unix-2.0' -i configure.ac
+
 	if use mono; then
 		# The /usr/lib/cli location for Mono bindings is specific to Ubuntu
 		sed -e 's:assemblydir = $(libdir)/cli/appindicator-sharp-0.1:assemblydir = $(libdir)/appindicator-sharp-0.1:' \
