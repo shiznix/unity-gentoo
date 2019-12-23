@@ -43,7 +43,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		app-accessibility/onboard
 		app-accessibility/orca )
 	apps? (
-		app-office/libreoffice
+		|| ( app-office/libreoffice app-office/libreoffice-bin )
 		|| ( mail-client/thunderbird =mail-client/evolution-${GVER} )
 		media-gfx/shotwell
 		media-sound/rhythmbox
