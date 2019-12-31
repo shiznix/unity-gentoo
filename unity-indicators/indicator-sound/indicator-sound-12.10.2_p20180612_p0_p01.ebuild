@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="test"
 RESTRICT="mirror"
 
 RDEPEND="sys-auth/polkit-pkla-compat
@@ -25,14 +25,18 @@ DEPEND="${RDEPEND}
 	dev-libs/libappindicator
 	dev-libs/libgee:0.8
 	dev-libs/libdbusmenu:=
-	dev-libs/libqtdbusmock
-	dev-libs/libqtdbustest
 	dev-util/dbus-test-runner
 	media-sound/pulseaudio
 	unity-base/bamf:=
 	unity-base/unity-api
 	unity-indicators/ido:=
 	>=x11-libs/libnotify-0.7.6
+
+	test? (
+		dev-cpp/gmock
+		dev-libs/libqtdbusmock
+		dev-libs/libqtdbustest )
+
 	$(vala_depend)"
 
 S="${WORKDIR}"
@@ -43,6 +47,18 @@ src_prepare() {
 
 	# Disable url-dispatcher when not using unity8-desktop-session
 	eapply "${FILESDIR}/disable-url-dispatcher.diff"
+
+	# Remove all language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	sed -i \
+		-e "/add_subdirectory(po)/d" \
+		CMakeLists.txt
+
+	# Remove tests #
+	use test || sed -i \
+		-e "/enable_testing()/d" \
+		-e "/add_subdirectory(tests)/d" \
+		CMakeLists.txt
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

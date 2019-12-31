@@ -20,12 +20,13 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+introspection java mono test"
 RESTRICT="mirror"
 
+# legacy dep #
+#dev-libs/xapian:=
+#dev-libs/xapian-bindings[python]
 DEPEND="dev-libs/dbus-glib
 	dev-libs/glib:2
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicator:3=
-	dev-libs/xapian:=
-	dev-libs/xapian-bindings[python]
 	dev-perl/XML-LibXML
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/pygobject:2[${PYTHON_USEDEP}]

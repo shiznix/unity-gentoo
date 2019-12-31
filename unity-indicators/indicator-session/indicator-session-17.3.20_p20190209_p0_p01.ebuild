@@ -15,18 +15,18 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+help"
+IUSE="+help test"
 RESTRICT="mirror"
 
 RDEPEND="unity-base/unity-language-pack"
 DEPEND="${RDEPEND}
-	dev-cpp/gtest
 	dev-libs/glib:2
 	dev-libs/libappindicator:=
 	dev-libs/libdbusmenu:=
 	help? ( gnome-extra/yelp
 		gnome-extra/gnome-user-docs
-		unity-base/ubuntu-docs )"
+		unity-base/ubuntu-docs )
+	test? ( dev-cpp/gmock )"
 
 S="${WORKDIR}"
 
@@ -53,6 +53,19 @@ src_prepare() {
 		sed -e 's:yelp:yelp help\:ubuntu-help:g' \
 			-i src/backend-dbus/actions.c
 	fi
+
+	# Remove all language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	sed -i \
+		-e "/add_subdirectory (po)/d" \
+		CMakeLists.txt
+
+	# Remove tests #
+	use test || sed -i \
+		-e "/enable_testing ()/d" \
+		-e "/add_subdirectory (tests)/d" \
+		CMakeLists.txt
+
 	cmake-utils_src_prepare
 }
 
@@ -60,10 +73,6 @@ src_install() {
 	cmake-utils_src_install
 
 	use help && domenu "${FILESDIR}/unity-yelp.desktop"
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_preinst() {

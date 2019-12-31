@@ -34,6 +34,11 @@ S="${WORKDIR}"
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
 	ubuntu-versionator_src_prepare
+
+	# Remove all languages as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	> po/LINGUAS
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
