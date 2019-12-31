@@ -54,12 +54,11 @@ RDEPEND="gnome-base/gnome-core-libs
 		( net-im/empathy net-libs/telepathy-indicator ) ) )
 	extras? (
 		app-cdr/brasero
-		=gnome-base/dconf-editor-3.30*
+		=gnome-base/dconf-editor-3.34*
 		gnome-extra/gnome-search-tool
 		sys-block/gparted
 		unity-extra/unity-tweak-tool )
 	fonts? (
-		media-fonts/dejavu
 		media-fonts/droid
 		media-fonts/font-bitstream-type1
 		media-fonts/freefont
