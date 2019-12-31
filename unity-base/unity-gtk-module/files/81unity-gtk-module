@@ -1,14 +1,19 @@
-if [ -n "$GTK_MODULES" ]
-then
-  GTK_MODULES="$GTK_MODULES:unity-gtk-module"
-else
-  GTK_MODULES="unity-gtk-module"
-fi
+# -*- sh -*-
+# Xsession.d script to set the GTK_MODULES env variable to load unity-gtk-module
+#
+# This file is sourced by Xsession(5), not executed.
 
-if [ -z "$UBUNTU_MENUPROXY" ]
-then
-  UBUNTU_MENUPROXY=1
-fi
+if [ "x$DESKTOP_SESSION" = "xunity" ]; then
+	if [ -n "$GTK_MODULES" ]; then
+		GTK_MODULES="$GTK_MODULES:unity-gtk-module"
+	else
+		GTK_MODULES="unity-gtk-module"
+	fi
 
-export GTK_MODULES
-export UBUNTU_MENUPROXY
+	if [ -z "$UBUNTU_MENUPROXY" ]; then
+		UBUNTU_MENUPROXY=1
+	fi
+
+	export GTK_MODULES
+	export UBUNTU_MENUPROXY
+fi

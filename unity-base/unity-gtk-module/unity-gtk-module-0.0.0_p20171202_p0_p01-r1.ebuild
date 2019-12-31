@@ -31,8 +31,6 @@ S="${WORKDIR}"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}/unity-gtk-module-0.0.0+14.04-deprecated-api.patch"
-	sed -e 's/ubuntu-session/unity-session/g' \
-		-i data/unity-gtk-module.service
 	eautoreconf
 }
 
@@ -79,6 +77,10 @@ src_install() {
 	pushd build-gtk3
 		emake DESTDIR="${D}" install || die
 	popd
+
+	# Append module to GTK_MODULES environment variable #
+	exeinto /etc/X11/xinit/xinitrc.d/
+	doexe "${FILESDIR}/81unity-gtk-module"
 
 	prune_libtool_files --modules
 }
