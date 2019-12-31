@@ -1,6 +1,6 @@
-diff -urN unity-control-center_19.04/configure.ac unity-control-center_19.04-patched/configure.ac
---- unity-control-center_19.04/configure.ac	2019-02-09 13:03:49.000000000 +1030
-+++ unity-control-center_19.04-patched/configure.ac	2019-05-31 17:45:31.054053377 +0930
+diff -Nur a/configure.ac b/configure.ac
+--- a/configure.ac	2019-02-09 03:33:49.000000000 +0100
++++ b/configure.ac	2019-12-27 07:29:54.203287714 +0100
 @@ -141,8 +141,6 @@
  PKG_CHECK_MODULES(DATETIME_PANEL, $COMMON_MODULES timezonemap geonames
                    polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION)
@@ -103,9 +103,11 @@ diff -urN unity-control-center_19.04/configure.ac unity-control-center_19.04-pat
  # Check for NetworkManager ~0.9
  PKG_CHECK_MODULES(NETWORK_MANAGER, NetworkManager >= $NETWORK_MANAGER_REQUIRED_VERSION
                    libnm-glib >= $NETWORK_MANAGER_REQUIRED_VERSION
-@@ -246,24 +313,38 @@
+@@ -245,25 +312,40 @@
+ fi
  AM_CONDITIONAL(BUILD_CHEESE, test x${have_cheese} = xyes)
  
++# Check for wacom
  # wacom is disabled for s390/s390x and non Linux platforms (needs udev)
 -case $host_os in
 -  linux*)
@@ -160,7 +162,7 @@ diff -urN unity-control-center_19.04/configure.ac unity-control-center_19.04-pat
  
  # Online accounts
  AC_ARG_ENABLE(onlineaccounts, AC_HELP_STRING([--disable-onlineaccounts], [disable online-accounts panel]),
-@@ -300,15 +381,25 @@
+@@ -300,15 +382,25 @@
  ISO_CODES=iso-codes
  
  # Kerberos kerberos support
@@ -195,26 +197,29 @@ diff -urN unity-control-center_19.04/configure.ac unity-control-center_19.04-pat
  
  AC_SUBST(KRB5_CFLAGS)
  AC_SUBST(KRB5_LIBS)
-@@ -553,6 +644,16 @@
+@@ -553,6 +645,19 @@
  else
  	AC_MSG_NOTICE([   Printers panel disabled])
  fi
++
 +if test "x$build_color" = "xyes"; then
-+       AC_MSG_NOTICE([** colord (Color panel)])
++	AC_MSG_NOTICE([** colord (Color panel)])
 +else
-+       AC_MSG_NOTICE([   Color panel disabled])
++	AC_MSG_NOTICE([   Color panel disabled])
 +fi
++
 +if test "x$have_bluetooth" = "xyes"; then
-+       AC_MSG_NOTICE([** gnome-bluetooth (Bluetooth panel)])
++	AC_MSG_NOTICE([** gnome-bluetooth (Bluetooth panel)])
 +else
-+       AC_MSG_NOTICE([   Bluetooth panel disabled])
++	AC_MSG_NOTICE([   Bluetooth panel disabled])
 +fi
++
  if test "x$have_cheese" = "xyes"; then
  	AC_MSG_NOTICE([** Cheese (Users panel webcam support)])
  else
-diff -urN unity-control-center_19.04/panels/info/cc-info-panel.c unity-control-center_19.04-patched/panels/info/cc-info-panel.c
---- unity-control-center_19.04/panels/info/cc-info-panel.c	2019-02-09 13:03:49.000000000 +1030
-+++ unity-control-center_19.04-patched/panels/info/cc-info-panel.c	2019-05-31 17:49:44.920719218 +0930
+diff -Nur a/panels/info/cc-info-panel.c b/panels/info/cc-info-panel.c
+--- a/panels/info/cc-info-panel.c	2019-02-09 03:33:49.000000000 +0100
++++ b/panels/info/cc-info-panel.c	2019-12-27 07:29:54.204287720 +0100
 @@ -40,7 +40,9 @@
  #include <GL/gl.h>
  #include <GL/glx.h>
@@ -225,9 +230,48 @@ diff -urN unity-control-center_19.04/panels/info/cc-info-panel.c unity-control-c
  
  #include "hostname-helper.h"
  #include "gsd-disk-space-helper.h"
-diff -urN unity-control-center_19.04/panels/Makefile.am unity-control-center_19.04-patched/panels/Makefile.am
---- unity-control-center_19.04/panels/Makefile.am	2019-02-09 13:03:49.000000000 +1030
-+++ unity-control-center_19.04-patched/panels/Makefile.am	2019-05-31 17:46:31.756931617 +0930
+@@ -733,6 +735,7 @@
+   gtk_tree_path_free (path);
+ }
+ 
++#ifdef BUILD_WEBKIT
+ static gboolean
+ on_decide_policy (WebKitWebView             *web_view,
+                   WebKitPolicyDecision      *decision,
+@@ -779,6 +782,7 @@
+   gtk_notebook_append_page (GTK_NOTEBOOK (WID ("notebook")), GTK_WIDGET (webView), NULL);
+   gtk_widget_show_all (GTK_WIDGET (webView));
+ }
++#endif /* BUILD_WEBKIT */
+ 
+ static void
+ default_app_changed (GtkAppChooserButton *button,
+@@ -1415,10 +1419,12 @@
+                       _("Removable Media"),
+                       -1);
+ 
++#ifdef BUILD_WEBKIT
+   gtk_list_store_append (model, &iter);
+   gtk_list_store_set (model, &iter, section_name_column,
+                       _("Legal Notice"),
+                       -1);
++#endif /* BUILD_WEBKIT */
+ 
+   g_signal_connect (selection, "changed",
+                     G_CALLBACK (on_section_changed), self);
+@@ -1944,7 +1950,9 @@
+   info_panel_setup_overview (self);
+   info_panel_setup_default_apps (self);
+   info_panel_setup_media (self);
++#ifdef BUILD_WEBKIT
+   info_panel_setup_notice (self);
++#endif /* BUILD_WEBKIT */
+ }
+ 
+ void
+diff -Nur a/panels/Makefile.am b/panels/Makefile.am
+--- a/panels/Makefile.am	2019-02-09 03:33:49.000000000 +0100
++++ b/panels/Makefile.am	2019-12-27 07:31:21.004821335 +0100
 @@ -4,7 +4,6 @@
  	datetime \
  	screen \
@@ -254,9 +298,9 @@ diff -urN unity-control-center_19.04/panels/Makefile.am unity-control-center_19.
  
  if BUILD_WACOM
  SUBDIRS += wacom
-diff -urN unity-control-center_19.04/panels/user-accounts/um-realm-manager.c unity-control-center_19.04-patched/panels/user-accounts/um-realm-manager.c
---- unity-control-center_19.04/panels/user-accounts/um-realm-manager.c	2019-02-09 13:03:49.000000000 +1030
-+++ unity-control-center_19.04-patched/panels/user-accounts/um-realm-manager.c	2019-05-31 18:02:18.334192301 +0930
+diff -Nur a/panels/user-accounts/um-realm-manager.c b/panels/user-accounts/um-realm-manager.c
+--- a/panels/user-accounts/um-realm-manager.c	2019-02-09 03:33:49.000000000 +0100
++++ b/panels/user-accounts/um-realm-manager.c	2019-12-27 07:29:54.205287726 +0100
 @@ -23,7 +23,9 @@
  
  #include "um-realm-manager.h"
