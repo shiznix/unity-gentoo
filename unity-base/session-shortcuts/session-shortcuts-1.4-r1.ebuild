@@ -30,4 +30,11 @@ src_configure() {
 src_install() {
 	insinto /usr/share/applications
 	doins build/*.desktop
+
+	# If a .desktop file does not have inline
+	# translations, fall back to calling gettext
+	local file
+	for file in "${ED%/}"/usr/share/applications/*.desktop; do
+		echo "X-GNOME-Gettext-Domain=${PN}" >> "${file}"
+	done
 }

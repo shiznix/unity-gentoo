@@ -87,6 +87,17 @@ pkg_setup() {
 	python-single-r1_pkg_setup
 }
 
+src_prepare() {
+	ubuntu-versionator_src_prepare
+
+	# If a .desktop file does not have inline translations
+	# and contains X-GNOME-Gettext-Domain desktop key,
+	# fall back to calling gettext (u-c-c, session-shortcuts)
+	epatch "${FILESDIR}"/01_gettext-desktopfiles.patch
+
+	gnome2_src_prepare
+}
+
 meson_use_enable() {
 	usex "$1" "-D${2-$1}=enabled" "-D${2-$1}=disabled"
 }
