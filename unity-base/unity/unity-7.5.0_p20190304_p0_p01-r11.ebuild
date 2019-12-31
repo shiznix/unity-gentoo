@@ -175,10 +175,6 @@ src_prepare() {
 	# Don't use drop-down menu icon from Adwaita theme as it's too dark since v3.30 #
 	sed -i "s/go-down-symbolic/drop-down-symbolic/" decorations/DecorationsMenuDropdown.cpp
 
-	# Remove all language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	> po/LINGUAS
-
 	cmake-utils_src_prepare
 }
 
@@ -199,6 +195,10 @@ src_configure() {
 		mycmakeargs+=(-Duse_pch=OFF)
 	fi
 
+	# Disable language files support as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	mycmakeargs+=(-DI18N_SUPPORT=OFF)
+
 	mycmakeargs+=(-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_PLUGIN_INSTALL_TYPE=package
@@ -215,10 +215,6 @@ src_compile() {
 		popd
 	fi
 
-	# 'make translations' is sometimes not parallel make safe #
-	pushd ${CMAKE_BUILD_DIR}
-		emake -j1 translations
-	popd
 	cmake-utils_src_compile || die
 }
 
