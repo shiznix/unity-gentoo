@@ -176,6 +176,46 @@ IUSE="${IUSE/l10n_en/+l10n_en}"
 S="${WORKDIR}"
 
 src_install() {
+	# sharing panel msgids
+	local -a sh_msgids=(
+		"No networks selected for sharing"
+		"service is enabled"
+		"service is disabled"
+		"service is enabled"
+		"service is active"
+		"Choose a Folder"
+		"File Sharing allows you to share your Public folder with others on your "
+		"When remote login is enabled, remote users can connect using the Secure "
+		"Screen sharing allows remote users to view or control your screen by "
+		"Copy"
+		"Sharing"
+		"_Computer Name"
+		"_File Sharing"
+		"_Screen Sharing"
+		"_Media Sharing"
+		"_Remote Login"
+		"Some services are disabled because of no network access."
+		"File Sharing"
+		"_Require Password"
+		"Remote Login"
+		"Screen Sharing"
+		"_Allow connections to control the screen"
+		"_Password:"
+		"_Show Password"
+		"Access Options"
+		"_New connections must ask for access"
+		"_Require a password"
+		"Media Sharing"
+		"Share music, photos and videos over the network."
+		"Folders"
+		"Control what you want to share with others"
+		"preferences-system-sharing"
+		"share;sharing;ssh;host;name;remote;desktop;media;audio;video;pictures;photos;"
+		"Networks"
+		"Enable or disable remote login"
+		"Authentication is required to enable or disable remote login"
+	)
+
 	# langselector panel msgids
 	local -a ls_msgids=(
 		"Language Support"
@@ -208,13 +248,17 @@ src_install() {
 		"Get help with Unity"
 	)
 
+	local -a indicator=( "|" "/" "-" "\\" )
+
 	local \
-		pofile msgid gcc_src ls_src ylp_src \
+		lng flg pofile msgid gcc_src ls_src ylp_src \
+		count=1 \
 		ucc_po="unity-control-center.po" \
 		gcc_po="gnome-control-center-2.0.po" \
 		ls_po="language-selector.po" \
 		is_po="indicator-session.po" \
-		ylp_po="yelp.po"
+		ylp_po="yelp.po" \
+		newline=$'\n'
 
 	# Remove all translations except those we need
 	find "${S}" -type f \
@@ -222,11 +266,22 @@ src_install() {
 		! -name ${ls_po} \
 		! -name 'indicator-*' \
 		! -name 'libdbusmenu.po' \
+		! -name 'session-shortcuts.po' \
 		! -name 'ubuntu-help.po' \
 		! -name 'unity*' \
 		! -name ${ylp_po} \
 			-delete || die
 	find "${S}" -mindepth 1 -type d -empty -delete || die
+
+	# Add translations for session-shortcuts
+	local -a langs=( "${S}"/language-pack-gnome-*-base/data/* )
+	unpack "${FILESDIR}"/session-shortcuts-translations-artful.tar.xz
+	printf "%s" "Processing translation files ${indicator[0]}"
+	for lng in "${langs[@]}"; do
+		flg=${lng##*data/}
+		cp "${S}"/po/"${flg}".po "${lng}"/LC_MESSAGES/session-shortcuts.po 2>/dev/null
+	done
+	rm -r "${S}"/po
 
 	for pofile in $( \
 		find "${S}" -type f -name "*.po" \
@@ -234,9 +289,35 @@ src_install() {
 			! -name "${ls_po}" \
 			! -name "${ylp_po}" \
 	); do
-		# Add translations for langselector panel
 		if [[ ${pofile##*/} == ${ucc_po} ]]; then
+			## Progress indicator.
+			[[ ${count} -eq 4 ]] && count=0
+			printf "\b\b %s" "${indicator[${count}]}"
+			count=$((count + 1))
+
+			# Add translations for sharing panel
+			sed -i -e "/\"Sharing\"/,+1 d" "${pofile}" # remove old identical msgid
 			gcc_src=${pofile/${ucc_po}/${gcc_po}}
+			for msgid in "${sh_msgids[@]}"; do
+				if ! grep -q "^\(msgid\|msgctxt\)\s\"${msgid}\"$" "${pofile}"; then
+					msgid="$(awk "/^(msgid\s|msgctxt\s|)\"${msgid}\"\$/ { p = 1 } p { print } /^\$/ { p = 0 }" "${gcc_src}" 2>/dev/null)"
+					case ${msgid:0:1} in
+						m)
+							echo "${msgid}" >> "${pofile}"
+							;;
+						\")
+							echo "msgid \"\"${newline}${msgid}" >> "${pofile}"
+							;;
+					esac
+				fi
+			done
+
+			## Progress indicator.
+			[[ ${count} -eq 4 ]] && count=0
+			printf "\b\b %s" "${indicator[${count}]}"
+			count=$((count + 1))
+
+			# Add translations for langselector panel
 			ls_src=${pofile/${ucc_po}/${ls_po}}
 			ls_src=${ls_src/gnome-}
 			for msgid in "${ls_msgids[@]}"; do
@@ -250,11 +331,14 @@ src_install() {
 
 		# Add translations for Unity help desktop launcher
 		if [[ ${pofile##*/} == ${is_po} ]]; then
+			## Progress indicator.
+			[[ ${count} -eq 4 ]] && count=0
+			printf "\b\b %s" "${indicator[${count}]}"
+			count=$((count + 1))
+
 			ylp_src=${pofile/${is_po}/${ylp_po}}
 			for msgid in "${is_msgids[@]}"; do
-				sed -i \
-					-e "s/GNOME/Unity/g" \
-					"${ylp_src}"
+				sed -i -e "s/GNOME/Unity/g" "${ylp_src}"
 				if ! grep -q "^\(msgid\|msgctxt\)\s\"${msgid}\"$" "${pofile}"; then
 					echo "$(awk "/^(msgid|msgctxt)\s\"${msgid}\"\$/ { p = 1 } p { print } /^\$/ { p = 0 }" "${ylp_src}" 2>/dev/null)" \
 						>> "${pofile}"
@@ -269,4 +353,6 @@ src_install() {
 
 	insinto /usr/share/locale
 	doins -r "${S}"/language-pack-*-base/data/*
+
+	printf "\b\b%s\n" "... done!"
 }
