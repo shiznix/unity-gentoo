@@ -68,7 +68,7 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	# Make Unity Tweak Tool appear in unity-control-center #
 	sed -e 's:Categories=.*:Categories=Settings;X-GNOME-Settings-Panel;X-GNOME-PersonalSettings;X-Unity-Settings-Panel;:' \
-		-e 's:Exec=.*:Exec=unity-tweak-tool:' \
+		-e 's: %f::' \
 		-e '/Actions=/{:a;n;/^$/!ba;i\X-Unity-Settings-Panel=unitytweak' -e '}' \
 			-i unity-tweak-tool.desktop.in || die
 
