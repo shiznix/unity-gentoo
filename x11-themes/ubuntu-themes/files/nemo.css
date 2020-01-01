@@ -2,38 +2,6 @@
     background-color: @theme_bg_color;
 }
 
-.nemo-window .sidebar .view {
-    color: shade(@places_sidebar_fg_color, 0.9);
-    text-shadow: none;
-    -gtk-icon-shadow: none;
-}
-
-.nemo-window .sidebar .view:selected {
-    color: @theme_selected_bg_color;
-    text-shadow: 1px 1px alpha(black, 0.2);
-    -gtk-icon-shadow: 1px 1px alpha(black, 0.2);
-}
-
-.nemo-window .sidebar .view:selected:backdrop {
-    background-color: @places_sidebar_backdrop_bg;
-    color: @theme_selected_bg_color;
-}
-
-.nemo-window .sidebar .view:hover:selected {
-    color: shade(@places_sidebar_fg_color, 0.9);
-    text-shadow: none;
-    -gtk-icon-shadow: none;
-}
-
-.nemo-window .sidebar .view:hover:selected:backdrop {
-    color: @theme_selected_bg_color;
-}
-
-.nemo-window .sidebar .expander:selected,
-.nemo-window .sidebar .expander:selected:backdrop {
-    color: shade(@places_sidebar_fg_color, 0.9);
-}
-
 .nemo-window .sidebar .nemo-places-sidebar,
 .nemo-window .sidebar .places-treeview,
 .nemo-window .sidebar .frame,
@@ -48,15 +16,62 @@
     background-color: @places_sidebar_backdrop_bg;
 }
 
+.nemo-window .places-treeview {
+    -NemoPlacesTreeView-disk-full-bg-color: color: shade(@places_sidebar_selected_bg_color, 1.03);
+    -NemoPlacesTreeView-disk-full-fg-color: shade(@places_sidebar_fg_color, 0.9);
+    -NemoPlacesTreeView-disk-full-bottom-padding: -1px;
+}
+
 .nemo-window .sidebar .view {
-    padding-top: 4px;
-    padding-bottom: 4px;
+    color: shade(@places_sidebar_fg_color, 0.9);
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.nemo-window .sidebar .places-treeview {
+    -GtkTreeView-vertical-separator: 11;
+}
+
+.nemo-window .sidebar .NemoSidebar {
+    -GtkTreeView-vertical-separator: 7;
 }
 
 .nemo-window .sidebar .view:hover {
     background-color: @theme_selected_bg_color;
+    color: @places_sidebar_fg_color;
+    text-shadow: 0 -1px alpha (shade (@fg_color, 1.55), 0.5);
 }
 
 .nemo-window .sidebar .view:hover:backdrop {
     background-color: alpha(@backdrop_selected_bg_color, 0.4);
+    color: @backdrop_selected_fg_color;
+    text-shadow: none;
+}
+
+.nemo-window .sidebar .view:selected {
+    background-color: @places_sidebar_bg;
+    color: shade(@places_sidebar_selected_bg_color, 1.03);
+    text-shadow: 0 1px alpha (shade (@places_sidebar_selected_bg_color, 0.3), 0.5);
+}
+
+.nemo-window .sidebar .view:selected:backdrop {
+    background-color: @places_sidebar_backdrop_bg;
+    color: mix(shade(@places_sidebar_selected_bg_color, 1.03), shade(@places_sidebar_fg_color, 0.9), 0.3);
+    text-shadow: 0 1px alpha (shade (@places_sidebar_selected_bg_color, 0.4), 0.4);
+}
+
+.nemo-window .sidebar .view:hover:selected {
+    background-color: @places_sidebar_selected_bg_color;
+    color: @places_sidebar_fg_color;
+    text-shadow: 0 -1px alpha (shade (@fg_color, 1.55), 0.5);
+}
+
+.nemo-window .sidebar .view:hover:selected:backdrop {
+    background-color: alpha(@backdrop_selected_bg_color, 0.4);
+    color: @backdrop_selected_fg_color;
+}
+
+.nemo-window .sidebar .expander:selected,
+.nemo-window .sidebar .expander:selected:backdrop {
+    color: shade(@places_sidebar_fg_color, 0.9);
 }
