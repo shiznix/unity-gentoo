@@ -68,6 +68,7 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
+		-DCMAKE_INSTALL_FULL_LOCALEDIR=/usr/share/locale
 		-DWITH_EDS="$(usex eds)"
 	)
 	cmake-utils_src_configure
