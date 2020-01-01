@@ -70,6 +70,9 @@ while [[ -n ${arr[@]} ]]; do
 	wcard+="*/"
 done
 
+## Get future releases
+frelease="$(find "${repo_dir}"/profiles/releases/* -maxdepth 0 -type d ! -name ${urelease} | awk -F/ '{print $(NF-0)}')"
+
 sys_db="/var/db/pkg/"
 
 EHOOK_UPDATE=()
@@ -104,7 +107,16 @@ for x in "${ehk[@]}"; do
 		[[ -z ${req} ]] || portageq has_version / unity-extra/ehooks["${req/ehook_require }"] || continue
 
 		## Set ebuild hook's modification time equal to package's time when --reset option given.
-		[[ -n ${reset} ]] && touch -m -t $(date -d @"${sys_date}" +%Y%m%d%H%M.%S) "${x}" 2>/dev/null && reset="applied" && continue
+		if [[ -n ${reset} ]]; then
+			touch -m -t $(date -d @"${sys_date}" +%Y%m%d%H%M.%S) "${x}" 2>/dev/null && reset="applied"
+			if [[ ${reset} == "applied" ]]; then
+				for y in ${frelease}; do
+					## Include future releases with the same ebuild hook.
+					touch -m -t $(date -d @"${sys_date}" +%Y%m%d%H%M.%S) "${x/${urelease}/${y}}" 2>/dev/null
+				done
+				continue
+			fi
+		fi
 		## Get ownership of file when 'touch: cannot touch "${x}": Permission denied' and quit.
 		[[ -n ${reset} ]] && reset=$(stat -c "%U:%G" "${x}") && break 2
 
