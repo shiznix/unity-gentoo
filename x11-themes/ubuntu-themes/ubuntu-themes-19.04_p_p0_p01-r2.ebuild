@@ -15,11 +15,13 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 LICENSE="GPL-3 CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="+nemo"
 RESTRICT="mirror"
 
 RDEPEND="!x11-themes/light-themes
-	x11-themes/hicolor-icon-theme"
+	x11-themes/hicolor-icon-theme
+
+	nemo? ( gnome-extra/nemo )"
 DEPEND="${RDEPEND}
 	x11-misc/icon-naming-utils
 	dev-util/intltool
@@ -37,6 +39,8 @@ src_prepare() {
 
 	## set eog fullscreen toolbar background ##
 	echo -e "\n/* eog fullscreen toolbar background */\ntoolbar {\n background-color: @bg_color;\n}" >> Ambiance/gtk-3.20/gtk-widgets.css
+
+	use nemo && echo $(<"${FILESDIR}"/nemo.css) >> Ambiance/gtk-3.20/apps/nemo.css
 }
 
 src_configure() { :; }

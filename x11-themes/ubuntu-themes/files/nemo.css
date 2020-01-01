@@ -1,0 +1,66 @@
+.view {
+    background-color: @theme_bg_color;
+}
+
+.rubberband {
+    background-color: alpha (@selected_bg_color, 0.35);
+}
+
+.nemo-window .sidebar .view {
+    color: @places_sidebar_fg_color;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.nemo-window .sidebar .view:selected {
+    color: @theme_selected_bg_color;
+    text-shadow: 1px 1px alpha(black, 0.2);
+    -gtk-icon-shadow: 1px 1px alpha(black, 0.2);
+}
+
+.nemo-window .sidebar .view:selected:backdrop {
+    background-color: @places_sidebar_backdrop_bg;
+    color: @theme_selected_bg_color;
+}
+
+.nemo-window .sidebar .view:hover:selected {
+    color: @places_sidebar_fg_color;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.nemo-window .sidebar .view:hover:selected:backdrop {
+    color: @theme_selected_bg_color;
+}
+
+.nemo-window .sidebar .expander:selected,
+.nemo-window .sidebar .expander:selected:backdrop {
+    color: @places_sidebar_fg_color;
+}
+
+.nemo-window .sidebar .nemo-places-sidebar,
+.nemo-window .sidebar .places-treeview,
+.nemo-window .sidebar .frame,
+.nemo-window .sidebar .NemoSidebar {
+    background-color: @places_sidebar_bg;
+}
+
+.nemo-window .sidebar .nemo-places-sidebar:backdrop,
+.nemo-window .sidebar .places-treeview:backdrop,
+.nemo-window .sidebar .frame:backdrop,
+.nemo-window .sidebar .NemoSidebar:backdrop {
+    background-color: @places_sidebar_backdrop_bg;
+}
+
+.nemo-window .sidebar .view {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.nemo-window .sidebar .view:hover {
+    background-color: @theme_selected_bg_color;
+}
+
+.nemo-window .sidebar .view:hover:backdrop {
+    background-color: alpha(@backdrop_selected_bg_color, 0.4);
+}
