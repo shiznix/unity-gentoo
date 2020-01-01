@@ -1,9 +1,5 @@
-.view {
+.nemo-window .nemo-window-pane .view:not(.rubberband):not(:selected):not(:active) {
     background-color: @theme_bg_color;
-}
-
-.rubberband {
-    background-color: alpha (@selected_bg_color, 0.35);
 }
 
 .nemo-window .sidebar .view {

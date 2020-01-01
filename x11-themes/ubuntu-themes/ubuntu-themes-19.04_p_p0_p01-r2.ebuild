@@ -38,7 +38,7 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	## set eog fullscreen toolbar background ##
-	echo -e "\n/* eog fullscreen toolbar background */\ntoolbar {\n background-color: @bg_color;\n}" >> Ambiance/gtk-3.20/gtk-widgets.css
+	echo -e "\n/* eog fullscreen toolbar background */\noverlay > revealer > box > toolbar {\n background-color: @bg_color;\n}" >> Ambiance/gtk-3.20/gtk-widgets.css
 
 	use nemo && echo $(<"${FILESDIR}"/nemo.css) >> Ambiance/gtk-3.20/apps/nemo.css
 }
