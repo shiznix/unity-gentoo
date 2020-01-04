@@ -3,10 +3,10 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+18.10.${PVR_MICRO}"
 
 DESCRIPTION="System sound indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-sound"

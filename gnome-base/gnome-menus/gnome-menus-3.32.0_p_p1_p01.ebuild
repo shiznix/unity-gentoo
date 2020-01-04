@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit autotools gnome2 ubuntu-versionator
 
 DESCRIPTION="The GNOME menu system, implementing the F.D.O cross-desktop spec, patched for the Unity desktop"
@@ -13,7 +13,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+ LGPL-2+"
 SLOT="3"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="debug +introspection test"
 RESTRICT="mirror"
 

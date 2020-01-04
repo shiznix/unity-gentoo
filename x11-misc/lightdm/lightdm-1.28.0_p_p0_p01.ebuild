@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit autotools eutils pam readme.gentoo-r1 systemd user ubuntu-versionator vala
 
 DESCRIPTION="A lightweight display manager"

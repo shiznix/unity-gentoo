@@ -6,7 +6,7 @@ EAPI=6
 DESCRIPTION="Merge this to setup the Unity desktop build environment package.{accept_keywords,mask,use} files"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-URELEASE="cosmic"
+URELEASE="disco"
 UVER=
 
 LICENSE="GPL-2"

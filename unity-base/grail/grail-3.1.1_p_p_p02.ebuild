@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit autotools eutils ubuntu-versionator
 
 UVER="-${PVR_PL_MINOR}"

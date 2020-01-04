@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit ubuntu-versionator
 
 UVER=

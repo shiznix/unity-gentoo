@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_5,3_6} )
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala xdummy
 
 UVER_PREFIX="+18.04.${PVR_MICRO}"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="0/1.0.0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 

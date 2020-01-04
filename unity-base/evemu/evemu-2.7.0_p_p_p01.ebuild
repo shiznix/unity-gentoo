@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit autotools eutils python-single-r1 ubuntu-versionator
 
 UVER="-${PVR_PL_MINOR}"

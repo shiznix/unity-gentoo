@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit autotools eutils ubuntu-versionator vala
 
 UVER_PREFIX="+16.04.${PVR_MICRO}"

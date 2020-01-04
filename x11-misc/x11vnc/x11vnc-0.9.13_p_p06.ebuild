@@ -5,7 +5,7 @@ EAPI=6
 
 inherit eutils ubuntu-versionator
 
-URELEASE="cosmic"
+URELEASE="disco"
 UVER="-${PVR_PL_MAJOR}"
 
 DESCRIPTION="A VNC server for real X displays"

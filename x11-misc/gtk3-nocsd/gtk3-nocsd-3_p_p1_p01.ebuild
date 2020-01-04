@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit autotools eutils ubuntu-versionator
 
 DESCRIPTION="Disable Gtk+ 3 client side decorations (CSD)"
