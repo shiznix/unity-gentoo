@@ -36,7 +36,7 @@ src_prepare() {
 	gnome2_src_prepare
 
 	# Don't show KDE standalone settings desktop files in GNOME others menu
-	epatch "${FILESDIR}/${PN}-3.8.0-ignore_kde_standalone.patch"
+#	epatch "${FILESDIR}/${PN}-3.8.0-ignore_kde_standalone.patch"
 }
 
 src_configure() {
