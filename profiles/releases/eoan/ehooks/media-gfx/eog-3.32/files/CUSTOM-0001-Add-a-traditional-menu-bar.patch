@@ -2,13 +2,230 @@ Subject: [PATCH 1/2] Add a traditional menu bar (v3.28.2)
 Bug: https://bugzilla.gnome.org/749976
 Bug-Debian: https://bugs.debian.org/793445
 ---
- data/meson.build      |  1 +
- po/POTFILES.in        |  1 +
- src/eog-application.c | 35 ++++++++++++++++++++++++++++
- src/eog-window.c      | 53 ++++++++++++++++++++++++-------------------
- src/eog.gresource.xml |  1 +
- 5 files changed, 68 insertions(+), 23 deletions(-)
+ data/eog-menubar.ui   | 209 ++++++++++++++++++++++++++++++++++++++++++
+ data/meson.build      |   1 +
+ po/POTFILES.in        |   1 +
+ src/eog-application.c |  35 +++++++
+ src/eog-window.c      |  53 ++++++-----
+ src/eog.gresource.xml |   1 +
+ 6 files changed, 277 insertions(+), 23 deletions(-)
+ create mode 100644 data/eog-menubar.ui
 
+diff --git a/data/eog-menubar.ui b/data/eog-menubar.ui
+new file mode 100644
+index 0000000..65c8b42
+--- /dev/null
++++ b/data/eog-menubar.ui
+@@ -0,0 +1,209 @@
++<?xml version="1.0" encoding="utf-8"?>
++<interface>
++  <menu id="menubar">
++    <submenu>
++      <attribute name="label" translatable="yes">_Image</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Open…</attribute>
++          <attribute name="action">win.open</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;o</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Save</attribute>
++          <attribute name="action">win.save</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;s</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Save As…</attribute>
++          <attribute name="action">win.save-as</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;s</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Print…</attribute>
++          <attribute name="action">win.print</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;p</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Set as _Wallpaper</attribute>
++          <attribute name="action">win.set-wallpaper</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;F8</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Show Containing _Folder</attribute>
++          <attribute name="action">win.open-folder</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Image Properties</attribute>
++          <attribute name="action">win.properties</attribute>
++          <attribute name="accel">&lt;Alt&gt;Return</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Close</attribute>
++          <attribute name="action">win.close</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;w</attribute>
++        </item>
++      </section>
++    </submenu>
++    <submenu>
++      <attribute name="label" translatable="yes">_Edit</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Undo</attribute>
++          <attribute name="action">win.undo</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;z</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Copy Image</attribute>
++          <attribute name="action">win.copy</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;c</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Flip _Horizontal</attribute>
++          <attribute name="action">win.flip-horizontal</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Flip _Vertical</attribute>
++          <attribute name="action">win.flip-vertical</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Rotate Clockwise</attribute>
++          <attribute name="action">win.rotate-90</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;r</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Rotate Counter_clockwise</attribute>
++          <attribute name="action">win.rotate-270</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;r</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Move to _Trash</attribute>
++          <attribute name="action">win.move-trash</attribute>
++          <attribute name="accel">Delete</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Delete</attribute>
++          <attribute name="action">win.delete</attribute>
++          <attribute name="accel">&lt;Shift&gt;Delete</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Preferences</attribute>
++          <attribute name="action">app.preferences</attribute>
++        </item>
++      </section>
++    </submenu>
++    <submenu>
++      <attribute name="label" translatable="yes">_View</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Statusbar</attribute>
++          <attribute name="action">win.view-statusbar</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Image Gallery</attribute>
++          <attribute name="action">win.view-gallery</attribute>
++          <attribute name="accel">F9</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Side _Pane</attribute>
++          <attribute name="action">win.view-sidebar</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;F9</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Zoom _In</attribute>
++          <attribute name="action">win.zoom-in</attribute>
++          <attribute name="accel">plus</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Zoom _Out</attribute>
++          <attribute name="action">win.zoom-out</attribute>
++          <attribute name="accel">minus</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Best Fit</attribute>
++          <attribute name="action">win.toggle-zoom-fit</attribute>
++          <attribute name="accel">F</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Fullscreen</attribute>
++          <attribute name="action">win.view-fullscreen</attribute>
++          <attribute name="accel">F11</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Slide Show</attribute>
++          <attribute name="action">win.view-slideshow</attribute>
++          <attribute name="accel">F5</attribute>
++        </item>
++      </section>
++    </submenu>
++    <submenu>
++      <attribute name="label" translatable="yes">_Go</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Previous Image</attribute>
++          <attribute name="action">win.go-previous</attribute>
++          <attribute name="accel">Left</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Next Image</attribute>
++          <attribute name="action">win.go-next</attribute>
++          <attribute name="accel">Right</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_First Image</attribute>
++          <attribute name="action">win.go-first</attribute>
++          <attribute name="accel">&lt;Alt&gt;Home</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Last Image</attribute>
++          <attribute name="action">win.go-last</attribute>
++          <attribute name="accel">&lt;Alt&gt;End</attribute>
++        </item>
++      </section>
++    </submenu>
++    <submenu>
++      <attribute name="label" translatable="yes">_Help</attribute>
++      <section>
++        <item>
++          <attribute name="action">win.show-help-overlay</attribute>
++          <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Help</attribute>
++          <attribute name="action">win.manual</attribute>
++          <attribute name="accel">F1</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_About</attribute>
++          <attribute name="action">app.about</attribute>
++        </item>
++      </section>
++    </submenu>
++  </menu>
++</interface>
 diff --git a/data/meson.build b/data/meson.build
 index 378863a..71f97d7 100644
 --- a/data/meson.build
