@@ -1,0 +1,61 @@
+From 0c16941d660d5ede5ae7178ac6514253a84eee58 Mon Sep 17 00:00:00 2001
+From: c4pp4
+Date: Wed, 8 Jan 2020 01:48:14 +0100
+Subject: [PATCH 1/1] Don't use file manager DBus service when in Unity
+
+Nemo-desktop tries to own the org.freedesktop.FileManager1 DBus service
+by default, but we need it for Nautilus in order to Launcher integration
+work properly (see LP: #1161323).
+
+Signed-off-by: c4pp4
+---
+ src/nemo-desktop-application.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/src/nemo-desktop-application.c b/src/nemo-desktop-application.c
+index ed4f2b1..8468dfb 100644
+--- a/src/nemo-desktop-application.c
++++ b/src/nemo-desktop-application.c
+@@ -327,6 +327,29 @@ nemo_desktop_application_local_command_line (GApplication *application,
+     return TRUE;
+ }
+ 
++static gboolean
++in_desktop (const gchar *name)
++{
++    const gchar *desktop_name_list;
++    gchar **names;
++    gboolean in_list = FALSE;
++    gint i;
++
++    desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
++    if (!desktop_name_list)
++        return FALSE;
++
++    names = g_strsplit (desktop_name_list, ":", -1);
++    for (i = 0; names[i] && !in_list; i++)
++        if (strcmp (names[i], name) == 0) {
++            in_list = TRUE;
++            break;
++        }
++    g_strfreev (names);
++
++    return in_list;
++}
++
+ static void
+ nemo_desktop_application_continue_startup (NemoApplication *app)
+ {
+@@ -336,7 +359,8 @@ nemo_desktop_application_continue_startup (NemoApplication *app)
+     nemo_application_check_required_directory (app, nemo_get_desktop_directory ());
+     nemo_application_check_required_directory (app, nemo_get_user_directory ());
+ 
+-    NEMO_DESKTOP_APPLICATION (app)->priv->fdb_manager = nemo_freedesktop_dbus_new ();
++    if (!in_desktop("Unity"))
++        NEMO_DESKTOP_APPLICATION (app)->priv->fdb_manager = nemo_freedesktop_dbus_new ();
+ 
+ 	/* register views */
+ 	nemo_desktop_icon_view_register ();
+-- 
+2.24.1
+
