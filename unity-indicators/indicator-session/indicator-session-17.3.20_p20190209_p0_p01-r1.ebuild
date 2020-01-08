@@ -26,7 +26,7 @@ DEPEND="${RDEPEND}
 	help? ( gnome-extra/yelp
 		gnome-extra/gnome-user-docs
 		unity-base/ubuntu-docs )
-	test? ( dev-cpp/gmock )"
+	test? ( >=dev-cpp/gtest-1.8.1 )"
 
 S="${WORKDIR}"
 

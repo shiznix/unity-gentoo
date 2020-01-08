@@ -20,7 +20,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc test"
 RESTRICT="mirror"
 
-DEPEND="dev-cpp/gmock
+DEPEND=">=dev-cpp/gtest-1.8.1
 	dev-db/sqlite:3
 	dev-libs/dee[${PYTHON_USEDEP}]
 	dev-libs/glib:2

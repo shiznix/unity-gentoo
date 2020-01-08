@@ -31,9 +31,7 @@ DEPEND="${RDEPEND}
 	unity-base/unity-api
 	unity-indicators/ido:=
 	>=x11-libs/libnotify-0.7.6
-
-	test? (
-		dev-cpp/gmock
+	test? ( >=dev-cpp/gtest-1.8.1
 		dev-libs/libqtdbusmock
 		dev-libs/libqtdbustest )
 

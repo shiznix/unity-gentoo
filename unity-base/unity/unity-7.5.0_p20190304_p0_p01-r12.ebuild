@@ -78,8 +78,7 @@ DEPEND="${RDEPEND}
 	x11-libs/startup-notification
 	unity-base/unity-gtk-module
 	doc? ( app-doc/doxygen )
-	test? ( dev-cpp/gmock
-		dev-cpp/gtest
+	test? ( >=dev-cpp/gtest-1.8.1
 		dev-python/autopilot
 		dev-util/dbus-test-runner
 		sys-apps/xorg-gtest )"

@@ -29,7 +29,7 @@ COMMON_DEPEND="
 	>=x11-libs/libnotify-0.7.6
 
 	eds? ( gnome-extra/evolution-data-server:= )
-	test? ( dev-cpp/gmock )"
+	test? ( >=dev-cpp/gtest-1.8.1 )"
 
 RDEPEND="${COMMON_DEPEND}
 	unity-base/unity-language-pack"

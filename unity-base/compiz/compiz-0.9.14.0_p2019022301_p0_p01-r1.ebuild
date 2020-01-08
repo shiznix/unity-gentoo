@@ -5,7 +5,7 @@ EAPI=6
 #PYTHON_COMPAT=( python2_7 )
 PYTHON_COMPAT=( python{3_5,3_6} )
 
-URELEASE="eoan"
+URELEASE="disco"
 inherit gnome2-utils cmake-utils eutils python-r1 ubuntu-versionator xdummy
 
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.xz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0/${PV}"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+debug test"
 RESTRICT="mirror"
 
@@ -66,7 +66,7 @@ DEPEND="${COMMONDEPEND}
 	virtual/pkgconfig
 	x11-base/xorg-proto
 	test? ( dev-cpp/gtest
-		dev-cpp/gmock
+		>=dev-cpp/gtest-1.8.1
 		sys-apps/xorg-gtest )"
 
 RDEPEND="${COMMONDEPEND}

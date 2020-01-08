@@ -19,8 +19,7 @@ IUSE="doc test"
 RESTRICT="mirror"
 
 DEPEND="doc? ( app-doc/doxygen )
-        test? ( dev-cpp/gtest
-                dev-cpp/gmock )
+        test? ( >=dev-cpp/gtest-1.8.1 )
         dev-libs/boost:=
 	dev-libs/properties-cpp"
 

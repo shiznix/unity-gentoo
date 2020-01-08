@@ -18,8 +18,7 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
 * Reasons for patching/maintaining packages:
 app-backup/deja-dup			# Enable Unity desktop options
-dev-cpp/gtest				# Customised ebuild to install /usr/src/gtest/* files lacking from main tree ebuild
-dev-cpp/gmock				# Customised ebuild to install /usr/src/gmock/* files lacking from main tree ebuild
+dev-cpp/gtest				# Customised ebuild to install /usr/src/{gmock,gtest}/* source files lacking from main tree ebuild
 dev-libs/dee				# Portage tree versions can lag and is now being removed, maintained for patches and version control
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/gobject-introspection		# See glib reason above

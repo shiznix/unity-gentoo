@@ -40,8 +40,7 @@ DEPEND="app-i18n/ibus
 	x11-libs/libXxf86vm
 	x11-libs/pango
 	doc? ( app-doc/doxygen )
-	test? ( dev-cpp/gmock
-		dev-cpp/gtest )"
+	test? ( >=dev-cpp/gtest-1.8.1 )"
 
 S="${WORKDIR}"
 

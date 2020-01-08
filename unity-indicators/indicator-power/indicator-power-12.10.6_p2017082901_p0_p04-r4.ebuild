@@ -25,8 +25,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libdbusmenu
 	sys-power/upower
 	unity-base/unity-settings-daemon
-
-	test? ( dev-cpp/gmock )"
+	test? ( >=dev-cpp/gtest-1.8.1 )"
 
 S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"

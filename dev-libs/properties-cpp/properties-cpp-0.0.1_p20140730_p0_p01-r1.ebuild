@@ -21,8 +21,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/boost
 	doc? ( app-doc/doxygen )
-        test? ( dev-cpp/gtest
-                dev-cpp/gmock )"
+        test? ( >=dev-cpp/gtest-1.8.1 )"
 
 S="${WORKDIR}/${MY_P}"
 MAKEOPTS="${MAKEOPTS} -j1"

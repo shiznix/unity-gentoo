@@ -20,7 +20,7 @@ RESTRICT="mirror"
 
 S="${WORKDIR}"
 
-DEPEND="dev-cpp/gmock
+DEPEND=">=dev-cpp/gtest-1.8.1
 	dev-libs/libqtdbustest
 	net-misc/networkmanager"
 

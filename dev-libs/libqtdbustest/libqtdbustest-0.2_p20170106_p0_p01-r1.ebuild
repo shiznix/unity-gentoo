@@ -20,7 +20,7 @@ RESTRICT="mirror"
 
 S="${WORKDIR}"
 
-DEPEND="dev-cpp/gmock
+DEPEND=">=dev-cpp/gtest-1.8.1
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qttest:5

@@ -160,10 +160,8 @@ x11-libs/xapps
 app-accessibility/onboard **
 app-backup/deja-dup **
 app-text/evince **
-dev-cpp/gmock **
 dev-cpp/gtest **
 dev-libs/dee **
-dev-libs/dbus-cpp **
 dev-libs/libaccounts-glib **
 dev-libs/libindicator **
 dev-libs/libtimezonemap **

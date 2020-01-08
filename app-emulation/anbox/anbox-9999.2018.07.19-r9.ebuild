@@ -71,7 +71,7 @@ DEPEND="${RDEPEND}
 			app-arch/unzip
 			net-misc/curl
 			sys-fs/squashfs-tools )
-	test? ( dev-cpp/gmock )"
+	test? ( >=dev-cpp/gtest-1.8.1 )"
 
 CONFIG_CHECK="
 	~ANDROID_BINDER_IPC

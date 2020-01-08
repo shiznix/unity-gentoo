@@ -22,9 +22,6 @@ dev-libs/libzeitgeist                   # (b.g.o #629180)
 gnome-extra/activity-log-manager        # (b.g.o #625140)
 gnome-extra/zeitgeist                   # (b.g.o #629180)
 
-## Gentoo dropping packages required by unity-base/unity (reason: depends on Qt4) ##
-dev-cpp/gmock
-
 # Unmask overlay version
 dev-libs/dee::unity-gentoo
 x11-misc/lightdm-kde::unity-gentoo
