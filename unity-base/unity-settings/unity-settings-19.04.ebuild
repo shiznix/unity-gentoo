@@ -58,9 +58,9 @@ src_install() {
 		-e "/org.gnome.desktop.sound/,+2 d" \
 		"${ED}${gschema_dir}/${gschema}"
 
-	wallpaper_urelease="${wallpapers_urelease##*URELEASE=\"}"
+	wallpapers_urelease="${wallpapers_urelease##*URELEASE=\"}"
 	sed -i \
-		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${wallpaper_urelease%\"}.xml/}" \
+		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${wallpapers_urelease%\"}.xml/}" \
 		"${ED}${gschema_dir}/${gschema}"
 
 	use lowgfx && echo -e \
