@@ -19,14 +19,15 @@ IUSE="+nemo"
 RESTRICT="mirror"
 
 RDEPEND="!x11-themes/light-themes
-	x11-themes/hicolor-icon-theme
+	x11-themes/hicolor-icon-theme"
 
-	nemo? ( gnome-extra/nemo )"
 DEPEND="${RDEPEND}
 	x11-misc/icon-naming-utils
 	dev-util/intltool
 	sys-devel/gettext
 	virtual/pkgconfig"
+
+PDEPEND="nemo? ( gnome-extra/nemo )"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
