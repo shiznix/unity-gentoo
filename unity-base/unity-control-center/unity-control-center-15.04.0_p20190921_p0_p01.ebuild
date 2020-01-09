@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+bluetooth +colord +cups +fcitx +gnome-online-accounts +i18n input_devices_wacom +kerberos +samba +v4l +webkit"
+IUSE="+bluetooth +branding +colord +cups +fcitx +gnome-online-accounts +i18n input_devices_wacom +kerberos +samba +v4l +webkit"
 REQUIRED_USE="samba? ( cups )"
 #KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
@@ -141,16 +141,34 @@ src_prepare() {
 	# Fudge a pass on broken hostname-helper test (see https://bugzilla.gnome.org/show_bug.cgi?id=650342) #
 	echo > panels/info/hostnames-test.txt
 
-	epatch "${FILESDIR}/01_${PN}-2019-language-selector.patch" # Based on g-c-c v3.24 Region & Language panel
-	epatch "${FILESDIR}/02_remove_ubuntu_info_branding.patch"
-	epatch "${FILESDIR}/03_enable_printer_panel-v2.patch"
-	epatch "${FILESDIR}/04_${PN}-2019-optional-bt-colord-kerberos-wacom-webkit.patch"
-	epatch "${FILESDIR}/05_online-accounts-enable-passing-data.patch"
+	epatch "${FILESDIR}/01_${PN}-2019-langselector.patch" # Based on g-c-c v3.24 Region & Language panel
+	epatch "${FILESDIR}/02_${PN}-2019-optional-bt-colord-kerberos-wacom-webkit.patch"
 
-	# If a .desktop file does not have inline translations, fall back #
-	#  to calling gettext #
-	find ${WORKDIR} -type f -name "unity*desktop.in.in" \
-		-exec sh -c 'sed -i -e "/\[Desktop Entry\]/a X-GNOME-Gettext-Domain=${PN}" "$1"' -- {} \;
+	# Fix typo #
+	sed -i \
+		-e "/Name=/{s/Sha­ring/Sharing/}" \
+		panels/sharing/unity-sharing-panel.desktop.in.in
+
+	if use branding; then
+		cp "${FILESDIR}"/GnomeLogoVerticalMedium.svg panels/info/
+		sed -i \
+			-e "/gtk_widget_hide (WID (\"version_label\")/d" \
+			-e "s/Version %s/unity-gentoo ${UVER_RELEASE} ${URELEASE^}/" \
+			panels/info/cc-info-panel.c
+		sed -i \
+			-e "s/UbuntuLogo.png/GnomeLogoVerticalMedium.svg/" \
+			panels/info/info.ui
+	fi
+
+	use cups \
+		&& epatch "${FILESDIR}/${PN}-printers-fix_launcher.patch"
+
+	use gnome-online-accounts \
+		&& epatch "${FILESDIR}/${PN}-online-accounts-enable_passing_data.patch"
+
+	# Remove all language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	> po/LINGUAS
 
 	eautoreconf
 	gnome2_src_prepare
@@ -177,10 +195,6 @@ src_configure() {
 src_install() {
 	gnome2_src_install
 
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
-
 	# Remove libgnome-bluetooth.so symlink as is provided by net-wireless/gnome-bluetooth #
 	rm "${ED}usr/$(get_libdir)/libgnome-bluetooth.so" 2>/dev/null
 
@@ -189,6 +203,19 @@ src_install() {
 
 	# Remove cc-remote-login-helper as is provided by gnome-base/gnome-control-center #
 	rm "${ED}usr/libexec/cc-remote-login-helper" 2> /dev/null
+
+	# If a .desktop file does not have inline
+	# translations, fall back to calling gettext
+	local file
+	for file in "${ED%/}"/usr/share/applications/*.desktop; do
+		echo "X-GNOME-Gettext-Domain=${PN}" >> "${file}"
+	done
+
+	if ! use branding; then
+		pushd "${WORKDIR}"/panels/info 1>/dev/null
+			./logo-generator --logo UbuntuLogoBlank.png --text "ubuntu ${UVER_RELEASE}" --output "${ED%/}"/usr/share/"${PN}"/ui/UbuntuLogo.png
+		popd 1>/dev/null
+	fi
 }
 
 pkg_preinst() { gnome2_icon_savelist; }

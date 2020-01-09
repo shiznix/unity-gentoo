@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility +apps chat extras +fonts +games +utils +xdm"
 RESTRICT="mirror"
 
-GVER="3.32*"
+GVER="3.34*"
 
 
 DEPEND="unity-base/unity-build-env
@@ -54,7 +54,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		( net-im/empathy net-libs/telepathy-indicator ) ) )
 	extras? (
 		app-cdr/brasero
-		=gnome-base/dconf-editor-3.30*
+		=gnome-base/dconf-editor-${GVER}
 		gnome-extra/gnome-search-tool
 		sys-block/gparted
 		unity-extra/unity-tweak-tool )

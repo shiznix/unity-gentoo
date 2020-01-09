@@ -216,7 +216,6 @@ src_install() {
 			./logo-generator --logo UbuntuLogoBlank.png --text "ubuntu ${UVER_RELEASE}" --output "${ED%/}"/usr/share/"${PN}"/ui/UbuntuLogo.png
 		popd 1>/dev/null
 	fi
-
 }
 
 pkg_preinst() { gnome2_icon_savelist; }

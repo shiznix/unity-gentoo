@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="eoan"
-inherit cmake-utils gnome2-utils ubuntu-versionator vala
+inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="+eds"
+IUSE="+eds test"
 RESTRICT="mirror"
 
 COMMON_DEPEND="
@@ -28,7 +28,8 @@ COMMON_DEPEND="
 	unity-indicators/indicator-messages
 	>=x11-libs/libnotify-0.7.6
 
-	eds? ( gnome-extra/evolution-data-server:= )"
+	eds? ( gnome-extra/evolution-data-server:= )
+	test? ( >=dev-cpp/gtest-1.8.1 )"
 
 RDEPEND="${COMMON_DEPEND}
 	unity-base/unity-language-pack"
@@ -49,27 +50,28 @@ src_prepare() {
 	sed -e 's:SEND_ERROR:WARNING:g' \
 		-e '/Compiling GSettings schemas/,+1 d' \
 			-i cmake/UseGSettings.cmake
-	vala_src_prepare
-	export VALA_API_GEN="$VAPIGEN"
+
+	# Remove all language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	sed -i \
+		-e "/add_subdirectory(po)/d" \
+		CMakeLists.txt
+
+	# Remove tests #
+	use test || sed -i \
+		-e "/enable_testing()/d" \
+		-e "/add_subdirectory(tests)/d" \
+		CMakeLists.txt
+
 	cmake-utils_src_prepare
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DVALA_COMPILER=$VALAC
-		-DVAPI_GEN=$VAPIGEN
 		-DCMAKE_INSTALL_FULL_LOCALEDIR=/usr/share/locale
 		-DWITH_EDS="$(usex eds)"
 	)
 	cmake-utils_src_configure
-}
-
-src_install() {
-	cmake-utils_src_install
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_preinst() {

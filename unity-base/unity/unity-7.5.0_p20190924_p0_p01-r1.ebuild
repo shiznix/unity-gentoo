@@ -109,13 +109,9 @@ src_prepare() {
 
 	# Setup Unity side launcher default applications #
 	sed \
-		-e '/amazon/d' \
-		-e '/software-center/d' \
-		-e 's:nautilus.desktop:org.gnome.Nautilus.desktop:' \
+		-e '/ubiquity/d' \
+		-e '/org.gnome.Software/d' \
 			-i data/com.canonical.Unity.gschema.xml || die
-
-	sed -e "s:/desktop:/org/unity/desktop:g" \
-		-i data/com.canonical.Unity.gschema.xml || die
 
 	sed -e "s:Ubuntu Desktop:Unity Gentoo Desktop:g" \
 		-i panel/PanelMenuView.cpp || die
@@ -164,10 +160,16 @@ src_prepare() {
 	#	to create "$XDG_RUNTIME_DIR/systemd/user/${unit}.d/graphical-session-pre.conf" drop-in units #
 	#	results in weird race problems on desktop logout where the reliant desktop services #
 	#	stop in a different jumbled order each time #
-	sed -e 's:Requires=unity-settings-daemon.service:Requires=gnome-session.service unity-settings-daemon.service:g' \
-		-e 's:After=unity-settings-daemon.service:After=graphical-session-pre.target gnome-session.service bamfdaemon.service unity-settings-daemon.service:g' \
-			-i data/unity7.service.in || \
-				die "Sed failed for data/unity7.service.in"
+	sed -e 's:After=\(unity-settings-daemon.service\):After=graphical-session-pre.target gnome-session.service bamfdaemon.service \1:' \
+		-i data/unity7.service.in || \
+			die "Sed failed for data/unity7.service.in"
+
+	# Apps launched from u-c-c need GTK_MODULES environment variable with unity-gtk-module value #
+	#	to use unity global/titlebar menu. Disable unity-gtk-module.service as it sets only #
+	#	dbus/systemd environment variable. We are providing xinit.d script to set GTK_MODULES #
+	#	environment variable to load unity-gtk-module (see unity-base/unity-gtk-module package) #
+	sed -e 's:unity-gtk-module.service ::' \
+			-i data/unity7.service.in
 
 	# Don't use drop-down menu icon from Adwaita theme as it's too dark since v3.30 #
 	sed -i "s/go-down-symbolic/drop-down-symbolic/" decorations/DecorationsMenuDropdown.cpp
@@ -192,6 +194,10 @@ src_configure() {
 		mycmakeargs+=(-Duse_pch=OFF)
 	fi
 
+	# Disable language files support as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	mycmakeargs+=(-DI18N_SUPPORT=OFF)
+
 	mycmakeargs+=(-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_PLUGIN_INSTALL_TYPE=package
@@ -208,10 +214,6 @@ src_compile() {
 		popd
 	fi
 
-	# 'make translations' is sometimes not parallel make safe #
-	pushd ${CMAKE_BUILD_DIR}
-		emake -j1 translations
-	popd
 	cmake-utils_src_compile || die
 }
 
@@ -252,10 +254,6 @@ src_install() {
 
 	fi
 
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
-
 	exeinto /etc/X11/xinit/xinitrc.d/
 	doexe "${FILESDIR}/70im-config"			# Configure input method (xim/ibus)
 	doexe "${FILESDIR}/99unity-session_systemd"	# Unity session environment setup and 'startx' launcher
@@ -278,7 +276,8 @@ src_install() {
 
 	# Make 'unity-session.target' systemd user unit auto-start 'unity7.service' #
 	dosym $(systemd_get_userunitdir)/unity7.service $(systemd_get_userunitdir)/unity-session.target.requires/unity7.service
-	dosym $(systemd_get_userunitdir)/unity-gtk-module.service $(systemd_get_userunitdir)/unity-session.target.wants/unity-gtk-module.service
+	# Disable service, see unity-gtk-module.service in src_prepare phase
+	#dosym $(systemd_get_userunitdir)/unity-gtk-module.service $(systemd_get_userunitdir)/unity-session.target.wants/unity-gtk-module.service
 	dosym $(systemd_get_userunitdir)/unity-settings-daemon.service $(systemd_get_userunitdir)/unity-session.target.wants/unity-settings-daemon.service
 	dosym $(systemd_get_userunitdir)/window-stack-bridge.service $(systemd_get_userunitdir)/unity-session.target.wants/window-stack-bridge.service
 
