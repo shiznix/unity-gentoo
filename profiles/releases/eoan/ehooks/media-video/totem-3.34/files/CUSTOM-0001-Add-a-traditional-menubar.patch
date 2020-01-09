@@ -59,8 +59,8 @@ index 00d6201..c42a6db 100644
 -
 -<menu id="playermenu">
 -	<section>
+-		<section id="opendirectory-placeholder"/>
 -		<section id="save-placeholder"/>
--		<section id="burn-placeholder"/>
 -	</section>
 -	<section>
 -		<section id="screenshot-placeholder"/>
@@ -251,8 +251,8 @@ index 0000000..b2fbec9
 +
 +<menu id="playermenu">
 +	<section>
++		<section id="opendirectory-placeholder"/>
 +		<section id="save-placeholder"/>
-+		<section id="burn-placeholder"/>
 +	</section>
 +	<section>
 +		<section id="screenshot-placeholder"/>
