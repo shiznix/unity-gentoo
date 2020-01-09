@@ -4,7 +4,7 @@
 EAPI=6
 VALA_MIN_API_VERSION="0.40"
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit gnome.org gnome2-utils meson vala xdg ubuntu-versionator
 
 DESCRIPTION="Open source photo manager for GNOME"
@@ -16,6 +16,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="opencv udev"
+RESTRICT="mirror"
 
 COMMON_DEPEND="
 	>=x11-libs/gtk+-3.22.0:3

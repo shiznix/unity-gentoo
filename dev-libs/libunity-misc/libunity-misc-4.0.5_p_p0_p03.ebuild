@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils flag-o-matic ubuntu-versionator
 
 UVER_PREFIX="+14.04.20140115"
@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0/4.1.0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 RESTRICT="mirror"
 

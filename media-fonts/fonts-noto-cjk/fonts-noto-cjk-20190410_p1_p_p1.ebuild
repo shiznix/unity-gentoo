@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-URELEASE="cosmic"
+URELEASE="eoan"
 inherit font ubuntu-versionator
 
 UURL="mirror://unity/pool/main/f/${PN}"
@@ -11,8 +11,9 @@ DESCRIPTION="No Tofu font families with large Unicode coverage"
 HOMEPAGE="https://www.google.com/get/noto/ https://github.com/googlei18n/noto-cjk"
 
 UVER_PREFIX="+repack${PVR_MICRO}"
+UVER="-${PVR_PL_MINOR}"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
-	${UURL}/${MY_P}${UVER_PREFIX}-${PVR_PL_MINOR}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 ## conf source ##
 LSVER="0.190" ## language-selector package version

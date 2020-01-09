@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
 DESCRIPTION="Blacklist configuration user interface for Zeitgeist"
@@ -13,7 +13,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 

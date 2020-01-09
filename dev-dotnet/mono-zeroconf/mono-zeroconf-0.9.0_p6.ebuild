@@ -3,7 +3,7 @@
 
 EAPI=5
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit base mono ubuntu-versionator
 
 UVER="-${PVR_MICRO}"

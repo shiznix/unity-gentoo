@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils flag-o-matic ubuntu-versionator vala virtualx
 
 UURL="mirror://unity/pool/main/libd/${PN}"
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="0/4.0.12"	# Takes *.so version
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="debug gtk3 +introspection"	# We force building both GTK2, GTK3, and 'introspection', but keep these in IUSE for main portage tree ebuilds
 RESTRICT="mirror"
 

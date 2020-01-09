@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit gnome2-utils ubuntu-versionator
 
 MY_PN="psensor"

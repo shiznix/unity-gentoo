@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="eoan"
 inherit cmake-utils ubuntu-versionator
 
 UVER="-${PV}${PVR_PL_MINOR}"

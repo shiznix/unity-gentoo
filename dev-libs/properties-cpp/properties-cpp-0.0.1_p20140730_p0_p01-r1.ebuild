@@ -3,11 +3,13 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit cmake-utils
 
+# Handle version strings here so as not to use 'ubuntu-versionator' eclass #
 MY_PV="${PV:0:5}+14.10.${PV:7:8}"
 MY_P="${PN}-${MY_PV}"
+UVER_PREFIX="+14.10.${PVR_MICRO}"
 
 DESCRIPTION="Simple convenience library for handling properties and signals in C++11"
 HOMEPAGE="https://launchpad.net/properties-cpp"

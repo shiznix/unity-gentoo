@@ -3,14 +3,15 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="eoan"
 inherit cmake-utils ubuntu-versionator
 
-UVER_PREFIX="+17.04.${PVR_MICRO}"
+UVER_PREFIX="+bzr49+repack${PVR_PL_MAJOR}"
+UVER="-${PVR_PL_MINOR}"
 
 DESCRIPTION="Qt Bindings for python-dbusmock"
 HOMEPAGE="https://launchpad.net/libqtdbustest"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -18,11 +19,11 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-S="${WORKDIR}"
-
 DEPEND=">=dev-cpp/gtest-1.8.1
 	dev-libs/libqtdbustest
 	net-misc/networkmanager"
+
+S="${S}+bzr49"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare

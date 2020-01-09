@@ -3,18 +3,19 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit cmake-utils ubuntu-versionator
 
-UVER_PREFIX="+17.04.${PVR_MICRO}"
+UVER_PREFIX="+bzr42+repack${PVR_PL_MAJOR}"
+UVER="-${PVR_PL_MINOR}"
 
 DESCRIPTION="Library to facilitate testing DBus interactions in Qt applications"
 HOMEPAGE="https://launchpad.net/libqtdbustest"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 

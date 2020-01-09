@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-GTESTVER="1.7.0"
+GTESTVER="1.8.1"
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit cmake-utils ubuntu-versionator
 
 UVER_PREFIX="+15.10.${PVR_MICRO}"
