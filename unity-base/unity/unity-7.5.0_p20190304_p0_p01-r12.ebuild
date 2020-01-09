@@ -20,7 +20,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.xz
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+branding debug doc +hud pch +systray test"
+IUSE="+branding debug doc +hud +nemo pch +systray test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}"
@@ -34,7 +34,8 @@ RDEPEND="app-i18n/ibus[gtk,gtk2]
 	x11-themes/humanity-icon-theme
 	x11-themes/gtk-engines-murrine
 	x11-themes/unity-asset-pool
-	hud? ( unity-base/hud )"
+	hud? ( unity-base/hud )
+	nemo? ( gnome-extra/nemo )"
 DEPEND="${RDEPEND}
 	!sys-apps/upstart
 	!unity-base/dconf-qt
@@ -58,7 +59,6 @@ DEPEND="${RDEPEND}
 	gnome-base/gnome-menus:3
 	gnome-base/gnome-session[systemd]
 	gnome-base/gsettings-desktop-schemas
-	gnome-extra/nemo
 	gnome-extra/polkit-gnome:0
 	media-libs/clutter-gtk:1.0
 	media-libs/glew:=

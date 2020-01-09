@@ -11,6 +11,7 @@
 	</upstream>
 	<use>
 		<flag name="hud">Enable the backend for Unity's HUD</flag>
+		<flag name="nemo">Enable desktop icons via <pkg>gnome-extra/nemo</pkg></flag>
 		<flag name="systray">Enable system tray support in the Unity menu bar</flag>
 	</use>
 </pkgmetadata>
