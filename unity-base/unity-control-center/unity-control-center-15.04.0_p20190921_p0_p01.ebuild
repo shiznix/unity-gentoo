@@ -142,7 +142,7 @@ src_prepare() {
 	echo > panels/info/hostnames-test.txt
 
 	epatch "${FILESDIR}/01_${PN}-2019-langselector.patch" # Based on g-c-c v3.24 Region & Language panel
-	epatch "${FILESDIR}/02_${PN}-2019-optional-bt-colord-kerberos-wacom-webkit.patch"
+	epatch "${FILESDIR}/02_${PN}-2020-optional-bt-colord-kerberos-wacom-webkit.patch"
 
 	# Fix typo #
 	sed -i \
