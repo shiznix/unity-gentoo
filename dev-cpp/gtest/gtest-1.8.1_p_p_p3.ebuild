@@ -24,7 +24,8 @@ RESTRICT="mirror"
 
 DEPEND="app-arch/unzip
 	${PYTHON_DEPS}"
-RDEPEND="!dev-cpp/gmock"
+RDEPEND="!!dev-cpp/gmock
+	!!<dev-cpp/gtest-1.8"
 
 S="${WORKDIR}/${MY_PN}-release-1.8.1"
 
