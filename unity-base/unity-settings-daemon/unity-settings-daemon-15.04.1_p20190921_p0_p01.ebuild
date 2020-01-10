@@ -101,7 +101,7 @@ src_prepare() {
 
 	# pnp.ids is not provided by >=gnome-base/gnome-desktop-3.21.4 #
 	#  use udev's hwdb to query PNP IDs instead #
-	epatch "${FILESDIR}/02_${PN}-optional-pnp-ids.patch"
+	epatch "${FILESDIR}/02_${PN}-2020-optional-pnp-ids.patch"
 
 	# Correct path to unity-settings-daemon executable in upstart and systemd files #
 	sed -e 's:/usr/lib/unity-settings-daemon:/usr/libexec:g' \

@@ -1,0 +1,397 @@
+diff -Nur a/configure.ac b/configure.ac
+--- a/configure.ac	2020-01-10 22:34:04.622258100 +0100
++++ b/configure.ac	2020-01-10 22:31:07.867100734 +0100
+@@ -62,12 +62,27 @@
+ 
+ EXTRA_COMPILE_WARNINGS(yes)
+ 
++dnl ---------------------------------------------------------------------------
++dnl - hwdb for pnp IDs (default enabled)
++dnl ---------------------------------------------------------------------------
++UDEV_PKG=""
++AC_ARG_ENABLE([udev], [
++    AS_HELP_STRING([--disable-udev], [Disable udev support])
++])
++AS_IF([test "x$enable_udev" != "xno"], [
++    PKG_CHECK_MODULES([UDEV], [libudev], [
++        AC_DEFINE([HAVE_UDEV], [1], [define if libudev is available])
++        UDEV_PKG="libudev"
++    ])
++])
++
+ PKG_CHECK_MODULES(SETTINGS_DAEMON,
+         gtk+-3.0 >= $GTK_REQUIRED_VERSION
+         gio-2.0 >= $GIO_REQUIRED_VERSION
+         gmodule-2.0
+         gthread-2.0
+ 	gsettings-desktop-schemas >= $GSETTINGS_DESKTOP_SCHEMAS_REQUIRED_VERSION
++        $UDEV_PKG
+ )
+ 
+ PKG_CHECK_MODULES(SETTINGS_PLUGIN,
+@@ -614,6 +629,7 @@
+         Color support:            ${enable_color}
+         Wacom support:            ${have_wacom}
+         RFKill support:           ${enable_rfkill}
++        Udev support:             ${enable_udev}
+ ${NSS_DATABASE:+\
+         System nssdb:             ${NSS_DATABASE}
+ }\
+diff -Nur a/gnome-settings-daemon/gsd-pnp-ids.c b/gnome-settings-daemon/gsd-pnp-ids.c
+--- a/gnome-settings-daemon/gsd-pnp-ids.c	2019-09-21 12:58:37.000000000 +0200
++++ b/gnome-settings-daemon/gsd-pnp-ids.c	2020-01-10 22:29:39.105023030 +0100
+@@ -20,8 +20,10 @@
+ #include "config.h"
+ 
+ #include <glib-object.h>
+-
+ #include "gsd-pnp-ids.h"
++#ifdef HAVE_UDEV
++#include <libudev.h>
++#endif
+ 
+ static void gsd_pnp_ids_finalize (GObject *object);
+ 
+@@ -29,221 +31,16 @@
+ 
+ struct _GsdPnpIdsPrivate
+ {
+-        gchar      *table_data;
+-        GHashTable *pnp_table;
++#ifdef HAVE_UDEV
++        struct udev *udev;
++        struct udev_hwdb *hwdb;
++#else
++        char *placeholder;
++#endif
+ };
+ 
+-static gpointer gsd_pnp_ids_object = NULL;
+-
+ G_DEFINE_TYPE (GsdPnpIds, gsd_pnp_ids, G_TYPE_OBJECT)
+ 
+-typedef struct Vendor Vendor;
+-struct Vendor
+-{
+-    const char vendor_id[4];
+-    const char vendor_name[28];
+-};
+-
+-/* This list of vendor codes derived from lshw
+- *
+- * http://ezix.org/project/wiki/HardwareLiSter
+- *
+- * Note: we now prefer to use data coming from hwdata (and shipped with
+- * gnome-desktop). See
+- * http://git.fedorahosted.org/git/?p=hwdata.git;a=blob_plain;f=pnp.ids;hb=HEAD
+- * All contributions to the list of vendors should go there.
+- */
+-static const struct Vendor vendors[] =
+-{
+-    { "AIC", "AG Neovo" },
+-    { "ACR", "Acer" },
+-    { "DEL", "DELL" },
+-    { "SAM", "SAMSUNG" },
+-    { "SNY", "SONY" },
+-    { "SEC", "Epson" },
+-    { "WAC", "Wacom" },
+-    { "NEC", "NEC" },
+-    { "CMO", "CMO" },        /* Chi Mei */
+-    { "BNQ", "BenQ" },
+-
+-    { "ABP", "Advansys" },
+-    { "ACC", "Accton" },
+-    { "ACE", "Accton" },
+-    { "ADP", "Adaptec" },
+-    { "ADV", "AMD" },
+-    { "AIR", "AIR" },
+-    { "AMI", "AMI" },
+-    { "ASU", "ASUS" },
+-    { "ATI", "ATI" },
+-    { "ATK", "Allied Telesyn" },
+-    { "AZT", "Aztech" },
+-    { "BAN", "Banya" },
+-    { "BRI", "Boca Research" },
+-    { "BUS", "Buslogic" },
+-    { "CCI", "Cache Computers Inc." },
+-    { "CHA", "Chase" },
+-    { "CMD", "CMD Technology, Inc." },
+-    { "COG", "Cogent" },
+-    { "CPQ", "Compaq" },
+-    { "CRS", "Crescendo" },
+-    { "CSC", "Crystal" },
+-    { "CSI", "CSI" },
+-    { "CTL", "Creative Labs" },
+-    { "DBI", "Digi" },
+-    { "DEC", "Digital Equipment" },
+-    { "DBK", "Databook" },
+-    { "EGL", "Eagle Technology" },
+-    { "ELS", "ELSA" },
+-    { "ESS", "ESS" },
+-    { "FAR", "Farallon" },
+-    { "FDC", "Future Domain" },
+-    { "HWP", "Hewlett-Packard" },
+-    { "IBM", "IBM" },
+-    { "INT", "Intel" },
+-    { "ISA", "Iomega" },
+-    { "LEN", "Lenovo" },
+-    { "MDG", "Madge" },
+-    { "MDY", "Microdyne" },
+-    { "MET", "Metheus" },
+-    { "MIC", "Micronics" },
+-    { "MLX", "Mylex" },
+-    { "NVL", "Novell" },
+-    { "OLC", "Olicom" },
+-    { "PRO", "Proteon" },
+-    { "RII", "Racal" },
+-    { "RTL", "Realtek" },
+-    { "SCM", "SCM" },
+-    { "SKD", "SysKonnect" },
+-    { "SGI", "SGI" },
+-    { "SMC", "SMC" },
+-    { "SNI", "Siemens Nixdorf" },
+-    { "STL", "Stallion Technologies" },
+-    { "SUN", "Sun" },
+-    { "SUP", "SupraExpress" },
+-    { "SVE", "SVEC" },
+-    { "TCC", "Thomas-Conrad" },
+-    { "TCI", "Tulip" },
+-    { "TCM", "3Com" },
+-    { "TCO", "Thomas-Conrad" },
+-    { "TEC", "Tecmar" },
+-    { "TRU", "Truevision" },
+-    { "TOS", "Toshiba" },
+-    { "TYN", "Tyan" },
+-    { "UBI", "Ungermann-Bass" },
+-    { "USC", "UltraStor" },
+-    { "VDM", "Vadem" },
+-    { "VMI", "Vermont" },
+-    { "WDC", "Western Digital" },
+-    { "ZDS", "Zeos" },
+-
+-    /* From http://faydoc.tripod.com/structures/01/0136.htm */
+-    { "ACT", "Targa" },
+-    { "ADI", "ADI" },
+-    { "AOC", "AOC Intl" },
+-    { "API", "Acer America" },
+-    { "APP", "Apple Computer" },
+-    { "ART", "ArtMedia" },
+-    { "AST", "AST Research" },
+-    { "CPL", "Compal" },
+-    { "CTX", "Chuntex Electronic Co." },
+-    { "DPC", "Delta Electronics" },
+-    { "DWE", "Daewoo" },
+-    { "ECS", "ELITEGROUP" },
+-    { "EIZ", "EIZO" },
+-    { "FCM", "Funai" },
+-    { "GSM", "LG Electronics" },
+-    { "GWY", "Gateway 2000" },
+-    { "HEI", "Hyundai" },
+-    { "HIT", "Hitachi" },
+-    { "HSL", "Hansol" },
+-    { "HTC", "Hitachi" },
+-    { "ICL", "Fujitsu ICL" },
+-    { "IVM", "Idek Iiyama" },
+-    { "KFC", "KFC Computek" },
+-    { "LKM", "ADLAS" },
+-    { "LNK", "LINK Tech" },
+-    { "LTN", "Lite-On" },
+-    { "MAG", "MAG InnoVision" },
+-    { "MAX", "Maxdata" },
+-    { "MEI", "Panasonic" },
+-    { "MEL", "Mitsubishi" },
+-    { "MIR", "miro" },
+-    { "MTC", "MITAC" },
+-    { "NAN", "NANAO" },
+-    { "NEC", "NEC Tech" },
+-    { "NOK", "Nokia" },
+-    { "OQI", "OPTIQUEST" },
+-    { "PBN", "Packard Bell" },
+-    { "PGS", "Princeton" },
+-    { "PHL", "Philips" },
+-    { "REL", "Relisys" },
+-    { "SDI", "Samtron" },
+-    { "SMI", "Smile" },
+-    { "SPT", "Sceptre" },
+-    { "SRC", "Shamrock Technology" },
+-    { "STP", "Sceptre" },
+-    { "TAT", "Tatung" },
+-    { "TRL", "Royal Information Company" },
+-    { "TSB", "Toshiba, Inc." },
+-    { "UNM", "Unisys" },
+-    { "VSC", "ViewSonic" },
+-    { "WTC", "Wen Tech" },
+-    { "ZCM", "Zenith Data Systems" },
+-
+-    { "???", "Unknown" },
+-};
+-
+-static gboolean
+-gsd_pnp_ids_load (GsdPnpIds *pnp_ids, GError **error)
+-{
+-        gchar *retval = NULL;
+-        GsdPnpIdsPrivate *priv = pnp_ids->priv;
+-        guint i;
+-
+-        /* load the contents */
+-        g_debug ("loading: %s", PNP_IDS);
+-        if (g_file_get_contents (PNP_IDS, &priv->table_data, NULL, error) == FALSE)
+-                return FALSE;
+-
+-        /* parse into lines */
+-        retval = priv->table_data;
+-        for (i = 0; priv->table_data[i] != '\0'; i++) {
+-
+-                /* ignore */
+-                if (priv->table_data[i] != '\n')
+-                        continue;
+-
+-                /* convert newline to NULL */
+-                priv->table_data[i] = '\0';
+-
+-                /* the ID to text is a fixed offset */
+-                if (retval[0] && retval[1] && retval[2] && retval[3] == '\t' && retval[4]) {
+-                        retval[3] = '\0';
+-                        g_hash_table_insert (priv->pnp_table,
+-                                             retval,
+-                                             retval+4);
+-                        retval = &priv->table_data[i+1];
+-                }
+-        }
+-
+-        g_debug ("Added %i items to the vendor hashtable", i);
+-
+-        return TRUE;
+-}
+-
+-static const char *
+-find_vendor (const char *pnp_id)
+-{
+-        guint i;
+-
+-        for (i = 0; i < G_N_ELEMENTS (vendors); i++) {
+-                if (g_strcmp0 (vendors[i].vendor_id, pnp_id) == 0)
+-                        return vendors[i].vendor_name;
+-        }
+-
+-        return NULL;
+-}
+-
+ /**
+  * gsd_pnp_ids_get_pnp_id:
+  * @pnp_ids: a #GsdPnpIds object
+@@ -257,33 +54,32 @@
+ gchar *
+ gsd_pnp_ids_get_pnp_id (GsdPnpIds *pnp_ids, const gchar *pnp_id)
+ {
++#ifdef HAVE_UDEV
+         GsdPnpIdsPrivate *priv = pnp_ids->priv;
+-        const char *found;
+-        GError *error = NULL;
+-        guint size;
+-
+-        g_return_val_if_fail (GSD_IS_PNP_IDS (pnp_ids), NULL);
+-        g_return_val_if_fail (pnp_id != NULL, NULL);
+-
+-        /* if table is empty, try to load it */
+-        size = g_hash_table_size (priv->pnp_table);
+-        if (size == 0) {
+-                if (gsd_pnp_ids_load (pnp_ids, &error) == FALSE) {
+-                        g_warning ("Failed to load PNP ids: %s", error->message);
+-                        g_error_free (error);
+-                        return NULL;
+-                }
+-        }
+-
+-        /* look this up in the table */
+-        found = g_hash_table_lookup (priv->pnp_table, pnp_id);
+-        if (found == NULL) {
+-                found = find_vendor (pnp_id);
+-                if (found == NULL)
+-                        return NULL;
+-        }
+-
+-        return g_strdup (found);
++        struct udev_list_entry *list_entry, *l;
++        char *modalias;
++        char *ret = NULL;
++
++        modalias = g_strdup_printf ("acpi:%s:", pnp_id);
++        list_entry = udev_hwdb_get_properties_list_entry(priv->hwdb, modalias, 0);
++        g_free (modalias);
++        if (list_entry == NULL)
++                return ret;
++
++        /* Try to get the model specific string */
++        l = udev_list_entry_get_by_name (list_entry, "ID_MODEL_FROM_DATABASE");
++        if (l == NULL)
++                l = udev_list_entry_get_by_name (list_entry, "ID_VENDOR_FROM_DATABASE");
++
++        if (l == NULL)
++                return ret;
++
++        ret = g_strdup (udev_list_entry_get_value (l));
++
++        return ret;
++#else
++        return g_strdup ("Undefined");
++#endif /* HAVE_UDEV */
+ }
+ 
+ static void
+@@ -298,13 +94,10 @@
+ gsd_pnp_ids_init (GsdPnpIds *pnp_ids)
+ {
+         pnp_ids->priv = GSD_PNP_IDS_GET_PRIVATE (pnp_ids);
+-
+-        /* we don't keep malloc'd data in the hash; instead we read it
+-         * out into priv->table_data and then link to it in the hash */
+-        pnp_ids->priv->pnp_table = g_hash_table_new_full (g_str_hash,
+-                                                         g_str_equal,
+-                                                         NULL,
+-                                                         NULL);
++#ifdef HAVE_UDEV
++        pnp_ids->priv->udev = udev_new();
++        pnp_ids->priv->hwdb = udev_hwdb_new (pnp_ids->priv->udev);
++#endif
+ }
+ 
+ static void
+@@ -313,8 +106,10 @@
+         GsdPnpIds *pnp_ids = GSD_PNP_IDS (object);
+         GsdPnpIdsPrivate *priv = pnp_ids->priv;
+ 
+-        g_free (priv->table_data);
+-        g_hash_table_unref (priv->pnp_table);
++#ifdef HAVE_UDEV
++        g_clear_pointer (&priv->udev, udev_unref);
++        g_clear_pointer (&priv->hwdb, udev_hwdb_unref);
++#endif
+ 
+         G_OBJECT_CLASS (gsd_pnp_ids_parent_class)->finalize (object);
+ }
+@@ -330,12 +125,6 @@
+ GsdPnpIds *
+ gsd_pnp_ids_new (void)
+ {
+-        if (gsd_pnp_ids_object != NULL) {
+-                g_object_ref (gsd_pnp_ids_object);
+-        } else {
+-                gsd_pnp_ids_object = g_object_new (GSD_TYPE_PNP_IDS, NULL);
+-                g_object_add_weak_pointer (gsd_pnp_ids_object, &gsd_pnp_ids_object);
+-        }
+-        return GSD_PNP_IDS (gsd_pnp_ids_object);
++        return g_object_new (GSD_TYPE_PNP_IDS, NULL);
+ }
+ 
+diff -Nur a/gnome-settings-daemon/Makefile.am b/gnome-settings-daemon/Makefile.am
+--- a/gnome-settings-daemon/Makefile.am	2019-09-21 12:58:37.000000000 +0200
++++ b/gnome-settings-daemon/Makefile.am	2020-01-10 22:29:39.105023030 +0100
+@@ -47,7 +47,6 @@
+ 
+ libunity_settings_daemon_la_CFLAGS = 		\
+ 	-DLIBEXECDIR=\""$(libexecdir)\""			\
+-	-DPNP_IDS=\""$(datadir)/hwdata/pnp.ids"\"			\
+ 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"        \
+ 	$(LIBUNITY_SETTINGS_DAEMON_CFLAGS)
+ 
