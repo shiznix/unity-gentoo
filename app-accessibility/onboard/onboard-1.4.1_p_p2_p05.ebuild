@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python{3_5,3_6} )
+PYTHON_COMPAT=( python{3_6,3_7} )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="eoan"
@@ -19,7 +19,7 @@ SLOT="0"
 IUSE=""
 
 # Let people emerge this by default, bug #472932
-IUSE+=" python_single_target_python3_5 +python_single_target_python3_6"
+IUSE+=" +python_single_target_python3_6 python_single_target_python3_7"
 RESTRICT="mirror"
 
 RDEPEND="app-accessibility/at-spi2-core

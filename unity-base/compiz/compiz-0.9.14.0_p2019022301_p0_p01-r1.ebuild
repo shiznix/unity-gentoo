@@ -3,7 +3,7 @@
 
 EAPI=6
 #PYTHON_COMPAT=( python2_7 )
-PYTHON_COMPAT=( python{3_5,3_6} )
+PYTHON_COMPAT=( python{3_6,3_7} )
 
 URELEASE="disco"
 inherit gnome2-utils cmake-utils eutils python-r1 ubuntu-versionator xdummy
