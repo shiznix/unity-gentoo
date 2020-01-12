@@ -4,6 +4,8 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_6,3_7} )
 DISTUTILS_SINGLE_IMPL=1
+VALA_MIN_API_VERSION=0.40
+VALA_MAX_API_VERSION=0.40
 
 URELEASE="disco"
 inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala

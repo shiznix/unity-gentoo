@@ -4,6 +4,8 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_7,3_6,3_7} )
 AUTOTOOLS_AUTORECONF=y
+VALA_MIN_API_VERSION=0.40
+VALA_MAX_API_VERSION=0.40
 
 URELEASE="disco"
 inherit autotools-utils eutils python-r1 ubuntu-versionator vala
