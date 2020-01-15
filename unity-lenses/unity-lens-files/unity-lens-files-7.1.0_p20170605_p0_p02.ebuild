@@ -35,7 +35,7 @@ src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" || die
 	ubuntu-versionator_src_prepare
 
-	# Remove all languages as they can be incomplete #
+	# Disable all language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	> po/LINGUAS
 

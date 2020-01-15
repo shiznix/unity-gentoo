@@ -15,7 +15,6 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.xz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-
 IUSE="+accessibility +battery +branding +networkmanager nls +sound"
 RESTRICT="mirror"
 
@@ -60,11 +59,11 @@ src_prepare() {
 		-e "s:/usr/lib/at-spi2-core/at-spi-bus-launcher:/usr/libexec/at-spi-bus-launcher:" \
 		"${S}"/src/unity-greeter.vala || die
 
-	! use battery && sed -i \
+	use battery || sed -i \
 		-e "s/ indicator-power//" \
 		src/unity-greeter.vala
 
-	! use networkmanager && sed -i \
+	use networkmanager || sed -i \
 		-e "/command_line_async (\"nm-applet\")/d" \
 		src/unity-greeter.vala
 
@@ -78,6 +77,10 @@ src_prepare() {
 			src/unity-greeter.vala
 	fi
 
+	# Disable all language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	> po/LINGUAS
+
 	vala_src_prepare
 	append-cflags -Wno-error
 	eautoreconf
@@ -89,10 +92,6 @@ src_configure() {
 
 src_install() {
 	emake DESTDIR="${ED}" install
-
-	# Remove all installed language files as they can be incomplete #
-	# due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 
 	local \
 		gschema="10_unity-greeter.gschema.override" \

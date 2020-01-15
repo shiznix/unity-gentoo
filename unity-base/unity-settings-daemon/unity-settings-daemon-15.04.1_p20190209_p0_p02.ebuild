@@ -121,6 +121,10 @@ src_prepare() {
 	sed -e 's:-lm :-lm -ludev :g' \
 		-i gnome-settings-daemon/Makefile.am
 
+	# Disable all language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	> po/LINGUAS
+
 	eautoreconf
 	gnome2_src_prepare
 }
@@ -154,10 +158,6 @@ src_compile() {
 
 src_install() {
 	gnome2_src_install
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 
 	insinto /usr/lib/unity-settings-daemon
 	doins gnome-settings-daemon/gnome-update-wallpaper-cache

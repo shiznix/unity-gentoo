@@ -166,7 +166,7 @@ src_prepare() {
 	use gnome-online-accounts \
 		&& epatch "${FILESDIR}/${PN}-online-accounts-enable_passing_data.patch"
 
-	# Remove all language files as they can be incomplete #
+	# Disable all language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	> po/LINGUAS
 

@@ -54,13 +54,13 @@ src_prepare() {
 			-i src/backend-dbus/actions.c
 	fi
 
-	# Remove all language files as they can be incomplete #
+	# Disable all language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	sed -i \
 		-e "/add_subdirectory (po)/d" \
 		CMakeLists.txt
 
-	# Remove tests #
+	# Disable tests #
 	use test || sed -i \
 		-e "/enable_testing ()/d" \
 		-e "/add_subdirectory (tests)/d" \

@@ -39,17 +39,13 @@ src_prepare() {
 	# Disable url-dispatcher when not using unity8-desktop-session
 	eapply "${FILESDIR}/disable-url-dispatcher.diff"
 
+	# Disable all language files as they can be incomplete #
+        #  due to being provided by Ubuntu's language-pack packages #
+        > po/LINGUAS
+
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
-}
-
-src_install() {
-	emake DESTDIR="${ED}" install
-
-	# Remove all installed language files as they can be incomplete #
-	#  due to being provided by Ubuntu's language-pack packages #
-	rm -rf "${ED}usr/share/locale"
 }
 
 pkg_preinst() {

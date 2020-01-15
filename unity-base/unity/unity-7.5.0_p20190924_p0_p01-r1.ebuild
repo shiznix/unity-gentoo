@@ -194,7 +194,7 @@ src_configure() {
 		mycmakeargs+=(-Duse_pch=OFF)
 	fi
 
-	# Disable language files support as they can be incomplete #
+	# Disable all language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	mycmakeargs+=(-DI18N_SUPPORT=OFF)
 
