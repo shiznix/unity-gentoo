@@ -76,7 +76,7 @@ multilib_src_install_all() {
 		insinto /usr/src/googletest/googletest
 		doins -r src cmake CMakeLists.txt
 	popd
-	dosym /usr/src/googletest /usr/src/gtest
+	dosym /usr/src/googletest/googletest /usr/src/gtest
 
 	# Install GoogleMock source files + symlink for backwards compatibility #
 	pushd googlemock
