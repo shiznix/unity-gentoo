@@ -4,13 +4,13 @@ version_check() {
 	for source in {main,universe}; do
 		if [ ! -f /tmp/Sources-${source}-${URELEASE} ]; then
 			echo
-			wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/${source}/source/Sources.bz2 -O /tmp/Sources-${source}-${URELEASE}.bz2
-			bunzip2 /tmp/Sources-${source}-${URELEASE}.bz2
+			wget http://archive.ubuntu.com/ubuntu/dists/${URELEASE}/${source}/source/Sources.gz -O /tmp/Sources-${source}-${URELEASE}.gz
+			gunzip /tmp/Sources-${source}-${URELEASE}.gz
 		fi
 	done
 	upstream_version=
-	upstream_version=`grep -A2 "Package: unity-scope-${_name}$" /tmp/Sources-main-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
-	[[ -z "${upstream_version}" ]] && upstream_version=`grep -A2 "Package: unity-scope-${_name}$" /tmp/Sources-universe-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+	upstream_version=`grep -A4 "Package: unity-scope-${_name}$" /tmp/Sources-main-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
+	[[ -z "${upstream_version}" ]] && upstream_version=`grep -A4 "Package: unity-scope-${_name}$" /tmp/Sources-universe-${URELEASE} | sed -n 's/^Version: \(.*\)/\1/p' | sed 's/[0-9]://g'`
 
 	if [ "${local_version}" = "${upstream_version}" ]; then
 		[ -n "${CHANGES}" ] && return

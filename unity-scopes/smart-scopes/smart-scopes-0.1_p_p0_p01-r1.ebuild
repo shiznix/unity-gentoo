@@ -6,9 +6,8 @@ PYTHON_COMPAT=( python{3_6,3_7} )
 
 inherit distutils-r1 eutils ubuntu-versionator
 
-URELEASE="trusty"
-UVER_PREFIX="+13.10.20130723"
-UURL="http://archive.ubuntu.com/ubuntu/pool/main/u"	# Mirrors can be unpredictable #
+URELEASE="disco"
+UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors can be unpredictable #
 
 DESCRIPTION="Online scopes for the Unity Dash"
 HOMEPAGE="https://launchpad.net/onehundredscopes"
@@ -38,25 +37,28 @@ setvar() {
 	packages+=(${1})
 }
 setvar audacious		0.1+13.10.20130927.1	0ubuntu1
-setvar calculator		0.1+14.04.20140328	0ubuntu1
+setvar calculator		0.1+14.04.20140328	0ubuntu4
 setvar chromiumbookmarks	0.1+13.10.20130723	0ubuntu1
 setvar clementine		0.1+13.10.20130723	0ubuntu1
 setvar colourlovers		0.1+13.10.20130723	0ubuntu1
-setvar devhelp			0.1+14.04.20140328	0ubuntu1
+setvar devhelp			0.1+14.04.20140328	0ubuntu3
 setvar deviantart		0.1+13.10.20130723	0ubuntu1
 setvar firefoxbookmarks		0.1+13.10.20130809.1	0ubuntu1
 setvar gallica			0.1+13.10.20130816.2	0ubuntu1
 setvar gdrive			0.9+13.10.20130723	0ubuntu1
 setvar github			0.1+13.10.20130723	0ubuntu1
 setvar gmusicbrowser		0.1+13.10.20130723	0ubuntu1
+setvar gnote			0.1+13.10.20130723	0ubuntu2
 setvar googlenews		0.1+13.10.20130723	0ubuntu1
 setvar gourmet			0.1+13.10.20130723	0ubuntu1
 setvar guayadeque		0.1+13.10.20130927.1	0ubuntu1
-setvar manpages			3.0+14.04.20140324	0ubuntu1
+setvar launchpad		0.1daily13.06.05	0ubuntu1
+setvar manpages			3.0+14.04.20140324	0ubuntu3
 setvar musique			0.1+13.10.20130723	0ubuntu1
 setvar openclipart		0.1+13.10.20130723	0ubuntu1
 setvar openweathermap		0.1+13.10.20130828	0ubuntu1
 setvar soundcloud		0.1+13.10.20130723	0ubuntu1
+setvar sshsearch		0.1daily13.06.05	0ubuntu1
 setvar texdoc			0.1+14.04.20140328	0ubuntu1
 setvar tomboy			0.1+13.10.20130723	0ubuntu1
 setvar virtualbox		0.1+13.10.20130723	0ubuntu1
