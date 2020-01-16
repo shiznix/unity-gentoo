@@ -55,7 +55,6 @@ RDEPEND="gnome-base/gnome-core-libs
 	extras? (
 		app-cdr/brasero
 		=gnome-base/dconf-editor-${GVER}
-		gnome-extra/gnome-search-tool
 		sys-block/gparted
 		unity-extra/unity-tweak-tool )
 	fonts? (
@@ -99,7 +98,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		=app-arch/file-roller-${GVER}
 		=app-crypt/seahorse-${GVER}
 		=app-editors/gedit-${GVER}
-		=app-text/evince-3.32*
+		=app-text/evince-${GVER}
 		=gnome-extra/gnome-calculator-${GVER}
 		=gnome-extra/gnome-calendar-${GVER}
 		=gnome-extra/gnome-power-manager-3.30*
