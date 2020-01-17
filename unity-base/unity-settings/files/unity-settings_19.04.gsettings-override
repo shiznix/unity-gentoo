@@ -68,6 +68,7 @@ default-zoom-level = 'small'
 
 [org.gnome.nautilus.preferences:Unity]
 open-folder-on-dnd-hover = false
+use-legacy-clipboard = true
 
 [org.gnome.settings-daemon.plugins.power:Unity]
 button-power = 'interactive'
