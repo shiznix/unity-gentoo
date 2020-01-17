@@ -9,4 +9,33 @@
 		<remote-id type="github">shiznix</remote-id>
 		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
 	</upstream>
+	<use>
+		<flag name="audacious">Audacious scope for Unity</flag>
+		<flag name="calculator">Calculator scope for Unity</flag>
+		<flag name="chromiumbookmarks">Chromium bookmarks scope for Unity</flag>
+		<flag name="clementine">Clementine scope for Unity</flag>
+		<flag name="colourlovers">COLOURlovers scope for Unity</flag>
+		<flag name="devhelp">devhelp scope for Unity</flag>
+		<flag name="deviantart">deviantART scope for Unity</flag>
+		<flag name="firefoxbookmarks">Firefox bookmarks scope for Unity</flag>
+		<flag name="gallica">gallica scope for Unity</flag>
+		<flag name="github">GitHub scope for Unity</flag>
+		<flag name="gmusicbrowser">gmusicbrowser scope for Unity</flag>
+		<flag name="gnote">Gnote scope for Unity</flag>
+		<flag name="googlenews">Google News scope for Unity</flag>
+		<flag name="gourmet">Gourmet Recipe Manager scope for Unity</flag>
+		<flag name="guayadeque">Guayadeque scope for Unity</flag>
+		<flag name="manpages">Manual pages scope for Unity</flag>
+		<flag name="musique">Musique scope for Unity</flag>
+		<flag name="onlinemusic">Unity Scope that provides online music to the Dash</flag>
+		<flag name="openclipart">OpenClipArt scope for Unity</flag>
+		<flag name="openweathermap">Openweathermap scope for Unity</flag>
+		<flag name="soundcloud">SoundCloud scope for Unity</flag>
+		<flag name="sshsearch">SSH search scope for Unity</flag>
+		<flag name="texdoc">Texdoc scope for Unity</flag>
+		<flag name="virtualbox">VirtualBox scope for Unity</flag>
+		<flag name="yahoostock">Yahoo! Finance scope for Unity</flag>
+		<flag name="yelp">Help scope for Unity</flag>
+		<flag name="zotero">Zotero scope for Unity</flag>
+	</use>
 </pkgmetadata>
