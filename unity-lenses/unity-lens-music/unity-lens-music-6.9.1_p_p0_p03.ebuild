@@ -19,10 +19,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-RDEPEND="|| ( media-sound/rhythmbox
-		media-sound/banshee )"
-DEPEND="${RDEPEND}
-	dev-db/sqlite:3
+DEPEND="dev-db/sqlite:3
 	dev-libs/dee:=
 	dev-libs/glib:2
 	dev-libs/json-glib
@@ -34,6 +31,10 @@ DEPEND="${RDEPEND}
 	sys-libs/tdb
 	unity-base/unity
 	$(vala_depend)"
+PDEPEND="|| ( media-sound/rhythmbox
+		media-sound/banshee
+		unity-scopes/smart-scopes[audacious]
+		unity-scopes/smart-scopes[soundcloud] )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 

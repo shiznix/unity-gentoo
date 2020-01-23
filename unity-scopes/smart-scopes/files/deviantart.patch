@@ -1,0 +1,12 @@
+diff -Nur a/src/unity_deviantart_daemon.py b/src/unity_deviantart_daemon.py
+--- a/src/unity_deviantart_daemon.py	2013-07-23 08:12:10.000000000 +0200
++++ b/src/unity_deviantart_daemon.py	2020-01-22 16:59:22.552047520 +0100
+@@ -91,7 +91,7 @@
+         try:
+             if entry is None:
+                 continue
+-            if entry['media_rating'] != "nonadult":
++            if entry['media_rating']['content'] != "nonadult":
+                 continue
+             results.append({'uri':entry['link'].replace('http://', 'https://'),
+                             'icon':entry['media_thumbnail'][0]['url'].replace('http://', 'https://'),

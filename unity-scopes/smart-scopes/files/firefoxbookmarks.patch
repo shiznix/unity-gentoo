@@ -1,0 +1,36 @@
+diff -Nur a/src/unity_firefoxbookmarks_daemon.py b/src/unity_firefoxbookmarks_daemon.py
+--- a/src/unity_firefoxbookmarks_daemon.py	2013-08-09 13:49:28.000000000 +0200
++++ b/src/unity_firefoxbookmarks_daemon.py	2020-01-22 21:22:44.941148161 +0100
+@@ -41,12 +41,10 @@
+ DEFAULT_RESULT_TYPE = Unity.ResultType.DEFAULT
+ FIREFOX_EXECUTABLE = '/usr/bin/firefox'
+ BOOKMARKS_PATH = os.getenv("HOME") + "/.mozilla/firefox/"
+-BOOKMARKS_QUERY = '''SELECT moz_bookmarks.title, moz_places.url, moz_favicons.url, '%s', '%s'
+-                     FROM moz_bookmarks, moz_places, moz_favicons
++BOOKMARKS_QUERY = '''SELECT moz_bookmarks.title, moz_places.url, '%s', '%s'
++                     FROM moz_bookmarks, moz_places
+                      WHERE moz_places.id = moz_bookmarks.fk
+-                         AND moz_places.favicon_id = moz_favicons.id
+                          AND moz_bookmarks.title is not null
+-                         AND moz_places.favicon_id is not null
+                          AND moz_bookmarks.type = 1
+                          AND (moz_bookmarks.title LIKE '%%%s%%' OR moz_places.url LIKE '%%%s%%')
+                      ORDER BY moz_bookmarks.lastModified;'''
+@@ -104,7 +102,7 @@
+         # Stop Firefox's smart bookmark folders from showing up
+         if not bookmark[1].find("place:") == -1:
+             continue
+-        path = bookmark[4].replace('places.sqlite', 'thumbnails/')
++        path = bookmark[3].replace('places.sqlite', 'thumbnails/')
+         path = path.replace('.mozilla/', '.cache/mozilla/') 
+         icon = '%s%s.png' % (path, hashlib.md5(bookmark[1].encode()).hexdigest())
+         if not os.path.exists(icon):
+@@ -113,7 +111,7 @@
+                         'icon': icon,
+                         'category': 0,
+                         'title': bookmark[0],
+-                        'user': GLib.Variant('s', bookmark[3])})
++                        'user': GLib.Variant('s', bookmark[2])})
+     return results
+ 
+ 

@@ -1,0 +1,25 @@
+diff -Nur a/src/unity_gallica_daemon.py b/src/unity_gallica_daemon.py
+--- a/src/unity_gallica_daemon.py	2013-08-17 00:48:23.000000000 +0200
++++ b/src/unity_gallica_daemon.py	2020-01-23 00:38:12.680874419 +0100
+@@ -75,7 +75,7 @@
+         return results
+     search = search.replace(' ', ' AND ')
+     search = urllib.parse.quote(search)
+-    uri = ('%sSRU?operation=searchRetrieve&version=1.2&maximumRecords=25&startRecord=1&query=%s' % (SEARCH_URI, search))
++    uri = ('%sSRU?operation=searchRetrieve&version=1.2&maximumRecords=25&startRecord=1&query=(gallica+all+%s)' % (SEARCH_URI, search))
+     print (uri)
+     try:
+         response = urllib.request.urlopen(uri).read()
+@@ -95,10 +95,10 @@
+                 for r in record:
+                     if r.tag == "{http://www.loc.gov/zing/srw/}extraRecordData":
+                         for element in r:
+-                            if element.tag == "{http://gallica.bnf.fr/namespaces/gallica}thumbnail":
++                            if element.tag == "thumbnail":
+                                 if element.text !=  "":
+                                     thumb = element.text
+-                            if element.tag == "{http://gallica.bnf.fr/namespaces/gallica}link":
++                            if element.tag == "link":
+                                 if element.text !=  "":
+                                     uri = element.text
+                     if r.tag == "{http://www.loc.gov/zing/srw/}recordData":
