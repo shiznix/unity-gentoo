@@ -1,0 +1,5 @@
+ebuild_hook() {
+	sed -i \
+		-e "s/Unity;//" \
+		"${PN}.desktop.in"
+}
