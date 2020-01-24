@@ -44,11 +44,11 @@ RDEPEND="gnome-base/gnome-core-libs
 		app-accessibility/orca )
 	apps? (
 		|| ( app-office/libreoffice app-office/libreoffice-bin )
-		|| ( mail-client/thunderbird =mail-client/evolution-${GVER} )
+		|| ( mail-client/thunderbird mail-client/thunderbird-bin =mail-client/evolution-${GVER} )
 		media-gfx/shotwell
 		media-sound/rhythmbox
 		=media-video/totem-${GVER}
-		|| ( www-client/firefox www-client/chromium ) )
+		|| ( www-client/firefox www-client/firefox-bin www-client/chromium ) )
 	chat? ( || (
 		( net-im/pidgin x11-plugins/pidgin-libnotify )
 		( net-im/empathy net-libs/telepathy-indicator ) ) )
@@ -58,7 +58,6 @@ RDEPEND="gnome-base/gnome-core-libs
 		sys-block/gparted
 		unity-extra/unity-tweak-tool )
 	fonts? (
-		media-fonts/dejavu
 		media-fonts/droid
 		media-fonts/font-bitstream-type1
 		media-fonts/freefont
