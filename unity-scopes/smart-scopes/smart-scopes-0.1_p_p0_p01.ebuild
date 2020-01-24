@@ -35,10 +35,10 @@ setvar() {
 }
 setvar audacious		0.1+13.10.20130927.1	0ubuntu1 + "dev-python/dbus-python[${PYTHON_USEDEP}] unity-lenses/unity-lens-meta[music]"	## works with audacious 3.9
 setvar calculator		0.1+14.04.20140328	0ubuntu4 + ""											## works with gnome-calculator 3.32
-setvar chromiumbookmarks	0.1+13.10.20130723	0ubuntu1 + ""											## not tested
+setvar chromiumbookmarks	0.1+13.10.20130723	0ubuntu1 + ""											## works with chromium 79 (fixed by patch)
 setvar clementine		0.1+13.10.20130723	0ubuntu1 - "dev-python/dbus-python[${PYTHON_USEDEP}]"						## not tested
 setvar colourlovers		0.1+13.10.20130723	0ubuntu1 + ""											## works
-setvar devhelp			0.1+14.04.20140328	0ubuntu3 - "dev-python/lxml[${PYTHON_USEDEP}]"							## not tested
+setvar devhelp			0.1+14.04.20140328	0ubuntu3 + "dev-python/lxml[${PYTHON_USEDEP}]"							## works
 setvar deviantart		0.1+13.10.20130723	0ubuntu1 + "dev-python/feedparser[${PYTHON_USEDEP}]"						## works (fixed by patch)
 setvar firefoxbookmarks		0.1+13.10.20130809.1	0ubuntu1 + ""											## works with firefox 72 (fixed by patch)
 setvar gallica			0.1+13.10.20130816.2	0ubuntu1 + "dev-python/lxml[${PYTHON_USEDEP}]"							## works (fixed by patch)
@@ -56,7 +56,7 @@ setvar musique			0.1+13.10.20130723	0ubuntu1 - "dev-python/dbus-python[${PYTHON_
 #setvar openweathermap		0.1+13.10.20130828	0ubuntu1 - ""											## doesn't work (needs API key)
 setvar soundcloud		0.1+13.10.20130723	0ubuntu1 + "unity-lenses/unity-lens-meta[music]"						## works
 setvar sshsearch		0.1daily13.06.05	0ubuntu1 - "dev-python/paramiko[${PYTHON_USEDEP}]"						## not tested
-setvar texdoc			0.1+14.04.20140328	0ubuntu1 - ""											## not tested
+setvar texdoc			0.1+14.04.20140328	0ubuntu1 + ""											## works
 #setvar tomboy			0.1+13.10.20130723	0ubuntu1 - ""											## doesn't work (tomboy package not available)
 setvar virtualbox		0.1+13.10.20130723	0ubuntu1 + ""											## works
 #setvar yahoostock		0.1+13.10.20130723	0ubuntu1 - ""											## doesn't work
@@ -127,17 +127,20 @@ src_install() {
 }
 
 pkg_postinst() {
-	local ylp rs
+	local ylp dvh rs
 
-	has_version "gnome-extra/yelp" || ylp="gnome-extra/yelp package and "
+	has_version "gnome-extra/yelp" || ylp="to install gnome-extra/yelp package and "
+	has_version "dev-util/devhelp" || dvh="to install dev-util/devhelp package and "
 
 	echo
-	use audacious && ! has_version "media-sound/audacious" && elog "audacious scope needs media-sound/audacious package." && echo
-	use calculator && ! has_version "gnome-extra/gnome-calculator" && elog "calculator scope needs gnome-extra/gnome-calculator package." && echo
-	use chromiumbookmarks && ! has_version "www-client/chromium" && elog "chromiumbookmarks scope needs www-client/chromium package." && echo
-	use firefoxbookmarks && ! has_version "www-client/firefox" && elog "firefoxbookmarks scope needs www-client/firefox package." && echo
-	use manpages && elog "manpages scope needs ${ylp}run mandb." && echo
-	use virtualbox && ! has_version "app-emulation/virtualbox" && elog "virtualbox scope needs app-emulation/virtualbox package." && echo
+	use audacious && ! has_version "media-sound/audacious" && elog "audacious scope needs to install media-sound/audacious package." && echo
+	use calculator && ! has_version "gnome-extra/gnome-calculator" && elog "calculator scope needs to install gnome-extra/gnome-calculator." && echo
+	use chromiumbookmarks && ! has_version "www-client/chromium" && elog "chromiumbookmarks scope needs to install www-client/chromium package." && echo
+	use devhelp && [[ -n ${dvh} ]] && elog "devhelp scope needs ${dvh/ and /.}" && echo
+	use firefoxbookmarks && ! has_version "www-client/firefox" && elog "firefoxbookmarks scope needs to install www-client/firefox package." && echo
+	use manpages && elog "manpages scope needs ${ylp}to run mandb to create or update the manual page index caches." && echo
+	use texdoc && ([[ -n ${dvh} ]] || ! has_version "app-text/texlive-core[doc]") && elog "texdoc scope needs ${dvh}to install app-text/texlive-core[doc] package." && echo
+	use virtualbox && ! has_version "app-emulation/virtualbox" && elog "virtualbox scope needs to install app-emulation/virtualbox package." && echo
 	use yelp && [[ -n ${ylp} ]] && elog "yelp scope needs ${ylp/ and /.}" && echo
 
 	if [[ -n ${RSCOPES} ]]; then
