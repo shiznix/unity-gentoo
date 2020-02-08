@@ -1,0 +1,90 @@
+diff -Nur a/gtk/gtkmenu.c b/gtk/gtkmenu.c
+--- a/gtk/gtkmenu.c	2019-10-04 05:03:04.000000000 +0200
++++ b/gtk/gtkmenu.c	2020-02-08 21:39:32.723931948 +0100
+@@ -1398,7 +1398,7 @@
+ {
+   GtkMenuPrivate *priv = menu->priv;
+ 
+-  gtk_window_fixate_size (GTK_WINDOW (priv->toplevel));
++//  gtk_window_fixate_size (GTK_WINDOW (priv->toplevel));
+ 
+   if (!priv->emulated_move_to_rect)
+     g_signal_emit (menu,
+@@ -1996,7 +1996,7 @@
+     gtk_menu_shell_select_first (menu_shell, TRUE);
+ 
+   /* Once everything is set up correctly, map the toplevel */
+-  gtk_window_force_resize (GTK_WINDOW (priv->toplevel));
++//  gtk_window_force_resize (GTK_WINDOW (priv->toplevel));
+   gtk_widget_show (priv->toplevel);
+ 
+   if (xgrab_shell == widget)
+@@ -5274,7 +5274,7 @@
+    * the right place to popup the menu.
+    */
+   gtk_widget_realize (priv->toplevel);
+-  gtk_window_move_resize (GTK_WINDOW (priv->toplevel));
++//  gtk_window_move_resize (GTK_WINDOW (priv->toplevel));
+ 
+   if (text_direction == GTK_TEXT_DIR_NONE)
+     text_direction = gtk_widget_get_direction (GTK_WIDGET (menu));
+@@ -5405,12 +5405,12 @@
+ 
+           priv->upper_arrow_visible = priv->lower_arrow_visible = TRUE;
+ 
+-          if (flags & GTK_MENU_SCROLL_FLAG_ADAPT)
+-            sync_arrows_state (menu);
++//          if (flags & GTK_MENU_SCROLL_FLAG_ADAPT)
++//            sync_arrows_state (menu);
+ 
+           get_arrows_border (menu, &arrow_border);
+-          if (should_offset_by_arrow)
+-            offset += arrow_border.top;
++//          if (should_offset_by_arrow)
++//            offset += arrow_border.top;
+           y += arrow_border.top;
+           view_height -= arrow_border.top;
+           view_height -= arrow_border.bottom;
+diff -Nur a/gtk/gtkwindow.c b/gtk/gtkwindow.c
+--- a/gtk/gtkwindow.c	2019-10-04 05:03:04.000000000 +0200
++++ b/gtk/gtkwindow.c	2020-02-08 21:42:20.722169366 +0100
+@@ -6513,12 +6513,12 @@
+   display = gtk_widget_get_display (widget);
+   gdkwindow = _gtk_widget_get_window (widget);
+ 
+-  if (window->priv->fixate_size)
+-    {
+-      g_assert (gdkwindow);
+-      gtk_window_get_remembered_size (window, width, height);
+-      return;
+-    }
++//  if (window->priv->fixate_size)
++//    {
++//      g_assert (gdkwindow);
++//      gtk_window_get_remembered_size (window, width, height);
++//      return;
++//    }
+ 
+   if (gdkwindow)
+     monitor = gdk_display_get_monitor_at_window (display, gdkwindow);
+@@ -6527,14 +6527,14 @@
+ 
+   gdk_monitor_get_workarea (monitor, &workarea);
+ 
+-  if (window->priv->unlimited_guessed_size_x)
+-    *width = INT_MAX;
+-  else
++//  if (window->priv->unlimited_guessed_size_x)
++//    *width = INT_MAX;
++//  else
+     *width = workarea.width;
+ 
+-  if (window->priv->unlimited_guessed_size_y)
+-    *height = INT_MAX;
+-  else
++//  if (window->priv->unlimited_guessed_size_y)
++//    *height = INT_MAX;
++//  else
+     *height = workarea.height;
+ 
+   if (gtk_widget_get_request_mode (widget) == GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT)

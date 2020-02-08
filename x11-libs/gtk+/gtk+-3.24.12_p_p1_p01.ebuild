@@ -134,6 +134,9 @@ src_prepare() {
 	# gtk-update-icon-cache is installed by dev-util/gtk-update-icon-cache
         eapply "${FILESDIR}"/${PN}-3.24.8-update-icon-cache.patch
 
+	# revert gtkmenu and gtkwindow changes (LP #1854753)
+	eapply "${FILESDIR}"/${PN}-3.24.12-revert_gtkmenu_gtkwindow.diff
+
 	eautoreconf
 	gnome2_src_prepare
 }
