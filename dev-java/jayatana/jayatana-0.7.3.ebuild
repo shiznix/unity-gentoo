@@ -9,13 +9,13 @@ DESCRIPTION="Global Menu for Java applications"
 HOMEPAGE="https://gitlab.com/vala-panel-project/vala-panel-appmenu/tree/master/subprojects/jayatana
 	https://gitlab.com/vala-panel-project/vala-panel-appmenu/releases"
 
-COMMIT="3f19440d0dff20cebe692d7cfce00e10"
+COMMIT="4158cb00cc3b06992704861a1af5439a"
 SRC_URI="https://gitlab.com/vala-panel-project/vala-panel-appmenu/uploads/${COMMIT}/${P}.tar.xz"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="system-wide"
+IUSE="+system-wide"
 RESTRICT="mirror"
 
 DEPEND=">=dev-libs/glib-2.40.0
