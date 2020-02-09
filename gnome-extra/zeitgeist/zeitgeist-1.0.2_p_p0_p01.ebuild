@@ -5,29 +5,23 @@ EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
 URELEASE="disco"
-inherit bash-completion-r1 python-r1 vala ubuntu-versionator versionator xdg
-
-DIR_PV=$(get_version_component_range 1-2)
+inherit bash-completion-r1 python-r1 vala ubuntu-versionator xdg
 
 DESCRIPTION="Service to log activities and present to other apps"
 HOMEPAGE="https://launchpad.net/zeitgeist/"
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 	${UURL}/${MY_P}-${UVER}.debian.tar.xz"
-#SRC_URI="https://launchpad.net/zeitgeist/${DIR_PV}/${PV}/+download/${P}.tar.xz
-#	https://dev.gentoo.org/~eva/distfiles/${PN}/${P}.tar.xz"
 
 LICENSE="LGPL-2+ LGPL-3+ GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+datahub downloads-monitor +fts introspection nls sql-debug telepathy"
+IUSE="+datahub +downloads-monitor +fts +icu introspection nls sql-debug telepathy"
 RESTRICT="mirror"
 
-REQUIRED_USE="
-	${PYTHON_REQUIRED_USE}
+REQUIRED_USE="${PYTHON_REQUIRED_USE}
 	downloads-monitor? ( datahub )"
 
-RDEPEND="
-	${PYTHON_DEPS}
+RDEPEND="${PYTHON_DEPS}
 	dev-libs/json-glib
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/rdflib[${PYTHON_USEDEP}]
@@ -37,6 +31,7 @@ RDEPEND="
 	sys-apps/dbus
 	datahub? ( x11-libs/gtk+:3 )
 	fts? ( dev-libs/xapian:0=[inmemory] )
+	icu? ( dev-libs/dee[icu] )
 	introspection? ( dev-libs/gobject-introspection )
 	telepathy? ( net-libs/telepathy-glib )
 "
@@ -79,16 +74,15 @@ src_prepare() {
 src_configure() {
 	local myeconfargs=(
 		--docdir="${EPREFIX}/usr/share/doc/${PF}"
-		--without-dee-icu
-		$(use_enable sql-debug explain-queries)
 		$(use_enable datahub)
 		$(use_enable downloads-monitor)
-		$(use_enable telepathy)
+		$(use_enable fts)
+		$(use_with icu dee-icu)
 		$(use_enable introspection)
+		$(use_enable nls)
+		$(use_enable sql-debug explain-queries)
+		$(use_enable telepathy)
 	)
-
-	use nls || myeconfargs+=( --disable-nls )
-	use fts && myeconfargs+=( --enable-fts )
 
 	python_setup
 	econf "${myeconfargs[@]}"
