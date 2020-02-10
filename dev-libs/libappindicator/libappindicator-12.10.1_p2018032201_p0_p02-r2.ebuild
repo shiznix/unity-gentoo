@@ -28,12 +28,14 @@ DEPEND="dev-libs/dbus-glib
 	dev-libs/libdbusmenu:=
 	dev-libs/libindicator:3=
 	dev-perl/XML-LibXML
-	dev-python/dbus-python[${PYTHON_USEDEP}]
-	dev-python/pygobject:2[${PYTHON_USEDEP}]
-	dev-python/pygtk[${PYTHON_USEDEP}]
-	dev-python/pyxdg[${PYTHON_USEDEP}]
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
+	$(python_gen_cond_dep '
+		dev-python/dbus-python[${PYTHON_MULTI_USEDEP}]
+		dev-python/pygobject:2[${PYTHON_MULTI_USEDEP}]
+		dev-python/pygtk[${PYTHON_MULTI_USEDEP}]
+		dev-python/pyxdg[${PYTHON_MULTI_USEDEP}]
+	')
 
 	introspection? ( >=dev-libs/gobject-introspection-1:= )
 	java? ( dev-java/jayatana )

@@ -22,9 +22,7 @@ RESTRICT="mirror"
 
 DEPEND="dev-libs/gobject-introspection
 	dev-libs/libdbusmenu[gtk3]
-	dev-libs/libunity[${PYTHON_USEDEP}]
 	dev-libs/libxslt[python]
-	dev-libs/libxml2[${PYTHON_USEDEP}]
 	dev-util/gdbus-codegen
 	gnome-base/libgtop
 	x11-libs/gtk+:2
@@ -32,6 +30,10 @@ DEPEND="dev-libs/gobject-introspection
 	x11-libs/libwnck:1
 	x11-libs/libwnck:3
 	x11-libs/libXfixes
+	$(python_gen_cond_dep '
+		dev-libs/libunity[${PYTHON_MULTI_USEDEP}]
+		dev-libs/libxml2[${PYTHON_MULTI_USEDEP}]
+	')
 	$(vala_depend)"
 
 S="${WORKDIR}"

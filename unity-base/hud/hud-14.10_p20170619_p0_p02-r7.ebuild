@@ -24,7 +24,6 @@ RESTRICT="mirror"
 
 DEPEND=">=dev-cpp/gtest-1.8.1
 	dev-db/sqlite:3
-	dev-libs/dee[${PYTHON_USEDEP}]
 	dev-libs/glib:2
 	dev-libs/libcolumbus
 	dev-libs/libdbusmenu:=
@@ -43,6 +42,9 @@ DEPEND=">=dev-cpp/gtest-1.8.1
 	x11-libs/gsettings-qt
 	x11-libs/gtk+:3
 	x11-libs/pango
+	$(python_gen_cond_dep '
+		dev-libs/dee[${PYTHON_MULTI_USEDEP}]
+	')
 	$(vala_depend)
 	test? ( dev-util/dbus-test-runner )"
 
