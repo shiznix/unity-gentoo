@@ -23,14 +23,16 @@ IUSE=""
 IUSE+=" +python_single_target_python3_6 python_single_target_python3_7"
 RESTRICT="mirror"
 
-RDEPEND="dev-libs/dee[${PYTHON_USEDEP}]
-	dev-libs/libgee
+RDEPEND="dev-libs/libgee
 	net-libs/liboauth
-	dev-python/pygobject[${PYTHON_USEDEP}]
 	net-libs/libsoup
-	dev-libs/libunity[${PYTHON_USEDEP}]
-	dev-python/httplib2[${PYTHON_USEDEP}]
-	dev-python/oauthlib[${PYTHON_USEDEP}]
+	$(python_gen_cond_dep '
+		dev-libs/dee[${PYTHON_MULTI_USEDEP}]
+		dev-python/pygobject[${PYTHON_MULTI_USEDEP}]
+		dev-libs/libunity[${PYTHON_MULTI_USEDEP}]
+		dev-python/httplib2[${PYTHON_MULTI_USEDEP}]
+		dev-python/oauthlib[${PYTHON_MULTI_USEDEP}]
+	')
 	media-gfx/shotwell
 	unity-base/unity
 	unity-base/unity-language-pack
