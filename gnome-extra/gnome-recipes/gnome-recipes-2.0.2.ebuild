@@ -11,15 +11,21 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Recipes"
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="archive spell"
+IUSE="archive libcanberra spell"
 
 RDEPEND="
+	dev-libs/appstream-glib
 	dev-libs/glib:2
-	media-libs/libcanberra
+	>=dev-libs/gobject-introspection-1.42.0
+	dev-libs/json-glib
+	dev-util/itstool
+	net-libs/gnome-online-accounts
 	net-libs/libsoup:2.4
+	net-libs/rest:0.7
 	>=x11-libs/gtk+-3.22:3
 	archive? ( app-arch/gnome-autoar )
-	spell? ( >=app-text/gspell-1 )
+	libcanberra? ( media-libs/libcanberra )
+	spell? ( app-text/gspell )
 "
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
