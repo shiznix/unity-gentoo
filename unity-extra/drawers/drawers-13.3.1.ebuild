@@ -20,14 +20,16 @@ KEYWORDS="~amd64 ~x86"
 
 RDEPEND="app-text/yelp-tools
 	dev-libs/gobject-introspection
-	dev-libs/libunity[${PYTHON_USEDEP}]
-	dev-python/pycairo[${PYTHON_USEDEP}]
-	dev-python/pyxdg[${PYTHON_USEDEP}]
 	gnome-extra/yelp
 	unity-base/compiz
 	x11-apps/xprop
 	x11-libs/gdk-pixbuf[introspection]
-	x11-libs/gtk+:3[introspection]"
+	x11-libs/gtk+:3[introspection]
+	$(python_gen_cond_dep '
+		dev-libs/libunity[${PYTHON_MULTI_USEDEP}]
+		dev-python/pycairo[${PYTHON_MULTI_USEDEP}]
+		dev-python/pyxdg[${PYTHON_MULTI_USEDEP}]
+	')"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup

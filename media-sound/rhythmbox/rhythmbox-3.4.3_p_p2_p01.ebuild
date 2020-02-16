@@ -54,7 +54,10 @@ COMMON_DEPEND="
 	libsecret? ( >=app-crypt/libsecret-0.18 )
 	libnotify? ( >=x11-libs/libnotify-0.7.0 )
 	lirc? ( app-misc/lirc )
-	python? ( >=dev-python/pygobject-3.0:3[${PYTHON_USEDEP}] )
+	python? (
+		$(python_gen_cond_dep '
+			>=dev-python/pygobject-3.0:3[${PYTHON_MULTI_USEDEP}]
+		') )
 	udev? (
 		virtual/libgudev:=
 		ipod? ( >=media-libs/libgpod-0.7.92[udev] )
@@ -73,7 +76,7 @@ RDEPEND="${COMMON_DEPEND}
 		>=media-libs/grilo-0.2:0.2
 		>=media-plugins/grilo-plugins-0.2:0.2[upnp-av] )
 	python? (
-		>=dev-libs/libpeas-0.7.3[${PYTHON_USEDEP}]
+		>=dev-libs/libpeas-0.7.3[${PYTHON_SINGLE_USEDEP}]
 		x11-libs/gdk-pixbuf:2[introspection]
 		x11-libs/gtk+:3[introspection]
 		x11-libs/pango[introspection]

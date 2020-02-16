@@ -29,9 +29,11 @@ RESTRICT="mirror"
 DEPEND="dev-libs/libappindicator
 	dev-libs/libdbusmenu
 	>=dev-python/python-distutils-extra-2.37
-	dev-python/pytz[${PYTHON_USEDEP}]
-	>=dev-python/pywapi-0.3.7[${PYTHON_USEDEP}]
-	x11-themes/adwaita-icon-theme"
+	x11-themes/adwaita-icon-theme
+	$(python_gen_cond_dep '
+		dev-python/pytz[${PYTHON_MULTI_USEDEP}]
+		>=dev-python/pywapi-0.3.7[${PYTHON_MULTI_USEDEP}]
+	')"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup

@@ -22,10 +22,12 @@ RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
 	dev-libs/libappindicator
-	dev-python/pygobject:3[${PYTHON_USEDEP}]
-	dev-python/pygtk[${PYTHON_USEDEP}]
 	gnome-base/gnome-menus:0[python]
-	x11-libs/gtk+:3"
+	x11-libs/gtk+:3
+	$(python_gen_cond_dep '
+		dev-python/pygobject:3[${PYTHON_MULTI_USEDEP}]
+		dev-python/pygtk[${PYTHON_MULTI_USEDEP}]
+	')"
 DEPEND="${RDEPEND}
 	dev-util/intltool
 	sys-devel/gettext
