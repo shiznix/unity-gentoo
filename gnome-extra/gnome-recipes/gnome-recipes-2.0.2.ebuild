@@ -31,11 +31,24 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 "
 
+src_prepare() {
+	# Fix launcher icon and global/titlebar menu app name
+	sed -i \
+		-e "/DBusActivatable/d" \
+		data/org.gnome.Recipes.desktop.in
+
+	# If a .desktop file does not have inline
+	# translations, fall back to calling gettext
+	echo "X-GNOME-Gettext-Domain=${PN}" >> "data/org.gnome.Recipes.desktop.in"
+
+	default
+}
+
 src_configure() {
 	local emesonargs=(
-		-Denable-autoar=$(usex archive yes no)
-		-Denable-gspell=$(usex spell yes no)
-		-Denable-canberra=yes
+		-Dautoar=$(usex archive yes no)
+		-Dcanberra=$(usex libcanberra yes no)
+		-Dgspell=$(usex spell yes no)
 	)
 
 	meson_src_configure
