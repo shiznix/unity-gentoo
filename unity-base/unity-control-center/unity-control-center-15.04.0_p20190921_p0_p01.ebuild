@@ -163,8 +163,15 @@ src_prepare() {
 	use cups \
 		&& epatch "${FILESDIR}/${PN}-printers-fix_launcher.patch"
 
-	use gnome-online-accounts \
-		&& epatch "${FILESDIR}/${PN}-online-accounts-enable_passing_data.patch"
+	if use gnome-online-accounts; then
+		# Needed by gnome-calendar #
+		epatch "${FILESDIR}/${PN}-online-accounts-enable_passing_data.patch"
+
+		# Use .desktop Comment from g-c-c we can translate #
+		sed -i \
+			-e "/Comment/{s/your online accounts/to your online accounts and decide what to use them for/}" \
+			panels/online-accounts/unity-online-accounts-panel.desktop.in.in
+	fi
 
 	# Disable all language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #

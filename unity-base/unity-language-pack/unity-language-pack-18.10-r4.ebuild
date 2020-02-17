@@ -175,6 +175,15 @@ IUSE="${IUSE/l10n_en/+l10n_en}"
 
 S="${WORKDIR}"
 
+_progress_counter=0
+_progress_indicator() {
+	local -a arr=( "|" "/" "-" "\\" )
+
+	[[ ${_progress_counter} -eq 4 ]] && _progress_counter=0
+	printf "\b\b %s" "${arr[${_progress_counter}]}"
+	_progress_counter=$((_progress_counter + 1))
+}
+
 src_install() {
 	# sharing panel msgids
 	local -a sh_msgids=(
@@ -242,17 +251,20 @@ src_install() {
 		"No regions found"
 	)
 
+	# online-accounts desktop launcher msgids
+	local -a oa_msgids=(
+		"Online Accounts"
+		"Connect to your online accounts and decide what to use them for"
+	)
+
 	# Unity help desktop launcher msgids
 	local -a is_msgids=(
 		"Unity Help"
 		"Get help with Unity"
 	)
 
-	local -a indicator=( "|" "/" "-" "\\" )
-
 	local \
 		lng flg pofile msgid gcc_src ls_src ylp_src \
-		count=1 \
 		ucc_po="unity-control-center.po" \
 		gcc_po="gnome-control-center-2.0.po" \
 		ls_po="language-selector.po" \
@@ -276,7 +288,10 @@ src_install() {
 	# Add translations for session-shortcuts
 	local -a langs=( "${S}"/language-pack-gnome-*-base/data/* )
 	unpack "${FILESDIR}"/session-shortcuts-translations-artful.tar.xz
-	printf "%s" "Processing translation files ${indicator[0]}"
+
+	printf "%s  " "Processing translation files"
+	_progress_indicator
+
 	for lng in "${langs[@]}"; do
 		flg=${lng##*data/}
 		cp "${S}"/po/"${flg}".po "${lng}"/LC_MESSAGES/session-shortcuts.po 2>/dev/null
@@ -290,15 +305,12 @@ src_install() {
 			! -name "${ylp_po}" \
 	); do
 		if [[ ${pofile##*/} == ${ucc_po} ]]; then
-			## Progress indicator.
-			[[ ${count} -eq 4 ]] && count=0
-			printf "\b\b %s" "${indicator[${count}]}"
-			count=$((count + 1))
+			_progress_indicator
 
-			# Add translations for sharing panel
+			# Add translations for sharing panel and online-accounts desktop launcher
 			sed -i -e "/\"Sharing\"/,+1 d" "${pofile}" # remove old identical msgid
 			gcc_src=${pofile/${ucc_po}/${gcc_po}}
-			for msgid in "${sh_msgids[@]}"; do
+			for msgid in "${sh_msgids[@]}" "${oa_msgids[@]}"; do
 				if ! grep -q "^\(msgid\|msgctxt\)\s\"${msgid}\"$" "${pofile}"; then
 					msgid="$(awk "/^(msgid\s|msgctxt\s|)\"${msgid}\"\$/ { p = 1 } p { print } /^\$/ { p = 0 }" "${gcc_src}" 2>/dev/null)"
 					case ${msgid:0:1} in
@@ -312,10 +324,7 @@ src_install() {
 				fi
 			done
 
-			## Progress indicator.
-			[[ ${count} -eq 4 ]] && count=0
-			printf "\b\b %s" "${indicator[${count}]}"
-			count=$((count + 1))
+			_progress_indicator
 
 			# Add translations for langselector panel
 			ls_src=${pofile/${ucc_po}/${ls_po}}
@@ -331,10 +340,7 @@ src_install() {
 
 		# Add translations for Unity help desktop launcher
 		if [[ ${pofile##*/} == ${is_po} ]]; then
-			## Progress indicator.
-			[[ ${count} -eq 4 ]] && count=0
-			printf "\b\b %s" "${indicator[${count}]}"
-			count=$((count + 1))
+			_progress_indicator
 
 			ylp_src=${pofile/${is_po}/${ylp_po}}
 			for msgid in "${is_msgids[@]}"; do
