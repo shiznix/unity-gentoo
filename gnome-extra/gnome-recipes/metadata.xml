@@ -12,7 +12,7 @@
 	<use>
 		<flag name="archive">Enable archives support using
 			<pkg>app-arch/gnome-autoar</pkg></flag>
-		<flag name="fcitx">Enable sound event support using
+		<flag name="libcanberra">Enable sound event support using
 			<pkg>media-libs/libcanberra</pkg></flag>
 	</use>
 </pkgmetadata>
