@@ -1,0 +1,26 @@
+.nautilus-window widget.view:not(:selected):not(:focus) {
+    background-color: @theme_bg_color;
+    color: @theme_fg_color;
+}
+
+.nautilus-window treeview.view:selected:not(:focus) {
+    background-color: @theme_bg_color;
+    color: @text_color;
+}
+
+.nautilus-window widget.view:selected:not(:focus),
+.nautilus-window widget.view:selected:not(:focus):backdrop,
+.nautilus-window treeview.view:selected:not(:focus):backdrop {
+    background-color: alpha (@backdrop_selected_bg_color, 0.9);
+    color: @backdrop_text_color;
+}
+
+.nautilus-window treeview.view:not(:selected):not(:focus) {
+    background-color: @base_color;
+}
+
+.nautilus-window widget.view:not(:selected):not(:focus):backdrop,
+.nautilus-window treeview.view:not(:selected):not(:focus):backdrop {
+    background-color: @theme_bg_color;
+    color: @backdrop_text_color;
+}
