@@ -100,7 +100,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		=app-text/evince-${GVER}
 		=gnome-extra/gnome-calculator-${GVER}
 		=gnome-extra/gnome-calendar-${GVER}
-		=gnome-extra/gnome-power-manager-3.30*
+		=gnome-extra/gnome-power-manager-${GVER}
 		=gnome-extra/gnome-system-monitor-${GVER}
 		gnome-extra/gucharmap:2.90
 		=gnome-extra/yelp-${GVER}
