@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="disco"
-inherit meson ubuntu-versionator vala
+inherit gnome2-utils meson ubuntu-versionator vala xdg
 
 UVER="-${PVR_PL_MINOR}"
 
@@ -20,21 +20,27 @@ IUSE="test +nautilus"
 RESTRICT="mirror test"
 
 COMMON_DEPEND="
+	>=app-admin/packagekit-base-0.6.5
 	app-crypt/libsecret[vala]
-	dev-libs/libdbusmenu:=
-	dev-libs/libunity:=
-	dev-libs/glib:2
-	dev-libs/libpeas
-	unity-base/unity-control-center
-	x11-libs/gtk+:3
-	x11-libs/libnotify
-	>=app-backup/duplicity-0.7.14
-	dev-libs/dbus-glib
+	>=dev-libs/glib-2.46:2
+	dev-libs/libgpg-error
+	>=net-libs/gnome-online-accounts-3.8.0
+	>=x11-libs/gtk+-3.22:3
+
 	nautilus? ( gnome-base/nautilus )"
 RDEPEND="${COMMON_DEPEND}
-	gnome-base/gvfs[fuse]"
+	>=app-backup/duplicity-0.7.14
+	dev-libs/atk
+	gnome-base/dconf
+	gnome-base/gvfs[fuse]
+	sys-auth/polkit
+	x11-libs/pango"
 DEPEND="${COMMON_DEPEND}
 	app-text/yelp-tools
+	dev-libs/appstream-glib
+	dev-util/desktop-file-utils
+	sys-apps/dbus
+
 	dev-perl/Locale-gettext
 	virtual/pkgconfig
 	dev-util/intltool
@@ -45,9 +51,20 @@ src_prepare() {
 	# Make Deja Dup appear in unity-control-center #
 	sed -i \
 		-e "/Categories/{s/X-GNOME-Utilities/Settings;X-GNOME-SystemSettings;X-Unity-Settings-Panel\nX-Unity-Settings-Panel=deja-dup/}" \
-		data/org.gnome.DejaDup.desktop
+		data/org.gnome.DejaDup.desktop.in
 
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
-	rm -v Makefile	# Force Makefile recreation so that 'builddir is correct #
+	xdg_src_prepare
+}
+
+pkg_postinst() {
+	xdg_pkg_postinst
+	gnome2_schemas_update
+	ubuntu-versionator_pkg_postinst
+}
+
+pkg_postrm() {
+	xdg_pkg_postrm
+	gnome2_schemas_update
 }
