@@ -20,8 +20,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE+=" +python_single_target_python3_6 python_single_target_python3_7"
 RESTRICT="mirror"
 
-RDEPEND="dev-python/pygobject[${PYTHON_USEDEP}]
-	dev-python/setproctitle[${PYTHON_USEDEP}]
+RDEPEND="$(python_gen_cond_dep '
+		dev-python/pygobject[${PYTHON_MULTI_USEDEP}]
+		dev-python/setproctitle[${PYTHON_MULTI_USEDEP}]
+	')
 	dev-python/python-xlib
 	unity-base/unity-gtk-module
 	x11-libs/gtk+:3

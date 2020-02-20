@@ -23,10 +23,13 @@ IUSE=""
 IUSE+=" +python_single_target_python3_6 python_single_target_python3_7"
 RESTRICT="mirror"
 
-RDEPEND="dev-python/distro[${PYTHON_USEDEP}]
-	dev-python/psutil[${PYTHON_USEDEP}]
-	dev-python/pygobject[${PYTHON_USEDEP}]
-	dev-python/setproctitle[${PYTHON_USEDEP}]
+RDEPEND="
+	$(python_gen_cond_dep '
+		dev-python/distro[${PYTHON_MULTI_USEDEP}]
+		dev-python/psutil[${PYTHON_MULTI_USEDEP}]
+		dev-python/pygobject[${PYTHON_MULTI_USEDEP}]
+		dev-python/setproctitle[${PYTHON_MULTI_USEDEP}]
+	')
 	gnome-base/dconf
 	gnome-extra/zenity
 	mate-base/mate

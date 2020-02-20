@@ -21,12 +21,14 @@ IUSE+=" +python_single_target_python3_6 python_single_target_python3_7"
 RESTRICT="mirror"
 
 RDEPEND="dev-libs/glib:2
-	dev-python/configobj[${PYTHON_USEDEP}]
-	dev-python/pyxdg[${PYTHON_USEDEP}]
-	dev-python/setproctitle[${PYTHON_USEDEP}]
-	dev-python/setuptools[${PYTHON_USEDEP}]
-	dev-python/unidecode[${PYTHON_USEDEP}]
-	dev-python/python-xlib[${PYTHON_USEDEP}]
+	$(python_gen_cond_dep '
+		dev-python/configobj[${PYTHON_MULTI_USEDEP}]
+		dev-python/pyxdg[${PYTHON_MULTI_USEDEP}]
+		dev-python/setproctitle[${PYTHON_MULTI_USEDEP}]
+		dev-python/setuptools[${PYTHON_MULTI_USEDEP}]
+		dev-python/unidecode[${PYTHON_MULTI_USEDEP}]
+		dev-python/python-xlib[${PYTHON_MULTI_USEDEP}]
+	')
 	mate-base/mate-desktop[introspection]
 	mate-base/mate-panel[introspection]
 	x11-libs/gtk+:3[introspection]
