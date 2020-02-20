@@ -47,8 +47,10 @@ x11-wm/marco
 # >=app-cdr/brasero-3.12::gentoo
 >=app-crypt/seahorse-3.30::gentoo
 >=app-editors/gedit-3.28::gentoo
+app-text/enchant:2::gentoo
 >=app-text/evince-3.28::gentoo
 app-text/gspell::gentoo
+app-text/gtkspell:3::gentoo
 # >=app-text/yelp-tools-3.18::gentoo
 # >=dev-cpp/gtkmm-3.22::gentoo
 dev-lang/vala:0.42::gentoo
