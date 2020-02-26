@@ -17,10 +17,9 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="+colord debug +fcitx +i18n input_devices_wacom nls packagekit +short-touchpad-timeout smartcard +udev"
+IUSE="+colord debug +fcitx +i18n input_devices_wacom nls +short-touchpad-timeout smartcard +udev"
 #KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="input_devices_wacom? ( udev )
-		packagekit? ( udev )
 		smartcard? ( udev )"
 RESTRICT="mirror"
 
@@ -58,7 +57,6 @@ COMMON_DEPEND="dev-libs/glib:2
 	input_devices_wacom? (
 		dev-libs/libwacom
 		x11-drivers/xf86-input-wacom )
-	packagekit? ( app-admin/packagekit-base )
 	smartcard? ( dev-libs/nss )
 	udev? (
 		sys-apps/hwids
@@ -136,13 +134,13 @@ src_configure() {
 	gnome2_src_configure \
 		--disable-static \
 		--enable-man \
+		--disable-packagekit \
 		$(use_enable colord color) \
 		$(use_enable debug) \
 		$(use_enable debug more-warnings) \
 		$(use_enable fcitx) \
 		$(use_enable i18n ibus) \
 		$(use_enable nls) \
-		$(use_enable packagekit) \
 		$(use_enable smartcard smartcard-support) \
 		$(use_enable udev gudev) \
 		$(use_enable udev) \

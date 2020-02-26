@@ -20,7 +20,6 @@ IUSE="test +nautilus"
 RESTRICT="mirror test"
 
 COMMON_DEPEND="
-	>=app-admin/packagekit-base-0.6.5
 	app-crypt/libsecret[vala]
 	>=dev-libs/glib-2.46:2
 	dev-libs/libgpg-error

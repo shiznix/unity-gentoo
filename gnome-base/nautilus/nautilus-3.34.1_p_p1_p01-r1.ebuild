@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 
 LICENSE="GPL-3+ LGPL-2.1+"
 SLOT="0"
-IUSE="+extensions gnome gtk-doc +introspection packagekit previewer seccomp selinux sendto"
+IUSE="+extensions gnome gtk-doc +introspection previewer seccomp selinux sendto"
 #KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -44,7 +44,6 @@ DEPEND="${COMMON_DEPEND}
 	x11-base/xorg-proto
 "
 RDEPEND="${COMMON_DEPEND}
-	packagekit? ( app-admin/packagekit-base )
 	seccomp? ( >=sys-apps/bubblewrap-0.3.1 )
 	sendto? ( !<gnome-extra/nautilus-sendto-3.0.1 )
 "
@@ -87,7 +86,6 @@ src_configure() {
 		$(meson_use gtk-doc docs)
 		$(meson_use extensions) # image file properties, sendto support
 		$(meson_use introspection)
-		$(meson_use packagekit)
 		$(meson_use selinux)
 		-Dprofiling=false
 		-Dunity-launcher=true
