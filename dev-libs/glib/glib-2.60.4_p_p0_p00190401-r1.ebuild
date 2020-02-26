@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python{3_6,3_7} )
 
 URELEASE="disco-updates"
 #TODO most of those classes are not used
-inherit meson bash-completion-r1 epunt-cxx flag-o-matic gnome2 libtool linux-info \
+inherit meson bash-completion-r1 flag-o-matic gnome2 libtool linux-info \
 	multilib multilib-minimal pax-utils python-single-r1 toolchain-funcs ubuntu-versionator versionator virtualx
 
 MY_P="${PN}2.0_${PV}"
