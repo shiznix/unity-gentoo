@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python{3_6,3_7} )
 PYTHON_REQ_USE="xml"
 
 URELEASE="eoan"
-inherit eutils gnome2 python-single-r1 toolchain-funcs versionator ubuntu-versionator
+inherit gnome2 meson python-single-r1 toolchain-funcs versionator ubuntu-versionator
 
 UVER="-1"
 
@@ -28,7 +28,6 @@ RDEPEND="
 	>=dev-libs/glib-2.$(get_version_component_range 2):2
 	doctool? ( dev-python/mako )
 	virtual/libffi:=
-	virtual/pkgconfig
 	!<dev-lang/vala-0.20.0
 	${PYTHON_DEPS}
 "
@@ -37,6 +36,7 @@ DEPEND="${RDEPEND}
 	>=dev-util/gtk-doc-am-1.19
 	sys-devel/bison
 	sys-devel/flex
+	virtual/pkgconfig
 "
 # PDEPEND to avoid circular dependencies, bug #391213
 PDEPEND="cairo? ( x11-libs/cairo[glib] )"
@@ -55,16 +55,21 @@ src_configure() {
 	fi
 
 	# To prevent crosscompiling problems, bug #414105
-	gnome2_src_configure \
-		--disable-static \
-		CC="$(tc-getCC)" \
-		YACC="$(type -p yacc)" \
-		$(use_with cairo) \
-		$(use_enable doctool)
+	local emesonargs=(
+		-Dcairo=$(usex cairo true false) \
+		-Ddoctool=$(usex doctool true false) \
+		-Dgtk_doc=$(usex doctool true false) \
+		-Dpython=python3
+	)
+	meson_src_configure
+}
+
+src_compile() {
+	meson_src_compile
 }
 
 src_install() {
-	gnome2_src_install
+	meson_src_install
 
 	# Prevent collision with gobject-introspection-common
 	rm -v "${ED}"usr/share/aclocal/introspection.m4 \

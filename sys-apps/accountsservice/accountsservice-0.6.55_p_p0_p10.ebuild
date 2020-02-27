@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="eoan"
-inherit autotools eutils gnome2-utils systemd vala ubuntu-versionator
+inherit meson gnome2-utils systemd vala ubuntu-versionator
 
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-3+"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="doc +introspection systemd vala"
+IUSE="doc +introspection +systemd vala"
 REQUIRED_USE="vala? ( introspection )"
 RESTRICT="mirror"
 
@@ -46,31 +46,30 @@ src_prepare() {
 	sed -i '/0009-language-tools.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0010-set-language.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0013-add-has-message-support.patch/d' "${WORKDIR}/debian/patches/series" || die
+	sed -i '/0016-add-input-sources-support.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/1001-buildsystem.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/2001-filtering_out_users.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/2002-disable_systemd.patch/d' "${WORKDIR}/debian/patches/series" || die
 
 	ubuntu-versionator_src_prepare
-	eautoreconf
-
 	use vala && vala_src_prepare
 }
 
 src_configure() {
-	DOCS="AUTHORS NEWS README TODO"
-	econf \
-		--disable-static \
-		--disable-more-warnings \
-		--localstatedir="${EPREFIX}/var" \
-		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
-		$(use_enable doc docbook-docs) \
-		$(use_enable introspection) \
-		$(use_enable systemd) \
-		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
+	DOCS="AUTHORS NEWS README.md TODO"
+	local emesonargs=(
+		--localstatedir="${EPREFIX}/var"
+		-Dsystemdsystemunitdir="$(systemd_get_systemunitdir)"
+		-Dsystemd="$(usex systemd true false)"
+		-Dintrospection="$(usex introspection true false)"
+		-Ddocbook="$(usex doc true false)"
+		-Dgtk_doc="true"
+	)
+	meson_src_configure
 }
 
 src_install() {
-	emake DESTDIR="${ED}" install
+	meson_src_install
 	keepdir /var/lib/AccountsService/icons
 	keepdir /var/lib/AccountsService/users
 
