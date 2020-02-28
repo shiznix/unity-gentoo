@@ -17,7 +17,7 @@ IUSE="doc"
 
 DEPEND="dev-python/python-distutils-extra"
 RDEPEND="dev-db/couchdb
-	dev-python/gnome-keyring-python[${PYTHON_USEDEP}]
+	app-crypt/libsecret
 	dev-python/couchdb-python[${PYTHON_USEDEP}]
 	dev-python/oauth[${PYTHON_USEDEP}]
 	dev-python/simplejson[${PYTHON_USEDEP}]
