@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 RDEPEND="app-text/yelp-tools
-	<dev-lang/erlang-18
+	>=dev-lang/erlang-18
 	dev-db/desktopcouch[${PYTHON_USEDEP}]
 	dev-libs/glib:2
 	dev-libs/gobject-introspection
