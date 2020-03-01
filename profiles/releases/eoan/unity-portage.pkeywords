@@ -255,7 +255,10 @@ unity-indicators/indicator-applet **
 unity-indicators/indicator-application **
 unity-indicators/indicator-appmenu **
 unity-indicators/indicator-bluetooth **
-unity-indicators/indicator-datetime **
+
+# Needs Gnome-3.34 (>=evolution-data-server-3.34, which pulls in gnome-shell-3.34, etc)
+# unity-indicators/indicator-datetime **
+
 unity-indicators/indicator-keyboard **
 unity-indicators/indicator-messages **
 unity-indicators/indicator-network **

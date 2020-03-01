@@ -61,9 +61,9 @@ COMMON_DEPEND="
 		>=x11-misc/colord-1.0.2:=
 		>=media-libs/lcms-2.2:2 )
 	cups? ( >=net-print/cups-1.4[dbus] )
-	input_devices_wacom? ( >=dev-libs/libwacom-0.7
+	>=dev-libs/libwacom-0.7
 		>=x11-libs/pango-1.20.0
-		x11-drivers/xf86-input-wacom )
+		x11-drivers/xf86-input-wacom
 	networkmanager? ( >=net-misc/networkmanager-1.0 )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
 	udev? ( virtual/libgudev:= )
@@ -104,7 +104,7 @@ DEPEND="${COMMON_DEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/3.32-colord_wacom_networkmanager-optional.patch"
+#	eapply "${FILESDIR}/3.32-colord_wacom_networkmanager-optional.patch"	## FIXME
 	gnome2_src_prepare
 
 	use schemas && eapply "${FILESDIR}/${PN}-3.34-schemas.diff"
@@ -113,6 +113,7 @@ src_prepare() {
 src_configure() {
 	# Ubuntu 53_sync_input_sources_to_accountsservice.patch adds references to act/act.h but misses telling configure about it #
 	append-cflags "$(pkg-config --libs --cflags accountsservice)"
+
 
 	local emesonargs=(
 		#-Dnssdb_dir # TODO: Is the default /etc/pki/nssdb path correct for our nss?

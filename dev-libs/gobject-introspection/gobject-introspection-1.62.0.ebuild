@@ -69,6 +69,8 @@ src_compile() {
 }
 
 src_install() {
+	python_fix_shebang "${BUILD_DIR}/tools/g-ir-annotation-tool"
+	python_fix_shebang "${BUILD_DIR}/tools/g-ir-scanner"
 	meson_src_install
 
 	# Prevent collision with gobject-introspection-common

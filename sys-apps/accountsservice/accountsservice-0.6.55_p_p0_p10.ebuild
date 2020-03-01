@@ -19,10 +19,9 @@ IUSE="doc +introspection +systemd vala"
 REQUIRED_USE="vala? ( introspection )"
 RESTRICT="mirror"
 
-# Want glib-2.30 for gdbus
-RDEPEND=">=dev-libs/glib-2.37.3:2
+RDEPEND="dev-libs/glib:2
 	sys-auth/polkit
-	introspection? ( >=dev-libs/gobject-introspection-0.9.12 )
+	introspection? ( dev-libs/gobject-introspection )
 	systemd? ( >=sys-apps/systemd-186 )
 	!systemd? ( sys-auth/consolekit )"
 DEPEND="${RDEPEND}
@@ -44,9 +43,13 @@ src_prepare() {
 	sed -i '/0002-create-and-manage-groups-like-on-a-ubuntu-system.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0006-adduser_instead_of_useradd.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/0009-language-tools.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/0010-set-language.patch/d' "${WORKDIR}/debian/patches/series" || die
+
+	# Enabling this patch causes '0016-add-input-sources-support.patch' to fail, does it still need to be disabled? #
+	#	see (https://github.com/shiznix/unity-gentoo/commit/23c5266c3d35447ea31b8e57632bea243b1b5865#diff-3f549df4aa732c2d0840ce576fe09078) #
+	# '0016-add-input-sources-support.patch' needs to be applied as it's functions are used by gnome-settings-daemon patchset and indicator-keyboard #
+#	sed -i '/0010-set-language.patch/d' "${WORKDIR}/debian/patches/series" || die	## FIXME
+
 	sed -i '/0013-add-has-message-support.patch/d' "${WORKDIR}/debian/patches/series" || die
-	sed -i '/0016-add-input-sources-support.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/1001-buildsystem.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/2001-filtering_out_users.patch/d' "${WORKDIR}/debian/patches/series" || die
 	sed -i '/2002-disable_systemd.patch/d' "${WORKDIR}/debian/patches/series" || die

@@ -141,9 +141,6 @@ src_install() {
 	insinto /etc/lightdm/lightdm.conf.d
 	doins "${WORKDIR}/debian/data/50-unity.conf"
 
-	insinto /usr/share/upstart/systemd-session/upstart
-	doins "${WORKDIR}/debian/data/gnome-session.override"
-
 	if use wayland; then
 		sed -e 's:^Exec=gnome-session:Exec=gnome-session --session=gnome:g' \
 			-e 's:TryExec=gnome-session:TryExec=gnome-shell:g' \
