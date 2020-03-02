@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 #KEYWORDS="~amd64 ~x86"
-IUSE="test"
+IUSE="+eds test"
 RESTRICT="mirror"
 
 COMMON_DEPEND="
@@ -28,7 +28,7 @@ COMMON_DEPEND="
 	unity-indicators/indicator-messages
 	>=x11-libs/libnotify-0.7.6
 
-	gnome-extra/evolution-data-server:=
+	eds? ( gnome-extra/evolution-data-server:= )
 	test? ( >=dev-cpp/gtest-1.8.1 )"
 
 RDEPEND="${COMMON_DEPEND}
@@ -44,7 +44,7 @@ MAKEOPTS="${MAKEOPTS} -j1"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eapply "${FILESDIR}/01-${PN}-remove-url-dispatcher_17.10.patch"
-#	eapply "${FILESDIR}/02-${PN}-optional-eds_17.10.patch"	## FIXME
+	eapply "${FILESDIR}/02-${PN}-optional-eds_19.10.patch"
 
 	# Fix schema errors and sandbox violations #
 	sed -e 's:SEND_ERROR:WARNING:g' \
@@ -69,6 +69,7 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DCMAKE_INSTALL_FULL_LOCALEDIR=/usr/share/locale
+		-DWITH_EDS="$(usex eds)"
 	)
 	cmake-utils_src_configure
 }

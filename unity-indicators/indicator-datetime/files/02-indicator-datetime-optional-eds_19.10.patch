@@ -1,0 +1,149 @@
+diff -Nur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2020-03-02 08:16:25.904961000 +0100
++++ b/CMakeLists.txt	2020-03-02 08:22:43.133318289 +0100
+@@ -40,7 +40,7 @@
+ include (CheckIncludeFile)
+ include (FindPkgConfig)
+ 
+-pkg_check_modules (SERVICE_DEPS REQUIRED
++set (CUSTOM_DEPS
+                    glib-2.0>=2.36
+                    gio-unix-2.0>=2.36
+                    libical>=0.48
+@@ -52,6 +52,19 @@
+                    libaccounts-glib>=1.18
+                    messaging-menu>=12.10
+                    uuid>=2.25)
++
++option (WITH_EDS "Evolution Data Server support" ON)
++
++if (WITH_EDS)
++  add_definitions (-DUSE_EDS)
++else ()
++  list (REMOVE_ITEM CUSTOM_DEPS
++        libical>=0.48
++        libecal-2.0
++        libedataserver-1.2>=3.5)
++endif ()
++
++pkg_check_modules (SERVICE_DEPS REQUIRED ${CUSTOM_DEPS})
+ include_directories (SYSTEM ${SERVICE_DEPS_INCLUDE_DIRS})
+ 
+ ##
+diff -Nur a/src/CMakeLists.txt b/src/CMakeLists.txt
+--- a/src/CMakeLists.txt	2019-08-19 16:49:23.000000000 +0200
++++ b/src/CMakeLists.txt	2020-03-02 08:17:53.850758869 +0100
+@@ -41,6 +41,12 @@
+      wakeup-timer-mainloop.cpp
+      wakeup-timer-powerd.cpp)
+ 
++if (NOT WITH_EDS)
++  list (REMOVE_ITEM SERVICE_CXX_SOURCES
++        engine-eds.cpp
++        planner-snooze.cpp)
++endif ()
++
+ # generated sources
+ include (GdbusCodegen)
+ set(SERVICE_GENERATED_SOURCES)
+diff -Nur a/src/main.cpp b/src/main.cpp
+--- a/src/main.cpp	2019-08-19 16:49:23.000000000 +0200
++++ b/src/main.cpp	2020-03-02 08:17:53.850758869 +0100
+@@ -21,13 +21,17 @@
+ #include <datetime/alarm-queue-simple.h>
+ #include <datetime/clock.h>
+ #include <datetime/engine-mock.h>
++#ifdef USE_EDS
+ #include <datetime/engine-eds.h>
++#endif /* USE_EDS */
+ #include <datetime/exporter.h>
+ #include <datetime/locations-settings.h>
+ #include <datetime/menu.h>
+ #include <datetime/myself.h>
+ #include <datetime/planner-aggregate.h>
++#ifdef USE_EDS
+ #include <datetime/planner-snooze.h>
++#endif /* USE_EDS */
+ #include <datetime/planner-range.h>
+ #include <datetime/settings-live.h>
+ #include <datetime/snap.h>
+@@ -56,10 +60,14 @@
+ 
+         // we don't show appointments in the greeter,
+         // so no need to connect to EDS there...
++#ifdef USE_EDS
+         if (!g_strcmp0("lightdm", g_get_user_name()))
++#endif /* USE_EDS */
+             engine.reset(new MockEngine);
++#ifdef USE_EDS
+         else
+             engine.reset(new EdsEngine(std::shared_ptr<Myself>(new Myself)));
++#endif /* USE_EDS */
+ 
+         return engine;
+     }
+@@ -91,6 +99,7 @@
+         return state;
+     }
+ 
++#ifdef USE_EDS
+     std::shared_ptr<AlarmQueue> create_simple_alarm_queue(const std::shared_ptr<Clock>& clock,
+                                                           const std::shared_ptr<Planner>& snooze_planner,
+                                                           const std::shared_ptr<Engine>& engine,
+@@ -114,6 +123,7 @@
+         auto wakeup_timer = std::make_shared<PowerdWakeupTimer>(clock);
+         return std::make_shared<SimpleAlarmQueue>(clock, planner, wakeup_timer);
+     }
++#endif /* USE_EDS */
+ }
+ 
+ int
+@@ -143,6 +153,7 @@
+     auto actions = std::make_shared<LiveActions>(state);
+     MenuFactory factory(actions, state);
+ 
++#ifdef USE_EDS
+     // set up the snap decisions
+     auto snooze_planner = std::make_shared<SnoozePlanner>(state->settings, state->clock);
+     auto notification_engine = std::make_shared<uin::Engine>("indicator-datetime-service");
+@@ -166,6 +177,7 @@
+         engine->disable_ubuntu_alarm(appointment);
+     };
+     alarm_queue->alarm_reached().connect(on_alarm_reached);
++#endif /* USE_EDS */
+ 
+     // create the menus
+     std::vector<std::shared_ptr<Menu>> menus;
+diff -Nur a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+--- a/tests/CMakeLists.txt	2019-08-19 16:49:23.000000000 +0200
++++ b/tests/CMakeLists.txt	2020-03-02 08:17:53.850758869 +0100
+@@ -90,17 +90,19 @@
+             ${CMAKE_CURRENT_SOURCE_DIR}/accounts.db                # arg6: online accounts database
+             ${CMAKE_CURRENT_SOURCE_DIR}/data)                      # arg7: data dir
+ endfunction()
+-add_eds_ics_test_by_name(test-eds-ics-all-day-events)
+-add_eds_ics_test_by_name(test-eds-ics-repeating-events)
+-add_eds_ics_test_by_name(test-eds-ics-nonrepeating-events)
+-add_eds_ics_test_by_name(test-eds-ics-repeating-valarms)
+-add_eds_ics_test_by_name(test-eds-ics-missing-trigger)
+-add_eds_ics_test_by_name(test-eds-ics-tzids)
+-add_eds_ics_test_by_name(test-eds-ics-tzids-2)
+-add_eds_ics_test_by_name(test-eds-ics-tzids-utc)
+-add_eds_ics_test_by_name(test-eds-ics-non-attending-alarms)
+-add_eds_ics_test_by_name(test-eds-ics-repeating-events-with-individual-change)
+ 
++if (WITH_EDS)
++  add_eds_ics_test_by_name (test-eds-ics-all-day-events)
++  add_eds_ics_test_by_name (test-eds-ics-repeating-events)
++  add_eds_ics_test_by_name (test-eds-ics-nonrepeating-events)
++  add_eds_ics_test_by_name (test-eds-ics-repeating-valarms)
++  add_eds_ics_test_by_name (test-eds-ics-missing-trigger)
++  add_eds_ics_test_by_name (test-eds-ics-tzids)
++  add_eds_ics_test_by_name (test-eds-ics-tzids-2)
++  add_eds_ics_test_by_name (test-eds-ics-tzids-utc)
++  add_eds_ics_test_by_name (test-eds-ics-non-attending-alarms)
++  add_eds_ics_test_by_name (test-eds-ics-repeating-events-with-individual-change)
++endif ()
+ 
+ # disabling the timezone unit tests because they require
+ # https://code.launchpad.net/~ted/dbus-test-runner/multi-interface-test/+merge/199724
