@@ -1,9 +1,9 @@
-.horizontal.linked entry:first-child:not(:focus) {
+.nautilus-window .horizontal.linked entry.search:first-child:not(:focus) {
     border-left: 1px solid transparent;
     border-image: -gtk-scaled(url("../assets/entry-toolbar.png"),url("../assets/entry-toolbar@2.png")) 10 12 10 12 / 10px 0 10px 12px stretch;
 }
 
-.horizontal.linked entry:first-child:focus {
+.nautilus-window .horizontal.linked entry.search:first-child:focus {
     border-image: -gtk-scaled(url("../assets/entry-toolbar-focused.png"),url("../assets/entry-toolbar-focused@2.png")) 10 12 10 12 / 10px 0 10px 12px stretch;
     border-right: none;
     border-top-left-radius: 8px;
