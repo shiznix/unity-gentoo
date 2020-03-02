@@ -1,26 +1,28 @@
-.nautilus-window widget.view:not(:selected):not(:focus) {
-    background-color: @theme_bg_color;
-    color: @theme_fg_color;
+.horizontal.linked entry:first-child:not(:focus) {
+    border-left: 1px solid transparent;
+    border-image: -gtk-scaled(url("../assets/entry-toolbar.png"),url("../assets/entry-toolbar@2.png")) 10 12 10 12 / 10px 0 10px 12px stretch;
 }
 
-.nautilus-window treeview.view:selected:not(:focus) {
-    background-color: @theme_bg_color;
-    color: @text_color;
+.horizontal.linked entry:first-child:focus {
+    border-image: -gtk-scaled(url("../assets/entry-toolbar-focused.png"),url("../assets/entry-toolbar-focused@2.png")) 10 12 10 12 / 10px 0 10px 12px stretch;
+    border-right: none;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
-.nautilus-window widget.view:selected:not(:focus),
-.nautilus-window widget.view:selected:not(:focus):backdrop,
-.nautilus-window treeview.view:selected:not(:focus):backdrop {
+.nautilus-window widget.view:active:not(:focus) {
+    background-color: inherit;
+}
+
+.nautilus-window widget.view:selected:backdrop {
     background-color: alpha (@backdrop_selected_bg_color, 0.9);
     color: @backdrop_text_color;
 }
 
-.nautilus-window treeview.view:not(:selected):not(:focus) {
-    background-color: @base_color;
+.nautilus-window widget.view:not(:selected):backdrop {
+    background-color: @theme_bg_color;
 }
 
-.nautilus-window widget.view:not(:selected):not(:focus):backdrop,
-.nautilus-window treeview.view:not(:selected):not(:focus):backdrop {
-    background-color: @theme_bg_color;
+.nautilus-window treeview.view:selected:backdrop {
     color: @backdrop_text_color;
 }
