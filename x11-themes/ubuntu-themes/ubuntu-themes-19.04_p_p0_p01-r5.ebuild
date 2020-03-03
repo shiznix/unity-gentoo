@@ -41,7 +41,10 @@ src_prepare() {
 	## set eog fullscreen toolbar background ##
 	echo -e "\n/* eog fullscreen toolbar background */\noverlay > revealer > box > toolbar {\n background-color: @bg_color;\n}" >> Ambiance/gtk-3.20/gtk-widgets.css
 
-	## tweak nautilus selection when not focused ##
+	## tweak transmission-gtk progress bar border when selected ##
+	echo -e "\n/* transmission-gtk progress bar border */\nwindow.background > box.vertical > scrolledwindow.tr-workarea > treeview.view:focus .progressbar:selected:not(:backdrop) {\n border-color: @selected_fg_color;\n}" >> Ambiance/gtk-3.20/gtk-widgets.css
+
+	## tweak nautilus selection and search bar ##
 	echo $(<"${FILESDIR}"/nautilus.css) >> Ambiance/gtk-3.20/apps/nautilus.css
 
 	use nemo && echo $(<"${FILESDIR}"/nemo.css) >> Ambiance/gtk-3.20/apps/nemo.css
