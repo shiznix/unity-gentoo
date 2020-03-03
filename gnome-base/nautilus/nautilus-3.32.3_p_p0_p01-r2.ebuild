@@ -27,7 +27,7 @@ COMMON_DEPEND="
 	seccomp? ( sys-libs/libseccomp )
 	>=x11-libs/pango-1.28.3
 	selinux? ( >=sys-libs/libselinux-2.0 )
-	>=app-misc/tracker-2.0:=
+	>=app-misc/tracker-2.0:=[miners]
 	x11-libs/libX11
 	>=dev-libs/libxml2-2.7.8:2
 	introspection? ( >=dev-libs/gobject-introspection-1.54:= )
