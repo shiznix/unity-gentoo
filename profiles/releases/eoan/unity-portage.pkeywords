@@ -21,20 +21,24 @@ x11-themes/mate-themes-meta
 x11-terms/mate-terminal
 x11-wm/marco
 
-# Unmask up to Gnome-3.32 #
+# Unmask up to Gnome-3.34 #
+=*/gnome*-*34*::gentoo
 =*/gnome*-*32*::gentoo
 =*/gnome*-*30*::gentoo
 =*/gnome*-*28*::gentoo
 =*/gnome*-*26*::gentoo
+=gnome-base/*-*34*::gentoo
 =gnome-base/*-*32*::gentoo
 =gnome-base/*-*31*::gentoo
 =gnome-base/*-*30*::gentoo
 =gnome-base/*-*28*::gentoo
 =gnome-base/*-*26*::gentoo
+=gnome-extra/*-*34*::gentoo
 =gnome-extra/*-*32*::gentoo
 =gnome-extra/*-*30*::gentoo
 =gnome-extra/*-*28*::gentoo
 =gnome-extra/*-*26*::gentoo
+=games-puzzle/*-*34*::gentoo
 =games-puzzle/*-*32*::gentoo
 =games-puzzle/*-*30*::gentoo
 =games-puzzle/*-*28*::gentoo
@@ -56,6 +60,7 @@ app-text/gtkspell:3::gentoo
 dev-lang/vala:0.42::gentoo
 >=dev-libs/atk-2.24::gentoo
 >=dev-libs/gjs-1.48::gentoo
+dev-libs/libdazzle::gentoo
 # ~dev-libs/libgudev-232::gentoo
 >=dev-libs/libgweather-3.24::gentoo
 ~dev-libs/libusb-1.0.22::gentoo
@@ -69,17 +74,17 @@ games-board/gnome*::gentoo
 >=gnome-base/gvfs-1.32::gentoo
 gnome-base/librsvg::gentoo
 # gnome-extra/gucharmap:2.90::gentoo
->=gnome-extra/evolution-data-server-3.32::gentoo
+>=gnome-extra/evolution-data-server-3.34::gentoo
 >=gnome-extra/zenity-3.30::gentoo
 gui-libs/libhandy::gentoo
->=mail-client/evolution-3.32::gentoo
+>=mail-client/evolution-3.34::gentoo
 media-fonts/cantarell::gentoo
 >=media-gfx/eog-3.32::gentoo
 # >=media-libs/clutter-gtk-1.8.4::gentoo
 media-sound/paprefs::gentoo
 media-sound/pulseaudio::gentoo
 # >=media-sound/sound-juicer-3.24::gentoo
->=media-video/cheese-3.32::gentoo
+>=media-video/cheese-3.34::gentoo
 >=media-video/totem-3.32::gentoo
 # >=net-misc/vinagre-3.22::gentoo
 # >=net-wireless/gnome-bluetooth-3.20::gentoo
@@ -127,6 +132,7 @@ dev-libs/libdbusmenu-qt
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
 dev-util/gn
+dev-util/sysprof-capture
 dev-util/valgrind
 dev-python/python-prctl
 =dev-python/python-xlib-0.19*
@@ -255,10 +261,7 @@ unity-indicators/indicator-applet **
 unity-indicators/indicator-application **
 unity-indicators/indicator-appmenu **
 unity-indicators/indicator-bluetooth **
-
-# Needs Gnome-3.34 (>=evolution-data-server-3.34, which pulls in gnome-shell-3.34, etc)
-# unity-indicators/indicator-datetime **
-
+unity-indicators/indicator-datetime **
 unity-indicators/indicator-keyboard **
 unity-indicators/indicator-messages **
 unity-indicators/indicator-network **
