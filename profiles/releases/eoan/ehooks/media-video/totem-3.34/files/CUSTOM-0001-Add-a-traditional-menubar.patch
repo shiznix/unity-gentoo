@@ -1,189 +1,30 @@
-From 738204da8970e0b7c0b4537fcf75b25250b972f6 Mon Sep 17 00:00:00 2001
+From 6412f4e494be1d0e8760c19ca436358f42a68f2d Mon Sep 17 00:00:00 2001
 From: c4pp4
-Date: Tue, 18 Feb 2020 22:03:58 +0100
+Date: Wed, 4 Mar 2020 13:13:30 +0100
 Subject: [PATCH 1/1] Add a traditional menubar
 
 Signed-off-by: c4pp4
 ---
- data/controls-nogo.ui                    | 137 +++++++++++++++++
- data/meson.build                         |   1 +
- po/POTFILES.in                           |   2 +
- src/backend/bacon-video-controls-actor.c |  32 +++-
- src/grilo.gresource.xml                  |   3 +
- src/menus-traditional.ui                 | 181 +++++++++++++++++++++++
- src/totem-object.c                       |  16 ++
- 7 files changed, 371 insertions(+), 1 deletion(-)
- create mode 100644 data/controls-nogo.ui
+ po/POTFILES.in                                |   1 +
+ src/grilo.gresource.xml                       |   3 +
+ src/menus-traditional.ui                      | 179 ++++++++++++++++++
+ .../open-directory/totem-open-directory.c     |   1 +
+ .../properties/totem-movie-properties.c       |   4 +
+ src/plugins/rotation/totem-rotation.c         |   3 +
+ src/plugins/save-file/totem-save-file.c       |   1 +
+ .../screenshot/totem-screenshot-plugin.c      |   3 +
+ src/plugins/skipto/totem-skipto-plugin.c      |   1 +
+ .../totem-variable-rate-plugin.c              |   2 +
+ src/totem-menu.c                              |  18 +-
+ src/totem-object.c                            |  30 ++-
+ 12 files changed, 230 insertions(+), 16 deletions(-)
  create mode 100644 src/menus-traditional.ui
 
-diff --git a/data/controls-nogo.ui b/data/controls-nogo.ui
-new file mode 100644
-index 0000000..81bab72
---- /dev/null
-+++ b/data/controls-nogo.ui
-@@ -0,0 +1,137 @@
-+<?xml version="1.0" encoding="UTF-8"?>
-+<!-- Generated with glade 3.16.0 on Mon Dec 16 08:54:54 2013 -->
-+<interface>
-+  <!-- interface-requires gtk+ 3.11 -->
-+  <object class="GtkWindow" id="window">
-+    <property name="can_focus">False</property>
-+    <child>
-+      <object class="GtkToolbar" id="toolbar">
-+        <property name="visible">True</property>
-+        <property name="can_focus">False</property>
-+        <property name="border_width">0</property>
-+        <child>
-+          <object class="GtkToolItem" id="controls_toolbutton">
-+            <property name="visible">True</property>
-+            <property name="can_focus">False</property>
-+            <child>
-+              <object class="GtkBox" id="controls_box">
-+                <property name="visible">True</property>
-+                <property name="can_focus">False</property>
-+                <style>
-+                  <class name="linked"/>
-+                </style>
-+                <child>
-+                  <placeholder/>
-+                </child>
-+              </object>
-+            </child>
-+          </object>
-+          <packing>
-+            <property name="expand">False</property>
-+            <property name="homogeneous">False</property>
-+          </packing>
-+        </child>
-+        <child>
-+          <object class="GtkToolItem" id="slider_toolbutton">
-+            <property name="visible">True</property>
-+            <property name="can_focus">False</property>
-+            <child>
-+              <object class="GtkBox" id="bottom_row">
-+                <property name="visible">True</property>
-+                <property name="can_focus">False</property>
-+                <property name="border_width">0</property>
-+                <property name="spacing">4</property>
-+                <child>
-+                  <object class="BaconTimeLabel" id="time_label">
-+                    <property name="visible">True</property>
-+                    <property name="can_focus">False</property>
-+                    <property name="margin_start">16</property>
-+                  </object>
-+                  <packing>
-+                    <property name="expand">False</property>
-+                    <property name="fill">True</property>
-+                    <property name="position">0</property>
-+                  </packing>
-+                </child>
-+                <child>
-+                  <object class="GtkScale" id="seek_scale">
-+                    <property name="visible">True</property>
-+                    <property name="sensitive">False</property>
-+                    <property name="can_focus">True</property>
-+                    <property name="draw_value">False</property>
-+                    <property name="restrict-to-fill-level">False</property>
-+                  </object>
-+                  <packing>
-+                    <property name="expand">True</property>
-+                    <property name="fill">True</property>
-+                    <property name="position">1</property>
-+                  </packing>
-+                </child>
-+                <child>
-+                  <object class="BaconTimeLabel" id="time_rem_label">
-+                    <property name="visible">True</property>
-+                    <property name="can_focus">False</property>
-+                    <property name="remaining">True</property>
-+                    <property name="margin_end">16</property>
-+                  </object>
-+                  <packing>
-+                    <property name="expand">False</property>
-+                    <property name="fill">True</property>
-+                    <property name="position">2</property>
-+                  </packing>
-+                </child>
-+              </object>
-+            </child>
-+          </object>
-+          <packing>
-+            <property name="expand">True</property>
-+            <property name="homogeneous">False</property>
-+          </packing>
-+        </child>
-+        <child>
-+          <object class="GtkToolItem" id="volume_toolbutton">
-+            <property name="visible">True</property>
-+            <property name="can_focus">False</property>
-+            <child>
-+              <object class="GtkBox" id="box1">
-+                <property name="visible">True</property>
-+                <property name="can_focus">False</property>
-+                <property name="orientation">vertical</property>
-+                <child>
-+                  <object class="GtkVolumeButton" id="volume_button">
-+                    <property name="visible">True</property>
-+                    <property name="sensitive">False</property>
-+                    <property name="can_focus">True</property>
-+                    <property name="receives_default">True</property>
-+                    <property name="has_tooltip">True</property>
-+                    <property name="relief">none</property>
-+                    <property name="focus_on_click">False</property>
-+                    <property name="orientation">vertical</property>
-+                    <property name="valign">center</property>
-+                    <property name="icons">audio-volume-muted-symbolic
-+audio-volume-high-symbolic
-+audio-volume-low-symbolic
-+audio-volume-medium-symbolic</property>
-+                    <property name="use_symbolic">True</property>
-+                    <style>
-+                      <class name="image-button"/>
-+                    </style>
-+                  </object>
-+                  <packing>
-+                    <property name="expand">True</property>
-+                    <property name="fill">True</property>
-+                    <property name="position">0</property>
-+                  </packing>
-+                </child>
-+              </object>
-+            </child>
-+          </object>
-+          <packing>
-+            <property name="expand">False</property>
-+            <property name="homogeneous">True</property>
-+          </packing>
-+        </child>
-+      </object>
-+    </child>
-+  </object>
-+</interface>
-diff --git a/data/meson.build b/data/meson.build
-index aecc657..91d6edc 100644
---- a/data/meson.build
-+++ b/data/meson.build
-@@ -41,6 +41,7 @@ endif
- 
- ui_files = files(
-   'controls.ui',
-+  'controls-nogo.ui',
-   'playlist.ui',
-   'preferences.ui',
-   'shortcuts.ui',
 diff --git a/po/POTFILES.in b/po/POTFILES.in
-index 4ae3b70..7cd3f71 100644
+index f35c6ff..b9d1665 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
-@@ -2,6 +2,7 @@
- # Please keep this file sorted alphabetically.
- data/appdata/org.gnome.Totem.appdata.xml.in
- data/controls.ui
-+data/controls-nogo.ui
- data/org.gnome.Totem.desktop.in.in
- data/org.gnome.totem.gschema.xml.in
- data/playlist.ui
-@@ -14,6 +15,7 @@ src/backend/bacon-video-widget.c
+@@ -14,6 +14,7 @@ src/backend/bacon-video-widget.c
  src/backend/bacon-video-widget-gst-missing-plugins.c
  src/gst/totem-time-helpers.c
  src/grilo.ui
@@ -191,58 +32,8 @@ index 4ae3b70..7cd3f71 100644
  src/totem.c
  src/totem-gallery-thumbnailer.c
  src/totem-grilo.c
-diff --git a/src/backend/bacon-video-controls-actor.c b/src/backend/bacon-video-controls-actor.c
-index a8e2f89..85fa5de 100644
---- a/src/backend/bacon-video-controls-actor.c
-+++ b/src/backend/bacon-video-controls-actor.c
-@@ -100,6 +100,29 @@ disable_popover_transitions (BaconVideoControlsActor *controls)
- 	gtk_popover_set_transitions_enabled (popover, FALSE);
- }
- 
-+gboolean
-+in_desktop (const gchar *name)
-+{
-+	const gchar *desktop_name_list;
-+	gchar **names;
-+	gboolean in_list = FALSE;
-+	gint i;
-+
-+	desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
-+	if (!desktop_name_list)
-+		return FALSE;
-+
-+	names = g_strsplit (desktop_name_list, ":", -1);
-+	for (i = 0; names[i] && !in_list; i++)
-+		if (strcmp (names[i], name) == 0) {
-+			in_list = TRUE;
-+			break;
-+		}
-+	g_strfreev (names);
-+
-+	return in_list;
-+}
-+
- static void
- bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
- {
-@@ -110,7 +133,14 @@ bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
- 	g_type_class_ref (BACON_TYPE_TIME_LABEL);
- 
- 	controls->priv->builder = gtk_builder_new ();
--	if (gtk_builder_add_objects_from_file (controls->priv->builder, DATADIR "/controls.ui", (gchar **) objects, NULL) == 0)
-+
-+	const gchar *filename;
-+	if (in_desktop ("Unity"))
-+		filename = DATADIR "/controls-nogo.ui";
-+	else
-+		filename = DATADIR "/controls.ui";
-+
-+	if (gtk_builder_add_objects_from_file (controls->priv->builder, filename, (gchar **) objects, NULL) == 0)
- 		g_assert_not_reached ();
- 
- 	setup_object (controls, "seek_scale");
 diff --git a/src/grilo.gresource.xml b/src/grilo.gresource.xml
-index 2186e86..76ecf30 100644
+index 2186e86..c605738 100644
 --- a/src/grilo.gresource.xml
 +++ b/src/grilo.gresource.xml
 @@ -6,4 +6,7 @@
@@ -255,10 +46,10 @@ index 2186e86..76ecf30 100644
  </gresources>
 diff --git a/src/menus-traditional.ui b/src/menus-traditional.ui
 new file mode 100644
-index 0000000..9a28ced
+index 0000000..8bab2f9
 --- /dev/null
 +++ b/src/menus-traditional.ui
-@@ -0,0 +1,181 @@
+@@ -0,0 +1,179 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<interface>
 +
@@ -276,26 +67,24 @@ index 0000000..9a28ced
 +          <attribute name="action">app.open-location</attribute>
 +          <attribute name="accel">&lt;Ctrl&gt;L</attribute>
 +        </item>
-+        <section id="save-placeholder"/>
 +      </section>
 +      <section>
-+        <section id="burn-placeholder"/>
++        <section id="opendirectory-placeholder"/>
++        <section id="save-placeholder"/>
 +      </section>
 +      <section>
 +        <section id="properties-placeholder"/>
 +      </section>
 +      <section>
 +        <item>
-+          <attribute name="label" translatable="yes">_Eject</attribute>
-+          <attribute name="action">app.eject</attribute>
-+          <attribute name="accel">&lt;Ctrl&gt;E</attribute>
-+        </item>
-+      </section>
-+      <section>
-+        <item>
 +          <attribute name="label" translatable="yes">_Play / Pause</attribute>
 +          <attribute name="action">app.play</attribute>
 +          <attribute name="accel">&lt;Ctrl&gt;space</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Eject</attribute>
++          <attribute name="action">app.eject</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;E</attribute>
 +        </item>
 +      </section>
 +      <section>
@@ -440,104 +229,275 @@ index 0000000..9a28ced
 +  </menu>
 +
 +</interface>
-diff --git a/src/totem-object.c b/src/totem-object.c
-index 93be4fa..ecb5b54 100644
---- a/src/totem-object.c
-+++ b/src/totem-object.c
-@@ -625,6 +625,8 @@ totem_object_get_main_window (TotemObject *totem)
- 	return GTK_WINDOW (totem->win);
+diff --git a/src/plugins/open-directory/totem-open-directory.c b/src/plugins/open-directory/totem-open-directory.c
+index cc8bd4f..ba250cd 100644
+--- a/src/plugins/open-directory/totem-open-directory.c
++++ b/src/plugins/open-directory/totem-open-directory.c
+@@ -188,6 +188,7 @@ impl_activate (PeasActivatable *plugin)
+ 	menu = totem_object_get_menu_section (priv->totem, "opendirectory-placeholder");
+ 	item = g_menu_item_new (_("Open Containing Folder"), "app.open-dir");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "opendirectory-placeholder")), item);
+ 
+ 	mrl = totem_object_get_current_mrl (priv->totem);
+ 	totem_open_directory_file_opened (priv->totem, mrl, pi);
+diff --git a/src/plugins/properties/totem-movie-properties.c b/src/plugins/properties/totem-movie-properties.c
+index a865374..752acbf 100644
+--- a/src/plugins/properties/totem-movie-properties.c
++++ b/src/plugins/properties/totem-movie-properties.c
+@@ -216,6 +216,7 @@ totem_movie_properties_plugin_file_opened (TotemObject *totem,
+ 		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props), bvw);
+ 	g_object_unref (bvw);
+ 	gtk_widget_set_sensitive (plugin->priv->props, TRUE);
++	g_simple_action_set_enabled (G_SIMPLE_ACTION (plugin->priv->props_action), TRUE);
  }
  
-+extern gboolean in_desktop (const gchar *name);
-+
- /**
-  * totem_object_get_menu_section:
-  * @totem: a #TotemObject
-@@ -638,6 +640,9 @@ GMenu *
- totem_object_get_menu_section (TotemObject *totem,
- 			       const char  *id)
- {
-+	if (in_desktop ("Unity"))
-+		return gtk_application_get_menu_by_id (GTK_APPLICATION (totem), id);
-+	else {
- 	GObject *object;
- 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
- 
-@@ -646,6 +651,7 @@ totem_object_get_menu_section (TotemObject *totem,
- 		return NULL;
- 
- 	return G_MENU (object);
-+	}
+ static void
+@@ -226,6 +227,7 @@ totem_movie_properties_plugin_file_closed (TotemObject *totem,
+         bacon_video_widget_properties_reset
+ 		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props));
+ 	gtk_widget_set_sensitive (plugin->priv->props, FALSE);
++	g_simple_action_set_enabled (G_SIMPLE_ACTION (plugin->priv->props_action), FALSE);
  }
  
- /**
-@@ -1021,9 +1027,11 @@ totem_object_set_main_page (TotemObject *totem,
- 			      "custom-title", NULL,
- 			      NULL);
- 		gtk_widget_show (totem->fullscreen_button);
-+		if (!in_desktop ("Unity")) {
- 		gtk_widget_show (totem->gear_button);
- 		gtk_widget_hide (totem->add_button);
- 		gtk_widget_hide (totem->main_menu_button);
-+		}
- 		bacon_video_widget_show_popup (totem->bvw);
- 	} else if (g_strcmp0 (page_id, "grilo") == 0) {
- 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
-@@ -1042,11 +1050,14 @@ totem_object_set_main_page (TotemObject *totem,
- 		g_clear_pointer (&totem->search_string, g_free);
- 		g_clear_pointer (&totem->player_title, g_free);
- 		g_clear_object (&totem->custom_title);
-+		if (!in_desktop ("Unity"))
- 		gtk_widget_show (totem->main_menu_button);
- 		gtk_widget_hide (totem->fullscreen_button);
-+		if (!in_desktop ("Unity")) {
- 		gtk_widget_hide (totem->gear_button);
- 		if (totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo)) == TOTEM_GRILO_PAGE_RECENT)
- 			gtk_widget_show (totem->add_button);
-+		}
- 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
+ static void
+@@ -299,12 +301,14 @@ impl_activate (PeasActivatable *plugin)
+ 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem),
+ 					       "app.properties",
+ 					       accels);
++	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->props_action), FALSE);
+ 
+ 	/* Install the menu */
+ 	menu = totem_object_get_menu_section (totem, "properties-placeholder");
+ 	item = g_menu_item_new (_("_Properties"), "app.properties");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>p");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "properties-placeholder")), item);
+ 	g_object_unref (item);
+ 
+ 	g_signal_connect (G_OBJECT (totem),
+diff --git a/src/plugins/rotation/totem-rotation.c b/src/plugins/rotation/totem-rotation.c
+index db342df..b2f96ec 100644
+--- a/src/plugins/rotation/totem-rotation.c
++++ b/src/plugins/rotation/totem-rotation.c
+@@ -242,6 +242,7 @@ impl_activate (PeasActivatable *plugin)
+ 
+ 	/* add UI */
+ 	menu = totem_object_get_menu_section (priv->totem, "rotation-placeholder");
++	GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "rotation-placeholder");
+ 
+ 	priv->rotate_left_action = g_simple_action_new ("rotate-left", NULL);
+ 	g_signal_connect (G_OBJECT (priv->rotate_left_action), "activate",
+@@ -258,10 +259,12 @@ impl_activate (PeasActivatable *plugin)
+ 	item = g_menu_item_new (_("_Rotate ↷"), "app.rotate-right");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>R");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ 
+ 	item = g_menu_item_new (_("Rotate ↶"), "app.rotate-left");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary><Shift>R");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ 
+ 	mrl = totem_object_get_current_mrl (priv->totem);
+ 	update_state (pi, mrl);
+diff --git a/src/plugins/save-file/totem-save-file.c b/src/plugins/save-file/totem-save-file.c
+index eb2ec67..3e971f8 100644
+--- a/src/plugins/save-file/totem-save-file.c
++++ b/src/plugins/save-file/totem-save-file.c
+@@ -456,6 +456,7 @@ impl_activate (PeasActivatable *plugin)
+ 	item = g_menu_item_new (_("Make Available Offline"), "app.save-as");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>s");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "save-placeholder")), item);
+ 
+ 	mrl = totem_object_get_current_mrl (priv->totem);
+ 	totem_save_file_file_opened (priv->totem, mrl, pi);
+diff --git a/src/plugins/screenshot/totem-screenshot-plugin.c b/src/plugins/screenshot/totem-screenshot-plugin.c
+index 2d488b5..77816ad 100644
+--- a/src/plugins/screenshot/totem-screenshot-plugin.c
++++ b/src/plugins/screenshot/totem-screenshot-plugin.c
+@@ -336,16 +336,19 @@ impl_activate (PeasActivatable *plugin)
+ 
+ 	/* Install the menu */
+ 	menu = totem_object_get_menu_section (priv->totem, "screenshot-placeholder");
++	GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "screenshot-placeholder");
+ 	item = g_menu_item_new (_("Take _Screenshot"), "app.take-screenshot");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary><Alt>s");
+ 	g_menu_item_set_attribute_value (item, "hidden-when",
+ 					 g_variant_new_string ("action-disabled"));
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ 	g_object_unref (item);
+ 	item = g_menu_item_new (_("Create Screenshot _Gallery…"), "app.take-gallery");
+ 	g_menu_item_set_attribute_value (item, "hidden-when",
+ 					 g_variant_new_string ("action-disabled"));
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ 	g_object_unref (item);
+ 
+ 	/* Set up a GSettings watch for lockdown keys */
+diff --git a/src/plugins/skipto/totem-skipto-plugin.c b/src/plugins/skipto/totem-skipto-plugin.c
+index f459de8..611b9d0 100644
+--- a/src/plugins/skipto/totem-skipto-plugin.c
++++ b/src/plugins/skipto/totem-skipto-plugin.c
+@@ -206,6 +206,7 @@ impl_activate (PeasActivatable *plugin)
+ 	item = g_menu_item_new (_("_Skip To…"), "app.skip-to");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Ctrl>K");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "skipto-placeholder")), item);
+ 
+ 	totem_skipto_update_from_state (priv->totem, pi);
+ }
+diff --git a/src/plugins/variable-rate/totem-variable-rate-plugin.c b/src/plugins/variable-rate/totem-variable-rate-plugin.c
+index 792c0cb..830ddc6 100644
+--- a/src/plugins/variable-rate/totem-variable-rate-plugin.c
++++ b/src/plugins/variable-rate/totem-variable-rate-plugin.c
+@@ -218,6 +218,7 @@ impl_activate (PeasActivatable *plugin)
+ 
+ 	/* Create the submenu */
+ 	menu = totem_object_get_menu_section (priv->totem, "variable-rate-placeholder");
++	GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "variable-rate-placeholder");
+ 	for (i = 0; i < NUM_RATES; i++) {
+ 		char *target;
+ 
+@@ -225,6 +226,7 @@ impl_activate (PeasActivatable *plugin)
+ 		item = g_menu_item_new (g_dpgettext2 (NULL, "playback rate", rates[i].label), target);
+ 		g_free (target);
+ 		g_menu_append_item (G_MENU (menu), item);
++		g_menu_append_item (G_MENU (menu_trad), item);
+ 	}
+ }
+ 
+diff --git a/src/totem-menu.c b/src/totem-menu.c
+index 20b9764..41b892e 100644
+--- a/src/totem-menu.c
++++ b/src/totem-menu.c
+@@ -493,6 +493,7 @@ bvw_lang_info_to_menu_labels (GList        *langs,
+ 
+ static void
+ add_lang_item (GMenu      *menu,
++	       GMenu      *menu_trad,
+ 	       const char *label,
+ 	       const char *action,
+ 	       int         target)
+@@ -502,10 +503,12 @@ add_lang_item (GMenu      *menu,
+ 	item = g_menu_item_new (label, NULL);
+ 	g_menu_item_set_action_and_target_value (item, action, g_variant_new_int32 (target));
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ }
+ 
+ static void
+ add_lang_action (GMenu *menu,
++	         GMenu *menu_trad,
+ 		 const char *action,
+ 		 const char *label,
+ 		 int lang_id)
+@@ -513,12 +516,13 @@ add_lang_action (GMenu *menu,
+ 	char *escaped_label;
+ 
+ 	escaped_label = escape_label_for_menu (label);
+-	add_lang_item (menu, escaped_label, action, lang_id);
++	add_lang_item (menu, menu_trad, escaped_label, action, lang_id);
+ 	g_free (escaped_label);
+ }
+ 
+ static void
+ create_lang_actions (GMenu        *menu,
++		     GMenu        *menu_trad,
+ 		     const char   *action,
+ 		     GList        *list,
+ 		     BvwTrackType  track_type)
+@@ -528,16 +532,16 @@ create_lang_actions (GMenu        *menu,
+ 
+ 	if (track_type == BVW_TRACK_TYPE_SUBTITLE) {
+ 		/* Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD */
+-		add_lang_action (menu, action, _("None"), -2);
++		add_lang_action (menu, menu_trad, action, _("None"), -2);
  	}
  
-@@ -3448,6 +3459,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
- 	case GDK_KEY_Menu:
- 	case GDK_KEY_F10:
- 		bacon_video_widget_show_popup (totem->bvw);
-+		if (!in_desktop ("Unity"))
- 		if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN) {
- 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->gear_button),
- 						      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->gear_button)));
-@@ -3854,6 +3866,7 @@ totem_callback_connect (TotemObject *totem)
- 	g_signal_connect (G_OBJECT (item), "notify::visible",
- 			  G_CALLBACK (volume_button_menu_shown_cb), totem);
+ 	/* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
+-	add_lang_action (menu, action, C_("Language", "Auto"), -1);
++	add_lang_action (menu, menu_trad, action, C_("Language", "Auto"), -1);
  
-+	if (!in_desktop ("Unity")) {
- 	/* Go button */
- 	item = g_object_get_data (totem->controls, "go_button");
- 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
-@@ -3901,6 +3914,7 @@ totem_callback_connect (TotemObject *totem)
- 			  G_CALLBACK (update_add_button_visibility), totem);
- 	g_signal_connect (G_OBJECT (totem->header), "notify::select-mode",
- 			  G_CALLBACK (update_add_button_visibility), totem);
-+	}
+ 	ui_list = bvw_lang_info_to_menu_labels (list, track_type);
  
- 	/* Fullscreen button */
- 	item = totem->fullscreen_button = totem_interface_create_header_button (totem->header,
-@@ -4033,6 +4047,7 @@ add_fullscreen_toolbar (TotemObject *totem)
- 	gtk_header_bar_pack_end (GTK_HEADER_BAR (totem->fullscreen_header), item);
- 	gtk_style_context_add_class (gtk_widget_get_style_context (item), "header-bar-separator");
+ 	for (l = ui_list, i = 0; l != NULL; l = l->next, i++)
+-		add_lang_action (menu, action, l->data, i);
++		add_lang_action (menu, menu_trad, action, l->data, i);
  
-+	if (!in_desktop ("Unity")) {
- 	item = totem_interface_create_header_button (totem->fullscreen_header,
- 						     gtk_menu_button_new (),
- 						     "view-more-symbolic",
-@@ -4042,6 +4057,7 @@ add_fullscreen_toolbar (TotemObject *totem)
- 	g_signal_connect (G_OBJECT (item), "toggled",
- 			  G_CALLBACK (popup_menu_shown_cb), totem);
- 	totem->fullscreen_gear_button = item;
-+	}
+ 	g_list_free_full (ui_list, (GDestroyNotify) g_free);
+ }
+@@ -587,7 +591,8 @@ totem_languages_update (Totem *totem, GList *list)
+ 	if (list != NULL) {
+ 		GMenu *menu;
+ 		menu = totem_object_get_menu_section (totem, "languages-placeholder");
+-		create_lang_actions (menu, "app.set-language", list, BVW_TRACK_TYPE_AUDIO);
++		GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "languages-placeholder");
++		create_lang_actions (menu, menu_trad, "app.set-language", list, BVW_TRACK_TYPE_AUDIO);
+ 	}
  
- 	gtk_container_add (GTK_CONTAINER (container), totem->fullscreen_header);
- 	gtk_widget_show_all (totem->fullscreen_header);
+ 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "set-language");
+@@ -612,7 +617,8 @@ totem_subtitles_update (Totem *totem, GList *list)
+ 	if (list != NULL) {
+ 		GMenu *menu;
+ 		menu = totem_object_get_menu_section (totem, "subtitles-placeholder");
+-		create_lang_actions (menu, "app.set-subtitle", list, BVW_TRACK_TYPE_SUBTITLE);
++		GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "subtitles-placeholder");
++		create_lang_actions (menu, menu_trad, "app.set-subtitle", list, BVW_TRACK_TYPE_SUBTITLE);
+ 	}
+ 
+ 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "set-subtitle");
+diff --git a/src/totem-object.c b/src/totem-object.c
+index 93be4fa..2b0bc7a 100644
+--- a/src/totem-object.c
++++ b/src/totem-object.c
+@@ -657,17 +657,10 @@ totem_object_get_menu_section (TotemObject *totem,
+  * related actions. Note that menu items with specific target
+  * will not have the associated action removed.
+  **/
+-void
+-totem_object_empty_menu_section (TotemObject *totem,
+-				 const char  *id)
++static void
++totem_object_remove_item (TotemObject *totem,
++		          GMenu       *menu)
+ {
+-	GMenu *menu;
+-
+-	g_return_if_fail (TOTEM_IS_OBJECT (totem));
+-
+-	menu = G_MENU (gtk_builder_get_object (totem->xml, id));
+-	g_return_if_fail (menu != NULL);
+-
+ 	while (g_menu_model_get_n_items (G_MENU_MODEL (menu)) > 0) {
+ 		const char *action;
+ 		g_menu_model_get_item_attribute (G_MENU_MODEL (menu), 0, G_MENU_ATTRIBUTE_ACTION, "s", &action);
+@@ -686,6 +679,23 @@ totem_object_empty_menu_section (TotemObject *totem,
+ 	}
+ }
+ 
++void
++totem_object_empty_menu_section (TotemObject *totem,
++				 const char  *id)
++{
++	GMenu *menu;
++
++	g_return_if_fail (TOTEM_IS_OBJECT (totem));
++
++	menu = G_MENU (gtk_builder_get_object (totem->xml, id));
++	g_return_if_fail (menu != NULL);
++	GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), id);
++	g_return_if_fail (menu_trad != NULL);
++
++	totem_object_remove_item (totem, menu);
++	totem_object_remove_item (totem, menu_trad);
++}
++
+ /**
+  * totem_object_get_video_widget:
+  * @totem: a #TotemObject
 -- 
 2.24.1
 
