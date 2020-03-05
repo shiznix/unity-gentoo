@@ -85,6 +85,7 @@ src_prepare() {
 	sed -e 's:buntu:nity:g' \
 		-i "${WORKDIR}/debian/data/unity-session.target" || die
 	sed -e 's:/usr/lib/gnome-session:/usr/libexec:g' \
+		-i gnome-session/gnome-session.in \
 		-i data/unity.desktop.in.in || die
 
 	gnome2_src_prepare
