@@ -65,6 +65,7 @@ dev-libs/libdazzle::gentoo
 >=dev-libs/libgweather-3.24::gentoo
 ~dev-libs/libusb-1.0.22::gentoo
 =dev-libs/vala-common-0.42*::gentoo
+dev-python/nototools::gentoo
 # >=dev-python/pyatspi-2.24.0::gentoo
 >=dev-python/pygobject-3.24::gentoo
 >=dev-util/gtk-update-icon-cache-3.24::gentoo

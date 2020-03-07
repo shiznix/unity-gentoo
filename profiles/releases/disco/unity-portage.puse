@@ -12,6 +12,11 @@ unity-base/evemu python_single_target_python2_7
 unity-extra/indicator-weather python_single_target_python2_7
 x11-themes/ubuntu-themes python_single_target_python2_7
 
+# New stable dev-python/fonttools (indirectly pulled in by '*noto*' font packages) is python3_6 only #
+#       so it's dep's PYTHON_TARGETS need to match #
+dev-python/booleanOperations -python_targets_python2_7
+dev-python/defcon -python_targets_python2_7
+
 
 app-accessibility/brltty python                                 # orca
 app-accessibility/speech-dispatcher python
