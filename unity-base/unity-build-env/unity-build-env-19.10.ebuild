@@ -28,7 +28,8 @@ src_install() {
 		die "Failed to detect unity-gentoo overlay and/or profile"
 	fi
 
-	for pfile in {env,accept_keywords,mask,unmask,use}; do
+#	for pfile in {env,accept_keywords,mask,unmask,use}; do
+	for pfile in {accept_keywords,mask,unmask,use}; do
 		dodir "/etc/portage/package.${pfile}"
 		dosym "${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/unity-portage.p${pfile}" \
 			"/etc/portage/package.${pfile}/0000_unity-portage.p${pfile}" || die
@@ -38,11 +39,11 @@ src_install() {
 		&& dosym "${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/unity-portage-minimal.puse" \
 			"/etc/portage/package.${pfile}/0001_unity-portage-minimal.puse"
 
-	dodir "/etc/portage/env"
-	for envconf in $(ls -1 ${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/env/* | awk -F/ '{print $NF}'); do
-		dosym "${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/env/${envconf}" \
-			"/etc/portage/env/${envconf}" || die
-	done
+#	dodir "/etc/portage/env"
+#	for envconf in $(ls -1 ${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/env/* | awk -F/ '{print $NF}'); do
+#		dosym "${REPO_ROOT}/profiles/releases/${PROFILE_RELEASE}/env/${envconf}" \
+#			"/etc/portage/env/${envconf}" || die
+#	done
 
 	# Old mono deps. have the potential to fail as >=dev-lang/mono-4.0.5 needed for gcc:5 migration #
 	#       removes /usr/bin/gmcs to now be /usr/bin/mcs most of these small mono projects seem to be suffering from bitrot #
