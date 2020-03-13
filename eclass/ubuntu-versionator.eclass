@@ -185,6 +185,10 @@ ubuntu-versionator_pkg_setup() {
 # @DESCRIPTION:
 # Apply common src_prepare tasks such as patching
 ubuntu-versionator_src_prepare() {
+	local \
+		color_norm=$(tput sgr0) \
+		color_bold=$(tput bold)
+
 	debug-print-function ${FUNCNAME} "$@"
 
 	# Apply Ubuntu patchset if one is present #
@@ -194,19 +198,19 @@ ubuntu-versionator_src_prepare() {
 		for patch in $(grep -v \# "${UPATCH_DIR}/series"); do
 			UBUNTU_PATCHES+=( "${UPATCH_DIR}/${patch}" )
 		done
-		[[ ${UBUNTU_PATCHES[@]} ]] && einfo "  <-- Ubuntu patchset -->"
+		[[ ${UBUNTU_PATCHES[@]} ]] && echo "${color_bold}>>> Processing Ubuntu patchset${color_norm} ..."
 	fi
 	# Many eclasses (cmake-utils,distutils-r1,qt5-build,xdg) apply their own 'default' command for EAPI=6 or 'epatch ${PATCHES[@]}' command for EAPI <6 so let them #
 	#	'declare' checks to see if any of those functions are set/inherited and only apply 'default' if they are not
 	if [ "${EAPI}" -ge 6 ]; then
-		[[ ${UBUNTU_PATCHES[@]} ]] && eapply "${UBUNTU_PATCHES[@]}"
+		[[ ${UBUNTU_PATCHES[@]} ]] && eapply "${UBUNTU_PATCHES[@]}" && echo "${color_bold}>>> Done.${color_norm}"
 		[[ $(declare -Ff cmake-utils_src_prepare) ]] || \
 		[[ $(declare -Ff distutils-r1_src_prepare) ]] || \
 		[[ $(declare -Ff qt5-build_src_prepare) ]] || \
 		[[ $(declare -Ff xdg_src_prepare) ]] || \
 			default
 	else
-		[[ ${UBUNTU_PATCHES[@]} ]] && epatch "${UBUNTU_PATCHES[@]}"
+		[[ ${UBUNTU_PATCHES[@]} ]] && epatch "${UBUNTU_PATCHES[@]}" && echo "${color_bold}>>> Done.${color_norm}"
 		# Only apply base_src_prepare if EAPI<6 and have inherited base.eclass #
 		# 	(use 'base' eclass while 'autotools-{multilib,utils}','gnome2','kde-4','qt4-r2','readme.gentoo','xorg-2(autotools-utils)' block EAPI6 upgrade) #
 		[[ $(declare -Ff base_src_prepare) ]] && \
