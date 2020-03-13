@@ -1,0 +1,70 @@
+diff -Nur a/remindor_common/database.py b/remindor_common/database.py
+--- a/remindor_common/database.py	2013-02-05 00:42:36.000000000 +0100
++++ b/remindor_common/database.py	2020-03-13 14:10:16.489584000 +0100
+@@ -28,17 +28,11 @@
+         if not os.path.exists(directory):
+             os.makedirs(directory)
+ 
+-        migrate = False
+-        if not os.path.exists(filename):
+-            migrate = True
+-
+         self.connection = sqlite3.connect(filename)
+         self.connection.text_factory = str
+         self.cursor = self.connection.cursor()
+ 
+         self.setup()
+-        if migrate:
+-            self.migrate_from_couch()
+ 
+     def setup(self):
+         self.execute("""CREATE TABLE IF NOT EXISTS version (id INTEGER PRIMARY KEY AUTOINCREMENT,
+@@ -188,48 +182,6 @@
+             "#00007878ffff", "#04039e9e0000", "#ffffecec1f1f", True, False, 30, 30, True,
+             True, False, False, True, False, 0, True])
+ 
+-    def migrate_from_couch(self):
+-        try:
+-            from desktopcouch.records.server import CouchDatabase
+-            from desktopcouch.records.record import Record
+-            imported = True
+-        except ImportError:
+-            return
+-
+-        db = 0
+-        try:
+-            db = CouchDatabase('indicator-remindor-alarms', create=False)
+-        except:
+-            return
+-
+-        if not db.view_exists("list", "app"):
+-            map_js = """function(doc) { emit(doc._id, doc) }"""
+-            db.add_view("list", map_js, None, "app")
+-
+-        result = db.execute_view("list", "app")
+-        result_list = list(result)
+-
+-        for row in result_list:
+-            time_s = format_time(row.value["hour"], row.value["minute"], row.value["am_pm"])
+-            sound_length = 0
+-            sound_loop = False
+-
+-            try:
+-                sound_length = row.value["sound_length"]
+-            except KeyError:
+-                sound_length = 0
+-
+-            try:
+-                sound_loop = row.value["sound_loop"]
+-            except KeyError:
+-                sound_loop = False
+-
+-            self.execute("""INSERT INTO alarms (label, notes, time, date, sound, sound_length,
+-                sound_loop, notification, command) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+-                (row.value["label"], row.value["notes"], time_s, row.value["date"],
+-                row.value["sound"], sound_length, sound_loop,
+-                row.value["notification"], row.value["command"]))
+-
+     def version(self, v=None):
+         if v == None:
+             row = self.fetchone("SELECT * FROM version WHERE 1")

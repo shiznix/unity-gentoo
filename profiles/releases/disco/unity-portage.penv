@@ -1,2 +1,0 @@
-## Needs to run an instance of dev-db/couchdb during build process and this is incompatible in a sandbox ##
-dev-db/desktopcouch no-sandbox

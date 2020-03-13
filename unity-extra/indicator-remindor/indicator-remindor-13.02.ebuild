@@ -16,20 +16,17 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-RDEPEND="app-text/yelp-tools
-	<dev-lang/erlang-18
-	dev-db/desktopcouch[${PYTHON_USEDEP}]
-	dev-libs/glib:2
+RDEPEND="dev-libs/glib:2[dbus]
 	dev-libs/gobject-introspection
-	dev-libs/gobject-introspection-common
-	dev-libs/libappindicator:3
-	dev-python/couchdb-python[${PYTHON_USEDEP}]
-	dev-python/dbus-python[${PYTHON_USEDEP}]
-	dev-python/feedparser[${PYTHON_USEDEP}]
-	dev-python/python-dateutil[${PYTHON_USEDEP}]
-	dev-python/requests[${PYTHON_USEDEP}]
+	dev-libs/libappindicator:3[introspection]
+	$(python_gen_cond_dep '
+		dev-python/dbus-python[${PYTHON_MULTI_USEDEP}]
+		dev-python/feedparser[${PYTHON_MULTI_USEDEP}]
+		dev-python/python-dateutil[${PYTHON_MULTI_USEDEP}]
+		dev-python/requests[${PYTHON_MULTI_USEDEP}]
+	')
 	gnome-extra/yelp
-	media-libs/gstreamer:0.10[introspection]
+	media-libs/gstreamer:1.0[introspection]
 	x11-libs/gtk+:3[introspection]
 	x11-libs/libnotify[introspection]"
 DEPEND="${RDEPEND}
@@ -37,11 +34,33 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig"
 
+# Remove migrate from couchdb #
+PATCHES=( "${FILESDIR}"/${PN}-remove_migrate.diff )
+
 S="${WORKDIR}/${PN}"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
 	python-single-r1_pkg_setup
+}
+
+src_prepare() {
+	# Fix gst-1.0 sound player #
+	sed -i \
+		-e "s/playbin2/playbin/" \
+		indicator_remindor/IndicatorRemindorWindow.py \
+		remindor_common/scheduler.py
+
+	# Fix help uri #
+	sed -i \
+		-e "s/%s#%s/%s\/%s/" \
+		indicator_remindor/helpers.py
+	sed -i \
+		-e "s/ghelp/help/" \
+		indicator_remindor/{PreferencesDialog,IndicatorRemindorWindow,ReminderDialog}.py
+
+	ubuntu-versionator_src_prepare
+	default
 }
 
 pkg_preinst() {
