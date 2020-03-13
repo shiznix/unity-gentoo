@@ -1,19 +1,28 @@
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{2_7,3_6,3_7} )
+PYTHON_COMPAT=( python3_{6,7} )
 
-inherit gnome2 python-any-r1 virtualx
+URELEASE="disco"
+inherit autotools gnome2 python-any-r1 ubuntu-versionator virtualx
+
+UURL="mirror://unity/pool/universe/e/${PN}"
+UVER_PREFIX="+really3.12.14"
 
 DESCRIPTION="Telepathy instant messaging and video/audio call client for GNOME"
 HOMEPAGE="https://wiki.gnome.org/Apps/Empathy"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2 CC-BY-SA-3.0 FDL-1.3 LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+RESTRICT="!test? ( test )
+	mirror"
 
-IUSE="debug +geolocation gnome gnome-online-accounts +map spell test +v4l"
+IUSE="+chat debug +geolocation gnome gnome-online-accounts +map spell test +v4l"
 
 # False positives caused by nested configure scripts
 QA_CONFIGURE_OPTIONS=".*"
@@ -59,7 +68,7 @@ COMMON_DEPEND="
 		>=media-libs/clutter-gtk-0.90.3:1.0
 		>=media-libs/libchamplain-0.12.1:0.12[gtk] )
 	spell? (
-		>=app-text/enchant-1.2
+		>=app-text/enchant-1.2:0
 		>=app-text/iso-codes-0.35 )
 	v4l? (
 		media-plugins/gst-plugins-v4l2:1.0
@@ -73,6 +82,8 @@ RDEPEND="${COMMON_DEPEND}
 	net-im/telepathy-connection-managers
 	!<net-voip/telepathy-rakia-0.7
 	x11-themes/adwaita-icon-theme
+
+	chat? ( net-libs/telepathy-indicator )
 	gnome? ( gnome-extra/gnome-contacts )
 "
 DEPEND="${COMMON_DEPEND}
@@ -88,14 +99,40 @@ DEPEND="${COMMON_DEPEND}
 "
 PDEPEND=">=net-im/telepathy-mission-control-5.14"
 
+S="${WORKDIR}/${PN}-3.12.14"
+
 pkg_setup() {
 	python-any-r1_pkg_setup
 	export PYTHONIOENCODING=UTF-8 # See bug 489774
 }
 
+src_prepare() {
+	# Fix metadata path #
+	sed -i \
+		-e "/appdatadir/{s/\/appdata/\/metainfo/}" \
+		data/Makefile.am
+
+	# Disable chat section #
+	use chat || sed -i \
+		-e "/UsesChatSection/{s/true/false/}" \
+		"${WORKDIR}/debian/patches/43_quicklists.patch"
+
+	# Disable selected patches #
+	## REVISIT
+	sed \
+		`# Supposedly to "Add Unity support to show file transfer progress in the launcher" but does not work #` \
+		`#  causes empathy process to hang, no chat windows displayed and consumes 100% CPU #` \
+			-e 's:41_unity_launcher_progress.patch:#41_unity_launcher_progress.patch:g' \
+				-i "${WORKDIR}/debian/patches/series"
+
+	ubuntu-versionator_src_prepare
+	eautoreconf
+	gnome2_src_prepare
+}
+
 src_configure() {
+	DOCS="CONTRIBUTORS AUTHORS ChangeLog NEWS README"
 	gnome2_src_configure \
-		--disable-Werror \
 		--disable-coding-style-checks \
 		--disable-static \
 		--disable-ubuntu-online-accounts \
@@ -112,4 +149,9 @@ src_configure() {
 
 src_test() {
 	dbus-launch virtx emake check #504516
+}
+
+pkg_postinst() {
+	gnome2_pkg_postinst
+	ubuntu-versionator_pkg_postinst
 }
