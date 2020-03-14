@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="gcr +introspection +modemmanager selinux systemd teamd"
+IUSE="gcr gtk +introspection +modemmanager selinux systemd teamd"
 #KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
@@ -36,6 +36,7 @@ RDEPEND=">=app-crypt/libsecret-0.18
 	>=net-misc/networkmanager-1.7:=[introspection?,modemmanager?,teamd?]
 	net-misc/mobile-broadband-provider-info
 
+	gtk? ( ~net-misc/networkmanager-1.18.4 )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.6:= )
 	virtual/freedesktop-icon-theme
 	virtual/libgudev:=
@@ -60,6 +61,8 @@ src_prepare() {
 src_configure() {
 	local myconf=(
 		--with-appindicator
+		$(use_with gtk libnm-gtk)
+		--without-libnma-gtk4
 		--disable-lto
 		--disable-ld-gc
 		--disable-more-warnings
