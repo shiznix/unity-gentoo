@@ -1,6 +1,9 @@
 ## Global masks ##
 
-# mask gnome-3.36 packages
+# mask gnome-3.34/36 packages
+=*/gnome*-*34*::gentoo
+=gnome-base/*-*34*::gentoo
+=gnome-extra/*-*34*::gentoo
 =*/gnome*-*36*::gentoo
 =gnome-base/*-*36*::gentoo
 =gnome-extra/*-*36*::gentoo
