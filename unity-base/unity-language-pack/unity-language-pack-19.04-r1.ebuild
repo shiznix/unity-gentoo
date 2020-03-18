@@ -18,7 +18,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND="sys-devel/gettext"
+DEPEND="sys-devel/gettext
+	!!<gnome-base/gnome-session-3.32.0_p_p1_p01-r1"
 
 setvar() {
 	eval "${1//-/_}=(${2} ${3} ${4})"
@@ -41,19 +42,22 @@ setvar bs		19.04+20190412 19.04+20190412
 setvar ca		19.04+20190412 19.04+20190412
 setvar ca-valencia	19.04+20190412 19.04+20190412 ca
 setvar cs		19.04+20190412 19.04+20190412
-setvar csb		14.04+20150804 14.04+20150804
 setvar cy		19.04+20190412 19.04+20190412
 setvar da		19.04+20190412 19.04+20190412
 setvar de		19.04+20190412 19.04+20190412
+setvar dv		14.04+20150804 14.04+20150804
 setvar dz		19.04+20190412 19.04+20190412
 setvar el		19.04+20190412 19.04+20190412
 setvar en		19.04+20190412 19.04+20190412
+setvar en-AU		19.04+20190412 19.04+20190412 en
+setvar en-CA		19.04+20190412 19.04+20190412 en
 setvar en-GB		19.04+20190412 19.04+20190412 en
 setvar eo		19.04+20190412 19.04+20190412
 setvar es		19.04+20190412 19.04+20190412
 setvar et		19.04+20190412 19.04+20190412
 setvar eu		19.04+20190412 19.04+20190412
 setvar fa		19.04+20190412 19.04+20190412
+setvar ff		14.04+20150804 14.04+20150804
 setvar fi		19.04+20190412 19.04+20190412
 setvar fil		14.04+20150804 14.04+20150804
 setvar fo		14.04+20150804 14.04+20150804
@@ -66,6 +70,7 @@ setvar gu		19.04+20190412 19.04+20190412
 setvar he		19.04+20190412 19.04+20190412
 setvar hi		19.04+20190412 19.04+20190412
 setvar hr		19.04+20190412 19.04+20190412
+setvar ht		14.04+20150804 14.04+20150804
 setvar hu		19.04+20190412 19.04+20190412
 setvar hy		14.04+20150804 14.04+20150804
 setvar ia		19.04+20190412 19.04+20190412
@@ -93,9 +98,9 @@ setvar ml		19.04+20190412 19.04+20190412
 setvar mn		16.04+20160214 16.04+20160214
 setvar mr		19.04+20190412 19.04+20190412
 setvar ms		19.04+20190412 19.04+20190412
+setvar mt		14.04+20150804 14.04+20150804
 setvar my		19.04+20190412 19.04+20190412
 setvar nb		19.04+20190412 19.04+20190412
-setvar nds		17.10+20171012 17.10+20171012
 setvar ne		19.04+20190412 19.04+20190412
 setvar nl		19.04+20190412 19.04+20190412
 setvar nn		19.04+20190412 19.04+20190412
@@ -105,17 +110,19 @@ setvar om		14.04+20150804 14.04+20150804
 setvar or		19.04+20190412 19.04+20190412
 setvar pa		19.04+20190412 19.04+20190412
 setvar pl		19.04+20190412 19.04+20190412
+setvar ps		14.04+20150804 14.04+20150804
 setvar pt		19.04+20190412 19.04+20190412
 setvar pt-BR		19.04+20190412 19.04+20190412 pt
 setvar ro		19.04+20190412 19.04+20190412
 setvar ru		19.04+20190412 19.04+20190412
 setvar rw		14.04+20150804 14.04+20150804
 setvar sa		14.04+20150804 14.04+20150804
+setvar sc		14.04+20150804 14.04+20150804
 setvar sd		14.04+20150804 14.04+20150804
-setvar se		14.04+20150804 14.04+20150804
 setvar si		18.10+20180731 18.10+20180731
 setvar sk		19.04+20190412 19.04+20190412
 setvar sl		19.04+20190412 19.04+20190412
+setvar so		14.04+20150804 13.04+20130418
 setvar sq		19.04+20190412 19.04+20190412
 setvar sr		19.04+20190412 19.04+20190412
 setvar sr-Latn		19.04+20190412 19.04+20190412 sr
@@ -126,6 +133,7 @@ setvar ta		19.04+20190412 19.04+20190412
 setvar te		19.04+20190412 19.04+20190412
 setvar tg		19.04+20190412 19.04+20190412
 setvar th		19.04+20190412 19.04+20190412
+setvar ti		14.04+20150804 14.04+20150804
 setvar tk		14.04+20150804 14.04+20150804
 setvar tl		14.04+20150804 14.04+20150804
 setvar tr		19.04+20190412 19.04+20190412
@@ -133,26 +141,25 @@ setvar ts		14.04+20150804 14.04+20150804
 setvar tt		14.04+20150804 14.04+20150804
 setvar ug		19.04+20190412 19.04+20190412
 setvar uk		19.04+20190412 19.04+20190412
-setvar ur-PK		14.04+20150804 14.04+20150804 ur
+setvar ur		14.04+20150804 14.04+20150804
 setvar uz		16.04+20160214 16.04+20160214
-setvar uz-Cyrl		16.04+20160214 16.04+20160214 uz
 setvar ve		14.04+20150804 14.04+20150804
 setvar vi		19.04+20190412 19.04+20190412
-setvar wa		14.04+20150804 14.04+20150804
 setvar xh		17.10+20171012 17.10+20171012
+setvar yi		14.04+20150804 14.04+20150804
+setvar yo		14.04+20150804 14.04+20150804
 setvar zh-CN		19.04+20190412 19.04+20190412 zh-hans
-setvar zh-HK		18.10+20181011 18.10+20181011 zh-hant
 setvar zh-TW		19.04+20190412 19.04+20190412 zh-hant
 setvar zu		14.04+20150804 14.04+20150804
 
 # Only valid IETF language tags that are listed in
 #  /usr/portage/profiles/desc/l10n.desc are supported:
-IUSE_L10N="af am an ar as ast az be bg bn bo br bs ca ca-valencia cs csb
-cy da de dz el en en-GB eo es et eu fa fi fil fo fr fy ga gd gl gu he hi
-hr hu hy ia id is it ja ka kk km kn ko ks ku ky la lb lo lt lv mai mi mk
-ml mn mr ms my nb nds ne nl nn nso oc om or pa pl pt pt-BR ro ru rw sa
-sd se si sk sl sq sr sr-Latn st sv sw ta te tg th tk tl tr ts tt ug uk
-ur-PK uz uz-Cyrl ve vi wa xh zh-CN zh-HK zh-TW zu"
+IUSE_L10N="af am an ar as ast az be bg bn bo br bs ca ca-valencia cs cy
+da de dv dz el en en-AU en-CA en-GB eo es et eu fa ff fi fil fo fr fy ga
+gd gl gu he hi hr ht hu hy ia id is it ja ka kk km kn ko ks ku ky la lb
+lo lt lv mai mi mk ml mn mr ms mt my nb ne nl nn nso oc om or pa pl ps
+pt pt-BR ro ru rw sa sc sd si sk sl so sq sr sr-Latn st sv sw ta te tg
+th ti tk tl tr ts tt ug uk ur uz ve vi xh yi yo zh-CN zh-TW zu"
 
 # IUSE and SRC_URI generator:
 for use_flag in ${IUSE_L10N}; do
@@ -275,8 +282,9 @@ src_install() {
 	# Remove all translations except those we need
 	find "${S}" -type f \
 		! -name ${gcc_po} \
-		! -name ${ls_po} \
+		! -name 'gnome-session-3.0.po' \
 		! -name 'indicator-*' \
+		! -name ${ls_po} \
 		! -name 'libdbusmenu.po' \
 		! -name 'session-shortcuts.po' \
 		! -name 'ubuntu-help.po' \
