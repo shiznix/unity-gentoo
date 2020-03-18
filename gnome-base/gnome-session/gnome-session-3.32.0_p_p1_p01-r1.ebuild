@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="eoan"
+URELEASE="disco"
 inherit gnome2 meson systemd ubuntu-versionator
 
 MY_P="${PN}_${PV}"
@@ -11,12 +11,12 @@ S="${WORKDIR}/${PN}-${PV}"
 
 DESCRIPTION="Gnome session manager patched for the Unity desktop"
 HOMEPAGE="https://git.gnome.org/browse/gnome-session"
-SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.34/${PN}-${PV}.tar.xz
+SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/3.32/${PN}-${PV}.tar.xz
 	${UURL}/${MY_P}-${UVER}${UVER_PREFIX}.debian.tar.xz"
 
 LICENSE="GPL-2 LGPL-2 FDL-1.1"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc elibc_FreeBSD ipv6 systemd wayland +xdg-dirs"
 RESTRICT="mirror"
 
@@ -85,8 +85,15 @@ src_prepare() {
 	sed -e 's:buntu:nity:g' \
 		-i "${WORKDIR}/debian/data/unity-session.target" || die
 	sed -e 's:/usr/lib/gnome-session:/usr/libexec:g' \
-		-i gnome-session/gnome-session.in \
 		-i data/unity.desktop.in.in || die
+
+	# Disable all language files as they can be incomplete #
+        #  due to being provided by Ubuntu's language-pack packages #
+        > po/LINGUAS
+
+	# If a .desktop file does not have inline
+	# translations, fall back to calling gettext
+	echo "X-GNOME-Gettext-Domain=${PN}-3.0" >> "data/${PN}-properties.desktop.in"
 
 	gnome2_src_prepare
 }
@@ -141,6 +148,9 @@ src_install() {
 
 	insinto /etc/lightdm/lightdm.conf.d
 	doins "${WORKDIR}/debian/data/50-unity.conf"
+
+	insinto /usr/share/upstart/systemd-session/upstart
+	doins "${WORKDIR}/debian/data/gnome-session.override"
 
 	if use wayland; then
 		sed -e 's:^Exec=gnome-session:Exec=gnome-session --session=gnome:g' \
