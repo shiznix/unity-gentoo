@@ -71,10 +71,10 @@ diff --git a/src/terminal-screen.c b/src/terminal-screen.c
 index e42c401..2cbc4c2 100644
 --- a/src/terminal-screen.c
 +++ b/src/terminal-screen.c
-@@ -94,6 +94,8 @@ struct _TerminalScreenPrivate
-   int child_pid;
-   GSList *match_tags;
+@@ -105,6 +105,8 @@ struct _TerminalScreenPrivate
+   guint contents_changed_source_id;
    guint launch_child_source_id;
+   guint shell_preexec_source_id;
 +  GdkRGBA bg_color;
 +  GdkRGBA fg_color;
  };
