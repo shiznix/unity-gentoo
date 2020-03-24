@@ -60,7 +60,6 @@ DEPEND="${RDEPEND}
 	gnome-base/gnome-session[systemd]
 	gnome-base/gsettings-desktop-schemas
 	gnome-extra/polkit-gnome:0
-	media-libs/clutter-gtk:1.0
 	media-libs/glew:=
 	media-libs/mesa
 	sys-apps/dbus[systemd,user-session]
