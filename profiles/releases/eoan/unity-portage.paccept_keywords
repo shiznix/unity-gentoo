@@ -143,7 +143,7 @@ dev-python/python-prctl
 dev-util/umockdev
 gnome-extra/nemo
 media-fonts/nanum
-~media-fonts/noto-emoji-20200311        # python3
+media-fonts/quivira
 ~media-libs/giflib-4.2.3
 ~media-libs/gexiv2-0.10.5
 =media-libs/harfbuzz-2.2*

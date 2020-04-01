@@ -8,7 +8,7 @@ inherit ubuntu-versionator
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity packages"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-URELEASE="disco"
+URELEASE="eoan"
 
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"
@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility +apps chat extras +fonts +games +utils +xdm"
 RESTRICT="mirror"
 
-GVER="3.32*"
+GVER="3.34*"
 
 
 DEPEND="unity-base/unity-build-env
@@ -47,19 +47,20 @@ RDEPEND="gnome-base/gnome-core-libs
 		|| ( mail-client/thunderbird mail-client/thunderbird-bin =mail-client/evolution-${GVER} )
 		media-gfx/shotwell
 		media-sound/rhythmbox
-		=media-video/totem-${GVER}
+		media-video/totem
 		|| ( www-client/firefox www-client/firefox-bin www-client/chromium ) )
 	chat? ( || (
 		( net-im/pidgin x11-plugins/pidgin-libnotify )
 		( net-im/empathy net-libs/telepathy-indicator ) ) )
 	extras? (
 		app-cdr/brasero
-		=gnome-base/dconf-editor-3.34*
+		=gnome-base/dconf-editor-${GVER}
 		sys-block/gparted
 		unity-extra/unity-tweak-tool )
 	fonts? (
 		media-fonts/droid
 		media-fonts/font-bitstream-type1
+		media-fonts/fonts-noto-cjk
 		media-fonts/freefont
 		media-fonts/kacst-fonts
 		media-fonts/khmer
@@ -77,12 +78,11 @@ RDEPEND="gnome-base/gnome-core-libs
 		media-fonts/lohit-tamil-classical
 		media-fonts/lohit-telugu
 		media-fonts/nanum
-		media-fonts/fonts-noto-cjk
-		media-fonts/noto-emoji
+		amd64? ( media-fonts/noto-emoji )
+		media-fonts/quivira
 		media-fonts/sil-abyssinica
 		media-fonts/sil-padauk
 		media-fonts/stix-fonts
-		media-fonts/symbola
 		media-fonts/takao-fonts
 		media-fonts/thaifonts-scalable
 		media-fonts/tibetan-machine-font
@@ -94,27 +94,27 @@ RDEPEND="gnome-base/gnome-core-libs
 	utils? (
 		app-admin/gnome-system-log
 		app-backup/deja-dup[nautilus]
-		=app-arch/file-roller-${GVER}
-		=app-crypt/seahorse-${GVER}
-		=app-editors/gedit-${GVER}
-		=app-text/evince-${GVER}
-		=gnome-extra/gnome-calculator-${GVER}
-		=gnome-extra/gnome-calendar-${GVER}
-		=gnome-extra/gnome-power-manager-${GVER}
-		=gnome-extra/gnome-system-monitor-${GVER}
+		app-arch/file-roller
+		app-crypt/seahorse
+		app-editors/gedit
+		app-text/evince
+		gnome-extra/gnome-calculator
+		gnome-extra/gnome-calendar
+		gnome-extra/gnome-power-manager
+		gnome-extra/gnome-system-monitor
 		gnome-extra/gucharmap:2.90
-		=gnome-extra/yelp-${GVER}
+		gnome-extra/yelp
 		media-gfx/eog
-		=media-gfx/gnome-font-viewer-${GVER}
-		=media-gfx/gnome-screenshot-${GVER}
-		=media-gfx/simple-scan-${GVER}
+		media-gfx/gnome-font-viewer
+		media-gfx/gnome-screenshot
+		media-gfx/simple-scan
 		=media-video/cheese-${GVER}
 		net-misc/remmina
 		net-misc/vino
 		net-p2p/transmission[ayatana]
 		sys-apps/baobab
-		=sys-apps/gnome-disk-utility-${GVER}
+		sys-apps/gnome-disk-utility
 		unity-indicators/indicator-keyboard[charmap]
 		unity-indicators/indicator-power[powerman]
-		=x11-terms/gnome-terminal-${GVER} )
+		x11-terms/gnome-terminal )
 	xdm? ( || ( unity-extra/unity-greeter gnome-base/gdm ) )"
