@@ -9,7 +9,7 @@ HOMEPAGE="http://unity.ubuntu.com/"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+files +music +photos +plugins +video"
+IUSE="+files +music +photos plugins +video"
 RESTRICT="mirror"
 
 DEPEND="unity-lenses/unity-lens-applications
