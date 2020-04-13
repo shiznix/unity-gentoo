@@ -108,6 +108,7 @@ src_prepare() {
 
 	# Setup Unity side launcher default applications #
 	sed \
+		-e "/firefox.desktop/a \        'application://firefox-bin.desktop',\n        'application://chromium-browser-chromium.desktop'," \
 		-e '/ubiquity/d' \
 		-e '/org.gnome.Software/d' \
 			-i data/com.canonical.Unity.gschema.xml || die

@@ -55,6 +55,8 @@ src_prepare() {
 
 	# Fix pre-populator
 	sed -i \
+		-e "s/+1,117/+1,119/" \
+		-e "/thunderbird/r ${FILESDIR}/mail-clients" \
 		-e "s/yelp/unity-yelp/" \
 		"${WORKDIR}/debian/patches/pre_populator.patch" || die
 
