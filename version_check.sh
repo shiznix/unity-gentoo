@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="disco disco-security disco-updates eoan eoan-security eoan-updates"
+RELEASES="eoan eoan-security eoan-updates"
 SOURCES="main universe"
 
 sources_download() {

@@ -17,7 +17,6 @@ x11-themes/ubuntu-themes python_single_target_python2_7
 dev-python/booleanOperations -python_targets_python2_7
 dev-python/defcon -python_targets_python2_7
 
-
 app-accessibility/brltty python                                 # orca
 app-accessibility/speech-dispatcher python
 app-admin/packagekit-base networkmanager
