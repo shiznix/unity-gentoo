@@ -24,20 +24,23 @@ RDEPEND="!x11-misc/glipper
 	dev-libs/keybinder:0[python]
 	dev-libs/libappindicator
 	dev-python/gconf-python[${PYTHON_USEDEP}]
-	dev-python/pycrypto
 	dev-python/pygtk:2[${PYTHON_USEDEP}]
 	dev-python/python-prctl[${PYTHON_USEDEP}]
 	dev-python/pyxdg"
 DEPEND="${RDEPEND}
 	>=dev-python/python-distutils-extra-2.37"
 
-src_install() {
-	sed -e "s:DATA_DIR = \"\":DATA_DIR = \"/usr/share\":g" \
-		-i glipper/defs.py
-	distutils-r1_src_install
+
+python_install() {
+	distutils-r1_python_install
+	sed -e 's:DATA_DIR = "":DATA_DIR = "/usr/share":' \
+		-i "${ED}"$(python_get_sitedir)/glipper/defs.py || die
+
+	insinto /usr/share/icons/hicolor
+	doins -r data/icons/*
 
 	dodir /etc
-	mv -vf "${ED}"/usr/share/gconf "${ED}"/etc
+	mv -vf "${ED}"usr/share/gconf "${ED}"/etc
 
 	prune_libtool_files --modules
 }
