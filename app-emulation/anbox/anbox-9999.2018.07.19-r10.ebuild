@@ -25,7 +25,7 @@ RESTRICT="mirror"
 # For fperms to be correct inside the Anbox container, LXC must start the container as 'unprivileged' #
 #  Otherwise fperms will appear corrupt as 'u1_<uid>' and 'u1_<gid>' #
 # LXC hardcodes the use of sys-apps/shadow 'newuidmap' and 'newgidmap' (if they exist on the host) to map UID/GID from host to container #
-#	Anbox usually run confined inside a 'snap' environment, relies on LXC not detecting 'newuidmap' and 'newgidmap' on the host system, #
+#	Anbox usually runs confined inside a 'snap' environment, so relies on LXC not detecting 'newuidmap' and 'newgidmap' on the host system, #
 #		leading to LXC then falling through to directly setup UID/GID mapping itself #
 #			 eliminating the need for correct setup of /etc/subuid and /etc/subgid files #
 # DEBUGGING:
@@ -61,7 +61,7 @@ DEPEND="${RDEPEND}
 	dev-libs/protobuf
 	media-libs/glm
 	media-libs/libsdl2[wayland?,X?]
-	media-libs/mesa[egl,gles2]
+	>=media-libs/mesa-19.3.5[egl,gles2]
 	media-libs/sdl2-image
 	sys-apps/dbus
 	sys-libs/libcap
@@ -151,7 +151,6 @@ src_install() {
 	# 'anbox-launch' wrapper script to start 'session-manager' and anbox appmgr #
 	exeinto /usr/bin
 	doexe "${FILESDIR}/anbox-launch"
-	doexe "${FILESDIR}/anbox-lxc_mk-subuid_gid"
 
 	# anbox.desktop and icon #
 	insinto /usr/share/applications
@@ -175,35 +174,51 @@ src_install() {
 
 pkg_postinst() {
 	if ! use privileged; then
-		if [ ! -e /etc/subuid ] || [ ! -e /etc/subuid ]; then
+		if [ ! -s /etc/subuid ] || [ ! -s /etc/subgid ] && [ -e /usr/bin/newuidmap ]; then
 			elog
-			elog "Oops...no /etc/subuid or /etc/subgid files have been detected on the system"
-			elog "LXC unprivileged container support requires permission mapping files /etc/subuid and /etc/subgid so that it can use"
-			elog " sys-apps/shadow's 'newuidmap' and 'newgidmap' to map UIDs/GIDs from the host to the container"
-			elog " See here -> https://stgraber.org/2014/01/17/lxc-1-0-unprivileged-containers/"
-			elog "TLDR? Here is an example of /etc/subgid and /etc/subuid files (both have the same content):"
-			elog "	root:100000:65536"
-			elog "	<username>:100000:65536"
-			elog "There is a helper script /usr/bin/anbox-lxc_mk-subuid_gid which will create the correct"
-			elog " /etc/subuid and /etc/subgid content based on Anbox's /var/lib/anbox/containers/default/config"
-			elog " You may need to run 'anbox session-manager' to create /var/lib/anbox/containers/default/config first"
-			elog
+			elog "Oops...$(which newuidmap) and $(which newgidmap) have been detected, but no /etc/subuid or /etc/subgid files have been detected on the system"
+			elog "LXC container user support (unprivileged) needs to map UIDs/GIDs from the host to the container"
+			elog "By default LXC does so using sys-apps/shadow's 'newuidmap' and 'newgidmap' applications configured by /etc/subuid and /etc/subgid"
+			elog " which can sometimes be quite complex to setup, particularly on multi-user systems (YMMV)"
+			elog "The preferred method is to make 'newuidmap' and 'newgidmap' inaccessible to LXC"
+			elog " This forces LXC to more robustly handle the UID/GID host<->container mapping itself"
+			elog " Anbox make them inaccessible on their preferred Ubuntu platform by running inside a SNAP environment"
+			elog " On Gentoo we can do the following (as root):"
+			elog "   # echo 'EXTRA_ECONF=\"--enable-subordinate-ids=no\"' >> /etc/portage/env/remove-newsuidmap"
+			elog "   # echo 'sys-apps/shadow remove-newsuidmap' >> /etc/portage/package.env/sys-apps_shadow-remove-newsuidmap"
+			elog "   # emerge -1 sys-apps/shadow"
+			elog " NB: This method will remove 'newuidmap' and 'newgidmap', so if you need those to be present"
+			elog "  for other purposes, then you'll need to manage the /etc/subuid and /etc/subgid method"
 		fi
 	fi
 
         elog
         elog "To run Anbox, as root:"
         elog " # systemctl start anbox-container-manager"
+	if linux_chkconfig_present ANDROID_BINDERFS; then
+		elog " # mkdir /dev/binderfs"
+		elog " # mount -t binder none /dev/binderfs"
+		elog " #	OR place the entry into /etc/fstab"
+		elog " # binderfs    /dev/binderfs    binder    defaults    0 0"
+	fi
         elog "Then as desktop user:"
-        elog " $ EGL_PLATFORM=\$XDG_SESSION_TYPE anbox session-manager --gles-driver=host"
+        elog " $ anbox session-manager --gles-driver=host"
         elog " $ anbox launch --package=org.anbox.appmgr --component=org.anbox.appmgr.AppViewActivity"
 	if use softrender; then
 	        elog "To run Anbox using software rendering, run 'session-manager' as follows, as desktop user:"
-	        elog " $ ANBOX_FORCE_SOFTWARE_RENDERING=true EGL_PLATFORM=\$XDG_SESSION_TYPE anbox session-manager --gles-driver=host"
+	        elog " $ ANBOX_FORCE_SOFTWARE_RENDERING=true anbox session-manager --gles-driver=host"
 	fi
         elog
         elog "To install APKs: 'adb install myapp.apk'"
         elog "To copy files: 'adb push somefile /sdcard'"
+        elog
+        elog "If clicking on an installed app inside Anbox doesn't display it's window,"
+        elog " you may need to instead run Anbox in 'Single Window Mode', example:"
+        elog " $ anbox session-manager --gles-driver=host --single-window --window-size=1024,768"
+	elog
+	elog "When trying to run the stock Android Music app it will crash"
+	elog " This is due to https://github.com/anbox/anbox/issues/68"
+	elog " Solution: Install another Music player from Google's Playstore"
 
 	if use playstore; then
 		elog
@@ -211,6 +226,9 @@ pkg_postinst() {
 		elog "  emerge --config =${CATEGORY}/${PF}"
 		elog "  This will download and install the latest GoogleApps into Anbox's default android.img"
 		elog
+		elog "Please note that Anbox only supports GLESv1/GLESv2"
+		elog "As more Playstore apps/games move up to GLESv3 they may no longer work until Anbox starts supporting GLESv3"
+		elog " (see https://github.com/anbox/anbox/issues/246)"
 	fi
 }
 

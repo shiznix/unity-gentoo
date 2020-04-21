@@ -4,10 +4,9 @@
 
 # Always use the host's GLES driver otherwise will cause the following error: #
 #       anbox "eglCreateSyncKHR: error 0x3004 (EGL_BAD_ATTRIBUTE)"
-# Specify EGL_PLATFORM as Mesa needs a working display to auto-detect it, which doesn't get provided until later from "anbox launch" #
 
 if [ -z "$(ps aux | grep 'anbox session-manager' | grep -v grep)" ]; then
-	EGL_PLATFORM=$XDG_SESSION_TYPE anbox session-manager --gles-driver=host &
+	anbox session-manager --gles-driver=host &
 	sleep 5s
 fi
 anbox launch --package=org.anbox.appmgr --component=org.anbox.appmgr.AppViewActivity

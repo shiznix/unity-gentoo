@@ -84,6 +84,8 @@ a texture and possibly other code, so just DON'T USE THIS QUIRK.
         <MediaCodec name="OMX.google.g711.alaw.decoder" type="audio/g711-alaw" />
         <MediaCodec name="OMX.google.g711.mlaw.decoder" type="audio/g711-mlaw" />
         <MediaCodec name="OMX.google.vorbis.decoder" type="audio/vorbis" />
+        <MediaCodec name="OMX.google.opus.decoder" type="audio/opus" />
+        <MediaCodec name="OMX.google.wma.decoder" type="audio/wma" />
         <MediaCodec name="OMX.google.mpeg4.decoder" type="video/mp4v-es" />
         <MediaCodec name="OMX.google.h263.decoder" type="video/3gpp" />
         <MediaCodec name="OMX.google.h264.decoder" type="video/avc" />
@@ -96,6 +98,9 @@ a texture and possibly other code, so just DON'T USE THIS QUIRK.
         <MediaCodec name="OMX.google.amrwb.encoder" type="audio/amr-wb" />
         <MediaCodec name="OMX.google.aac.encoder" type="audio/mp4a-latm" />
         <MediaCodec name="OMX.google.flac.encoder" type="audio/flac" />
+        <MediaCodec name="OMX.google.mpeg4.encoder" type="video/mp4v-es" />
+        <MediaCodec name="OMX.qcom.video.encoder.h263" type="video/3gpp" >
         <MediaCodec name="OMX.google.vp8.encoder" type="video/x-vnd.on2.vp8" />
+        <MediaCodec name="OMX.google.vp9.encoder" type="video/x-vnd.on2.vp9">
     </Encoders>
 </MediaCodecs>
