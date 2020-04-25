@@ -49,7 +49,7 @@ UURL="https://launchpad.net/ubuntu/+archive/primary/+files"
 [[ "${URELEASE}" == *cosmic* ]] && UVER_RELEASE="18.10"
 [[ "${URELEASE}" == *disco* ]] && UVER_RELEASE="19.04"
 [[ "${URELEASE}" == *eoan* ]] && UVER_RELEASE="19.10"
-[[ "${URELEASE}" == *eoan* ]] && UVER_RELEASE="20.04"
+[[ "${URELEASE}" == *focal* ]] && UVER_RELEASE="20.04"
 
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
