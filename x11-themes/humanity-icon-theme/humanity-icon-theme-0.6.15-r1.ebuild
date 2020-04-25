@@ -4,7 +4,7 @@
 EAPI=6
 inherit gnome2-utils ubuntu-versionator
 
-URELEASE="disco"
+URELEASE="eoan"
 UVER=
 
 DESCRIPTION="A nice and well polished icon theme"

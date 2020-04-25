@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_6,3_7} )
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit cmake-utils eutils python-r1 ubuntu-versionator
 
 UVER_PREFIX="+15.10.${PVR_MICRO}"

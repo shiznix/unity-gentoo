@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils python-r1 ubuntu-versionator
 
 UVER_PREFIX="+18.04.${PVR_MICRO}"

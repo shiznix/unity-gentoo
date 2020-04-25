@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit bash-completion-r1 python-r1 vala ubuntu-versionator xdg
 
 DESCRIPTION="Service to log activities and present to other apps"

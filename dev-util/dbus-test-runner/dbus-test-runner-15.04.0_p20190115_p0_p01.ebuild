@@ -3,10 +3,10 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools flag-o-matic ubuntu-versionator
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+19.04.${PVR_MICRO}"
 
 DESCRIPTION="Run executables under a new DBus session for testing"
 HOMEPAGE="https://launchpad.net/dbus-test-runner"

@@ -49,6 +49,8 @@ UURL="https://launchpad.net/ubuntu/+archive/primary/+files"
 [[ "${URELEASE}" == *cosmic* ]] && UVER_RELEASE="18.10"
 [[ "${URELEASE}" == *disco* ]] && UVER_RELEASE="19.04"
 [[ "${URELEASE}" == *eoan* ]] && UVER_RELEASE="19.10"
+[[ "${URELEASE}" == *eoan* ]] && UVER_RELEASE="20.04"
+
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
 PV="${PV%%[a-z]*}"	# For package-3.6.0a
@@ -170,6 +172,7 @@ ubuntu-versionator_pkg_setup() {
 	[[ "${PROFILE_RELEASE}" == zesty ]] && GCC_MINIMUM="6.3.0"
 	[[ "${PROFILE_RELEASE}" == artful ]] && GCC_MINIMUM="6.4.0"
 	[[ "${PROFILE_RELEASE}" == cosmic ]] && GCC_MINIMUM="8.2.0"
+	[[ "${PROFILE_RELEASE}" == eoan ]] && GCC_MINIMUM="9.2.0"
 	GCC_CURRENT=$(gcc-fullversion)
 
 	[[ ${GCC_CURRENT//./} -lt ${GCC_MINIMUM//./} ]] \
@@ -212,7 +215,7 @@ ubuntu-versionator_src_prepare() {
 	else
 		[[ ${UBUNTU_PATCHES[@]} ]] && epatch "${UBUNTU_PATCHES[@]}" && echo "${color_bold}>>> Done.${color_norm}"
 		# Only apply base_src_prepare if EAPI<6 and have inherited base.eclass #
-		# 	(use 'base' eclass while 'autotools-{multilib,utils}','gnome2','kde-4','qt4-r2','readme.gentoo','xorg-2(autotools-utils)' block EAPI6 upgrade) #
+		#	(use 'base' eclass while 'autotools-{multilib,utils}','gnome2','kde-4','qt4-r2','readme.gentoo','xorg-2(autotools-utils)' block EAPI6 upgrade) #
 		[[ $(declare -Ff base_src_prepare) ]] && \
 			base_src_prepare
 	fi

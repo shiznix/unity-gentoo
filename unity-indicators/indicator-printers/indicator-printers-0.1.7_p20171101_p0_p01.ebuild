@@ -4,7 +4,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"

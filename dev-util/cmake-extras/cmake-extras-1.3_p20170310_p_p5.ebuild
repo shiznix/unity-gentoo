@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit cmake-utils ubuntu-versionator
 
 UVER="-${PVR_PL_MINOR}"

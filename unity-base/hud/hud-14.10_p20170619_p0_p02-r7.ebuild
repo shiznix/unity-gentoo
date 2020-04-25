@@ -7,7 +7,7 @@ DISTUTILS_SINGLE_IMPL=1
 VALA_MIN_API_VERSION=0.40
 VALA_MAX_API_VERSION=0.40
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"

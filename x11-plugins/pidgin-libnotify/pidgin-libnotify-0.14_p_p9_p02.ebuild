@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils ubuntu-versionator
 
 DESCRIPTION="pidgin-libnotify provides popups for pidgin via a libnotify interface"

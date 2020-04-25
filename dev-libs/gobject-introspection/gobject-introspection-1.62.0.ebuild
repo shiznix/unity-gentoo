@@ -15,7 +15,7 @@ HOMEPAGE="https://wiki.gnome.org/Projects/GObjectIntrospection"
 SRC_URI="mirror://gnome/sources/${PN}/1.$(get_version_component_range 2)/${P}.tar.xz"
 LICENSE="LGPL-2+ GPL-2+"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="cairo doctool test"
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}

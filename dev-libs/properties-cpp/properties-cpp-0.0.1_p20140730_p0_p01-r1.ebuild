@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit cmake-utils
 
 # Handle version strings here so as not to use 'ubuntu-versionator' eclass #

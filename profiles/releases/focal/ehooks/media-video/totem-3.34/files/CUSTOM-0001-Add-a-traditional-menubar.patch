@@ -1,0 +1,503 @@
+From 6412f4e494be1d0e8760c19ca436358f42a68f2d Mon Sep 17 00:00:00 2001
+From: c4pp4
+Date: Wed, 4 Mar 2020 13:13:30 +0100
+Subject: [PATCH 1/1] Add a traditional menubar
+
+Signed-off-by: c4pp4
+---
+ po/POTFILES.in                                |   1 +
+ src/grilo.gresource.xml                       |   3 +
+ src/menus-traditional.ui                      | 179 ++++++++++++++++++
+ .../open-directory/totem-open-directory.c     |   1 +
+ .../properties/totem-movie-properties.c       |   4 +
+ src/plugins/rotation/totem-rotation.c         |   3 +
+ src/plugins/save-file/totem-save-file.c       |   1 +
+ .../screenshot/totem-screenshot-plugin.c      |   3 +
+ src/plugins/skipto/totem-skipto-plugin.c      |   1 +
+ .../totem-variable-rate-plugin.c              |   2 +
+ src/totem-menu.c                              |  18 +-
+ src/totem-object.c                            |  30 ++-
+ 12 files changed, 230 insertions(+), 16 deletions(-)
+ create mode 100644 src/menus-traditional.ui
+
+diff --git a/po/POTFILES.in b/po/POTFILES.in
+index f35c6ff..b9d1665 100644
+--- a/po/POTFILES.in
++++ b/po/POTFILES.in
+@@ -14,6 +14,7 @@ src/backend/bacon-video-widget.c
+ src/backend/bacon-video-widget-gst-missing-plugins.c
+ src/gst/totem-time-helpers.c
+ src/grilo.ui
++src/menus-traditional.ui
+ src/totem.c
+ src/totem-gallery-thumbnailer.c
+ src/totem-grilo.c
+diff --git a/src/grilo.gresource.xml b/src/grilo.gresource.xml
+index 2186e86..c605738 100644
+--- a/src/grilo.gresource.xml
++++ b/src/grilo.gresource.xml
+@@ -6,4 +6,7 @@
+     <file compressed="true">grilo.ui</file>
+     <file compressed="true">totem-grilo.conf</file>
+   </gresource>
++  <gresource prefix="/org/gnome/Totem">
++    <file alias="gtk/menus-traditional.ui" compressed="true" preprocess="xml-stripblanks">menus-traditional.ui</file>
++  </gresource>
+ </gresources>
+diff --git a/src/menus-traditional.ui b/src/menus-traditional.ui
+new file mode 100644
+index 0000000..8bab2f9
+--- /dev/null
++++ b/src/menus-traditional.ui
+@@ -0,0 +1,179 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<interface>
++
++  <menu id="menubar">
++    <submenu>
++      <attribute name="label" translatable="yes">_Movie</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Add _Local Video…</attribute>
++          <attribute name="action">app.open</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;O</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">Add _Web Video…</attribute>
++          <attribute name="action">app.open-location</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;L</attribute>
++        </item>
++      </section>
++      <section>
++        <section id="opendirectory-placeholder"/>
++        <section id="save-placeholder"/>
++      </section>
++      <section>
++        <section id="properties-placeholder"/>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Play / Pause</attribute>
++          <attribute name="action">app.play</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;space</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Eject</attribute>
++          <attribute name="action">app.eject</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;E</attribute>
++        </item>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Quit</attribute>
++          <attribute name="action">app.quit</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;Q</attribute>
++        </item>
++      </section>
++    </submenu>
++
++    <submenu>
++      <attribute name="label" translatable="yes">_Edit</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Repeat</attribute>
++          <attribute name="action">app.repeat</attribute>
++        </item>
++      </section>
++      <section>
++        <section id="screenshot-placeholder"/>
++      </section>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">Prefere_nces</attribute>
++          <attribute name="action">app.preferences</attribute>
++        </item>
++      </section>
++    </submenu>
++
++    <submenu>
++      <attribute name="label" translatable="yes">_View</attribute>
++      <section>
++        <submenu>
++          <attribute name="label" translatable="yes">_Aspect Ratio</attribute>
++          <section>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Auto</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">0</attribute>
++            </item>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Square</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">1</attribute>
++            </item>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">4∶3 (TV)</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">2</attribute>
++            </item>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">16∶9 (Widescreen)</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">3</attribute>
++            </item>
++            <item>
++              <attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">2.11∶1 (DVB)</attribute>
++              <attribute name="action">app.aspect-ratio</attribute>
++              <attribute name="target" type="i">4</attribute>
++            </item>
++          </section>
++        </submenu>
++        <item>
++          <attribute name="label" translatable="yes">Zoom In</attribute>
++          <attribute name="action">app.zoom</attribute>
++        </item>
++        <section id="rotation-placeholder"/>
++        <item>
++          <attribute name="label" translatable="yes">Switch An_gles</attribute>
++          <attribute name="action">app.next-angle</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;G</attribute>
++        </item>
++        <submenu>
++          <attribute name="label" translatable="yes">Speed</attribute>
++          <section id="variable-rate-placeholder"/>
++        </submenu>
++      </section>
++      <section>
++        <submenu>
++          <attribute name="label" translatable="yes">_Languages</attribute>
++          <section id="languages-placeholder"/>
++        </submenu>
++        <submenu>
++          <attribute name="label" translatable="yes">S_ubtitles</attribute>
++          <section>
++            <item>
++              <attribute name="label" translatable="yes">_Select Text Subtitles…</attribute>
++              <attribute name="action">app.select-subtitle</attribute>
++            </item>
++            <section id="subtitle-download-placeholder"/>
++            <section id="subtitles-placeholder"/>
++          </section>
++        </submenu>
++      </section>
++    </submenu>
++
++    <submenu>
++      <attribute name="label" translatable="yes">_Go</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_DVD Menu</attribute>
++          <attribute name="action">app.dvd-root-menu</attribute>
++          <attribute name="accel">&lt;Ctrl&gt;M</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Title Menu</attribute>
++          <attribute name="action">app.dvd-title-menu</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">A_udio Menu</attribute>
++          <attribute name="action">app.dvd-audio-menu</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Angle Menu</attribute>
++          <attribute name="action">app.dvd-angle-menu</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Chapter Menu</attribute>
++          <attribute name="action">app.dvd-chapter-menu</attribute>
++        </item>
++      </section>
++      <section>
++        <section id="skipto-placeholder"/>
++      </section>
++    </submenu>
++
++    <submenu>
++      <attribute name="label" translatable="yes">_Help</attribute>
++      <section>
++        <item>
++          <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
++          <attribute name="action">app.shortcuts</attribute>
++        </item>
++        <item>
++          <attribute name="label" translatable="yes">_Help</attribute>
++          <attribute name="action">app.help</attribute>
++          <attribute name="accel">F1</attribute>
++        </item>
++      </section>
++    </submenu>
++  </menu>
++
++</interface>
+diff --git a/src/plugins/open-directory/totem-open-directory.c b/src/plugins/open-directory/totem-open-directory.c
+index cc8bd4f..ba250cd 100644
+--- a/src/plugins/open-directory/totem-open-directory.c
++++ b/src/plugins/open-directory/totem-open-directory.c
+@@ -188,6 +188,7 @@ impl_activate (PeasActivatable *plugin)
+ 	menu = totem_object_get_menu_section (priv->totem, "opendirectory-placeholder");
+ 	item = g_menu_item_new (_("Open Containing Folder"), "app.open-dir");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "opendirectory-placeholder")), item);
+ 
+ 	mrl = totem_object_get_current_mrl (priv->totem);
+ 	totem_open_directory_file_opened (priv->totem, mrl, pi);
+diff --git a/src/plugins/properties/totem-movie-properties.c b/src/plugins/properties/totem-movie-properties.c
+index a865374..752acbf 100644
+--- a/src/plugins/properties/totem-movie-properties.c
++++ b/src/plugins/properties/totem-movie-properties.c
+@@ -216,6 +216,7 @@ totem_movie_properties_plugin_file_opened (TotemObject *totem,
+ 		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props), bvw);
+ 	g_object_unref (bvw);
+ 	gtk_widget_set_sensitive (plugin->priv->props, TRUE);
++	g_simple_action_set_enabled (G_SIMPLE_ACTION (plugin->priv->props_action), TRUE);
+ }
+ 
+ static void
+@@ -226,6 +227,7 @@ totem_movie_properties_plugin_file_closed (TotemObject *totem,
+         bacon_video_widget_properties_reset
+ 		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props));
+ 	gtk_widget_set_sensitive (plugin->priv->props, FALSE);
++	g_simple_action_set_enabled (G_SIMPLE_ACTION (plugin->priv->props_action), FALSE);
+ }
+ 
+ static void
+@@ -299,12 +301,14 @@ impl_activate (PeasActivatable *plugin)
+ 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem),
+ 					       "app.properties",
+ 					       accels);
++	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->props_action), FALSE);
+ 
+ 	/* Install the menu */
+ 	menu = totem_object_get_menu_section (totem, "properties-placeholder");
+ 	item = g_menu_item_new (_("_Properties"), "app.properties");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>p");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "properties-placeholder")), item);
+ 	g_object_unref (item);
+ 
+ 	g_signal_connect (G_OBJECT (totem),
+diff --git a/src/plugins/rotation/totem-rotation.c b/src/plugins/rotation/totem-rotation.c
+index db342df..b2f96ec 100644
+--- a/src/plugins/rotation/totem-rotation.c
++++ b/src/plugins/rotation/totem-rotation.c
+@@ -242,6 +242,7 @@ impl_activate (PeasActivatable *plugin)
+ 
+ 	/* add UI */
+ 	menu = totem_object_get_menu_section (priv->totem, "rotation-placeholder");
++	GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "rotation-placeholder");
+ 
+ 	priv->rotate_left_action = g_simple_action_new ("rotate-left", NULL);
+ 	g_signal_connect (G_OBJECT (priv->rotate_left_action), "activate",
+@@ -258,10 +259,12 @@ impl_activate (PeasActivatable *plugin)
+ 	item = g_menu_item_new (_("_Rotate ↷"), "app.rotate-right");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>R");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ 
+ 	item = g_menu_item_new (_("Rotate ↶"), "app.rotate-left");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary><Shift>R");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ 
+ 	mrl = totem_object_get_current_mrl (priv->totem);
+ 	update_state (pi, mrl);
+diff --git a/src/plugins/save-file/totem-save-file.c b/src/plugins/save-file/totem-save-file.c
+index eb2ec67..3e971f8 100644
+--- a/src/plugins/save-file/totem-save-file.c
++++ b/src/plugins/save-file/totem-save-file.c
+@@ -456,6 +456,7 @@ impl_activate (PeasActivatable *plugin)
+ 	item = g_menu_item_new (_("Make Available Offline"), "app.save-as");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>s");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "save-placeholder")), item);
+ 
+ 	mrl = totem_object_get_current_mrl (priv->totem);
+ 	totem_save_file_file_opened (priv->totem, mrl, pi);
+diff --git a/src/plugins/screenshot/totem-screenshot-plugin.c b/src/plugins/screenshot/totem-screenshot-plugin.c
+index 2d488b5..77816ad 100644
+--- a/src/plugins/screenshot/totem-screenshot-plugin.c
++++ b/src/plugins/screenshot/totem-screenshot-plugin.c
+@@ -336,16 +336,19 @@ impl_activate (PeasActivatable *plugin)
+ 
+ 	/* Install the menu */
+ 	menu = totem_object_get_menu_section (priv->totem, "screenshot-placeholder");
++	GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "screenshot-placeholder");
+ 	item = g_menu_item_new (_("Take _Screenshot"), "app.take-screenshot");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Primary><Alt>s");
+ 	g_menu_item_set_attribute_value (item, "hidden-when",
+ 					 g_variant_new_string ("action-disabled"));
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ 	g_object_unref (item);
+ 	item = g_menu_item_new (_("Create Screenshot _Gallery…"), "app.take-gallery");
+ 	g_menu_item_set_attribute_value (item, "hidden-when",
+ 					 g_variant_new_string ("action-disabled"));
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ 	g_object_unref (item);
+ 
+ 	/* Set up a GSettings watch for lockdown keys */
+diff --git a/src/plugins/skipto/totem-skipto-plugin.c b/src/plugins/skipto/totem-skipto-plugin.c
+index f459de8..611b9d0 100644
+--- a/src/plugins/skipto/totem-skipto-plugin.c
++++ b/src/plugins/skipto/totem-skipto-plugin.c
+@@ -206,6 +206,7 @@ impl_activate (PeasActivatable *plugin)
+ 	item = g_menu_item_new (_("_Skip To…"), "app.skip-to");
+ 	g_menu_item_set_attribute (item, "accel", "s", "<Ctrl>K");
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "skipto-placeholder")), item);
+ 
+ 	totem_skipto_update_from_state (priv->totem, pi);
+ }
+diff --git a/src/plugins/variable-rate/totem-variable-rate-plugin.c b/src/plugins/variable-rate/totem-variable-rate-plugin.c
+index 792c0cb..830ddc6 100644
+--- a/src/plugins/variable-rate/totem-variable-rate-plugin.c
++++ b/src/plugins/variable-rate/totem-variable-rate-plugin.c
+@@ -218,6 +218,7 @@ impl_activate (PeasActivatable *plugin)
+ 
+ 	/* Create the submenu */
+ 	menu = totem_object_get_menu_section (priv->totem, "variable-rate-placeholder");
++	GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (priv->totem), "variable-rate-placeholder");
+ 	for (i = 0; i < NUM_RATES; i++) {
+ 		char *target;
+ 
+@@ -225,6 +226,7 @@ impl_activate (PeasActivatable *plugin)
+ 		item = g_menu_item_new (g_dpgettext2 (NULL, "playback rate", rates[i].label), target);
+ 		g_free (target);
+ 		g_menu_append_item (G_MENU (menu), item);
++		g_menu_append_item (G_MENU (menu_trad), item);
+ 	}
+ }
+ 
+diff --git a/src/totem-menu.c b/src/totem-menu.c
+index 20b9764..41b892e 100644
+--- a/src/totem-menu.c
++++ b/src/totem-menu.c
+@@ -493,6 +493,7 @@ bvw_lang_info_to_menu_labels (GList        *langs,
+ 
+ static void
+ add_lang_item (GMenu      *menu,
++	       GMenu      *menu_trad,
+ 	       const char *label,
+ 	       const char *action,
+ 	       int         target)
+@@ -502,10 +503,12 @@ add_lang_item (GMenu      *menu,
+ 	item = g_menu_item_new (label, NULL);
+ 	g_menu_item_set_action_and_target_value (item, action, g_variant_new_int32 (target));
+ 	g_menu_append_item (G_MENU (menu), item);
++	g_menu_append_item (G_MENU (menu_trad), item);
+ }
+ 
+ static void
+ add_lang_action (GMenu *menu,
++	         GMenu *menu_trad,
+ 		 const char *action,
+ 		 const char *label,
+ 		 int lang_id)
+@@ -513,12 +516,13 @@ add_lang_action (GMenu *menu,
+ 	char *escaped_label;
+ 
+ 	escaped_label = escape_label_for_menu (label);
+-	add_lang_item (menu, escaped_label, action, lang_id);
++	add_lang_item (menu, menu_trad, escaped_label, action, lang_id);
+ 	g_free (escaped_label);
+ }
+ 
+ static void
+ create_lang_actions (GMenu        *menu,
++		     GMenu        *menu_trad,
+ 		     const char   *action,
+ 		     GList        *list,
+ 		     BvwTrackType  track_type)
+@@ -528,16 +532,16 @@ create_lang_actions (GMenu        *menu,
+ 
+ 	if (track_type == BVW_TRACK_TYPE_SUBTITLE) {
+ 		/* Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD */
+-		add_lang_action (menu, action, _("None"), -2);
++		add_lang_action (menu, menu_trad, action, _("None"), -2);
+ 	}
+ 
+ 	/* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
+-	add_lang_action (menu, action, C_("Language", "Auto"), -1);
++	add_lang_action (menu, menu_trad, action, C_("Language", "Auto"), -1);
+ 
+ 	ui_list = bvw_lang_info_to_menu_labels (list, track_type);
+ 
+ 	for (l = ui_list, i = 0; l != NULL; l = l->next, i++)
+-		add_lang_action (menu, action, l->data, i);
++		add_lang_action (menu, menu_trad, action, l->data, i);
+ 
+ 	g_list_free_full (ui_list, (GDestroyNotify) g_free);
+ }
+@@ -587,7 +591,8 @@ totem_languages_update (Totem *totem, GList *list)
+ 	if (list != NULL) {
+ 		GMenu *menu;
+ 		menu = totem_object_get_menu_section (totem, "languages-placeholder");
+-		create_lang_actions (menu, "app.set-language", list, BVW_TRACK_TYPE_AUDIO);
++		GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "languages-placeholder");
++		create_lang_actions (menu, menu_trad, "app.set-language", list, BVW_TRACK_TYPE_AUDIO);
+ 	}
+ 
+ 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "set-language");
+@@ -612,7 +617,8 @@ totem_subtitles_update (Totem *totem, GList *list)
+ 	if (list != NULL) {
+ 		GMenu *menu;
+ 		menu = totem_object_get_menu_section (totem, "subtitles-placeholder");
+-		create_lang_actions (menu, "app.set-subtitle", list, BVW_TRACK_TYPE_SUBTITLE);
++		GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), "subtitles-placeholder");
++		create_lang_actions (menu, menu_trad, "app.set-subtitle", list, BVW_TRACK_TYPE_SUBTITLE);
+ 	}
+ 
+ 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "set-subtitle");
+diff --git a/src/totem-object.c b/src/totem-object.c
+index 93be4fa..2b0bc7a 100644
+--- a/src/totem-object.c
++++ b/src/totem-object.c
+@@ -657,17 +657,10 @@ totem_object_get_menu_section (TotemObject *totem,
+  * related actions. Note that menu items with specific target
+  * will not have the associated action removed.
+  **/
+-void
+-totem_object_empty_menu_section (TotemObject *totem,
+-				 const char  *id)
++static void
++totem_object_remove_item (TotemObject *totem,
++		          GMenu       *menu)
+ {
+-	GMenu *menu;
+-
+-	g_return_if_fail (TOTEM_IS_OBJECT (totem));
+-
+-	menu = G_MENU (gtk_builder_get_object (totem->xml, id));
+-	g_return_if_fail (menu != NULL);
+-
+ 	while (g_menu_model_get_n_items (G_MENU_MODEL (menu)) > 0) {
+ 		const char *action;
+ 		g_menu_model_get_item_attribute (G_MENU_MODEL (menu), 0, G_MENU_ATTRIBUTE_ACTION, "s", &action);
+@@ -686,6 +679,23 @@ totem_object_empty_menu_section (TotemObject *totem,
+ 	}
+ }
+ 
++void
++totem_object_empty_menu_section (TotemObject *totem,
++				 const char  *id)
++{
++	GMenu *menu;
++
++	g_return_if_fail (TOTEM_IS_OBJECT (totem));
++
++	menu = G_MENU (gtk_builder_get_object (totem->xml, id));
++	g_return_if_fail (menu != NULL);
++	GMenu *menu_trad = gtk_application_get_menu_by_id (GTK_APPLICATION (totem), id);
++	g_return_if_fail (menu_trad != NULL);
++
++	totem_object_remove_item (totem, menu);
++	totem_object_remove_item (totem, menu_trad);
++}
++
+ /**
+  * totem_object_get_video_widget:
+  * @totem: a #TotemObject
+-- 
+2.24.1
+

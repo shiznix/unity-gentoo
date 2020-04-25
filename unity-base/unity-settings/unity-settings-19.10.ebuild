@@ -13,7 +13,7 @@ HOMEPAGE="https://launchpad.net/ubuntu/+source/ubuntu-settings"
 SRC_URI="" ## We are providing own gschema overrides based on Zesty ##
 
 LICENSE="GPL-2+"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+files lowgfx +music +photos +ubuntu-cursor +ubuntu-sounds +video"
 

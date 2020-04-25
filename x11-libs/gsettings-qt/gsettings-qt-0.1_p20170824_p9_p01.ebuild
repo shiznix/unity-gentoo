@@ -4,7 +4,7 @@
 EAPI=6
 MY_PV=${PV}
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit qmake-utils ubuntu-versionator
 
 UVER="-${PVR_PL_MAJOR}fakesync${PVR_PL_MINOR}"

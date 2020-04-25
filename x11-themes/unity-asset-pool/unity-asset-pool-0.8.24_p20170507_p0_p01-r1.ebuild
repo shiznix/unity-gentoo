@@ -4,7 +4,7 @@
 EAPI=5
 GCONF_DEBUG="yes"
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit eutils gnome2 ubuntu-versionator
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"

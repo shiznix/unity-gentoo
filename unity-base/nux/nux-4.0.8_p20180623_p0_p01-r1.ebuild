@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils ubuntu-versionator xdummy
 
 UVER_PREFIX="+18.10.${PVR_MICRO}"

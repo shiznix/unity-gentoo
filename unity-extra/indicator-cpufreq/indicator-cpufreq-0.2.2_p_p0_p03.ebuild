@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_6,3_7} )
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 DESCRIPTION="CPU frequency scaling indicator for the Unity desktop environment"

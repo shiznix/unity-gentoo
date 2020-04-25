@@ -3,10 +3,10 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils ubuntu-versionator vala virtualx
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+19.04.${PVR_MICRO}"
 
 DESCRIPTION="Home scope that aggregates results from multiple scopes for the Unity desktop"
 HOMEPAGE="https://launchpad.net/unity-scope-home"

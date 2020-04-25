@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_6,3_7} )
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit distutils-r1 ubuntu-versionator
 
 UVER="-${PVR_PL_MINOR}"

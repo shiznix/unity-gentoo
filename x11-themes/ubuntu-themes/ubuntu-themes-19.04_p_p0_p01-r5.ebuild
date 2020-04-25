@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit eutils gnome2-utils python-single-r1 ubuntu-versionator
 
 DESCRIPTION="Monochrome icons for the Unity desktop (default icon theme)"

@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_6,3_7} )
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools flag-o-matic python-r1 ubuntu-versionator
 
 UVER_PREFIX="+17.04.${PVR_MICRO}"

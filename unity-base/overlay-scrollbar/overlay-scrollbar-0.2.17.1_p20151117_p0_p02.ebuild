@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+16.04.${PVR_MICRO}"

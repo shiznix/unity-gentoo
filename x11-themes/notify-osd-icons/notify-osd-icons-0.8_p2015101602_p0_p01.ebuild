@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit ubuntu-versionator
 
 UVER_PREFIX="+15.10.${PVR_MICRO}"

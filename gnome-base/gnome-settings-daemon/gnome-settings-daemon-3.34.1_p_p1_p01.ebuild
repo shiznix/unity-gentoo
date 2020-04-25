@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2+"
 SLOT="0"
 IUSE="+colord +cups debug input_devices_wacom kernel_linux +networkmanager policykit schemas -smartcard test +udev wayland"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="
 	udev
 	kernel_linux? ( networkmanager )

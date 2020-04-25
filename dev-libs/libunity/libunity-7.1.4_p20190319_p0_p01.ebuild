@@ -5,10 +5,10 @@ EAPI=6
 PYTHON_COMPAT=( python{2_7,3_6,3_7} )
 
 MY_PV="${PV}"
-URELEASE="disco"
+URELEASE="eoan"
 inherit autotools eutils python-r1 ubuntu-versionator vala
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+19.04.${PVR_MICRO}"
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"

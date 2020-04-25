@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="disco"
+URELEASE="eoan"
 inherit cmake-utils gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"

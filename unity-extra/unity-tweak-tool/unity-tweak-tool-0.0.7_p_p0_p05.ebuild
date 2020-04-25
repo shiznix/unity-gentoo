@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python{3_6,3_7} )
 
 inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
 
-URELEASE="disco"
+URELEASE="eoan"
 UVER="+-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"
