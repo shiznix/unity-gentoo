@@ -133,6 +133,15 @@ diff -Nur a/meson.build b/meson.build
  if enable_rfkill
    assert(cc.has_header('linux/rfkill.h'), 'rfkill support requested but RFKill headers not found')
    assert(enable_gudev, 'GUdev is required for rfkill support')
+@@ -210,7 +210,7 @@
+ endif
+ 
+ # wwan
+-enable_wwan = get_option('wwan')
++enable_wwan = false
+ if enable_wwan
+   gcr_base_dep = dependency('gcr-base-3', version: '>= 3.7.5')
+   mm_glib_dep = dependency('mm-glib', version: '>= 1.0')
 @@ -232,9 +232,9 @@
  
  top_inc = include_directories('.')

@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+colord +cups debug input_devices_wacom kernel_linux +networkmanager policykit schemas -smartcard test +udev wayland"
+IUSE="+colord +cups debug input_devices_wacom kernel_linux modemmanager +networkmanager policykit schemas -smartcard test +udev wayland"
 KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="
 	udev
@@ -65,6 +65,8 @@ COMMON_DEPEND="
 		>=dev-libs/libwacom-0.7
 		>=x11-libs/pango-1.20.0
 		x11-drivers/xf86-input-wacom )
+	modemmanager? ( >=app-crypt/gcr-3.7.5:=
+		>=net-misc/modemmanager-1.0:= )
 	networkmanager? ( >=net-misc/networkmanager-1.0 )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
 	udev? ( virtual/libgudev:= )
@@ -126,6 +128,7 @@ src_configure() {
 		$(meson_use smartcard)
 		$(meson_use input_devices_wacom wacom)
 		$(meson_use wayland)
+		$(meson_use modemmanager wwan)
 	)
 	meson_src_configure
 }
