@@ -101,6 +101,12 @@ src_install() {
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
 	dosym nm-signal-100-secure.png \
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
+
+	local f
+	for f in "${ED%/}"/usr/share/locale/*/*/network-manager-applet.mo; do
+		f="${f/${ED%/}}"
+		dosym network-manager-applet.mo "${f%/*}/nm-applet.mo"
+	done
 }
 
 pkg_preinst() {
