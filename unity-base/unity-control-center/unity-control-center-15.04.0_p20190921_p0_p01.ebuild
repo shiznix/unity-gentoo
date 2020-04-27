@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+bluetooth +branding +colord +cups +fcitx +gnome-online-accounts +i18n input_devices_wacom +kerberos +samba +v4l +webkit"
+IUSE="+bluetooth +branding +colord +cups +fcitx +gnome-online-accounts +i18n input_devices_wacom +kerberos networkmanager +samba +v4l +webkit"
 REQUIRED_USE="samba? ( cups )"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
@@ -54,8 +54,6 @@ COMMON_DEPEND="
 	unity-base/unity-settings-daemon[colord?,input_devices_wacom?]
 	>=x11-libs/libnotify-0.7.3:0=
 
-	>=gnome-extra/nm-applet-0.9.7.995
-	>=net-misc/networkmanager-0.9.8
 	net-libs/geonames
 
 	virtual/libgudev
@@ -86,6 +84,10 @@ COMMON_DEPEND="
 		>=gnome-base/libgnomekbd-3 )
 	input_devices_wacom? ( >=dev-libs/libwacom-0.7 )
 	kerberos? ( app-crypt/mit-krb5 )
+	networkmanager? (
+		>=gnome-extra/nm-applet-1.2.0
+		>=net-misc/modemmanager-0.7
+		>=net-misc/networkmanager-1.2.0 )
 	v4l? (
 		media-libs/gstreamer:1.0
 		media-libs/clutter-gtk:1.0
