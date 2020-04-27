@@ -82,7 +82,7 @@ antialiasing = 'rgba'
 hinting = 'slight'
 
 [org.gnome.settings-daemon.plugins.media-keys:Unity]
-screensaver = '<Control><Alt>l'
+screensaver = ['<Control><Alt>l']
 
 [org.gnome.settings-daemon.plugins.print-notifications:Unity]
 active = false

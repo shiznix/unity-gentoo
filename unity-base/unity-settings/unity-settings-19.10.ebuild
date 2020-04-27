@@ -34,7 +34,7 @@ src_install() {
 		wallpapers_urelease=$(fgrep -h "URELEASE=" "$(portageq get_repo_path / unity-gentoo)"/x11-themes/ubuntu-wallpapers/ubuntu-wallpapers-*.ebuild)
 
 	insinto "${gschema_dir}"
-	newins "${FILESDIR}"/unity-settings_19.04.gsettings-override \
+	newins "${FILESDIR}"/unity-settings_19.10.gsettings-override \
 		"${gschema}"
 
 	if use ubuntu-cursor; then
