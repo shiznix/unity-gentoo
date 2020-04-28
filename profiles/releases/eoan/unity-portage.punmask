@@ -3,6 +3,7 @@ dev-lang/spidermonkey:52
 =sys-auth/polkit-0.114*
 
 ## Unmask those gnome packages inadvertently masked globablly in package.mask ##
+=media-gfx/gnome-screenshot-3.36*::gentoo
 =net-wireless/gnome-bluetooth-3.34*::gentoo	# gnome-base/gnome-core-apps-3.32 requires >=3.34
 # gnome-base/gnome-extra-apps #
 =gnome-base/dconf-editor-3.34*::gentoo
