@@ -1,0 +1,11 @@
+ebuild_hook() {
+	local d
+
+	for d in "${WORKDIR}"/*; do
+		if [[ ${d} != ${S} ]]; then
+			pushd "${d}" >/dev/null || die
+			meson configure -Dgnome=true
+			popd >/dev/null || die
+		fi
+	done
+}
