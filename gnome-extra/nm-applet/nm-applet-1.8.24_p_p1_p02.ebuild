@@ -18,12 +18,12 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="gcr gtk +introspection +modemmanager selinux systemd teamd"
+IUSE="gcr +introspection +modemmanager selinux systemd teamd"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 RDEPEND=">=app-crypt/libsecret-0.18
-	>=dev-libs/glib-2.32:2[dbus]
+	>=dev-libs/glib-2.38:2[dbus]
 	>=dev-libs/dbus-glib-0.88
 	dev-libs/libappindicator:=
 	>=dev-libs/libdbusmenu-16.04.0
@@ -36,7 +36,6 @@ RDEPEND=">=app-crypt/libsecret-0.18
 	>=net-misc/networkmanager-1.7:=[introspection?,modemmanager?,teamd?]
 	net-misc/mobile-broadband-provider-info
 
-	gtk? ( ~net-misc/networkmanager-1.18.4 )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.6:= )
 	virtual/freedesktop-icon-theme
 	virtual/libgudev:=
@@ -46,7 +45,7 @@ RDEPEND=">=app-crypt/libsecret-0.18
 	teamd? ( >=dev-libs/jansson-2.7 )"
 DEPEND="${RDEPEND}
 	>=dev-util/gtk-doc-am-1.0
-	>=dev-util/intltool-0.50.1
+	>=sys-devel/gettext-0.18
 	virtual/pkgconfig"
 PDEPEND="virtual/notification-daemon" #546134
 
@@ -61,14 +60,13 @@ src_prepare() {
 src_configure() {
 	local myconf=(
 		--with-appindicator
-		$(use_with gtk libnm-gtk)
+		--without-libnm-gtk
 		--without-libnma-gtk4
 		--disable-lto
 		--disable-ld-gc
 		--disable-more-warnings
 		--disable-static
 		--localstatedir=/var
-		--with-libnm-gtk=yes
 		$(use_enable introspection)
 		$(use_with gcr)
 		$(use_with modemmanager wwan)
@@ -101,12 +99,6 @@ src_install() {
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
 	dosym nm-signal-100-secure.png \
 		/usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
-
-	local f
-	for f in "${ED%/}"/usr/share/locale/*/*/network-manager-applet.mo; do
-		f="${f/${ED%/}}"
-		dosym network-manager-applet.mo "${f%/*}/nm-applet.mo"
-	done
 }
 
 pkg_preinst() {
