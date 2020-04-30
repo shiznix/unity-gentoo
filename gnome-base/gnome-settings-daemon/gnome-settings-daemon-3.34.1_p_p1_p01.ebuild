@@ -25,7 +25,7 @@ REQUIRED_USE="
 RESTRICT="mirror"
 
 COMMON_DEPEND="
-	>=gnome-base/gsettings-desktop-schemas-3.27.90
+	>=gnome-base/gsettings-desktop-schemas-3.34
 
 	!schemas? (
 		>=dev-libs/glib-2.53.0:2[dbus]
