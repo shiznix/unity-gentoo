@@ -31,5 +31,6 @@
 		<flag name="bionic">Ubuntu Bionic backgrounds</flag>
 		<flag name="cosmic">Ubuntu Cosmic backgrounds</flag>
 		<flag name="disco">Ubuntu Disco backgrounds</flag>
+		<flag name="eoan">Ubuntu Eoan backgrounds</flag>
 	</use>
 </pkgmetadata>
