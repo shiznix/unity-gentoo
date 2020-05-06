@@ -78,7 +78,7 @@ net-libs/libgadu gnutls
 net-libs/libproxy -kde
 #net-misc/iputils -arping
 net-misc/openssh -bindist
-net-p2p/transmission ayatana
+net-p2p/transmission appindicator
 net-wireless/bluez user-session
 sys-apps/dbus user-session
 sys-apps/systemd nat pam

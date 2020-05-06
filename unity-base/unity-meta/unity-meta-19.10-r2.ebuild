@@ -111,7 +111,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		=media-video/cheese-${GVER}
 		net-misc/remmina
 		net-misc/vino
-		net-p2p/transmission[ayatana]
+		net-p2p/transmission[appindicator]
 		sys-apps/baobab
 		sys-apps/gnome-disk-utility
 		unity-indicators/indicator-keyboard[charmap]
