@@ -25,6 +25,12 @@ gnome-extra/zeitgeist                   # (b.g.o #629180)
 ## Gentoo dropping app-backup/deja-dup because it needs maintaining ##
 app-backup/deja-dup	# (b.g.o #708398)
 
+## Gentoo dropping gnome-extra/nemo along with entire Cinnamon desktop because they can't recruit maintainers (b.g.o #720190) ##
+gnome-extra/cinnamon-desktop
+gnome-extra/cinnamon-settings-daemon
+gnome-extra/cinnamon-translations
+gnome-extra/nemo
+
 # Unmask overlay version
 dev-libs/dee::unity-gentoo
 x11-misc/lightdm-kde::unity-gentoo
