@@ -49,6 +49,7 @@ dev-libs/gobject-introspection-common::gentoo
 dev-libs/libappindicator::gentoo
 dev-libs/libdbusmenu::gentoo
 dev-libs/libindicator::gentoo
+dev-util/dbus-test-runner::gentoo
 dev-util/gdbus-codegen::gentoo
 dev-util/glib-utils::gentoo
 
