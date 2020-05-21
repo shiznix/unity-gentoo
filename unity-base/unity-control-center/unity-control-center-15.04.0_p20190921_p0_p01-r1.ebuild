@@ -61,7 +61,6 @@ COMMON_DEPEND="
 	x11-apps/xmodmap
 	x11-libs/cairo
 	x11-libs/libX11
-	x11-libs/libXxf86misc
 	>=x11-libs/libXi-1.2
 
 	dev-util/desktop-file-utils

@@ -47,7 +47,6 @@ COMMON_DEPEND="dev-libs/glib:2
 	x11-libs/libXext
 	x11-libs/libXfixes
 	x11-libs/libXtst
-	x11-libs/libXxf86misc
 
 	sys-auth/polkit
 
