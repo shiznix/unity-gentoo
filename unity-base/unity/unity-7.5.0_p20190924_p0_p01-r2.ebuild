@@ -53,7 +53,6 @@ DEPEND="${RDEPEND}
 	dev-libs/libunity
 	dev-libs/libunity-misc:=
 	dev-libs/xpathselect
-	dev-python/gconf-python
 	gnome-base/gconf
 	gnome-base/gnome-desktop:3=
 	gnome-base/gnome-menus:3
