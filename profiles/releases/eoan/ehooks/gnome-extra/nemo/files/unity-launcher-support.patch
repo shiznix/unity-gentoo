@@ -1,4 +1,4 @@
-From aef462abdab17664856277351325e6a9f2d5afda Mon Sep 17 00:00:00 2001
+From b283668929a5c0e23ce4a4236432f0d948597643 Mon Sep 17 00:00:00 2001
 From: c4pp4
 Date: Thu, 6 Jun 2019 13:55:23 +0200
 Subject: [PATCH 1/1] Add Unity Launcher support
@@ -31,20 +31,20 @@ Signed-off-by: c4pp4
  create mode 100644 src/unity-quicklist-handler.h
 
 diff --git a/config.h.meson.in b/config.h.meson.in
-index f03133f..b1c2159 100644
+index 46ba4c8..84a18ce 100644
 --- a/config.h.meson.in
 +++ b/config.h.meson.in
-@@ -19,6 +19,8 @@
- #mesondefine HAVE_EXIF
- // Define if libselinux is available
- #mesondefine HAVE_SELINUX
+@@ -13,6 +13,8 @@
+ #mesondefine ENABLE_EMPTY_VIEW
+ // Define to enable xmp support
+ #mesondefine HAVE_EXEMPI
 +// Define to add Unity Launcher support
 +#mesondefine HAVE_UNITY
- 
- 
- 
+ // Define to enable EXIF support
+ #mesondefine HAVE_EXIF
+ // Define if libselinux is available
 diff --git a/libnemo-private/nemo-progress-info.c b/libnemo-private/nemo-progress-info.c
-index bcd52c5..4d032f1 100644
+index bcd52c5..e321a39 100644
 --- a/libnemo-private/nemo-progress-info.c
 +++ b/libnemo-private/nemo-progress-info.c
 @@ -53,6 +53,10 @@ struct _NemoProgressInfo
@@ -130,12 +130,12 @@ index 235e58c..45c922e 100644
  void          nemo_progress_info_queue           (NemoProgressInfo *info);
  void          nemo_progress_info_start           (NemoProgressInfo *info);
 diff --git a/meson.build b/meson.build
-index 028d5b2..d4e627b 100644
+index f692a61..cefaf4a 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -128,6 +128,14 @@ endif
- conf.set('HAVE_SELINUX', libselinux_enabled)
- 
+@@ -115,6 +115,14 @@ if new_pango.found()
+   conf.set('HAVE_PANGO_144', true)
+ endif
  
 +unity_enabled = get_option('unity-launcher')
 +if unity_enabled
@@ -148,27 +148,27 @@ index 028d5b2..d4e627b 100644
  enableEmptyView = get_option('empty_view')
  conf.set10('ENABLE_EMPTY_VIEW', enableEmptyView)
  
-@@ -202,6 +210,7 @@ message('\n'.join(['',
+@@ -185,6 +193,7 @@ message('\n'.join(['',
+ '    prefix:                 @0@'.format(prefix),
+ '    source code location:   @0@'.format(meson.source_root()),
+ '    compiler:           @0@'.format(cc.get_id()),
++'    Unity   support:    @0@'.format(unity_enabled),
+ '    debugging support:  @0@'.format(buildtype),
  '    libexif support:    @0@'.format(libexif_enabled),
  '    exempi  support:    @0@'.format(exempi_enabled),
- '    Tracker support:    @0@'.format(tracker_enabled),
-+'    Unity   support:    @0@'.format(unity_enabled),
- '',
- '    nemo-extension documentation: @0@'.format(gtkdoc_enabled),
- '    nemo-extension introspection: @0@'.format(true),
 diff --git a/meson_options.txt b/meson_options.txt
-index f0b9364..22e7f82 100644
+index 66b193d..ba5ea47 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -12,5 +12,7 @@ option('empty_view', type : 'boolean', value : false,
-        description: 'Enable empty view')
- option('tracker',type : 'combo', choices : ['true', 'false', 'auto'], value : 'false',
-        description: 'Tracker support')
+@@ -4,6 +4,8 @@ option('exif', type : 'boolean', value : true,
+        description: 'EXIF parsing support (requires libexif)')
+ option('xmp', type : 'boolean', value : true,
+        description: 'XMP support (requires Exempi)')
 +option ('unity-launcher', type : 'boolean', value : true,
 +       description: 'Add Unity Launcher support')
- option('profiling', type : 'boolean', value : false,
-        description: 'keep frame pointers (for profiling purposes)')
-\ No newline at end of file
+ option('gtk_doc', type : 'boolean', value : false,
+        description: 'Generate API reference (requires GTK-Doc)')
+ option('selinux', type : 'boolean', value : false,
 diff --git a/po/POTFILES.in b/po/POTFILES.in
 index 2f1eec6..0e83dab 100644
 --- a/po/POTFILES.in
@@ -198,7 +198,7 @@ index 3c01acb..bc5423a 100644
    nemoCommon_sources + nemoWindow_sources,
    include_directories: [ rootInclude ],
 diff --git a/src/nemo-application.c b/src/nemo-application.c
-index 2d12fed..02ce9d6 100644
+index f3d4b67..b60d1c6 100644
 --- a/src/nemo-application.c
 +++ b/src/nemo-application.c
 @@ -80,6 +80,10 @@
@@ -224,7 +224,7 @@ index 2d12fed..02ce9d6 100644
  
  static void
 diff --git a/src/nemo-progress-ui-handler.c b/src/nemo-progress-ui-handler.c
-index f30776a..16c54e1 100644
+index f30776a..83f718f 100644
 --- a/src/nemo-progress-ui-handler.c
 +++ b/src/nemo-progress-ui-handler.c
 @@ -41,6 +41,11 @@
@@ -494,7 +494,7 @@ index f30776a..16c54e1 100644
  typedef struct {
 diff --git a/src/unity-bookmarks-handler.c b/src/unity-bookmarks-handler.c
 new file mode 100644
-index 0000000..9969be5
+index 0000000..85c2c39
 --- /dev/null
 +++ b/src/unity-bookmarks-handler.c
 @@ -0,0 +1,141 @@
@@ -916,5 +916,5 @@ index 0000000..52caa1e
 +
 +#endif /* __UNITY_QUICKLIST_HANDLER_H__ */
 -- 
-2.21.0
+2.26.2
 
