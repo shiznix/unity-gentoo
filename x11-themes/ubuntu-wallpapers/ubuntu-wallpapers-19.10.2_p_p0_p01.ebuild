@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="focal"
+URELEASE="eoan"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}_all.deb
 ## Universe repo (older source files) ##
 CODE_NAME="karmic lucid maverick natty oneiric precise quantal raring
 saucy trusty utopic vivid wily xenial yakkety zesty artful bionic cosmic
-disco eoan"
+disco ${URELEASE}"
 
 for cn in ${CODE_NAME}; do
 	SRC_URI+=" ${cn}? ( ${UURL/main/universe}/${PN}-${cn}_${PV}${UVER_PREFIX}-${UVER}_all.deb )"
@@ -27,7 +27,7 @@ done
 LICENSE="CC-BY-SA-3.0"
 KEYWORDS="amd64 x86"
 SLOT="0/${URELEASE}"
-IUSE="gnome ${CODE_NAME}"
+IUSE="gnome ${CODE_NAME} +${URELEASE}"
 RESTRICT="mirror"
 
 RDEPEND="gnome? ( x11-themes/gnome-backgrounds )"
