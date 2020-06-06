@@ -10,7 +10,8 @@ MY_PN="psensor"
 
 DESCRIPTION="Indicator for monitoring hardware temperature used by the Unity desktop"
 HOMEPAGE="http://wpitchoune.net/psensor"
-SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_PN}_${PV}.orig.tar.gz
+	${UURL}/${MY_PN}_${PV}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -38,7 +39,6 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
-	epatch -p1 "${FILESDIR}/json-c-0.13-is_error-build-fix.diff"
 	ubuntu-versionator_src_prepare
 }
 
