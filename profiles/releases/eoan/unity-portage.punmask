@@ -26,6 +26,10 @@ gnome-extra/zeitgeist                   # (b.g.o #629180)
 ## Gentoo dropping app-backup/deja-dup because it needs maintaining ##
 app-backup/deja-dup	# (b.g.o #708398)
 
+## Gentoo dropping python2 ##
+dev-python/gconf-python
+dev-python/gnome-python-base
+
 # Unmask overlay version
 dev-libs/dee::unity-gentoo
 x11-misc/lightdm-kde::unity-gentoo
