@@ -14,7 +14,7 @@
              <menu id="file-menu" label="&fileMenu.label;"
 --- a/browser/base/content/browser.js
 +++ b/browser/base/content/browser.js
-@@ -7008,11 +7008,17 @@ function onViewToolbarsPopupShowing(aEve
+@@ -7017,11 +7017,17 @@ function onViewToolbarsPopupShowing(aEve
  
    let toolbarNodes = gNavToolbox.querySelectorAll("toolbar");
  
@@ -2210,7 +2210,7 @@
 +#endif /* __nsMenuContainer_h__ */
 --- /dev/null
 +++ b/widget/gtk/nsMenuItem.cpp
-@@ -0,0 +1,764 @@
+@@ -0,0 +1,768 @@
 +/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 +/* vim:expandtab:shiftwidth=4:tabstop=4:
 + */
@@ -2793,6 +2793,10 @@
 +    uint32_t count = parent->GetChildCount();
 +    for (uint32_t i = 0; i < count; ++i) {
 +        nsIContent *sibling = parent->GetChildAt_Deprecated(i);
++
++        if (sibling->IsComment()) {
++            continue;
++        }
 +
 +        nsAutoString otherName;
 +        sibling->AsElement()->GetAttr(kNameSpaceID_None, nsGkAtoms::name,
