@@ -9,7 +9,6 @@ dev-cpp/gtest python_single_target_python2_7
 dev-libs/libappindicator python_single_target_python2_7
 dev-util/gtk-doc python_single_target_python2_7
 unity-base/evemu python_single_target_python2_7
-unity-extra/indicator-weather python_single_target_python2_7
 x11-themes/ubuntu-themes python_single_target_python2_7
 
 # New stable dev-python/fonttools (indirectly pulled in by '*noto*' font packages) is python3_6 only #

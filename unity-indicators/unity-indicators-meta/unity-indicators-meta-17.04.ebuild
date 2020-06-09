@@ -23,5 +23,5 @@ DEPEND="unity-indicators/indicator-application
 	sensors? ( unity-extra/indicator-psensor )
 	session? ( unity-indicators/indicator-session )
 	sound? ( unity-indicators/indicator-sound )
-	weather? ( unity-extra/indicator-weather )"
+	weather? ( unity-extra/meteo-qt )"
 RDEPEND="${DEPEND}"
