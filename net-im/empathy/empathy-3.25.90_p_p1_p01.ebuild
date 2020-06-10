@@ -3,7 +3,7 @@
 
 EAPI="6"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python{3_7,3_8} )
 
 URELEASE="eoan"
 inherit autotools gnome2 python-any-r1 ubuntu-versionator virtualx

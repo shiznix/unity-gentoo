@@ -3,7 +3,7 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{3_6,3_7} )
+PYTHON_COMPAT=( python{3_7,3_8} )
 
 URELEASE="eoan"
 inherit flag-o-matic gnome2 meson python-any-r1 systemd udev virtualx ubuntu-versionator
