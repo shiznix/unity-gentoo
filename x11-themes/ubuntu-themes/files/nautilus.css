@@ -10,6 +10,11 @@
     border-bottom-left-radius: 8px;
 }
 
+.nautilus-window headerbar.toolbar-mode.titlebar .horizontal.linked entry:last-child {
+    border-image-width: 10px 12px;
+    margin-left: 3px;
+}
+
 .nautilus-window widget.view:active:not(:focus) {
     background-color: inherit;
 }
