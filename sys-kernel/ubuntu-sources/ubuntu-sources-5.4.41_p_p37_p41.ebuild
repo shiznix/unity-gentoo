@@ -4,13 +4,13 @@
 EAPI=5	# kernel-2.eclass unsupported for EAPI6
 ETYPE="sources"
 
-URELEASE="eoan-security"
+URELEASE="focal-security"
 inherit eutils mount-boot kernel-2 versionator ubuntu-versionator
 
 MY_PN="linux"
 MY_PV="${PV}"
-BASE_PV="5.3.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
-KCONFIG_URELEASE="xenial/linux/4.4.0-156.183"
+BASE_PV="5.4.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
+KCONFIG_URELEASE="xenial/linux/4.4.0-185.215"
 UURL="mirror://unity/pool/main/l/${MY_PN}"
 
 DESCRIPTION="Ubuntu patched kernel sources"
