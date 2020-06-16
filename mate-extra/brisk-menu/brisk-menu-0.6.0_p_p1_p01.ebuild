@@ -3,10 +3,8 @@
 
 EAPI=6
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit autotools gnome2-utils meson ubuntu-versionator
-
-UVER="-${PVR_PL_MINOR}"
 
 DESCRIPTION="Solus Project's Brisk Menu MATE Panel Applet"
 HOMEPAGE="https://github.com/solus-project/brisk-menu"
