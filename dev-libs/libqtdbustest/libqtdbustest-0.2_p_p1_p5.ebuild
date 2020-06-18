@@ -21,7 +21,7 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}+bzr42"
 
-DEPEND=">=dev-cpp/gtest-1.8.1
+DEPEND="=dev-cpp/gtest-1.8*
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qttest:5

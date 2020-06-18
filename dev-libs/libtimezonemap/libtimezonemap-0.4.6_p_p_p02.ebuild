@@ -25,8 +25,6 @@ DEPEND="dev-libs/glib:2
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3"
 
-S="${WORKDIR}/${PN}-${PV}${UVER}"
-
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eautoreconf

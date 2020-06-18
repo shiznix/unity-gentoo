@@ -50,9 +50,6 @@ src_prepare() {
 	# workaround launchpad bug #1186915
 	epatch "${FILESDIR}/${PN}-0.5.0-remove-desktop-fullname.patch"
 
-	# removed gtester2xunit-check
-	epatch "${FILESDIR}/${PN}-0.5.0-disable-gtester2xunit-check.patch"
-
 	# Correct path to upstart's /usr/bin/initctl #
 	sed -e 's:/sbin/initctl:/usr/bin/initctl:g' \
 		-i data/bamfdaemon-dbus-runner.in

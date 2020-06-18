@@ -25,7 +25,7 @@ DEPEND="dev-libs/glib:2
 	dev-qt/qtdeclarative:5
 	test? ( dev-qt/qttest:5 )"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${PN}-v${PV}"
 unset QT_QPA_PLATFORMTHEME
 MAKEOPTS="${MAKEOPTS} -j1"
 

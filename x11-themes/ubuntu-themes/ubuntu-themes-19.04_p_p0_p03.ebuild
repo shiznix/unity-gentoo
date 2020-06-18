@@ -2,10 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
 
 URELEASE="focal"
-inherit eutils gnome2-utils python-single-r1 ubuntu-versionator
+inherit eutils gnome2-utils ubuntu-versionator
 
 DESCRIPTION="Monochrome icons for the Unity desktop (default icon theme)"
 HOMEPAGE="https://launchpad.net/ubuntu-themes"
@@ -28,11 +27,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 PDEPEND="nemo? ( gnome-extra/nemo )"
-
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	python-single-r1_pkg_setup
-}
 
 src_prepare() {
 	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #

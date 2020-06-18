@@ -94,8 +94,8 @@ src_prepare() {
 		-i plugins/composite/composite.xml.in
 
 	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
-	sed -e 's:xubuntu:xunity:g' \
-		-i debian/65compiz_profile-on-session || die
+#	sed -e 's:xubuntu:xunity:g' \
+#		-i debian/65compiz_profile-on-session || die
 
 	# Don't let compiz install /etc/compizconfig/config, violates sandbox and we install it from "${WORKDIR}/debian/compizconfig" anyway #
 	sed '/add_subdirectory (config)/d' \
@@ -192,8 +192,8 @@ src_install() {
 		doman debian/{ccsm,compiz,gtk-window-decorator}.1
 
 		# X11 startup script #
-		exeinto /etc/X11/xinit/xinitrc.d/
-		doexe debian/65compiz_profile-on-session
+#		exeinto /etc/X11/xinit/xinitrc.d/
+#		doexe debian/65compiz_profile-on-session
 
 ## PROVIDED BY unity-base/unity ##
 		# Unity Compiz profile configuration file #

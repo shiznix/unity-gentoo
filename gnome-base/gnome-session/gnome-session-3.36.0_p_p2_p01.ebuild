@@ -135,10 +135,6 @@ src_install() {
 	exeinto /etc/X11/xinit/xinitrc.d/
 	newexe "${FILESDIR}/05-unity-desktop-session" 05-unity-desktop-session
 
-	# Start gnome-session using upstart #
-	insinto /usr/share/upstart/sessions
-	newins "${WORKDIR}/debian/gnome-session-bin.user-session.upstart" gnome-session.conf
-
 	# Start gnome-session using systemd #
 	exeinto /usr/libexec
 	doexe "${WORKDIR}/debian/data/run-systemd-session"

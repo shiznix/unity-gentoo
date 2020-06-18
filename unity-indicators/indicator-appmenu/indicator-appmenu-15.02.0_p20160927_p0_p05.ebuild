@@ -10,7 +10,8 @@ UVER_PREFIX="+16.10.${PVR_MICRO}"
 
 DESCRIPTION="Indicator for application menus used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-appmenu"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -28,9 +29,9 @@ DEPEND="dev-libs/libdbusmenu:=
 S="${WORKDIR}"
 
 src_prepare() {
+	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 	eautoreconf
-	append-cflags -Wno-error=incompatible-pointer-types
 }
 
 src_install() {

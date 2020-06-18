@@ -11,7 +11,8 @@ UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
 
 DESCRIPTION="Library to facilitate testing DBus interactions in Qt applications"
 HOMEPAGE="https://launchpad.net/libqtdbustest"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
+	${UURL}/${MY_P}${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -21,8 +22,13 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}+bzr42"
 
-DEPEND=">=dev-cpp/gtest-1.8.1
+DEPEND="=dev-cpp/gtest-1.8*
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qttest:5
 	dev-util/cmake-extras"
+
+src_prepare() {
+	cmake-utils_src_prepare
+	ubuntu-versionator_src_prepare
+}

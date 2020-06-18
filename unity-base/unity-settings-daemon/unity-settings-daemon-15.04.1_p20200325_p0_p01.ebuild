@@ -23,11 +23,21 @@ REQUIRED_USE="input_devices_wacom? ( udev )
 		smartcard? ( udev )"
 RESTRICT="mirror"
 
+# =gnome-base/gnome-desktop-3.34* required to build otherwise the following error occurs:
+#	debian/gnome-update-wallpaper-cache.c:65:5: error: too many arguments to function ‘gnome_bg_draw’
+#		65 |     gnome_bg_draw (bg, pixbuf, screen, FALSE);
+#		   |     ^~~~~~~~~~~~~
+#	In file included from debian/gnome-update-wallpaper-cache.c:25:
+#	/usr/include/gnome-desktop-3.0/libgnome-desktop/gnome-bg.h:81:18: note: declared here
+#		81 | void             gnome_bg_draw                  (GnomeBG               *bg,
+#		   |                  ^~~~~~~~~~~~~
+#	* ERROR: unity-base/unity-settings-daemon-15.04.1_p20200325_p0_p01::unity-gentoo failed (compile phase):
+#
 # require colord-0.1.27 dependency for connection type support
 COMMON_DEPEND="dev-libs/glib:2
 	dev-libs/libappindicator:=
 	x11-libs/gtk+:3
-	gnome-base/gnome-desktop:3=
+	=gnome-base/gnome-desktop-3.34*:3=
 	gnome-base/gsettings-desktop-schemas
 	gnome-base/librsvg
 	media-libs/fontconfig

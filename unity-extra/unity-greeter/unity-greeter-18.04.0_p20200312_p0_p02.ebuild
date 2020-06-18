@@ -44,7 +44,7 @@ RDEPEND="accessibility? ( app-accessibility/onboard
 	unity-indicators/indicator-application
 	x11-themes/ubuntu-wallpapers"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
