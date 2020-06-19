@@ -4,10 +4,10 @@
 EAPI=6
 GNOME_ORG_MODULE="gobject-introspection"
 
-URELEASE="focal"
+URELEASE="focal-updates"
 inherit ubuntu-versionator gnome.org
 
-UVER="-2"
+UVER="-1~ubuntu${PVR_PL_MINOR}${UVER_RELEASE}.1"
 
 DESCRIPTION="Build infrastructure for GObject Introspection"
 HOMEPAGE="https://wiki.gnome.org/Projects/GObjectIntrospection"

@@ -22,6 +22,7 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}+bzr42"
 
+# Won't build with >dev-cpp/gtest-1.8 "no rule to make target libgtest.a"
 DEPEND="=dev-cpp/gtest-1.8*
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5

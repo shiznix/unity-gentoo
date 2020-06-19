@@ -3,14 +3,16 @@
 
 EAPI=6
 
-URELEASE="focal"
+URELEASE="focal-updates"
 inherit meson gnome2-utils systemd vala ubuntu-versionator
+
+UVER="-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}~${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="D-Bus interfaces for querying and manipulating user account information"
 HOMEPAGE="http://www.fedoraproject.org/wiki/Features/UserAccountDialog"
 
 SRC_URI="${UURL}/${MY_P}.orig.tar.xz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3+"
 SLOT="0"

@@ -5,10 +5,10 @@ EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 PYTHON_REQ_USE="xml"
 
-URELEASE="focal"
+URELEASE="focal-updates"
 inherit gnome.org meson python-single-r1 toolchain-funcs versionator ubuntu-versionator xdg
 
-UVER="-2"
+UVER="-1~ubuntu${PVR_PL_MINOR}${UVER_RELEASE}.1"
 
 DESCRIPTION="Introspection system for GObject-based libraries"
 HOMEPAGE="https://wiki.gnome.org/Projects/GObjectIntrospection"
