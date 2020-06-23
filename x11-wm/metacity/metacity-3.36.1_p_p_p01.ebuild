@@ -40,19 +40,21 @@ RDEPEND="
 	x11-libs/libICE
 	x11-libs/libSM
 	gnome-extra/zenity
-	vulkan? ( <media-libs/vulkan-loader-1.2.140 )
+	vulkan? ( media-libs/vulkan-loader )
 "
 DEPEND="${RDEPEND}
-	vulkan? ( <dev-util/vulkan-headers-1.2.140 )
+	vulkan? ( dev-util/vulkan-headers )
 	dev-util/glib-utils
 	>=sys-devel/gettext-0.19.4
 	x11-base/xorg-proto
 	virtual/pkgconfig
 " # autoconf-archive for eautoreconf
 
-#src_prepare() {
-#	ubuntu-versionator_src_prepare
-#}
+src_prepare() {
+	ubuntu-versionator_src_prepare
+	gnome2_src_prepare
+	epatch -p1 "${FILESDIR}/metacity-3.36-compositor-vulkan_fix.diff"
+}
 
 src_configure() {
 	gnome2_src_configure \
