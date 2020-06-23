@@ -1,0 +1,12 @@
+diff -urN debian/gnome-update-wallpaper-cache.c debian-patched/gnome-update-wallpaper-cache.c
+--- debian/gnome-update-wallpaper-cache.c	2020-06-19 20:39:52.447563433 +0930
++++ debian-patched/gnome-update-wallpaper-cache.c	2020-06-19 20:53:35.751716174 +0930
+@@ -62,7 +62,7 @@
+     gnome_bg_load_from_preferences (bg, settings);
+ 
+     pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, rect.width, rect.height);
+-    gnome_bg_draw (bg, pixbuf, screen, FALSE);
++    gnome_bg_draw (bg, pixbuf);
+ 
+     g_object_unref (settings);
+ 
