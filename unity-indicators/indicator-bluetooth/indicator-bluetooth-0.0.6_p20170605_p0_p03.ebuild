@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"

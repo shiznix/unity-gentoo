@@ -16,12 +16,12 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 	${UURL}/${MY_P}${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 ## conf source ##
-LSVER="0.190" ## language-selector package version
+LSVER="0.204" ## language-selector package version
 SRC_URI+=" ${UURL/\/f\/${PN}}/l/language-selector/language-selector_${LSVER}.tar.xz"
 
 LICENSE="OFL-1.1"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="extra"
 
 RESTRICT="mirror binchecks strip"

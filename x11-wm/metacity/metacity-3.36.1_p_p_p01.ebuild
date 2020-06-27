@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2+"
 SLOT="0"
 IUSE="+libcanberra vulkan xinerama"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # TODO: libgtop could be optional, but no knob

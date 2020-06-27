@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit autotools eutils ubuntu-versionator
 
 MY_P="${PN}_${PV}"

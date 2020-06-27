@@ -3,7 +3,7 @@
 
 EAPI=5
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit base mono ubuntu-versionator
 
 UVER="-${PVR_MICRO}"

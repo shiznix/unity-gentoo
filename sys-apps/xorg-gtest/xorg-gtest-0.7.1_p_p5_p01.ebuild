@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit autotools ubuntu-versionator
 
 DESCRIPTION="X.Org dummy testing environment for Google Test"

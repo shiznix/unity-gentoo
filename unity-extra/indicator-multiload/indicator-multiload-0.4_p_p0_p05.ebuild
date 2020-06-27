@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit gnome2-utils ubuntu-versionator
 
 DESCRIPTION="Graphical system load indicator for CPU, ram, etc. used by the Unity desktop"

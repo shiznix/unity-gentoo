@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python{3_7,3_8} )
 
 inherit distutils-r1 eutils ubuntu-versionator
 
-URELEASE="disco"
+URELEASE="focal"
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors can be unpredictable #
 
 DESCRIPTION="Online scopes for the Unity Dash"

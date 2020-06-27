@@ -5,7 +5,7 @@ EAPI="6"
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_7,3_8} )
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit autotools gnome2 python-any-r1 ubuntu-versionator virtualx
 
 UURL="mirror://unity/pool/universe/e/${PN}"

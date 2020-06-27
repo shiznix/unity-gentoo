@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit systemd ubuntu-versionator
 
 UVER="-${PVR_MICRO}"

@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit autotools flag-o-matic ubuntu-versionator
 
 UVER_PREFIX="+19.04.${PVR_MICRO}"

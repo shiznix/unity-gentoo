@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{3_7,3_8} )
 
 URELEASE="focal"
 inherit bash-completion-r1 python-r1 vala ubuntu-versionator xdg
@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 
 LICENSE="LGPL-2+ LGPL-3+ GPL-2+"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+datahub +downloads-monitor +fts +icu introspection nls sql-debug telepathy"
 RESTRICT="mirror"
 

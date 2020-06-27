@@ -21,7 +21,7 @@ LICENSE="LGPL-2.1+"
 SLOT="2/$(get_version_component_range 2-3)"
 IUSE="dbus debug fam gtk-doc kernel_linux +mime selinux static-libs systemtap test xattr"
 
-#KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
 
 # * libelf isn't strictly necessary, but makes gresource tool more useful, and
 # the check is automagic in gio/meson.build. gresource is not a multilib tool

@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="eoan"
+URELEASE="focal"
 inherit autotools eutils ubuntu-versionator
 
 DESCRIPTION="Disable Gtk+ 3 client side decorations (CSD)"

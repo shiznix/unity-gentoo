@@ -19,7 +19,7 @@ SLOT="0"
 IUSE="doctool gtk-doc test"
 RESTRICT="!test? ( test )"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 # virtual/pkgconfig needed at runtime, bug #505408
 RDEPEND="

@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.xz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+branding debug doc +hud +nemo pch +systray test"
 RESTRICT="mirror"
 
