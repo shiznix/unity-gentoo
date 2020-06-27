@@ -174,6 +174,7 @@ ubuntu-versionator_pkg_setup() {
 	[[ "${PROFILE_RELEASE}" == artful ]] && GCC_MINIMUM="6.4.0"
 	[[ "${PROFILE_RELEASE}" == cosmic ]] && GCC_MINIMUM="8.2.0"
 	[[ "${PROFILE_RELEASE}" == eoan ]] && GCC_MINIMUM="9.2.0"
+	[[ "${PROFILE_RELEASE}" == focal ]] && GCC_MINIMUM="9.3.0"
 	GCC_CURRENT=$(gcc-fullversion)
 
 	[[ ${GCC_CURRENT//./} -lt ${GCC_MINIMUM//./} ]] \
