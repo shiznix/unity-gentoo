@@ -106,7 +106,7 @@ DEPEND="${COMMON_DEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/3.34-colord_wacom_networkmanager-optional.patch"
+	eapply "${FILESDIR}/3.36-colord_wacom_networkmanager-optional.patch"
 	gnome2_src_prepare
 
 	use schemas && eapply "${FILESDIR}/${PN}-3.34-schemas.diff"
