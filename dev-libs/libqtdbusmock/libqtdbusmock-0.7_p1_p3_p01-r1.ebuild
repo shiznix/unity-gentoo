@@ -19,9 +19,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
+# Networkmanager >1.20 removes NetworkManager.pc and libnm-{util,glib,glib-vpn}.pc #
 DEPEND=">=dev-cpp/gtest-1.8.1
 	dev-libs/libqtdbustest
-	net-misc/networkmanager"
+	<net-misc/networkmanager-1.20"
 
 S="${S}+bzr49"
 
