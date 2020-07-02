@@ -2,7 +2,7 @@
 	* This can lead to problems trying to use group keyboard layout(s)/variant(s) customised key+combo switching
 		Based on bug, requires upstream to patch support into unity-settings-daemon,unity,compiz and unity-control-center
 
-- Lockscreen fails to function when onscreen reader (orca) is activated Super+Alt+S (broken since Trusty, see LP# 1310404)
+- Lockscreen (Ctrl+Alt+L/Super+L) fails to function when onscreen reader(orca) or keyboard(onboard) are activated (broken since Trusty, see LP# 1310404)
 
 - Window control buttons can no longer currently be configured to be on the right using dconf/unity-tweak-tool
 	* Possibly due to changes in >=gtk-3.10 GtkHeaderBar client side decorations and ubuntu-themes
@@ -19,3 +19,11 @@
         unity-base/unity-settings-daemon (Ubuntu fork of gnome-base/gnome-settings-daemon)
         unity-base/unity-control-center (Ubuntu fork of gnome-base/gnome-control-center)
   * The flow-on effect of this development lag and subsequent version mismatch is that some updated features in Gnome can break in Unity
+
+- On some desktop installations the machine may mysteriously suspend to sleep (if supported) after 20 minutes
+ * This is a bug with Gnome's gnome-settings-daemon default power settings
+	Check the follwing as desktop user:
+		$ gsettings get org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout
+	If it returns anything above '0', then the following will need to be issued:
+		$ gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
+	Alternatively, it may be set via the GUI oriented gnome-base/dconf-editor

@@ -25,6 +25,8 @@ KEYWORDS="~amd64 ~arm64 ~ia64 ~ppc ~ppc64 ~x86"
 # printer panel requires cups and smbclient (the latter is not patched yet to be separately optional)
 # >=polkit-0.114 for .policy files gettext ITS
 # First block is toplevel meson.build deps in order of occurrence (plus deeper deps if in same conditional). Second block is dependency() from subdir meson.builds, sorted by directory name occurrence order
+#
+# >=dev-libs/libwacom-0.27 is non-optional until the usual Gentoo wacom/colord optional patchset is made available #
 DEPEND="
 	>=gui-libs/libhandy-0.0.12:0.0=
 	gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.25.3:= )
@@ -56,7 +58,7 @@ DEPEND="
 		>=net-misc/networkmanager-1.12.0:=[modemmanager]
 		>=net-misc/modemmanager-0.7.990 )
 	bluetooth? ( >=net-wireless/gnome-bluetooth-3.18.2:= )
-	input_devices_wacom? ( >=dev-libs/libwacom-0.27 )
+	>=dev-libs/libwacom-0.27
 	kerberos? ( app-crypt/mit-krb5 )
 
 	x11-libs/cairo[glib]
