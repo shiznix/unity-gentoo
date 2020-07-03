@@ -21,10 +21,4 @@ ebuild_hook() {
 			-e "s/@MOZ_APP_NAME@/${PN}/" \
 			"${desktopfile}" || die
 	fi
-
-	if ! use startup-notification; then
-		sed -i \
-			-e "/StartupNotify=true/d" \
-			"${desktopfile}" || die
-	fi
 }
