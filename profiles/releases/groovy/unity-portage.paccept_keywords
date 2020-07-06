@@ -170,6 +170,7 @@ sys-libs/db:5.3
 =sys-libs/libapparmor-2.10*
 sys-power/upower
 www-client/firefox
+x11-apps/copyq
 =x11-drivers/xf86-input-evdev-2.10*
 x11-misc/xvfb-run
 ~x11-libs/libdrm-2.4.67
@@ -261,7 +262,6 @@ unity-base/unity-language-pack **
 unity-base/unity-scopes-api **
 unity-base/unity-settings **
 unity-base/unity-settings-daemon **
-unity-extra/glipper **
 unity-extra/indicator-psensor **
 unity-extra/unity-greeter **
 unity-extra/indicator-evolution **
