@@ -50,7 +50,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 	local \
 		pkg \
-		basedir="$(/usr/bin/portageq get_repo_path / unity-gentoo)/profiles/releases/${PROFILE_RELEASE}/ehooks"
+		basedir="$(/usr/bin/portageq get_repo_path / unity-gentoo)/profiles/ehooks"
 
 	for pkg in ${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{:${SLOT%/*},}; do
 		if [[ -d ${EHOOK_PATH:=${basedir}}/${pkg} ]]; then
@@ -105,8 +105,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		[[ -s ${log} ]] \
 			&& die "ebuild_hook: function name collision"
 
-		x="${EHOOK_SOURCE[0]#*unity-gentoo/profiles/releases/}"
-		echo "${color_bold}>>> Loading unity-gentoo ebuild hooks${color_norm} from ${x%/*} ..."
+		echo "${color_bold}>>> Loading unity-gentoo ebuild hooks${color_norm} from ${EHOOK_SOURCE[0]%/*} ..."
 		for x in "${EHOOK_SOURCE[@]}"; do
 
 		## Process current phase ebuild hook.

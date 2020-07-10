@@ -52,7 +52,6 @@ printf "%s  " "Looking for ebuild hooks changes"
 indicator
 
 repo_dir="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
-urelease="$(readlink /etc/portage/make.profile | awk -F/ '{print $(NF-0)}')"
 wcard="*/*/"
 
 arr=( "nzero" )
@@ -63,15 +62,12 @@ while [[ -n ${arr[@]} ]]; do
 
 	prev_shopt=$(shopt -p nullglob)
 	shopt -s nullglob
-	arr=( "${repo_dir}"/profiles/releases/"${urelease}"/ehooks/${wcard} )
+	arr=( "${repo_dir}"/profiles/ehooks/${wcard} )
 	${prev_shopt}
 
 	ehk+=( "${arr[@]}" )
 	wcard+="*/"
 done
-
-## Get future releases
-frelease="$(find "${repo_dir}"/profiles/releases/* -maxdepth 0 -type d ! -name ${urelease} | awk -F/ '{print $(NF-0)}')"
 
 sys_db="/var/db/pkg/"
 
@@ -103,20 +99,11 @@ for x in "${ehk[@]}"; do
 		[[ -z ${slot} ]] || fgrep -qsx "${slot}" "${n}/SLOT" || continue
 
 		## Try another package if ehook_require USE-flag is not declared.
-		req=$(egrep -hos -m 1 "ehook_require\s[A-Za-z0-9+_@-]+" "${x%%/files/*}/"*.ehook)
+		req=$(egrep -hos -m 1 "ehook_require\s[A-Za-z0-9+_@-]+" "${x%%/files/*}/"*.ehook | head -1)
 		[[ -z ${req} ]] || portageq has_version / unity-extra/ehooks["${req/ehook_require }"] || continue
 
 		## Set ebuild hook's modification time equal to package's time when --reset option given.
-		if [[ -n ${reset} ]]; then
-			touch -m -t $(date -d @"${sys_date}" +%Y%m%d%H%M.%S) "${x}" 2>/dev/null && reset="applied"
-			if [[ ${reset} == "applied" ]]; then
-				for y in ${frelease}; do
-					## Include future releases with the same ebuild hook.
-					touch -m -t $(date -d @"${sys_date}" +%Y%m%d%H%M.%S) "${x/${urelease}/${y}}" 2>/dev/null
-				done
-				continue
-			fi
-		fi
+		[[ -n ${reset} ]] && touch -m -t $(date -d @"${sys_date}" +%Y%m%d%H%M.%S) "${x}" 2>/dev/null && reset="applied" && continue
 		## Get ownership of file when 'touch: cannot touch "${x}": Permission denied' and quit.
 		[[ -n ${reset} ]] && reset=$(stat -c "%U:%G" "${x}") && break 2
 

@@ -1,9 +1,0 @@
-ebuild_hook() {
-	ehook_require fontconfig_adjust
-
-	cp fonts/NotoColorEmoji.ttf "${S}"
-
-	rm {Makefile,png/128/*,svg/*}
-	touch png/128/tmp.png
-	touch svg/tmp.svg
-}

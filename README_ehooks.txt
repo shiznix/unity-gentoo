@@ -5,10 +5,10 @@ EBUILD HOOKS
   It's loosly based on eapply_user function from /usr/lib/portage/python*/phase-helpers.sh script
   and pre_src_prepare function from https://wiki.gentoo.org/wiki//etc/portage/patches link.
 
-  see profiles/releases/profile.bashrc
+  see /var/lib/layman/unity-gentoo/profiles/releases/profile.bashrc
 
 * Overlay's ebuild hooks are located
-  in /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks directory.
+  in /var/lib/layman/unity-gentoo/profiles/ehooks directory.
 
 * Optional ebuild hooks are managed via unity-extra/ehooks USE-flags
   and ehook_use and ehook_require query functions (see below).
@@ -131,4 +131,4 @@ EBUILD HOOKS
   - own empty directory DISABLES overlay's directory of the same name
   - e.g. /home/ehooks/app-arch/file-roller
          overrides or disables
-         /var/lib/layman/unity-gentoo/profiles/releases/${PROFILE_RELEASE}/ehooks/app-arch/file-roller
+         /var/lib/layman/unity-gentoo/profiles/ehooks/app-arch/file-roller
