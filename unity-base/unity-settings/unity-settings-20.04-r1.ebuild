@@ -31,7 +31,6 @@ src_install() {
 	local \
 		gschema="10_unity-settings.gschema.override" \
 		gschema_dir="/usr/share/glib-2.0/schemas" \
-		wallpapers_urelease=$(fgrep -h "URELEASE=" "$(portageq get_repo_path / unity-gentoo)"/x11-themes/ubuntu-wallpapers/ubuntu-wallpapers-*.ebuild)
 
 	insinto "${gschema_dir}"
 	newins "${FILESDIR}"/unity-settings_20.04.gsettings-override \
@@ -58,9 +57,8 @@ src_install() {
 		-e "/org.gnome.desktop.sound/,+2 d" \
 		"${ED}${gschema_dir}/${gschema}"
 
-	wallpapers_urelease="${wallpapers_urelease##*URELEASE=\"}"
 	sed -i \
-		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${wallpapers_urelease%\"}.xml/}" \
+		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${URELEASE}.xml/}" \
 		"${ED}${gschema_dir}/${gschema}"
 
 	use lowgfx && echo -e \
