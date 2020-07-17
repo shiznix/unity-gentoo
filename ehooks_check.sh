@@ -51,7 +51,7 @@ printf "%s  " "Looking for ebuild hooks changes"
 
 indicator
 
-repo_dir="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
+repo_root="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
 wcard="*/*/"
 
 arr=( "nzero" )
@@ -62,7 +62,7 @@ while [[ -n ${arr[@]} ]]; do
 
 	prev_shopt=$(shopt -p nullglob)
 	shopt -s nullglob
-	arr=( "${repo_dir}"/profiles/ehooks/${wcard} )
+	arr=( "${repo_root}"/profiles/ehooks/${wcard} )
 	${prev_shopt}
 
 	ehk+=( "${arr[@]}" )

@@ -4,7 +4,7 @@ ebuild_hook() {
 		fname=ubuntu-versionator_pkg_setup
 
 	if ! declare -F ${fname} 1>/dev/null; then
-		x=${REPODIR%/}/eclass/ubuntu-versionator.eclass
+		x="${REPO_ROOT}"/eclass/ubuntu-versionator.eclass
 		[[ -f ${x} ]] \
 			|| die "${x}: file not found"
 		source <(awk "/^${fname}\() {\$/ { p = 1 } p { print } /^}\$/ { p = 0 }" ${x} 2>/dev/null)

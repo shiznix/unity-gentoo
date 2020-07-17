@@ -24,22 +24,20 @@ S=${WORKDIR}
 EHOOK_UPDATE=()
 
 src_install() {
-	dosym "$(/usr/bin/portageq get_repo_path / unity-gentoo)"/ehooks_check.sh /usr/bin/ehooks
+	dosym "${REPO_ROOT}"/ehooks_check.sh /usr/bin/ehooks
 }
 
 pkg_preinst() {
 	local \
 		count=1 \
 		sys_db="/var/db/pkg/" \
-		repo_dir pkg_flag sys_flag x m n slot prev_shopt
+		pkg_flag sys_flag x m n slot prev_shopt
 
 	local -a \
 		ehk=() pkg=() \
 		indicator=( "|" "/" "-" "\\" )
 
 	printf "%s" "Looking for USE-flag changes ${indicator[0]}"
-
-	repo_dir="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
 
 	for x in ${IUSE}; do
 		x="${x#+}"
@@ -57,7 +55,7 @@ pkg_preinst() {
 		## Get ebuild hooks containing recently changed USE-flag.
 		prev_shopt=$(shopt -p nullglob)
 		shopt -s nullglob
-		ehk=( $(fgrep -l "${x}" "${repo_dir}"/profiles/ehooks/*/*/*.ehook) )
+		ehk=( $(fgrep -l "${x}" "${REPO_ROOT}"/profiles/ehooks/*/*/*.ehook) )
 		${prev_shopt}
 
 		for m in "${ehk[@]}"; do
