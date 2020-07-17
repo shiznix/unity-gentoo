@@ -30,7 +30,7 @@ S="${FILESDIR}"
 src_install() {
 	local \
 		gschema="10_unity-settings.gschema.override" \
-		gschema_dir="/usr/share/glib-2.0/schemas" \
+		gschema_dir="/usr/share/glib-2.0/schemas"
 
 	insinto "${gschema_dir}"
 	newins "${FILESDIR}"/unity-settings_20.04.gsettings-override \
