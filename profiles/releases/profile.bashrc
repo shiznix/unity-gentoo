@@ -3,6 +3,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 	PROFILE_DESC="/etc/portage/${CURRENT_PROFILE%%profiles*}/profiles/profiles.desc"
 	PROFILE_NAME="${CURRENT_PROFILE#*profiles}"
 	PROFILE_NAME="${PROFILE_NAME#"/"}"
+	REPODIR="$(/usr/bin/portageq get_repo_path / unity-gentoo)"
 
 	if [ -z "$(echo ${CURRENT_PROFILE} | grep unity-gentoo)" ]; then
 		die "Invalid profile detected, please select a 'unity-gentoo' profile for your architecture shown in 'eselect profile list'"
@@ -50,7 +51,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 	local \
 		pkg \
-		basedir="$(/usr/bin/portageq get_repo_path / unity-gentoo)/profiles/ehooks"
+		basedir="${REPODIR%/}/profiles/ehooks"
 
 	for pkg in ${CATEGORY}/{${P}-${PR},${P},${P%.*},${P%.*.*},${PN}}{:${SLOT%/*},}; do
 		if [[ -d ${EHOOK_PATH:=${basedir}}/${pkg} ]]; then
