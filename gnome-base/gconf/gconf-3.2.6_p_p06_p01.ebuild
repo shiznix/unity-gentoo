@@ -35,7 +35,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libxslt
 	dev-util/gtk-doc-am
 	>=dev-util/intltool-0.35
-	virtual/pkgconfig[${MULTILIB_USEDEP}]"
+	virtual/pkgconfig"
 RDEPEND="${RDEPEND}
 	abi_x86_32? (
 		!<=app-emulation/emul-linux-x86-gtklibs-20140508-r1
