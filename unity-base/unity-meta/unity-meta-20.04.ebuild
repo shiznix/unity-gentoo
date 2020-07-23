@@ -16,8 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility +apps chat extras +fonts +games +utils +xdm"
 RESTRICT="mirror"
 
-GVER="3.34*"
-
+GVER="3.36*"
 
 DEPEND="unity-base/unity-build-env
 	unity-extra/ehooks"
@@ -108,7 +107,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		media-gfx/gnome-font-viewer
 		media-gfx/gnome-screenshot
 		media-gfx/simple-scan
-		=media-video/cheese-${GVER}
+		media-video/cheese
 		net-misc/remmina
 		net-misc/vino
 		net-p2p/transmission[appindicator]
