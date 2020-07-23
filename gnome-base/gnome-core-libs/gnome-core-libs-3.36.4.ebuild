@@ -16,23 +16,22 @@ KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 # Note to developers:
 # This is a wrapper for the core libraries used by GNOME 3
 RDEPEND="
-	>=dev-libs/glib-2.62.1:2
+	>=dev-libs/glib-2.64.2:2
 	>=x11-libs/gdk-pixbuf-2.40.0:2
 	>=x11-libs/pango-1.42.4
-	>=x11-libs/gtk+-3.24.12:3[cups?]
+	>=x11-libs/gtk+-3.24.18:3[cups?]
 	>=dev-libs/atk-2.34.1
 	>=gnome-base/librsvg-2.40.21
-	>=gnome-base/gnome-desktop-3.34.2:3
-	>=x11-libs/startup-notification-0.12
+	>=gnome-base/gnome-desktop-3.36.2:3
 
-	>=gnome-base/gvfs-1.42.2
-	>=gnome-base/dconf-0.34.0
+	>=gnome-base/gvfs-1.44.1
+	>=gnome-base/dconf-0.36.0
 
-	>=media-libs/gstreamer-1.14.4:1.0
-	>=media-libs/gst-plugins-base-1.14.4:1.0
-	>=media-libs/gst-plugins-good-1.14.4:1.0
+	>=media-libs/gstreamer-1.16.2:1.0
+	>=media-libs/gst-plugins-base-1.16.2:1.0
+	>=media-libs/gst-plugins-good-1.16.2:1.0
 
-	python? ( >=dev-python/pygobject-3.34.0:3 )
+	python? ( >=dev-python/pygobject-3.36.1:3 )
 "
 DEPEND=""
 BDEPEND=""
