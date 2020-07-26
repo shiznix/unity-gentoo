@@ -49,7 +49,10 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# Keep warnings as warnings, not failures #
-	sed -e 's:-Werror ::g' \
+	# Fix typo #
+	sed \
+		-e 's:-Werror ::g' \
+		-e 's:AM_CXXFLAGS-:AM_CXXFLAGS=:' \
 		-i configure.ac
 	eautoreconf
 
@@ -62,7 +65,7 @@ src_prepare() {
 src_configure() {
 	emake -C ${WORKDIR}/${GLEWMX} glew.lib.mx AR="$(tc-getAR)" STRIP=true CC="$(tc-getCC)" POPT="${CFLAGS}"
 	CXXFLAGS+=" -I${WORKDIR}/${GLEWMX}/include"
-	PKG_CONFIG_PATH="${WORKDIR}/${GLEWMX}"
+	export PKG_CONFIG_PATH="${WORKDIR}/${GLEWMX}"
 
 	use debug && \
 		myconf="${myconf}
