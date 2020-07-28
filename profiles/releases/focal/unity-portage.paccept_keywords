@@ -113,7 +113,6 @@ media-libs/grilo:0.3::gentoo
 media-plugins/grilo-plugins:0.3::gentoo
 
 # www-client/firefox related #
-dev-lang/rust::gentoo
 dev-libs/nspr::gentoo
 dev-libs/nss::gentoo
 dev-util/cbindgen::gentoo
@@ -122,7 +121,6 @@ media-libs/libaom::gentoo
 media-libs/libvpx:0/6::gentoo
 media-libs/libwebp::gentoo
 virtual/cargo::gentoo
-virtual/rust::gentoo
 
 ## Other packages keyword unmasking ##
 app-admin/cgmanager
