@@ -227,7 +227,7 @@ index 0000000..65c8b42
 +  </menu>
 +</interface>
 diff --git a/data/meson.build b/data/meson.build
-index 378863a..71f97d7 100644
+index 17c9140..7adcb40 100644
 --- a/data/meson.build
 +++ b/data/meson.build
 @@ -2,6 +2,7 @@ subdir('icons')
@@ -239,11 +239,11 @@ index 378863a..71f97d7 100644
    'eog-image-properties-dialog.ui',
    'eog-multiple-save-as-dialog.ui',
 diff --git a/po/POTFILES.in b/po/POTFILES.in
-index 0d602a2..74891d3 100644
+index 31cf8f1..8bc89b4 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
-@@ -4,6 +4,7 @@ data/eog.appdata.xml.in
- data/eog.desktop.in.in
+@@ -3,6 +3,7 @@
+ data/eog.appdata.xml.in
  data/eog-gear-menu.ui
  data/eog-image-properties-dialog.ui
 +data/eog-menubar.ui
@@ -251,10 +251,10 @@ index 0d602a2..74891d3 100644
  data/eog-preferences-dialog.ui
  data/eog-zoom-entry.ui
 diff --git a/src/eog-application.c b/src/eog-application.c
-index 95ca9ac..95bbebe 100644
+index a464e4e..9a8ce1f 100644
 --- a/src/eog-application.c
 +++ b/src/eog-application.c
-@@ -267,6 +267,29 @@ on_extension_removed (PeasExtensionSet *set,
+@@ -265,6 +265,29 @@ on_extension_removed (PeasExtensionSet *set,
  	eog_application_activatable_deactivate (EOG_APPLICATION_ACTIVATABLE (exten));
  }
  
@@ -284,7 +284,7 @@ index 95ca9ac..95bbebe 100644
  static void
  eog_application_startup (GApplication *application)
  {
-@@ -329,6 +352,18 @@ eog_application_startup (GApplication *application)
+@@ -326,6 +349,18 @@ eog_application_startup (GApplication *application)
  			  G_CALLBACK (on_extension_removed), app);
  
  	peas_extension_set_call (app->priv->extensions, "activate");
@@ -304,10 +304,10 @@ index 95ca9ac..95bbebe 100644
  
  static void
 diff --git a/src/eog-window.c b/src/eog-window.c
-index 775eb72..3c100b7 100644
+index d6fc383..79d3d79 100644
 --- a/src/eog-window.c
 +++ b/src/eog-window.c
-@@ -4303,23 +4303,36 @@ eog_window_construct_ui (EogWindow *window)
+@@ -4263,23 +4263,36 @@ eog_window_construct_ui (EogWindow *window)
  	gtk_widget_show (priv->zoom_scale);
  #endif
  
@@ -358,7 +358,7 @@ index 775eb72..3c100b7 100644
  
  	fullscreen_button = gtk_button_new_from_icon_name ("view-fullscreen-symbolic",
  							   GTK_ICON_SIZE_BUTTON);
-@@ -4330,15 +4343,6 @@ eog_window_construct_ui (EogWindow *window)
+@@ -4290,15 +4303,6 @@ eog_window_construct_ui (EogWindow *window)
  	gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), fullscreen_button);
  	gtk_widget_show (fullscreen_button);
  
@@ -374,7 +374,7 @@ index 775eb72..3c100b7 100644
  	priv->cbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
  	gtk_box_pack_start (GTK_BOX (priv->box), priv->cbox, TRUE, TRUE, 0);
  	gtk_widget_show (priv->cbox);
-@@ -5310,6 +5314,9 @@ eog_window_get_gear_menu_section (EogWindow *window, const gchar *id)
+@@ -5300,6 +5304,9 @@ eog_window_get_gear_menu_section (EogWindow *window, const gchar *id)
  	GObject *object;
  	g_return_val_if_fail (EOG_IS_WINDOW (window), NULL);
  
@@ -397,5 +397,5 @@ index 472408a..0305a13 100644
    </gresource>
  </gresources>
 -- 
-2.24.1
+2.26.2
 
