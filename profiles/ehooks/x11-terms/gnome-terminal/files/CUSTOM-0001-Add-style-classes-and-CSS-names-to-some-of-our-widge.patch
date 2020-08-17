@@ -8,7 +8,7 @@ Subject: [PATCH] Add style classes and CSS names to some of our widgets
  2 files changed, 13 insertions(+)
 
 diff --git a/src/terminal-notebook.c b/src/terminal-notebook.c
-index 006922f..3823329 100644
+index 356a389..5f5670f 100644
 --- a/src/terminal-notebook.c
 +++ b/src/terminal-notebook.c
 @@ -32,6 +32,8 @@
@@ -20,7 +20,7 @@ index 006922f..3823329 100644
  #define TERMINAL_NOTEBOOK_GET_PRIVATE(notebook)(G_TYPE_INSTANCE_GET_PRIVATE ((notebook), TERMINAL_TYPE_NOTEBOOK, TerminalNotebookPrivate))
  
  struct _TerminalNotebookPrivate
-@@ -389,11 +391,15 @@ static void
+@@ -387,11 +389,15 @@ static void
  terminal_notebook_init (TerminalNotebook *notebook)
  {
    TerminalNotebookPrivate *priv;
@@ -37,10 +37,10 @@ index 006922f..3823329 100644
  
  static void
 diff --git a/src/terminal-screen.c b/src/terminal-screen.c
-index 76a7c06..a7082ab 100644
+index 21bbac0..b7459c0 100644
 --- a/src/terminal-screen.c
 +++ b/src/terminal-screen.c
-@@ -122,6 +122,8 @@ enum
+@@ -150,6 +150,8 @@ enum
    TARGET_TAB
  };
  
@@ -49,7 +49,7 @@ index 76a7c06..a7082ab 100644
  static void terminal_screen_constructed (GObject             *object);
  static void terminal_screen_dispose     (GObject             *object);
  static void terminal_screen_finalize    (GObject             *object);
-@@ -404,9 +406,14 @@ terminal_screen_init (TerminalScreen *screen)
+@@ -531,9 +533,14 @@ terminal_screen_init (TerminalScreen *screen)
    guint i;
    uuid_t u;
    char uuidstr[37];
@@ -64,3 +64,5 @@ index 76a7c06..a7082ab 100644
    uuid_generate (u);
    uuid_unparse (u, uuidstr);
    priv->uuid = g_strdup (uuidstr);
+-- 
+2.26.2

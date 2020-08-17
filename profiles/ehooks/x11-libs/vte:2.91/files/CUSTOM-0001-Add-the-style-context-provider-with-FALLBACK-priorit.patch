@@ -1,0 +1,73 @@
+From: Iain Lane <iain@orangesquash.org.uk>
+Date: Thu, 16 Jul 2015 10:32:38 +0100
+Subject: [PATCH] Add the style context provider with FALLBACK priority
+
+Let's try again. This time we have two style providers. One of them is at
+APPLICATION priority and cannot be overridden by the theme. It sets the padding
+on VteTerminal widgets. The other one is at FALLBACK priority and is for
+colours. This can be overridden by the theme.
+
+This reverts commit bd86e7637d89a55941674756e3e223c82aee2305.
+
+Bug-Upstream: https://bugzilla.gnome.org/show_bug.cgi?id=740123
+---
+ src/vtegtk.cc | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/src/vtegtk.cc b/src/vtegtk.cc
+index f7307c8..eb131d7 100644
+--- a/src/vtegtk.cc
++++ b/src/vtegtk.cc
+@@ -75,6 +75,7 @@
+ struct _VteTerminalClassPrivate {
+         GtkStyleProvider *style_provider_dark;
+         GtkStyleProvider *style_provider_light;
++        GtkStyleProvider *style_provider_padding;
+ };
+ 
+ #ifdef VTE_DEBUG
+@@ -146,15 +147,18 @@ vte_terminal_theme_update (VteTerminal *terminal)
+ 
+                 gtk_style_context_add_provider (context,
+                                                 VTE_TERMINAL_GET_CLASS (terminal)->priv->style_provider_dark,
+-                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
++                                                GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+         } else {
+                 gtk_style_context_remove_provider (context,
+                                                    VTE_TERMINAL_GET_CLASS (terminal)->priv->style_provider_dark);
+ 
+                 gtk_style_context_add_provider (context,
+                                                 VTE_TERMINAL_GET_CLASS (terminal)->priv->style_provider_light,
+-                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
++                                                GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+         }
++        gtk_style_context_add_provider (context,
++                                        VTE_TERMINAL_GET_CLASS (terminal)->priv->style_provider_padding,
++                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+ }
+ 
+ static void
+@@ -487,6 +491,7 @@ vte_terminal_get_property (GObject *object,
+                 case PROP_HADJUSTMENT:
+                         g_value_set_object (value, widget->hadjustment());
+                         break;
++
+                 case PROP_VADJUSTMENT:
+                         g_value_set_object (value, widget->vadjustment());
+                         break;
+@@ -1927,6 +1932,13 @@ vte_terminal_class_init(VteTerminalClass *klass)
+                                          "}\n",
+                                          -1, NULL);
+ 
++        klass->priv->style_provider_padding = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
++        gtk_css_provider_load_from_data (GTK_CSS_PROVIDER (klass->priv->style_provider_padding),
++                                         "VteTerminal, " VTE_TERMINAL_CSS_NAME " {\n"
++                                           "padding: 1px 1px 1px 1px;\n"
++                                         "}\n",
++                                         -1, NULL);
++
+ #ifdef WITH_A11Y
+         /* a11y */
+         gtk_widget_class_set_accessible_type(widget_class, VTE_TYPE_TERMINAL_ACCESSIBLE);
+-- 
+2.26.2
