@@ -38,7 +38,6 @@ COMMON_DEPEND="
 	>=gnome-base/gnome-desktop-3.17.4:3=
 	>=gnome-base/gnome-settings-daemon-3.8.3
 
-	app-admin/apg
 	app-text/iso-codes
 	dev-libs/libpwquality
 	dev-libs/libtimezonemap
