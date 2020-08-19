@@ -22,15 +22,14 @@ RESTRICT="mirror"
 # Networkmanager >1.20 removes NetworkManager.pc and libnm-{util,glib,glib-vpn}.pc #
 DEPEND=">=dev-cpp/gtest-1.8.1
 	dev-libs/libqtdbustest
-	<net-misc/networkmanager-1.20"
+	net-misc/networkmanager"
 
 S="${S}+bzr49"
 
+PATCHES=( "${FILESDIR}"/1001_port-to-libnm.patch )
+
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	# Include missing glib-2.0 header files for building with >=networkmanager-1.0.6 #
-	sed -e 's:NetworkManager REQUIRED:NetworkManager REQUIRED glib-2.0 REQUIRED:g' \
-		-i CMakeLists.txt
 
 	# Disable build of tests #
 	sed '/add_subdirectory(tests)/d' -i CMakeLists.txt || die
