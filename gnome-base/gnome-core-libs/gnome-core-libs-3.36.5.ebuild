@@ -11,7 +11,7 @@ IUSE="cups python"
 
 # when unmasking for an arch
 # double check none of the deps are still masked !
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 
 # Note to developers:
 # This is a wrapper for the core libraries used by GNOME 3
@@ -21,7 +21,7 @@ RDEPEND="
 	>=x11-libs/pango-1.42.4
 	>=x11-libs/gtk+-3.24.18:3[cups?]
 	>=dev-libs/atk-2.34.1
-	>=gnome-base/librsvg-2.40.21
+	>=gnome-base/librsvg-2.48.8
 	>=gnome-base/gnome-desktop-3.36.2:3
 
 	>=gnome-base/gvfs-1.44.1
@@ -37,7 +37,6 @@ DEPEND=""
 BDEPEND=""
 
 # >=x11-libs/libwnck-3.24.1:3 - not used by core packages anymore
-# librsvg kept back on non-rust version; should move on at some point for non-exotic arches.
 # pango kept at 1.42 for now due to bitmap fonts and incompatibilities
 
 S="${WORKDIR}"
