@@ -77,7 +77,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		media-fonts/lohit-tamil-classical
 		media-fonts/lohit-telugu
 		media-fonts/nanum
-		amd64? ( media-fonts/noto-emoji )
+		media-fonts/noto-emoji
 		media-fonts/quivira
 		media-fonts/sil-abyssinica
 		media-fonts/sil-padauk
