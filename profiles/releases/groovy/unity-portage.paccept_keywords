@@ -83,6 +83,7 @@ gnome-base/librsvg::gentoo
 >=gnome-extra/evolution-data-server-3.36::gentoo
 >=gnome-extra/zenity-3.30::gentoo
 gui-libs/libhandy::gentoo
+~gui-libs/tepl-4.4.0::gentoo
 >=mail-client/evolution-3.36::gentoo
 media-fonts/cantarell::gentoo
 >=media-gfx/eog-3.32::gentoo
