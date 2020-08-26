@@ -2,10 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
 
 URELEASE="focal"
-inherit autotools eutils python-single-r1 ubuntu-versionator vala
+inherit autotools eutils ubuntu-versionator vala
 
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
@@ -20,9 +19,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+introspection java mono test"
 RESTRICT="mirror"
 
-# legacy dep #
-#dev-libs/xapian:=
-#dev-libs/xapian-bindings[python]
 DEPEND="dev-libs/dbus-glib
 	dev-libs/glib:2
 	dev-libs/libdbusmenu:=
@@ -30,27 +26,15 @@ DEPEND="dev-libs/dbus-glib
 	dev-perl/XML-LibXML
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
-	$(python_gen_cond_dep '
-		dev-python/dbus-python[${PYTHON_MULTI_USEDEP}]
-		dev-python/pygobject:2[${PYTHON_MULTI_USEDEP}]
-		dev-python/pygtk[${PYTHON_MULTI_USEDEP}]
-		dev-python/pyxdg[${PYTHON_MULTI_USEDEP}]
-	')
 
 	introspection? ( >=dev-libs/gobject-introspection-1:= )
 	java? ( dev-java/jayatana )
 	mono? ( dev-dotnet/gtk-sharp:2 )
 
-	$(vala_depend)
-	${PYTHON_DEPS}"
+	$(vala_depend)"
 
 S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
-
-pkg_setup() {
-	ubuntu-versionator_pkg_setup
-	python-single-r1_pkg_setup
-}
 
 src_prepare () {
 	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" # This needs to be applied for the debian/ directory to be present #
@@ -83,7 +67,7 @@ src_configure() {
 	# Build GTK2 support #
 	[[ -d build-gtk2 ]] || mkdir build-gtk2
 	pushd build-gtk2
-		PYTHON="${EPYTHON}" ../configure \
+		../configure \
 			--prefix=/usr \
 			--libdir=/usr/$(get_libdir) \
 			--disable-static \
@@ -96,7 +80,7 @@ src_configure() {
 	# Build GTK3 support #
 	[[ -d build-gtk3 ]] || mkdir build-gtk3
 	pushd build-gtk3
-		PYTHON="${EPYTHON}" ../configure \
+		../configure \
 			--prefix=/usr \
 			--libdir=/usr/$(get_libdir) \
 			--disable-static \
