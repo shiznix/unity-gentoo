@@ -1,4 +1,4 @@
-*/* -accessibility -bluetooth -colord -cups -eds -fcitx -gnome-online-accounts
+*/* -accessibility -bluetooth -colord -cups -eds -fcitx -gnome-online-accounts -wayland
 
 ## unity related
 unity-base/unity -hud -nemo
