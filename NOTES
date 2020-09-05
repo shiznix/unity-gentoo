@@ -81,6 +81,7 @@ media-gfx/gnome-screenshot		# Use Ubuntu help instead of GNOME help, don't use G
 media-sound/audacity			# Fix Exec command to use Unity menubar properly
 media-video/totem			# Add traditional menubar (https://bugzilla.gnome.org/show_bug.cgi?id=749695)
 net-im/pidgin				# Add chat section into messaging menu (Available, Away, Busy, Invisible, Offline)
+net-im/telegram-desktop			# Add ubuntu-mono-dark tray icons
 x11-libs/vte:2.91			# Add the style context provider with FALLBACK priority
 					# NOTE: see x11-terms/gnome-terminal
 

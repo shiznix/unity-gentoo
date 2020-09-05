@@ -1,0 +1,8 @@
+ebuild_hook() {
+	sed -i \
+		-e "/^Exec/{s/=/=env TDESKTOP_DISABLE_TRAY_COUNTER=1 /}" \
+		"${ED%/}"/usr/share/applications/telegram-desktop.desktop
+
+	insinto /usr/share/icons
+	doins -r "${EHOOK_FILESDIR}"/ubuntu-mono-dark
+}
