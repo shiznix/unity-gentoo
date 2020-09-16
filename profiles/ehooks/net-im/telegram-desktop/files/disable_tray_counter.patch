@@ -1,0 +1,26 @@
+From 4dec4f27e3aea5085fb155dd0da61174e7e24e10 Mon Sep 17 00:00:00 2001
+From: c4pp4
+Date: Wed, 16 Sep 2020 01:07:50 +0200
+Subject: [PATCH 1/1] Disable tray counter for autostart launcher
+
+Signed-off-by: c4pp4
+---
+ Telegram/SourceFiles/platform/linux/specific_linux.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/platform/linux/specific_linux.cpp b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
+index 6fd2edc..2f1abdc 100644
+--- a/Telegram/SourceFiles/platform/linux/specific_linux.cpp
++++ b/Telegram/SourceFiles/platform/linux/specific_linux.cpp
+@@ -305,7 +305,7 @@ bool GenerateDesktopFile(
+ 				QRegularExpression(
+ 					qsl("^Exec=(.*) -- %u$"),
+ 					QRegularExpression::MultilineOption),
+-				qsl("Exec=\\1")
++				qsl("Exec=env TDESKTOP_DISABLE_TRAY_COUNTER=1 \\1")
+ 					+ (args.isEmpty() ? QString() : ' ' + args));
+ 		}
+ 
+-- 
+2.26.2
+
