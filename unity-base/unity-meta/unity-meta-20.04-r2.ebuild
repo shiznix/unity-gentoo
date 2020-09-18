@@ -50,7 +50,8 @@ RDEPEND="gnome-base/gnome-core-libs
 		|| ( www-client/firefox www-client/firefox-bin www-client/chromium ) )
 	chat? ( || (
 		( net-im/pidgin x11-plugins/pidgin-libnotify )
-		( net-im/empathy net-libs/telepathy-indicator ) ) )
+		( net-im/empathy net-libs/telepathy-indicator )
+		net-im/telegram-desktop ) )
 	extras? (
 		app-cdr/brasero
 		=gnome-base/dconf-editor-${GVER}
