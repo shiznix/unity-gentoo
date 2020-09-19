@@ -13,7 +13,7 @@ LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-IUSE="+audacity_menu +eog_menu +evince_menu +fontconfig_adjust +gnome-screenshot_adjust +gnome-terminal_theme +libreoffice_theme +nemo_noroot +pidgin_chat +telegram_theme +totem_menu +zim_theme"
+IUSE="+audacity_menu +copyq_theme +eog_menu +evince_menu +fontconfig_adjust +gnome-screenshot_adjust +gnome-terminal_theme +libreoffice_theme +nemo_noroot +pidgin_chat +telegram_theme +totem_menu +zim_theme"
 
 DEPEND="unity-base/unity-build-env"
 RDEPEND="fontconfig_adjust? (

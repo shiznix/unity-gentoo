@@ -1,0 +1,10 @@
+ebuild_hook() {
+	sed -i \
+		-e '/Exec=/{s/copyq/env COPYQ_SESSION_COLOR=#dfdbd2 copyq/}' \
+		shared/com.github.hluk.copyq.desktop.in
+
+	sed -i \
+		-e '/applicationFilePath/{s/"\\"" +/"env COPYQ_SESSION_COLOR=#dfdbd2 " +/}' \
+		-e '/applicationFilePath/{s/ + "\\""//}' \
+		src/platform/x11/x11platform.cpp
+}

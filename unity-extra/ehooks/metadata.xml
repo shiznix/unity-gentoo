@@ -11,6 +11,7 @@
 	</upstream>
 	<use>
 		<flag name="audacity_menu">Add Unity's Global menu for <pkg>media-sound/audacity</pkg></flag>
+		<flag name="copyq_theme">Set ubuntu-mono-dark tray icon color for <pkg>x11-apps/copyq</pkg></flag>
 		<flag name="eog_menu">Add Unity's Global menu for <pkg>media-gfx/eog</pkg></flag>
 		<flag name="evince_menu">Add Unity's Global menu for <pkg>app-text/evince</pkg></flag>
 		<flag name="fontconfig_adjust">Adjust fonts configuration according to Ubuntu</flag>
@@ -19,6 +20,7 @@
 		<flag name="libreoffice_theme">Add Ubuntu's Human icon theme for <pkg>app-office/libreoffice</pkg></flag>
 		<flag name="nemo_noroot">Remove "Open as Root" context menu action for <pkg>gnome-extra/nemo</pkg></flag>
 		<flag name="pidgin_chat">Add chat section into Unity's Messaging menu for <pkg>net-im/pidgin</pkg></flag>
+		<flag name="telegram_theme">Add ubuntu-mono-dark tray icons for <pkg>net-im/telegram-desktop</pkg></flag>
 		<flag name="totem_menu">Add Unity's Global menu for <pkg>media-video/totem</pkg></flag>
 		<flag name="zim_theme">Add Ubuntu Mono icon theme for <pkg>x11-misc/zim</pkg></flag>
 	</use>
