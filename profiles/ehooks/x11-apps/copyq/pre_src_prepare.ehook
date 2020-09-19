@@ -1,4 +1,6 @@
 ebuild_hook() {
+	ehook_require copyq_theme
+
 	sed -i \
 		-e '/Exec=/{s/copyq/env COPYQ_SESSION_COLOR=#dfdbd2 copyq/}' \
 		shared/com.github.hluk.copyq.desktop.in
