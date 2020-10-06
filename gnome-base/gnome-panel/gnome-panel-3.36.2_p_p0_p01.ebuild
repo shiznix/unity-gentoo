@@ -4,7 +4,7 @@
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-URELEASE="focal"
+URELEASE="focal-updates"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 DESCRIPTION="The GNOME panel patched for the Unity desktop"

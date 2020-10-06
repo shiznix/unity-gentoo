@@ -5,7 +5,7 @@ EAPI=6
 VALA_MIN_API_VERSION=0.40
 VALA_MAX_API_VERSION=0.40
 
-URELEASE="focal"
+URELEASE="focal-updates"
 inherit gnome.org gnome2-utils meson vala xdg ubuntu-versionator
 
 DESCRIPTION="Open source photo manager for GNOME"

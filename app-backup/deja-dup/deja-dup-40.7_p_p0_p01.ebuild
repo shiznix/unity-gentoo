@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="focal"
+URELEASE="focal-updates"
 inherit gnome2-utils meson ubuntu-versionator vala xdg
 
 DESCRIPTION="Simple backup tool using duplicity back-end"

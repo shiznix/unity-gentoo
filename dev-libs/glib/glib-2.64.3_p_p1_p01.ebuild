@@ -4,13 +4,13 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 
-URELEASE="focal"
+URELEASE="focal-updates"
 inherit flag-o-matic gnome.org gnome2-utils linux-info meson multilib multilib-minimal python-any-r1 toolchain-funcs ubuntu-versionator versionator xdg
 
 
 MY_P="${PN}2.0_${PV}"
 MY_PV="${PV}"
-UVER="-${PVR_PL_MAJOR}~fakesync${PVR_PL_MINOR}"
+UVER="-${PVR_PL_MAJOR}~ubuntu${UVER_RELEASE}.${PVR_PL_MINOR}"
 #S="${WORKDIR}/${PN}-${PV}"
 
 DESCRIPTION="The GLib library of C routines"
