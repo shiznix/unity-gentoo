@@ -19,7 +19,7 @@ DEPEND="unity-indicators/indicator-application
 	cups? ( unity-indicators/indicator-printers )
 	datetime? ( unity-indicators/indicator-datetime )
 	keyboard? ( unity-indicators/indicator-keyboard )
-	paste? ( x11-apps/copyq )
+	paste? ( x11-misc/copyq )
 	sensors? ( unity-extra/indicator-psensor )
 	session? ( unity-indicators/indicator-session )
 	sound? ( unity-indicators/indicator-sound )

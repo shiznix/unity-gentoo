@@ -168,11 +168,11 @@ sys-libs/db:5.3
 =sys-libs/libapparmor-2.10*
 sys-power/upower
 www-client/firefox
-x11-apps/copyq
 =x11-drivers/xf86-input-evdev-2.10*
-x11-misc/xvfb-run
 ~x11-libs/libdrm-2.4.67
 x11-libs/xapps
+x11-misc/copyq
+x11-misc/xvfb-run
 =x11-themes/adwaita-icon-theme-3.24*
 
 ## Overlay missing keyword unmasking ##
