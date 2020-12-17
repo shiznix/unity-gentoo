@@ -23,7 +23,6 @@ RESTRICT="mirror"
 
 DEPEND=">=dev-libs/dee-1.2.5:=
 	dev-libs/libdbusmenu:=
-	dev-libs/libgee:0
 	x11-libs/gtk+:3
 	${PYTHON_DEPS}
 	$(vala_depend)"

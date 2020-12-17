@@ -18,7 +18,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="dev-libs/glib:2
-	dev-libs/libgee:0
+	dev-libs/libgee:0.8
 	dev-libs/libzeitgeist
 	gnome-extra/zeitgeist
 	sys-auth/polkit

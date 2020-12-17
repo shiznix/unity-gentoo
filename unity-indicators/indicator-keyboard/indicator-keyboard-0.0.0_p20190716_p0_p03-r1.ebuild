@@ -26,7 +26,7 @@ DEPEND="${RDEPEND}
 	app-i18n/ibus[vala]
 	>=dev-libs/glib-2.37
 	dev-libs/libappindicator
-	dev-libs/libgee:0
+	dev-libs/libgee:0.8
 	dev-libs/libdbusmenu
 	gnome-base/dconf
 	gnome-base/libgnomekbd
