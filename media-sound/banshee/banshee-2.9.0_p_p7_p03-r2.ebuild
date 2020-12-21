@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="cosmic"
-inherit eutils autotools mono-env fdo-mime gnome2-utils versionator ubuntu-versionator
+inherit eutils autotools mono-env gnome2-utils versionator ubuntu-versionator xdg-utils
 
 UVER_PREFIX="+really2.6.2"
 
@@ -142,13 +142,13 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	fdo-mime_desktop_database_update
-	fdo-mime_mime_database_update
+	xdg_desktop_database_update
+	xdg_mime_database_update
 	gnome2_icon_cache_update
 }
 
 pkg_postrm() {
-	fdo-mime_desktop_database_update
-	fdo-mime_mime_database_update
+	xdg_desktop_database_update
+	xdg_mime_database_update
 	gnome2_icon_cache_update
 }
