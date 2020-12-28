@@ -1,8 +1,0 @@
-ebuild_hook() {
-	# Cater for 'lib64' on newer systems where 'lib' may no longer be a symlink to 'lib64' #
-	sed -e "s:lib/mono:$(get_libdir)/mono:g" \
-		-i Mono.Addins/mono-addins.pc.in \
-		Mono.Addins.Setup/mono-addins-setup.pc.in \
-		Mono.Addins.MSBuild/mono-addins-msbuild.pc.in \
-		Mono.Addins.Gui/mono-addins-gui.pc.in
-}

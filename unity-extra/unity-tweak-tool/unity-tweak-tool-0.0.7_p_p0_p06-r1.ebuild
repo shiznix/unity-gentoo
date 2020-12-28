@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 
-inherit distutils-r1 fdo-mime gnome2-utils ubuntu-versionator
+inherit distutils-r1 gnome2-utils ubuntu-versionator xdg-utils
 
 URELEASE="focal"
 UVER="+-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
@@ -103,10 +103,13 @@ pkg_preinst() {
 
 pkg_postinst() {
 	gnome2_icon_cache_update
-	fdo-mime_desktop_database_update
+	xdg_desktop_database_update
+	xdg_mimeinfo_database_update
 	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {
 	gnome2_icon_cache_update
+	xdg_desktop_database_update
+	xdg_mimeinfo_database_update
 }
