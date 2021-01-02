@@ -14,7 +14,7 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 RDEPEND=">=dev-dotnet/gtk-sharp-2.12.21
-	virtual/libgudev"
+	dev-libs/libgudev"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 

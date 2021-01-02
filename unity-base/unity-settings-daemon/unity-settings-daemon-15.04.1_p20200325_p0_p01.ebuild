@@ -59,7 +59,7 @@ COMMON_DEPEND="dev-libs/glib:2
 	smartcard? ( dev-libs/nss )
 	udev? (
 		sys-apps/hwids
-		virtual/libgudev:=
+		dev-libs/libgudev:=
 		virtual/libudev:= )"
 RDEPEND="${COMMON_DEPEND}
 	gnome-base/dconf

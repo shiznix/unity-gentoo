@@ -54,8 +54,7 @@ COMMON_DEPEND="
 		>=sci-geosciences/geocode-glib-3.10
 		>=sys-auth/polkit-0.114
 
-		>=x11-libs/pango-1.20
-		virtual/libgudev:= )
+		>=x11-libs/pango-1.20 )
 	colord? (
 		>=x11-misc/colord-1.0.2:=
 		>=media-libs/lcms-2.2:2 )
@@ -68,7 +67,7 @@ COMMON_DEPEND="
 		>=net-misc/modemmanager-1.0:= )
 	networkmanager? ( >=net-misc/networkmanager-1.0 )
 	smartcard? ( >=dev-libs/nss-3.11.2 )
-	udev? ( virtual/libgudev:= )
+	udev? ( dev-libs/libgudev:= )
 	wayland? ( dev-libs/wayland )
 "
 

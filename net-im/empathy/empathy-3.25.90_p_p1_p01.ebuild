@@ -73,7 +73,7 @@ COMMON_DEPEND="
 	v4l? (
 		media-plugins/gst-plugins-v4l2:1.0
 		>=media-video/cheese-3.4:=
-		virtual/libgudev:= )
+		dev-libs/libgudev:= )
 "
 
 # >=empathy-3.4 is incompatible with telepathy-rakia-0.6, bug #403861

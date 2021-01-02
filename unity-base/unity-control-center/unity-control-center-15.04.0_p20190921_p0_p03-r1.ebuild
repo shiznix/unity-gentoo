@@ -55,7 +55,7 @@ COMMON_DEPEND="
 
 	net-libs/geonames
 
-	virtual/libgudev
+	dev-libs/libgudev
 	virtual/opengl
 	x11-apps/xmodmap
 	x11-libs/cairo

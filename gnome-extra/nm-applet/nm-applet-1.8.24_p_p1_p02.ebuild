@@ -38,7 +38,7 @@ RDEPEND=">=app-crypt/libsecret-0.18
 
 	introspection? ( >=dev-libs/gobject-introspection-0.9.6:= )
 	virtual/freedesktop-icon-theme
-	virtual/libgudev:=
+	dev-libs/libgudev:=
 	gcr? ( >=app-crypt/gcr-3.14:=[gtk] )
 	modemmanager? ( net-misc/modemmanager )
 	selinux? ( sys-libs/libselinux )

@@ -59,7 +59,7 @@ COMMON_DEPEND="
 			>=dev-python/pygobject-3.0:3[${PYTHON_MULTI_USEDEP}]
 		') )
 	udev? (
-		virtual/libgudev:=
+		dev-libs/libgudev:=
 		ipod? ( >=media-libs/libgpod-0.7.92[udev] )
 		mtp? ( >=media-libs/libmtp-0.3 ) )
 	zeitgeist? ( gnome-extra/zeitgeist )"
