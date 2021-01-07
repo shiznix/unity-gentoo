@@ -61,9 +61,8 @@ DEPEND="${RDEPEND}
 	gnome-extra/polkit-gnome:0
 	media-libs/glew:=
 	media-libs/mesa
-	sys-apps/dbus[systemd,user-session]
+	sys-apps/dbus[systemd,user-session,X]
 	sys-auth/pambase
-	sys-libs/libnih[dbus]
 	unity-base/bamf:=
 	unity-base/compiz:=
 	unity-base/nux:=[debug?]

@@ -36,7 +36,6 @@ DEPEND=">=dev-cpp/gtest-1.8.1
 	dev-qt/qtsql:5
 	dev-qt/qttest:5
 	gnome-base/dconf
-	sys-libs/libnih[dbus]
 	unity-base/bamf:=
 	x11-libs/dee-qt
 	x11-libs/gsettings-qt
