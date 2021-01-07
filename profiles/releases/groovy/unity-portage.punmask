@@ -23,4 +23,5 @@ app-backup/deja-dup	# (b.g.o #708398)
 
 # Unmask overlay version
 dev-libs/dee::unity-gentoo
+sys-libs/libnih::unity-gentoo
 x11-misc/lightdm-kde::unity-gentoo
