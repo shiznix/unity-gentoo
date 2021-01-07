@@ -105,7 +105,7 @@ sys-fs/fuse-common::gentoo
 # >=x11-libs/gtksourceview-3.24::gentoo
 >=x11-libs/libwnck-3.30::gentoo
 # >=x11-libs/pango-1.42::gentoo
->=x11-libs/vte-0.52::gentoo
+# >=x11-libs/vte-0.52::gentoo
 >=x11-themes/adwaita-icon-theme-3.36::gentoo
 >=x11-wm/mutter-3.36::gentoo
 media-libs/grilo:0.3::gentoo
