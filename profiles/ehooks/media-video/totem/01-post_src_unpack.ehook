@@ -14,7 +14,7 @@ ebuild_hook() {
 		if [[ -f ${po_orig} ]]; then
 			sed -i -e '/msgid \"\"/,/^$/d' "${po_ext}"
 			cat "${po_ext}" >> "${po_orig}"
-			msguniq --use-first -o "${po_orig}" "${po_orig}"
+			msguniq --use-first -o "${po_orig}" "${po_orig}" 2>&1
 		fi
 	done
 }
