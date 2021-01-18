@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="focal-updates"
+URELEASE="focal-security"
 inherit meson gnome2-utils systemd vala ubuntu-versionator
 
 UVER="-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}~${UVER_RELEASE}.${PVR_MICRO}"

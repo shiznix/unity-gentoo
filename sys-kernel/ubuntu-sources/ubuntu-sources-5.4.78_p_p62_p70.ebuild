@@ -1,7 +1,7 @@
 # Copyright 1999-2020 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5	# kernel-2.eclass unsupported for EAPI6
+EAPI=6	# kernel-2.eclass unsupported for EAPI7
 ETYPE="sources"
 
 URELEASE="focal-security"
