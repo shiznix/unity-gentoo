@@ -22,13 +22,15 @@ x11-themes/mate-themes-meta
 x11-terms/mate-terminal
 x11-wm/marco
 
-# Unmask up to Gnome-3.36 #
+# Unmask up to Gnome-3.38 #
+=*/gnome*-*38*::gentoo
 =*/gnome*-*36*::gentoo
 =*/gnome*-*34*::gentoo
 =*/gnome*-*32*::gentoo
 =*/gnome*-*30*::gentoo
 =*/gnome*-*28*::gentoo
 =*/gnome*-*26*::gentoo
+=gnome-base/*-*38*::gentoo
 =gnome-base/*-*36*::gentoo
 =gnome-base/*-*34*::gentoo
 =gnome-base/*-*32*::gentoo
@@ -36,12 +38,14 @@ x11-wm/marco
 =gnome-base/*-*30*::gentoo
 =gnome-base/*-*28*::gentoo
 =gnome-base/*-*26*::gentoo
+=gnome-extra/*-*38*::gentoo
 =gnome-extra/*-*36*::gentoo
 =gnome-extra/*-*34*::gentoo
 =gnome-extra/*-*32*::gentoo
 =gnome-extra/*-*30*::gentoo
 =gnome-extra/*-*28*::gentoo
 =gnome-extra/*-*26*::gentoo
+=games-puzzle/*-*38*::gentoo
 =games-puzzle/*-*36*::gentoo
 =games-puzzle/*-*34*::gentoo
 =games-puzzle/*-*32*::gentoo
@@ -288,7 +292,6 @@ x11-libs/dee-qt **
 x11-libs/gsettings-qt **
 x11-libs/gtk+:2 **
 x11-libs/gtk+:3 **
-x11-libs/libaccounts-qt **
 x11-misc/lightdm **
 x11-misc/lightdm-kde **
 x11-misc/mate-dock-applet **

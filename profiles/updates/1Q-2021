@@ -1,1 +1,2 @@
 move dev-libs/libaccounts-glib net-libs/libaccounts-glib
+move x11-libs/libaccounts-qt net-libs/accounts-qt
