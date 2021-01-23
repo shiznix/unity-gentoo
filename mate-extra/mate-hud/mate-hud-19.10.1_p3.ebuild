@@ -5,8 +5,10 @@ EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit distutils-r1 eutils gnome2-utils ubuntu-versionator
+
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="MATE menubar commands, like the Unity 7 Heads-Up Display (HUD)"
 HOMEPAGE="https://github.com/ubuntu-mate/mate-hud"

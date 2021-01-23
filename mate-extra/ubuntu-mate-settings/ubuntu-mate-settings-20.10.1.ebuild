@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit ubuntu-versionator
 
 UVER=

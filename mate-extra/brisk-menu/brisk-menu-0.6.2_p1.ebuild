@@ -3,12 +3,14 @@
 
 EAPI=6
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit autotools gnome2-utils meson ubuntu-versionator
+
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Solus Project's Brisk Menu MATE Panel Applet"
 HOMEPAGE="https://github.com/solus-project/brisk-menu"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}.orig.tar.xz"
 
 LICENSE="GPL-2 CC-BY-SA-4.0"
 SLOT="0"

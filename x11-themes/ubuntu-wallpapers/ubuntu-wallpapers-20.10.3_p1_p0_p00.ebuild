@@ -3,25 +3,26 @@
 
 EAPI=6
 
-URELEASE="focal"
+URELEASE="groovy-updates"
 inherit ubuntu-versionator
 
 UURL="mirror://unity/pool/main/u/${PN}"
+UVER="-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}.${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Ubuntu wallpapers"
 HOMEPAGE="https://launchpad.net/ubuntu-wallpapers"
 
 ## Main repo (URELEASE source files) ##
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}_all.deb
-	${UURL}/${PN}-${URELEASE}_${PV}${UVER_PREFIX}-${UVER}_all.deb"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}${UVER}_all.deb
+	${UURL}/${PN}-groovy_${PV}${UVER_PREFIX}${UVER}_all.deb"
 
 ## Universe repo (older source files) ##
 CODE_NAME="karmic lucid maverick natty oneiric precise quantal raring
 saucy trusty utopic vivid wily xenial yakkety zesty artful bionic cosmic
-disco eoan ${URELEASE}"
+disco eoan focal groovy"
 
 for cn in ${CODE_NAME}; do
-	SRC_URI+=" ${cn}? ( ${UURL/main/universe}/${PN}-${cn}_${PV}${UVER_PREFIX}-${UVER}_all.deb )"
+	SRC_URI+=" ${cn}? ( ${UURL/main/universe}/${PN}-${cn}_${PV}${UVER_PREFIX}${UVER}_all.deb )"
 done
 
 LICENSE="CC-BY-SA-3.0"
