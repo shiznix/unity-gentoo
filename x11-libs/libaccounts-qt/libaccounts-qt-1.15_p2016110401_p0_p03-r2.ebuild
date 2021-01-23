@@ -18,9 +18,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc test"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/libaccounts-glib:=
-	dev-qt/qtcore:5
+DEPEND="dev-qt/qtcore:5
 	dev-qt/qtxml:5
+	net-libs/libaccounts-glib:=
 	doc? ( app-doc/doxygen )
 	test? ( dev-qt/qttest:5 )"
 

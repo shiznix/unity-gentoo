@@ -1,40 +1,40 @@
 ## Global masks ##
 
-# mask gnome-3.38 packages
-=*/gnome*-*38*::gentoo
-=gnome-base/*-*38*::gentoo
-=gnome-extra/*-*38*::gentoo
+# mask gnome-3.40 packages
+=*/gnome*-*40*::gentoo
+=gnome-base/*-*40*::gentoo
+=gnome-extra/*-*40*::gentoo
 #>=app-accessibility/at-spi2-atk-2.26::gentoo
 #>=app-accessibility/at-spi2-core-2.26::gentoo
->=app-accessibility/orca-3.38::gentoo
->=app-arch/file-roller-3.38::gentoo
+>=app-accessibility/orca-3.40::gentoo
+>=app-arch/file-roller-3.40::gentoo
 #>=app-cdr/brasero-3.12::gentoo
 #>=app-crypt/gcr-3.20::gentoo
 #>=app-crypt/seahorse-3.20::gentoo
->=app-editors/gedit-3.38::gentoo
->=app-text/evince-3.38::gentoo
->=app-text/yelp-tools-3.38::gentoo
+>=app-editors/gedit-3.40::gentoo
+>=app-text/evince-3.40::gentoo
+>=app-text/yelp-tools-3.40::gentoo
 #>=dev-cpp/gtkmm-3.22::gentoo
->=dev-libs/libgweather-3.38::gentoo
+>=dev-libs/libgweather-3.40::gentoo
 #>=dev-python/pyatspi-2.20.0::gentoo
->=dev-python/pygobject-3.38::gentoo
+>=dev-python/pygobject-3.40::gentoo
 #>=dev-util/gtk-update-icon-cache-3.24::gentoo
->=dev-util/devhelp-3.38::gentoo
->=mail-client/evolution-3.38::gentoo
->=media-gfx/eog-3.38::gentoo
+>=dev-util/devhelp-3.40::gentoo
+>=mail-client/evolution-3.40::gentoo
+>=media-gfx/eog-3.40::gentoo
 #>=media-libs/clutter-gtk-1.8.4::gentoo
 #>=media-sound/sound-juicer-3.26::gentoo
->=media-video/cheese-3.38::gentoo
->=media-video/totem-3.38::gentoo
+>=media-video/cheese-3.40::gentoo
+>=media-video/totem-3.40::gentoo
 #>=net-misc/vinagre-3.22::gentoo
->=net-wireless/gnome-bluetooth-3.38::gentoo
->=sci-geosciences/geocode-glib-3.38::gentoo
+>=net-wireless/gnome-bluetooth-3.40::gentoo
+>=sci-geosciences/geocode-glib-3.40::gentoo
 #>=sys-apps/baobab-3.36::gentoo
->=www-client/epiphany-3.38::gentoo
+>=www-client/epiphany-3.40::gentoo
 #>=x11-libs/gtksourceview-3.24::gentoo
 #>=x11-libs/libwnck-3.24::gentoo
->=x11-themes/adwaita-icon-theme-3.38::gentoo
->=x11-wm/mutter-3.38::gentoo
+>=x11-themes/adwaita-icon-theme-3.40::gentoo
+>=x11-wm/mutter-3.40::gentoo
 # >=media-plugins/grilo-plugins-0.2.16::gentoo
 
 
@@ -73,7 +73,6 @@ gnome-extra/polkit-gnome::gentoo
 media-gfx/shotwell::gentoo
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo
-net-libs/libnma::gentoo
 sys-apps/accountsservice::gentoo
 sys-libs/libnih::gentoo
 x11-libs/gtk+::gentoo

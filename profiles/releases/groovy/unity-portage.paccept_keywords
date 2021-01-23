@@ -180,7 +180,6 @@ app-backup/deja-dup **
 app-text/evince **
 dev-cpp/gtest **
 dev-libs/dee **
-dev-libs/libaccounts-glib **
 dev-libs/libindicator **
 dev-libs/libtimezonemap **
 dev-libs/glib **

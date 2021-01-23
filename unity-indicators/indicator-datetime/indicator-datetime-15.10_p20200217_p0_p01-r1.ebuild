@@ -19,10 +19,10 @@ IUSE="+eds test"
 RESTRICT="mirror"
 
 COMMON_DEPEND="
-	dev-libs/libaccounts-glib
 	dev-libs/libdbusmenu:=
 	dev-libs/libtimezonemap:=
 	media-libs/gstreamer:1.0
+	net-libs/libaccounts-glib:=
 	sys-apps/util-linux
 	unity-indicators/ido:=
 	unity-indicators/indicator-messages

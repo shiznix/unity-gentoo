@@ -1,9 +1,9 @@
 ## Unmask those gnome packages inadvertently masked globablly in package.mask ##
-=net-wireless/gnome-bluetooth-3.34*::gentoo	# gnome-base/gnome-core-apps-3.32 requires >=3.34
+=net-wireless/gnome-bluetooth-3.38*::gentoo	# gnome-base/gnome-core-apps-3.32 requires >=3.34
 # gnome-base/gnome-extra-apps #
-=gnome-base/dconf-editor-3.34*::gentoo
-=games-board/gnome*-*34*::gentoo
-=games-puzzle/gnome*-*34*::gentoo
+=gnome-base/dconf-editor-3.38*::gentoo
+=games-board/gnome*-*38*::gentoo
+=games-puzzle/gnome*-*38*::gentoo
 
 ## Gentoo dropping mono packages required by media-sound/banshee ##
 dev-dotnet/google-gdata-sharp   # (b.g.o #563234 - make: gmcs: Command not found)
