@@ -37,7 +37,7 @@ src_unpack() {
 }
 
 src_prepare() {
-	epatch -p1 "${MY_P}${UVER_PREFIX}-${UVER}.diff"
+	epatch -p1 "${MY_P}${UVER_PREFIX}${UVER}.diff"
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

@@ -26,8 +26,9 @@ RDEPEND=">=app-crypt/libsecret-0.18
 	>=dev-libs/glib-2.38:2[dbus]
 	>=dev-libs/dbus-glib-0.88
 	dev-libs/libappindicator:3
-	=dev-libs/libdbusmenu-16.04.0
+	>=dev-libs/libdbusmenu-16.04.0
 	>=dev-libs/libgudev-147:=
+	>=net-libs/libnma-1.8.27
 	>=sys-apps/dbus-1.6.12[systemd?]
 	>=sys-auth/polkit-0.96-r1
 	>=x11-libs/gtk+-3.10:3
@@ -61,7 +62,7 @@ src_configure() {
 		$(meson_use modemmanager wwan)
 		$(meson_use selinux)
 		$(meson_use teamd team)
-		-Dappindicator=true
+		-Dappindicator=ubuntu
 		-Dmore_asserts=0
 		-Dld_gc=false
 	)

@@ -53,7 +53,6 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	gnome2_src_prepare
-	epatch -p1 "${FILESDIR}/metacity-3.36-compositor-vulkan_fix.diff"
 }
 
 src_configure() {

@@ -57,7 +57,6 @@ PDEPEND="
 
 PATCHES=(
 	"${FILESDIR}"/3.30.5-docs-build.patch # Always install pregenerated manpage, keeping docs option for gtk-doc
-	"${FILESDIR}"/3.34-add-legacy-clipboard.patch # https://gitlab.gnome.org/GNOME/nautilus/issues/634#note_474020
 )
 
 src_prepare() {

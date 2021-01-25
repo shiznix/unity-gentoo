@@ -1,0 +1,22 @@
+ebuild_hook() {
+	ehook_require eog_menu
+
+	unpack "${EHOOK_FILESDIR}"/global-menu-translations-xenial.tar.xz
+
+	einfo "  Merging available translations..."
+
+	local po_ext po_orig
+	local -a po_files=( po/* )
+
+	for po_ext in "${po_files[@]}"; do
+	        po_orig=${po_ext/po/${P%%_*}\/po}
+
+		if [[ -f ${po_orig} ]]; then
+			sed -i -e '/msgid \"\"/,/^$/d' "${po_ext}"
+			cat "${po_ext}" >> "${po_orig}"
+			## REVISIT: redirect stderr to stdout to ignore warning message:
+			## eog-3.36.3/po/ms.po:110: warning: internationalized messages should not contain the '\v' escape sequence
+			msguniq --use-first -o "${po_orig}" "${po_orig}" 2>&1
+		fi
+	done
+}
