@@ -108,7 +108,7 @@ src_prepare() {
 	eapply "${FILESDIR}/3.38.1-build-Make-colord-and-wacom-optional-and-controllabl.patch"
 	gnome2_src_prepare
 
-	use schemas && eapply "${FILESDIR}/${PN}-3.36-schemas.diff"
+	use schemas && eapply "${FILESDIR}/${PN}-3.38-schemas.diff"
 }
 
 src_configure() {
