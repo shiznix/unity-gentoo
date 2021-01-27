@@ -2,21 +2,21 @@ Subject: [PATCH 1/2] Add a traditional menu bar (v3.28.2)
 Bug: https://bugzilla.gnome.org/749976
 Bug-Debian: https://bugs.debian.org/793445
 ---
- data/eog-menubar.ui   | 209 ++++++++++++++++++++++++++++++++++++++++++
+ data/eog-menubar.ui   | 213 ++++++++++++++++++++++++++++++++++++++++++
  data/meson.build      |   1 +
  po/POTFILES.in        |   1 +
  src/eog-application.c |  35 +++++++
- src/eog-window.c      |  53 ++++++-----
+ src/eog-window.c      |  11 ++-
  src/eog.gresource.xml |   1 +
- 6 files changed, 277 insertions(+), 23 deletions(-)
+ 6 files changed, 259 insertions(+), 3 deletions(-)
  create mode 100644 data/eog-menubar.ui
 
 diff --git a/data/eog-menubar.ui b/data/eog-menubar.ui
 new file mode 100644
-index 0000000..65c8b42
+index 0000000..5241c75
 --- /dev/null
 +++ b/data/eog-menubar.ui
-@@ -0,0 +1,209 @@
+@@ -0,0 +1,213 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<interface>
 +  <menu id="menubar">
@@ -27,6 +27,10 @@ index 0000000..65c8b42
 +          <attribute name="label" translatable="yes">_Open…</attribute>
 +          <attribute name="action">win.open</attribute>
 +          <attribute name="accel">&lt;Ctrl&gt;o</attribute>
++        </item>
++        <item>
++        <attribute name="label" translatable="yes">Op_en With…</attribute>
++        <attribute name="action">win.open-with</attribute>
 +        </item>
 +      </section>
 +      <section>
@@ -251,10 +255,10 @@ index 31cf8f1..8bc89b4 100644
  data/eog-preferences-dialog.ui
  data/eog-zoom-entry.ui
 diff --git a/src/eog-application.c b/src/eog-application.c
-index a464e4e..9a8ce1f 100644
+index 69a5c06..ed2a82d 100644
 --- a/src/eog-application.c
 +++ b/src/eog-application.c
-@@ -265,6 +265,29 @@ on_extension_removed (PeasExtensionSet *set,
+@@ -266,6 +266,29 @@ on_extension_removed (PeasExtensionSet *set,
  	eog_application_activatable_deactivate (EOG_APPLICATION_ACTIVATABLE (exten));
  }
  
@@ -284,7 +288,7 @@ index a464e4e..9a8ce1f 100644
  static void
  eog_application_startup (GApplication *application)
  {
-@@ -326,6 +349,18 @@ eog_application_startup (GApplication *application)
+@@ -327,6 +350,18 @@ eog_application_startup (GApplication *application)
  			  G_CALLBACK (on_extension_removed), app);
  
  	peas_extension_set_call (app->priv->extensions, "activate");
@@ -304,77 +308,43 @@ index a464e4e..9a8ce1f 100644
  
  static void
 diff --git a/src/eog-window.c b/src/eog-window.c
-index d6fc383..79d3d79 100644
+index 131d0b3..1ce68eb 100644
 --- a/src/eog-window.c
 +++ b/src/eog-window.c
-@@ -4263,23 +4263,36 @@ eog_window_construct_ui (EogWindow *window)
+@@ -4256,6 +4256,7 @@ eog_window_construct_ui (EogWindow *window)
  	gtk_widget_show (priv->zoom_scale);
  #endif
  
--	menu_button = gtk_menu_button_new ();
--	menu_image = gtk_image_new_from_icon_name ("open-menu-symbolic",
--						   GTK_ICON_SIZE_BUTTON);
--	gtk_button_set_image (GTK_BUTTON (menu_button), menu_image);
-+	priv->open_with_menu = g_menu_new ();
-+	priv->appinfo = g_ptr_array_new_with_free_func (g_object_unref);
-+
 +	if (in_desktop ("GNOME")) {
-+		menu_button = gtk_menu_button_new ();
-+		menu_image = gtk_image_new_from_icon_name ("open-menu-symbolic",
-+							   GTK_ICON_SIZE_BUTTON);
-+		gtk_button_set_image (GTK_BUTTON (menu_button), menu_image);
+ 	menu_button = gtk_menu_button_new ();
+ 	menu_image = gtk_image_new_from_icon_name ("open-menu-symbolic",
+ 						   GTK_ICON_SIZE_BUTTON);
+@@ -4269,10 +4270,14 @@ eog_window_construct_ui (EogWindow *window)
+ 	gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), menu_button);
+ 	gtk_widget_show (menu_button);
+ 
++	priv->gear_menu_builder = builder;
++	builder = NULL;
 +
-+		builder = gtk_builder_new_from_resource ("/org/gnome/eog/ui/eog-gear-menu.ui");
-+		builder_object = gtk_builder_get_object (builder, "gear-menu");
-+		gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (menu_button),
-+						G_MENU_MODEL (builder_object));
- 
--	builder = gtk_builder_new_from_resource ("/org/gnome/eog/ui/eog-gear-menu.ui");
--	builder_object = gtk_builder_get_object (builder, "gear-menu");
--	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (menu_button),
--					G_MENU_MODEL (builder_object));
-+		gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), menu_button);
-+		gtk_widget_show (menu_button);
-+
-+		builder_object = gtk_builder_get_object (builder, "open-with-menu");
-+		g_menu_append_section (G_MENU (builder_object),
-+				       NULL,
-+				       G_MENU_MODEL (priv->open_with_menu));
-+		priv->gear_menu_builder = builder;
-+		builder = NULL;
- 
--	gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), menu_button);
--	gtk_widget_show (menu_button);
-+		action = G_ACTION (g_property_action_new ("toggle-gear-menu",
-+							  menu_button, "active"));
-+		g_action_map_add_action (G_ACTION_MAP (window), action);
-+		g_object_unref (action);
- 
--	action = G_ACTION (g_property_action_new ("toggle-gear-menu",
--						  menu_button, "active"));
--	g_action_map_add_action (G_ACTION_MAP (window), action);
--	g_object_unref (action);
+ 	action = G_ACTION (g_property_action_new ("toggle-gear-menu",
+ 						  menu_button, "active"));
+ 	g_action_map_add_action (G_ACTION_MAP (window), action);
+ 	g_object_unref (action);
 +	}
  
  	fullscreen_button = gtk_button_new_from_icon_name ("view-fullscreen-symbolic",
  							   GTK_ICON_SIZE_BUTTON);
-@@ -4290,15 +4303,6 @@ eog_window_construct_ui (EogWindow *window)
+@@ -4283,9 +4288,6 @@ eog_window_construct_ui (EogWindow *window)
  	gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), fullscreen_button);
  	gtk_widget_show (fullscreen_button);
  
--	priv->open_with_menu = g_menu_new ();
--	priv->appinfo = g_ptr_array_new_with_free_func (g_object_unref);
--	builder_object = gtk_builder_get_object (builder, "open-with-menu");
--	g_menu_append_section (G_MENU (builder_object),
--			       NULL,
--			       G_MENU_MODEL (priv->open_with_menu));
 -	priv->gear_menu_builder = builder;
 -	builder = NULL;
 -
  	priv->cbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
  	gtk_box_pack_start (GTK_BOX (priv->box), priv->cbox, TRUE, TRUE, 0);
  	gtk_widget_show (priv->cbox);
-@@ -5300,6 +5304,9 @@ eog_window_get_gear_menu_section (EogWindow *window, const gchar *id)
+@@ -5283,6 +5285,9 @@ eog_window_get_gear_menu_section (EogWindow *window, const gchar *id)
  	GObject *object;
  	g_return_val_if_fail (EOG_IS_WINDOW (window), NULL);
  

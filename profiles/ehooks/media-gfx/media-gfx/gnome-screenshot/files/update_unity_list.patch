@@ -3,13 +3,13 @@ Date: Fri, 7 Sep 2018 17:27:22 +0200
 Subject: Add quicklist area-shot option
 
 ---
- src/org.gnome.Screenshot.desktop.in | 8 +++++++-
+ data/org.gnome.Screenshot.desktop.in | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/src/org.gnome.Screenshot.desktop.in b/src/org.gnome.Screenshot.desktop.in
 index 73b4d02..4e2643b 100644
---- a/src/org.gnome.Screenshot.desktop.in
-+++ b/src/org.gnome.Screenshot.desktop.in
+--- a/data/org.gnome.Screenshot.desktop.in
++++ b/data/org.gnome.Screenshot.desktop.in
 @@ -14,7 +14,9 @@ NotShowIn=KDE;
  X-GNOME-Bugzilla-Bugzilla=GNOME
  X-GNOME-Bugzilla-Product=gnome-utils
