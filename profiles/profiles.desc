@@ -1,10 +1,10 @@
-amd64	linux/amd64/17.0/focal	stable
-x86	linux/x86/17.0/focal	stable
+amd64	linux/amd64/17.0/groovy		stable
+x86	linux/x86/17.0/groovy		stable
 
-amd64	linux/amd64/17.0/groovy	dev
-x86	linux/x86/17.0/groovy	dev
+amd64	linux/amd64/17.0/hirsute	dev
+x86	linux/x86/17.0/hirsute		dev
 
 # Experimental SYMLINK_LIB=no profiles
 # Run app-portage/unsymlink-lib *before* switching the profile.
-amd64	linux/amd64/17.1/focal dev
-amd64	linux/amd64/17.1/groovy dev
+amd64	linux/amd64/17.1/groovy		dev
+amd64	linux/amd64/17.1/hirsute	dev

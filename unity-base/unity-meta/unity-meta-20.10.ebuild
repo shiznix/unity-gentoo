@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -8,7 +8,7 @@ inherit ubuntu-versionator
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity packages"
 HOMEPAGE="http://unity.ubuntu.com/"
 
-URELEASE="focal"
+URELEASE="groovy"
 
 LICENSE="metapackage"
 SLOT="0/${URELEASE}"

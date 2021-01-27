@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}${UVER}.orig.tar.xz
 	${UURL}/${MY_P}${UVER}${UVER_SUFFIX}.debian.tar.xz"
 
 LICENSE="LGPL-3"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+vala-panel mate xfce +wnck"
 REQUIRED_USE="|| ( xfce vala-panel )"

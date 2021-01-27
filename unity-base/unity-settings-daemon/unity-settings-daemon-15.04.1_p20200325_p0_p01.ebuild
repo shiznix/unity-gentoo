@@ -1,14 +1,14 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=5
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="no"
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit autotools base eutils flag-o-matic gnome2 virtualx ubuntu-versionator
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+20.04.${PVR_MICRO}"
 
 DESCRIPTION="Unity Settings Daemon"
 HOMEPAGE="https://launchpad.net/unity-settings-daemon"

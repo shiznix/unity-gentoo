@@ -1,10 +1,10 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit bash-completion-r1 python-r1 vala ubuntu-versionator xdg
 
 DESCRIPTION="Service to log activities and present to other apps"

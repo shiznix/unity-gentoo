@@ -1,9 +1,9 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=5
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit base mono ubuntu-versionator
 
 UVER="-${PVR_MICRO}"

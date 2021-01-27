@@ -1,10 +1,10 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit autotools eutils flag-o-matic gnome2-utils python-r1 ubuntu-versionator vala
 
 UVER_PREFIX="+19.10.${PVR_MICRO}"

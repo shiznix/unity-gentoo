@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -7,7 +7,7 @@ GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_7,3_8} )
 PYTHON_REQ_USE="xml"
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit eutils gnome2 multilib-minimal python-r1 ubuntu-versionator
 
 DESCRIPTION="GNOME configuration system and daemon patched for the Unity desktop"

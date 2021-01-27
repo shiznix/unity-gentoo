@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="focal focal-security focal-updates groovy groovy-security groovy-updates"
+RELEASES="groovy groovy-security groovy-updates hirsute hirsute-security hirsute-updates"
 SOURCES="main universe"
 
 sources_download() {
@@ -236,6 +236,7 @@ uver() {
 	[[ "${URELEASE}" == *eoan* ]] && UVER_RELEASE="19.10"
 	[[ "${URELEASE}" == *focal* ]] && UVER_RELEASE="20.04"
 	[[ "${URELEASE}" == *groovy* ]] && UVER_RELEASE="20.10"
+	[[ "${URELEASE}" == *hirsute* ]] && UVER_RELEASE="21.04"
 	PVR=`echo "${packbasename}" | sed -e 's/.*-\([0-9]\)/\1/' -e 's:-r[0-9].*$::g'`
 	PVR="_${PVR#*_}"
 

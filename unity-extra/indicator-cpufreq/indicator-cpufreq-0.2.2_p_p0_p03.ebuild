@@ -1,10 +1,10 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
 DESCRIPTION="CPU frequency scaling indicator for the Unity desktop environment"

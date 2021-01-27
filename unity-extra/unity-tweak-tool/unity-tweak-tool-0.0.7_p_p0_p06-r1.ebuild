@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python{3_7,3_8} )
 
 inherit distutils-r1 gnome2-utils ubuntu-versionator xdg-utils
 
-URELEASE="focal"
+URELEASE="groovy"
 UVER="+-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"

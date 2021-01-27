@@ -1,9 +1,9 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit cmake-utils ubuntu-versionator
 
 UVER_PREFIX="+17.04.${PVR_MICRO}"

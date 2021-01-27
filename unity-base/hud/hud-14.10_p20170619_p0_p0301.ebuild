@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -7,7 +7,7 @@ DISTUTILS_SINGLE_IMPL=1
 VALA_MIN_API_VERSION=0.40
 VALA_MAX_API_VERSION=0.40
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"

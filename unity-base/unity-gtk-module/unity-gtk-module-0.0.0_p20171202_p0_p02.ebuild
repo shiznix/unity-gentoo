@@ -1,10 +1,10 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit autotools eutils python-r1 ubuntu-versionator
 
 UVER_PREFIX="+18.04.${PVR_MICRO}"

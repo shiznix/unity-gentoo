@@ -1,15 +1,15 @@
 
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit cmake-utils distutils-r1 eutils gnome2-utils pam systemd toolchain-funcs ubuntu-versionator xdummy
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+20.04.${PVR_MICRO}"
 GLEWMX="glew-1.13.0"
 
 DESCRIPTION="The Ubuntu Unity Desktop"

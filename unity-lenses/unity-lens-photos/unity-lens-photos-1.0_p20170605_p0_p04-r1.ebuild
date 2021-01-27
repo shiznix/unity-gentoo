@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="focal"
+URELEASE="groovy"
 inherit distutils-r1 eutils ubuntu-versionator
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"
