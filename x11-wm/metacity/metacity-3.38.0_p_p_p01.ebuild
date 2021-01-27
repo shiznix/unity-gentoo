@@ -35,6 +35,7 @@ RDEPEND="
 	gnome-base/libgtop:2=
 	x11-libs/libX11
 	xinerama? ( x11-libs/libXinerama )
+	x11-libs/libXpresent
 	x11-libs/libXrandr
 	x11-libs/libXext
 	x11-libs/libICE
