@@ -41,6 +41,11 @@ src_prepare() {
 	## tweak nautilus selection and search bar ##
 	echo $(<"${FILESDIR}"/nautilus.css) >> Ambiance/gtk-3.20/apps/nautilus.css
 
+	## workaround to avoid unwanted black frame when using gnome-screenshot ##
+	sed -i \
+		-e "s/^decoration {$/.background.csd decoration {/" \
+		Ambiance/gtk-3.20/gtk-widgets.css
+
 	use nemo && echo $(<"${FILESDIR}"/nemo.css) >> Ambiance/gtk-3.20/apps/nemo.css
 }
 

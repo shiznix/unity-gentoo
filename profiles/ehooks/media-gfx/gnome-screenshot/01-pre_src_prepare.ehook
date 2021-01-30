@@ -4,4 +4,9 @@ ebuild_hook() {
 	sed -i \
 		-e "s/gnome-help/ubuntu-help/" \
 		src/screenshot-utils.c
+
+	sed -i \
+		-e "s/HdyHeaderBar/GtkHeaderBar/" \
+		-e "/show_close_button/d" \
+		data/ui/screenshot{,-interactive}-dialog.ui
 }
