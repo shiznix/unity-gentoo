@@ -51,6 +51,7 @@ UURL="https://launchpad.net/ubuntu/+archive/primary/+files"
 [[ "${URELEASE}" == *eoan* ]] && UVER_RELEASE="19.10"
 [[ "${URELEASE}" == *focal* ]] && UVER_RELEASE="20.04"
 [[ "${URELEASE}" == *groovy* ]] && UVER_RELEASE="20.10"
+[[ "${URELEASE}" == *hirsute* ]] && UVER_RELEASE="21.04"
 
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
