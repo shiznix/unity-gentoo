@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{3_7,3_8} )
 
 URELEASE="hirsute"
 inherit autotools eutils python-single-r1 ubuntu-versionator
