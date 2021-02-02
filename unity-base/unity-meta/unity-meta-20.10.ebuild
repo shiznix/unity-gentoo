@@ -114,6 +114,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		net-p2p/transmission[appindicator]
 		sys-apps/baobab
 		sys-apps/gnome-disk-utility
+		unity-base/unity-control-center[gnome-online-accounts]
 		unity-indicators/indicator-keyboard[charmap]
 		unity-indicators/indicator-power[powerman]
 		x11-terms/gnome-terminal )
