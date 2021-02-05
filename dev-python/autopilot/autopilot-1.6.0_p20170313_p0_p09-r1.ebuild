@@ -24,14 +24,13 @@ RDEPEND="app-i18n/ibus[introspection]
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/pyjunitxml
 	dev-python/pyxdg[${PYTHON_USEDEP}]
-	dev-python/PyQt4[dbus,${PYTHON_USEDEP}]
 	dev-python/python-xlib
-	dev-python/python-testscenarios
 	dev-python/testtools[${PYTHON_USEDEP}]
+	dev-util/lttng-ust
 	gnome-base/gconf[introspection]
 	gnome-extra/zeitgeist
 	unity-base/compiz
 	x11-libs/gtk+:3[introspection]"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"
