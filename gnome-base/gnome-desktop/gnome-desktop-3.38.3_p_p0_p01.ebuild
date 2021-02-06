@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="groovy"
+URELEASE="groovy-updates"
 inherit gnome2 meson ubuntu-versionator virtualx xdg
 
 #UVER_SUFFIX="~${UVER_RELEASE}.${PVR_MICRO}"
