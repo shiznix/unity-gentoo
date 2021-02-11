@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{3_7,3_8} )
 
 inherit distutils-r1 gnome2-utils ubuntu-versionator
 
@@ -19,7 +19,7 @@ RDEPEND="dev-libs/libappindicator
 	dev-python/pygobject:3
 	dev-python/pyxdg
 	gnome-extra/zeitgeist
-	net-libs/ubuntu-geoip
+	dev-libs/geoip
 	x11-libs/gtk+:3[introspection]"
 DEPEND="${RDEPEND}"
 RESTRICT="mirror"
