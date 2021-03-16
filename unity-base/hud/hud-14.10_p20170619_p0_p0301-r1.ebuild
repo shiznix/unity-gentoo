@@ -4,8 +4,6 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 DISTUTILS_SINGLE_IMPL=1
-VALA_MIN_API_VERSION=0.40
-VALA_MAX_API_VERSION=0.40
 
 URELEASE="groovy"
 inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
@@ -14,7 +12,8 @@ UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="Backend for the Unity HUD"
 HOMEPAGE="https://launchpad.net/hud"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -55,8 +54,20 @@ pkg_setup() {
 }
 
 src_prepare() {
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
+
+	# Fix "field ‘m_name’ has incomplete type ‘std::string’ #
+	#  {aka ‘std::__cxx11::basic_string<char>’}" compile failure #
+	sed -i \
+		-e '/#include <glib-object.h>/a #include <string>' \
+		common/HudDee.cpp
+
+	# Fix "except ..., e: SyntaxError: invalid syntax" #
+	sed -i \
+		-e '/except /{s/,/ as/}' \
+		tools/hudkeywords/hudkeywords/cli.py
 
 	# Stop cmake doing the job of distutils #
 	sed -e '/add_subdirectory(hudkeywords)/d' \
