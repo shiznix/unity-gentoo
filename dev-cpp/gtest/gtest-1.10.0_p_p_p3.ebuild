@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python{3_7,3_8} )
 
 URELEASE="eoan"
@@ -13,7 +13,7 @@ MY_P="${MY_PN}_${PV}"
 
 DESCRIPTION="Google C++ Testing Framework"
 HOMEPAGE="http://code.google.com/p/googletest/"
-SRC_URI="${UURL}/${MY_P}.orig.tar.gz
+SRC_URI="${UURL}/${MY_P}.orig.tar.bz2
 	${UURL}/${MY_P}${UVER}.debian.tar.xz"
 
 LICENSE="BSD"
@@ -27,7 +27,7 @@ DEPEND="app-arch/unzip
 RDEPEND="!!dev-cpp/gmock
 	!!<dev-cpp/gtest-1.8"
 
-S="${WORKDIR}/${MY_PN}-release-1.8.1"
+S="${WORKDIR}/${MY_P/_/-}"
 
 
 pkg_setup() {
@@ -36,7 +36,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch -p1 "${FILESDIR}/gtest-gcc9_fix-signed-wchar.diff"
 	ubuntu-versionator_src_prepare
 	python_fix_shebang .
 	cmake-utils_src_prepare

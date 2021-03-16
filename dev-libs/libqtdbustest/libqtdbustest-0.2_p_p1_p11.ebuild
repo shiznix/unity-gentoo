@@ -25,14 +25,18 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}+bzr42"
 
-# Won't build with >dev-cpp/gtest-1.8 "no rule to make target libgtest.a"
-DEPEND="=dev-cpp/gtest-1.8*
+DEPEND="=dev-cpp/gtest
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qttest:5
 	dev-util/cmake-extras"
 
 src_prepare() {
+	# Fix build with >dev-cpp/gtest-1.8 "no rule to make target libgtest.a"
+	sed -i \
+		-e "/find_package/{s/GMock/GTest/}" \
+		tests/CMakeLists.txt
+
 	cmake-utils_src_prepare
 	ubuntu-versionator_src_prepare
 }
