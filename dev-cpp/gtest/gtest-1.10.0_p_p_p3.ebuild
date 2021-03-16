@@ -4,7 +4,7 @@
 EAPI=7
 PYTHON_COMPAT=( python{3_7,3_8} )
 
-URELEASE="eoan"
+URELEASE="groovy"
 inherit cmake-multilib python-single-r1 ubuntu-versionator
 
 UVER="-${PVR_PL_MINOR}"
