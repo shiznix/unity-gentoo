@@ -172,6 +172,10 @@ src_prepare() {
 	# Don't use drop-down menu icon from Adwaita theme as it's too dark since v3.30 #
 	sed -i "s/go-down-symbolic/drop-down-symbolic/" decorations/DecorationsMenuDropdown.cpp
 
+	# Fix building with GCC 10 #
+	sed -i '/#include <functional>/a #include <string>' UnityCore/GLibSource.h
+	sed -i '/#include <core\/screen.h>/a #include <iostream>' unity-shared/CompizUtils.cpp
+
 	cmake-utils_src_prepare
 }
 
