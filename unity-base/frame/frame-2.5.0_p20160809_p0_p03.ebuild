@@ -29,6 +29,11 @@ DEPEND="app-text/asciidoc
 S="${WORKDIR}"
 
 src_prepare() {
+	# fix building with GCC 10 #
+	sed -i \
+		-e '/#include "device.h"/a #include <stdio.h>' \
+		src/device.cpp
+
 	ubuntu-versionator_src_prepare
 	eautoreconf
 }
