@@ -63,6 +63,10 @@ src_prepare() {
 		-e "/add_subdirectory(tests)/d" \
 		CMakeLists.txt
 
+	# Fix building with GCC 10 #
+	sed -i '/#include <limits>/a #include <string>' src/awake.cpp
+	sed -i '/#include <datetime\/date-time.h>/a #include <string>' src/date-time.cpp
+
 	cmake-utils_src_prepare
 }
 
