@@ -7,9 +7,9 @@ inherit cmake-utils java-utils-2
 
 DESCRIPTION="Global Menu for Java applications"
 HOMEPAGE="https://gitlab.com/vala-panel-project/vala-panel-appmenu/tree/master/subprojects/jayatana
-	https://gitlab.com/vala-panel-project/vala-panel-appmenu/releases"
+	https://gitlab.com/vala-panel-project/vala-panel-appmenu/-/releases"
 
-COMMIT="4158cb00cc3b06992704861a1af5439a"
+COMMIT="6a09b01b13637454c268a4e1c050a266"
 SRC_URI="https://gitlab.com/vala-panel-project/vala-panel-appmenu/uploads/${COMMIT}/${P}.tar.xz"
 
 LICENSE="MIT"
@@ -28,6 +28,10 @@ src_configure() {
 	sed -i \
 		-e "/JAVADIR/{s/java/${PN}\/lib/}" \
 		lib/config.h.in
+
+	sed -i \
+		-e "/--add-exports/d" \
+		java/CMakeLists.txt
 
 	local mycmakeargs=(
 		-DENABLE_JAYATANA=ON
