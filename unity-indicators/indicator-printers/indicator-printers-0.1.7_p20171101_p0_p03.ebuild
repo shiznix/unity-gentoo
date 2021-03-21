@@ -40,6 +40,11 @@ src_prepare() {
 	sed -e 's/SESSION=ubuntu/SESSION=unity/g' \
 		-i data/indicator-printers.conf.in
 
+	# Fix building with GCC 10 #
+	sed -i \
+		-e "s/GParamSpec \*properties/extern GParamSpec \*properties/" \
+		src/indicator-printers-menu.c
+
 	eautoreconf
 	gnome2_src_prepare
 }
