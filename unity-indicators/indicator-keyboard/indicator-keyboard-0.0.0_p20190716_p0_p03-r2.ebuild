@@ -52,6 +52,11 @@ src_prepare() {
 		-e "/Character Map/d" \
 		lib/indicator-menu.vala
 
+	# Fix "SyntaxError: Missing parentheses in call to 'print'" #
+	sed -i \
+		-e "s/print level \* ' ', root/print (level \* ' ', root)/" \
+		tests/autopilot/tests/test_indicator_keyboard.py
+
 	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
 	#       (the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
 	# Workaround by changing into a re-defined "${S}" #
@@ -86,6 +91,7 @@ src_install() {
 		emake DESTDIR="${D}" install
 	}
 	python_foreach_impl run_in_build_dir installation
+	python_foreach_impl python_optimize
 
 	prune_libtool_files --modules
 }

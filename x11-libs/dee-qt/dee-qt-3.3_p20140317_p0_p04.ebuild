@@ -45,7 +45,6 @@ src_prepare() {
 src_configure() {
 	mycmakeargs+=(-DWITHQT5=1
 		-DCMAKE_INSTALL_PREFIX=/usr
-		-DIMPORT_INSTALL_DIR=lib/qt/imports/dee
 		-DCMAKE_BUILD_TYPE=Release)
 	cmake-utils_src_configure
 }

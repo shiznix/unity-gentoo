@@ -131,9 +131,7 @@ src_configure() {
 		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF
-		-DCOMPIZ_DEFAULT_PLUGINS="ccp"
-		-DUSE_KDE4=OFF
-		-DCOMPIZ_DISABLE_PLUGIN_KDE=ON)
+		-DCOMPIZ_DEFAULT_PLUGINS="ccp")
 	configuration() {
 		cmake-utils_src_configure
 	}
@@ -179,6 +177,7 @@ src_install() {
 		popd &> /dev/null
 	}
 	python_foreach_impl run_in_build_dir installation
+	python_foreach_impl python_optimize
 
 	pushd ${CMAKE_USE_DIR}
 		CMAKE_DIR=$(cmake --system-information | grep '^CMAKE_ROOT' | awk -F\" '{print $2}')

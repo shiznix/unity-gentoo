@@ -57,6 +57,7 @@ src_configure() {
 	../configure --enable-tests \
 		--libdir="/usr/$(get_libdir)" \
 		--prefix=/usr \
+		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
 		--enable-introspection \
 		--disable-static \
 		--with-gtk=2 || die
@@ -68,6 +69,7 @@ src_configure() {
 	../configure --enable-tests \
 		--libdir="/usr/$(get_libdir)" \
 		--prefix=/usr \
+		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
 		--enable-introspection \
 		--disable-static \
 		--with-gtk=3 || die
@@ -107,4 +109,5 @@ src_install() {
 	popd
 
 	prune_libtool_files --modules
+	einstalldocs
 }

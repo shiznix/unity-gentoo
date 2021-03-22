@@ -90,13 +90,12 @@ src_configure() {
 	econf \
 		--localstatedir=/var \
 		--disable-static \
-		--disable-liblightdm-qt \
 		--enable-vala \
 		$(use_enable audit libaudit) \
 		$(use_enable introspection) \
 		$(use_enable qt5 liblightdm-qt5) \
 		$(use_enable test tests) \
-		--with-html-dir="${EPREFIX}"/usr/share/doc/${PF}/html
+		--with-html-dir="${EPREFIX}"/usr/share/gtk-doc/html/${PF}
 }
 
 pkg_preinst() {
@@ -182,7 +181,7 @@ src_install() {
 	systemd_dounit "${FILESDIR}/${PN}.service"
 
 	# Create data directory
-	dodir /var/lib/${PN}-data
+	keepdir /var/lib/${PN}-data
 }
 
 pkg_postinst() {

@@ -31,6 +31,12 @@ S="${WORKDIR}"
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	epatch "${FILESDIR}/unity-gtk-module-0.0.0+14.04-deprecated-api.patch"
+
+	# Fix "SyntaxError: Missing parentheses in call to 'print'" #
+	sed -i \
+		-e "s/print level \* ' ', root/print (level \* ' ', root)/" \
+		tests/autopilot/tests/test_gedit.py
+
 	eautoreconf
 }
 
@@ -83,4 +89,5 @@ src_install() {
 	doexe "${FILESDIR}/81unity-gtk-module"
 
 	prune_libtool_files --modules
+	python_foreach_impl python_optimize
 }

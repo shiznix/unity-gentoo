@@ -173,6 +173,11 @@ src_prepare() {
 			panels/online-accounts/unity-online-accounts-panel.desktop.in.in
 	fi
 
+	# Fix metadata path #
+	sed -i \
+		-e "/appdatadir/{s/\/appdata/\/metainfo/}" \
+		shell/appdata/Makefile.am
+
 	# Disable all language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #
 	> po/LINGUAS

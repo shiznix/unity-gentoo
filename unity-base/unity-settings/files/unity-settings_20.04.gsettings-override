@@ -82,7 +82,7 @@ antialiasing = 'rgba'
 hinting = 'slight'
 
 [com.canonical.unity.settings-daemon.plugins.media-keys:Unity]
-screensaver = ['<Control><Alt>l']
+screensaver = '<Control><Alt>l'
 
 [com.canonical.unity.settings-daemon.plugins.print-notifications:Unity]
 active = false

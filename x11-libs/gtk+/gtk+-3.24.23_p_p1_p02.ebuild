@@ -161,7 +161,6 @@ multilib_src_configure() {
 		$(use_enable X xrandr) \
 		$(use_enable xinerama) \
 		--disable-papi \
-		--disable-mir-backend \
 		--enable-man \
 		--with-xml-catalog="${EPREFIX}"/etc/xml/catalog \
 		--libdir="${EPREFIX}"/usr/$(get_libdir) \

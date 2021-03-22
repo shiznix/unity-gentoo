@@ -160,6 +160,9 @@ src_install() {
 	rm "${ED}"usr/share/wayland-sessions/ubuntu*.desktop
 	rm "${ED}"usr/share/xsessions/ubuntu*.desktop
 	rm "${ED}"usr/share/gnome-session/sessions/ubuntu.session
+
+	mv "${ED%/}/usr/share/doc/${PN}" "${ED%/}/usr/share/doc/${PF}"
+	einstalldocs
 }
 
 pkg_postinst() {
