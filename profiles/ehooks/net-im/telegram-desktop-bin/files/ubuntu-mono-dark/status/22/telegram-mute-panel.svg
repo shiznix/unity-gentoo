@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="22"
+   height="22"
+   viewBox="0 0 5.8208332 5.8208335"
+   version="1.1"
+   id="svg837"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="telegram-mute-panel.svg">
+  <defs
+     id="defs831" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="41.136364"
+     inkscape:cx="11"
+     inkscape:cy="11"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata834">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       class="ColorScheme-Text"
+       style="color:#eff0f1;fill:#dfdbd2;fill-opacity:1;stroke:none;stroke-width:0.330729;opacity:0.4"
+       d="M 5.2342576,0.69968014 0.37719319,2.5597295 c 0,0 -0.1182707,0.059092 -0.1123982,0.1622639 0.00587,0.1031716 0.1123982,0.1589389 0.1123982,0.1589389 l 1.26963371,0.4468908 0.433631,1.3732414 c 0,0 0.041199,0.1730563 0.2040978,0.2231515 0.1628992,0.050096 0.3053508,-0.085495 0.3053508,-0.085495 l 0.5812784,-0.5998461 1.125977,0.8372549 c 0,0 0.1037474,0.075612 0.2181458,0.065837 0.1143982,-0.00977 0.1769105,-0.160269 0.1769105,-0.160269 L 5.5481736,0.92576604 c 0,0 0.041378,-0.1485332 -0.063182,-0.2161302 -0.079604,-0.064826 -0.2507335,-0.00996 -0.250734,-0.00996 z M 4.648989,1.4538081 c 0.02779,0.027698 -0.020616,0.076477 -0.020616,0.076477 -0.759199,0.6994619 -1.5177165,1.399669 -2.2772272,2.09879 -0.028119,0.027061 -0.0364,0.055163 -0.04057,0.095097 L 2.2653498,4.1624176 1.9454471,3.1356331 4.5651893,1.4458279 c 0,0 0.05601,-0.019718 0.0838,0.00798 z M 2.6404535,3.8438751 2.8958437,4.034069 2.5879118,4.3526125 Z"
+       id="path5" />
+  </g>
+</svg>
