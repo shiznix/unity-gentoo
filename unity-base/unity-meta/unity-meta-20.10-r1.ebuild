@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility +apps chat extras +fonts +games +utils +xdm"
 RESTRICT="mirror"
 
-GVER="3.36*"
+GVER="3.38*"
 
 DEPEND="unity-base/unity-build-env
 	unity-extra/ehooks"
@@ -43,7 +43,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		app-accessibility/orca )
 	apps? (
 		|| ( app-office/libreoffice app-office/libreoffice-bin )
-		|| ( mail-client/thunderbird mail-client/thunderbird-bin =mail-client/evolution-${GVER} )
+		|| ( mail-client/thunderbird mail-client/thunderbird-bin mail-client/evolution )
 		media-gfx/shotwell
 		media-sound/rhythmbox
 		media-video/totem
@@ -51,10 +51,10 @@ RDEPEND="gnome-base/gnome-core-libs
 	chat? ( || (
 		( net-im/pidgin x11-plugins/pidgin-libnotify )
 		( net-im/empathy net-libs/telepathy-indicator )
-		amd64? ( net-im/telegram-desktop ) ) )
+		net-im/telegram-desktop net-im/telegram-desktop-bin ) )
 	extras? (
 		app-cdr/brasero
-		=gnome-base/dconf-editor-${GVER}
+		gnome-base/dconf-editor
 		sys-block/gparted
 		unity-extra/unity-tweak-tool )
 	fonts? (
