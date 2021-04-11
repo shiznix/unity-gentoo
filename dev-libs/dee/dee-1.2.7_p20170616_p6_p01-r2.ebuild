@@ -1,12 +1,12 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 PYTHON_COMPAT=( python{3_7,3_8} )
 AUTOTOOLS_AUTORECONF=y
 
 URELEASE="groovy"
-inherit autotools-utils eutils python-r1 ubuntu-versionator vala
+inherit autotools eutils python-r1 ubuntu-versionator vala
 
 MY_P="${PN}_${PV}"
 S="${WORKDIR}/${PN}-${PV}"
@@ -44,7 +44,7 @@ src_prepare() {
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
-	autotools-utils_src_prepare
+	eautoreconf
 }
 
 src_configure() {
@@ -54,25 +54,12 @@ src_configure() {
 		$(use_enable doc gtk-doc)
 		$(use_enable icu)
 		$(use_enable test tests)
-#		$(use_enable test extended-tests)
 		)
-	autotools-utils_src_configure
-	python_copy_sources
-}
-
-src_compile() {
-	autotools-utils_src_compile
-
-	compilation() {
-		cd bindings || die
-		emake \
-			pyexecdir="$(python_get_sitedir)"
-	}
-	python_foreach_impl run_in_build_dir compilation
+	econf
 }
 
 src_install() {
-	autotools-utils_src_install
+	emake DESTDIR="${ED}" install
 
 	if use examples; then
 		insinto /usr/share/doc/${PN}/
@@ -86,7 +73,6 @@ src_install() {
 			DESTDIR="${D}" \
 			install
 	}
-	python_foreach_impl run_in_build_dir installation
 
-	prune_libtool_files --modules
+	find "${ED}" -type f -name '*.la' -delete || die
 }
