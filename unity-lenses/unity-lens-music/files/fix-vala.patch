@@ -1,0 +1,36 @@
+diff -Nur a/src/filter-parser.vala b/src/filter-parser.vala
+--- a/src/filter-parser.vala	2015-11-30 09:48:42.000000000 +0100
++++ b/src/filter-parser.vala	2021-04-16 18:51:41.495173480 +0200
+@@ -23,7 +23,7 @@
+   
+   public abstract class FilterParser : Object
+   {
+-    public FilterParser (Filter filter)
++    protected FilterParser (Filter filter)
+     {
+       this.filter = filter;
+     }
+diff -Nur a/src/player.vala b/src/player.vala
+--- a/src/player.vala	2015-11-30 09:48:42.000000000 +0100
++++ b/src/player.vala	2021-04-16 19:16:43.249236021 +0200
+@@ -21,7 +21,7 @@
+ 
+ namespace PreviewPlayer
+ {
+-  errordomain PreviewPlayerError
++  public errordomain PreviewPlayerError
+   {
+     GST_INIT_FAILED
+   }
+diff -Nur a/src/simple-scope.vala b/src/simple-scope.vala
+--- a/src/simple-scope.vala	2015-11-30 09:48:42.000000000 +0100
++++ b/src/simple-scope.vala	2021-04-16 18:54:35.674303945 +0200
+@@ -36,7 +36,7 @@
+                                                   int max_results = -1,
+                                                   GLib.Cancellable? cancellable = null);
+ 
+-    public SimpleScope ()
++    protected SimpleScope ()
+     {
+     }
+ 

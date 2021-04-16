@@ -2,8 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-VALA_MIN_API_VERSION=0.40
-VALA_MAX_API_VERSION=0.40
 
 URELEASE="groovy"
 inherit autotools eutils ubuntu-versionator vala
@@ -39,6 +37,8 @@ PDEPEND="|| ( media-sound/rhythmbox
 		unity-scopes/smart-scopes[soundcloud] )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+
+PATCHES=( "${FILESDIR}/fix-vala.patch" )
 
 src_prepare() {
 	PATCHES+=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )
