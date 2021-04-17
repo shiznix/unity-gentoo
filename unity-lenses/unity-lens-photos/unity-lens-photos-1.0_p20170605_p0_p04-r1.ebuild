@@ -21,7 +21,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="gnome-online-accounts"
 
 # Let people emerge this by default, bug #472932
-IUSE+=" +python_single_target_python3_7 python_single_target_python3_8"
+#IUSE+=" +python_single_target_python3_7 python_single_target_python3_8"
 RESTRICT="mirror"
 
 RDEPEND="
