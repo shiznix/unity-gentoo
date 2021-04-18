@@ -4,12 +4,12 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8} )
 
-URELEASE="groovy"
+URELEASE="groovy-security"
 inherit flag-o-matic gnome.org gnome2-utils linux-info meson multilib multilib-minimal python-any-r1 toolchain-funcs ubuntu-versionator versionator xdg
 
 MY_P="${PN}2.0_${PV}"
 MY_PV="${PV}"
-UVER="-${PVR_MICRO}"
+#UVER="-${PVR_MICRO}"
 
 DESCRIPTION="The GLib library of C routines"
 HOMEPAGE="https://www.gtk.org/"

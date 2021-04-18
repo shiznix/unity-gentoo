@@ -6,7 +6,7 @@ EAPI=6
 URELEASE="hirsute"
 inherit cmake-utils gnome2-utils ubuntu-versionator xdg-utils
 
-UVER_PREFIX="+19.10.${PVR_MICRO}"
+UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
 DESCRIPTION="Indicator showing session management, status and user switching used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-session"
