@@ -33,7 +33,7 @@ src_install() {
 		gschema_dir="/usr/share/glib-2.0/schemas"
 
 	insinto "${gschema_dir}"
-	newins "${FILESDIR}"/unity-settings_20.04.gsettings-override \
+	newins "${FILESDIR}"/unity-settings_20.10.gsettings-override \
 		"${gschema}"
 
 	if use ubuntu-cursor; then

@@ -14,7 +14,7 @@ show-desktop-icons = true
 [org.gnome.desktop.interface:Unity]
 gtk-theme = 'Ambiance'
 icon-theme = 'ubuntu-mono-dark'
-cursor-theme = 'Vanilla-DMZ'
+cursor-theme = 'DMZ-White'
 font-name = 'Ubuntu 11'
 monospace-font-name = 'Ubuntu Mono 13'
 
@@ -70,21 +70,21 @@ default-zoom-level = 'small'
 open-folder-on-dnd-hover = false
 use-legacy-clipboard = true
 
-[org.gnome.settings-daemon.plugins.power:Unity]
+[com.canonical.unity.settings-daemon.plugins.power:Unity]
 button-power = 'interactive'
 button-sleep = 'suspend'
 critical-battery-action = 'suspend'
 power-button-action = 'interactive'
 sleep-inactive-ac-timeout = 0
 
-[org.gnome.settings-daemon.plugins.xsettings:Unity]
+[com.canonical.unity.settings-daemon.plugins.xsettings:Unity]
 antialiasing = 'rgba'
 hinting = 'slight'
 
-[org.gnome.settings-daemon.plugins.media-keys:Unity]
-screensaver = ['<Control><Alt>l']
+[com.canonical.unity.settings-daemon.plugins.media-keys:Unity]
+screensaver = '<Control><Alt>l'
 
-[org.gnome.settings-daemon.plugins.print-notifications:Unity]
+[com.canonical.unity.settings-daemon.plugins.print-notifications:Unity]
 active = false
 
 [org.gtk.Settings.FileChooser:Unity]
