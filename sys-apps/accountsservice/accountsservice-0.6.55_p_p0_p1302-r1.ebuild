@@ -57,6 +57,7 @@ src_configure() {
 	local emesonargs=(
 		--localstatedir="${EPREFIX}/var"
 		-Dsystemdsystemunitdir="$(systemd_get_systemunitdir)"
+		-Duser_heuristics="false" # we need guest-session user to be detected as "SystemAccount=true"
 		-Dsystemd="$(usex systemd true false)"
 		-Dintrospection="$(usex introspection true false)"
 		-Ddocbook="$(usex doc true false)"
