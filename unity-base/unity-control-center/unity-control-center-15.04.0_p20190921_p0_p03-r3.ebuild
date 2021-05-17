@@ -1,12 +1,10 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="5"
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="yes"
+EAPI=7
 
 URELEASE="groovy"
-inherit autotools base eutils gnome2 ubuntu-versionator vala
+inherit autotools gnome2 ubuntu-versionator vala xdg-utils
 
 UVER_PREFIX="+19.10.${PVR_MICRO}"
 
@@ -22,15 +20,12 @@ REQUIRED_USE="samba? ( cups )"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-# False positives caused by nested configure scripts
-QA_CONFIGURE_OPTIONS=".*"
-
 # gnome-session-2.91.6-r1 is needed so that 10-user-dirs-update is run at login
 # g-s-d[policykit] needed for bug #403527
 # kerberos unfortunately means mit-krb5; build fails with heimdal
 # udev could be made optional, only conditions gsd-device-panel
 # (mouse, keyboards, touchscreen, etc)
-COMMON_DEPEND="
+DEPEND="
 	>=dev-libs/glib-2.39.91:2[dbus]
 	>=x11-libs/gdk-pixbuf-2.23.0:2
 	>=x11-libs/gtk+-3.15:3[X]
@@ -93,7 +88,7 @@ COMMON_DEPEND="
 	webkit? ( net-libs/webkit-gtk:4 )
 
 	$(vala_depend)"
-RDEPEND="${COMMON_DEPEND}
+RDEPEND="${DEPEND}
 	|| ( ( app-admin/openrc-settingsd sys-auth/consolekit ) >=sys-apps/systemd-31 )
 	>=sys-apps/accountsservice-0.6.39
 
@@ -117,8 +112,7 @@ PDEPEND=">=gnome-base/gnome-session-2.91.6-r1
 	bluetooth? ( unity-indicators/indicator-bluetooth )"
 
 # Soft block unity-base/gnome-control-center-signon as it installs conflicting 'Online Accounts' settings tile (use GOA not UOA) #
-DEPEND="!unity-base/gnome-control-center-signon
-	${COMMON_DEPEND}
+BDEPEND="!unity-base/gnome-control-center-signon
 	x11-base/xorg-proto
 
 	dev-libs/libxml2:2
@@ -135,14 +129,14 @@ DEPEND="!unity-base/gnome-control-center-signon
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"      # This needs to be applied for the debian/ directory to be present #
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"      # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 
 	# Fudge a pass on broken hostname-helper test (see https://bugzilla.gnome.org/show_bug.cgi?id=650342) #
 	echo > panels/info/hostnames-test.txt
 
-	epatch "${FILESDIR}/01_${PN}-2019-langselector.patch" # Based on g-c-c v3.24 Region & Language panel
-	epatch "${FILESDIR}/02_${PN}-2020-optional-bt-colord-kerberos-wacom-webkit.patch"
+	eapply "${FILESDIR}/01_${PN}-2019-langselector.patch" # Based on g-c-c v3.24 Region & Language panel
+	eapply "${FILESDIR}/02_${PN}-2020-optional-bt-colord-kerberos-wacom-webkit.patch"
 
 	# Fix typo #
 	sed -i \
@@ -161,11 +155,11 @@ src_prepare() {
 	fi
 
 	use cups \
-		&& epatch "${FILESDIR}/${PN}-printers-fix_launcher.patch"
+		&& eapply "${FILESDIR}/${PN}-printers-fix_launcher.patch"
 
 	if use gnome-online-accounts; then
 		# Needed by gnome-calendar #
-		epatch "${FILESDIR}/${PN}-online-accounts-enable_passing_data.patch"
+		eapply "${FILESDIR}/${PN}-online-accounts-enable_passing_data.patch"
 
 		# Use .desktop Comment from g-c-c we can translate #
 		sed -i \
@@ -233,7 +227,7 @@ src_install() {
 pkg_preinst() { gnome2_icon_savelist; }
 
 pkg_postinst() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 	if ! use webkit; then
 		echo
 		elog "Searching in the dash - Legal notice:"
@@ -242,4 +236,4 @@ pkg_postinst() {
 	fi
 }
 
-pkg_postrm() { gnome2_icon_cache_update; }
+pkg_postrm() { xdg_icon_cache_update; }

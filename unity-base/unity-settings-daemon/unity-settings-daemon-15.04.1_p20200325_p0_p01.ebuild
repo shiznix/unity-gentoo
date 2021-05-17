@@ -1,12 +1,10 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
-GNOME2_LA_PUNT="yes"
-GCONF_DEBUG="no"
+EAPI=7
 
 URELEASE="groovy"
-inherit autotools base eutils flag-o-matic gnome2 virtualx ubuntu-versionator
+inherit autotools flag-o-matic gnome2 virtualx ubuntu-versionator xdg-utils
 
 UVER_PREFIX="+20.04.${PVR_MICRO}"
 
@@ -24,7 +22,7 @@ REQUIRED_USE="input_devices_wacom? ( udev )
 RESTRICT="mirror"
 
 # require colord-0.1.27 dependency for connection type support
-COMMON_DEPEND="dev-libs/glib:2
+DEPEND="dev-libs/glib:2
 	dev-libs/libappindicator:=
 	x11-libs/gtk+:3
 	>=gnome-base/gnome-desktop-3.36:3=
@@ -61,15 +59,14 @@ COMMON_DEPEND="dev-libs/glib:2
 		sys-apps/hwids
 		dev-libs/libgudev:=
 		virtual/libudev:= )"
-RDEPEND="${COMMON_DEPEND}
+RDEPEND="${DEPEND}
 	gnome-base/dconf
 	x11-themes/gnome-themes-standard
 	x11-themes/adwaita-icon-theme
 	!<gnome-base/gnome-control-center-2.22
 	!<gnome-extra/gnome-color-manager-3.1.1
 	!<gnome-extra/gnome-power-manager-3.1.3"
-DEPEND="${COMMON_DEPEND}
-	dev-libs/libxml2:2
+BDEPEND="dev-libs/libxml2:2
 	sys-devel/gettext
 	dev-util/intltool
 	virtual/pkgconfig
@@ -79,11 +76,11 @@ S="${WORKDIR}"
 
 src_prepare() {
 	# Ubuntu patchset #
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"  # This needs to be applied for the debian/ directory to be present #
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"  # This needs to be applied for the debian/ directory to be present #
 
 	# debian/gnome-update-wallpaper-cache.c:65:5: error: too many arguments to function ‘gnome_bg_draw’
 	#	65 |     gnome_bg_draw (bg, pixbuf, screen, FALSE);
-	epatch "${FILESDIR}/gnome-desktop-3.36-gnome_bg_draw-fix.diff"
+	eapply -p0 "${FILESDIR}/gnome-desktop-3.36-gnome_bg_draw-fix.diff"
 
 	# DESKTOP_SESSION: rename "ubuntu" to "unity" #
 	#  to fix keyboard layouts shortcut on lock screen #
@@ -95,14 +92,14 @@ src_prepare() {
 	# people, so revert it if USE=short-touchpad-timeout.
 	# Revisit if/when upstream adds a setting for customizing the timeout.
 	use short-touchpad-timeout &&
-		epatch "${FILESDIR}/${PN}-3.7.90-short-touchpad-timeout.patch"
+		eapply "${FILESDIR}/${PN}-3.7.90-short-touchpad-timeout.patch"
 
 	# Make colord and wacom optional; requires eautoreconf
-	epatch "${FILESDIR}/01_${PN}-optional-color-wacom.patch"
+	eapply "${FILESDIR}/01_${PN}-optional-color-wacom.patch"
 
 	# pnp.ids is not provided by >=gnome-base/gnome-desktop-3.21.4 #
 	#  use udev's hwdb to query PNP IDs instead #
-	epatch "${FILESDIR}/02_${PN}-2020-optional-pnp-ids.patch"
+	eapply "${FILESDIR}/02_${PN}-2020-optional-pnp-ids.patch"
 
 	# Correct path to unity-settings-daemon executable in upstart and systemd files #
 	sed -e 's:/usr/lib/unity-settings-daemon:/usr/libexec:g' \
@@ -175,7 +172,7 @@ src_install() {
 	insinto /usr/share/upstart/systemd-session/upstart
 	doins debian/user/unity-settings-daemon.override
 
-	prune_libtool_files --modules
+	find "${D}" -name "*.la" -delete || die
 }
 
 src_test() {
@@ -189,8 +186,10 @@ pkg_preinst() {
 
 pkg_postinst() {
 	gnome2_schemas_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {
 	gnome2_schemas_update
+	xdg_icon_cache_update
 }

@@ -1,10 +1,10 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 
 URELEASE="groovy"
-inherit base mono ubuntu-versionator
+inherit mono ubuntu-versionator
 
 UVER="-${PVR_MICRO}"
 
@@ -17,15 +17,15 @@ SLOT="0"
 KEYWORDS="amd64 ppc x86"
 IUSE="doc"
 
-RDEPEND=">=dev-lang/mono-2.0
-	>=net-dns/avahi-0.6[mono]"
-DEPEND="${RDEPEND}
-	virtual/pkgconfig"
+DEPEND=">=dev-lang/mono-2.0"
+RDEPEND=">=net-dns/avahi-0.6[mono]"
+BDEPEND="virtual/pkgconfig"
 RESTRICT="mirror"
 
 src_prepare() {
 	sed -e 's:mono/2.0:mono/2.0-api:g' \
 		-i configure || die
+	default
 }
 
 src_configure() {
