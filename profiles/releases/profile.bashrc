@@ -141,7 +141,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 		if declare -f ebuild_hook | grep -q "eautoreconf"; then
 			if ! declare -F eautoreconf 1>/dev/null; then
-				x=${PORTDIR%/}/eclass/autotools.eclass
+				x="$(portageq get_repo_path / gentoo)"/eclass/autotools.eclass
 				[[ -f ${x} ]] \
 					|| die "${x}: file not found"
 
