@@ -1,3 +1,0 @@
-ebuild_hook() {
-	ehook_require telegram_theme
-}

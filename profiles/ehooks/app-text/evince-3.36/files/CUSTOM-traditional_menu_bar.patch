@@ -9,32 +9,12 @@ the gtk-shell-shows-app-menu and gtk-shell-shows-menubar settings.
 The view and action menus are hidden when the menubar is shown.
 
 https://bugzilla.gnome.org/show_bug.cgi?id=736419
----
- po/POTFILES.in             |   1 +
- shell/ev-application.c     |  42 +++++++
- shell/ev-application.h     |   2 +
- shell/ev-window-title.c    |  26 +++++
- shell/ev-window.c          |   3 +-
- shell/evince.gresource.xml |   1 +
- shell/meson.build          |   1 +
- shell/traditional-menus.ui | 230 +++++++++++++++++++++++++++++++++++++
- 8 files changed, 305 insertions(+), 1 deletion(-)
- create mode 100644 shell/traditional-menus.ui
 
-diff --git a/po/POTFILES.in b/po/POTFILES.in
-index ebfc72b..72797d3 100644
---- a/po/POTFILES.in
-+++ b/po/POTFILES.in
-@@ -65,3 +65,4 @@ shell/ev-window-title.c
- shell/ev-zoom-action.c
- shell/help-overlay.ui
- shell/main.c
-+shell/traditional-menus.ui
-diff --git a/shell/ev-application.c b/shell/ev-application.c
-index 23871d9..946627f 100644
---- a/shell/ev-application.c
-+++ b/shell/ev-application.c
-@@ -45,12 +45,15 @@
+Index: evince-3.22.1/shell/ev-application.c
+===================================================================
+--- a/shell/ev-application.c	2018-11-13 02:38:48.000000000 +0100
++++ b/shell/ev-application.c	2019-03-03 02:24:29.742584027 +0100
+@@ -44,12 +44,15 @@
  #include "ev-media-player-keys.h"
  #endif /* ENABLE_DBUS */
  
@@ -50,11 +30,10 @@ index 23871d9..946627f 100644
  
  #ifdef ENABLE_DBUS
          EvEvinceApplication *skeleton;
-@@ -939,6 +942,26 @@ ev_application_migrate_config_dir (EvApplication *application)
-         g_free (old_accels);
+@@ -939,6 +942,26 @@
  }
  
-+static void
+ static void
 +ev_application_update_bookmarks_menu (EvApplication *application)
 +{
 +        GtkWindow *window;
@@ -74,12 +53,13 @@ index 23871d9..946627f 100644
 +        }
 +}
 +
- static void
++static void
  ev_application_startup (GApplication *gapplication)
  {
-@@ -998,6 +1021,25 @@ ev_application_startup (GApplication *gapplication)
+         const gchar *action_accels[] = {
+@@ -995,6 +1018,25 @@
  
-         hdy_init ();
+         G_APPLICATION_CLASS (ev_application_parent_class)->startup (gapplication);
  
 +        if (!in_desktop ("GNOME")) {
 +                GtkBuilder *builder;
@@ -103,11 +83,11 @@ index 23871d9..946627f 100644
          for (it = action_accels; it[0]; it += g_strv_length ((gchar **)it) + 1)
                  gtk_application_set_accels_for_action (GTK_APPLICATION (application), it[0], &it[1]);
  }
-diff --git a/shell/ev-application.h b/shell/ev-application.h
-index 00a7a18..b2664a4 100644
---- a/shell/ev-application.h
-+++ b/shell/ev-application.h
-@@ -74,6 +74,8 @@ void              ev_application_new_window          (EvApplication *application
+Index: evince-3.22.1/shell/ev-application.h
+===================================================================
+--- a/shell/ev-application.h	2018-11-13 02:38:48.000000000 +0100
++++ b/shell/ev-application.h	2019-03-03 02:24:29.743584031 +0100
+@@ -74,6 +74,8 @@
                                                        GdkScreen     *screen,
                                                        guint32        timestamp);
  
@@ -116,64 +96,31 @@ index 00a7a18..b2664a4 100644
  G_END_DECLS
  
  #endif /* !EV_APPLICATION_H */
-diff --git a/shell/ev-window-title.c b/shell/ev-window-title.c
-index 87fbd1f..dd4f152 100644
---- a/shell/ev-window-title.c
-+++ b/shell/ev-window-title.c
-@@ -32,6 +32,8 @@
- #define EV_BACKEND_PS  "PSDocument"
- #define EV_BACKEND_PDF "PdfDocument"
+Index: evince-3.22.1/shell/evince.gresource.xml.in
+===================================================================
+--- evince-3.22.1.orig/shell/evince.gresource.xml.in
++++ evince-3.22.1/shell/evince.gresource.xml.in
+@@ -21,5 +21,6 @@
+     <file alias="ui/evince.css" compressed="true">@EVINCE_CSS@</file>
+     <file alias="ui/thumbnail-frame.png" compressed="true">thumbnail-frame.png</file>
+     <file alias="gtk/menus.ui" compressed="true" preprocess="xml-stripblanks">evince-menus.ui</file>
++    <file alias="gtk/traditional-menus.ui" compressed="true" preprocess="xml-stripblanks">traditional-menus.ui</file>
+   </gresource>
+ </gresources>
+Index: evince-3.22.1/shell/ev-window.c
+===================================================================
+--- a/shell/ev-window.c	2018-11-13 03:58:44.000000000 +0100
++++ b/shell/ev-window.c	2019-03-03 02:27:37.042451064 +0100
+@@ -665,6 +665,8 @@
  
-+gboolean in_desktop (const gchar *name);
-+
- typedef struct
- {
- 	const gchar *backend;
-@@ -93,6 +95,30 @@ ev_window_title_sanitize_title (EvWindowTitle *window_title, char **title) {
- 	}
- }
- 
-+gboolean
-+in_desktop (const gchar *name)
-+{
-+	const gchar *desktop_name_list;
-+	gchar **names;
-+	gboolean in_list = FALSE;
-+	gint i;
-+
-+	desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
-+	if (!desktop_name_list)
-+		return FALSE;
-+
-+	names = g_strsplit (desktop_name_list, ":", -1);
-+	for (i = 0; names[i] && !in_list; i++)
-+		if (strcmp (names[i], name) == 0) {
-+			in_list = TRUE;
-+			break;
-+		}
-+	g_strfreev (names);
-+
-+	return in_list;
-+}
-+
-+
- static void
- ev_window_title_update (EvWindowTitle *window_title)
- {
-diff --git a/shell/ev-window.c b/shell/ev-window.c
-index 077d577..bf5122f 100644
---- a/shell/ev-window.c
-+++ b/shell/ev-window.c
-@@ -674,6 +674,8 @@ update_chrome_visibility (EvWindow *window)
- 
- 	set_widget_visibility (priv->toolbar, toolbar);
- 	set_widget_visibility (priv->sidebar, sidebar);
+ 	if (toolbar && ev_document_model_get_fullscreen (priv->model))
+ 		ev_window_fullscreen_show_toolbar (window);
 +
 +	gtk_application_window_set_show_menubar (GTK_APPLICATION_WINDOW (window), !presentation);
  }
  
  static void
-@@ -7840,7 +7842,6 @@ ev_window_new (void)
+@@ -7763,7 +7765,6 @@
  	ev_window = GTK_WIDGET (g_object_new (EV_TYPE_WINDOW,
  					      "type", GTK_WINDOW_TOPLEVEL,
                                                "application", g_application_get_default (),
@@ -181,34 +128,24 @@ index 077d577..bf5122f 100644
  					      NULL));
  
  	return ev_window;
-diff --git a/shell/evince.gresource.xml b/shell/evince.gresource.xml
-index c7dcc17..865ba3f 100644
---- a/shell/evince.gresource.xml
-+++ b/shell/evince.gresource.xml
-@@ -21,5 +21,6 @@
-     <file alias="ui/evince.css" compressed="true">evince.css</file>
-     <file alias="ui/thumbnail-frame.png" compressed="true">thumbnail-frame.png</file>
-     <file alias="gtk/menus.ui" compressed="true" preprocess="xml-stripblanks">evince-menus.ui</file>
-+    <file alias="gtk/traditional-menus.ui" compressed="true" preprocess="xml-stripblanks">traditional-menus.ui</file>
-   </gresource>
- </gresources>
-diff --git a/shell/meson.build b/shell/meson.build
-index 7cbc48f..9320505 100644
---- a/shell/meson.build
-+++ b/shell/meson.build
-@@ -38,6 +38,7 @@ resource_data = files(
-   '../data/thumbnail-frame.png',
-   'evince-menus.ui',
-   'help-overlay.ui',
-+  'traditional-menus.ui',
- )
+Index: evince-3.22.1/shell/Makefile.am
+===================================================================
+--- a/shell/Makefile.am	2018-10-23 20:48:09.000000000 +0200
++++ b/shell/Makefile.am	2019-03-03 02:24:29.748584055 +0100
+@@ -172,7 +172,8 @@
+ 	evince-icon.rc \
+ 	evince.gresource.xml.in \
+ 	ev-gdbus.xml \
+-	ev-daemon-gdbus.xml
++	ev-daemon-gdbus.xml \
++	traditional-menus.ui
  
- sources += gnome.compile_resources(
-diff --git a/shell/traditional-menus.ui b/shell/traditional-menus.ui
-new file mode 100644
-index 0000000..aa2dc96
+ GRESOURCE_XML_IN_FILES = evince.gresource.xml.in
+ GRESOURCE_XML_FILE = $(GRESOURCE_XML_IN_FILES:.xml.in=.xml)
+Index: evince-3.22.1/shell/traditional-menus.ui
+===================================================================
 --- /dev/null
-+++ b/shell/traditional-menus.ui
++++ evince-3.22.1/shell/traditional-menus.ui
 @@ -0,0 +1,230 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<!--
@@ -440,6 +377,56 @@ index 0000000..aa2dc96
 +    </submenu>
 +  </menu>
 +</interface>
--- 
-2.26.3
-
+Index: evince-3.22.1/po/POTFILES.in
+===================================================================
+--- a/po/POTFILES.in	2018-11-13 02:38:48.000000000 +0100
++++ b/po/POTFILES.in	2019-03-03 02:26:21.273100082 +0100
+@@ -64,3 +64,4 @@
+ shell/ev-zoom-action.c
+ shell/help-overlay.ui
+ shell/main.c
++shell/traditional-menus.ui
+Index: evince-3.22.1/shell/ev-window-title.c
+===================================================================
+--- a/shell/ev-window-title.c	2018-10-23 20:48:09.000000000 +0200
++++ b/shell/ev-window-title.c	2019-03-03 02:24:29.749584059 +0100
+@@ -32,6 +32,8 @@
+ #define EV_BACKEND_PS  "PSDocument"
+ #define EV_BACKEND_PDF "PdfDocument"
+ 
++gboolean in_desktop (const gchar *name);
++
+ typedef struct
+ {
+ 	const gchar *backend;
+@@ -93,6 +95,30 @@
+ 	}
+ }
+ 
++gboolean
++in_desktop (const gchar *name)
++{
++	const gchar *desktop_name_list;
++	gchar **names;
++	gboolean in_list = FALSE;
++	gint i;
++
++	desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
++	if (!desktop_name_list)
++		return FALSE;
++
++	names = g_strsplit (desktop_name_list, ":", -1);
++	for (i = 0; names[i] && !in_list; i++)
++		if (strcmp (names[i], name) == 0) {
++			in_list = TRUE;
++			break;
++		}
++	g_strfreev (names);
++
++	return in_list;
++}
++
++
+ static void
+ ev_window_title_update (EvWindowTitle *window_title)
+ {

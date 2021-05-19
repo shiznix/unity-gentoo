@@ -1,0 +1,9 @@
+ebuild_hook() {
+        sed -i \
+                -e "s/HDY_TYPE/GTK_TYPE/" \
+                -e "s/HdyHeaderBar/GtkHeaderBar/" \
+                -e "s/hdy_header_bar/gtk_header_bar/" \
+                -e "s/HDY_HEADER_BAR/GTK_HEADER_BAR/" \
+                -e "s/HdyApplicationWindow/GtkApplicationWindow/" \
+                shell/ev-{toolbar.{c,h},window{,-title}.{c,h}}
+}
