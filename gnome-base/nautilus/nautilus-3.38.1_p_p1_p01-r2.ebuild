@@ -27,7 +27,7 @@ COMMON_DEPEND="
 	seccomp? ( sys-libs/libseccomp )
 	>=x11-libs/pango-1.28.3
 	selinux? ( >=sys-libs/libselinux-2.0 )
-	>=app-misc/tracker-2.0:=[miners]
+	app-misc/tracker:3=[miners]
 	x11-libs/libX11
 	>=dev-libs/libxml2-2.7.8:2
 	introspection? ( >=dev-libs/gobject-introspection-1.54:= )
@@ -65,6 +65,7 @@ src_prepare() {
 	sed \
 		`# multiarch_fallback.patch causes segfault in /usr/lib/nautilus/extensions-3.0/libterminal-nautilus.so` \
 		-e 's:multiarch_fallback:#multiarch_fallback:g' \
+		-e 's:revert_tracker_update:#revert_tracker_update:g' \
 			-i "${WORKDIR}/debian/patches/series"
 	# Fix unity_launcher patch #
 	sed -i \
