@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python{3_7,3_8} )
+PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 
 URELEASE="hirsute"
 inherit flag-o-matic gnome.org gnome2-utils linux-info meson multilib multilib-minimal python-any-r1 toolchain-funcs ubuntu-versionator versionator xdg

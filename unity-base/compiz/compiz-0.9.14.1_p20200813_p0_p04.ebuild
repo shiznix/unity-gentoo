@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python{3_7,3_8} )
+PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 
 URELEASE="hirsute"
 inherit gnome2-utils cmake-utils eutils python-r1 ubuntu-versionator xdummy

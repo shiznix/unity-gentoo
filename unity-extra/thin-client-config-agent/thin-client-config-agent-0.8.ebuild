@@ -3,7 +3,7 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{3_7,3_8} )
+PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 
 URELEASE="eoan"
 inherit distutils-r1 ubuntu-versionator
