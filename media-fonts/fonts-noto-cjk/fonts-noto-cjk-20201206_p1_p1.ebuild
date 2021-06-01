@@ -59,7 +59,7 @@ src_install() {
 
 	einfo "Creating fontconfig configuration symlinks ..."
 	dodir "${symlink_dir}"
-	for f in "${ED%/}"/etc/fonts/conf.avail/*; do
+	for f in "${ED}"/etc/fonts/conf.avail/*; do
 		f=${f##*/}
 		echo " * ${f}"
 		dosym "../conf.avail/${f}" "${symlink_dir}/${f}"

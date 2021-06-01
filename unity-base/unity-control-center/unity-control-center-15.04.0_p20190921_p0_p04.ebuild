@@ -202,24 +202,24 @@ src_install() {
 	gnome2_src_install
 
 	# Remove libgnome-bluetooth.so symlink as is provided by net-wireless/gnome-bluetooth #
-	rm "${ED}usr/$(get_libdir)/libgnome-bluetooth.so" 2>/dev/null
+	rm "${ED}/usr/$(get_libdir)/libgnome-bluetooth.so" 2>/dev/null
 
 	# Remove /usr/share/pixmaps/faces/ as is provided by gnome-base/gnome-control-center #
-	rm -rf "${ED}usr/share/pixmaps/faces"
+	rm -rf "${ED}/usr/share/pixmaps/faces"
 
 	# Remove cc-remote-login-helper as is provided by gnome-base/gnome-control-center #
-	rm "${ED}usr/libexec/cc-remote-login-helper" 2> /dev/null
+	rm "${ED}/usr/libexec/cc-remote-login-helper" 2> /dev/null
 
 	# If a .desktop file does not have inline
 	# translations, fall back to calling gettext
 	local file
-	for file in "${ED%/}"/usr/share/applications/*.desktop; do
+	for file in "${ED}"/usr/share/applications/*.desktop; do
 		echo "X-GNOME-Gettext-Domain=${PN}" >> "${file}"
 	done
 
 	if ! use branding; then
 		pushd "${WORKDIR}"/panels/info 1>/dev/null
-			./logo-generator --logo UbuntuLogoBlank.png --text "ubuntu ${UVER_RELEASE}" --output "${ED%/}"/usr/share/"${PN}"/ui/UbuntuLogo.png
+			./logo-generator --logo UbuntuLogoBlank.png --text "ubuntu ${UVER_RELEASE}" --output "${ED}"/usr/share/"${PN}"/ui/UbuntuLogo.png
 		popd 1>/dev/null
 	fi
 }
