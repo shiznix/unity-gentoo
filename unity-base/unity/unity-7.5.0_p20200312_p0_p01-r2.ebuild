@@ -175,6 +175,8 @@ src_prepare() {
 	# Fix building with GCC 10 #
 	sed -i '/#include <functional>/a #include <string>' UnityCore/GLibSource.h
 	sed -i '/#include <core\/screen.h>/a #include <iostream>' unity-shared/CompizUtils.cpp
+	sed -i '/#include "GLibWrapper.h"/a #include <vector>' UnityCore/ScopeData.h
+	sed -i '/#include <NuxCore\/Property.h>/a #include <vector>' unity-shared/ThemeSettings.h
 
 	cmake-utils_src_prepare
 }
