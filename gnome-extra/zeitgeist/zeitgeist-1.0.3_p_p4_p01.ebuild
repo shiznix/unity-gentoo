@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 
 URELEASE="hirsute"
-inherit bash-completion-r1 python-r1 vala ubuntu-versionator xdg
+inherit autotools bash-completion-r1 python-r1 vala ubuntu-versionator xdg
 
 DESCRIPTION="Service to log activities and present to other apps"
 HOMEPAGE="https://launchpad.net/zeitgeist/"
@@ -43,16 +43,11 @@ DEPEND="${RDEPEND}
 "
 
 PATCHES=(
-	# Fix direct invocation of python in configure
-	"${FILESDIR}"/${PN}-1.0-python-detection.patch
+	# As of vala 0.51.1, PtrArray is a subclass of GenericArray
+	"${FILESDIR}"/0001-use-genericarray-api-only.patch
 )
 
 src_prepare() {
-	# Disable Ubuntu Touch patch
-	sed -i \
-		-e "/disable-fts-on-touch.patch/d" \
-		"${WORKDIR}/debian/patches/series" || die
-
 	# Fix pre-populator
 	sed -i \
 		-e "s/+1,117/+1,119/" \
@@ -71,6 +66,7 @@ src_prepare() {
 
 	vala_src_prepare
 	xdg_src_prepare
+	eautoreconf
 }
 
 src_configure() {

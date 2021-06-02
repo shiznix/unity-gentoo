@@ -6,6 +6,8 @@ PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 
 URELEASE="groovy"
 inherit bash-completion-r1 python-r1 vala ubuntu-versionator xdg
+VALA_MIN_API_VERSION=0.48
+VALA_MAX_API_VERSION=0.48
 
 DESCRIPTION="Service to log activities and present to other apps"
 HOMEPAGE="https://launchpad.net/zeitgeist/"
