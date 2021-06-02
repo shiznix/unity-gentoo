@@ -1,4 +1,4 @@
-From b283668929a5c0e23ce4a4236432f0d948597643 Mon Sep 17 00:00:00 2001
+From 98b46bed6c3b101bbea7d09c3d62130260ead620 Mon Sep 17 00:00:00 2001
 From: c4pp4
 Date: Thu, 6 Jun 2019 13:55:23 +0200
 Subject: [PATCH 1/1] Add Unity Launcher support
@@ -130,11 +130,11 @@ index 235e58c..45c922e 100644
  void          nemo_progress_info_queue           (NemoProgressInfo *info);
  void          nemo_progress_info_start           (NemoProgressInfo *info);
 diff --git a/meson.build b/meson.build
-index f692a61..cefaf4a 100644
+index bc328e8..842f1e1 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -115,6 +115,14 @@ if new_pango.found()
-   conf.set('HAVE_PANGO_144', true)
+@@ -141,6 +141,14 @@ else
+   message('................using pango @0@ instead'.format(new_pango.version()))
  endif
  
 +unity_enabled = get_option('unity-launcher')
@@ -148,16 +148,16 @@ index f692a61..cefaf4a 100644
  enableEmptyView = get_option('empty_view')
  conf.set10('ENABLE_EMPTY_VIEW', enableEmptyView)
  
-@@ -185,6 +193,7 @@ message('\n'.join(['',
+@@ -211,6 +219,7 @@ message('\n'.join(['',
  '    prefix:                 @0@'.format(prefix),
  '    source code location:   @0@'.format(meson.source_root()),
- '    compiler:           @0@'.format(cc.get_id()),
-+'    Unity   support:    @0@'.format(unity_enabled),
- '    debugging support:  @0@'.format(buildtype),
- '    libexif support:    @0@'.format(libexif_enabled),
- '    exempi  support:    @0@'.format(exempi_enabled),
+ '    compiler:               @0@'.format(cc.get_id()),
++'    Unity support:          @0@'.format(unity_enabled),
+ '    debugging support:      @0@'.format(buildtype),
+ '    libexif support:        @0@'.format(libexif_enabled),
+ '    exempi  support:        @0@'.format(exempi_enabled),
 diff --git a/meson_options.txt b/meson_options.txt
-index 66b193d..ba5ea47 100644
+index 6281d58..19be216 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
 @@ -4,6 +4,8 @@ option('exif', type : 'boolean', value : true,
@@ -198,10 +198,10 @@ index 3c01acb..bc5423a 100644
    nemoCommon_sources + nemoWindow_sources,
    include_directories: [ rootInclude ],
 diff --git a/src/nemo-application.c b/src/nemo-application.c
-index f3d4b67..b60d1c6 100644
+index 999eb3b..67ff556 100644
 --- a/src/nemo-application.c
 +++ b/src/nemo-application.c
-@@ -80,6 +80,10 @@
+@@ -81,6 +81,10 @@
  #define GNOME_DESKTOP_USE_UNSTABLE_API
  #include <libcinnamon-desktop/gnome-desktop-thumbnail.h>
  
@@ -212,7 +212,7 @@ index f3d4b67..b60d1c6 100644
  #define NEMO_ACCEL_MAP_SAVE_DELAY 30
  
  G_DEFINE_TYPE (NemoApplication, nemo_application, GTK_TYPE_APPLICATION);
-@@ -567,6 +571,10 @@ nemo_application_startup (GApplication *app)
+@@ -568,6 +572,10 @@ nemo_application_startup (GApplication *app)
          if (!gnome_desktop_thumbnail_cache_check_permissions (NULL, TRUE))
              self->priv->cache_problem = TRUE;
      }
@@ -224,12 +224,12 @@ index f3d4b67..b60d1c6 100644
  
  static void
 diff --git a/src/nemo-progress-ui-handler.c b/src/nemo-progress-ui-handler.c
-index f30776a..83f718f 100644
+index af76b19..1abcf1b 100644
 --- a/src/nemo-progress-ui-handler.c
 +++ b/src/nemo-progress-ui-handler.c
-@@ -41,6 +41,11 @@
- #include <libnotify/notify.h>
+@@ -42,6 +42,11 @@
  #include <libxapp/xapp-gtk-window.h>
+ #include <libxapp/xapp-status-icon.h>
  
 +#ifdef HAVE_UNITY
 +#include <unity.h>
@@ -239,9 +239,9 @@ index f30776a..83f718f 100644
  struct _NemoProgressUIHandlerPriv {
  	NemoProgressInfoManager *manager;
  
-@@ -55,6 +60,9 @@ struct _NemoProgressUIHandlerPriv {
+@@ -56,6 +61,9 @@ struct _NemoProgressUIHandlerPriv {
  
- 	GtkStatusIcon *status_icon;
+ 	XAppStatusIcon *status_icon;
      gboolean should_show_status_icon;
 +#ifdef HAVE_UNITY
 +	UnityQuicklistHandler *unity_quicklist_handler;
@@ -249,8 +249,8 @@ index f30776a..83f718f 100644
  };
  
  G_DEFINE_TYPE (NemoProgressUIHandler, nemo_progress_ui_handler, G_TYPE_OBJECT);
-@@ -126,6 +134,220 @@ progress_ui_handler_update_status_icon (NemoProgressUIHandler *self)
- 	gtk_status_icon_set_visible (self->priv->status_icon, self->priv->should_show_status_icon);
+@@ -128,6 +136,220 @@ progress_ui_handler_update_status_icon (NemoProgressUIHandler *self)
+ 	xapp_status_icon_set_visible (self->priv->status_icon, self->priv->should_show_status_icon);
  }
  
 +#ifdef HAVE_UNITY
@@ -470,7 +470,7 @@ index f30776a..83f718f 100644
  static gboolean
  progress_window_delete_event (GtkWidget *widget,
  			      GdkEvent *event,
-@@ -299,6 +521,10 @@ progress_info_finished_cb (NemoProgressInfo *info,
+@@ -301,6 +523,10 @@ progress_info_finished_cb (NemoProgressInfo *info,
  			progress_ui_handler_show_complete_notification (self);
  		}
  	}
@@ -481,7 +481,7 @@ index f30776a..83f718f 100644
  }
  
  static void
-@@ -370,6 +596,10 @@ handle_new_progress_info (NemoProgressUIHandler *self,
+@@ -372,6 +598,10 @@ handle_new_progress_info (NemoProgressUIHandler *self,
              gtk_window_present (GTK_WINDOW (self->priv->progress_window));
          }
  	}
@@ -916,5 +916,5 @@ index 0000000..52caa1e
 +
 +#endif /* __UNITY_QUICKLIST_HANDLER_H__ */
 -- 
-2.26.2
+2.31.1
 
