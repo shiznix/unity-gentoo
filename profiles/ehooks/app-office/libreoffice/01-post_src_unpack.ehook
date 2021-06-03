@@ -3,5 +3,6 @@
 
 ebuild_hook() {
 	ehook_use libreoffice_theme \
-		&& unpack "${EHOOK_FILESDIR}"/human-icon-theme.tar.xz
+		&& unpack "${EHOOK_FILESDIR}"/human-icon-theme.tar.xz \
+		&& unpack "${EHOOK_FILESDIR}"/tango-icon-theme.tar.xz
 }

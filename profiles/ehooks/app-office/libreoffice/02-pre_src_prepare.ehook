@@ -7,10 +7,13 @@ ebuild_hook() {
 	## Add custom icons.
 	cp "${EHOOK_FILESDIR}"/custom-icons/savemodified_{large,small}.png icon-themes/human/res
 
+	## Add Human icon theme.
+	mv "${WORKDIR}"/tango icon-themes
+
 	## Configure with Human icon theme.
 	sed -i \
-		-e "/with_theme=/{s/\(elementary\)/\1 human/}" \
-		-e "/|sukapura_svg)/{s/\(elementary\)/\1|human/}" \
+		-e "/with_theme=/{s/\(elementary\)/\1 human tango/}" \
+		-e "/|sukapura_svg)/{s/\(elementary\)/\1|human|tango/}" \
 		configure.ac || die
 
 	## Make Human icon theme the default.
@@ -20,7 +23,7 @@ ebuild_hook() {
 
 	## Use Tango icon theme as the fallback for Human icon theme.
 	sed -i \
-		-e "s/\(sResult = \"\";\)/\1\nelse if (rsStyle == \"human\")\nsResult = \"elementary\";/" \
+		-e "s/\(sResult = \"\";\)/\1\nelse if (rsStyle == \"human\")\nsResult = \"tango\";/" \
 		vcl/source/image/ImplImageTree.cxx || die
 
 	fi ## end of ehook_use libreoffice_theme
