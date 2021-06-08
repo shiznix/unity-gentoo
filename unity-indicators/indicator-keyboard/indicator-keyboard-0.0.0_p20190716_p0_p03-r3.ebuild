@@ -46,6 +46,7 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+	eapply "${FILESDIR}/${PN}-fix-build-against-vala-0.52.patch"
 	eapply "${FILESDIR}/${PN}-optional-fcitx.patch"
 
 	! use charmap && sed -i \

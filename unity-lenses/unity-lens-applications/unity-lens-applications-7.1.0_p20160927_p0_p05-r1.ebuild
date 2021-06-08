@@ -33,6 +33,7 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
+	eapply "${FILESDIR}/${PN}-fix-build-against-vala-0.52.patch"
 
 	# Disable all language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #

@@ -1,0 +1,59 @@
+diff -Nur a/lib/ibus-menu.vala b/lib/ibus-menu.vala
+--- a/lib/ibus-menu.vala	2019-07-16 21:19:20.000000000 +0200
++++ b/lib/ibus-menu.vala	2021-06-08 09:46:39.402501117 +0200
+@@ -279,7 +279,7 @@
+ 
+ 	/* Forward all menu model calls to our internal menu. */
+ 
+-	public override Variant get_item_attribute_value (int item_index, string attribute, VariantType? expected_type) {
++	public override Variant? get_item_attribute_value (int item_index, string attribute, VariantType? expected_type) {
+ 		return menu.get_item_attribute_value (item_index, attribute, expected_type);
+ 	}
+ 
+@@ -287,7 +287,7 @@
+ 		menu.get_item_attributes (item_index, out attributes);
+ 	}
+ 
+-	public override MenuModel get_item_link (int item_index, string link) {
++	public override MenuModel? get_item_link (int item_index, string link) {
+ 		return menu.get_item_link (item_index, link);
+ 	}
+ 
+diff -Nur a/lib/indicator-menu.vala b/lib/indicator-menu.vala
+--- a/lib/indicator-menu.vala	2019-07-16 21:19:20.000000000 +0200
++++ b/lib/indicator-menu.vala	2021-06-08 09:46:50.543430126 +0200
+@@ -151,11 +151,11 @@
+ 		indicator_menu.get_item_links (item_index, out links);
+ 	}
+ 
+-	public override Variant get_item_attribute_value (int item_index, string attribute, VariantType? expected_type) {
++	public override Variant? get_item_attribute_value (int item_index, string attribute, VariantType? expected_type) {
+ 		return indicator_menu.get_item_attribute_value (item_index, attribute, expected_type);
+ 	}
+ 
+-	public override MenuModel get_item_link (int item_index, string link) {
++	public override MenuModel? get_item_link (int item_index, string link) {
+ 		return indicator_menu.get_item_link (item_index, link);
+ 	}
+ 
+diff -Nur a/lib/main.vala b/lib/main.vala
+--- a/lib/main.vala	2019-07-16 21:19:27.000000000 +0200
++++ b/lib/main.vala	2021-06-08 09:55:16.427232563 +0200
+@@ -839,7 +848,7 @@
+ 		string? name = null;
+ 
+ 		var sources = get_sources ();
+-		var active = get_active_action ().get_state ().get_uint32 ();
++		var active = ((!) get_active_action ().get_state ()).get_uint32 ();
+ 
+ 		if (active < sources.length) {
+ 			icon = sources[active].icon;
+@@ -983,7 +998,7 @@
+ 
+ 			if (xkb_length > 1) {
+ 				var active_action = get_active_action ();
+-				var active = active_action.get_state ().get_uint32 ();
++				var active = ((!) active_action.get_state ()).get_uint32 ();
+ 				var offset = -((!) parameter).get_int32 () % xkb_length;
+ 
+ 				/* Make offset positive modulo xkb_length. */

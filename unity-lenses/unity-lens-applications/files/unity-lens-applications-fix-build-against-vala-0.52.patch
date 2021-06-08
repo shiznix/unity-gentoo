@@ -1,0 +1,35 @@
+diff -Nur a/src/app-watcher.vala b/src/app-watcher.vala
+--- a/src/app-watcher.vala	2016-09-27 19:05:55.000000000 +0200
++++ b/src/app-watcher.vala	2021-06-08 10:00:09.068561599 +0200
+@@ -97,7 +97,7 @@
+     }
+ 
+     private void running_apps_changed (DBusConnection connection,
+-                                       string sender_name,
++                                       string? sender_name,
+                                        string object_path,
+                                        string interface_name,
+                                        string signal_name,
+diff -Nur a/src/utils.vala b/src/utils.vala
+--- a/src/utils.vala	2016-09-27 19:05:55.000000000 +0200
++++ b/src/utils.vala	2021-06-08 09:59:59.003478831 +0200
+@@ -98,7 +98,7 @@
+     return "%s\n%s".printf (uncamelcased, folded);
+   }
+ 
+-  private static Regex camelcase_matcher;
++  private static GLib.Regex camelcase_matcher;
+ 
+   public string uncamelcase (string text)
+   {
+@@ -108,8 +108,8 @@
+       {
+         // 1+ upper characters followed by 1+ non-upper 
+         // (but preceded by non-upper or start of the string)
+-        camelcase_matcher = new Regex ("(?<=^|[^[:upper:]\\s])[[:upper:]]+[^[:upper:]]+",
+-                                       RegexCompileFlags.OPTIMIZE);
++        camelcase_matcher = new GLib.Regex ("(?<=^|[^[:upper:]\\s])[[:upper:]]+[^[:upper:]]+",
++                                       GLib.RegexCompileFlags.OPTIMIZE);
+       }
+       catch (Error e) { warning ("%s", e.message); }
+     }

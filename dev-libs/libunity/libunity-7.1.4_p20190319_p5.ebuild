@@ -37,7 +37,8 @@ src_unpack() {
 }
 
 src_prepare() {
-	epatch -p1 "${MY_P}${UVER_PREFIX}${UVER}.diff"
+	eapply "${MY_P}${UVER_PREFIX}${UVER}.diff"
+	eapply "${FILESDIR}/${PN}-fix-build-against-vala-0.52.patch"
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
