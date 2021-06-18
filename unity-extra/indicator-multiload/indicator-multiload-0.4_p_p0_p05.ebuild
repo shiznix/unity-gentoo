@@ -27,6 +27,11 @@ DEPEND="${RDEPEND}
 	x11-libs/cairo
 	x11-libs/gtk+:3"
 
+src_install() {
+	default
+	mv "${ED%/}/usr/share/doc/${PN}" "${ED%/}/usr/share/doc/${PF}"
+}
+
 pkg_preinst() {
 	gnome2_schemas_savelist
 }
