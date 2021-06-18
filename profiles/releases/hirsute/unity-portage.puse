@@ -31,7 +31,7 @@ dev-qt/qtmultimedia:5 widgets
 dev-qt/qtquickcontrols:5 widgets
 dev-qt/qtsql:5 sqlite
 dev-qt/qtwebchannel:5 qml
-dev-qt/qtwebkit:5 qml multimedia webp
+dev-qt/qtwebkit:5 qml multimedia webp -gstreamer
 gnome-base/gvfs fuse
 gnome-extra/evolution-data-server vala
 gnome-extra/nm-applet appindicator
