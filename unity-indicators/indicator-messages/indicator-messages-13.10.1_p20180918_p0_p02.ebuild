@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="hirsute"
-inherit autotools eutils flag-o-matic gnome2-utils ubuntu-versionator vala
+inherit autotools eutils flag-o-matic gnome2-utils ubuntu-versionator vala xdg-utils
 
 UVER_PREFIX="+18.10.${PVR_MICRO}"
 
@@ -46,9 +46,11 @@ pkg_preinst() {
 
 pkg_postinst() {
 	gnome2_schemas_update
+	xdg_icon_cache_update
 	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {
 	gnome2_schemas_update
+	xdg_icon_cache_update
 }
