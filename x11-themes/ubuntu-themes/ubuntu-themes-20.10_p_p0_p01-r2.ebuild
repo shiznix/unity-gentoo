@@ -45,7 +45,7 @@ src_prepare() {
 	## fix nautilus properties window background ##
 	echo -e "\n/* nautilus properties window background */window.background.unified:dir(ltr) > deck:dir(ltr) > box.vertical.view:dir(ltr) {\n background-color: transparent;\n}" >> Ambiance/gtk-3.20/gtk-widgets.css
 
-	if portageq has_version / unity-extra/ehooks[libhandy_adjust]; then
+	if portageq has_version / unity-extra/ehooks[headerbar_adjust]; then
 
 		## workaround to avoid unwanted black frame when using HdyHeaderBar ##
 		sed -i \
