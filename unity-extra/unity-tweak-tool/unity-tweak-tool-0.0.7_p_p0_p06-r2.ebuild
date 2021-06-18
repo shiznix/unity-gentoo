@@ -11,7 +11,8 @@ UVER="+-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"
 HOMEPAGE="https://launchpad.net/unity-tweak-tool"
-SRC_URI="${UURL}/${MY_P}+.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}+.orig.tar.gz
+	${UURL}/${MY_P}${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -84,9 +85,6 @@ src_prepare() {
 		-e "/FilesLens/d" \
 		UnityTweakTool/section/spaghetti/gsettings.py
 
-	# Switch from using gnome-base/nautilus to gnome-extra/nemo as >=Gnome-3.32 has nautilus no longer capable of managing desktop background icons #
-	epatch -p1 "${FILESDIR}/migrate-nautilus_to_nemo.diff"
-
 	distutils-r1_src_prepare
 }
 
@@ -95,6 +93,10 @@ src_install() {
 
 	exeinto /etc/X11/xinit/xinitrc.d
 	doexe "${FILESDIR}/95-xcursor-theme"
+
+	python_foreach_impl python_optimize
+
+	mv "${ED%/}/usr/share/doc/${PN}" "${ED%/}/usr/share/doc/${PF}"
 }
 
 pkg_preinst() {
