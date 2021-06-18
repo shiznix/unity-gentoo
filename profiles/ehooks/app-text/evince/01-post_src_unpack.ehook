@@ -1,5 +1,5 @@
 ebuild_hook() {
-	ehook_require evince_menu
+	if ehook_use evince_menu; then
 
 	unpack "${EHOOK_FILESDIR}"/global-menu-translations-artful.tar.xz
 
@@ -18,4 +18,6 @@ ebuild_hook() {
 			msgfmt -o "${po_orig/.po/.gmo}" "${po_orig}" 2>&1
 		fi
 	done
+
+	fi ## end of ehook_use evince_menu
 }
