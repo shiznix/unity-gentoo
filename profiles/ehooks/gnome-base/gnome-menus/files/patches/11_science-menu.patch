@@ -1,0 +1,44 @@
+--- a/layout/gnome-applications.menu
++++ b/layout/gnome-applications.menu
+@@ -86,10 +86,23 @@
+     <Include>
+       <And>
+         <Category>Education</Category>
++        <Not><Category>Science</Category></Not>
+       </And>
+     </Include>
+   </Menu> <!-- End Education -->
+ 
++  <!-- Science -->
++  <Menu>
++    <Name>Science</Name>
++    <Directory>GnomeScience.directory</Directory>
++    <Include>
++      <And>
++        <Category>Education</Category>
++        <Category>Science</Category>
++      </And>
++    </Include>
++  </Menu> <!-- End Science -->
++
+   <!-- Games -->
+   <Menu>
+     <Name>Games</Name>
+--- a/desktop-directories/Education.directory.desktop.in
++++ b/desktop-directories/Education.directory.desktop.in
+@@ -1,5 +1,5 @@
+ [Desktop Entry]
+ Name=Education
+ # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+-Icon=applications-science
++Icon=applications-accessories
+ Type=Directory
+--- a/desktop-directories/Utility.directory.desktop.in
++++ b/desktop-directories/Utility.directory.desktop.in
+@@ -2,5 +2,5 @@
+ Name=Accessories
+ Comment=Desktop accessories
+ # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+-Icon=applications-accessories
++Icon=applications-utilities
+ Type=Directory

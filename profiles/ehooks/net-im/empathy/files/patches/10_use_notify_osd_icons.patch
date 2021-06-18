@@ -1,0 +1,48 @@
+Description: Use the notify-osd image for new message notifications
+Bug: https://bugs.launchpad.net/ubuntu/+source/empathy/+bug/409828
+
+=== modified file 'libempathy-gtk/empathy-images.h'
+---
+ libempathy-gtk/empathy-images.h   |    1 +
+ libempathy-gtk/empathy-ui-utils.c |    3 +++
+ src/empathy-event-manager.c       |    4 ++--
+ 3 files changed, 6 insertions(+), 2 deletions(-)
+
+--- a/libempathy-gtk/empathy-images.h
++++ b/libempathy-gtk/empathy-images.h
+@@ -37,6 +37,7 @@ G_BEGIN_DECLS
+ 
+ #define EMPATHY_IMAGE_MESSAGE             "im-message"
+ #define EMPATHY_IMAGE_NEW_MESSAGE         "im-message-new"
++#define EMPATHY_IMAGE_NEW_MESSAGE_NOTIFY  "notification-message-im"
+ #define EMPATHY_IMAGE_TYPING              "user-typing"
+ #define EMPATHY_IMAGE_CONTACT_INFORMATION "gtk-info"
+ #define EMPATHY_IMAGE_GROUP_MESSAGE       "system-users"
+--- a/libempathy-gtk/empathy-ui-utils.c
++++ b/libempathy-gtk/empathy-ui-utils.c
+@@ -60,6 +60,9 @@ empathy_gtk_init (void)
+   gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
+       PKGDATADIR G_DIR_SEPARATOR_S "icons");
+ 
++  gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
++      DATADIR G_DIR_SEPARATOR_S "notify-osd" G_DIR_SEPARATOR_S "icons");
++
+   /* Add icons from source dir if available */
+   if (g_getenv ("EMPATHY_SRCDIR") != NULL)
+     {
+--- a/src/empathy-event-manager.c
++++ b/src/empathy-event-manager.c
+@@ -560,11 +560,11 @@ event_manager_chat_message_received_cb (
+   msg = empathy_message_get_body (message);
+ 
+   if (event != NULL)
+-    event_update (approval->manager, event, EMPATHY_IMAGE_NEW_MESSAGE, header,
++    event_update (approval->manager, event, EMPATHY_IMAGE_NEW_MESSAGE_NOTIFY, header,
+         msg);
+   else
+     event_manager_add (approval->manager, NULL, sender,
+-        EMPATHY_EVENT_TYPE_CHAT, EMPATHY_IMAGE_NEW_MESSAGE, header, msg,
++        EMPATHY_EVENT_TYPE_CHAT, EMPATHY_IMAGE_NEW_MESSAGE_NOTIFY, header, msg,
+         approval, event_text_channel_process_func, NULL);
+ 
+   empathy_sound_manager_play (priv->sound_mgr, NULL,

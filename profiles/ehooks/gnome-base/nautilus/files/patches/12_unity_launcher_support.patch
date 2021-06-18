@@ -1,0 +1,618 @@
+From: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 12 Apr 2018 23:54:13 +0200
+Subject: _unity_launcher_support
+
+---
+ meson.build                   |   7 ++
+ meson_options.txt             |   4 +
+ src/meson.build               |  10 +++
+ src/nautilus-application.c    |   9 +++
+ src/nautilus-toolbar.c        |  23 ++++++
+ src/unity-bookmarks-handler.c | 151 ++++++++++++++++++++++++++++++++++++++
+ src/unity-bookmarks-handler.h |  28 +++++++
+ src/unity-quicklist-handler.c | 166 ++++++++++++++++++++++++++++++++++++++++++
+ src/unity-quicklist-handler.h |  69 ++++++++++++++++++
+ 9 files changed, 467 insertions(+)
+ create mode 100644 src/unity-bookmarks-handler.c
+ create mode 100644 src/unity-bookmarks-handler.h
+ create mode 100644 src/unity-quicklist-handler.c
+ create mode 100644 src/unity-quicklist-handler.h
+
+Index: nautilus-3.38.0/meson.build
+===================================================================
+--- nautilus-3.38.0.orig/meson.build
++++ nautilus-3.38.0/meson.build
+@@ -127,6 +127,11 @@ endif
+ tracker_sparql = dependency('tracker-sparql-3.0')
+ xml = dependency('libxml-2.0', version: '>= 2.7.8')
+ 
++if get_option ('unity-launcher')
++  unity = dependency ('unity', version: '>=4.0.0')
++  dbusmenu = dependency ('dbusmenu-glib-0.4', version: '>=0.4.90')
++endif
++
+ ####################
+ # End dependencies #
+ ####################
+@@ -159,6 +164,8 @@ conf.set('ENABLE_PACKAGEKIT', get_option
+ conf.set('ENABLE_PROFILING', get_option('profiling'))
+ conf.set('HAVE_SELINUX', get_option('selinux'))
+ 
++conf.set10('HAVE_UNITY', get_option('unity-launcher'))
++
+ #############################################################
+ # config.h dependency, add to target dependencies if needed #
+ #############################################################
+Index: nautilus-3.38.0/meson_options.txt
+===================================================================
+--- nautilus-3.38.0.orig/meson_options.txt
++++ nautilus-3.38.0/meson_options.txt
+@@ -38,6 +38,10 @@ option(
+   value: false,
+   description: 'Enable SELinux context support in file properties dialog',
+ )
++option ('unity-launcher',
++        type: 'boolean',
++        value: false,
++        description: 'build with unity launcher support')
+ ################
+ # End features #
+ ################
+Index: nautilus-3.38.0/src/meson.build
+===================================================================
+--- nautilus-3.38.0.orig/src/meson.build
++++ nautilus-3.38.0/src/meson.build
+@@ -289,6 +289,16 @@ nautilus_deps = [
+   xml
+ ]
+ 
++if get_option ('unity-launcher')
++    nautilus_deps += [unity, dbusmenu]
++    libnautilus_sources += [
++        'unity-quicklist-handler.c',
++        'unity-quicklist-handler.h',
++        'unity-bookmarks-handler.c',
++        'unity-bookmarks-handler.h'
++    ]
++endif
++
+ libnautilus = static_library(
+   'nautilus',
+   libnautilus_sources,
+Index: nautilus-3.38.0/src/nautilus-application.c
+===================================================================
+--- nautilus-3.38.0.orig/src/nautilus-application.c
++++ nautilus-3.38.0/src/nautilus-application.c
+@@ -24,6 +24,7 @@
+  *
+  */
+ 
++#include <config.h>
+ #include "nautilus-application.h"
+ 
+ #include <eel/eel-gtk-extensions.h>
+@@ -67,6 +68,10 @@
+ #include "nautilus-window-slot.h"
+ #include "nautilus-window.h"
+ 
++#if HAVE_UNITY
++#include "unity-bookmarks-handler.h"
++#endif
++
+ typedef struct
+ {
+     NautilusProgressPersistenceHandler *progress_handler;
+@@ -1378,6 +1383,10 @@ nautilus_application_startup (GApplicati
+     nautilus_application_startup_common (self);
+ 
+     nautilus_profile_end (NULL);
++
++#if HAVE_UNITY
++    unity_bookmarks_handler_initialize ();
++#endif
+ }
+ 
+ static gboolean
+Index: nautilus-3.38.0/src/nautilus-toolbar.c
+===================================================================
+--- nautilus-3.38.0.orig/src/nautilus-toolbar.c
++++ nautilus-3.38.0/src/nautilus-toolbar.c
+@@ -25,6 +25,12 @@
+ #include <glib/gi18n.h>
+ #include <math.h>
+ 
++#include <config.h>
++
++#if HAVE_UNITY
++#include <unity.h>
++#endif
++
+ #include "animation/ide-box-theatric.h"
+ #include "animation/egg-animation.h"
+ 
+@@ -115,6 +121,9 @@ struct _NautilusToolbar
+     GBinding *icon_binding;
+     GBinding *search_binding;
+     GBinding *tooltip_binding;
++#if HAVE_UNITY
++    UnityLauncherEntry *ulauncher;
++#endif
+ };
+ 
+ enum
+@@ -369,6 +378,9 @@ on_remove_finished_operations_timeout (N
+     {
+         gtk_revealer_set_reveal_child (GTK_REVEALER (self->operations_revealer),
+                                        FALSE);
++#if HAVE_UNITY
++        unity_launcher_entry_set_progress_visible (self->ulauncher, FALSE);
++#endif
+     }
+     else
+     {
+@@ -555,6 +567,10 @@ update_operations (NautilusToolbar *self
+                                        TRUE);
+         gtk_widget_queue_draw (self->operations_icon);
+ 
++#if HAVE_UNITY
++        unity_launcher_entry_set_progress_visible (self->ulauncher, TRUE);
++#endif
++
+         /* Show the popover at start to increase visibility.
+          * Check whether the toolbar is visible or not before showing the
+          * popover. This can happens if the window has the disables-chrome
+@@ -722,6 +738,10 @@ on_operations_icon_draw (GtkWidget
+     }
+ 
+ 
++#if HAVE_UNITY
++    unity_launcher_entry_set_progress (self->ulauncher, ratio);
++#endif
++
+     width = gtk_widget_get_allocated_width (widget);
+     height = gtk_widget_get_allocated_height (widget);
+ 
+@@ -924,6 +944,9 @@ nautilus_toolbar_constructed (GObject *o
+                       G_CALLBACK (on_location_entry_close), self);
+ 
+     self->progress_manager = nautilus_progress_info_manager_dup_singleton ();
++#if HAVE_UNITY
++    self->ulauncher = unity_launcher_entry_get_for_desktop_id ("org.gnome.Nautilus.desktop");
++#endif
+     g_signal_connect (self->progress_manager, "new-progress-info",
+                       G_CALLBACK (on_new_progress_info), self);
+     g_signal_connect (self->progress_manager, "has-viewers-changed",
+Index: nautilus-3.38.0/src/unity-bookmarks-handler.c
+===================================================================
+--- /dev/null
++++ nautilus-3.38.0/src/unity-bookmarks-handler.c
+@@ -0,0 +1,151 @@
++/*unity-bookmarks-handler.c: handle Unity bookmark for quicklist
++ *
++ * Copyright (C) 2012 Canonical
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of the
++ * License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public
++ * License along with this program; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ *
++ * Authors: Didier Roche <didrocks@ubuntu.com>
++ *
++ */
++
++#include <config.h>
++
++#include "unity-bookmarks-handler.h"
++
++#include <libdbusmenu-glib/dbusmenu-glib.h>
++#include "unity-quicklist-handler.h"
++
++#include "nautilus-application.h"
++#include "nautilus-bookmark.h"
++#include "nautilus-bookmark-list.h"
++
++#include <eel/eel-string.h>
++#include <gdk/gdkx.h>
++
++static UnityQuicklistHandler* unity_quicklist_handler = NULL;
++static NautilusBookmarkList* bookmarks = NULL;
++
++static void
++activate_bookmark_by_quicklist (DbusmenuMenuitem *menu,
++                                guint timestamp,
++                                NautilusBookmark *bookmark)
++{
++
++    GFile *locations[2];
++    GList *l;
++    NautilusApplication *application;
++
++    g_return_if_fail (NAUTILUS_IS_BOOKMARK (bookmark));
++
++    locations[0] = nautilus_bookmark_get_location (bookmark);
++    locations[1] = NULL;
++
++    application = NAUTILUS_APPLICATION (g_application_get_default ());
++
++    /* Make sure that the application timestamp matches the event */
++    for (l = gtk_application_get_windows (GTK_APPLICATION (application)); l; l = l->next)
++    {
++        GdkWindow *gdk_window = gtk_widget_get_window (GTK_WIDGET (l->data));
++        gdk_x11_window_set_user_time (gdk_window, timestamp);
++    }
++
++    g_application_open (G_APPLICATION (application), locations, 1, "");
++
++    g_object_unref (locations[0]);
++}
++
++static void
++unity_bookmarks_handler_remove_bookmark_quicklists (void)
++{
++
++    GList *children, *l;
++
++    /* remove unity quicklist bookmarks to launcher entries */
++    for (l = unity_quicklist_get_launcher_entries (unity_quicklist_handler); l; l = l->next)
++    {
++        UnityLauncherEntry *entry = l->data;
++        DbusmenuMenuitem *ql = unity_launcher_entry_get_quicklist (entry);
++        if (!ql)
++        {
++            break;
++        }
++
++        children = dbusmenu_menuitem_get_children (ql);
++        while (children)
++        {
++            DbusmenuMenuitem *child = children->data;
++            children = children->next;
++            if (unity_quicklist_handler_menuitem_is_bookmark_item (child))
++            {
++                g_signal_handlers_disconnect_matched (child, G_SIGNAL_MATCH_FUNC, 0, 0, 0,
++                                                      (GCallback) activate_bookmark_by_quicklist, 0);
++                dbusmenu_menuitem_child_delete (ql, child);
++                g_object_unref(child);
++            }
++        }
++    }
++}
++
++static void
++unity_bookmarks_handler_update_bookmarks (void)
++{
++    NautilusBookmark *bookmark;
++    GList *all_bookmarks;
++    GList *lb;
++    GList *l;
++
++    /* append new set of bookmarks */
++    all_bookmarks = nautilus_bookmark_list_get_all (bookmarks);
++    for (lb = all_bookmarks; lb != NULL; lb = lb->next)
++    {
++        bookmark = NAUTILUS_BOOKMARK (lb->data);
++
++        for (l = unity_quicklist_get_launcher_entries (unity_quicklist_handler); l; l = l->next)
++        {
++            UnityLauncherEntry *entry = l->data;
++
++            DbusmenuMenuitem* menuitem = dbusmenu_menuitem_new();
++            gchar *bookmark_name_dbusmenu = eel_str_replace_substring (nautilus_bookmark_get_name (bookmark), "_", "__");
++            dbusmenu_menuitem_property_set (menuitem, "label", bookmark_name_dbusmenu);
++            g_free (bookmark_name_dbusmenu);
++            g_signal_connect (menuitem, DBUSMENU_MENUITEM_SIGNAL_ITEM_ACTIVATED,
++                              (GCallback) activate_bookmark_by_quicklist,
++                              bookmark);
++
++            unity_quicklist_handler_append_menuitem (entry, menuitem);
++        }
++    }
++}
++
++static void
++unity_bookmarks_handler_refresh_bookmarks (void)
++{
++    unity_bookmarks_handler_remove_bookmark_quicklists ();
++    unity_bookmarks_handler_update_bookmarks ();
++}
++
++void
++unity_bookmarks_handler_initialize ()
++{
++    unity_quicklist_handler = unity_quicklist_handler_get_singleton ();
++    /* get the singleton */
++    bookmarks = nautilus_bookmark_list_new ();
++    unity_bookmarks_handler_refresh_bookmarks ();
++
++    /* Recreate dynamic part of menu if bookmark list changes */
++    g_signal_connect (bookmarks, "changed",
++                      G_CALLBACK (unity_bookmarks_handler_refresh_bookmarks), 0);
++}
+Index: nautilus-3.38.0/src/unity-bookmarks-handler.h
+===================================================================
+--- /dev/null
++++ nautilus-3.38.0/src/unity-bookmarks-handler.h
+@@ -0,0 +1,28 @@
++/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 8; tab-width: 8 -*- */
++/*
++ * unity-bookmarks-handler.h: handle Unity bookmark for quicklist
++ *
++ * Copyright (C) 2012 Canonical
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of the
++ * License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public
++ * License along with this program; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ *
++ * Authors: Didier Roche <didrocks@ubuntu.com>
++ *
++ */
++
++#pragma once
++
++void unity_bookmarks_handler_initialize (void);
+Index: nautilus-3.38.0/src/unity-quicklist-handler.c
+===================================================================
+--- /dev/null
++++ nautilus-3.38.0/src/unity-quicklist-handler.c
+@@ -0,0 +1,166 @@
++/*unity-quicklist-handler.c: handle Unity quicklists
++ *
++ * Copyright (C) 2012 Canonical
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of the
++ * License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public
++ * License along with this program; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ *
++ * Authors: Didier Roche <didrocks@ubuntu.com>
++ *
++ */
++
++#include <config.h>
++
++#include "unity-quicklist-handler.h"
++
++struct _UnityQuicklistHandlerPriv {
++    GList *launcher_entries;
++};
++
++G_DEFINE_TYPE (UnityQuicklistHandler, unity_quicklist_handler, G_TYPE_OBJECT);
++
++static UnityQuicklistHandler *unity_quicklist_handler_singleton = NULL;
++
++GList *
++unity_quicklist_get_launcher_entries (UnityQuicklistHandler *self)
++{
++    return self->priv->launcher_entries;
++}
++
++gboolean
++unity_quicklist_handler_menuitem_is_progress_item (DbusmenuMenuitem *ql)
++{
++    g_return_val_if_fail(ql, FALSE);
++    return dbusmenu_menuitem_property_get_bool (ql, UNITY_QUICKLIST_PROGRESS_ITEM);
++}
++
++gboolean
++unity_quicklist_handler_menuitem_is_bookmark_item (DbusmenuMenuitem *ql)
++{
++    g_return_val_if_fail(ql, FALSE);
++    return (!unity_quicklist_handler_menuitem_is_progress_item(ql));
++}
++
++void
++unity_quicklist_handler_append_menuitem (UnityLauncherEntry *entry, DbusmenuMenuitem *elem)
++{
++    GList *children, *l;
++    int position;
++    DbusmenuMenuitem *ql;
++    gboolean is_bookmark;
++    gboolean is_progress;
++
++    g_return_if_fail (entry);
++
++    position = 0;
++    ql = unity_launcher_entry_get_quicklist (entry);
++
++    is_bookmark = unity_quicklist_handler_menuitem_is_bookmark_item (elem);
++    is_progress = unity_quicklist_handler_menuitem_is_progress_item (elem);
++
++    if (!ql)
++    {
++        ql = dbusmenu_menuitem_new ();
++        unity_launcher_entry_set_quicklist (entry, ql);
++    }
++
++    children = dbusmenu_menuitem_get_children (ql);
++    for (l = children; l; l = l->next)
++    {
++        DbusmenuMenuitem *child = l->data;
++        /* set quicklist groups together, and bookmarks group after progress group.
++           bookmarks elements are ordered alphabetically */
++        if ((is_bookmark && unity_quicklist_handler_menuitem_is_bookmark_item (child) &&
++                (g_strcmp0 (dbusmenu_menuitem_property_get (child, DBUSMENU_MENUITEM_PROP_LABEL), dbusmenu_menuitem_property_get (elem, DBUSMENU_MENUITEM_PROP_LABEL)) < 0)) ||
++            (is_progress && unity_quicklist_handler_menuitem_is_progress_item (child)) ||
++            (is_progress && unity_quicklist_handler_menuitem_is_bookmark_item (child)))
++        {
++            position++;
++        }
++        else
++        {
++            break;
++        }
++    }
++
++    dbusmenu_menuitem_child_add_position (ql, elem, position);
++}
++
++static void
++unity_quicklist_handler_dispose (GObject *obj)
++{
++    UnityQuicklistHandler *self = UNITY_QUICKLIST_HANDLER (obj);
++
++    if (self->priv->launcher_entries)
++    {
++        g_list_free_full (self->priv->launcher_entries, g_object_unref);
++        self->priv->launcher_entries = NULL;
++    }
++
++    G_OBJECT_CLASS (unity_quicklist_handler_parent_class)->dispose (obj);
++}
++
++static void
++unity_quicklist_handler_launcher_entry_add (UnityQuicklistHandler *self,
++                                            const gchar *entry_id)
++{
++    GList **entries;
++    UnityLauncherEntry *entry;
++
++    entries = &(self->priv->launcher_entries);
++    entry = unity_launcher_entry_get_for_desktop_id (entry_id);
++
++    if (entry)
++    {
++        *entries = g_list_prepend (*entries, entry);
++    }
++}
++
++static void
++unity_quicklist_handler_init (UnityQuicklistHandler *self)
++{
++    self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, UNITY_TYPE_QUICKLIST_HANDLER,
++                                              UnityQuicklistHandlerPriv);
++
++    unity_quicklist_handler_launcher_entry_add (self, "org.gnome.Nautilus.desktop");
++    g_return_if_fail (g_list_length (self->priv->launcher_entries) != 0);
++}
++
++static void
++unity_quicklist_handler_class_init (UnityQuicklistHandlerClass *klass)
++{
++    GObjectClass *oclass;
++
++    oclass = G_OBJECT_CLASS (klass);
++    oclass->dispose = unity_quicklist_handler_dispose;
++
++    g_type_class_add_private (klass, sizeof (UnityQuicklistHandlerPriv));
++}
++
++UnityQuicklistHandler *
++unity_quicklist_handler_get_singleton (void)
++{
++    if (!unity_quicklist_handler_singleton)
++    {
++        unity_quicklist_handler_singleton = unity_quicklist_handler_new ();
++    }
++    return unity_quicklist_handler_singleton;
++}
++
++UnityQuicklistHandler *
++unity_quicklist_handler_new (void)
++{
++    return g_object_new (UNITY_TYPE_QUICKLIST_HANDLER, NULL);
++}
+Index: nautilus-3.38.0/src/unity-quicklist-handler.h
+===================================================================
+--- /dev/null
++++ nautilus-3.38.0/src/unity-quicklist-handler.h
+@@ -0,0 +1,69 @@
++/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 8; tab-width: 8 -*- */
++/*
++ * unity-quicklist.h: handle unity quicklists.
++ *
++ * Copyright (C) 2012 Canonical
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of the
++ * License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public
++ * License along with this program; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 02111-1307, USA.
++ *
++ * Authors: Didier Roche <didrocks@ubuntu.com>
++ *
++ */
++
++#pragma once
++
++#include <glib-object.h>
++#include <glib/gi18n.h>
++
++#include <libdbusmenu-glib/dbusmenu-glib.h>
++#include <unity.h>
++
++#define UNITY_TYPE_QUICKLIST_HANDLER unity_quicklist_handler_get_type()
++#define UNITY_QUICKLIST_HANDLER(obj) \
++  (G_TYPE_CHECK_INSTANCE_CAST ((obj), UNITY_TYPE_QUICKLIST_HANDLER, UnityQuicklistHandler))
++#define UNITY_QUICKLIST_HANDLER_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_CAST ((klass), UNITY_TYPE_QUICKLIST_HANDLER, UnityQuicklistHandlerClass))
++#define UNITY_IS_QUICKLIST_HANDLER(obj) \
++  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), UNITY_TYPE_QUICKLIST_HANDLER))
++#define UNITY_IS_QUICKLIST_HANDLER_CLASS(klass) \
++  (G_TYPE_CHECK_CLASS_TYPE ((klass), UNITY_TYPE_QUICKLIST_HANDLER))
++#define UNITY_QUICKLIST_HANDLER_GET_CLASS(obj) \
++  (G_TYPE_INSTANCE_GET_CLASS ((obj), UNITY_TYPE_QUICKLIST_HANDLER, UnityQuicklistHandlerClass))
++
++typedef struct _UnityQuicklistHandlerPriv UnityQuicklistHandlerPriv;
++
++#define UNITY_QUICKLIST_PROGRESS_ITEM "unity-quicklist-progress-item"
++
++typedef struct {
++  GObject parent;
++
++  /* private */
++  UnityQuicklistHandlerPriv *priv;
++} UnityQuicklistHandler;
++
++typedef struct {
++  GObjectClass parent_class;
++} UnityQuicklistHandlerClass;
++
++GType unity_quicklist_handler_get_type (void);
++
++UnityQuicklistHandler * unity_quicklist_handler_new (void);
++UnityQuicklistHandler * unity_quicklist_handler_get_singleton (void);
++
++GList * unity_quicklist_get_launcher_entries (UnityQuicklistHandler *unity_quicklist_handler);
++gboolean unity_quicklist_handler_menuitem_is_progress_item (DbusmenuMenuitem *ql);
++gboolean unity_quicklist_handler_menuitem_is_bookmark_item (DbusmenuMenuitem *ql);
++void unity_quicklist_handler_append_menuitem (UnityLauncherEntry *entry, DbusmenuMenuitem *elem);

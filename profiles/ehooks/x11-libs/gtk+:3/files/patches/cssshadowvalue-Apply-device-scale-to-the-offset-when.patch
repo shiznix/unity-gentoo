@@ -1,0 +1,37 @@
+From 86da4e0c97ec037cd80edc783c7804268a0d2fc8 Mon Sep 17 00:00:00 2001
+From: Daniel van Vugt <daniel.van.vugt@canonical.com>
+Date: Wed, 24 Mar 2021 18:28:25 +0800
+Subject: [PATCH] cssshadowvalue: Apply device scale to the offset when
+ blurring text
+
+Although the surface already has the device scale set, that doesn't
+apply to the offset which is in raw device units. So we need to scale
+the device offset explicitly.
+
+Fixes: https://gitlab.com/rastersoft/desktop-icons-ng/-/issues/119
+---
+ gtk/gtkcssshadowvalue.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+Origin: Upstream commit 86da4e0c97ec037cd80edc783c7804268a0d2fc8
+Bug-Ubuntu: https://launchpad.net/bugs/1919404
+Last-Update: 2021-03-25
+
+diff --git a/gtk/gtkcssshadowvalue.c b/gtk/gtkcssshadowvalue.c
+index 864bdef4b4..3c0d977566 100644
+--- a/gtk/gtkcssshadowvalue.c
++++ b/gtk/gtkcssshadowvalue.c
+@@ -485,7 +485,9 @@ make_blurred_pango_surface (cairo_t           *existing_cr,
+                                                 x_scale * (ink_rect.width + 2 * clip_radius),
+                                                 y_scale * (ink_rect.height + 2 * clip_radius));
+   cairo_surface_set_device_scale (surface, x_scale, y_scale);
+-  cairo_surface_set_device_offset (surface, -ink_rect.x + clip_radius, -ink_rect.y + clip_radius);
++  cairo_surface_set_device_offset (surface,
++                                   x_scale * (-ink_rect.x + clip_radius),
++                                   y_scale * (-ink_rect.y + clip_radius));
+   cr = cairo_create (surface);
+   cairo_move_to (cr, 0, 0);
+   _gtk_pango_fill_layout (cr, layout);
+-- 
+2.30.2
+

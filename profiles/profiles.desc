@@ -2,11 +2,11 @@
 # Run app-portage/unsymlink-lib *before* switching the profile
 
 # == STABLE == #
-amd64	linux/amd64/17.0/groovy		stable
-amd64	linux/amd64/17.1/groovy		stable
-x86	linux/x86/17.0/groovy		stable
+amd64	linux/amd64/17.0/hirsute	stable
+amd64	linux/amd64/17.1/hirsute	stable
+x86	linux/x86/17.0/hirsute		stable
 
 # == DEVELOPING === #
-amd64	linux/amd64/17.0/hirsute	dev
-amd64	linux/amd64/17.1/hirsute	dev
-x86	linux/x86/17.0/hirsute		dev
+amd64	linux/amd64/17.0/impish	        dev
+amd64	linux/amd64/17.1/impish	        dev
+x86	linux/x86/17.0/impish		dev

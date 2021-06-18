@@ -22,7 +22,8 @@ x11-themes/mate-themes-meta
 x11-terms/mate-terminal
 x11-wm/marco
 
-# Unmask up to Gnome-3.38 #
+# Unmask up to Gnome-3.40 #
+=*/gnome*-*40*::gentoo
 =*/gnome*-*38*::gentoo
 =*/gnome*-*36*::gentoo
 =*/gnome*-*34*::gentoo
@@ -30,6 +31,7 @@ x11-wm/marco
 =*/gnome*-*30*::gentoo
 =*/gnome*-*28*::gentoo
 =*/gnome*-*26*::gentoo
+=gnome-base/*-*40*::gentoo
 =gnome-base/*-*38*::gentoo
 =gnome-base/*-*36*::gentoo
 =gnome-base/*-*34*::gentoo
@@ -38,6 +40,7 @@ x11-wm/marco
 =gnome-base/*-*30*::gentoo
 =gnome-base/*-*28*::gentoo
 =gnome-base/*-*26*::gentoo
+=gnome-extra/*-*40*::gentoo
 =gnome-extra/*-*38*::gentoo
 =gnome-extra/*-*36*::gentoo
 =gnome-extra/*-*34*::gentoo
@@ -45,6 +48,7 @@ x11-wm/marco
 =gnome-extra/*-*30*::gentoo
 =gnome-extra/*-*28*::gentoo
 =gnome-extra/*-*26*::gentoo
+=games-puzzle/*-*40*::gentoo
 =games-puzzle/*-*38*::gentoo
 =games-puzzle/*-*36*::gentoo
 =games-puzzle/*-*34*::gentoo
@@ -72,7 +76,6 @@ app-text/gtkspell:3::gentoo
 dev-libs/libdazzle::gentoo
 # ~dev-libs/libgudev-232::gentoo
 >=dev-libs/libgweather-3.38::gentoo
-~dev-libs/libusb-1.0.22::gentoo
 dev-python/nototools::gentoo
 # >=dev-python/pygobject-3.36::gentoo
 >=dev-python/pyatspi-2.36.0::gentoo
@@ -86,7 +89,6 @@ gnome-base/librsvg::gentoo
 >=gnome-extra/evolution-data-server-3.38::gentoo
 # >=gnome-extra/zenity-3.32::gentoo
 gui-libs/libhandy::gentoo
-~gui-libs/tepl-5.0.1::gentoo
 >=mail-client/evolution-3.38::gentoo
 media-fonts/cantarell::gentoo
 >=media-gfx/eog-3.38::gentoo
@@ -103,9 +105,6 @@ media-sound/pulseaudio::gentoo
 sys-apps/bubblewrap::gentoo
 sys-fs/fuse:3::gentoo
 sys-fs/fuse-common::gentoo
-=sys-fs/udisks-2.7*::gentoo
-=sys-libs/libblockdev-2.19*::gentoo
-=x11-libs/gdk-pixbuf-2.38*::gentoo
 # >=x11-libs/gtksourceview-3.24::gentoo
 >=x11-libs/libwnck-3.30::gentoo
 # >=x11-libs/pango-1.42::gentoo
@@ -127,186 +126,33 @@ virtual/cargo::gentoo
 
 ## Other packages keyword unmasking ##
 app-admin/cgmanager
-~app-backup/duplicity-0.7.19            # deja-dup
+app-backup/deja-dup
 app-eselect/eselect-opengl
-~app-admin/packagekit-base-0.8.15
-~dev-cpp/gflags-2.1.2
-~dev-dotnet/libgdiplus-2.10.9
 dev-lang/spidermonkey:68
 dev-libs/capnproto
 dev-libs/folks
-=dev-libs/icu-59*
+dev-libs/libappindicator
 dev-libs/libdbusmenu-qt
-=dev-libs/vala-common-0.36*
 =dev-libs/xapian-1.4*
 =dev-libs/xapian-bindings-1.4*
 dev-util/gn
 dev-util/sysprof-capture
 dev-util/valgrind
 dev-python/python-prctl
-=dev-python/python-xlib-0.19*
-~dev-qt/qtlocation-5.6.1
 dev-util/umockdev
-=gnome-extra/cinnamon-desktop-4.4*
-=gnome-extra/cinnamon-settings-daemon-4.4*
-=gnome-extra/cinnamon-translations-4.4*
-=gnome-extra/nemo-4.4*
 media-fonts/nanum
 media-fonts/quivira
-~media-libs/giflib-4.2.3
-~media-libs/gexiv2-0.10.5
-=media-libs/harfbuzz-2.6*
 =media-libs/libpng-1.6*
-=net-misc/networkmanager-1.2*
-=sec-policy/apparmor-profiles-2.10*
-=sys-apps/apparmor-2.10*
-=sys-apps/apparmor-utils-2.10*
-~sys-apps/systemd-232			# Provides support for graphical(-pre)-session.target(.wants) systemd units used to start Unity desktop session
-=sys-auth/polkit-0.115*
 sys-devel/clang:4
 sys-devel/llvm:4
 sys-fs/lxcfs
 sys-libs/db:5.1
 sys-libs/db:5.3
-=sys-libs/libapparmor-2.10*
 sys-power/upower
 www-client/firefox
 =x11-drivers/xf86-input-evdev-2.10*
-~x11-libs/libdrm-2.4.67
 x11-libs/xapps
 x11-misc/copyq
 x11-misc/xvfb-run
 =x11-themes/adwaita-icon-theme-3.24*
-
-## Overlay missing keyword unmasking ##
-app-accessibility/onboard **
-app-backup/deja-dup **
-app-text/evince **
-dev-cpp/gtest **
-dev-libs/dee **
-dev-libs/libindicator **
-dev-libs/libtimezonemap **
-dev-libs/glib **
-dev-libs/gobject-introspection **
-dev-libs/gobject-introspection-common **
-dev-libs/libappindicator **
-dev-libs/libcolumbus **
-dev-libs/libdbusmenu **
-dev-libs/libqtdbusmock **
-dev-libs/libqtdbustest **
-dev-libs/libsignon-glib **
-dev-libs/libunity **
-dev-libs/process-cpp **
-dev-libs/properties-cpp **
-dev-python/autopilot **
-dev-python/python-testscenarios **
-dev-util/cmake-extras **
-dev-util/dbus-test-runner **
-dev-util/gdbus-codegen **
-dev-util/glib-utils **
-gnome-base/gconf **
-gnome-base/gnome-control-center **
-gnome-base/gnome-core-apps **
-gnome-base/gnome-core-libs **
-gnome-base/gnome-desktop **
-gnome-base/gnome-menus **
-gnome-base/gnome-panel **
-gnome-base/gnome-settings-daemon **
-gnome-base/gsettings-desktop-schemas **
-gnome-base/nautilus **
-gnome-base/gnome-core-apps **
-gnome-base/gnome-session **
-gnome-extra/activity-log-manager **
-gnome-extra/gnome-color-manager **
-gnome-extra/evolution-data-server **
-gnome-extra/nm-applet **
-gnome-extra/polkit-gnome **
-mail-client/evolution **
-mail-client/thunderbird **
-mate-extra/brisk-menu **
-mate-extra/mate-hud **
-mate-extra/mate-menu **
-mate-extra/mate-tweak **
-mate-extra/ubuntu-mate-settings **
-media-gfx/eog **
-media-gfx/shotwell **
-media-sound/banshee **
-media-sound/rhythmbox **
-media-video/cheese **
-net-im/empathy **
-net-im/telepathy-mission-control **
-net-libs/geonames **
-net-libs/telepathy-indicator **
-sys-apps/accountsservice **
-sys-apps/upstart **
-unity-base/bamf **
-unity-base/compiz **
-unity-base/evemu **
-unity-base/frame **
-unity-base/geis **
-unity-base/grail **
-unity-base/gsettings-ubuntu-touch-schemas **
-unity-base/hud **
-unity-base/nux **
-unity-base/overlay-scrollbar **
-unity-base/session-shortcuts **
-unity-base/signon **
-unity-base/signon-keyring-extension **
-unity-base/signon-ui **
-unity-base/ubuntu-docs **
-unity-base/unity **
-unity-base/unity-api **
-unity-base/unity-control-center **
-unity-base/unity-gtk-module **
-unity-base/unity-language-pack **
-unity-base/unity-scopes-api **
-unity-base/unity-settings **
-unity-base/unity-settings-daemon **
-unity-extra/indicator-psensor **
-unity-extra/unity-greeter **
-unity-extra/indicator-evolution **
-unity-extra/indicator-multiload **
-unity-extra/indicator-psensor **
-unity-extra/unity-tweak-tool **
-unity-indicators/ido **
-unity-indicators/indicator-applet **
-unity-indicators/indicator-application **
-unity-indicators/indicator-appmenu **
-unity-indicators/indicator-bluetooth **
-unity-indicators/indicator-datetime **
-unity-indicators/indicator-keyboard **
-unity-indicators/indicator-messages **
-unity-indicators/indicator-network **
-unity-indicators/indicator-power **
-unity-indicators/indicator-printers **
-unity-indicators/indicator-session **
-unity-indicators/indicator-sound **
-unity-lenses/unity-lens-applications **
-unity-lenses/unity-lens-files **
-unity-lenses/unity-lens-music **
-unity-lenses/unity-lens-photos **
-unity-lenses/unity-lens-video **
-unity-scopes/unity-scope-home **
-x11-libs/content-hub **
-x11-libs/dee-qt **
-x11-libs/gsettings-qt **
-x11-libs/gtk+:2 **
-x11-libs/gtk+:3 **
-x11-misc/lightdm **
-x11-misc/lightdm-kde **
-x11-misc/mate-dock-applet **
-x11-misc/notify-osd **
-x11-misc/vala-panel **
-x11-themes/humanity-icon-theme **
-x11-themes/notify-osd-icons **
-x11-themes/ubuntu-themes **
-x11-themes/ubuntu-wallpapers **
-x11-themes/unity-asset-pool **
-x11-wm/metacity **
-
-
-# older versions are not compilable with gcc-6.3 (needed for re-compile)
-~sys-block/thin-provisioning-tools-0.7.5
-~dev-util/colm-0.13.0.5 # (new) dependency of 'dev-util/ragel'
-~dev-util/ragel-7.0.0.10
-~x11-libs/wxGTK-3.0.2.0
+x11-wm/metacity

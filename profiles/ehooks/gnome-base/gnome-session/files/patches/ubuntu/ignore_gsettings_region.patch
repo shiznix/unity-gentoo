@@ -1,0 +1,28 @@
+From: Gunnar Hjalmarsson <gunnarhj@ubuntu.com>
+Date: Wed, 15 Aug 2018 17:13:26 +0200
+Subject: Ignore the "region" gsettings value
+
+We rely on ~/.pam_environment for the users' setting of LC_* variables.
+Bug-Ubuntu: https://launchpad.net/bugs/1722002
+Forwarded: not-needed
+---
+ gnome-session/gnome-session.in | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/gnome-session/gnome-session.in b/gnome-session/gnome-session.in
+index ddd1a59..59ce162 100755
+--- a/gnome-session/gnome-session.in
++++ b/gnome-session/gnome-session.in
+@@ -13,9 +13,9 @@ if [ "x$XDG_SESSION_TYPE" = "xwayland" ] &&
+   fi
+ fi
+ 
+-SETTING=$(G_MESSAGES_DEBUG='' gsettings get org.gnome.system.locale region)
+-REGION=${SETTING#\'}
+-REGION=${REGION%\'}
++#SETTING=$(G_MESSAGES_DEBUG='' gsettings get org.gnome.system.locale region)
++#REGION=${SETTING#\'}
++#REGION=${REGION%\'}
+ 
+ if [ -n "$REGION" ]; then
+   unset LC_TIME LC_NUMERIC LC_MONETARY LC_MEASUREMENT LC_PAPER

@@ -16,8 +16,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility +apps chat extras +fonts +games +utils +xdm"
 RESTRICT="mirror"
 
-GVER="3.38*"
-
 DEPEND="unity-base/unity-build-env
 	unity-extra/ehooks"
 
@@ -32,7 +30,6 @@ RDEPEND="gnome-base/gnome-core-libs
 	unity-base/unity-language-pack
 	unity-indicators/unity-indicators-meta
 	unity-lenses/unity-lens-meta
-	x11-misc/gtk3-nocsd
 	x11-misc/notify-osd
 	x11-themes/ubuntu-wallpapers
 
@@ -93,7 +90,7 @@ RDEPEND="gnome-base/gnome-core-libs
 		games-puzzle/gnome-sudoku )
 	utils? (
 		app-admin/gnome-system-log
-		app-backup/deja-dup[nautilus]
+		amd64? ( app-backup/deja-dup )
 		app-arch/file-roller
 		app-crypt/seahorse
 		app-editors/gedit

@@ -17,7 +17,7 @@ LICENSE="GPL-2+"
 SLOT="0"
 IUSE="+bluetooth +branding +colord +cups +fcitx +gnome-online-accounts +i18n input_devices_wacom +kerberos networkmanager +samba +v4l +webkit"
 REQUIRED_USE="samba? ( cups )"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 # gnome-session-2.91.6-r1 is needed so that 10-user-dirs-update is run at login

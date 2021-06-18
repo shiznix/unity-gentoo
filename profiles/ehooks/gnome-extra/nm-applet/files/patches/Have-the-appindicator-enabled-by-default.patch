@@ -1,0 +1,35 @@
+From: Mathieu Trudel-Lapierre <mathieu@canonical.com>
+Date: Fri, 20 May 2016 14:32:07 +0800
+Subject: Have the appindicator enabled by default.
+
+---
+ src/main.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+Index: network-manager-applet-1.8.24/src/main.c
+===================================================================
+--- network-manager-applet-1.8.24.orig/src/main.c
++++ network-manager-applet-1.8.24/src/main.c
+@@ -17,7 +17,7 @@
+ 
+ gboolean shell_debug = FALSE;
+ gboolean with_agent = TRUE;
+-gboolean with_appindicator = FALSE;
++gboolean with_appindicator = TRUE;
+ 
+ static void
+ usage (const char *progname)
+@@ -47,11 +47,9 @@ int main (int argc, char *argv[])
+ 			shell_debug = TRUE;
+ 		else if (!strcmp (argv[i], "--no-agent"))
+ 			with_agent = FALSE;
+-		else if (!strcmp (argv[i], "--indicator")) {
++		else if (!strcmp (argv[i], "--no-indicator")) {
+ #ifdef WITH_APPINDICATOR
+-			with_appindicator = TRUE;
+-#else
+-			g_error ("Error: --indicator requested but indicator support not available");
++			with_appindicator = FALSE;
+ #endif
+ 		}
+ 	}

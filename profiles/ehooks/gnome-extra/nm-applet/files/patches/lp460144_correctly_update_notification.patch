@@ -1,0 +1,83 @@
+From: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Fri, 20 May 2016 14:28:34 +0800
+Subject: lp460144_correctly_update_notification
+
+---
+ src/applet.c | 38 +++++++++++++++++---------------------
+ 1 file changed, 17 insertions(+), 21 deletions(-)
+
+Index: network-manager-applet-1.16.0-1ubuntu1/src/applet.c
+===================================================================
+--- network-manager-applet-1.16.0-1ubuntu1.orig/src/applet.c
++++ network-manager-applet-1.16.0-1ubuntu1/src/applet.c
+@@ -667,17 +667,6 @@
+ 	return item;
+ }
+ 
+-static void
+-applet_clear_notify (NMApplet *applet)
+-{
+-	if (applet->notification == NULL)
+-		return;
+-
+-	notify_notification_close (applet->notification, NULL);
+-	g_object_unref (applet->notification);
+-	applet->notification = NULL;
+-}
+-
+ static gboolean
+ applet_notify_server_has_actions (void)
+ {
+@@ -734,19 +723,28 @@
+ 	if (!applet->agent)
+ 		return;
+ 
+-	applet_clear_notify (applet);
+-
+ 	escaped = utils_escape_notify_message (message);
+-	notify = notify_notification_new (summary,
+-	                                  escaped,
+-	                                  icon ? icon : "network-workgroup"
++
++	if (applet->notification == NULL) {
++		notify = notify_notification_new (summary,
++		                                  escaped,
++		                                  icon ? icon : "network-workgroup"
+ #if HAVE_LIBNOTIFY_07
+-	                                  );
++		                                  );
+ #else
+-	                                  , NULL);
++		                                 , NULL);
+ #endif
++
++		applet->notification = notify;
++	} else {
++		notify = applet->notification;
++		notify_notification_update (notify,
++		                            summary,
++		                            escaped,
++		                            icon ? icon : "network-workgroup");
++	}
++
+ 	g_free (escaped);
+-	applet->notification = notify;
+ 
+ #if HAVE_LIBNOTIFY_07
+ 	notify_notification_set_hint (notify, "transient", g_variant_new_boolean (TRUE));
+@@ -3262,7 +3260,6 @@
+ 	/* Have clicking on the applet act also as acknowledgement
+ 	 * of the notification.
+ 	 */
+-	applet_clear_notify (applet);
+ 
+ 	applet_start_wifi_scan (applet, NULL);
+ 
+@@ -3294,7 +3291,6 @@
+ 	/* Have clicking on the applet act also as acknowledgement
+ 	 * of the notification.
+ 	 */
+-	applet_clear_notify (applet);
+ 
+ 	nma_context_menu_update (applet);
+ 	gtk_menu_popup (GTK_MENU (applet->context_menu), NULL, NULL,

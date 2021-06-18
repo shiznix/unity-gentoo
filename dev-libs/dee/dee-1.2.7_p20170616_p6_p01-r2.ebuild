@@ -5,7 +5,7 @@ EAPI=7
 PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 AUTOTOOLS_AUTORECONF=y
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit autotools eutils python-r1 ubuntu-versionator vala
 
 MY_P="${PN}_${PV}"

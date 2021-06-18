@@ -1,0 +1,17 @@
+Index: gnome-menus-3.35.3/layout/gnome-applications.menu
+===================================================================
+--- gnome-menus-3.35.3.orig/layout/gnome-applications.menu
++++ gnome-menus-3.35.3/layout/gnome-applications.menu
+@@ -240,7 +240,11 @@
+       <And>
+         <Not><Category>Core</Category></Not>
+         <Not><Category>Screensaver</Category></Not>
+-
++        <Not><Category>AudioVideo</Category></Not>
++        <Not><Category>Graphics</Category></Not>
++        <Not><Category>Network</Category></Not>
++        <Not><Category>Office</Category></Not>
++        <Not><Category>Utility</Category></Not>
+       </And>
+     </Include>
+   </Menu> <!-- End Other -->

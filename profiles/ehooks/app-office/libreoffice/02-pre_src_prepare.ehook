@@ -7,7 +7,7 @@ ebuild_hook() {
 	## Add custom icons.
 	cp "${EHOOK_FILESDIR}"/custom-icons/savemodified_{large,small}.png icon-themes/human/res
 
-	## Add Human icon theme.
+	## Add Tango icon theme.
 	mv "${WORKDIR}"/tango icon-themes
 
 	## Configure with Human icon theme.

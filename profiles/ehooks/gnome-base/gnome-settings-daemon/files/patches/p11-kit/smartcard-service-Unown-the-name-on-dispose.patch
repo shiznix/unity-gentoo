@@ -1,0 +1,22 @@
+From: =?utf-8?b?Ik1hcmNvIFRyZXZpc2FuIChUcmV2acOxbyki?= <mail@3v1n0.net>
+Date: Sat, 14 Nov 2020 01:24:46 +0100
+Subject: smartcard-service: Unown the name on dispose
+
+Origin: https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/208
+---
+ plugins/smartcard/gsd-smartcard-service.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/plugins/smartcard/gsd-smartcard-service.c b/plugins/smartcard/gsd-smartcard-service.c
+index c29d377..4e10dc3 100644
+--- a/plugins/smartcard/gsd-smartcard-service.c
++++ b/plugins/smartcard/gsd-smartcard-service.c
+@@ -352,6 +352,8 @@ gsd_smartcard_service_dispose (GObject *object)
+ {
+         GsdSmartcardService *self = GSD_SMARTCARD_SERVICE (object);
+ 
++        g_clear_handle_id (&self->name_id, g_bus_unown_name);
++
+         g_clear_object (&self->bus_connection);
+         g_clear_object (&self->object_manager_server);
+         g_clear_object (&self->smartcard_manager);

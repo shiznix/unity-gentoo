@@ -1,0 +1,5 @@
+ebuild_hook() {
+	ehook_use headerbar_adjust && sed -i \
+		-e "/show_close_button/{s/True/False/}" \
+		src/gui/gcal-window.ui
+}

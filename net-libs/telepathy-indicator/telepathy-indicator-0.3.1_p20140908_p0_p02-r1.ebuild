@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit autotools eutils gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+14.10.${PVR_MICRO}"

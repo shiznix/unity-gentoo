@@ -3,6 +3,6 @@ ebuild_hook() {
 		sed -i \
 			-e "/gboolean show_open_as_root/{s/no_selection_or_one_dir/FALSE/}" \
 			src/nemo-view.c || die
-		einfo "  'Open as Root' context menu action removed"
+		einfo "'Open as Root' context menu action removed"
 	fi
 }

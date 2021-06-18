@@ -1,0 +1,113 @@
+From 37d0dc308bfbfdd7beb94135cd45d6239fdad85c Mon Sep 17 00:00:00 2001
+From: Lars Uebernickel <lars@uebernic.de>
+Date: Fri, 28 Feb 2014 13:53:03 +0100
+Subject: [PATCH 1/2] shell: make play-{shuffle,repeat} proper toggle actions
+
+Remove their unused boolean parameter and toggle them when activating,
+so that they can be used in menus.
+---
+ shell/rb-shell-player.c | 33 +++++++++++++++++++++++----------
+ shell/rb-shell.c        |  6 ------
+ 2 files changed, 23 insertions(+), 16 deletions(-)
+
+Index: rhythmbox/shell/rb-shell-player.c
+===================================================================
+--- rhythmbox.orig/shell/rb-shell-player.c
++++ rhythmbox/shell/rb-shell-player.c
+@@ -2812,30 +2812,30 @@ play_next_action_cb (GSimpleAction *acti
+ }
+ 
+ static void
+-play_repeat_action_cb (GSimpleAction *action, GVariant *parameter, gpointer user_data)
++play_repeat_action_change_state_cb (GSimpleAction *action, GVariant *state, gpointer user_data)
+ {
+ 	RBShellPlayer *player = RB_SHELL_PLAYER (user_data);
+ 	const char *neworder;
+ 	gboolean shuffle = FALSE;
+-	gboolean repeat = FALSE;
++	gboolean repeat;
+ 	rb_debug ("repeat changed");
+ 
+ 	if (player->priv->syncing_state)
+ 		return;
+ 
+-	rb_shell_player_get_playback_state (player, &shuffle, &repeat);
++	repeat = g_variant_get_boolean (state);
++	rb_shell_player_get_playback_state (player, &shuffle, NULL);
+ 
+-	repeat = !repeat;
+ 	neworder = state_to_play_order[shuffle ? 1 : 0][repeat ? 1 : 0];
+ 	g_settings_set_string (player->priv->settings, "play-order", neworder);
+ }
+ 
+ static void
+-play_shuffle_action_cb (GSimpleAction *action, GVariant *parameter, gpointer user_data)
++play_shuffle_action_change_state_cb (GSimpleAction *action, GVariant *state, gpointer user_data)
+ {
+ 	RBShellPlayer *player = RB_SHELL_PLAYER (user_data);
+ 	const char *neworder;
+-	gboolean shuffle = FALSE;
++	gboolean shuffle;
+ 	gboolean repeat = FALSE;
+ 
+ 	if (player->priv->syncing_state)
+@@ -2843,9 +2843,9 @@ play_shuffle_action_cb (GSimpleAction *a
+ 
+ 	rb_debug ("shuffle changed");
+ 
+-	rb_shell_player_get_playback_state (player, &shuffle, &repeat);
++	shuffle = g_variant_get_boolean (state);
++	rb_shell_player_get_playback_state (player, NULL, &repeat);
+ 
+-	shuffle = !shuffle;
+ 	neworder = state_to_play_order[shuffle ? 1 : 0][repeat ? 1 : 0];
+ 	g_settings_set_string (player->priv->settings, "play-order", neworder);
+ }
+@@ -2946,6 +2946,19 @@ rb_shell_player_remove_play_order (RBShe
+ }
+ 
+ static void
++activate_toggle_action (GSimpleAction *action, GVariant *parameter, gpointer user_data)
++{
++	GVariant *state;
++	gboolean on;
++
++	state = g_action_get_state (G_ACTION (action));
++	on = g_variant_get_boolean (state);
++	g_action_change_state (G_ACTION (action), g_variant_new_boolean (!on));
++
++	g_variant_unref (state);
++}
++
++static void
+ rb_shell_player_constructed (GObject *object)
+ {
+ 	RBApplication *app;
+@@ -2956,8 +2969,8 @@ rb_shell_player_constructed (GObject *ob
+ 		{ "play", play_action_cb },
+ 		{ "play-previous", play_previous_action_cb },
+ 		{ "play-next", play_next_action_cb },
+-		{ "play-repeat", play_repeat_action_cb, "b", "false" },
+-		{ "play-shuffle", play_shuffle_action_cb, "b", "false" },
++		{ "play-repeat", activate_toggle_action, NULL, "false", play_repeat_action_change_state_cb },
++		{ "play-shuffle", activate_toggle_action, NULL, "false", play_shuffle_action_change_state_cb },
+ 		{ "volume-up", play_volume_up_action_cb },
+ 		{ "volume-down", play_volume_down_action_cb }
+ 	};
+Index: rhythmbox/shell/rb-shell.c
+===================================================================
+--- rhythmbox.orig/shell/rb-shell.c
++++ rhythmbox/shell/rb-shell.c
+@@ -742,12 +742,6 @@ construct_load_ui (RBShell *shell)
+ 	image = gtk_button_get_image (GTK_BUTTON (gtk_builder_get_object (builder, "play-button")));
+ 	gtk_image_set_from_icon_name (GTK_IMAGE (image), "media-playback-start-symbolic", GTK_ICON_SIZE_LARGE_TOOLBAR);
+ 
+-	/* this seems a bit unnecessary */
+-	gtk_actionable_set_action_target_value (GTK_ACTIONABLE (gtk_builder_get_object (builder, "shuffle-button")),
+-						g_variant_new_boolean (TRUE));
+-	gtk_actionable_set_action_target_value (GTK_ACTIONABLE (gtk_builder_get_object (builder, "repeat-button")),
+-						g_variant_new_boolean (TRUE));
+-
+ 	gtk_style_context_add_class (gtk_widget_get_style_context (toolbar),
+ 				     GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
+ 	gtk_box_pack_start (GTK_BOX (shell->priv->main_vbox), toolbar, FALSE, FALSE, 0);

@@ -3,10 +3,10 @@
 
 EAPI=6
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit autotools eutils ubuntu-versionator
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+20.10.${PVR_MICRO}"
 
 DESCRIPTION="Gnome panel indicator for the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-applet"

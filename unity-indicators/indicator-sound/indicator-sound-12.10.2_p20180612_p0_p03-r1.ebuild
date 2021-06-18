@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit cmake-utils gnome2-utils ubuntu-versionator vala
 
 UVER_PREFIX="+18.10.${PVR_MICRO}"

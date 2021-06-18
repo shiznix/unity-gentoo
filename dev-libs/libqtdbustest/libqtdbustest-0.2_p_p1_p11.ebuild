@@ -19,13 +19,13 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}-${PV}+bzr42"
 
-DEPEND="=dev-cpp/gtest
+DEPEND="dev-cpp/gtest
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qttest:5

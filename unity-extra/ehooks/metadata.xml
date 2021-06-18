@@ -17,6 +17,7 @@
 		<flag name="fontconfig_adjust">Adjust fonts configuration according to Ubuntu</flag>
 		<flag name="gnome-screenshot_adjust">Adjust <pkg>media-gfx/gnome-screenshot</pkg> when running under Unity</flag>
 		<flag name="gnome-terminal_theme">Add Unity's theme for <pkg>x11-terms/gnome-terminal</pkg></flag>
+		<flag name="headerbar_adjust">Adjust headerbar and re-enable original titlebar when running under Unity</flag>
 		<flag name="libreoffice_theme">Add Ubuntu's Human icon theme for <pkg>app-office/libreoffice</pkg></flag>
 		<flag name="nemo_noroot">Remove "Open as Root" context menu action for <pkg>gnome-extra/nemo</pkg></flag>
 		<flag name="pidgin_chat">Add chat section into Unity's Messaging menu for <pkg>net-im/pidgin</pkg></flag>

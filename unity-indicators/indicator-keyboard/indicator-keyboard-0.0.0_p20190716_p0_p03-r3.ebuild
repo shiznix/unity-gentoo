@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit autotools eutils flag-o-matic gnome2-utils python-r1 ubuntu-versionator vala
 
 UVER_PREFIX="+19.10.${PVR_MICRO}"

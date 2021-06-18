@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit distutils-r1 ubuntu-versionator
 
 UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"

@@ -1,0 +1,54 @@
+From 16267efeb840ceaa7067e8d608146ea6c9d4184b Mon Sep 17 00:00:00 2001
+From: Michael Terry <michael.terry@ubuntu.com>
+Date: Thu, 21 Dec 2017 15:15:05 +1300
+Subject: [PATCH 12/12] In addition to watching /etc/{passwd,shadow,group},
+ also watch those same files in /var/lib/extrausers/, if they exist.
+
+---
+ src/daemon.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/src/daemon.c b/src/daemon.c
+index 0415f41..ade29d9 100644
+--- a/src/daemon.c
++++ b/src/daemon.c
+@@ -51,6 +51,9 @@
+ #define PATH_PASSWD "/etc/passwd"
+ #define PATH_SHADOW "/etc/shadow"
+ #define PATH_GROUP "/etc/group"
++#define PATH_EXTRAUSERS_PASSWD "/var/lib/extrausers/passwd"
++#define PATH_EXTRAUSERS_SHADOW "/var/lib/extrausers/shadow"
++#define PATH_EXTRAUSERS_GROUP "/var/lib/extrausers/group"
+ 
+ enum {
+         PROP_0,
+@@ -69,6 +72,9 @@ typedef struct {
+         GFileMonitor *passwd_monitor;
+         GFileMonitor *shadow_monitor;
+         GFileMonitor *group_monitor;
++        GFileMonitor *extrausers_passwd_monitor;
++        GFileMonitor *extrausers_shadow_monitor;
++        GFileMonitor *extrausers_group_monitor;
+         GFileMonitor *gdm_monitor;
+         GFileMonitor *wtmp_monitor;
+ 
+@@ -743,6 +749,16 @@ daemon_init (Daemon *daemon)
+                                              PATH_GROUP,
+                                              on_users_monitor_changed);
+ 
++        priv->extrausers_passwd_monitor = setup_monitor (daemon,
++                                                         PATH_EXTRAUSERS_PASSWD,
++                                                         on_users_monitor_changed);
++        priv->extrausers_shadow_monitor = setup_monitor (daemon,
++                                                         PATH_EXTRAUSERS_SHADOW,
++                                                         on_users_monitor_changed);
++        priv->extrausers_group_monitor = setup_monitor (daemon,
++                                                        PATH_EXTRAUSERS_GROUP,
++                                                        on_users_monitor_changed);
++
+         priv->wtmp_monitor = setup_monitor (daemon,
+                                             wtmp_helper_get_path_for_monitor (),
+                                             on_users_monitor_changed);
+-- 
+2.20.1
+

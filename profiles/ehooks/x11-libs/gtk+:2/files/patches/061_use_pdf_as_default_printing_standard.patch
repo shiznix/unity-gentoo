@@ -1,0 +1,33 @@
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Tue, 3 Mar 2009 21:58:20 -0300
+Subject: Use PDF as default printing standard
+
+Original author unknown. https://wiki.ubuntu.com/PDFasStandardPrintJobFormat
+
+Forwarded: no
+---
+ modules/printbackends/lpr/gtkprintbackendlpr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/modules/printbackends/lpr/gtkprintbackendlpr.c b/modules/printbackends/lpr/gtkprintbackendlpr.c
+index 0ee856c..78ac558 100644
+--- a/modules/printbackends/lpr/gtkprintbackendlpr.c
++++ b/modules/printbackends/lpr/gtkprintbackendlpr.c
+@@ -31,6 +31,8 @@
+ #include <cairo.h>
+ #include <cairo-ps.h>
+ 
++#include <cairo-pdf.h>
++
+ #include <glib/gi18n-lib.h>
+ 
+ #include <gtk/gtk.h>
+@@ -209,7 +211,7 @@ lpr_printer_create_cairo_surface (GtkPrinter       *printer,
+ {
+   cairo_surface_t *surface;
+   
+-  surface = cairo_ps_surface_create_for_stream (_cairo_write, cache_io, width, height);
++  surface = cairo_pdf_surface_create_for_stream (_cairo_write, cache_io, width, height);
+ 
+   cairo_surface_set_fallback_resolution (surface,
+                                          2.0 * gtk_print_settings_get_printer_lpi (settings),

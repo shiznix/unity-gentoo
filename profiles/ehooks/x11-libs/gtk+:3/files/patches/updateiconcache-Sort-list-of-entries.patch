@@ -1,0 +1,50 @@
+From: "Bernhard M. Wiedemann" <bwiedemann@suse.de>
+Date: Wed, 15 Aug 2018 03:11:21 +0200
+Subject: updateiconcache: Sort list of entries
+
+because filesystem readdir order is indeterministic.
+
+Without this patch, building openSUSE's balsa package
+had variations between builds in /usr/share/balsa/icon-theme.cache
+
+Forwarded: https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/297
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=953105
+Applied-upstream: 3.96.0, commit:b364827a5b99e3b02862f36be4c03826e72aefba
+---
+ gtk/updateiconcache.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/gtk/updateiconcache.c b/gtk/updateiconcache.c
+index b48eaca..6703c8b 100644
+--- a/gtk/updateiconcache.c
++++ b/gtk/updateiconcache.c
+@@ -600,6 +600,7 @@ scan_directory (const gchar *base_path,
+ {
+   GHashTable *dir_hash;
+   GDir *dir;
++  GList *list = NULL, *iterator = NULL;
+   const gchar *name;
+   gchar *dir_path;
+   gboolean dir_added = FALSE;
+@@ -617,6 +618,13 @@ scan_directory (const gchar *base_path,
+ 
+   while ((name = g_dir_read_name (dir)))
+     {
++      list = g_list_prepend (list, g_strdup (name));
++    }
++  list = g_list_sort (list, (GCompareFunc) strcmp);
++  for (iterator = list; iterator; iterator = iterator->next)
++    {
++      name = iterator->data;
++
+       gchar *path;
+       gboolean retval;
+       int flags = 0;
+@@ -695,6 +703,7 @@ scan_directory (const gchar *base_path,
+       g_free (path);
+     }
+ 
++  g_list_free_full (list, g_free);
+   g_dir_close (dir);
+ 
+   /* Move dir into the big file hash */

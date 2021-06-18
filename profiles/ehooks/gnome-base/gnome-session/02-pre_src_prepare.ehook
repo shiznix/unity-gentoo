@@ -1,0 +1,14 @@
+ebuild_hook() {
+	# Desktop Session is named 'unity' #
+	sed -e 's/:ubuntu//' \
+		-i data/unity.session.desktop.in.in \
+		-i data/unity.desktop.in.in || die
+
+	# Disable all language files as they can be incomplete #
+	#  due to being provided by Ubuntu's language-pack packages #
+	> po/LINGUAS
+
+	# If a .desktop file does not have inline
+	# translations, fall back to calling gettext
+	echo "X-GNOME-Gettext-Domain=${PN}-3.0" >> "data/${PN}-properties.desktop.in"
+}

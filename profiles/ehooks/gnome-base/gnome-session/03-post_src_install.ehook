@@ -1,0 +1,59 @@
+ebuild_hook() {
+	##### from systemd.eclass ######
+	_systemd_get_dir() {
+		[[ ${#} -eq 2 ]] || die "Usage: ${FUNCNAME} <variable-name> <fallback-directory>"
+		local variable=${1} fallback=${2} d
+
+		if $(tc-getPKG_CONFIG) --exists systemd; then
+			d=$($(tc-getPKG_CONFIG) --variable="${variable}" systemd) || die
+			d=${d#${EPREFIX}}
+		else
+			d=${fallback}
+		fi
+
+		echo "${d}"
+	}
+
+	_systemd_get_userunitdir() {
+			_systemd_get_dir systemduserunitdir /usr/lib/systemd/user
+	}
+
+	systemd_douserunit() {
+		debug-print-function ${FUNCNAME} "${@}"
+
+		(
+			insopts -m 0644
+			insinto "$(_systemd_get_userunitdir)"
+			doins "${@}"
+		)
+	}
+	################################################################
+
+	# 'startx' visible via the XSESSION variable #
+	exeinto /etc/X11/Sessions
+	newexe "${EHOOK_FILESDIR}/unity.xsession" unity
+
+	# Set Unity XDG desktop session variables #
+	exeinto /etc/X11/xinit/xinitrc.d
+	newexe "${EHOOK_FILESDIR}/15-xdg-data-unity" 15-xdg-data-unity
+
+	# Enables and fills $DESKTOP_SESSION variable for sessions started using 'startx'
+	exeinto /etc/X11/xinit/xinitrc.d/
+	newexe "${EHOOK_FILESDIR}/05-unity-desktop-session" 05-unity-desktop-session
+
+	# Start gnome-session using systemd #
+	exeinto /usr/libexec
+	doexe "${EHOOK_FILESDIR}/data/run-systemd-session"
+
+	# Install systemd unit files to enable starting desktop sessions via systemd #
+	systemd_douserunit "${EHOOK_FILESDIR}/data/gnome-session.service"
+	systemd_douserunit "${EHOOK_FILESDIR}/data/unity-session.target"
+
+	insinto /etc/lightdm/lightdm.conf.d
+	doins "${EHOOK_FILESDIR}/data/50-unity.conf"
+
+	# Remove Ubuntu only session files #
+	rm "${ED}"/usr/share/wayland-sessions/ubuntu*.desktop
+	rm "${ED}"/usr/share/xsessions/ubuntu*.desktop
+	rm "${ED}"/usr/share/gnome-session/sessions/ubuntu.session
+}

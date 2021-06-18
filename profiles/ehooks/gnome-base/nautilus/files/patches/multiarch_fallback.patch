@@ -1,0 +1,20 @@
+From: Jeremy Bicha <jbicha@ubuntu.com>
+Date: Tue, 13 Sep 2016 21:33:50 -0400
+Subject: Load extensions from non-multiarch directory too
+
+---
+ src/nautilus-module.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/nautilus-module.c b/src/nautilus-module.c
+index bf474bd..bd74cc7 100644
+--- a/src/nautilus-module.c
++++ b/src/nautilus-module.c
+@@ -260,6 +260,7 @@ nautilus_module_setup (void)
+         initialized = TRUE;
+ 
+         load_module_dir (NAUTILUS_EXTENSIONDIR);
++        load_module_dir ("/usr/lib/nautilus/extensions-3.0");
+ 
+         eel_debug_call_at_shutdown (free_module_objects);
+     }

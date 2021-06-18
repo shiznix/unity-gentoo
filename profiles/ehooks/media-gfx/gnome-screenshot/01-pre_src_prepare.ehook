@@ -5,8 +5,7 @@ ebuild_hook() {
 		-e "s/gnome-help/ubuntu-help/" \
 		src/screenshot-utils.c
 
-	sed -i \
-		-e "s/HdyHeaderBar/GtkHeaderBar/" \
-		-e "/show_close_button/d" \
-		data/ui/screenshot{,-interactive}-dialog.ui
+	ehook_use headerbar_adjust && sed -i \
+		-e "/show_close_button/{s/True/False/}" \
+		data/ui/screenshot-interactive-dialog.ui
 }

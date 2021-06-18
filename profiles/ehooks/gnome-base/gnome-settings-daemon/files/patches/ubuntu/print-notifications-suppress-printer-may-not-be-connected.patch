@@ -1,0 +1,42 @@
+From: Ubuntu Desktop Team <ubuntu-desktop@lists.ubuntu.com>
+Date: Thu, 26 Jul 2018 16:19:06 +0100
+Subject: print-notifications: suppress printer may not be connected
+ notification
+
+ # Ubuntu: https://launchpad.net/bugs/842768
+ # Ubuntu: https://launchpad.net/bugs/842768
+---
+ plugins/print-notifications/gsd-print-notifications-manager.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/plugins/print-notifications/gsd-print-notifications-manager.c b/plugins/print-notifications/gsd-print-notifications-manager.c
+index 4e0b3ab..adccca8 100644
+--- a/plugins/print-notifications/gsd-print-notifications-manager.c
++++ b/plugins/print-notifications/gsd-print-notifications-manager.c
+@@ -407,7 +407,7 @@ get_statuses_second (guint i,
+                         break;
+                 case 2:
+                         /* Translators: The printer is in the process of connecting to a shared network output device (same as in system-config-printer) */
+-                        status = g_strdup_printf (_("Printer “%s” may not be connected."), printer_name);
++                        /* status = g_strdup_printf (_("Printer “%s” may not be connected."), printer_name); */
+                         break;
+                 case 3:
+                         /* Translators: One or more covers on the printer are open (same as in system-config-printer) */
+@@ -612,7 +612,7 @@ process_cups_notification (GsdPrintNotificationsManager *manager,
+         static const char * const reasons[] = {
+                 "toner-low",
+                 "toner-empty",
+-                "connecting-to-device",
++                /*"connecting-to-device",*/
+                 "cover-open",
+                 "cups-missing-filter",
+                 "door-open",
+@@ -629,7 +629,7 @@ process_cups_notification (GsdPrintNotificationsManager *manager,
+                 /* Translators: The printer has no toner left (same as in system-config-printer) */
+                 N_("Toner empty"),
+                 /* Translators: The printer is in the process of connecting to a shared network output device (same as in system-config-printer) */
+-                N_("Not connected?"),
++                /*N_("Not connected?"),*/
+                 /* Translators: One or more covers on the printer are open (same as in system-config-printer) */
+                 N_("Cover open"),
+                 /* Translators: A filter or backend is not installed (same as in system-config-printer) */

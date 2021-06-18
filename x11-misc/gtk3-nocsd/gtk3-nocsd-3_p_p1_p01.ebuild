@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit autotools eutils ubuntu-versionator
 
 DESCRIPTION="Disable Gtk+ 3 client side decorations (CSD)"
@@ -22,6 +22,9 @@ DEPEND="dev-libs/gobject-introspection
 	x11-libs/gtk+:3"
 
 src_prepare() {
+	# Version 4
+	eapply "${FILESDIR}/${PN}-4.patch"
+
 	# Fix libdir (prefix and LD_PRELOAD) #
 	local fixlib=$(get_libdir)
 	sed -i \

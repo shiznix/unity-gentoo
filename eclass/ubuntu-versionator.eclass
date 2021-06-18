@@ -52,6 +52,7 @@ UURL="https://launchpad.net/ubuntu/+archive/primary/+files"
 [[ "${URELEASE}" == *focal* ]] && UVER_RELEASE="20.04"
 [[ "${URELEASE}" == *groovy* ]] && UVER_RELEASE="20.10"
 [[ "${URELEASE}" == *hirsute* ]] && UVER_RELEASE="21.04"
+[[ "${URELEASE}" == *impish* ]] && UVER_RELEASE="21.10"
 
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
@@ -176,6 +177,8 @@ ubuntu-versionator_pkg_setup() {
 	[[ "${PROFILE_RELEASE}" == cosmic ]] && GCC_MINIMUM="8.2.0"
 	[[ "${PROFILE_RELEASE}" == eoan ]] && GCC_MINIMUM="9.2.0"
 	[[ "${PROFILE_RELEASE}" == focal ]] && GCC_MINIMUM="9.3.0"
+	[[ "${PROFILE_RELEASE}" == groovy ]] && GCC_MINIMUM="10.2.0"
+	[[ "${PROFILE_RELEASE}" == hirsute ]] && GCC_MINIMUM="10.3.0"
 	GCC_CURRENT=$(gcc-fullversion)
 
 	[[ ${GCC_CURRENT//./} -lt ${GCC_MINIMUM//./} ]] \

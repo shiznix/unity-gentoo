@@ -1,1 +1,7 @@
-../../templates/aa-pre_src_prepare.ehook
+ebuild_hook() {
+	# Description: Never default to using the custom title bar. Chromium should
+	#   integrate, not be a special little snowflake.
+	sed -i \
+		-e "/bool GetCustomFramePrefDefault/a return false;" \
+		ui/base/x/x11_util.cc
+}

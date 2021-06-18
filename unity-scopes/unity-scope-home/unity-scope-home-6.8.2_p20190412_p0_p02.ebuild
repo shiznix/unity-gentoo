@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit autotools eutils ubuntu-versionator vala virtualx
 
 UVER_PREFIX="+19.04.${PVR_MICRO}"

@@ -1,0 +1,127 @@
+From 61198bff068d1fa575967b29a28078240e9815e0 Mon Sep 17 00:00:00 2001
+From: Frederic Peters <fpeters@debian.org>
+Date: Thu, 21 Dec 2017 15:03:57 +1300
+Subject: [PATCH 02/12] Create and manage groups like on a debian system.
+
+---
+ src/daemon.c | 28 ++++++----------------------
+ src/util.c   | 40 ++++++++++++++++++++++++++++++++++++++++
+ src/util.h   |  9 +++++++++
+ 3 files changed, 55 insertions(+), 22 deletions(-)
+
+diff --git a/src/daemon.c b/src/daemon.c
+index d7c4437..5f2931e 100644
+--- a/src/daemon.c
++++ b/src/daemon.c
+@@ -1110,34 +1110,18 @@ daemon_create_user_authorized_cb (Daemon                *daemon,
+         argv[1] = "-m";
+         argv[2] = "-c";
+         argv[3] = cd->real_name;
+-        if (cd->account_type == ACCOUNT_TYPE_ADMINISTRATOR) {
+-                if (EXTRA_ADMIN_GROUPS != NULL && EXTRA_ADMIN_GROUPS[0] != '\0')
+-                        admin_groups = g_strconcat (ADMIN_GROUP, ",",
+-                                                    EXTRA_ADMIN_GROUPS, NULL);
+-                else
+-                        admin_groups = g_strdup (ADMIN_GROUP);
+-
+-                argv[4] = "-G";
+-                argv[5] = admin_groups;
+-                argv[6] = "--";
+-                argv[7] = cd->user_name;
+-                argv[8] = NULL;
+-        }
+-        else if (cd->account_type == ACCOUNT_TYPE_STANDARD) {
+-                argv[4] = "--";
+-                argv[5] = cd->user_name;
+-                argv[6] = NULL;
+-        }
+-        else {
+-                throw_error (context, ERROR_FAILED, "Don't know how to add user of type %d", cd->account_type);
+-                return;
+-        }
++        argv[4] = cd->user_name;
++        argv[5] = NULL;
+ 
+         if (!spawn_with_login_uid (context, argv, &error)) {
+                 throw_error (context, ERROR_FAILED, "running '%s' failed: %s", argv[0], error->message);
+                 return;
+         }
+ 
++        if (cd->account_type == ACCOUNT_TYPE_ADMINISTRATOR) {
++                add_user_to_group (context, cd->user_name, "sudo");
++        }
++
+         user = daemon_local_find_user_by_name (daemon, cd->user_name);
+         user_update_local_account_property (user, TRUE);
+         user_update_system_account_property (user, FALSE);
+diff --git a/src/util.c b/src/util.c
+index 0372b4b..684a58d 100644
+--- a/src/util.c
++++ b/src/util.c
+@@ -289,3 +289,43 @@ get_caller_uid (GDBusMethodInvocation *context,
+ 
+         return TRUE;
+ }
++
++void
++add_user_to_group (GDBusMethodInvocation *context,
++                  const char *user_name,
++                  const char *group_name)
++{
++        g_autoptr(GError) error = NULL;
++        const gchar *argv[4];
++
++        argv[0] = "/usr/sbin/adduser";
++        argv[1] = user_name;
++        argv[2] = group_name;
++        argv[3] = NULL;
++
++        error = NULL;
++        if (!spawn_with_login_uid (context, argv, &error)) {
++                g_warning ("failed to add user %s to group %s", user_name, group_name);
++                return;
++        }
++}
++
++void
++remove_user_from_group (GDBusMethodInvocation *context,
++                        const char *user_name,
++                        const char *group_name)
++{
++        g_autoptr(GError) error = NULL;
++        const gchar *argv[4];
++
++        argv[0] = "/usr/sbin/deluser";
++        argv[1] = user_name;
++        argv[2] = group_name;
++        argv[3] = NULL;
++
++        error = NULL;
++        if (!spawn_with_login_uid (context, argv, &error)) {
++                g_warning ("failed to remove user %s from group %s", user_name, group_name);
++                return;
++        }
++}
+diff --git a/src/util.h b/src/util.h
+index 41ba545..c243c29 100644
+--- a/src/util.h
++++ b/src/util.h
+@@ -40,6 +40,15 @@ gint get_user_groups (const gchar  *username,
+                       gid_t         group,
+                       gid_t       **groups);
+ 
++void add_user_to_group (GDBusMethodInvocation *context,
++                        const char *user_name,
++                        const char *group_name);
++
++void remove_user_from_group (GDBusMethodInvocation *context,
++                             const char *user_name,
++                             const char *group_name);
++
++
+ G_END_DECLS
+ 
+ #endif /* __UTIL_H__ */
+-- 
+2.20.1
+

@@ -15,11 +15,11 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.xz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0/${PV}"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+debug test"
 RESTRICT="mirror"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 COMMONDEPEND="!!x11-wm/compiz
 	!!x11-libs/compiz-bcop
@@ -75,6 +75,7 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/xvinfo"
 
 src_prepare() {
+	eapply "${FILESDIR}/${PN}"-build-python-extension.patch
 	ubuntu-versionator_src_prepare
 
 	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #

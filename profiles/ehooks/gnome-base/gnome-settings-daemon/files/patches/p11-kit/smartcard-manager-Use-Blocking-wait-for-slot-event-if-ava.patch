@@ -1,0 +1,43 @@
+From: =?utf-8?b?Ik1hcmNvIFRyZXZpc2FuIChUcmV2acOxbyki?= <mail@3v1n0.net>
+Date: Sat, 14 Nov 2020 01:03:09 +0100
+Subject: smartcard-manager: Use Blocking wait-for-slot-event if available
+
+Not all the PKCS#11 modules support blocking C_WaitForSlotEvent function
+however, some popular ones do, and in such case we should use it.
+
+Cancellation is handled by the module Finalization, that will cause
+the function to return CKR_CRYPTOKI_NOT_INITIALIZED.
+
+Fixes: #439
+
+Origin: https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/208
+---
+ plugins/smartcard/gsd-smartcard-manager.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/plugins/smartcard/gsd-smartcard-manager.c b/plugins/smartcard/gsd-smartcard-manager.c
+index ae034d1..a6ee8fb 100644
+--- a/plugins/smartcard/gsd-smartcard-manager.c
++++ b/plugins/smartcard/gsd-smartcard-manager.c
+@@ -132,12 +132,16 @@ wait_for_any_slot_event (GckModule  *module,
+         CK_SLOT_ID slot_id;
+         CK_RV ret;
+ 
+-        /* Use the non-blocking version of the call as p11-kit, which
+-         * is used on both Fedora and Ubuntu, doesn't support the
+-         * blocking version of the call.
+-         */
+         p11_module = gck_module_get_functions (module);
+-        ret = p11_module->C_WaitForSlotEvent (CKF_DONT_BLOCK, &slot_id, NULL);
++
++        /* We first trt to use the blocking version of the call, in case it
++         * is not supported, we fallback in the non-blocking version as
++         * historically not all the p11-kit modules used supported it.
++         */
++        ret = p11_module->C_WaitForSlotEvent (0, &slot_id, NULL);
++        if (ret == CKR_FUNCTION_NOT_SUPPORTED) {
++                ret = p11_module->C_WaitForSlotEvent (CKF_DONT_BLOCK, &slot_id, NULL);
++        }
+ 
+         if (ret == CKR_NO_EVENT) {
+                 g_set_error (error, G_IO_ERROR, G_IO_ERROR_AGAIN,

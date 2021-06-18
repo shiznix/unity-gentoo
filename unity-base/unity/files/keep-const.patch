@@ -1,0 +1,19 @@
+author	Marco Trevisan (Treviño) <mail@3v1n0.net>	2021-06-01 14:49:06 +0200
+committer	Marco Trevisan (Treviño) <mail@3v1n0.net>	2021-06-01 14:49:50 +0200
+commit	ffc5be4ee8e2a44d61a51485fae66aafca91ca7d (patch)
+tree	b2932f87004b8885057bd19d804639412900dac0
+parent	b947384158d8f8136d8fba6a265d76219cd4a27e (diff)
+IntrospectionData: Keep Get() const as it should be
+The builder is now invalid but unreffing will happne in the destructor
+
+diff --git a/unity-shared/IntrospectionData.cpp b/unity-shared/IntrospectionData.cpp
+index 2dbb393..495e175 100644
+--- a/unity-shared/IntrospectionData.cpp
++++ b/unity-shared/IntrospectionData.cpp
+@@ -55,7 +55,6 @@ IntrospectionData::~IntrospectionData()
+ GVariant* IntrospectionData::Get() const
+ {
+   GVariant* data = g_variant_builder_end(builder_);
+-  g_clear_pointer(&builder_, g_variant_builder_unref);
+   return data;
+ }

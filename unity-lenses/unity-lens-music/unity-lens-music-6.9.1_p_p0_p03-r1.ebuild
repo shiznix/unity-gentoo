@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit autotools eutils ubuntu-versionator vala
 
 UVER_PREFIX="+16.04"

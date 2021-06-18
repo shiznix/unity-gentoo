@@ -1,0 +1,68 @@
+From: =?utf-8?b?Ik1hcmNvIFRyZXZpc2FuIChUcmV2acOxbyki?= <mail@3v1n0.net>
+Date: Sat, 14 Nov 2020 02:29:27 +0100
+Subject: smartcard-manager: Use mutex auto-lockers when convenient
+
+Origin: https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/208
+---
+ plugins/smartcard/gsd-smartcard-manager.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/plugins/smartcard/gsd-smartcard-manager.c b/plugins/smartcard/gsd-smartcard-manager.c
+index 74c8b7b..b7b768f 100644
+--- a/plugins/smartcard/gsd-smartcard-manager.c
++++ b/plugins/smartcard/gsd-smartcard-manager.c
+@@ -411,10 +411,11 @@ static void
+ on_smartcards_watch_task_destroyed (GsdSmartcardManager *self,
+                                     GTask               *freed_task)
+ {
+-        G_LOCK (gsd_smartcards_watch_tasks);
++        g_autoptr(GMutexLocker) locked = NULL;
++
++        locked = g_mutex_locker_new (&G_LOCK_NAME (gsd_smartcards_watch_tasks));
+         self->smartcards_watch_tasks = g_list_remove (self->smartcards_watch_tasks,
+                                                       freed_task);
+-        G_UNLOCK (gsd_smartcards_watch_tasks);
+ }
+ 
+ static void
+@@ -772,10 +773,11 @@ get_login_token_for_operation (GsdSmartcardManager      *self,
+ GckSlot *
+ gsd_smartcard_manager_get_login_token (GsdSmartcardManager *self)
+ {
++        g_autoptr(GMutexLocker) locked = NULL;
+         GckSlot *card_slot = NULL;
+         GList *node;
+ 
+-        G_LOCK (gsd_smartcards_watch_tasks);
++        locked = g_mutex_locker_new (&G_LOCK_NAME (gsd_smartcards_watch_tasks));
+         node = self->smartcards_watch_tasks;
+         while (node != NULL) {
+                 GTask *task = node->data;
+@@ -788,7 +790,6 @@ gsd_smartcard_manager_get_login_token (GsdSmartcardManager *self)
+ 
+                 node = node->next;
+         }
+-        G_UNLOCK (gsd_smartcards_watch_tasks);
+ 
+         return card_slot;
+ }
+@@ -816,9 +817,10 @@ GList *
+ gsd_smartcard_manager_get_inserted_tokens (GsdSmartcardManager *self,
+                                            gsize               *num_tokens)
+ {
++        g_autoptr(GMutexLocker) locked = NULL;
+         GList *inserted_tokens = NULL, *node;
+ 
+-        G_LOCK (gsd_smartcards_watch_tasks);
++        locked = g_mutex_locker_new (&G_LOCK_NAME (gsd_smartcards_watch_tasks));
+         for (node = self->smartcards_watch_tasks; node != NULL; node = node->next) {
+                 GTask *task = node->data;
+                 WatchSmartcardsOperation *operation = g_task_get_task_data (task);
+@@ -828,7 +830,6 @@ gsd_smartcard_manager_get_inserted_tokens (GsdSmartcardManager *self,
+ 
+                 inserted_tokens = g_list_concat (inserted_tokens, operation_inserted_tokens);
+         }
+-        G_UNLOCK (gsd_smartcards_watch_tasks);
+ 
+         if (num_tokens != NULL)
+                 *num_tokens = g_list_length (inserted_tokens);

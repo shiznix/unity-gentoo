@@ -1,0 +1,278 @@
+From: Marco Trevisan <marco.trevisan@canonical.com>
+Date: Thu, 13 Dec 2018 18:00:43 -0500
+Subject: Export windows corners radius in the _UNITY_GTK_BORDER_RADIUS
+
+X11 property when such feature is supported by WM (so just in unity).
+This has to be removed when compiz will natively support _GTK_FRAME_EXTENTS
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1516403
+---
+ gtk/gtkwindow.c | 158 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 152 insertions(+), 6 deletions(-)
+
+diff --git a/gtk/gtkwindow.c b/gtk/gtkwindow.c
+index 2ae56a0..4e91812 100644
+--- a/gtk/gtkwindow.c
++++ b/gtk/gtkwindow.c
+@@ -255,6 +255,7 @@ struct _GtkWindowPrivate
+   guint    csd_requested             : 1;
+   guint    client_decorated          : 1; /* Decorations drawn client-side */
+   guint    use_client_shadow         : 1; /* Decorations use client-side shadows */
++  guint    use_unity_border_radius   : 1; /* Unity border radius is supported */
+   guint    maximized                 : 1;
+   guint    fullscreen                : 1;
+   guint    tiled                     : 1;
+@@ -4084,6 +4085,119 @@ gtk_window_set_geometry_hints (GtkWindow       *window,
+   gtk_widget_queue_resize_no_redraw (GTK_WIDGET (window));
+ }
+ 
++static void
++unity_border_radius_update (GtkWindow *window)
++{
++#ifdef GDK_WINDOWING_X11
++  Atom border_radius;
++  GtkWindowPrivate *priv;
++  GtkStyleContext *context;
++  GdkDisplay *display;
++  GdkWindow *gdk_window;
++
++  enum { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT };
++  gulong corners[4] = {0};
++
++  priv = window->priv;
++  context = NULL;
++
++  if (!gtk_widget_get_realized (GTK_WIDGET (window)))
++    return;
++
++  if (priv->type == GTK_WINDOW_POPUP)
++    {
++      context = gtk_widget_get_style_context (GTK_WIDGET (window));
++    }
++  else if (priv->title_box)
++    {
++      context = gtk_widget_get_style_context (priv->title_box);
++    }
++
++  if (context)
++    {
++      corners[TOP_LEFT] = round (_gtk_css_corner_value_get_x (_gtk_style_context_peek_property (context, GTK_CSS_PROPERTY_BORDER_TOP_LEFT_RADIUS), 100) * priv->scale);
++      corners[TOP_RIGHT] = round (_gtk_css_corner_value_get_x (_gtk_style_context_peek_property (context, GTK_CSS_PROPERTY_BORDER_TOP_RIGHT_RADIUS), 100) * priv->scale);
++
++      /* Bottom corners radius is not controlled by title box, and we can
++       * assume it's always 0 for such windows. */
++
++      if (priv->type == GTK_WINDOW_POPUP)
++        {
++          corners[BOTTOM_LEFT] = round (_gtk_css_corner_value_get_x (_gtk_style_context_peek_property (context, GTK_CSS_PROPERTY_BORDER_BOTTOM_LEFT_RADIUS), 100) * priv->scale);
++          corners[BOTTOM_RIGHT] = round (_gtk_css_corner_value_get_x (_gtk_style_context_peek_property (context, GTK_CSS_PROPERTY_BORDER_BOTTOM_RIGHT_RADIUS), 100) * priv->scale);
++        }
++    }
++
++  gdk_window = _gtk_widget_get_window (GTK_WIDGET (window));
++  display = gdk_window_get_display (gdk_window);
++  border_radius = gdk_x11_get_xatom_by_name_for_display (display,
++                                                         "_UNITY_GTK_BORDER_RADIUS");
++
++  if (priv->client_decorated)
++    {
++      XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
++                       GDK_WINDOW_XID (gdk_window),
++                       border_radius,
++                       gdk_x11_get_xatom_by_name_for_display (display, "CARDINAL"),
++                       32, PropModeReplace,
++                       (guchar *) &corners, G_N_ELEMENTS (corners));
++    }
++  else
++    {
++      XDeleteProperty (GDK_DISPLAY_XDISPLAY (display),
++                       GDK_WINDOW_XID (gdk_window),
++                       border_radius);
++    }
++#endif
++}
++
++static void
++on_decoration_style_changed (GtkWidget *widget,
++                             GtkWindow *window)
++{
++  GtkStyleContext *context = gtk_widget_get_style_context (widget);
++  const GtkBitmask *change = gtk_style_context_get_change (context);
++
++  if (!change || !gtk_css_style_change_affects (change, GTK_CSS_AFFECTS_BORDER))
++    return;
++
++  unity_border_radius_update (window);
++}
++
++static void
++on_window_scale_changed (GtkWidget  *widget,
++                         GParamSpec *pspec,
++                         GtkWindow  *window)
++{
++  unity_border_radius_update (window);
++}
++
++static void
++unity_border_radius_update_and_monitor (GtkWindow *window, GtkWidget *widget)
++{
++  if (!window->priv->use_unity_border_radius)
++    return;
++
++  g_signal_connect (widget, "style-updated", G_CALLBACK (on_decoration_style_changed), window);
++  unity_border_radius_update (window);
++}
++
++static gboolean
++unity_border_radius_is_supported (GtkWindow *window)
++{
++#ifdef GDK_WINDOWING_X11
++  GdkScreen *screen = _gtk_window_get_screen (window);
++
++  if (GDK_IS_X11_SCREEN (screen))
++    {
++      GdkAtom unity_atom = gdk_atom_intern_static_string ("_UNITY_GTK_BORDER_RADIUS");
++      return gdk_x11_screen_supports_net_wm_hint (screen, unity_atom);
++    }
++#endif
++
++  return FALSE;
++}
++
+ static void
+ unset_titlebar (GtkWindow *window)
+ {
+@@ -4094,6 +4208,9 @@ unset_titlebar (GtkWindow *window)
+       g_signal_handlers_disconnect_by_func (priv->title_box,
+                                             on_titlebar_title_notify,
+                                             window);
++      g_signal_handlers_disconnect_by_func (priv->title_box,
++                                            on_decoration_style_changed,
++                                            window);
+       gtk_widget_unparent (priv->title_box);
+       priv->title_box = NULL;
+       priv->titlebar = NULL;
+@@ -4150,13 +4267,16 @@ gtk_window_enable_csd (GtkWindow *window)
+   GdkVisual *visual;
+ 
+   /* We need a visual with alpha for client shadows */
+-  if (priv->use_client_shadow)
++  if (priv->use_client_shadow || priv->use_unity_border_radius)
+     {
+       visual = gdk_screen_get_rgba_visual (gtk_widget_get_screen (widget));
+       if (visual != NULL)
+         gtk_widget_set_visual (widget, visual);
+ 
+       gtk_style_context_add_class (gtk_widget_get_style_context (widget), GTK_STYLE_CLASS_CSD);
++
++      if (priv->use_unity_border_radius)
++        gtk_style_context_add_class (gtk_widget_get_style_context (widget), "unity-csd");
+     }
+   else
+     {
+@@ -4164,6 +4284,9 @@ gtk_window_enable_csd (GtkWindow *window)
+     }
+ 
+   priv->client_decorated = TRUE;
++
++  if (priv->use_unity_border_radius)
++    unity_border_radius_update (window);
+ }
+ 
+ static void
+@@ -4224,10 +4347,14 @@ gtk_window_set_titlebar (GtkWindow *window,
+       priv->client_decorated = FALSE;
+       gtk_style_context_remove_class (gtk_widget_get_style_context (widget), GTK_STYLE_CLASS_CSD);
+ 
++      if (priv->use_unity_border_radius)
++        unity_border_radius_update (window);
++
+       goto out;
+     }
+ 
+   priv->use_client_shadow = gtk_window_supports_client_shadow (window);
++  priv->use_unity_border_radius = unity_border_radius_is_supported (window);
+ 
+   gtk_window_enable_csd (window);
+   priv->title_box = titlebar;
+@@ -4239,6 +4366,8 @@ gtk_window_set_titlebar (GtkWindow *window,
+       on_titlebar_title_notify (GTK_HEADER_BAR (titlebar), NULL, window);
+     }
+ 
++  unity_border_radius_update_and_monitor (window, titlebar);
++
+   gtk_style_context_add_class (gtk_widget_get_style_context (titlebar),
+                                GTK_STYLE_CLASS_TITLEBAR);
+ 
+@@ -6141,13 +6270,19 @@ create_decoration (GtkWidget *widget)
+   GtkWindowPrivate *priv = window->priv;
+ 
+   priv->use_client_shadow = gtk_window_supports_client_shadow (window);
+-  if (!priv->use_client_shadow)
++  priv->use_unity_border_radius = unity_border_radius_is_supported (window);
++
++  if (!priv->use_client_shadow && !priv->use_unity_border_radius)
+     return;
+ 
+   gtk_window_enable_csd (window);
+-
+   if (priv->type == GTK_WINDOW_POPUP)
+-    return;
++    {
++      if (priv->csd_requested)
++        unity_border_radius_update_and_monitor (window, widget);
++
++      return;
++    }
+ 
+   if (priv->title_box == NULL)
+     {
+@@ -6155,6 +6290,8 @@ create_decoration (GtkWidget *widget)
+       gtk_widget_set_parent (priv->titlebar, widget);
+       gtk_widget_show_all (priv->titlebar);
+       priv->title_box = priv->titlebar;
++
++      unity_border_radius_update_and_monitor (window, priv->title_box);
+     }
+ 
+   update_window_buttons (window);
+@@ -6809,6 +6946,9 @@ get_shadow_width (GtkWindow *window,
+   if (!priv->decorated)
+     return;
+ 
++  if (priv->client_decorated && priv->use_unity_border_radius)
++    return;
++
+   if (!priv->client_decorated &&
+       !(gtk_window_should_use_csd (window) &&
+         gtk_window_supports_client_shadow (window)))
+@@ -7511,7 +7651,7 @@ gtk_window_realize (GtkWidget *widget)
+ 
+   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
+ 
+-  if (priv->client_decorated && priv->type == GTK_WINDOW_TOPLEVEL)
++  if (priv->client_decorated && priv->type == GTK_WINDOW_TOPLEVEL && !priv->use_unity_border_radius)
+     {
+       const gchar *cursor[8] = {
+         "nw-resize", "n-resize", "ne-resize",
+@@ -7603,6 +7743,12 @@ gtk_window_realize (GtkWidget *widget)
+     }
+ #endif
+ 
++  if (priv->use_unity_border_radius)
++    {
++      g_signal_connect (window, "notify::scale-factor", G_CALLBACK (on_window_scale_changed), window);
++      unity_border_radius_update (window);
++    }
++
+   child_allocation.x = 0;
+   child_allocation.y = 0;
+   child_allocation.width = allocation.width;
+@@ -11214,7 +11360,7 @@ gtk_window_set_screen (GtkWindow *window,
+     }
+   g_object_notify_by_pspec (G_OBJECT (window), window_props[PROP_SCREEN]);
+ 
+-  if (was_rgba && priv->use_client_shadow)
++  if (was_rgba && (priv->use_client_shadow || priv->use_unity_border_radius))
+     {
+       GdkVisual *visual;
+ 

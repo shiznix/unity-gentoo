@@ -1,8 +1,13 @@
 ebuild_hook() {
-	# fix Desktop Action TempProfile
+	# add --temp-profile
 	local fixlib=$(get_libdir)
-	sed -e "s:/usr/lib/:/usr/${fixlib}/:g" "${EHOOK_FILESDIR}/chromium-launcher-r3-with-temp.sh" > chromium-launcher.sh || die
 	exeinto "/usr/${fixlib}/chromium-browser"
+	local sedargs=( -e
+		"s:/usr/lib/:/usr/${fixlib}/:g;
+		s:@@OZONE_AUTO_SESSION@@:$(usex wayland true false):g;
+		s:@@FORCE_OZONE_PLATFORM@@:$(usex headless true false):g"
+	)
+	sed "${sedargs[@]}" "${EHOOK_FILESDIR}/chromium-launcher-r6-with-temp.sh" > chromium-launcher.sh || die
 	doexe chromium-launcher.sh
 
 	domenu "${EHOOK_FILESDIR}/chromium-browser-chromium.desktop"

@@ -1,41 +1,59 @@
-From: Debian GNOME Maintainers
- <pkg-gnome-maintainers@lists.alioth.debian.org>
-Date: Wed, 13 Jun 2007 10:52:27 +0200
-Subject: If a .desktop file does not have inline translations,
- fall back to calling gettext
+From: Philip Withnall <withnall@endlessm.com>
+Date: Thu, 23 Nov 2017 18:48:58 +0000
+Subject: Call gettext if .desktop file does not have inline translations
 
 Patch from OpenSUSE via Ubuntu, original author unknown. Martin Pitt and
 Vincent Untz appear to be the main authors.
+
+Reworked slightly by Philip Withnall to avoid exposing new public API
+for the non-standard keys.
 
 Bug: https://bugzilla.gnome.org/show_bug.cgi?id=569829
 Bug-Ubuntu: https://launchpad.net/bugs/3935
 Applied-upstream: no, rejected because "this will be solved soon" (in 2013)
 ---
- glib/gkeyfile.c | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- glib/gkeyfile.h |  4 ++++
- 2 files changed, 76 insertions(+)
+ glib/gkeyfile.c | 83 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 83 insertions(+)
 
 diff --git a/glib/gkeyfile.c b/glib/gkeyfile.c
-index ae3bbbc..f1475d7 100644
+index 5085916..d9c23b5 100644
 --- a/glib/gkeyfile.c
 +++ b/glib/gkeyfile.c
-@@ -511,6 +511,7 @@ struct _GKeyFile
-   GKeyFileFlags flags;
+@@ -488,6 +488,17 @@
+  * Since: 2.14
+  */
  
++/* Downstream Debian defines for calling gettext() if a .desktop file doesn’t
++ * contain translations. These are not standardised.
++ *
++ * See: https://launchpad.net/bugs/3935
++ * See:http://bugzilla.gnome.org/show_bug.cgi?id=569829
++ */
++#define G_KEY_FILE_DESKTOP_ACTION_GROUP_PREFIX  "Desktop Action"
++#define G_KEY_FILE_DESKTOP_KEY_GETTEXT_DOMAIN   "X-GNOME-Gettext-Domain"
++#define G_KEY_FILE_DESKTOP_KEY_FULLNAME         "X-GNOME-FullName"
++#define G_KEY_FILE_DESKTOP_KEY_KEYWORDS         "Keywords"
++
+ typedef struct _GKeyFileGroup GKeyFileGroup;
+ 
+ /**
+@@ -512,6 +523,7 @@ struct _GKeyFile
+ 
+   gboolean checked_locales;
    gchar **locales;
 +  gchar  *gettext_domain;
  
-   volatile gint ref_count;
+   gint ref_count;  /* (atomic) */
  };
-@@ -635,6 +636,7 @@ g_key_file_init (GKeyFile *key_file)
+@@ -636,6 +648,7 @@ g_key_file_init (GKeyFile *key_file)
+   key_file->parse_buffer = NULL;
    key_file->list_separator = ';';
    key_file->flags = 0;
-   key_file->locales = g_strdupv ((gchar **)g_get_language_names ());
 +  key_file->gettext_domain = NULL;
  }
  
  static void
-@@ -654,6 +656,12 @@ g_key_file_clear (GKeyFile *key_file)
+@@ -655,6 +668,12 @@ g_key_file_clear (GKeyFile *key_file)
        key_file->parse_buffer = NULL;
      }
  
@@ -48,7 +66,7 @@ index ae3bbbc..f1475d7 100644
    tmp = key_file->groups;
    while (tmp != NULL)
      {
-@@ -873,6 +881,11 @@ g_key_file_load_from_fd (GKeyFile       *key_file,
+@@ -874,6 +893,11 @@ g_key_file_load_from_fd (GKeyFile       *key_file,
        return FALSE;
      }
  
@@ -60,7 +78,7 @@ index ae3bbbc..f1475d7 100644
    return TRUE;
  }
  
-@@ -929,6 +942,11 @@ g_key_file_load_from_file (GKeyFile       *key_file,
+@@ -986,6 +1010,11 @@ g_key_file_load_from_data (GKeyFile       *key_file,
        return FALSE;
      }
  
@@ -72,7 +90,7 @@ index ae3bbbc..f1475d7 100644
    return TRUE;
  }
  
-@@ -2208,6 +2226,8 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
+@@ -2225,6 +2254,8 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
    GError *key_file_error;
    gchar **languages;
    gboolean free_languages = FALSE;
@@ -81,7 +99,7 @@ index ae3bbbc..f1475d7 100644
    gint i;
  
    g_return_val_if_fail (key_file != NULL, NULL);
-@@ -2229,6 +2249,25 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
+@@ -2246,6 +2277,25 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
        free_languages = FALSE;
      }
    
@@ -107,7 +125,7 @@ index ae3bbbc..f1475d7 100644
    for (i = 0; languages[i]; i++)
      {
        candidate_key = g_strdup_printf ("%s[%s]", key, languages[i]);
-@@ -2245,6 +2284,39 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
+@@ -2262,6 +2312,39 @@ g_key_file_get_locale_string (GKeyFile     *key_file,
        translated_value = NULL;
     }
  
@@ -147,25 +165,3 @@ index ae3bbbc..f1475d7 100644
    /* Fallback to untranslated key
     */
    if (!translated_value)
-diff --git a/glib/gkeyfile.h b/glib/gkeyfile.h
-index 7a10048..aef9113 100644
---- a/glib/gkeyfile.h
-+++ b/glib/gkeyfile.h
-@@ -298,6 +298,7 @@ gboolean  g_key_file_remove_group           (GKeyFile             *key_file,
- 
- /* Defines for handling freedesktop.org Desktop files */
- #define G_KEY_FILE_DESKTOP_GROUP                "Desktop Entry"
-+#define G_KEY_FILE_DESKTOP_ACTION_GROUP_PREFIX  "Desktop Action"
- 
- #define G_KEY_FILE_DESKTOP_KEY_TYPE             "Type"
- #define G_KEY_FILE_DESKTOP_KEY_VERSION          "Version"
-@@ -320,6 +321,9 @@ gboolean  g_key_file_remove_group           (GKeyFile             *key_file,
- #define G_KEY_FILE_DESKTOP_KEY_URL              "URL"
- #define G_KEY_FILE_DESKTOP_KEY_DBUS_ACTIVATABLE "DBusActivatable"
- #define G_KEY_FILE_DESKTOP_KEY_ACTIONS          "Actions"
-+#define G_KEY_FILE_DESKTOP_KEY_GETTEXT_DOMAIN   "X-GNOME-Gettext-Domain"
-+#define G_KEY_FILE_DESKTOP_KEY_FULLNAME         "X-GNOME-FullName"
-+#define G_KEY_FILE_DESKTOP_KEY_KEYWORDS         "Keywords"
- 
- #define G_KEY_FILE_DESKTOP_TYPE_APPLICATION     "Application"
- #define G_KEY_FILE_DESKTOP_TYPE_LINK            "Link"

@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit autotools ubuntu-versionator
 
 DESCRIPTION="X.Org dummy testing environment for Google Test"

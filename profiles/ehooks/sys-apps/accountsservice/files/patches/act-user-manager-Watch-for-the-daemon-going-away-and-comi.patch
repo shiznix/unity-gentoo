@@ -1,0 +1,55 @@
+From: Iain Lane <iainl@gnome.org>
+Date: Tue, 28 Apr 2020 16:47:00 +0100
+Subject: act-user-manager: Watch for the daemon going away and coming back
+
+And set is-loaded accordingly. This causes properties to be invalidated
+on the client side and then get re-fetched when the daemon comes back.
+
+Applied-Upstream: 0.6.56
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=948228
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1843982
+Bug-Upstream: https://gitlab.freedesktop.org/accountsservice/accountsservice/issues/55
+Origin: https://gitlab.freedesktop.org/accountsservice/accountsservice/-/commit/323707648fdefd11502faf44c2aa41d9b9500078
+---
+ src/libaccountsservice/act-user-manager.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/src/libaccountsservice/act-user-manager.c b/src/libaccountsservice/act-user-manager.c
+index 1b5298d..6be9165 100644
+--- a/src/libaccountsservice/act-user-manager.c
++++ b/src/libaccountsservice/act-user-manager.c
+@@ -2928,6 +2928,23 @@ act_user_manager_queue_load (ActUserManager *manager)
+         }
+ }
+ 
++static void
++on_name_owner_changed (GObject *object,
++                       GParamSpec *pspec,
++                       gpointer user_data)
++{
++        ActUserManager *manager = ACT_USER_MANAGER (user_data);
++        GDBusProxy *accounts_proxy = G_DBUS_PROXY (object);
++        g_autofree gchar *owner = NULL;
++
++        g_return_if_fail (ACT_IS_USER_MANAGER (manager));
++        g_return_if_fail (accounts_proxy != NULL);
++
++        owner = g_dbus_proxy_get_name_owner (accounts_proxy);
++
++        set_is_loaded (manager, owner != NULL);
++}
++
+ static gboolean
+ ensure_accounts_proxy (ActUserManager *manager)
+ {
+@@ -2965,6 +2982,10 @@ ensure_accounts_proxy (ActUserManager *manager)
+                           "user-deleted",
+                           G_CALLBACK (on_user_removed_in_accounts_service),
+                           manager);
++        g_signal_connect (priv->accounts_proxy,
++                          "notify::g-name-owner",
++                          G_CALLBACK (on_name_owner_changed),
++                          manager);
+ 
+         return TRUE;
+ }

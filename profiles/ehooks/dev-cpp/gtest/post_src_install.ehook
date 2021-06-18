@@ -1,0 +1,15 @@
+ebuild_hook() {
+	# Install GoogleTest source files + symlink for backwards compatibility #
+	pushd googletest
+		insinto /usr/src/googletest/googletest
+		doins -r src cmake CMakeLists.txt
+	popd
+	dosym /usr/src/googletest/googletest /usr/src/gtest
+
+	# Install GoogleMock source files + symlink for backwards compatibility #
+	pushd googlemock
+		insinto /usr/src/googletest/googlemock
+		doins -r src cmake CMakeLists.txt test
+	popd
+	dosym /usr/src/googletest/googlemock /usr/src/gmock
+}

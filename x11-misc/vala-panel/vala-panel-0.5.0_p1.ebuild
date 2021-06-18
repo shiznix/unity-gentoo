@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/vala-panel-appmenu_${VALA_PANEL_APPMENU_VER}.debian.tar.xz"
 
 LICENSE="LGPL-3"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+wnck +X"
 RESTRICT="mirror"

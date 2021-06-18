@@ -1,0 +1,25 @@
+From: Andre Klapper <a9016009@gmx.de>
+Date: Mon, 6 Jan 2020 14:14:40 +0100
+Subject: Fix broken application icon in "About" dialog
+
+Regression from 17c46812c32b2ff95e3839229db3774a23e2cb47
+
+Bug: https://gitlab.gnome.org/GNOME/rhythmbox/-/issues/1749
+Applied-upstream: 3.4.5, commit:0554e3da820a5a238aca4eee7e0684e727356b7e
+---
+ shell/rb-application.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/shell/rb-application.c b/shell/rb-application.c
+index bb10b7b..37afb36 100644
+--- a/shell/rb-application.c
++++ b/shell/rb-application.c
+@@ -205,7 +205,7 @@ about_action_cb (GSimpleAction *action, GVariant *parameters, gpointer user_data
+ 			       "authors", (const char **) authors,
+ 			       "documenters", (const char **) documenters,
+ 			       "translator-credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+-			       "logo-icon-name", "rhythmbox",
++			       "logo-icon-name", "org.gnome.Rhythmbox",
+ 			       NULL);
+ 	g_string_free (comment, TRUE);
+ 	g_free (license_trans);

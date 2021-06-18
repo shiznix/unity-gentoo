@@ -1,0 +1,154 @@
+From: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Fri, 20 Jul 2018 03:25:37 +0200
+Subject: Add *WithTimestamp dbus methods for file operations that
+
+ might trigger a dialog, that should be presented with event time.
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/nautilus/+bug/1445595
+Bug: https://bugzilla.gnome.org/show_bug.cgi?id=758833
+Forwarded: yes
+Author: Marco Trevisan <marco@ubuntu.com>
+From 13b0e898fbc80230333bb53dfffaa26a32889279 Mon Sep 17 00:00:00 2001
+From: Tim Lunn <tim@feathertop.org>
+Date: Sat, 20 Feb 2016 08:26:51 +1100
+Subject: [PATCH] 20_timestamp
+---
+ data/dbus-interfaces.xml                 |  8 +++++++
+ src/nautilus-dbus-manager.c              | 40 ++++++++++++++++++++++++++++++++
+ src/nautilus-file-operations-dbus-data.c | 13 +++++++++++
+ src/nautilus-file-operations-dbus-data.h |  2 ++
+ 4 files changed, 63 insertions(+)
+
+diff --git a/data/dbus-interfaces.xml b/data/dbus-interfaces.xml
+index a388af0..fb2664f 100644
+--- a/data/dbus-interfaces.xml
++++ b/data/dbus-interfaces.xml
+@@ -34,12 +34,20 @@
+       <arg type='as' name='SourceFilesURIList' direction='in'/>
+       <arg type='s' name='DestinationDirectoryURI' direction='in'/>
+     </method>
++    <method name='CopyURIsWithTimestamp'>
++      <arg type='as' name='SourceFilesURIList' direction='in'/>
++      <arg type='s' name='DestinationDirectoryURI' direction='in'/>
++      <arg type='u' name='EventTimestamp' direction='in'/>
++    </method>
+     <method name='MoveURIs'>
+       <arg type='as' name='SourceFilesURIList' direction='in'/>
+       <arg type='s' name='DestinationDirectoryURI' direction='in'/>
+     </method>
+     <method name='EmptyTrash'>
+     </method>
++    <method name='EmptyTrashWithTimestamp'>
++      <arg type='u' name='EventTimestamp' direction='in'/>
++    </method>
+     <method name='TrashFiles'>
+       <arg type='as' name='URIs' direction='in'/>
+     </method>
+diff --git a/src/nautilus-dbus-manager.c b/src/nautilus-dbus-manager.c
+index 6736205..c624453 100644
+--- a/src/nautilus-dbus-manager.c
++++ b/src/nautilus-dbus-manager.c
+@@ -253,6 +253,23 @@ handle_copy_uris (NautilusDBusFileOperations  *object,
+     return TRUE; /* invocation was handled */
+ }
+ 
++static gboolean
++handle_copy_uris_with_timestamp (NautilusDBusFileOperations  *object,
++                                 GDBusMethodInvocation       *invocation,
++                                 const gchar                **sources,
++                                 const gchar                 *destination,
++                                 guint32                      timestamp)
++{
++    g_autoptr (NautilusFileOperationsDBusData) dbus_data = NULL;
++
++    dbus_data = nautilus_file_operations_dbus_data_new_from_timestamp (timestamp);
++
++    handle_copy_uris_internal (sources, destination, dbus_data);
++
++    nautilus_dbus_file_operations_complete_copy_uris_with_timestamp (object, invocation);
++    return TRUE;
++}
++
+ static gboolean
+ handle_copy_uris2 (NautilusDBusFileOperations2  *object,
+                    GDBusMethodInvocation        *invocation,
+@@ -338,6 +355,21 @@ handle_empty_trash (NautilusDBusFileOperations *object,
+     return TRUE; /* invocation was handled */
+ }
+ 
++static gboolean
++handle_empty_trash_with_timestamp (NautilusDBusFileOperations *object,
++                                   GDBusMethodInvocation      *invocation,
++                                   guint32                     timestamp)
++{
++    g_autoptr (NautilusFileOperationsDBusData) dbus_data = NULL;
++
++    dbus_data = nautilus_file_operations_dbus_data_new_from_timestamp (timestamp);
++
++    handle_empty_trash_internal (TRUE, dbus_data);
++
++    nautilus_dbus_file_operations_complete_empty_trash_with_timestamp (object, invocation);
++    return TRUE; /* invocation was handled */
++}
++
+ static gboolean
+ handle_empty_trash2 (NautilusDBusFileOperations2 *object,
+                      GDBusMethodInvocation       *invocation,
+@@ -530,6 +562,10 @@ nautilus_dbus_manager_init (NautilusDBusManager *self)
+                       "handle-copy-uris",
+                       G_CALLBACK (handle_copy_uris),
+                       self);
++    g_signal_connect (self->file_operations,
++                      "handle-copy-uris-with-timestamp",
++                      G_CALLBACK (handle_copy_uris_with_timestamp),
++                      self);
+     g_signal_connect (self->file_operations2,
+                       "handle-copy-uris",
+                       G_CALLBACK (handle_copy_uris2),
+@@ -546,6 +582,10 @@ nautilus_dbus_manager_init (NautilusDBusManager *self)
+                       "handle-empty-trash",
+                       G_CALLBACK (handle_empty_trash),
+                       self);
++    g_signal_connect (self->file_operations,
++                      "handle-empty-trash-with-timestamp",
++                      G_CALLBACK (handle_empty_trash_with_timestamp),
++                      self);
+     g_signal_connect (self->file_operations2,
+                       "handle-empty-trash",
+                       G_CALLBACK (handle_empty_trash2),
+diff --git a/src/nautilus-file-operations-dbus-data.c b/src/nautilus-file-operations-dbus-data.c
+index 666253f..04de595 100644
+--- a/src/nautilus-file-operations-dbus-data.c
++++ b/src/nautilus-file-operations-dbus-data.c
+@@ -44,6 +44,19 @@ nautilus_file_operations_dbus_data_new (GVariant *platform_data)
+     return self;
+ }
+ 
++NautilusFileOperationsDBusData *
++nautilus_file_operations_dbus_data_new_from_timestamp (guint32 timestamp)
++{
++    NautilusFileOperationsDBusData *self;
++
++    self = g_new0 (NautilusFileOperationsDBusData, 1);
++    g_atomic_ref_count_init (&self->ref_count);
++
++    self->timestamp = timestamp;
++
++    return self;
++}
++
+ NautilusFileOperationsDBusData *
+ nautilus_file_operations_dbus_data_ref (NautilusFileOperationsDBusData *self)
+ {
+diff --git a/src/nautilus-file-operations-dbus-data.h b/src/nautilus-file-operations-dbus-data.h
+index ca719fc..e10765a 100644
+--- a/src/nautilus-file-operations-dbus-data.h
++++ b/src/nautilus-file-operations-dbus-data.h
+@@ -23,6 +23,8 @@ typedef struct _NautilusFileOperationsDBusData NautilusFileOperationsDBusData;
+ 
+ NautilusFileOperationsDBusData *nautilus_file_operations_dbus_data_new               (GVariant                       *platform_data);
+ 
++NautilusFileOperationsDBusData *nautilus_file_operations_dbus_data_new_from_timestamp(guint32                         timestamp);
++
+ NautilusFileOperationsDBusData *nautilus_file_operations_dbus_data_ref               (NautilusFileOperationsDBusData *self);
+ 
+ void                            nautilus_file_operations_dbus_data_unref             (NautilusFileOperationsDBusData *self);

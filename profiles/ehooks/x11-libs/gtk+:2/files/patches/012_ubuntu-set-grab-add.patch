@@ -1,0 +1,41 @@
+=== modified file 'gtk/gtk.symbols'
+--- a/gtk/gtk.symbols
++++ b/gtk/gtk.symbols
+@@ -5323,6 +5323,7 @@ gtk_widget_set_realized
+ gtk_widget_get_realized
+ gtk_widget_set_mapped
+ gtk_widget_get_mapped
++ubuntu_gtk_widget_set_has_grab
+ #endif
+ #endif
+ 
+--- a/gtk/gtkwidget.c
++++ b/gtk/gtkwidget.c
+@@ -11449,5 +11449,15 @@ gtk_widget_send_focus_change (GtkWidget
+   return res;
+ }
+ 
++void
++ubuntu_gtk_widget_set_has_grab (GtkWidget *widget,
++                                gboolean   has_grab)
++{
++  if (has_grab)
++    GTK_OBJECT_FLAGS (widget) |= GTK_HAS_GRAB;
++  else
++    GTK_OBJECT_FLAGS (widget) &= ~(GTK_HAS_GRAB);
++}
++
+ #define __GTK_WIDGET_C__
+ #include "gtkaliasdef.c"
+--- a/gtk/gtkwidget.h
++++ b/gtk/gtkwidget.h
+@@ -1346,6 +1346,9 @@ void         _gtk_widget_buildable_finis
+ 						       GtkWidget *toplevel,
+ 						       gpointer   user_data);
+ 
++void   ubuntu_gtk_widget_set_has_grab  (GtkWidget *widget,
++                                        gboolean   has_grab);
++
+ G_END_DECLS
+ 
+ #endif /* __GTK_WIDGET_H__ */

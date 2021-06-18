@@ -1,0 +1,164 @@
+From: Tim Lunn <tim@feathertop.org>
+Date: Thu, 23 May 2013 12:19:53 +1000
+Subject: [PATCH 2/2] Add api to collect a list of available languages from
+ SUPPORTED
+
+This patch provides a public api 'gnome_get_all_languages()' that returns a list of
+all available language codes as parsed from /usr/share/i18n/SUPPORTED.
+
+-- 
+ libgnome-desktop/gnome-languages.c | 103 +++++++++++++++++++++++++++++++++++++
+ libgnome-desktop/gnome-languages.h |   1 +
+ 2 files changed, 104 insertions(+)
+---
+ libgnome-desktop/gnome-languages.c | 103 +++++++++++++++++++++++++++++++++++++
+ libgnome-desktop/gnome-languages.h |   1 +
+ 2 files changed, 104 insertions(+)
+
+Index: gnome-desktop3-3.36.3.1/libgnome-desktop/gnome-languages.c
+===================================================================
+--- gnome-desktop3-3.36.3.1.orig/libgnome-desktop/gnome-languages.c
++++ gnome-desktop3-3.36.3.1/libgnome-desktop/gnome-languages.c
+@@ -59,6 +59,7 @@ typedef struct _GnomeLocale {
+ } GnomeLocale;
+ 
+ static GHashTable *gnome_languages_map;
++static GHashTable *gnome_available_languages_map;
+ static GHashTable *gnome_territories_map;
+ static GHashTable *gnome_available_locales_map;
+ static GHashTable *gnome_language_count_map;
+@@ -535,6 +536,55 @@ collect_locales_from_localebin (void)
+         return found_locales;
+ }
+ 
++static gboolean
++collect_languages_from_supported (void)
++{
++        /* Add installed languages */
++        gboolean found_locales = FALSE;
++        gchar *file_contents = NULL;
++        gsize length;
++        char *line;
++        GError *error = NULL;
++
++        if (g_file_get_contents ("/usr/share/i18n/SUPPORTED", &file_contents, &length, &error)) {
++                line = strtok (file_contents, "\n");
++                while (line != NULL) {
++                        gchar *lang;
++
++                        if (g_strrstr (line, "UTF-8")){
++                            char **split;
++                            const char *name;
++
++                            split = g_strsplit (line, " ", 2);
++
++                            /* some special cases */
++                            if (g_strrstr (line, "zh_CN") || g_strrstr (line, "zh_SG"))
++                                    name = "zh_CN";
++                            else if (g_strrstr (line, "iw"))
++                                    name = "he";
++                            else
++                                    name = split[0];
++
++                            lang = g_strdup(name);
++
++                            if (! g_hash_table_lookup (gnome_available_languages_map, lang)){
++                                g_hash_table_add (gnome_available_languages_map, g_strdup (lang));
++                                found_locales = TRUE;
++                            } else {
++                                g_free (lang);
++                            }
++                            g_strfreev (split);
++                        }
++                        line = strtok (NULL, "\n");
++                }
++                g_free (file_contents);
++        } else {
++                g_warning ("Couldn't get available languages: %s", error->message);
++                g_error_free (error);
++        }
++        return found_locales;
++}
++
+ static void
+ count_languages_and_territories (void)
+ {
+@@ -567,6 +617,27 @@ count_languages_and_territories (void)
+ 		}
+         }
+ }
++static void
++collect_languages (void)
++{
++        gboolean found_languages;
++
++        if (gnome_available_languages_map == NULL) {
++                gnome_available_languages_map = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
++        }
++
++        found_languages = collect_languages_from_supported ();
++
++        if (!found_languages) {
++#ifndef WITH_INCOMPLETE_LOCALES
++                g_warning ("Could not read list of available languages from, "
++                           "/usr/share/i18n/SUPPORTED");
++#endif
++        }
++
++        return found_languages;
++
++}
+ 
+ static void
+ collect_locales (void)
+@@ -1288,6 +1359,38 @@ gnome_get_all_locales (void)
+         }
+         g_ptr_array_add (array, NULL);
+ 
++        return (char **) g_ptr_array_free (array, FALSE);
++}
++
++/**
++ * gnome_get_all_languages:
++ *
++ * Gets all languages.
++ *
++ * Return value: (array zero-terminated=1) (element-type utf8) (transfer full):
++ *   a newly allocated %NULL-terminated string array containing the
++ *   available languages. Free with g_strfreev().
++ *
++ * Since: 3.8
++ */
++char **
++gnome_get_all_languages (void)
++{
++        GHashTableIter iter;
++        gpointer key, value;
++        GPtrArray *array;
++
++        if (gnome_available_languages_map == NULL) {
++                collect_languages ();
++        }
++
++        array = g_ptr_array_new ();
++        g_hash_table_iter_init (&iter, gnome_available_languages_map);
++        while (g_hash_table_iter_next (&iter, &key, &value)) {
++                g_ptr_array_add (array, g_strdup (value));
++        }
++        g_ptr_array_add (array, NULL);
++
+         return (char **) g_ptr_array_free (array, FALSE);
+ }
+ 
+Index: gnome-desktop3-3.36.3.1/libgnome-desktop/gnome-languages.h
+===================================================================
+--- gnome-desktop3-3.36.3.1.orig/libgnome-desktop/gnome-languages.h
++++ gnome-desktop3-3.36.3.1/libgnome-desktop/gnome-languages.h
+@@ -36,6 +36,7 @@ char *        gnome_get_language_from_lo
+ char *        gnome_get_country_from_locale     (const char *locale,
+                                                  const char *translation);
+ char **       gnome_get_all_locales             (void);
++char **       gnome_get_all_languages           (void);
+ gboolean      gnome_parse_locale                (const char *locale,
+                                                  char      **language_codep,
+                                                  char      **country_codep,

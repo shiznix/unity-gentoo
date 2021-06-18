@@ -1,0 +1,23 @@
+From: Lars Uebernickel <lars.uebernickel@canonical.com>
+Date: Tue, 24 Nov 2015 12:08:46 +0100
+Subject: [PATCH] gtkwindow: set transparent background color
+
+To reduce black flickering when new windows are created on compiz.
+---
+ gtk/gtkwindow.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/gtk/gtkwindow.c b/gtk/gtkwindow.c
+index c8fb476..2ae56a0 100644
+--- a/gtk/gtkwindow.c
++++ b/gtk/gtkwindow.c
+@@ -7495,6 +7495,9 @@ gtk_window_realize (GtkWidget *widget)
+   gtk_widget_register_window (widget, gdk_window);
+   gtk_widget_set_realized (widget, TRUE);
+ 
++  GdkRGBA transparent = { 1.0, 1.0, 1.0, 0.0 };
++  gdk_window_set_background_rgba (gdk_window, &transparent);
++
+   attributes.x = allocation.x;
+   attributes.y = allocation.y;
+   attributes.width = allocation.width;

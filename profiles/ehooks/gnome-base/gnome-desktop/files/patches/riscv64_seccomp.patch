@@ -1,0 +1,28 @@
+From: Laurent Bigonville <bigon@debian.org>
+Date: Mon, 16 Mar 2020 12:31:59 +0100
+Subject: Use libseccomp on linux-riscv64 now that's available
+
+This reverts commit f8916f70.
+
+On riscv64, this requires libseccomp 2.5.0, or an older version with a
+backported patch (for example Debian packages >= 2.4.3-1).
+
+Forwarded: https://gitlab.gnome.org/GNOME/gnome-desktop/-/merge_requests/77
+Applied-upstream: 40.alpha, commit:0a8ca555619a2c181aca56899ba45ba97f12f6a8
+---
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/meson.build b/meson.build
+index 68f6b1c..03f811d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -57,7 +57,7 @@ udev_dep = dependency('libudev', required: get_option('udev'))
+ host_os = host_machine.system()
+ host_cpu = host_machine.cpu()
+ supported_os = ['linux']
+-unsupported_cpus = ['alpha', 'ia64', 'm68k', 'riscv64', 'sh4', 'sparc', 'sparc64']
++unsupported_cpus = ['alpha', 'ia64', 'm68k', 'sh4', 'sparc', 'sparc64']
+ if supported_os.contains(host_os) and not unsupported_cpus.contains(host_cpu)
+   seccomp_dep = dependency('libseccomp')
+ else

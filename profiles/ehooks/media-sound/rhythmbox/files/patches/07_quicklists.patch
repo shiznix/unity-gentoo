@@ -1,0 +1,21 @@
+Index: rhythmbox-3.4.3/data/rhythmbox.desktop.in.in
+===================================================================
+--- rhythmbox-3.4.3.orig/data/rhythmbox.desktop.in.in
++++ rhythmbox-3.4.3/data/rhythmbox.desktop.in.in
+@@ -18,3 +18,16 @@ X-GNOME-Bugzilla-Component=general
+ X-GNOME-Bugzilla-OtherBinaries=rhythmbox-client;rhythmbox-metadata;
+ X-GNOME-Bugzilla-Version=@VERSION@
+ X-GNOME-UsesNotifications=true
++Actions=PlayPause;Next;Previous;
++
++[Desktop Action PlayPause]
++_Name=Play/Pause
++Exec=rhythmbox-client --play-pause
++
++[Desktop Action Next]
++_Name=Next
++Exec=rhythmbox-client --next
++
++[Desktop Action Previous]
++_Name=Previous
++Exec=rhythmbox-client --previous

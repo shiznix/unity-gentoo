@@ -1,0 +1,43 @@
+From: Robert Ancell <robert.ancell@canonical.com>
+Date: Wed, 18 May 2016 13:38:59 +1200
+Subject: Restore scroll-method key until Unity is ported to not need it
+
+---
+ headers/gdesktop-enums.h                             | 7 +++++++
+ schemas/org.gnome.desktop.peripherals.gschema.xml.in | 5 +++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/headers/gdesktop-enums.h b/headers/gdesktop-enums.h
+index 2ab6643..260bb79 100644
+--- a/headers/gdesktop-enums.h
++++ b/headers/gdesktop-enums.h
+@@ -162,6 +162,13 @@ typedef enum
+     G_DESKTOP_LOCATION_ACCURACY_LEVEL_EXACT
+ } GDesktopLocationAccuracyLevel;
+ 
++typedef enum
++{
++  G_DESKTOP_TOUCHPAD_SCROLL_METHOD_DISABLED,
++  G_DESKTOP_TOUCHPAD_SCROLL_METHOD_EDGE_SCROLLING,
++  G_DESKTOP_TOUCHPAD_SCROLL_METHOD_TWO_FINGER_SCROLLING
++} GDesktopTouchpadScrollMethod;
++
+ typedef enum
+ {
+   G_DESKTOP_TOUCHPAD_HANDEDNESS_RIGHT,
+diff --git a/schemas/org.gnome.desktop.peripherals.gschema.xml.in b/schemas/org.gnome.desktop.peripherals.gschema.xml.in
+index 014d7f7..09a41b9 100644
+--- a/schemas/org.gnome.desktop.peripherals.gschema.xml.in
++++ b/schemas/org.gnome.desktop.peripherals.gschema.xml.in
+@@ -9,6 +9,11 @@
+     <child name="touchscreen" schema="org.gnome.desktop.peripherals.touchscreen"/>
+   </schema>
+   <schema id="org.gnome.desktop.peripherals.touchpad" path="/org/gnome/desktop/peripherals/touchpad/">
++    <key name="scroll-method" enum="org.gnome.desktop.GDesktopTouchpadScrollMethod">
++      <default>'two-finger-scrolling'</default>
++      <summary>Select the touchpad scroll method</summary>
++      <description>Select the touchpad scroll method. Supported values are: "disabled", "edge-scrolling", "two-finger-scrolling". This is only recognized on Unity.</description>
++    </key>
+     <key name="edge-scrolling-enabled" type="b">
+       <default>false</default>
+       <summary>Whether edge scrolling is enabled</summary>

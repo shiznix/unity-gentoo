@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -34,16 +34,11 @@ DEPEND="app-admin/system-config-printer
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"        # This needs to be applied for the debian/ directory to be present #
 	ubuntu-versionator_src_prepare
 
 	sed -e 's/SESSION=ubuntu/SESSION=unity/g' \
 		-i data/indicator-printers.conf.in
-
-	# Fix building with GCC 10 #
-	sed -i \
-		-e "s/GParamSpec \*properties/extern GParamSpec \*properties/" \
-		src/indicator-printers-menu.c
 
 	eautoreconf
 	gnome2_src_prepare

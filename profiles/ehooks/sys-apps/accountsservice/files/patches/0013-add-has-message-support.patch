@@ -1,0 +1,255 @@
+From d8a0af56bae46720e053a6ce25b2d5273d7233d3 Mon Sep 17 00:00:00 2001
+From: Michael Terry <michael.terry@ubuntu.com>
+Date: Thu, 21 Dec 2017 15:11:37 +1300
+Subject: [PATCH 09/12] Add XHasMessages property to report if a user had
+ unread messages, largely for LightDM's benefit.
+
+---
+ data/org.freedesktop.Accounts.User.xml | 45 +++++++++++++++++++++
+ src/libaccountsservice/act-user.c      | 55 ++++++++++++++++++++++++++
+ src/libaccountsservice/act-user.h      |  3 ++
+ src/user.c                             | 43 ++++++++++++++++++++
+ 4 files changed, 146 insertions(+)
+
+diff --git a/data/org.freedesktop.Accounts.User.xml b/data/org.freedesktop.Accounts.User.xml
+index e4604b1..96d30a7 100644
+--- a/data/org.freedesktop.Accounts.User.xml
++++ b/data/org.freedesktop.Accounts.User.xml
+@@ -414,6 +414,41 @@
+     </doc:doc>
+   </method>
+ 
++  <method name="SetXHasMessages">
++    <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
++    <arg name="has_messages" direction="in" type="b">
++      <doc:doc>
++        <doc:summary>
++          Whether the user has messages waiting for them.
++        </doc:summary>
++      </doc:doc>
++    </arg>
++    <doc:doc>
++      <doc:description>
++        <doc:para>
++          Sets whether the user has messages waiting for them.
++        </doc:para>
++      </doc:description>
++      <doc:permission>
++        The caller needs one of the following PolicyKit authorizations:
++        <doc:list>
++          <doc:item>
++            <doc:term>org.freedesktop.accounts.change-own-user-data</doc:term>
++            <doc:definition>To change his or her own status</doc:definition>
++          </doc:item>
++          <doc:item>
++            <doc:term>org.freedesktop.accounts.user-administration</doc:term>
++            <doc:definition>To change the status of another user</doc:definition>
++          </doc:item>
++        </doc:list>
++      </doc:permission>
++      <doc:errors>
++        <doc:error name="org.freedesktop.Accounts.Error.PermissionDenied">if the caller lacks the appropriate PolicyKit authorization</doc:error>
++        <doc:error name="org.freedesktop.Accounts.Error.Failed">if the operation failed</doc:error>
++      </doc:errors>
++    </doc:doc>
++  </method>
++
+   <method name="SetXKeyboardLayouts">
+     <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
+     <arg name="layouts" direction="in" type="as">
+@@ -944,6 +979,16 @@
+     </doc:doc>
+   </property>
+ 
++  <property name="XHasMessages" type="b" access="read">
++    <doc:doc>
++      <doc:description>
++        <doc:para>
++           Whether the user has messages waiting for them.
++        </doc:para>
++      </doc:description>
++    </doc:doc>
++  </property>
++
+   <property name="XKeyboardLayouts" type="as" access="read">
+     <doc:doc>
+       <doc:description>
+diff --git a/src/libaccountsservice/act-user.c b/src/libaccountsservice/act-user.c
+index 982d64f..fdc8b2d 100644
+--- a/src/libaccountsservice/act-user.c
++++ b/src/libaccountsservice/act-user.c
+@@ -93,6 +93,7 @@ enum {
+         PROP_LOGIN_FREQUENCY,
+         PROP_LOGIN_TIME,
+         PROP_LOGIN_HISTORY,
++        PROP_X_HAS_MESSAGES,
+         PROP_X_KEYBOARD_LAYOUTS,
+         PROP_BACKGROUND_FILE,
+         PROP_ICON_FILE,
+@@ -117,6 +118,7 @@ struct _ActUser {
+         GList          *our_sessions;
+         GList          *other_sessions;
+ 
++        guint           x_has_messages : 1;
+         guint           is_loaded : 1;
+         guint           nonexistent : 1;
+ };
+@@ -375,6 +377,13 @@ act_user_class_init (ActUserClass *class)
+                                                                G_VARIANT_TYPE ("a(xxa{sv})"),
+                                                                NULL,
+                                                                G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
++        g_object_class_install_property (gobject_class,
++                                         PROP_X_HAS_MESSAGES,
++                                         g_param_spec_boolean ("xhas-messages",
++                                                             "Has Messages",
++                                                             "Whether the user has messages waiting.",
++                                                             FALSE,
++                                                             G_PARAM_READABLE));
+         g_object_class_install_property (gobject_class,
+                                          PROP_X_KEYBOARD_LAYOUTS,
+                                          g_param_spec_boxed ("xkeyboard-layouts",
+@@ -1012,6 +1021,25 @@ act_user_is_nonexistent (ActUser   *user)
+         return user->nonexistent;
+ }
+ 
++/**
++ * act_user_get_x_has_messages:
++ * @user: a #ActUser
++ *
++ * Returns whether @user has messages waiting for them.
++ *
++ * Returns: whether messages exist
++ */
++gboolean
++act_user_get_x_has_messages (ActUser *user)
++{
++        g_return_val_if_fail (ACT_IS_USER (user), FALSE);
++
++        if (user->accounts_proxy == NULL)
++                return FALSE;
++
++        return accounts_user_get_xhas_messages (user->accounts_proxy);
++}
++
+ /**
+  * act_user_get_x_keyboard_layouts:
+  * @user: a #ActUser
+@@ -1391,6 +1419,33 @@ act_user_get_password_expiration_policy (ActUser *user,
+         }
+ }
+ 
++/**
++ * act_user_set_x_has_messages:
++ * @user: the user object to alter.
++ * @has_messages: whether the user has messages waiting
++ *
++ * Sets a new has-messages status for @user.
++ *
++ * Note this function is synchronous and ignores errors.
++ **/
++void
++act_user_set_x_has_messages (ActUser  *user,
++                             gboolean  has_messages)
++{
++        g_autoptr(GError) error = NULL;
++
++        g_return_if_fail (ACT_IS_USER (user));
++        g_return_if_fail (ACCOUNTS_IS_USER (user->accounts_proxy));
++
++        if (!accounts_user_call_set_xhas_messages_sync (user->accounts_proxy,
++                                                        has_messages,
++                                                        NULL,
++                                                        &error)) {
++                g_warning ("SetXHasMessages call failed: %s", error->message);
++                return;
++        }
++}
++
+ /**
+  * act_user_set_x_keyboard_layouts:
+  * @user: the user object to alter.
+diff --git a/src/libaccountsservice/act-user.h b/src/libaccountsservice/act-user.h
+index 52c98b4..d460ef9 100644
+--- a/src/libaccountsservice/act-user.h
++++ b/src/libaccountsservice/act-user.h
+@@ -77,6 +77,7 @@ gboolean       act_user_is_system_account         (ActUser   *user);
+ gboolean       act_user_is_local_account          (ActUser   *user);
+ const char * const *act_user_get_x_keyboard_layouts (ActUser *user);
+ gboolean       act_user_is_nonexistent            (ActUser   *user);
++gboolean       act_user_get_x_has_messages        (ActUser   *user);
+ const char    *act_user_get_background_file       (ActUser   *user);
+ const char    *act_user_get_icon_file             (ActUser   *user);
+ const char    *act_user_get_language              (ActUser   *user);
+@@ -102,6 +103,8 @@ void           act_user_set_email                 (ActUser    *user,
+                                                    const char *email);
+ void           act_user_set_language              (ActUser    *user,
+                                                    const char *language);
++void           act_user_set_x_has_messages        (ActUser    *user,
++                                                   gboolean    has_messages);
+ void           act_user_set_x_keyboard_layouts    (ActUser    *user,
+                                                    const char * const *keyboard_layouts);
+ void           act_user_set_formats_locale        (ActUser    *user,
+diff --git a/src/user.c b/src/user.c
+index 06b3891..8bb1530 100644
+--- a/src/user.c
++++ b/src/user.c
+@@ -1873,6 +1873,48 @@ become_user (gpointer data)
+         }
+ }
+ 
++static void
++user_change_x_has_messages_authorized_cb (Daemon                *daemon,
++                                          User                  *user,
++                                          GDBusMethodInvocation *context,
++                                          gpointer               data)
++{
++        accounts_user_set_xhas_messages (ACCOUNTS_USER (user), GPOINTER_TO_INT (data));
++
++        accounts_user_complete_set_xhas_messages (ACCOUNTS_USER (user), context);
++}
++
++static gboolean
++user_set_xhas_messages (AccountsUser          *auser,
++                        GDBusMethodInvocation *context,
++                        gboolean               has_messages)
++{
++        User *user = (User*)auser;
++        int uid;
++        const gchar *action_id;
++
++        if (!get_caller_uid (context, &uid)) {
++                throw_error (context, ERROR_FAILED, "identifying caller failed");
++                return FALSE;
++        }
++
++        if (accounts_user_get_uid (ACCOUNTS_USER (user)) == (uid_t) uid)
++                action_id = "org.freedesktop.accounts.change-own-user-data";
++        else
++                action_id = "org.freedesktop.accounts.user-administration";
++
++        daemon_local_check_auth (user->daemon,
++                                 user,
++                                 action_id,
++                                 TRUE,
++                                 user_change_x_has_messages_authorized_cb,
++                                 context,
++                                 GINT_TO_POINTER (has_messages),
++                                 NULL);
++
++        return TRUE;
++}
++
+ static void
+ user_change_x_keyboard_layouts_authorized_cb (Daemon                *daemon,
+                                               User                  *user,
+@@ -2684,6 +2726,7 @@ user_accounts_user_iface_init (AccountsUserIface *iface)
+         iface->handle_set_real_name = user_set_real_name;
+         iface->handle_set_shell = user_set_shell;
+         iface->handle_set_user_name = user_set_user_name;
++        iface->handle_set_xhas_messages = user_set_xhas_messages;
+         iface->handle_set_xkeyboard_layouts = user_set_xkeyboard_layouts;
+         iface->handle_set_xsession = user_set_x_session;
+         iface->handle_set_session = user_set_session;
+-- 
+2.20.1
+

@@ -1,0 +1,107 @@
+From: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Wed, 15 Aug 2018 17:13:26 +0200
+Subject: Add "RequestShutdown" and "RequestReboot" DBus methods to allow
+
+other applications to shutdown or reboot the machine via the session manager
+Author: Chris Coulson <chrisccoulson@ubuntu.com>
+---
+ gnome-session/gsm-manager.c                | 41 ++++++++++++++++++++++++++++++
+ gnome-session/gsm-manager.h                |  4 +++
+ gnome-session/org.gnome.SessionManager.xml | 17 +++++++++++++
+ 3 files changed, 62 insertions(+)
+
+diff --git a/gnome-session/gsm-manager.c b/gnome-session/gsm-manager.c
+index e7c5738..abaf944 100644
+--- a/gnome-session/gsm-manager.c
++++ b/gnome-session/gsm-manager.c
+@@ -2578,6 +2578,47 @@ request_logout (GsmManager           *manager,
+         end_phase (manager);
+ }
+ 
++gboolean
++gsm_manager_request_shutdown (GsmManager *manager,
++                              GError    **error)
++{
++        g_debug ("GsmManager: RequestShutdown called");
++
++        g_return_val_if_fail (GSM_IS_MANAGER (manager), FALSE);
++
++        if (manager->priv->phase != GSM_MANAGER_PHASE_RUNNING) {
++                g_set_error (error,
++                             GSM_MANAGER_ERROR,
++                             GSM_MANAGER_ERROR_NOT_IN_RUNNING,
++                             "RequestShutdown interface is only available during the Running phase");
++                return FALSE;
++        }
++
++        request_shutdown (manager);
++
++        return TRUE;
++}
++
++gboolean
++gsm_manager_request_reboot (GsmManager *manager,
++                            GError    **error)
++{
++        g_debug ("GsmManager: RequestReboot called");
++
++        g_return_val_if_fail (GSM_IS_MANAGER (manager), FALSE);
++
++        if (manager->priv->phase != GSM_MANAGER_PHASE_RUNNING) {
++                g_set_error (error,
++                             GSM_MANAGER_ERROR,
++                            GSM_MANAGER_ERROR_NOT_IN_RUNNING,
++                             "RequestReboot interface is only available during the Running phase");
++                return FALSE;
++        }
++        request_reboot (manager);
++
++        return TRUE;
++}
++
+ static gboolean
+ gsm_manager_shutdown (GsmExportedManager    *skeleton,
+                       GDBusMethodInvocation *invocation,
+diff --git a/gnome-session/gsm-manager.h b/gnome-session/gsm-manager.h
+index 3ce4350..4e04524 100644
+--- a/gnome-session/gsm-manager.h
++++ b/gnome-session/gsm-manager.h
+@@ -128,6 +128,10 @@ void                _gsm_manager_set_renderer                  (GsmManager     *
+ gboolean            gsm_manager_logout                         (GsmManager     *manager,
+                                                                 guint           logout_mode,
+                                                                 GError        **error);
++gboolean            gsm_manager_request_shutdown               (GsmManager     *manager,
++                                                                GError        **error);
++gboolean            gsm_manager_request_reboot                 (GsmManager     *manager,
++                                                                GError        **error);
+ 
+ gboolean            gsm_manager_set_phase                      (GsmManager     *manager,
+                                                                 GsmManagerPhase phase);
+diff --git a/gnome-session/org.gnome.SessionManager.xml b/gnome-session/org.gnome.SessionManager.xml
+index ce4b8c0..be7e70d 100644
+--- a/gnome-session/org.gnome.SessionManager.xml
++++ b/gnome-session/org.gnome.SessionManager.xml
+@@ -377,6 +377,23 @@
+       </doc:doc>
+     </method>
+ 
++	<method name="RequestShutdown">
++      <doc:doc>
++        <doc:description>
++          <doc:para>Request a shutdown with no dialog</doc:para>
++        </doc:description>
++      </doc:doc>
++	</method>
++
++	<method name="RequestReboot">
++      <doc:doc>
++        <doc:description>
++          <doc:para>Request a reboot with no dialog</doc:para>
++        </doc:description>
++      </doc:doc>
++	</method>
++	
++
+     <!-- Signals -->
+ 
+     <signal name="ClientAdded">

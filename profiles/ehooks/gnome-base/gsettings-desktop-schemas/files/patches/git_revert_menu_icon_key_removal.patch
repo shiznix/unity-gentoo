@@ -1,0 +1,95 @@
+From: Tim Lunn <tim@feathertop.org>
+Date: Sat, 28 Sep 2013 06:05:39 +1000
+Subject: [PATCH] Revert "schemas: Remove settings for deprecated
+ gtk-settings"
+
+This reverts commit 7d48c4ed64bb5f42f1a8a781f06f534903e78d70.
+---
+ schemas/gsettings-desktop-schemas.convert          |  4 +++
+ schemas/org.gnome.desktop.interface.gschema.xml.in | 38 ++++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
+
+diff --git a/schemas/gsettings-desktop-schemas.convert b/schemas/gsettings-desktop-schemas.convert
+index 4f06ab7..7a746e0 100644
+--- a/schemas/gsettings-desktop-schemas.convert
++++ b/schemas/gsettings-desktop-schemas.convert
+@@ -34,6 +34,8 @@ enable-animations = /desktop/gnome/interface/enable_animations
+ #menus-have-tearoff = /desktop/gnome/interface/menus_have_tearoff
+ #can-change-accels = /desktop/gnome/interface/can_change_accels
+ #toolbar-style = /desktop/gnome/interface/toolbar_style
++#menus-have-icons = /desktop/gnome/interface/menus_have_icons
++#buttons-have-icons = /desktop/gnome/interface/buttons_have_icons
+ #menubar-detachable = /desktop/gnome/interface/menubar_detachable
+ #toolbar-detachable = /desktop/gnome/interface/toolbar_detachable
+ #toolbar-icons-size = /desktop/gnome/interface/toolbar_icons_size
+@@ -54,6 +56,8 @@ gtk-im-module = /desktop/gnome/interface/gtk-im-module
+ document-font-name = /desktop/gnome/interface/document_font_name
+ monospace-font-name = /desktop/gnome/interface/monospace_font_name
+ menubar-accel = /desktop/gnome/interface/menubar_accel
++show-input-method-menu = /desktop/gnome/interface/show_input_method_menu
++show-unicode-menu = /desktop/gnome/interface/show_unicode_menu
+ cursor-size = /desktop/gnome/peripherals/mouse/cursor_size
+ gtk-color-palette = /desktop/gnome/gtk-color-palette
+ # Disabled as we want users to use the default new theme colors
+diff --git a/schemas/org.gnome.desktop.interface.gschema.xml.in b/schemas/org.gnome.desktop.interface.gschema.xml.in
+index e395325..bd15d14 100644
+--- a/schemas/org.gnome.desktop.interface.gschema.xml.in
++++ b/schemas/org.gnome.desktop.interface.gschema.xml.in
+@@ -39,6 +39,20 @@
+         and “text”.
+       </description>
+     </key>
++    <key name="menus-have-icons" type="b">
++      <default>false</default>
++      <summary>Menus Have Icons</summary>
++      <description>
++        Whether menus may display an icon next to a menu entry.
++      </description>
++    </key>
++    <key name="buttons-have-icons" type="b">
++      <default>false</default>
++      <summary>Buttons Have Icons</summary>
++      <description>
++        Whether buttons may display an icon in addition to the button text.
++      </description>
++    </key>
+     <key name="menubar-detachable" type="b">
+       <default>false</default>
+       <summary>Menubar Detachable</summary>
+@@ -177,6 +191,22 @@
+         Keyboard shortcut to open the menu bars.
+       </description>
+     </key>
++    <key name="show-input-method-menu" type="b">
++      <default>true</default>
++      <summary>Show the 'Input Methods' menu</summary>
++      <description>
++        Whether the context menus of entries and text views should offer to
++        change the input method.
++      </description>
++    </key>
++    <key name="show-unicode-menu" type="b">
++      <default>true</default>
++      <summary>Show the 'Unicode Control Character' menu</summary>
++      <description>
++        Whether the context menus of entries and text views should offer to
++        insert control characters.
++      </description>
++    </key>
+     <key name="cursor-theme" type="s">
+       <default>'Adwaita'</default>
+       <summary>Cursor theme</summary>
+@@ -273,5 +303,13 @@
+         If true, pressing a key will highlight the current pointer location on screen.
+       </description>
+     </key>
++    <key name="automatic-mnemonics" type="b">
++      <default>true</default>
++      <summary>Only show mnemonics on when the Alt key is pressed</summary>
++      <description>
++        Whether mnemonics should be automatically shown and hidden when the user
++        presses the Alt key.
++      </description>
++    </key>
+   </schema>
+ </schemalist>

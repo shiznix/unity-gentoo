@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit distutils-r1 eutils gnome2-utils ubuntu-versionator
 
 UVER="-${PVR_MICRO}"

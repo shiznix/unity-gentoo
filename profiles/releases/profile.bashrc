@@ -141,13 +141,23 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 		if declare -f ebuild_hook | grep -q "eautoreconf"; then
 			if ! declare -F eautoreconf 1>/dev/null; then
-				x="$(portageq get_repo_path / gentoo)"/eclass/autotools.eclass
-				[[ -f ${x} ]] \
-					|| die "${x}: file not found"
+				local -a fn_source=()
+				local eautoreconf_names="eautoreconf _at_uses_pkg _at_uses_autoheader _at_uses_automake _at_uses_gettext _at_uses_glibgettext _at_uses_intltool _at_uses_gtkdoc _at_uses_gnomedoc _at_uses_libtool _at_uses_libltdl eaclocal_amflags eaclocal _elibtoolize eautoheader eautoconf eautomake autotools_env_setup autotools_run_tool ALL_AUTOTOOLS_MACROS autotools_check_macro autotools_check_macro_val _autotools_m4dir_include autotools_m4dir_include autotools_m4sysdir_include gnuconfig_findnewest elibtoolize tc-getLD tc-getPROG _tc-getPROG"
 
-				local eautoreconf_names="eautoreconf _at_uses_pkg _at_uses_autoheader _at_uses_automake _at_uses_gettext _at_uses_glibgettext _at_uses_intltool _at_uses_gtkdoc _at_uses_gnomedoc _at_uses_libtool _at_uses_libltdl eaclocal_amflags eaclocal _elibtoolize eautoheader eautoconf eautomake autotools_env_setup autotools_run_tool ALL_AUTOTOOLS_MACROS autotools_check_macro autotools_check_macro_val _autotools_m4dir_include autotools_m4dir_include autotools_m4sysdir_include"
+				x="$(portageq get_repo_path / gentoo)/eclass"
+				fn_source=(
+					"${x}/autotools.eclass"
+					"${x}/libtool.eclass"
+					"${x}/gnuconfig.eclass"
+					"${x}/toolchain-funcs.eclass")
 
-				source <(awk "/^(${eautoreconf_names// /|})(\(\)|=\(\$)/ { p = 1 } p { print } /(^(}|\))|; })\$/ { p = 0 }" ${x} 2>/dev/null)
+				for x in "${fn_source[@]}"; do
+					[[ -f ${x} ]] \
+						|| die "${x}: file not found"
+
+					source <(awk "/^(${eautoreconf_names// /|})(\(\)|=\(\$)/ { p = 1 } p { print } /(^(}|\))|; })\$/ { p = 0 }" ${x} 2>/dev/null)
+				done
+
 				declare -F eautoreconf 1>/dev/null \
 					|| die "eautoreconf: function not found"
 			fi
@@ -185,6 +195,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		unset -f ebuild_hook
 		[[ ${EAPI} -lt 6 ]] && unset -f eapply
 		if [[ -n ${eautoreconf_names} ]]; then
+			eautoreconf_names="${eautoreconf_names/ elibtoolize tc-getLD tc-getPROG _tc-getPROG}"
 			for x in ${eautoreconf_names}; do
 				unset ${x}
 			done

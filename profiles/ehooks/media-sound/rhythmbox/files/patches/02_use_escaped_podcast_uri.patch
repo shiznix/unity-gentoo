@@ -1,0 +1,35 @@
+#
+# Upstream: https://gitlab.gnome.org/GNOME/rhythmbox/issues/828
+# 
+=== modified file 'podcast/rb-podcast-manager.c'
+Index: rhythmbox/podcast/rb-podcast-manager.c
+===================================================================
+--- rhythmbox.orig/podcast/rb-podcast-manager.c
++++ rhythmbox/podcast/rb-podcast-manager.c
+@@ -29,6 +29,7 @@
+ #include "config.h"
+ 
+ #include <string.h>
++#include <ctype.h>
+ #define __USE_XOPEN
+ #include <time.h>
+ 
+@@ -879,9 +880,15 @@ download_podcast (GFileInfo *src_info, R
+ 	}
+ 
+ 	if (local_file_name == NULL) {
+-		/* fall back to the basename from the original URI */
+-		local_file_name = g_file_get_basename (data->source);
+-		rb_debug ("didn't get a filename from the file info request; using basename %s", local_file_name);
++		char *c;
++
++		/* fall back to the escaped URI */
++		local_file_name = g_file_get_uri (data->source);
++		for (c = local_file_name; *c; c++) {
++			if (!isalnum (*c) && *c != '.')
++				*c = '-';
++		}
++		rb_debug ("didn't get a filename from the file info request; using escaped uri %s", local_file_name);
+ 	}
+ 
+ 	/* if the filename ends with the query string from the original URI,

@@ -1,0 +1,41 @@
+From: Benjamin Berg <bberg@redhat.com>
+Date: Sun, 10 Jan 2021 19:26:07 +0100
+Subject: util: Disable capturing of subpatterns
+
+It seems that the pattern we use will create a subpattern match for
+every character of the value. This appears to then result in a stack
+overflow when matching very long values.
+
+It might be an idea to limit the overall length of an environment
+variable that is uploaded. But, this should fix the issue of crashes.
+
+Fixes: #42
+
+Origin: https://gitlab.gnome.org/GNOME/gnome-session/-/commit/3b57d117f78
+Applied-Upstream: 40
+---
+ gnome-session/gsm-util.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gnome-session/gsm-util.c b/gnome-session/gsm-util.c
+index 070fa75..cdf6761 100644
+--- a/gnome-session/gsm-util.c
++++ b/gnome-session/gsm-util.c
+@@ -550,7 +550,7 @@ gsm_util_export_activation_environment (GError     **error)
+                 return FALSE;
+         }
+ 
+-        value_regex = g_regex_new ("^([ \t\n]|[^[:cntrl:]])*$", G_REGEX_OPTIMIZE, 0, error);
++        value_regex = g_regex_new ("^(?:[ \t\n]|[^[:cntrl:]])*$", G_REGEX_OPTIMIZE, 0, error);
+ 
+         if (value_regex == NULL) {
+                 return FALSE;
+@@ -630,7 +630,7 @@ gsm_util_export_user_environment (GError     **error)
+                 return FALSE;
+         }
+ 
+-        regex = g_regex_new ("^[a-zA-Z_][a-zA-Z0-9_]*=([ \t\n]|[^[:cntrl:]])*$", G_REGEX_OPTIMIZE, 0, error);
++        regex = g_regex_new ("^[a-zA-Z_][a-zA-Z0-9_]*=(?:[ \t\n]|[^[:cntrl:]])*$", G_REGEX_OPTIMIZE, 0, error);
+ 
+         if (regex == NULL) {
+                 return FALSE;

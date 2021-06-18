@@ -1,0 +1,247 @@
+From: Nathan Follens <nfollens@gnome.org>
+Date: Mon, 14 Sep 2020 05:54:21 +0000
+Subject: Update Dutch translation
+
+Origin: upstream, 40, commit:cc932bdbaa91f3f7e3fb6f7d9d9ab421f9d1a337
+---
+ po/nl.po | 82 ++++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 46 insertions(+), 36 deletions(-)
+
+diff --git a/po/nl.po b/po/nl.po
+index 92f3a5c..5c5627c 100644
+--- a/po/nl.po
++++ b/po/nl.po
+@@ -18,14 +18,14 @@
+ # Reinout van Schouwen <reinouts@gnome.org>, 2003, 2013. (na 10 jaar!).
+ # Tino Meinen <a.t.meinen@chello.nl> 2005, 2006, 2008.
+ # Wouter Bolsterlee <wbolster@gnome.org>, 2007–2013.
+-# Nathan Follens <nthn@unseen.is>, 2015-2017, 2019.
++# Nathan Follens <nthn@unseen.is>, 2015-2017, 2019-2020.
+ # Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2015, 2018.
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: gnome-session\n"
+ "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-session/issues\n"
+-"POT-Creation-Date: 2019-09-18 13:36+0000\n"
+-"PO-Revision-Date: 2019-09-25 13:13+0200\n"
++"POT-Creation-Date: 2020-07-31 14:02+0000\n"
++"PO-Revision-Date: 2020-08-25 17:26+0200\n"
+ "Last-Translator: Nathan Follens <nthn@unseen.is>\n"
+ "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
+ "Language: nl\n"
+@@ -33,7 +33,7 @@ msgstr ""
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+-"X-Generator: Poedit 2.2.3\n"
++"X-Generator: Poedit 2.4.1\n"
+ 
+ #: data/gnome-custom-session.desktop.in.in:3
+ msgid "Custom"
+@@ -127,11 +127,11 @@ msgstr "Sessie _hernoemen"
+ msgid "_Continue"
+ msgstr "_Doorgaan"
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:313
++#: gnome-session/gsm-fail-whale-dialog.c:318
+ msgid "Oh no!  Something has gone wrong."
+ msgstr "Oeps! Er is iets misgegaan."
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:320
++#: gnome-session/gsm-fail-whale-dialog.c:325
+ msgid ""
+ "A problem has occurred and the system can’t recover. Please contact a system "
+ "administrator"
+@@ -139,7 +139,7 @@ msgstr ""
+ "Er is een probleem opgetreden dat niet door het systeem kan worden hersteld. "
+ "Neem contact op met een systeembeheerder"
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:322
++#: gnome-session/gsm-fail-whale-dialog.c:327
+ msgid ""
+ "A problem has occurred and the system can’t recover. All extensions have "
+ "been disabled as a precaution."
+@@ -147,7 +147,7 @@ msgstr ""
+ "Er is een probleem opgetreden dat niet door het systeem kan worden hersteld. "
+ "Alle uitbreidingen zijn uit voorzorg uitgeschakeld."
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:324
++#: gnome-session/gsm-fail-whale-dialog.c:329
+ msgid ""
+ "A problem has occurred and the system can’t recover.\n"
+ "Please log out and try again."
+@@ -156,27 +156,27 @@ msgstr ""
+ "hersteld.\n"
+ "Probeer af te melden en opnieuw aan te melden."
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:339
++#: gnome-session/gsm-fail-whale-dialog.c:344
+ msgid "_Log Out"
+ msgstr "_Afmelden"
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:361 gnome-session/main.c:396
++#: gnome-session/gsm-fail-whale-dialog.c:412 gnome-session/main.c:404
+ msgid "Enable debugging code"
+ msgstr "Debugging-code inschakelen"
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:362
++#: gnome-session/gsm-fail-whale-dialog.c:413
+ msgid "Allow logout"
+ msgstr "Afmelden toestaan"
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:363
++#: gnome-session/gsm-fail-whale-dialog.c:414
+ msgid "Show extension warning"
+ msgstr "Waarschuwingen van uitbreidingen tonen"
+ 
+-#: gnome-session/gsm-manager.c:1289 gnome-session/gsm-manager.c:1994
++#: gnome-session/gsm-manager.c:1289 gnome-session/gsm-manager.c:1999
+ msgid "Not responding"
+ msgstr "Reageert niet"
+ 
+-#: gnome-session/gsm-util.c:389
++#: gnome-session/gsm-util.c:415
+ msgid "_Log out"
+ msgstr "_Afmelden"
+ 
+@@ -207,61 +207,61 @@ msgstr ""
+ msgid "Could not create ICE listening socket: %s"
+ msgstr "Kon geen luister-socket voor ICE aanmaken: %s"
+ 
+-#: gnome-session/main.c:390
++#: gnome-session/main.c:398
+ msgid "Running as systemd service"
+ msgstr "Draait als systemd-dienst"
+ 
+-#: gnome-session/main.c:391
++#: gnome-session/main.c:399
+ msgid "Use systemd session management"
+ msgstr "Systemd-sessiebeheer gebruiken"
+ 
+-#: gnome-session/main.c:393
++#: gnome-session/main.c:401
+ msgid "Use builtin session management (rather than the systemd based one)"
+ msgstr ""
+ "Ingebouwd sessiebeheer gebruiken (in plaats van dat gebaseerd op systemd)"
+ 
+-#: gnome-session/main.c:394
++#: gnome-session/main.c:402
+ msgid "Override standard autostart directories"
+ msgstr "Map voor automatisch te starten toepassingen"
+ 
+-#: gnome-session/main.c:394
++#: gnome-session/main.c:402
+ msgid "AUTOSTART_DIR"
+ msgstr "AUTOSTART_MAP"
+ 
+-#: gnome-session/main.c:395
++#: gnome-session/main.c:403
+ msgid "Session to use"
+ msgstr "Te gebruiken sessie"
+ 
+-#: gnome-session/main.c:395
++#: gnome-session/main.c:403
+ msgid "SESSION_NAME"
+ msgstr "NAAM_VAN_SESSIE"
+ 
+-#: gnome-session/main.c:397
++#: gnome-session/main.c:405
+ msgid "Do not load user-specified applications"
+ msgstr "Toepassingen die door de gebruiker opgegeven zijn niet laden"
+ 
+-#: gnome-session/main.c:398
++#: gnome-session/main.c:406
+ msgid "Version of this application"
+ msgstr "Versie van deze toepassing"
+ 
+ #. Translators: the 'fail whale' is the black dialog we show when something goes seriously wrong
+-#: gnome-session/main.c:400
++#: gnome-session/main.c:408
+ msgid "Show the fail whale dialog for testing"
+ msgstr "Het misvis-venster tonen voor testen"
+ 
+-#: gnome-session/main.c:401
++#: gnome-session/main.c:409
+ msgid "Disable hardware acceleration check"
+ msgstr "Hardwareversnellingscontrole uitschakelen"
+ 
+-#: gnome-session/main.c:433
++#: gnome-session/main.c:441
+ msgid " — the GNOME session manager"
+ msgstr " — het Gnome-sessiebeheer"
+ 
+-#: tools/gnome-session-ctl.c:244
++#: tools/gnome-session-ctl.c:245
+ msgid "Start gnome-session-shutdown.target"
+ msgstr "Start gnome-session-shutdown.target"
+ 
+-#: tools/gnome-session-ctl.c:245
++#: tools/gnome-session-ctl.c:246
+ msgid ""
+ "Start gnome-session-shutdown.target when receiving EOF or a single byte on "
+ "stdin"
+@@ -269,15 +269,22 @@ msgstr ""
+ "Start gnome-session-shutdown.target wanneer EOF of een enkele byte ontvangen "
+ "wordt op stdin"
+ 
+-#: tools/gnome-session-ctl.c:246
++#: tools/gnome-session-ctl.c:247
+ msgid "Signal initialization done to gnome-session"
+ msgstr "Voltooiing van initialisering doorgeven aan gnome-session"
+ 
+-#: tools/gnome-session-ctl.c:247
++#: tools/gnome-session-ctl.c:248
+ msgid "Restart dbus.service if it is running"
+-msgstr "Herstart dbus.dienst indien het draait"
++msgstr "Herstart dbus.service indien het draait"
+ 
+-#: tools/gnome-session-ctl.c:275
++#: tools/gnome-session-ctl.c:249
++msgid ""
++"Run from ExecStopPost to start gnome-session-failed.target on service failure"
++msgstr ""
++"Uitvoeren van ExecStopPost om gnome-session-failed.target te starten bij "
++"dienstfout"
++
++#: tools/gnome-session-ctl.c:279
+ msgid "Program needs exactly one parameter"
+ msgstr "Programma vereist precies één parameter"
+ 
+@@ -296,13 +303,15 @@ msgid ""
+ "  --inhibit ARG     Things to inhibit, colon-separated list of:\n"
+ "                    logout, switch-user, suspend, idle, automount\n"
+ "  --inhibit-only    Do not launch COMMAND and wait forever instead\n"
++"  -l, --list        List the existing inhibitions, and exit\n"
+ "\n"
+ "If no --inhibit option is specified, idle is assumed.\n"
+ msgstr ""
+ "%s [OPTIE…] OPDRACHT\n"
+ "\n"
+ "Functionaliteit van de sessie uitschakelen tijdens het uitvoeren\n"
+-"van de opgegeven opdracht.\n"
++"van de opgegeven OPDRACHT.\n"
++"\n"
+ "  -h, --help        Deze uitleg tonen\n"
+ "  --version         Programmaversie tonen\n"
+ "  --app-id ID       Te gebruiken toepassings-id (optioneel)\n"
+@@ -312,16 +321,17 @@ msgstr ""
+ "                    punten gescheiden opsomming van:\n"
+ "                    logout, switch-user, suspend, idle, automount\n"
+ "  --inhibit-only    OPDRACHT niet uitvoeren, maar alleen wachten\n"
++"  -l, --list        Lijst de bestaande inhibities op, en sluit af\n"
+ "\n"
+ "Als ‘--inhibit’ niet opgegeven wordt, wordt alleen ‘idle’ gebruikt.\n"
+ 
+-#: tools/gnome-session-inhibit.c:146
++#: tools/gnome-session-inhibit.c:288
+ #, c-format
+ msgid "Failed to execute %s\n"
+ msgstr "Fout bij uitvoeren van %s\n"
+ 
+-#: tools/gnome-session-inhibit.c:206 tools/gnome-session-inhibit.c:216
+-#: tools/gnome-session-inhibit.c:226
++#: tools/gnome-session-inhibit.c:352 tools/gnome-session-inhibit.c:362
++#: tools/gnome-session-inhibit.c:372
+ #, c-format
+ msgid "%s requires an argument\n"
+ msgstr "%s heeft een argumentwaarde nodig\n"

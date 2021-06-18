@@ -1,0 +1,24 @@
+Description: Add some Unity Quicklists
+
+Index: b/data/empathy.desktop.in.in
+===================================================================
+--- a/data/empathy.desktop.in.in
++++ b/data/empathy.desktop.in.in
+@@ -15,4 +15,16 @@
+ X-GNOME-Bugzilla-Bugzilla=GNOME
+ X-GNOME-Bugzilla-Product=empathy
+ X-GNOME-Bugzilla-Component=General
+-X-GNOME-Bugzilla-Version=@VERSION@
++X-GNOME-Bugzilla-Version=@VERSION@8
++X-MessagingMenu-UsesChatSection=true
++Actions=Hidden;Prefs;
++
++[Desktop Action Hidden]
++_Name=Open Hidden in Background
++Exec=empathy -h
++NotShowIn=Messaging Menu
++
++[Desktop Action Prefs]
++_Name=Open Preferences
++Exec=empathy -p
++NotShowIn=Messaging Menu

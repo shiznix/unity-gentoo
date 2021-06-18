@@ -1,0 +1,16 @@
+Descrption: Make facebook the default chat account type, it is the most popular now and fits with our Social From the Start theme for Lucid
+Author: ?
+
+=== modified file 'libempathy-gtk/empathy-protocol-chooser.c'
+Index: empathy-3.12.6/telepathy-account-widgets/tp-account-widgets/tpaw-protocol.c
+===================================================================
+--- empathy-3.12.6.orig/telepathy-account-widgets/tp-account-widgets/tpaw-protocol.c
++++ empathy-3.12.6/telepathy-account-widgets/tp-account-widgets/tpaw-protocol.c
+@@ -426,6 +426,7 @@ sort_protocol_value (const gchar *protoc
+ {
+   guint i;
+   const gchar *names[] = {
++    "facebook",
+     "jabber",
+     "local-xmpp",
+     "gtalk",

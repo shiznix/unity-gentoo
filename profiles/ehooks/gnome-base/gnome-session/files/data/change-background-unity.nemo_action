@@ -1,0 +1,82 @@
+[Nemo Action]
+
+Name=Change Desktop _Background
+
+Comment=Change the Unity desktop background
+
+Exec=unity-control-center appearance
+
+Selection=None
+
+Icon-Name=cs-backgrounds-symbolic
+
+Extensions=any;
+
+
+Conditions=desktop;dbus com.canonical.Unity
+
+Name[jv]=Ganti Gambar _Buri Desktop
+Name[pt_BR]=Alterar _plano de fundo
+Name[ia]=Cambiar le fundo (_Background) del scriptorio
+Name[ko]=바탕화면 배경 바꾸기(_B)
+Name[kk]=Ф_он суретін ауыстыру
+Name[af]=Verander Werkskerm Agtergrond
+Name[el]=Αλλαγή _εικόνας επιφάνειας εργασίας
+Name[fr_CA]=Modifier l’arrière-plan du _bureau
+Name[ro]=Schim_bă imaginea de fundal
+Name[da]=Skift skrive_bordsbaggrund
+Name[gl]=Cambiar o _fondo do escritorio
+Name[vi]=Đổi Ảnh _nền Màn hình
+Name[ca]=Canvia el _fons de l'escriptori
+Name[de]=_Hintergrund des Schreibtisches ändern
+Name[sr@latin]=Iz_meni pozadinu
+Name[he]=שנה את _רקע שולחן העבודה
+Name[fr]=Modifier l'arrière-plan du _bureau
+Name[ga]=Athraigh Cúlra_na Deisce
+Name[bs]=Promijeni _pozadinu desktopa
+Name[id]=Ubah Latar _Belakang Desktop
+Name[sl]=Spremeni _ozadje namizja
+Name[sv]=Byt skrivbordsbak_grund
+Name[tg]=Тағйир додани пасзаминаи _мизи корӣ
+Name[sq]=Ndrysho _sfondin e desktopit
+Name[hu]=Asztal _hátterének módosítása
+Name[fi]=Muuta työpöydän _taustaa
+Name[ar]=تغيير خلفية _سطح المكتب
+Name[en_AU]=Change Desktop _Background
+Name[th]=_เปลี่ยนพื้นหลังของพื้นโต๊ะ
+Name[ku]=Zemîna Sermaseyê Biguherîne
+Name[ru]=Изменить _фон рабочего стола
+Name[bg]=Промяна на _фона
+Name[is]=Breyta _bakgrunni skjáborðs
+Name[oc]=Modificar lo _rèire plan del burèu
+Name[ur]=ڈیسک ٹاپ کا _پس منظر بدلیں
+Name[gd]=Atharraich _cùlaibh an desktop
+Name[sk]=Zmeniť _pozadie plochy
+Name[zh_TW]=變更桌面背景(_B)
+Name[zh_HK]=變更桌面背景(_B)
+Name[be]=Змяніць _фон працоўнага стала
+Name[en_GB]=Change Desktop _Background
+Name[et]=Vaheta töölaua _taust
+Name[hr]=Promijeni pozadinu _radne površine
+Name[cy]=Newid Cefndir y _Bwrdd Gwaith
+Name[ta]=(_B)பணிமேடை பின்னனியை மாற்று
+Name[eu]=Aldatu _mahaigainaren atzeko planoa
+Name[lt]=Keisti darbalaukio _foną
+Name[uk]=Змінити ф_он стільниці
+Name[ja]=背景を変更 (_B)
+Name[ast]=Camudar el fon_du d'escritoriu
+Name[ml]=ഡെസ്ക്ടോപ്പിന്റെ _പശ്ചാത്തലം മാറ്റുക
+Name[bn]=ডেস্কটপের পটভূমি পরিবর্তন করুন (_B)
+Name[sr]=Из_мени позадину
+Name[zh_CN]=更改桌面背景(_B)
+Name[it]=Ca_mbia sfondo desktop
+Name[ms]=Tukar Latar _Belakang Desktop
+Name[tr]=Masaüstü _Arkaplanını Değiştir
+Name[pt]=Alterar _fundo da área de trabalho
+Name[es]=Cambiar el _fondo del escritorio
+Name[pl]=Zmień _tło pulpitu
+Name[am]=የዴስክቶፕ _መደብ መቀየሪያ
+Name[nb]=Endre skrivebords_bakgrunn
+Name[cs]=Změnit _pozadí plochy
+Name[nl]=Werk_bladachtergrond wijzigen
+Name[nds]=Desktop_Hintergrund ändern

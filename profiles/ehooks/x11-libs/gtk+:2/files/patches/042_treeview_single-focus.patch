@@ -1,0 +1,26 @@
+From: Josselin Mouette <joss@debian.org>
+Date: Sun, 4 Nov 2007 16:22:31 +0100
+Subject: Don't select the focused item for GTK_SELECTION_SINGLE type
+ treeviews
+
+This allows the fix in 040_filechooser_single-click.patch to work.
+
+Forwarded: no
+---
+ gtk/gtktreeview.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/gtk/gtktreeview.c b/gtk/gtktreeview.c
+index 89301eb..d86bf0a 100644
+--- a/gtk/gtktreeview.c
++++ b/gtk/gtktreeview.c
+@@ -9628,7 +9628,8 @@ gtk_tree_view_focus_to_cursor (GtkTreeView *tree_view)
+ 
+       if (cursor_path)
+ 	{
+-	  if (tree_view->priv->selection->type == GTK_SELECTION_MULTIPLE)
++	  if (tree_view->priv->selection->type == GTK_SELECTION_MULTIPLE ||
++	      tree_view->priv->selection->type == GTK_SELECTION_SINGLE)
+ 	    gtk_tree_view_real_set_cursor (tree_view, cursor_path, FALSE, FALSE);
+ 	  else
+ 	    gtk_tree_view_real_set_cursor (tree_view, cursor_path, TRUE, FALSE);

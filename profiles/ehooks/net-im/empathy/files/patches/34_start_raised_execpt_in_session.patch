@@ -1,0 +1,37 @@
+Description: Start raised (window not hidden) when started explicitly; respect last state when autostarted.
+
+=== modified file 'src/empathy-status-icon.c'
+---
+ src/empathy-status-icon.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+--- a/src/empathy-status-icon.c
++++ b/src/empathy-status-icon.c
+@@ -494,6 +494,8 @@ empathy_status_icon_new (GtkWindow *wind
+ 	EmpathyStatusIcon     *icon;
+ 	gboolean               should_hide;
+ 
++	const gchar *desktop_autostart_id;
++	desktop_autostart_id = g_getenv ("DESKTOP_AUTOSTART_ID");
+ 	g_return_val_if_fail (GTK_IS_WINDOW (window), NULL);
+ 
+ 	icon = g_object_new (EMPATHY_TYPE_STATUS_ICON, NULL);
+@@ -510,8 +512,16 @@ empathy_status_icon_new (GtkWindow *wind
+ 			  icon);
+ 
+ 	if (!hide_contact_list) {
+-		should_hide = g_settings_get_boolean (priv->gsettings_ui,
+-			EMPATHY_PREFS_UI_MAIN_WINDOW_HIDDEN);
++		/* If not started with the session, we should raise the window.
++		https://bugs.launchpad.net/ubuntu/+source/empathy/+bug/503052 */
++		if (desktop_autostart_id == NULL) {
++			DEBUG ("Not started with session, showing contact list");
++			should_hide = FALSE;
++		} else {
++			DEBUG ("Auto-started with session, so honor the previous known state");
++			should_hide = g_settings_get_boolean (priv->gsettings_ui,
++					EMPATHY_PREFS_UI_MAIN_WINDOW_HIDDEN);
++		}
+ 	} else {
+ 		should_hide = TRUE;
+ 	}

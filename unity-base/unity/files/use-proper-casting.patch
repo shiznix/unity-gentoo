@@ -1,0 +1,20 @@
+author	Marco Trevisan (Treviño) <mail@3v1n0.net>	2021-06-01 14:50:07 +0200
+committer	Marco Trevisan (Treviño) <mail@3v1n0.net>	2021-06-01 14:50:07 +0200
+commit	e7a54a7d4fbd26aace9bd856eebd3ebc3d965df5 (patch)
+tree	3383c44030c514583ba8864f73a4a51afb479cc2
+parent	ffc5be4ee8e2a44d61a51485fae66aafca91ca7d (diff)
+ResultRendererTile: Use proper casting to GdkPixbuf for drag icon
+
+diff --git a/dash/ResultRendererTile.cpp b/dash/ResultRendererTile.cpp
+index ae0fc22..94a26ff 100644
+--- a/dash/ResultRendererTile.cpp
++++ b/dash/ResultRendererTile.cpp
+@@ -259,7 +259,7 @@ nux::NBitmapData* ResultRendererTile::GetDndImage(Result const& row) const
+   if (container && container->drag_icon && container->drag_icon.IsType(GDK_TYPE_PIXBUF))
+   {
+     // Need to ref the drag icon because GdkGraphics will unref it.
+-    nux::GdkGraphics graphics(GDK_PIXBUF(g_object_ref(container->drag_icon)));
++    nux::GdkGraphics graphics(g_object_ref(static_cast<GdkPixbuf*>(container->drag_icon)));
+     bitmap = graphics.GetBitmap();
+   }
+   return bitmap ? bitmap : ResultRenderer::GetDndImage(row);

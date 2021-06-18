@@ -1,0 +1,17 @@
+Description: Improve error message displayed when authentication fails
+Bug: https://bugzilla.gnome.org/show_bug.cgi?id=592978
+Bug-Ubuntu: http://launchpad.net/bugs/411559
+
+Index: policykit-1-gnome-0.105/src/polkitgnomeauthenticator.c
+===================================================================
+--- policykit-1-gnome-0.105.orig/src/polkitgnomeauthenticator.c	2011-12-19 09:25:02.275695807 -0500
++++ policykit-1-gnome-0.105/src/polkitgnomeauthenticator.c	2011-12-19 09:25:02.343695805 -0500
+@@ -454,7 +454,7 @@
+         {
+           gchar *s;
+ 
+-          s = g_strconcat ("<b>", _("Authentication Failure"), "</b>", NULL);
++          s = g_strconcat ("<b>", _("Your authentication attempt was unsuccessful. Please try again."), "</b>", NULL);
+           polkit_gnome_authentication_dialog_set_info_message (
+                                   POLKIT_GNOME_AUTHENTICATION_DIALOG (authenticator->dialog),
+                                   s);

@@ -1,0 +1,5 @@
+ebuild_hook() {
+	# Install Ubuntu's gconf update tool #
+	exeinto /usr/bin
+	doexe "${EHOOK_FILESDIR}/update-gconf-defaults"
+}

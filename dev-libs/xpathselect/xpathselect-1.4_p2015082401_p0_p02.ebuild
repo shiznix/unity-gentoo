@@ -4,7 +4,7 @@
 EAPI=6
 GTESTVER="1.8.1"
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit cmake-utils ubuntu-versionator
 
 UVER_PREFIX="+15.10.${PVR_MICRO}"

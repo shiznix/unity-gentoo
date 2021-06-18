@@ -1,0 +1,300 @@
+From ace0d7e184ff7011a26eb9287f81ef2d884f09e3 Mon Sep 17 00:00:00 2001
+From: Michael Terry <michael.terry@ubuntu.com>
+Date: Thu, 21 Dec 2017 15:11:01 +1300
+Subject: [PATCH 07/12] Add support for a BackgroundFile property, similar to
+ IconFile
+
+---
+ data/org.freedesktop.Accounts.User.xml | 45 ++++++++++++++
+ src/libaccountsservice/act-user.c      | 55 +++++++++++++++++
+ src/libaccountsservice/act-user.h      |  3 +
+ src/user.c                             | 81 ++++++++++++++++++++++++++
+ 4 files changed, 184 insertions(+)
+
+diff --git a/data/org.freedesktop.Accounts.User.xml b/data/org.freedesktop.Accounts.User.xml
+index d4adc3f..143794c 100644
+--- a/data/org.freedesktop.Accounts.User.xml
++++ b/data/org.freedesktop.Accounts.User.xml
+@@ -414,6 +414,41 @@
+     </doc:doc>
+   </method>
+ 
++  <method name="SetBackgroundFile">
++    <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
++    <arg name="filename" direction="in" type="s">
++      <doc:doc>
++        <doc:summary>
++          The absolute filename of a png file to use as the users background.
++        </doc:summary>
++      </doc:doc>
++    </arg>
++    <doc:doc>
++      <doc:description>
++        <doc:para>
++          Sets the users background.
++        </doc:para>
++      </doc:description>
++      <doc:permission>
++        The caller needs one of the following PolicyKit authorizations:
++        <doc:list>
++          <doc:item>
++            <doc:term>org.freedesktop.accounts.change-own-user-data</doc:term>
++            <doc:definition>To change his own background</doc:definition>
++          </doc:item>
++          <doc:item>
++            <doc:term>org.freedesktop.accounts.user-administration</doc:term>
++            <doc:definition>To change the background of another user</doc:definition>
++          </doc:item>
++        </doc:list>
++      </doc:permission>
++      <doc:errors>
++        <doc:error name="org.freedesktop.Accounts.Error.PermissionDenied">if the caller lacks the appropriate PolicyKit authorization</doc:error>
++        <doc:error name="org.freedesktop.Accounts.Error.Failed">if the operation failed</doc:error>
++      </doc:errors>
++    </doc:doc>
++  </method>
++
+   <method name="SetIconFile">
+     <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
+     <arg name="filename" direction="in" type="s">
+@@ -874,6 +909,16 @@
+     </doc:doc>
+   </property>
+ 
++  <property name="BackgroundFile" type="s" access="read">
++    <doc:doc>
++      <doc:description>
++        <doc:para>
++           The filename of a png file containing the users background.
++        </doc:para>
++      </doc:description>
++    </doc:doc>
++  </property>
++
+   <property name="IconFile" type="s" access="read">
+     <doc:doc>
+       <doc:description>
+diff --git a/src/libaccountsservice/act-user.c b/src/libaccountsservice/act-user.c
+index 2861518..554d371 100644
+--- a/src/libaccountsservice/act-user.c
++++ b/src/libaccountsservice/act-user.c
+@@ -93,6 +93,7 @@ enum {
+         PROP_LOGIN_FREQUENCY,
+         PROP_LOGIN_TIME,
+         PROP_LOGIN_HISTORY,
++        PROP_BACKGROUND_FILE,
+         PROP_ICON_FILE,
+         PROP_LANGUAGE,
+         PROP_FORMATS_LOCALE,
+@@ -373,6 +374,13 @@ act_user_class_init (ActUserClass *class)
+                                                                G_VARIANT_TYPE ("a(xxa{sv})"),
+                                                                NULL,
+                                                                G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
++        g_object_class_install_property (gobject_class,
++                                         PROP_BACKGROUND_FILE,
++                                         g_param_spec_string ("background-file",
++                                                              "Background File",
++                                                              "The path to a background for this user.",
++                                                              NULL,
++                                                              G_PARAM_READABLE));
+         g_object_class_install_property (gobject_class,
+                                          PROP_ICON_FILE,
+                                          g_param_spec_string ("icon-file",
+@@ -996,6 +1004,25 @@ act_user_is_nonexistent (ActUser   *user)
+         return user->nonexistent;
+ }
+ 
++/**
++ * act_user_get_background_file:
++ * @user: a #ActUser
++ *
++ * Returns the path to the account background belonging to @user.
++ *
++ * Returns: (transfer none): a path to a background
++ */
++const char *
++act_user_get_background_file (ActUser *user)
++{
++        g_return_val_if_fail (ACT_IS_USER (user), NULL);
++
++        if (user->accounts_proxy == NULL)
++                return NULL;
++
++        return accounts_user_get_background_file (user->accounts_proxy);
++}
++
+ /**
+  * act_user_get_icon_file:
+  * @user: a #ActUser
+@@ -1421,6 +1448,34 @@ act_user_set_language (ActUser    *user,
+         }
+ }
+ 
++/**
++ * act_user_set_background_file:
++ * @user: the user object to alter.
++ * @background_file: path to an background
++ *
++ * Assigns a new background for @user.
++ *
++ * Note this function is synchronous and ignores errors.
++ **/
++void
++act_user_set_background_file (ActUser    *user,
++                              const char *background_file)
++{
++        g_autoptr(GError) error = NULL;
++
++        g_return_if_fail (ACT_IS_USER (user));
++        g_return_if_fail (background_file != NULL);
++        g_return_if_fail (ACCOUNTS_IS_USER (user->accounts_proxy));
++
++        if (!accounts_user_call_set_background_file_sync (user->accounts_proxy,
++                                                          background_file,
++                                                          NULL,
++                                                          &error)) {
++                g_warning ("SetBackgroundFile call failed: %s", error->message);
++                return;
++        }
++}
++
+ /**
+  * act_user_set_x_session:
+  * @user: the user object to alter.
+diff --git a/src/libaccountsservice/act-user.h b/src/libaccountsservice/act-user.h
+index 323e3a5..40cf7aa 100644
+--- a/src/libaccountsservice/act-user.h
++++ b/src/libaccountsservice/act-user.h
+@@ -76,6 +76,7 @@ gboolean       act_user_get_automatic_login       (ActUser   *user);
+ gboolean       act_user_is_system_account         (ActUser   *user);
+ gboolean       act_user_is_local_account          (ActUser   *user);
+ gboolean       act_user_is_nonexistent            (ActUser   *user);
++const char    *act_user_get_background_file       (ActUser   *user);
+ const char    *act_user_get_icon_file             (ActUser   *user);
+ const char    *act_user_get_language              (ActUser   *user);
+ const char    *act_user_get_formats_locale        (ActUser   *user);
+@@ -102,6 +103,8 @@ void           act_user_set_language              (ActUser    *user,
+                                                    const char *language);
+ void           act_user_set_formats_locale        (ActUser    *user,
+                                                    const char *formats_locale);
++void           act_user_set_background_file       (ActUser    *user,
++                                                   const char *background_file);
+ void           act_user_set_x_session             (ActUser    *user,
+                                                    const char *x_session);
+ void           act_user_set_session               (ActUser    *user,
+diff --git a/src/user.c b/src/user.c
+index 0daeac9..789d7d8 100644
+--- a/src/user.c
++++ b/src/user.c
+@@ -301,6 +301,12 @@ user_update_from_keyfile (User     *user,
+                 g_clear_pointer (&s, g_free);
+         }
+ 
++        s = g_key_file_get_string (keyfile, "User", "Background", NULL);
++        if (s != NULL) {
++                accounts_user_set_background_file (ACCOUNTS_USER (user), s);
++                g_clear_pointer (&s, g_free);
++        }
++
+         s = g_key_file_get_string (keyfile, "User", "Icon", NULL);
+         if (s != NULL) {
+                 accounts_user_set_icon_file (ACCOUNTS_USER (user), s);
+@@ -366,6 +372,9 @@ user_save_to_keyfile (User     *user,
+         if (accounts_user_get_password_hint (ACCOUNTS_USER (user)))
+                 g_key_file_set_string (keyfile, "User", "PasswordHint", accounts_user_get_password_hint (ACCOUNTS_USER (user)));
+ 
++        if (accounts_user_get_background_file (ACCOUNTS_USER (user)))
++                g_key_file_set_string (keyfile, "User", "Background", accounts_user_get_background_file (ACCOUNTS_USER (user)));
++
+         if (accounts_user_get_icon_file (ACCOUNTS_USER (user)))
+                 g_key_file_set_string (keyfile, "User", "Icon", accounts_user_get_icon_file (ACCOUNTS_USER (user)));
+ 
+@@ -1854,6 +1863,77 @@ become_user (gpointer data)
+         }
+ }
+ 
++static void
++user_change_background_file_authorized_cb (Daemon                *daemon,
++                                           User                  *user,
++                                           GDBusMethodInvocation *context,
++                                           gpointer               data)
++{
++        g_autofree gchar *filename = NULL;
++        g_autoptr(GFile) file = NULL;
++        g_autoptr(GFileInfo) info = NULL;
++        GFileType type;
++
++        filename = g_strdup (data);
++
++        if (filename == NULL ||
++            *filename == '\0') {
++                g_free (filename);
++                filename = NULL;
++
++                goto background_saved;
++        }
++
++        file = g_file_new_for_path (filename);
++        info = g_file_query_info (file, G_FILE_ATTRIBUTE_STANDARD_TYPE,
++                                  0, NULL, NULL);
++        type = g_file_info_get_file_type (info);
++
++        if (type != G_FILE_TYPE_REGULAR) {
++                g_debug ("not a regular file\n");
++                throw_error (context, ERROR_FAILED, "file '%s' is not a regular file", filename);
++                return;
++        }
++
++background_saved:
++        accounts_user_set_background_file (ACCOUNTS_USER (user), filename);
++
++        save_extra_data (user);
++
++        accounts_user_complete_set_background_file (ACCOUNTS_USER (user), context);
++}
++
++static gboolean
++user_set_background_file (AccountsUser          *auser,
++                          GDBusMethodInvocation *context,
++                          const gchar           *filename)
++{
++        User *user = (User*)auser;
++        int uid;
++        const gchar *action_id;
++
++        if (!get_caller_uid (context, &uid)) {
++                throw_error (context, ERROR_FAILED, "identifying caller failed");
++                return FALSE;
++        }
++
++        if (accounts_user_get_uid (ACCOUNTS_USER (user)) == (uid_t) uid)
++                action_id = "org.freedesktop.accounts.change-own-user-data";
++        else
++                action_id = "org.freedesktop.accounts.user-administration";
++
++        daemon_local_check_auth (user->daemon,
++                                 user,
++                                 action_id,
++                                 TRUE,
++                                 user_change_background_file_authorized_cb,
++                                 context,
++                                 g_strdup (filename),
++                                 (GDestroyNotify)g_free);
++
++        return TRUE;
++}
++
+ static void
+ user_change_icon_file_authorized_cb (Daemon                *daemon,
+                                      User                  *user,
+@@ -2536,6 +2616,7 @@ user_accounts_user_iface_init (AccountsUserIface *iface)
+ {
+         iface->handle_set_account_type = user_set_account_type;
+         iface->handle_set_automatic_login = user_set_automatic_login;
++        iface->handle_set_background_file = user_set_background_file;
+         iface->handle_set_email = user_set_email;
+         iface->handle_set_formats_locale = user_set_formats_locale;
+         iface->handle_set_home_directory = user_set_home_directory;
+-- 
+2.20.1
+

@@ -1,0 +1,37 @@
+From: Benjamin Berg <bberg@redhat.com>
+Date: Mon, 19 Oct 2020 12:20:44 +0200
+Subject: main: Warn about failures to update the environment
+
+Bug: https://gitlab.gnome.org/GNOME/gnome-session/-/issues/71
+Origin: upstream, 40, commit:b6d98eb76b1d56da2d7202944a748723b58ece4a
+---
+ gnome-session/main.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/gnome-session/main.c b/gnome-session/main.c
+index 53f174e..443bc04 100644
+--- a/gnome-session/main.c
++++ b/gnome-session/main.c
+@@ -529,12 +529,20 @@ main (int argc, char **argv)
+                 }
+         }
+ 
+-        gsm_util_export_activation_environment (NULL);
++        gsm_util_export_activation_environment (&error);
++        if (error) {
++                g_warning ("Failed to upload environment to DBus: %s", error->message);
++                g_clear_error (&error);
++        }
+ 
+         session_name = opt_session_name;
+ 
+ #ifdef HAVE_SYSTEMD
+-        gsm_util_export_user_environment (NULL);
++        gsm_util_export_user_environment (&error);
++        if (error) {
++                g_warning ("Failed to upload environment to systemd: %s", error->message);
++                g_clear_error (&error);
++        }
+ #endif
+ 
+ #ifdef ENABLE_SYSTEMD_SESSION

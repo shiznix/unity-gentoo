@@ -56,15 +56,3 @@ diff -Nur a/protocol/protocol-scope-discovery.vala b/protocol/protocol-scope-dis
  
      public List<ScopeGroupScopeInfo?> scopes;
      public int timeout;
-diff -Nur a/src/unity-scope-channel.vala b/src/unity-scope-channel.vala
---- a/src/unity-scope-channel.vala	2019-03-19 11:18:05.000000000 +0100
-+++ b/src/unity-scope-channel.vala	2021-06-08 10:03:42.228522069 +0200
-@@ -312,7 +312,7 @@
-           DBusSignalFlags.NONE, this.owner_changed);
-     }
- 
--    private void owner_changed (DBusConnection con, string sender_name,
-+    private void owner_changed (DBusConnection con, string? sender_name,
-                                 string obj_path, string ifc_name,
-                                 string sig_name, Variant parameters)
-     {

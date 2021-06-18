@@ -14,7 +14,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+eds test"
 RESTRICT="mirror"
 
@@ -43,7 +43,7 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/01-${PN}-remove-url-dispatcher_17.10.patch"
+#	eapply "${FILESDIR}/01-${PN}-remove-url-dispatcher_17.10.patch"
 	eapply "${FILESDIR}/02-${PN}-optional-eds_19.10.patch"
 
 	# Fix schema errors and sandbox violations #

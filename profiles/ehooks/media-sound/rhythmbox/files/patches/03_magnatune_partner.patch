@@ -1,0 +1,14 @@
+=== modified file 'plugins/magnatune/MagnatuneSource.py'
+Index: rhythmbox-3.4.3/plugins/magnatune/MagnatuneSource.py
+===================================================================
+--- rhythmbox-3.4.3.orig/plugins/magnatune/MagnatuneSource.py
++++ rhythmbox-3.4.3/plugins/magnatune/MagnatuneSource.py
+@@ -43,7 +43,7 @@ import MagnatuneAccount
+ import gettext
+ gettext.install('rhythmbox', RB.locale_dir())
+ 
+-magnatune_partner_id = "rhythmbox"
++magnatune_partner_id = "ubuntu"
+ 
+ # URIs
+ magnatune_song_info_uri = "http://magnatune.com/info/song_info_xml.zip"

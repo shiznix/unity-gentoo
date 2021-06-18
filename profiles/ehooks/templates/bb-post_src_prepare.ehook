@@ -1,4 +1,15 @@
 ebuild_hook() {
-	eapply "${EHOOK_FILESDIR}"
+	local x
+
+	if [[ -r "${EHOOK_FILESDIR}/patches/series" ]]; then
+		for x in $(grep -v \# "${EHOOK_FILESDIR}/patches/series"); do
+			eapply "${EHOOK_FILESDIR}/patches/${x}"
+		done
+	fi
+
+	for x in "${EHOOK_FILESDIR}"/*.{diff,patch}; do
+		[[ -r ${x} ]] && eapply "${x}"
+	done
+
 	AT_NOELIBTOOLIZE="yes" eautoreconf
 }

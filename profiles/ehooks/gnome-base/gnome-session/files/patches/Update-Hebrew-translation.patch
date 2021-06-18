@@ -1,0 +1,304 @@
+From: Yosef Or Boczko <yoseforb@gnome.org>
+Date: Mon, 28 Sep 2020 17:22:03 +0000
+Subject: Update Hebrew translation
+
+Origin: upstream, 40, commit:3bb7554b0f5f980c2434755546b42f051a6a3934
+---
+ po/he.po | 96 +++++++++++++++++++++++++++-------------------------------------
+ 1 file changed, 41 insertions(+), 55 deletions(-)
+
+diff --git a/po/he.po b/po/he.po
+index 740582b..77eba91 100644
+--- a/po/he.po
++++ b/po/he.po
+@@ -10,8 +10,8 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: gnome-session.HEAD.he\n"
+ "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-session/issues\n"
+-"POT-Creation-Date: 2019-09-18 13:36+0000\n"
+-"PO-Revision-Date: 2020-03-30 20:25+0300\n"
++"POT-Creation-Date: 2020-08-16 08:36+0000\n"
++"PO-Revision-Date: 2020-09-28 20:21+0300\n"
+ "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+ "Language-Team: Hebrew <yoseforb@gmail.com>\n"
+ "Language: he\n"
+@@ -48,7 +48,6 @@ msgid "GNOME on Xorg"
+ msgstr "‏GNOME על גבי Xorg"
+ 
+ #: data/org.gnome.SessionManager.gschema.xml.in:5
+-#| msgid "Saving session details."
+ msgid "Save sessions"
+ msgstr "Save sessions"
+ 
+@@ -57,12 +56,10 @@ msgid "If enabled, gnome-session will save the session automatically."
+ msgstr "If enabled, gnome-session will save the session automatically."
+ 
+ #: data/org.gnome.SessionManager.gschema.xml.in:10
+-#| msgid "Save the current session"
+ msgid "Save this session"
+ msgstr "Save this session"
+ 
+ #: data/org.gnome.SessionManager.gschema.xml.in:11
+-#| msgid "If enabled, gnome-session will save the session automatically."
+ msgid ""
+ "When enabled, gnome-session will automatically save the next session at log "
+ "out even if auto saving is disabled."
+@@ -80,12 +77,10 @@ msgstr ""
+ "If enabled, gnome-session will prompt the user before ending a session."
+ 
+ #: data/org.gnome.SessionManager.gschema.xml.in:20
+-#| msgid "Show extension warning"
+ msgid "Show the fallback warning"
+ msgstr "Show the fallback warning"
+ 
+ #: data/org.gnome.SessionManager.gschema.xml.in:21
+-#| msgid "If enabled, gnome-session will save the session automatically."
+ msgid ""
+ "If enabled, gnome-session will display a warning dialog after login if the "
+ "session was automatically fallen back."
+@@ -117,34 +112,25 @@ msgstr "_שינוי שם ההפעלה"
+ msgid "_Continue"
+ msgstr "להמ_שיך"
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:313
++#: gnome-session/gsm-fail-whale-dialog.c:318
+ msgid "Oh no!  Something has gone wrong."
+ msgstr "אבוי!  משהו השתבש."
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:320
+-#| msgid ""
+-#| "A problem has occurred and the system can't recover. Please contact a "
+-#| "system administrator"
++#: gnome-session/gsm-fail-whale-dialog.c:325
+ msgid ""
+ "A problem has occurred and the system can’t recover. Please contact a system "
+ "administrator"
+ msgstr ""
+ "אירעה שגיאה והמערכת אינה יכולה להשתקם ממנה. נא ליצור קשר עם מנהל המערכת."
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:322
+-#| msgid ""
+-#| "A problem has occurred and the system can't recover. All extensions have "
+-#| "been disabled as a precaution."
++#: gnome-session/gsm-fail-whale-dialog.c:327
+ msgid ""
+ "A problem has occurred and the system can’t recover. All extensions have "
+ "been disabled as a precaution."
+ msgstr ""
+ "אירעה שגיאה והמערכת אינה יכולה להשתקם ממנה. ליתר ביטחון הושבתו כל ההרחבות."
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:324
+-#| msgid ""
+-#| "A problem has occurred and the system can't recover.\n"
+-#| "Please log out and try again."
++#: gnome-session/gsm-fail-whale-dialog.c:329
+ msgid ""
+ "A problem has occurred and the system can’t recover.\n"
+ "Please log out and try again."
+@@ -152,27 +138,27 @@ msgstr ""
+ "אירעה שגיאה והמערכת אינה יכולה להשתקם ממנה.\n"
+ "נא לצאת ולנסות שוב."
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:339
++#: gnome-session/gsm-fail-whale-dialog.c:344
+ msgid "_Log Out"
+ msgstr "_ניתוק"
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:361 gnome-session/main.c:396
++#: gnome-session/gsm-fail-whale-dialog.c:412 gnome-session/main.c:404
+ msgid "Enable debugging code"
+ msgstr "Enable debugging code"
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:362
++#: gnome-session/gsm-fail-whale-dialog.c:413
+ msgid "Allow logout"
+ msgstr "לאפשר יציאה"
+ 
+-#: gnome-session/gsm-fail-whale-dialog.c:363
++#: gnome-session/gsm-fail-whale-dialog.c:414
+ msgid "Show extension warning"
+ msgstr "הצגת אזהרת הרחבות"
+ 
+-#: gnome-session/gsm-manager.c:1289 gnome-session/gsm-manager.c:1994
++#: gnome-session/gsm-manager.c:1289 gnome-session/gsm-manager.c:1999
+ msgid "Not responding"
+ msgstr "אין תגובה"
+ 
+-#: gnome-session/gsm-util.c:389
++#: gnome-session/gsm-util.c:415
+ msgid "_Log out"
+ msgstr "י_ציאה"
+ 
+@@ -199,62 +185,60 @@ msgstr "מסרב לחיבור לקוח חדש מכיון שההפעלה נמצא
+ msgid "Could not create ICE listening socket: %s"
+ msgstr "לא ניתן ליצור שקע ICE: ‏%s"
+ 
+-#: gnome-session/main.c:390
++#: gnome-session/main.c:398
+ msgid "Running as systemd service"
+ msgstr "Running as systemd service"
+ 
+-#: gnome-session/main.c:391
+-#| msgid "Specify session management ID"
++#: gnome-session/main.c:399
+ msgid "Use systemd session management"
+ msgstr "Use systemd session management"
+ 
+-#: gnome-session/main.c:393
++#: gnome-session/main.c:401
+ msgid "Use builtin session management (rather than the systemd based one)"
+ msgstr "Use builtin session management (rather than the systemd based one)"
+ 
+-#: gnome-session/main.c:394
++#: gnome-session/main.c:402
+ msgid "Override standard autostart directories"
+ msgstr "Override standard autostart directories"
+ 
+-#: gnome-session/main.c:394
++#: gnome-session/main.c:402
+ msgid "AUTOSTART_DIR"
+ msgstr "AUTOSTART_DIR"
+ 
+-#: gnome-session/main.c:395
++#: gnome-session/main.c:403
+ msgid "Session to use"
+ msgstr "Session to use"
+ 
+-#: gnome-session/main.c:395
++#: gnome-session/main.c:403
+ msgid "SESSION_NAME"
+ msgstr "SESSION_NAME"
+ 
+-#: gnome-session/main.c:397
++#: gnome-session/main.c:405
+ msgid "Do not load user-specified applications"
+ msgstr "Do not load user-specified applications"
+ 
+-#: gnome-session/main.c:398
++#: gnome-session/main.c:406
+ msgid "Version of this application"
+ msgstr "Version of this application"
+ 
+ #. Translators: the 'fail whale' is the black dialog we show when something goes seriously wrong
+-#: gnome-session/main.c:400
++#: gnome-session/main.c:408
+ msgid "Show the fail whale dialog for testing"
+ msgstr "Show the fail whale dialog for testing"
+ 
+-#: gnome-session/main.c:401
++#: gnome-session/main.c:409
+ msgid "Disable hardware acceleration check"
+ msgstr "Disable hardware acceleration check"
+ 
+-#: gnome-session/main.c:433
+-#| msgid " - the GNOME session manager"
++#: gnome-session/main.c:441
+ msgid " — the GNOME session manager"
+ msgstr " — the GNOME session manager"
+ 
+-#: tools/gnome-session-ctl.c:244
++#: tools/gnome-session-ctl.c:245
+ msgid "Start gnome-session-shutdown.target"
+ msgstr "Start gnome-session-shutdown.target"
+ 
+-#: tools/gnome-session-ctl.c:245
++#: tools/gnome-session-ctl.c:246
+ msgid ""
+ "Start gnome-session-shutdown.target when receiving EOF or a single byte on "
+ "stdin"
+@@ -262,22 +246,28 @@ msgstr ""
+ "Start gnome-session-shutdown.target when receiving EOF or a single byte on "
+ "stdin"
+ 
+-#: tools/gnome-session-ctl.c:246
++#: tools/gnome-session-ctl.c:247
+ msgid "Signal initialization done to gnome-session"
+ msgstr "Signal initialization done to gnome-session"
+ 
+-#: tools/gnome-session-ctl.c:247
++#: tools/gnome-session-ctl.c:248
+ msgid "Restart dbus.service if it is running"
+ msgstr "Restart dbus.service if it is running"
+ 
+-#: tools/gnome-session-ctl.c:275
++#: tools/gnome-session-ctl.c:249
++msgid ""
++"Run from ExecStopPost to start gnome-session-failed.target on service failure"
++msgstr ""
++"Run from ExecStopPost to start gnome-session-failed.target on service failure"
++
++#: tools/gnome-session-ctl.c:279
+ msgid "Program needs exactly one parameter"
+ msgstr "Program needs exactly one parameter"
+ 
+ #: tools/gnome-session-inhibit.c:108
+ #, c-format
+ #| msgid ""
+-#| "%s [OPTION...] COMMAND\n"
++#| "%s [OPTION…] COMMAND\n"
+ #| "\n"
+ #| "Execute COMMAND while inhibiting some session functionality.\n"
+ #| "\n"
+@@ -304,6 +294,7 @@ msgid ""
+ "  --inhibit ARG     Things to inhibit, colon-separated list of:\n"
+ "                    logout, switch-user, suspend, idle, automount\n"
+ "  --inhibit-only    Do not launch COMMAND and wait forever instead\n"
++"  -l, --list        List the existing inhibitions, and exit\n"
+ "\n"
+ "If no --inhibit option is specified, idle is assumed.\n"
+ msgstr ""
+@@ -319,16 +310,17 @@ msgstr ""
+ "  --inhibit ARG     Things to inhibit, colon-separated list of:\n"
+ "                    logout, switch-user, suspend, idle, automount\n"
+ "  --inhibit-only    Do not launch COMMAND and wait forever instead\n"
++"  -l, --list        List the existing inhibitions, and exit\n"
+ "\n"
+ "If no --inhibit option is specified, idle is assumed.\n"
+ 
+-#: tools/gnome-session-inhibit.c:146
++#: tools/gnome-session-inhibit.c:288
+ #, c-format
+ msgid "Failed to execute %s\n"
+ msgstr "Failed to execute %s\n"
+ 
+-#: tools/gnome-session-inhibit.c:206 tools/gnome-session-inhibit.c:216
+-#: tools/gnome-session-inhibit.c:226
++#: tools/gnome-session-inhibit.c:352 tools/gnome-session-inhibit.c:362
++#: tools/gnome-session-inhibit.c:372
+ #, c-format
+ msgid "%s requires an argument\n"
+ msgstr "%s requires an argument\n"
+@@ -350,7 +342,6 @@ msgid "Ignoring any existing inhibitors"
+ msgstr "תוך התעלמות ממעקבים קיימים"
+ 
+ #: tools/gnome-session-quit.c:54
+-#| msgid "Don't prompt for user confirmation"
+ msgid "Don’t prompt for user confirmation"
+ msgstr "אין לבקש אישור מהמשתמש"
+ 
+@@ -368,25 +359,20 @@ msgid "Session %d"
+ msgstr "הפעלה %d"
+ 
+ #: tools/gnome-session-selector.c:107
+-#| msgid ""
+-#| "Session names are not allowed to start with ‘.’ or contain ‘/’ characters"
+ msgid ""
+ "Session names are not allowed to start with “.” or contain “/” characters"
+ msgstr "אסור ששמות ההפעלות יתחילו בתו „.” או יכילו את התו „/”"
+ 
+ #: tools/gnome-session-selector.c:111
+-#| msgid "Session names are not allowed to start with ‘.’"
+ msgid "Session names are not allowed to start with “.”"
+ msgstr "אסור ששמות ההפעלות יתחילו בתו „.”"
+ 
+ #: tools/gnome-session-selector.c:115
+-#| msgid "Session names are not allowed to contain ‘/’ characters"
+ msgid "Session names are not allowed to contain “/” characters"
+ msgstr "אסור ששמות ההפעלות יכילו את התו „/”"
+ 
+ #: tools/gnome-session-selector.c:123
+ #, c-format
+-#| msgid "A session named ‘%s’ already exists"
+ msgid "A session named “%s” already exists"
+ msgstr "כבר קיימת הפעלה בשם „%s”"
+ 

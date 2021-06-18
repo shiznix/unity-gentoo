@@ -1,0 +1,9 @@
+enchant-2.patch
+00_linker-fixes.patch
+10_use_notify_osd_icons.patch
+34_start_raised_execpt_in_session.patch
+38_default_to_facebook_for_im.patch
+39_default_to_freenode_for_irc.patch
+#41_unity_launcher_progress.patch
+42_shell_running.patch
+43_quicklists.patch

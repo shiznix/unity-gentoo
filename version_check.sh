@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="groovy groovy-security groovy-updates hirsute hirsute-security hirsute-updates"
+RELEASES="hirsute hirsute-security hirsute-updates impish impish-security impish-updates"
 SOURCES="main universe"
 
 sources_download() {
@@ -237,6 +237,7 @@ uver() {
 	[[ "${URELEASE}" == *focal* ]] && UVER_RELEASE="20.04"
 	[[ "${URELEASE}" == *groovy* ]] && UVER_RELEASE="20.10"
 	[[ "${URELEASE}" == *hirsute* ]] && UVER_RELEASE="21.04"
+	[[ "${URELEASE}" == *impish* ]] && UVER_RELEASE="21.10"
 	PVR=`echo "${packbasename}" | sed -e 's/.*-\([0-9]\)/\1/' -e 's:-r[0-9].*$::g'`
 	PVR="_${PVR#*_}"
 

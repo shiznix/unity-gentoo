@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="groovy"
+URELEASE="hirsute"
 inherit autotools eutils flag-o-matic ubuntu-versionator vala
 
 UVER_PREFIX="+17.04.${PVR_MICRO}"

@@ -1,0 +1,12 @@
+#multiarch_fallback.patch
+04_suppress_umount_in_ltsp.patch
+12_unity_launcher_support.patch
+18_unity_icon_color.patch
+19_unity_open_location_xid.patch
+20_add_timestamp_to_operations.patch
+ubuntu_infobars_color.patch
+ubuntu_backspace_behaviour.patch
+appstream-compulsory.patch
+nautilusgtkplacesview-show-error-if-volume-is-not-mo.patch
+ubuntu/shell-search-provider-implement-XUbuntuCancel-to-request-.patch
+#revert_tracker_update.patch

@@ -1,0 +1,21 @@
+From: Ubuntu Desktop Team <ubuntu-desktop@lists.ubuntu.com>
+Date: Tue, 26 Feb 2019 12:24:15 +0000
+Subject: teach gsd about the gnome-calculator snap .desktop name
+
+---
+ plugins/media-keys/gsd-media-keys-manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/plugins/media-keys/gsd-media-keys-manager.c b/plugins/media-keys/gsd-media-keys-manager.c
+index 9ed0637..e65836a 100644
+--- a/plugins/media-keys/gsd-media-keys-manager.c
++++ b/plugins/media-keys/gsd-media-keys-manager.c
+@@ -2732,7 +2732,7 @@ do_action (GsdMediaKeysManager *manager,
+                 do_media_action (manager, timestamp);
+                 break;
+         case CALCULATOR_KEY:
+-                do_execute_desktop_or_desktop (manager, "org.gnome.Calculator.desktop", "gnome-calculator.desktop", timestamp);
++                do_execute_desktop_or_desktop (manager, "org.gnome.Calculator.desktop", "gnome-calculator_gnome-calculator.desktop", timestamp);
+                 break;
+         case CONTROL_CENTER_KEY:
+                 do_execute_desktop_or_desktop (manager, "gnome-control-center.desktop", NULL, timestamp);

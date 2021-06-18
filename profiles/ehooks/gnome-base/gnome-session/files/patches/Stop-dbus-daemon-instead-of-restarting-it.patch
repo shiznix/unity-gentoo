@@ -1,0 +1,54 @@
+From: Simon McVittie <smcv@collabora.com>
+Date: Thu, 3 Dec 2020 12:39:20 +0000
+Subject: Stop dbus-daemon instead of restarting it
+
+On systems where dbus-daemon is a systemd user service, it is always
+socket-activatable, so it will be restarted on-demand by dbus.socket.
+On systems where it is not, neither StopUnit nor TryRestartUnit will
+do anything. Either way, there doesn't seem much point in immediately
+restarting it.
+
+If the job contradicts jobs that are already queued, fail with a warning
+instead of replacing those jobs.
+
+Related to #74.
+
+Signed-off-by: Simon McVittie <smcv@collabora.com>
+Origin: upstream, 40, commit:d82db7c123d8b346834bd7680073d5ae1882868d
+---
+ gnome-session/gsm-manager.c | 4 ++--
+ tools/gnome-session-ctl.c   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/gnome-session/gsm-manager.c b/gnome-session/gsm-manager.c
+index 6839a02..a15d217 100644
+--- a/gnome-session/gsm-manager.c
++++ b/gnome-session/gsm-manager.c
+@@ -977,8 +977,8 @@ maybe_restart_user_bus (GsmManager *manager)
+                                              "org.freedesktop.systemd1",
+                                              "/org/freedesktop/systemd1",
+                                              "org.freedesktop.systemd1.Manager",
+-                                             "TryRestartUnit",
+-                                             g_variant_new ("(ss)", "dbus.service", "replace"),
++                                             "StopUnit",
++                                             g_variant_new ("(ss)", "dbus.service", "fail"),
+                                              NULL,
+                                              G_DBUS_CALL_FLAGS_NONE,
+                                              -1,
+diff --git a/tools/gnome-session-ctl.c b/tools/gnome-session-ctl.c
+index 8d94f84..eb9d6b5 100644
+--- a/tools/gnome-session-ctl.c
++++ b/tools/gnome-session-ctl.c
+@@ -127,10 +127,10 @@ do_restart_dbus (void)
+                                              SYSTEMD_DBUS,
+                                              SYSTEMD_PATH_DBUS,
+                                              SYSTEMD_INTERFACE_DBUS,
+-                                             "TryRestartUnit",
++                                             "StopUnit",
+                                              g_variant_new ("(ss)",
+                                                             "dbus.service",
+-                                                            "replace"),
++                                                            "fail"),
+                                              NULL,
+                                              G_DBUS_CALL_FLAGS_NO_AUTO_START,
+                                              -1, NULL, &error);

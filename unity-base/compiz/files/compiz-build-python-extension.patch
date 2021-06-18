@@ -1,0 +1,258 @@
+author		Dmitry Shachnev <mitya57@ubuntu.com>	2021-05-01 17:29:17 +0000
+committer	Bileto Bot <ci-train-bot@canonical.com>	2021-05-01 17:29:17 +0000
+Build the compizconfig Python extension using distutils. Bump required CMake version to 3.17 to make this possible. (LP: #1926046)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 170c46b..26df7b8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3,7 +3,7 @@
+ #
+ project (compiz C CXX)
+ 
+-cmake_minimum_required (VERSION 3.10.0)
++cmake_minimum_required (VERSION 3.17.0)
+ 
+ if (POLICY CMP0072)
+     cmake_policy (SET CMP0072 OLD)
+diff --git a/cmake/CompizCommon.cmake b/cmake/CompizCommon.cmake
+index 3bdba7a..766b22f 100644
+--- a/cmake/CompizCommon.cmake
++++ b/cmake/CompizCommon.cmake
+@@ -1,4 +1,4 @@
+-cmake_minimum_required (VERSION 3.10.0)
++cmake_minimum_required (VERSION 3.17.0)
+ 
+ if (POLICY CMP0072)
+     cmake_policy (SET CMP0072 OLD)
+diff --git a/compizconfig/ccsm/CMakeLists.txt b/compizconfig/ccsm/CMakeLists.txt
+index 913cd22..85a29c0 100644
+--- a/compizconfig/ccsm/CMakeLists.txt
++++ b/compizconfig/ccsm/CMakeLists.txt
+@@ -13,9 +13,9 @@ execute_process (COMMAND uname -p OUTPUT_VARIABLE PROC_ARCH)
+ string (REPLACE "\n" "" PROC_ARCH ${PROC_ARCH})
+ 
+ # Get Python Version
+-find_package (PythonInterp 3.0 REQUIRED)
++find_package (Python3 REQUIRED)
+ 
+-set (PY_VERSION "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
++set (PY_VERSION "${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}")
+ set (PY_BUILD_DIR lib.linux-${PROC_ARCH}-${PY_VERSION})
+ set (PY_SCRIPTS_DIR scripts-${PY_VERSION})
+ 
+@@ -34,17 +34,17 @@ string (STRIP ${COMPIZ_RELEASE_VERSION} COMPIZ_RELEASE_VERSION)
+ set (VERSION ${COMPIZ_RELEASE_VERSION})
+ 
+ add_custom_command (OUTPUT ${PY_CCSM_LIB}
+-		    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py build --build-base=${CMAKE_CURRENT_BINARY_DIR}/build --version=${VERSION}
++		    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py build --build-base=${CMAKE_CURRENT_BINARY_DIR}/build --version=${VERSION}
+ 		    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+ 		    COMMENT "Generating Python Bytecode")
+ 
+ add_custom_target (ccsm_module ALL DEPENDS
+                    ${PY_CCSM_LIB})
+ 
+-set (UNINSTALL_COMMAND "${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py uninstall --prefix=${CMAKE_INSTALL_PREFIX} --version=${VERSION}")
++set (UNINSTALL_COMMAND "${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py uninstall --prefix=${CMAKE_INSTALL_PREFIX} --version=${VERSION}")
+ 
+ compiz_add_code_to_uninstall_target (${UNINSTALL_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR})
+ 
+ install (CODE
+ 	 "message (\"Installing python files\")
+-	  execute_process (COMMAND cmake -DPY_EXECUTABLE=${PYTHON_EXECUTABLE} -DSETUP=${CMAKE_CURRENT_SOURCE_DIR}/setup.py -DPREFIX=${CMAKE_INSTALL_PREFIX} -DWDIR=${CMAKE_CURRENT_SOURCE_DIR} -DVERSION=${VERSION} -P ${compiz_SOURCE_DIR}/compizconfig/cmake/exec_setup_py_with_destdir.cmake)")
++	  execute_process (COMMAND cmake -DPY_EXECUTABLE=${Python3_EXECUTABLE} -DSETUP=${CMAKE_CURRENT_SOURCE_DIR}/setup.py -DPREFIX=${CMAKE_INSTALL_PREFIX} -DWDIR=${CMAKE_CURRENT_SOURCE_DIR} -DVERSION=${VERSION} -P ${compiz_SOURCE_DIR}/compizconfig/cmake/exec_setup_py_with_destdir.cmake)")
+diff --git a/compizconfig/compizconfig-python/CMakeLists.txt b/compizconfig/compizconfig-python/CMakeLists.txt
+index 9041098..f1f6bc2 100644
+--- a/compizconfig/compizconfig-python/CMakeLists.txt
++++ b/compizconfig/compizconfig-python/CMakeLists.txt
+@@ -5,93 +5,43 @@ set (CMAKE_PROJECT_NAME compizconfig-python)
+ execute_process (COMMAND uname -p OUTPUT_VARIABLE PROC_ARCH)
+ string (REPLACE "\n" "" PROC_ARCH ${PROC_ARCH})
+ 
+-find_package (PythonInterp 3.0 REQUIRED)
+-find_package (PythonLibs 3.0 REQUIRED)
++find_package (Python3 COMPONENTS Interpreter Development REQUIRED)
+ 
+ set (COMPIZCONFIG_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/compizconfig/libcompizconfig/include)
+ 
+-set (PY_VERSION "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
++set (PY_VERSION "${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}")
+ set (PY_BUILD_DIR lib.linux-${PROC_ARCH}-${PY_VERSION})
+-set (PY_SCRIPTS_DIR scripts-${PY_VERSION})
+-set (PY_COMPIZCONFIG_SRC ${CMAKE_CURRENT_BINARY_DIR}/compizconfig.c)
+ set (PY_COMPIZCONFIG_CYTHON ${CMAKE_CURRENT_SOURCE_DIR}/src/compizconfig.pyx)
+-
+-find_program(CYTHON_BIN cython3)
+-if(NOT CYTHON_BIN)
+-  message(FATAL_ERROR "Can not build because cython binary not found.")
+-endif()
+-
+-add_custom_command (OUTPUT ${PY_COMPIZCONFIG_SRC}
+-		    COMMAND ${CYTHON_BIN} -o ${PY_COMPIZCONFIG_SRC} ${PY_COMPIZCONFIG_CYTHON}
+-		    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+-		    DEPENDS ${PY_COMPIZCONFIG_CYTHON})
++set (COMPIZCONFIG_PYTHON_MODULE ${CMAKE_CURRENT_BINARY_DIR}/build/${PY_BUILD_DIR}/compizconfig.${Python3_SOABI}.so)
+ 
+ file (READ ${CMAKE_SOURCE_DIR}/VERSION COMPIZ_RELEASE_VERSION LIMIT 12 OFFSET 0)
+ string (STRIP ${COMPIZ_RELEASE_VERSION} COMPIZ_RELEASE_VERSION)
+ set (VERSION ${COMPIZ_RELEASE_VERSION})
+ 
+-include_directories (${PYTHON_INCLUDE_DIRS}
+-		     ${COMPIZCONFIG_INCLUDE_DIRS})
+-
+-# cython generates code that does type-punning, this trips
+-# up -Werror
+-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-strict-aliasing")
+-
+-# We need to remove the "lib"
+-set (CMAKE_SHARED_LIBRARY_PREFIX "")
+-
+-# We must build the python module using CMake instead of distutils.
+-#
+-# The only way in which the python module can be built using distutils
+-# is by using add_custom_command to "generate" it into existence.
+-# Unfortunately this has drawbacks. Namely, it is not possible for
+-# add_custom_command to depend on library targets. Because of that, there's
+-# no way that we can guarantee that libcompizconfig.so will be linked
+-# before compizconfig.so (which is required). The best that we can do
+-# there is to use add_custom_target, and make that target depend on the
+-# file, 
+-add_library (compizconfig_python_module SHARED
+-	     ${PY_COMPIZCONFIG_SRC})
++add_custom_command (OUTPUT ${COMPIZCONFIG_PYTHON_MODULE}
++                    COMMAND ${CMAKE_COMMAND} -E copy ${PY_COMPIZCONFIG_CYTHON} ${CMAKE_CURRENT_BINARY_DIR}
++                    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py build --version=${VERSION}
++                    DEPENDS ${PY_COMPIZCONFIG_CYTHON} compizconfig)
+ 
+-set_target_properties (compizconfig_python_module
+-		       PROPERTIES
+-		       OUTPUT_NAME
+-		       compizconfig)
++add_custom_target (compizconfig_python_module ALL
++                   DEPENDS ${COMPIZCONFIG_PYTHON_MODULE})
+ 
+-target_link_libraries (compizconfig_python_module
+-		       ${PYTHON_LIBRARIES}
+-		       compizconfig)
+-
+-set (UNINSTALL_COMMAND "${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py uninstall --prefix=${CMAKE_INSTALL_PREFIX} --version=${VERSION}")
++set (UNINSTALL_COMMAND "${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/setup.py uninstall --prefix=${CMAKE_INSTALL_PREFIX} --version=${VERSION}")
+ 
+ compiz_add_code_to_uninstall_target (${UNINSTALL_COMMAND} ${CMAKE_CURRENT_BINARY_DIR})
+ 
+-# This is probably not very portable, but we can't install using distutils
+-# as we cannot build with it safely
+-
+-if ($ENV{COMPIZ_DEB_BUILD})
+-    set (INSTALL_LAYOUT_DIR dist-packages)
+-else ($ENV{COMPIZ_DEB_BUILD})
+-    set (INSTALL_LAYOUT_DIR site-packages)
+-endif ($ENV{COMPIZ_DEB_BUILD})
+-
+-set (PYTHON_MODULE_DIR ${CMAKE_INSTALL_PREFIX}/lib/python${PY_VERSION}/${INSTALL_LAYOUT_DIR})
+-
+-install (TARGETS compizconfig_python_module
+-	 DESTINATION ${PYTHON_MODULE_DIR})
+-
+ install (CODE
+ 	 "message (\"Installing python files\")
+-	  execute_process (COMMAND cmake -DPY_EXECUTABLE=${PYTHON_EXECUTABLE} -DSETUP=${CMAKE_CURRENT_SOURCE_DIR}/setup.py -DPREFIX=${CMAKE_INSTALL_PREFIX} -DWDIR=${CMAKE_CURRENT_BINARY_DIR} -DVERSION=${VERSION} -P ${compiz_SOURCE_DIR}/compizconfig/cmake/exec_setup_py_with_destdir.cmake)")
++	  execute_process (COMMAND cmake -DPY_EXECUTABLE=${Python3_EXECUTABLE} -DSETUP=${CMAKE_CURRENT_SOURCE_DIR}/setup.py -DPREFIX=${CMAKE_INSTALL_PREFIX} -DWDIR=${CMAKE_CURRENT_BINARY_DIR} -DVERSION=${VERSION} -P ${compiz_SOURCE_DIR}/compizconfig/cmake/exec_setup_py_with_destdir.cmake)")
+ 
+ if (COMPIZ_BUILD_TESTING)
+ 
+         find_program (BASH_EXECUTABLE bash)
+-	mark_as_advanced (FORCE PYTHON_EXECUTABLE)
++	mark_as_advanced (FORCE Python3_EXECUTABLE)
+ 
+ 	file (GLOB PYTHON_TESTS "tests/test_*.py")
+ 
+-        if (PYTHON_EXECUTABLE AND
++        if (Python3_EXECUTABLE AND
+             BASH_EXECUTABLE)
+ 		set (MOCK_XML_SRC ${CMAKE_CURRENT_SOURCE_DIR}/tests/mock.xml)
+ 		set (MOCK_XML_FILE ${CMAKE_CURRENT_BINARY_DIR}/mock.xml)
+@@ -116,9 +66,9 @@ if (COMPIZ_BUILD_TESTING)
+                                   COMMAND ${BASH_EXECUTABLE}
+                                   ${CMAKE_SOURCE_DIR}/tests/util/run_with_ld_library_path.sh
+                                   ${CMAKE_BINARY_DIR}/compizconfig/libcompizconfig/src
+-                                  ${PYTHON_EXECUTABLE} ${PYTHON_TEST_FILE})
++                                  ${Python3_EXECUTABLE} ${PYTHON_TEST_FILE})
+ 		endforeach (PYTHON_TEST_FILE)
+-        endif (PYTHON_EXECUTABLE AND
++        endif (Python3_EXECUTABLE AND
+                BASH_EXECUTABLE)
+ 
+ endif (COMPIZ_BUILD_TESTING)
+diff --git a/compizconfig/compizconfig-python/setup.py b/compizconfig/compizconfig-python/setup.py
+index 963364d..db60746 100644
+--- a/compizconfig/compizconfig-python/setup.py
++++ b/compizconfig/compizconfig-python/setup.py
+@@ -4,6 +4,8 @@ from distutils.command.build import build as _build
+ from distutils.command.install import install as _install
+ from distutils.command.install_data import install_data as _install_data
+ from distutils.command.sdist import sdist as _sdist
++from distutils.extension import Extension
++from Cython.Build import cythonize
+ import os
+ import subprocess
+ import sys
+@@ -145,6 +147,11 @@ setup (
+   license          = "GPL",
+   maintainer       = "Guillaume Seguin",
+   maintainer_email = "guillaume@segu.in",
++  ext_modules      = cythonize([
++                         Extension("compizconfig", ["compizconfig.pyx"],
++                                   libraries=["compizconfig"],
++                                   library_dirs=["../libcompizconfig/src"])
++                     ]),
+   cmdclass         = {"uninstall" : uninstall,
+                       "install" : install,
+                       "install_data" : install_data,
+diff --git a/compizconfig/compizconfig-python/tests/compiz_config_test.py b/compizconfig/compizconfig-python/tests/compiz_config_test.py
+index 5007eaf..cb6dc22 100644
+--- a/compizconfig/compizconfig-python/tests/compiz_config_test.py
++++ b/compizconfig/compizconfig-python/tests/compiz_config_test.py
+@@ -1,8 +1,8 @@
+ import os
+ import sys
+-import subprocess
++from distutils.util import get_platform
+ 
+-arch = subprocess.Popen (["uname", "-p"], stdout=subprocess.PIPE).communicate ()[0][:-1]
++arch = get_platform()
+ 
+ os.environ["G_SLICE"] = "always-malloc"
+ os.environ["COMPIZ_METADATA_PATH"] = "compizconfig/compizconfig-python/"
+@@ -11,7 +11,7 @@ os.environ["XDG_CONFIG_HOME"] = "compizconfig/libcompizconfig/config"
+ os.environ["LIBCOMPIZCONFIG_BACKEND_PATH"] = "compizconfig/libcompizconfig/backend/"
+ os.environ["XDG_DATA_DIRS"] = "generated/"
+ 
+-sys.path.insert (0, "compizconfig/compizconfig-python")
++sys.path.insert (0, "compizconfig/compizconfig-python/build/lib.%s-%s.%s" % (arch, *sys.version_info[:2]))
+ 
+ import unittest
+ import compizconfig
+diff --git a/debian/control b/debian/control
+index 3fe9285..54edd0b 100644
+--- a/debian/control
++++ b/debian/control
+@@ -4,7 +4,7 @@ Priority: optional
+ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+ XSBC-Original-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+ Uploaders: David Nusinow <dnusinow@debian.org>, Sean Finney <seanius@debian.org>, Cyril Brulebois <kibi@debian.org>
+-Build-Depends: cmake (>= 3.10.0),
++Build-Depends: cmake (>= 3.17.0),
+                debhelper (>= 9~),
+                dh-python,
+                dh-translations,
+diff --git a/debian/python3-compizconfig.install b/debian/python3-compizconfig.install
+index 71b2a32..2e35966 100644
+--- a/debian/python3-compizconfig.install
++++ b/debian/python3-compizconfig.install
+@@ -1,2 +1,2 @@
+-usr/lib/*/*/compizconfig.so
+-usr/lib/*/dist-packages/compizconfig_python*
++usr/lib/python3/dist-packages/compizconfig.*.so
++usr/lib/python3/dist-packages/compizconfig_python*

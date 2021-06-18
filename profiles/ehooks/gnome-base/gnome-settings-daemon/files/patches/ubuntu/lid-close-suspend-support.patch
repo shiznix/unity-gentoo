@@ -1,0 +1,43 @@
+From: Tim Lunn <tim@feathertop.org>
+Date: Sun, 14 Jul 2013 10:30:08 +1000
+Subject: Revert "Remove unused settings" and add a 'handle-lid-switch'
+  inhibitor based on lid-close-*-action settings.
+
+This reverts commit 58cb4eee64bbd8ca43111b1f80fdaacde8ad5f12.
+---
+ ...me.settings-daemon.plugins.power.gschema.xml.in | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
+index 93c704e..7984f16 100644
+--- a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
++++ b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
+@@ -31,6 +31,28 @@
+       <summary>Whether to hibernate, suspend or do nothing when inactive</summary>
+       <description>The type of sleeping that should be performed when the computer is inactive.</description>
+     </key>
++    <!-- See http://bugzilla.gnome.org/637473 for rationale -->
++    <key name="lid-close-battery-action" enum="org.gnome.settings-daemon.GsdPowerActionType">
++      <default>'suspend'</default>
++      <summary>Laptop lid close action on battery</summary>
++      <description>The action to take when the laptop lid is closed and the laptop is on battery power.</description>
++    </key>
++    <key name="lid-close-ac-action" enum="org.gnome.settings-daemon.GsdPowerActionType">
++      <default>'suspend'</default>
++      <summary>Laptop lid close action when on AC</summary>
++      <description>The action to take when the laptop lid is closed and the laptop is on AC power.</description>
++    </key>
++    <key name="lid-close-suspend-with-external-monitor" type="b">
++      <default>false</default>
++      <summary>Laptop lid, when closed, will suspend even if there is an external monitor plugged in</summary>
++      <description>With no external monitors plugged in, closing a laptop's lid
++	will suspend the machine (as set by the lid-close-battery-action and
++	lid-close-ac-action keys).  By default, however, closing the lid when
++	an external monitor is present will not suspend the machine, so that one can keep
++	working on that monitor (e.g. for docking stations or media viewers).  Set this
++	key to False to keep the default behavior, or to True to suspend the laptop whenever the
++	lid is closed and regardless of external monitors.</description>
++    </key>
+     <key name="ambient-enabled" type="b">
+       <default>true</default>
+       <summary>Enable the ALS sensor</summary>

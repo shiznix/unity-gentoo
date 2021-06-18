@@ -1,0 +1,301 @@
+From: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Wed, 15 Aug 2018 17:13:26 +0200
+Subject: sessions: Tweak the system to make it for ubuntu.
+
+The session contains:
+ - ubuntu (gnome-shell with ubuntu tweaks) in ubuntu-session package
+ - unity in unity-session package
+ - gnome-shell in the main gnome-session package.
+ - ubuntu-communitheme-snap into ubuntu-session package
+ (TryExec enables to show them or not depends on the package installed)
+
+Forwarded: Not needed
+---
+ data/gnome-xorg.desktop.in.in                    |  2 +-
+ data/gnome.desktop.in.in                         |  2 +-
+ data/meson.build                                 | 47 +++++++++++++++++++++++-
+ data/ubuntu-communitheme-snap-xorg.desktop.in.in |  8 ++++
+ data/ubuntu-communitheme-snap.desktop.in.in      |  8 ++++
+ data/ubuntu-xorg.desktop.in.in                   |  8 ++++
+ data/ubuntu.desktop.in.in                        |  8 ++++
+ data/ubuntu.session.conf.in                      |  5 +++
+ data/ubuntu.session.desktop.in.in                |  4 ++
+ data/unity.desktop.in.in                         |  7 ++++
+ data/unity.session.desktop.in.in                 |  4 ++
+ data/wayland-sessions/meson.build                |  1 +
+ meson_post_install.py                            |  6 +--
+ po/POTFILES.in                                   |  7 ++++
+ po/POTFILES.skip                                 |  7 ++++
+ 15 files changed, 117 insertions(+), 7 deletions(-)
+ create mode 100644 data/ubuntu-communitheme-snap-xorg.desktop.in.in
+ create mode 100644 data/ubuntu-communitheme-snap.desktop.in.in
+ create mode 100644 data/ubuntu-xorg.desktop.in.in
+ create mode 100644 data/ubuntu.desktop.in.in
+ create mode 100644 data/ubuntu.session.conf.in
+ create mode 100644 data/ubuntu.session.desktop.in.in
+ create mode 100644 data/unity.desktop.in.in
+ create mode 100644 data/unity.session.desktop.in.in
+ create mode 100644 data/wayland-sessions/meson.build
+
+diff --git a/data/gnome-xorg.desktop.in.in b/data/gnome-xorg.desktop.in.in
+index 9a76fac..3ee3181 100644
+--- a/data/gnome-xorg.desktop.in.in
++++ b/data/gnome-xorg.desktop.in.in
+@@ -1,7 +1,7 @@
+ [Desktop Entry]
+ Name=GNOME on Xorg
+ Comment=This session logs you into GNOME
+-Exec=@bindir@/gnome-session
++Exec=@bindir@/gnome-session --session=gnome
+ TryExec=@bindir@/gnome-session
+ Type=Application
+ DesktopNames=GNOME
+diff --git a/data/gnome.desktop.in.in b/data/gnome.desktop.in.in
+index 7eec1de..d240f57 100644
+--- a/data/gnome.desktop.in.in
++++ b/data/gnome.desktop.in.in
+@@ -1,7 +1,7 @@
+ [Desktop Entry]
+ Name=GNOME
+ Comment=This session logs you into GNOME
+-Exec=@bindir@/gnome-session
++Exec=@bindir@/gnome-session --session=gnome
+ TryExec=@bindir@/gnome-session
+ Type=Application
+ DesktopNames=GNOME
+diff --git a/data/meson.build b/data/meson.build
+index e02b80d..221020f 100644
+--- a/data/meson.build
++++ b/data/meson.build
+@@ -2,7 +2,17 @@ desktop_plain = 'gnome'
+ 
+ desktops = [
+   desktop_plain,
+-  'gnome-xorg'
++  'gnome-xorg',
++  'ubuntu',
++  'ubuntu-xorg',
++  'ubuntu-communitheme-snap',
++  'ubuntu-communitheme-snap-xorg',
++  'unity',
++]
++
++wayland_desktops = [
++  'ubuntu',
++  'ubuntu-communitheme-snap',
+ ]
+ 
+ shell_component = {
+@@ -30,6 +40,25 @@ required_components = {
+   ],
+ }
+ 
++shell_component += {
++  'ubuntu': shell_component[desktop_plain],
++}
++
++ubuntu_required_components = []
++ubuntu_excluded_components = [
++  'org.gnome.SettingsDaemon.UsbProtection',
++]
++
++foreach component: required_components[desktop_plain]
++  if component not in ubuntu_excluded_components
++    ubuntu_required_components += component
++  endif
++endforeach
++
++required_components += {
++  'ubuntu': ubuntu_required_components
++}
++
+ if enable_session_selector
+   desktops += 'gnome-custom-session'
+ endif
+@@ -66,11 +95,25 @@ foreach name: desktops
+     install: true,
+     install_dir: install_dir
+   )
++
++  if name == desktop_plain or name in wayland_desktops
++    # We can't install the same target in two locations, so using a temporary
++    # location that the post install script will fix for us
++    custom_target(desktop + '-wayland',
++      command: [ 'cat', desktop_target ],
++      capture: true,
++      output: desktop + '.tmp-session',
++      install: true,
++      install_dir: session_datadir / 'wayland-sessions',
++    )
++  endif
+ endforeach
+ 
+ sessions = [
+   'gnome',
+-  'gnome-dummy'
++  'gnome-dummy',
++  'ubuntu',
++  'unity',
+ ]
+ 
+ foreach session: sessions
+diff --git a/data/ubuntu-communitheme-snap-xorg.desktop.in.in b/data/ubuntu-communitheme-snap-xorg.desktop.in.in
+new file mode 100644
+index 0000000..58e256e
+--- /dev/null
++++ b/data/ubuntu-communitheme-snap-xorg.desktop.in.in
+@@ -0,0 +1,8 @@
++[Desktop Entry]
++Name=Ubuntu with communitheme snap on Xorg
++Comment=This session logs you into Ubuntu
++Exec=env GNOME_SHELL_SESSION_MODE=ubuntu-communitheme /snap/communitheme/current/session
++TryExec=/snap/communitheme/current/session
++Type=Application
++DesktopNames=communitheme:ubuntu:GNOME
++X-GDM-SessionRegisters=true
+diff --git a/data/ubuntu-communitheme-snap.desktop.in.in b/data/ubuntu-communitheme-snap.desktop.in.in
+new file mode 100644
+index 0000000..ad3b18b
+--- /dev/null
++++ b/data/ubuntu-communitheme-snap.desktop.in.in
+@@ -0,0 +1,8 @@
++[Desktop Entry]
++Name=Ubuntu with communitheme snap
++Comment=This session logs you into Ubuntu
++Exec=env GNOME_SHELL_SESSION_MODE=ubuntu-communitheme /snap/communitheme/current/session
++TryExec=/snap/communitheme/current/session
++Type=Application
++DesktopNames=communitheme:ubuntu:GNOME
++X-GDM-SessionRegisters=true
+diff --git a/data/ubuntu-xorg.desktop.in.in b/data/ubuntu-xorg.desktop.in.in
+new file mode 100644
+index 0000000..071ebad
+--- /dev/null
++++ b/data/ubuntu-xorg.desktop.in.in
+@@ -0,0 +1,8 @@
++[Desktop Entry]
++Name=Ubuntu on Xorg
++Comment=This session logs you into Ubuntu
++Exec=env GNOME_SHELL_SESSION_MODE=ubuntu @bindir@/gnome-session --session=ubuntu
++TryExec=@bindir@/gnome-shell
++Type=Application
++DesktopNames=ubuntu:GNOME
++X-GDM-SessionRegisters=true
+diff --git a/data/ubuntu.desktop.in.in b/data/ubuntu.desktop.in.in
+new file mode 100644
+index 0000000..bc6a697
+--- /dev/null
++++ b/data/ubuntu.desktop.in.in
+@@ -0,0 +1,8 @@
++[Desktop Entry]
++Name=Ubuntu
++Comment=This session logs you into Ubuntu
++Exec=env GNOME_SHELL_SESSION_MODE=ubuntu @bindir@/gnome-session --session=ubuntu
++TryExec=@bindir@/gnome-shell
++Type=Application
++DesktopNames=ubuntu:GNOME
++X-GDM-SessionRegisters=true
+diff --git a/data/ubuntu.session.conf.in b/data/ubuntu.session.conf.in
+new file mode 100644
+index 0000000..8373d82
+--- /dev/null
++++ b/data/ubuntu.session.conf.in
+@@ -0,0 +1,5 @@
++[Unit]
++# Must be in sync with ubuntu.session
++@wants_required_components@
++
++Requires=@requires_component@.target
+diff --git a/data/ubuntu.session.desktop.in.in b/data/ubuntu.session.desktop.in.in
+new file mode 100644
+index 0000000..4ace628
+--- /dev/null
++++ b/data/ubuntu.session.desktop.in.in
+@@ -0,0 +1,4 @@
++[GNOME Session]
++Name=Ubuntu
++# Must be in sync with gnome-session@ubuntu.target.d/ubuntu.session.conf drop-in
++RequiredComponents=@required_components@;
+diff --git a/data/unity.desktop.in.in b/data/unity.desktop.in.in
+new file mode 100644
+index 0000000..2a489dc
+--- /dev/null
++++ b/data/unity.desktop.in.in
+@@ -0,0 +1,7 @@
++[Desktop Entry]
++Name=Unity
++Comment=This session logs you into Unity
++Exec=/usr/libexec/run-systemd-session unity-session.target
++TryExec=@bindir@/unity
++Type=Application
++DesktopNames=Unity:Unity7:ubuntu
+diff --git a/data/unity.session.desktop.in.in b/data/unity.session.desktop.in.in
+new file mode 100644
+index 0000000..615b492
+--- /dev/null
++++ b/data/unity.session.desktop.in.in
+@@ -0,0 +1,4 @@
++[GNOME Session]
++Name=Unity
++RequiredComponents=unity-settings-daemon;
++DesktopName=Unity:Unity7:ubuntu
+diff --git a/data/wayland-sessions/meson.build b/data/wayland-sessions/meson.build
+new file mode 100644
+index 0000000..8b13789
+--- /dev/null
++++ b/data/wayland-sessions/meson.build
+@@ -0,0 +1 @@
++
+diff --git a/meson_post_install.py b/meson_post_install.py
+index e2e352c..fb288a3 100644
+--- a/meson_post_install.py
++++ b/meson_post_install.py
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env python3
+ 
++import glob
+ import os
+ import shutil
+ import subprocess
+@@ -21,6 +22,5 @@ dst_dir = os.path.join(install_root, 'wayland-sessions')
+ if not os.path.exists(dst_dir):
+   os.makedirs(dst_dir)
+ 
+-src = os.path.join(install_root, 'xsessions', 'gnome.desktop')
+-dst = os.path.join(dst_dir, 'gnome.desktop')
+-shutil.copyfile(src, dst)
++for i in glob.glob(os.path.join(dst_dir, '*.tmp-session')):
++  os.rename(i, i[:-len('.tmp-session')])
+diff --git a/po/POTFILES.in b/po/POTFILES.in
+index a1401e4..5cf6bdc 100644
+--- a/po/POTFILES.in
++++ b/po/POTFILES.in
+@@ -8,6 +8,13 @@ data/gnome-wayland.desktop.in.in
+ data/gnome-xorg.desktop.in.in
+ data/org.gnome.SessionManager.gschema.xml.in
+ data/session-selector.ui
++data/ubuntu.desktop.in.in
++data/ubuntu-xorg.desktop.in.in
++data/ubuntu-communitheme-snap.desktop.in.in
++data/ubuntu-communitheme-snap-xorg.desktop.in.in
++data/ubuntu.session.desktop.in.in
++data/unity.desktop.in.in
++data/unity.session.desktop.in.in
+ gnome-session/gsm-fail-whale-dialog.c
+ gnome-session/gsm-manager.c
+ gnome-session/gsm-process-helper.c
+diff --git a/po/POTFILES.skip b/po/POTFILES.skip
+index d59455a..dd1be49 100644
+--- a/po/POTFILES.skip
++++ b/po/POTFILES.skip
+@@ -7,3 +7,10 @@ data/gnome-dummy.session.desktop.in
+ data/gnome.session.desktop.in
+ data/gnome-wayland.desktop.in
+ data/gnome-xorg.desktop.in
++data/ubuntu.desktop.in
++data/ubuntu-wayland.desktop.in
++data/ubuntu-communitheme-snap.desktop.in
++data/ubuntu-communitheme-snap-wayland.desktop.in
++data/ubuntu.session.desktop.in
++data/unity.desktop.in
++data/unity.session.desktop.in

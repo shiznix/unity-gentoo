@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python{3_7,3_8,3_9} )
 
 inherit distutils-r1 gnome2-utils ubuntu-versionator xdg-utils
 
-URELEASE="groovy"
+URELEASE="hirsute"
 UVER="+-${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 
 DESCRIPTION="Configuration manager for the Unity desktop environment"

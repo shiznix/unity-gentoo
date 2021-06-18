@@ -1,0 +1,50 @@
+From: =?utf-8?b?Ik1hcmNvIFRyZXZpc2FuIChUcmV2acOxbyki?= <mail@3v1n0.net>
+Date: Sat, 14 Nov 2020 01:15:11 +0100
+Subject: smartcard-manager: Only sync token state if it really changed
+
+Ignore doing updates if the token state didn't change.
+
+This should not matter in normal scenario, but it does when we're using
+the fallback function to check if the smartcard token changed.
+
+Origin: https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/208
+---
+ plugins/smartcard/gsd-smartcard-manager.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/plugins/smartcard/gsd-smartcard-manager.c b/plugins/smartcard/gsd-smartcard-manager.c
+index a6ee8fb..1475112 100644
+--- a/plugins/smartcard/gsd-smartcard-manager.c
++++ b/plugins/smartcard/gsd-smartcard-manager.c
+@@ -334,20 +334,23 @@ watch_one_event_from_module (GsdSmartcardManager       *self,
+                          * removal
+                          */
+                         gsd_smartcard_service_sync_token (self->service, slot, cancellable);
+-                }
+ 
+-                g_hash_table_remove (operation->smartcards, slot);
++                        g_hash_table_remove (operation->smartcards, slot);
++                }
+         }
+ 
+         if (token_is_present) {
+-                g_debug ("Detected smartcard insertion event in slot %lu",
+-                         gck_slot_get_handle (slot));
++                if (token_changed) {
++                        g_debug ("Detected smartcard insertion event in slot %lu",
++                                 gck_slot_get_handle (slot));
+ 
+-                g_hash_table_replace (operation->smartcards,
+-                                      g_object_ref (slot),
+-                                      gck_slot_get_token_info (slot));
++                        g_hash_table_replace (operation->smartcards,
++                                        g_object_ref (slot),
++                                        gck_slot_get_token_info (slot));
+ 
+-                gsd_smartcard_service_sync_token (self->service, slot, cancellable);
++                        gsd_smartcard_service_sync_token (self->service, slot,
++                                                          cancellable);
++                }
+         } else if (old_token == NULL) {
+                 /* If the just removed smartcard is not known to us then
+                  * ignore the removal event. NSS sends a synthentic removal

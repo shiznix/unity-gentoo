@@ -1,0 +1,41 @@
+From 3360f18d15cd6fabcadac56bc07d4ca133fa661f Mon Sep 17 00:00:00 2001
+From: Jonathan Matthew <jonathan@d14n.org>
+Date: Thu, 5 Nov 2020 22:41:39 +1000
+Subject: [PATCH] gst-helper: fix xfade playback with GStreamer 1.18+
+
+In 1.18, the identity element now provides a clock for the pipeline
+based on the system clock, which screws up timing in the output
+section of the xfade pipeline.  Switching to volume avoids this, and
+since it's left in passthrough mode, doesn't cost us anything.
+---
+ backends/gstreamer/rb-player-gst-helper.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/backends/gstreamer/rb-player-gst-helper.c b/backends/gstreamer/rb-player-gst-helper.c
+index ae7c263d6..f5e46afca 100644
+--- a/backends/gstreamer/rb-player-gst-helper.c
++++ b/backends/gstreamer/rb-player-gst-helper.c
+@@ -426,17 +426,17 @@ rb_gst_create_filter_bin ()
+ {
+ 	GstElement *bin;
+ 	GstElement *audioconvert;
+-	GstElement *identity;
++	GstElement *volume;
+ 	GstPad *pad;
+ 
+ 	bin = gst_bin_new ("filterbin");
+ 
+ 	audioconvert = gst_element_factory_make ("audioconvert", "filteraudioconvert");
+-	identity = gst_element_factory_make ("identity", "filteridentity");
+-	gst_bin_add_many (GST_BIN (bin), audioconvert, identity, NULL);
+-	gst_element_link (identity, audioconvert);
++	volume = gst_element_factory_make ("volume", "filtervolume");
++	gst_bin_add_many (GST_BIN (bin), volume, audioconvert, NULL);
++	gst_element_link (volume, audioconvert);
+ 
+-	pad = gst_element_get_static_pad (identity, "sink");
++	pad = gst_element_get_static_pad (volume, "sink");
+ 	gst_element_add_pad (bin, gst_ghost_pad_new ("sink", pad));
+ 	gst_object_unref (pad);
+ 
+

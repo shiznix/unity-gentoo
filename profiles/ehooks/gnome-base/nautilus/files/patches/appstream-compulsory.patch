@@ -1,0 +1,22 @@
+From: Jeremy Bicha <jbicha@ubuntu.com>
+Date: Fri, 13 Apr 2018 20:57:30 +0200
+Subject: Set nautilus as unremovable in GNOME Software
+
+for GNOME and Unity users since it is a depends of ubuntu-desktop
+and gnome-software does not warn about uninstalling dependent packages
+---
+ data/org.gnome.Nautilus.appdata.xml.in.in | 2 ++
+ 1 file changed, 2 insertions(+)
+
+Index: nautilus-3.37.90/data/org.gnome.Nautilus.appdata.xml.in.in
+===================================================================
+--- nautilus-3.37.90.orig/data/org.gnome.Nautilus.appdata.xml.in.in
++++ nautilus-3.37.90/data/org.gnome.Nautilus.appdata.xml.in.in
+@@ -58,5 +58,7 @@
+     <kudo>Notifications</kudo>
+     <kudo>SearchProvider</kudo>
+   </kudos>
++  <compulsory_for_desktop>GNOME</compulsory_for_desktop>
++  <compulsory_for_desktop>Unity</compulsory_for_desktop>
+ </component>
+ 

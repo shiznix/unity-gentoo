@@ -1,0 +1,5 @@
+ebuild_hook() {
+	ehook_use headerbar_adjust && sed -i \
+		-e "/show-close-button/{s/True/False/}" \
+		src/disks/ui/disks.ui
+}

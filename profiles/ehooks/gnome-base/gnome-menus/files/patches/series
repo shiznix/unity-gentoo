@@ -1,0 +1,10 @@
+01_default_prefix.patch
+02_kill_debian_menu.patch
+04_fix-other.patch
+08_settings-menus.patch
+09_games-menu.patch
+09_app_install_entry.patch
+11_science-menu.patch
+translate-Debian-directories.patch
+80_file_monitor_delayed.patch
+ubuntu_gcc_translations.patch

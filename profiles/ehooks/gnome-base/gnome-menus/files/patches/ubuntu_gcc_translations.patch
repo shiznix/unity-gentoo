@@ -1,0 +1,91 @@
+From: Sebastien Bacher <seb128@ubuntu.com>
+Date: Wed, 9 Oct 2013 15:36:19 +0200
+Subject: Revert dropping the gnome-control-center categories
+
+The gnome-control-center categories were deprecated in
+gnome-control-center 3.8 but unity-control-center is a fork
+of gnome-control-center 3.6.
+
+Bugs-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/gnome-menus/+bug/1232534
+---
+ desktop-directories/Hardware.directory.desktop.in | 6 ++++++
+ desktop-directories/Makefile.am                   | 9 ++++++++-
+ desktop-directories/Personal.directory.desktop.in | 7 +++++++
+ desktop-directories/System.directory.desktop.in   | 6 ++++++
+ po/POTFILES.in                                    | 3 +++
+ 5 files changed, 30 insertions(+), 1 deletion(-)
+ create mode 100644 desktop-directories/Hardware.directory.desktop.in
+ create mode 100644 desktop-directories/Personal.directory.desktop.in
+ create mode 100644 desktop-directories/System.directory.desktop.in
+
+Index: gnome-menus-3.36.0/desktop-directories/Hardware.directory.desktop.in
+===================================================================
+--- /dev/null
++++ gnome-menus-3.36.0/desktop-directories/Hardware.directory.desktop.in
+@@ -0,0 +1,6 @@
++[Desktop Entry]
++Name=Hardware
++Comment=Settings for several hardware devices
++# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
++Icon=preferences-desktop-peripherals
++Type=Directory
+Index: gnome-menus-3.36.0/desktop-directories/Makefile.am
+===================================================================
+--- gnome-menus-3.36.0.orig/desktop-directories/Makefile.am
++++ gnome-menus-3.36.0/desktop-directories/Makefile.am
+@@ -1,5 +1,11 @@
+ directorydir = $(datadir)/desktop-directories
+ 
++# Should be moved to gnome-control-center:
++directory_in_controlcenterfiles =			\
++	Hardware.directory.desktop.in			\
++	Personal.directory.desktop.in			\
++	System.directory.desktop.in
++
+ directory_in_files =				\
+ 	AudioVideo.directory.desktop.in			\
+ 	Development.directory.desktop.in		\
+@@ -16,7 +22,8 @@ directory_in_files =				\
+ 	X-GNOME-Sundry.directory.desktop.in 		\
+ 	X-GNOME-Utilities.directory.desktop.in 		\
+ 	X-GNOME-WebApplications.directory.desktop.in 	\
+-	X-GNOME-SystemSettings.directory.desktop.in
++	X-GNOME-SystemSettings.directory.desktop.in	\
++	$(directory_in_controlcenterfiles)
+ 
+ directory_DATA = $(directory_in_files:.directory.desktop.in=.directory)
+ 
+Index: gnome-menus-3.36.0/desktop-directories/Personal.directory.desktop.in
+===================================================================
+--- /dev/null
++++ gnome-menus-3.36.0/desktop-directories/Personal.directory.desktop.in
+@@ -0,0 +1,7 @@
++[Desktop Entry]
++# Translators: this is Personal as in "Personal settings"
++Name=Personal
++Comment=Personal settings
++Icon=preferences-desktop-personal
++# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
++Type=Directory
+Index: gnome-menus-3.36.0/desktop-directories/System.directory.desktop.in
+===================================================================
+--- /dev/null
++++ gnome-menus-3.36.0/desktop-directories/System.directory.desktop.in
+@@ -0,0 +1,6 @@
++[Desktop Entry]
++Name=System
++Comment=System settings
++# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
++Icon=preferences-system
++Type=Directory
+Index: gnome-menus-3.36.0/po/POTFILES.in
+===================================================================
+--- gnome-menus-3.36.0.orig/po/POTFILES.in
++++ gnome-menus-3.36.0/po/POTFILES.in
+@@ -31,3 +31,6 @@ debian/desktop-files/Settings.directory.
+ debian/desktop-files/SimulationGames.directory.desktop.in
+ debian/desktop-files/SportsGames.directory.desktop.in
+ debian/desktop-files/StrategyGames.directory.desktop.in
++desktop-directories/Hardware.directory.desktop.in
++desktop-directories/Personal.directory.desktop.in
++desktop-directories/System.directory.desktop.in

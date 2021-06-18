@@ -1,0 +1,389 @@
+# Description: Support calling gettext at runtime and putting the gettext domain into the .schemas file instead of replicating translations in /usr/share/gconf/schemas/*.schemas *and* /var/lib/gconf/defaults/%gconf-tree-$LANG.xml. This saves in the order of 90 MB uncompressed/10 MB compressed on hard disks.
+# Ubuntu: https://bugs.launchpad.net/bugs/123025
+# Upstream: http://bugzilla.gnome.org/show_bug.cgi?id=568845
+Index: gconf-3.2.6/backends/markup-tree.c
+===================================================================
+--- gconf-3.2.6.orig/backends/markup-tree.c	2013-01-23 11:17:01.915020064 +0100
++++ gconf-3.2.6/backends/markup-tree.c	2013-01-23 11:17:15.000000000 +0100
+@@ -89,6 +89,7 @@
+   char       *schema_name;
+   char       *mod_user;
+   GTime       mod_time;
++  const char *gettext_domain;
+ };
+ 
+ static LocalSchemaInfo* local_schema_info_new  (void);
+@@ -1630,6 +1631,8 @@
+                              gconf_schema_get_type (schema));
+       gconf_schema_set_owner (current_schema,
+                               gconf_schema_get_owner (schema));
++      gconf_schema_set_gettext_domain (current_schema,
++                              gconf_schema_get_gettext_domain (schema));
+     }
+ 
+   /* Update mod time */
+@@ -1842,6 +1845,8 @@
+       else if (c_local_schema && c_local_schema->long_desc)
+         gconf_schema_set_long_desc (schema, c_local_schema->long_desc);
+ 
++      gconf_schema_set_gettext_domain (schema, entry->gettext_domain);
++
+       return retval;
+     }
+ }
+@@ -2362,9 +2367,11 @@
+   /* check out the crack; "ltype" is for nodes storing a list,
+    * and "list_type" is for nodes storing a schema
+    */
++  const char *gettext_domain;
+   const char *ltype;
+   const char *list_type;
+   const char *owner;
++
+   GConfValueType vtype;
+   const char *dummy1, *dummy2, *dummy3, *dummy4;
+   
+@@ -2386,6 +2393,7 @@
+   car_type = NULL;
+   cdr_type = NULL;
+   owner = NULL;
++  gettext_domain = NULL;
+ 
+   if (!locate_attributes (context, element_name, attribute_names, attribute_values,
+                           error,
+@@ -2397,6 +2405,7 @@
+                           "car_type", &car_type,
+                           "cdr_type", &cdr_type,
+                           "owner", &owner,
++                          "gettext_domain", &gettext_domain,
+ 
+                           /* And these are just to eat any error messages */
+                           "name", &dummy1,
+@@ -2611,6 +2620,9 @@
+         if (owner)
+           gconf_schema_set_owner (schema, owner);
+ 
++        if (gettext_domain)
++          gconf_schema_set_gettext_domain (schema, gettext_domain);
++
+         gconf_value_set_schema_nocopy (*retval, schema);
+       }
+       break;
+@@ -2709,6 +2721,7 @@
+       const char *mtime;
+       const char *schema;
+       const char *type;
++      const char *gettext_domain;
+       const char *dummy1, *dummy2, *dummy3, *dummy4;
+       const char *dummy5, *dummy6, *dummy7;
+       GConfValue *value;
+@@ -2719,6 +2732,7 @@
+       mtime = NULL;
+       schema = NULL;
+       type = NULL;
++      gettext_domain = NULL;
+ 
+       if (!locate_attributes (context, element_name, attribute_names, attribute_values,
+                               error,
+@@ -2727,6 +2741,7 @@
+                               "mtime", &mtime,
+                               "schema", &schema,
+                               "type", &type,
++                              "gettext_domain", &gettext_domain,
+                           
+                               /* These are allowed but we don't use them until
+                                * parse_value_element
+@@ -2794,6 +2809,9 @@
+        */
+       if (schema)
+         entry->schema_name = g_strdup (schema);
++
++      if (gettext_domain)
++        entry->gettext_domain = g_intern_string (gettext_domain);
+     }
+   else
+     {
+@@ -3741,6 +3759,7 @@
+         GConfSchema *schema;
+         GConfValueType stype;
+         const char *owner;
++        const char *gettext_domain;
+         
+         schema = gconf_value_get_schema (value);
+ 
+@@ -3762,6 +3781,23 @@
+               {
+                 g_free (s);
+                 return FALSE;
++              }
++            
++            g_free (s);
++          }
++
++        gettext_domain = gconf_schema_get_gettext_domain (schema);
++        
++        if (gettext_domain)
++          {
++            char *s;
++
++            s = g_markup_escape_text (gettext_domain, -1);
++            
++            if (fprintf (f, " gettext_domain=\"%s\"", s) < 0)
++              {
++                g_free (s);
++                return FALSE;
+               }
+             
+             g_free (s);
+Index: gconf-3.2.6/doc/gconf-1.0.dtd
+===================================================================
+--- gconf-3.2.6.orig/doc/gconf-1.0.dtd	2013-01-23 11:17:01.915020064 +0100
++++ gconf-3.2.6/doc/gconf-1.0.dtd	2013-01-23 11:17:01.903020063 +0100
+@@ -7,7 +7,7 @@
+ <!-- A single schema. What I am trying to say is "this set of
+ elements, in any order". Duplicate elements (apart from <locale>) are
+ not allowed). -->
+-<!ELEMENT schema  (key|applyto*|owner?|type|(list_type|(car_type,cdr_type))?|default?|locale*)*>
++<!ELEMENT schema  (key|applyto*|owner?|type|(list_type|(car_type,cdr_type))?|default?|locale*|gettext_domain?)*>
+ 
+ <!-- The key for this schema (e.g. /schemas/apps/foo/bar) -->
+ <!ELEMENT key     (#PCDATA)>
+Index: gconf-3.2.6/gconf/gconf-internals.c
+===================================================================
+--- gconf-3.2.6.orig/gconf/gconf-internals.c	2013-01-23 11:17:01.915020064 +0100
++++ gconf-3.2.6/gconf/gconf-internals.c	2013-01-23 11:17:01.907020064 +0100
+@@ -514,6 +514,7 @@
+   cs->short_desc = CORBA_string_dup (gconf_schema_get_short_desc (sc) ? gconf_schema_get_short_desc (sc) : "");
+   cs->long_desc = CORBA_string_dup (gconf_schema_get_long_desc (sc) ? gconf_schema_get_long_desc (sc) : "");
+   cs->owner = CORBA_string_dup (gconf_schema_get_owner (sc) ? gconf_schema_get_owner (sc) : "");
++  cs->gettext_domain = CORBA_string_dup (gconf_schema_get_gettext_domain (sc) ? gconf_schema_get_gettext_domain (sc) : "");
+ 
+   {
+     gchar* encoded;
+@@ -601,6 +602,14 @@
+         gconf_schema_set_owner(sc, cs->owner);
+     }
+       
++  if (*cs->gettext_domain != '\0')
++    {
++      if (!g_utf8_validate (cs->gettext_domain, -1, NULL))
++        gconf_log (GCL_ERR, _("Invalid UTF-8 in gettext domain for schema"));
++      else
++        gconf_schema_set_gettext_domain(sc, cs->gettext_domain);
++    }
++      
+   {
+     GConfValue* val;
+ 
+Index: gconf-3.2.6/gconf/gconf-schema.c
+===================================================================
+--- gconf-3.2.6.orig/gconf/gconf-schema.c	2013-01-23 11:17:01.915020064 +0100
++++ gconf-3.2.6/gconf/gconf-schema.c	2013-01-23 11:17:01.907020064 +0100
+@@ -32,9 +32,10 @@
+   GConfValueType car_type; /* Pair car type of the described entry */
+   GConfValueType cdr_type; /* Pair cdr type of the described entry */
+   gchar* locale;       /* Schema locale */
+-  gchar* owner;        /* Name of creating application */
++  const gchar* owner;        /* Name of creating application */
+   gchar* short_desc;   /* 40 char or less description, no newlines */
+   gchar* long_desc;    /* could be a paragraph or so */
++  const gchar* gettext_domain; /* description gettext domain */
+   GConfValue* default_value; /* Default value of the key */
+ } GConfRealSchema;
+ 
+@@ -63,7 +64,6 @@
+   g_free (real->locale);
+   g_free (real->short_desc);
+   g_free (real->long_desc);
+-  g_free (real->owner);
+ 
+   if (real->default_value)
+     gconf_value_free (real->default_value);
+@@ -91,7 +91,9 @@
+ 
+   dest->long_desc = g_strdup (real->long_desc);
+ 
+-  dest->owner = g_strdup (real->owner);
++  dest->gettext_domain = real->gettext_domain;
++
++  dest->owner = real->owner;
+ 
+   dest->default_value = real->default_value ? gconf_value_copy (real->default_value) : NULL;
+   
+@@ -136,6 +138,17 @@
+     REAL_SCHEMA (sc)->locale = NULL;
+ }
+ 
++void
++gconf_schema_set_gettext_domain (GConfSchema* sc, const gchar* domain)
++{
++  g_return_if_fail (domain == NULL || g_utf8_validate (domain, -1, NULL));
++  
++  if (domain)
++    REAL_SCHEMA (sc)->gettext_domain = g_intern_string (domain);
++  else 
++    REAL_SCHEMA (sc)->gettext_domain = NULL;
++}
++
+ void          
+ gconf_schema_set_short_desc (GConfSchema* sc, const gchar* desc)
+ {
+@@ -169,11 +182,8 @@
+ {
+   g_return_if_fail (owner == NULL || g_utf8_validate (owner, -1, NULL));
+   
+-  if (REAL_SCHEMA (sc)->owner)
+-    g_free (REAL_SCHEMA (sc)->owner);
+-
+   if (owner)
+-    REAL_SCHEMA (sc)->owner = g_strdup (owner);
++    REAL_SCHEMA (sc)->owner = g_intern_string (owner);
+   else
+     REAL_SCHEMA (sc)->owner = NULL;
+ }
+@@ -228,6 +238,14 @@
+       return FALSE;
+     }
+ 
++  if (real->gettext_domain && !g_utf8_validate (real->gettext_domain, -1, NULL))
++    {
++      g_set_error (err, GCONF_ERROR,
++                   GCONF_ERROR_FAILED,
++                   _("Schema contains invalid UTF-8"));
++      return FALSE;
++    }
++
+   if (real->owner && !g_utf8_validate (real->owner, -1, NULL))
+     {
+       g_set_error (err, GCONF_ERROR,
+@@ -299,11 +317,32 @@
+ }
+ 
+ const char*
++gconf_schema_get_gettext_domain (const GConfSchema *schema)
++{
++  g_return_val_if_fail (schema != NULL, NULL);
++
++  return REAL_SCHEMA (schema)->gettext_domain;
++}
++
++static inline const char *
++schema_translate (const GConfSchema *schema,
++                  const char        *string)
++{
++  if (REAL_SCHEMA (schema)->gettext_domain)
++    {
++      bind_textdomain_codeset (REAL_SCHEMA (schema)->gettext_domain, "UTF-8");
++      return g_dgettext(REAL_SCHEMA (schema)->gettext_domain, string);
++    }
++  else
++    return string;
++}
++
++const char*
+ gconf_schema_get_short_desc (const GConfSchema *schema)
+ {
+   g_return_val_if_fail (schema != NULL, NULL);
+ 
+-  return REAL_SCHEMA (schema)->short_desc;
++ return schema_translate (schema, REAL_SCHEMA (schema)->short_desc);
+ }
+ 
+ const char*
+@@ -311,7 +350,7 @@
+ {
+   g_return_val_if_fail (schema != NULL, NULL);
+ 
+-  return REAL_SCHEMA (schema)->long_desc;
++ return schema_translate (schema, REAL_SCHEMA (schema)->long_desc);
+ }
+ 
+ const char*
+Index: gconf-3.2.6/gconf/gconf-schema.h
+===================================================================
+--- gconf-3.2.6.orig/gconf/gconf-schema.h	2013-01-23 11:17:01.915020064 +0100
++++ gconf-3.2.6/gconf/gconf-schema.h	2013-01-23 11:17:01.907020064 +0100
+@@ -55,6 +55,8 @@
+                                             GConfValueType  type);
+ void gconf_schema_set_locale               (GConfSchema    *sc,
+                                             const gchar    *locale);
++void gconf_schema_set_gettext_domain       (GConfSchema    *sc,
++                                            const gchar    *domain);
+ void gconf_schema_set_short_desc           (GConfSchema    *sc,
+                                             const gchar    *desc);
+ void gconf_schema_set_long_desc            (GConfSchema    *sc,
+@@ -72,6 +74,7 @@
+ GConfValueType gconf_schema_get_car_type      (const GConfSchema *schema);
+ GConfValueType gconf_schema_get_cdr_type      (const GConfSchema *schema);
+ const char*    gconf_schema_get_locale        (const GConfSchema *schema);
++const char*    gconf_schema_get_gettext_domain(const GConfSchema *schema);
+ const char*    gconf_schema_get_short_desc    (const GConfSchema *schema);
+ const char*    gconf_schema_get_long_desc     (const GConfSchema *schema);
+ const char*    gconf_schema_get_owner         (const GConfSchema *schema);
+Index: gconf-3.2.6/gconf/gconftool.c
+===================================================================
+--- gconf-3.2.6.orig/gconf/gconftool.c	2013-01-23 11:17:01.915020064 +0100
++++ gconf-3.2.6/gconf/gconftool.c	2013-01-23 11:17:01.911020064 +0100
+@@ -3295,6 +3295,7 @@
+   GConfValueType cdr_type;
+   GConfValue* global_default;
+   GHashTable* hash;
++  gchar* gettext_domain;
+ };
+ 
+ static int
+@@ -3547,6 +3548,15 @@
+               else
+                 g_printerr (_("WARNING: empty <applyto> node"));
+             }
++          else if (strcmp((char *)iter->name, "gettext_domain") == 0)
++            {
++              tmp = (char *)xmlNodeGetContent(iter);
++              if (tmp)
++                {
++                  info->gettext_domain = g_strdup(tmp);
++                  xmlFree(tmp);
++                }
++            }
+           else
+             g_printerr (_("WARNING: node <%s> not understood below <schema>\n"),
+ 			iter->name);
+@@ -3636,6 +3646,9 @@
+   if (info->owner != NULL)
+     gconf_schema_set_owner(schema, info->owner);
+ 
++  if (info->gettext_domain != NULL)
++    gconf_schema_set_gettext_domain(schema, info->gettext_domain);
++
+   xmlFree(name);
+ 
+   /* Locale-specific info */
+@@ -3765,6 +3778,7 @@
+   info.apply_to = NULL;
+   info.owner = NULL;
+   info.global_default = NULL;
++  info.gettext_domain = NULL;
+   info.hash = g_hash_table_new(g_str_hash, g_str_equal);
+   
+   extract_global_info(node, &info);
+@@ -3801,6 +3815,8 @@
+             ;  /* nothing */
+           else if (strcmp((char *)iter->name, "applyto") == 0)
+             ;  /* nothing */
++          else if (strcmp((char *)iter->name, "gettext_domain") == 0)
++            ;  /* nothing */
+           else if (strcmp((char *)iter->name, "locale") == 0)
+             {
+               process_locale_info(iter, &info);
+Index: gconf-3.2.6/gconf/GConfX.idl
+===================================================================
+--- gconf-3.2.6.orig/gconf/GConfX.idl	2013-01-23 11:17:01.915020064 +0100
++++ gconf-3.2.6/gconf/GConfX.idl	2013-01-23 11:17:01.911020064 +0100
+@@ -16,6 +16,7 @@
+   string short_desc;
+   string long_desc;
+   string owner;
++  string gettext_domain;
+   // Work around lack of recursive data types
+   string encoded_default_value;
+ };

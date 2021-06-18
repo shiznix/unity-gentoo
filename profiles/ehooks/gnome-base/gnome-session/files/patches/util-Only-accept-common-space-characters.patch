@@ -1,0 +1,38 @@
+From: Benjamin Berg <bberg@redhat.com>
+Date: Mon, 19 Oct 2020 16:27:59 +0200
+Subject: util: Only accept common space characters
+
+Specifically, systemd only permits " \t\n" and we should stick to the
+same set of permitted space characters.
+
+See also
+  https://github.com/systemd/systemd/issues/17378
+
+Bug: https://gitlab.gnome.org/GNOME/gnome-session/-/issues/70
+Origin: upstream, 40, commit:fe22c4ee12922d790478bfe8b5b2e7c1313ca2f0
+---
+ gnome-session/gsm-util.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gnome-session/gsm-util.c b/gnome-session/gsm-util.c
+index 18a9470..9d05fd7 100644
+--- a/gnome-session/gsm-util.c
++++ b/gnome-session/gsm-util.c
+@@ -550,7 +550,7 @@ gsm_util_export_activation_environment (GError     **error)
+                 return FALSE;
+         }
+ 
+-        value_regex = g_regex_new ("^([[:blank:]]|[^[:cntrl:]])*$", G_REGEX_OPTIMIZE, 0, error);
++        value_regex = g_regex_new ("^([ \t\n]|[^[:cntrl:]])*$", G_REGEX_OPTIMIZE, 0, error);
+ 
+         if (value_regex == NULL) {
+                 return FALSE;
+@@ -633,7 +633,7 @@ gsm_util_export_user_environment (GError     **error)
+                 return FALSE;
+         }
+ 
+-        regex = g_regex_new ("^[a-zA-Z_][a-zA-Z0-9_]*=([[:blank:]]|[^[:cntrl:]])*$", G_REGEX_OPTIMIZE, 0, error);
++        regex = g_regex_new ("^[a-zA-Z_][a-zA-Z0-9_]*=([ \t\n]|[^[:cntrl:]])*$", G_REGEX_OPTIMIZE, 0, error);
+ 
+         if (regex == NULL) {
+                 return FALSE;

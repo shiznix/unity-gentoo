@@ -18,7 +18,7 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0/9.0.2"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
@@ -37,9 +37,10 @@ src_unpack() {
 }
 
 src_prepare() {
-	eapply "${MY_P}${UVER_PREFIX}${UVER}.diff"
-	eapply "${FILESDIR}/${PN}-fix-build-against-vala-0.52.patch"
+	eapply "${S}/${MY_P}${UVER_PREFIX}${UVER}.diff"
+	rm -r "${S}"/debian/patches     # patches already applied
 	ubuntu-versionator_src_prepare
+	eapply "${FILESDIR}/${PN}-fix-build-against-vala-0.52.patch"
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf

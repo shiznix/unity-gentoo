@@ -1,0 +1,34 @@
+From: Simon McVittie <smcv@debian.org>
+Date: Wed, 17 Jul 2019 17:20:23 +0100
+Subject: Disable accessibility-dump (aka a11ytests) test
+
+This test seems to be unreliable, with its results depending on
+unknown environmental factors. Upstream disable it for CI purposes,
+so we should probably do the same.
+
+Forwarded: no
+---
+ testsuite/a11y/Makefile.am | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/testsuite/a11y/Makefile.am b/testsuite/a11y/Makefile.am
+index 73519e9..9b475b4 100644
+--- a/testsuite/a11y/Makefile.am
++++ b/testsuite/a11y/Makefile.am
+@@ -28,8 +28,6 @@ TESTS_ENVIRONMENT = 			\
+ 	GTK_CSD=1			\
+ 	G_ENABLE_DIAGNOSTIC=0
+ 
+-TEST_PROGS += accessibility-dump
+-
+ TEST_PROGS += tree-performance
+ 
+ TEST_PROGS += text
+@@ -89,7 +87,6 @@ testdata = \
+ 	$(NULL)
+ 
+ test_in_files = \
+-	a11ytests.test.in \
+ 	a11ychildren.test.in \
+ 	a11ytree.test.in \
+ 	a11yvalue.test.in \

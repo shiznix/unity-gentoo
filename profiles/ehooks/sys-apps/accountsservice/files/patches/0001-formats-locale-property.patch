@@ -1,0 +1,278 @@
+From 8fe53c3b9b65ddb720336ff6ff85ffd8a63819ca Mon Sep 17 00:00:00 2001
+From: Gunnar Hjalmarsson <ubuntu@gunnar.cc>
+Date: Thu, 21 Dec 2017 15:03:24 +1300
+Subject: [PATCH 01/12] Addition of FormatsLocale property and SetFormatsLocale
+ method
+
+---
+ data/org.freedesktop.Accounts.User.xml | 45 ++++++++++++++++++++
+ src/libaccountsservice/act-user.c      | 55 ++++++++++++++++++++++++
+ src/libaccountsservice/act-user.h      |  3 ++
+ src/user.c                             | 59 ++++++++++++++++++++++++++
+ 4 files changed, 162 insertions(+)
+
+diff --git a/data/org.freedesktop.Accounts.User.xml b/data/org.freedesktop.Accounts.User.xml
+index 3b839a3..d4adc3f 100644
+--- a/data/org.freedesktop.Accounts.User.xml
++++ b/data/org.freedesktop.Accounts.User.xml
+@@ -150,6 +150,41 @@
+     </doc:doc>
+   </method>
+ 
++  <method name="SetFormatsLocale">
++    <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
++    <arg name="formats_locale" direction="in" type="s">
++      <doc:doc>
++        <doc:summary>
++          The new regional formats, as a locale specification like "de_DE.UTF-8".
++        </doc:summary>
++      </doc:doc>
++    </arg>
++    <doc:doc>
++      <doc:description>
++        <doc:para>
++          Sets the users regional formats.
++        </doc:para>
++      </doc:description>
++      <doc:permission>
++        The caller needs one of the following PolicyKit authorizations:
++        <doc:list>
++          <doc:item>
++            <doc:term>org.freedesktop.accounts.change-own-user-data</doc:term>
++            <doc:definition>To change his own language</doc:definition>
++          </doc:item>
++          <doc:item>
++            <doc:term>org.freedesktop.accounts.user-administration</doc:term>
++            <doc:definition>To change the language of another user</doc:definition>
++          </doc:item>
++        </doc:list>
++      </doc:permission>
++      <doc:errors>
++        <doc:error name="org.freedesktop.Accounts.Error.PermissionDenied">if the caller lacks the appropriate PolicyKit authorization</doc:error>
++        <doc:error name="org.freedesktop.Accounts.Error.Failed">if the operation failed</doc:error>
++      </doc:errors>
++    </doc:doc>
++  </method>
++
+   <method name="SetXSession">
+     <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
+     <annotation name="org.freedesktop.DBus.GLib.CSymbol" value="user_set_x_session"/>
+@@ -771,6 +806,16 @@
+     </doc:doc>
+   </property>
+ 
++  <property name="FormatsLocale" type="s" access="read">
++    <doc:doc>
++      <doc:description>
++        <doc:para>
++          The users regional formats, as a locale specification like "de_DE.UTF-8".
++        </doc:para>
++      </doc:description>
++    </doc:doc>
++  </property>
++
+   <property name="XSession" type="s" access="read">
+     <doc:doc>
+       <doc:description>
+diff --git a/src/libaccountsservice/act-user.c b/src/libaccountsservice/act-user.c
+index e66acb1..2861518 100644
+--- a/src/libaccountsservice/act-user.c
++++ b/src/libaccountsservice/act-user.c
+@@ -95,6 +95,7 @@ enum {
+         PROP_LOGIN_HISTORY,
+         PROP_ICON_FILE,
+         PROP_LANGUAGE,
++        PROP_FORMATS_LOCALE,
+         PROP_X_SESSION,
+         PROP_IS_LOADED
+ };
+@@ -386,6 +387,13 @@ act_user_class_init (ActUserClass *class)
+                                                               "User's locale.",
+                                                               NULL,
+                                                               G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
++        g_object_class_install_property (gobject_class,
++                                         PROP_FORMATS_LOCALE,
++                                         g_param_spec_string ("formats_locale",
++                                                              "Regional Formats",
++                                                              "User's regional formats.",
++                                                              NULL,
++                                                              G_PARAM_READABLE));
+         g_object_class_install_property (gobject_class,
+                                          PROP_X_SESSION,
+                                          g_param_spec_string ("x-session",
+@@ -1026,6 +1034,25 @@ act_user_get_language (ActUser *user)
+         return accounts_user_get_language (user->accounts_proxy);
+ }
+ 
++/**
++ * act_user_get_formats_locale:
++ * @user: a #ActUser
++ *
++ * Returns the path to the configured formats locale of @user.
++ *
++ * Returns: (transfer none): a path to an icon
++ */
++const char *
++act_user_get_formats_locale (ActUser *user)
++{
++        g_return_val_if_fail (ACT_IS_USER (user), NULL);
++
++        if (user->accounts_proxy == NULL)
++                return NULL;
++
++        return accounts_user_get_formats_locale (user->accounts_proxy);
++}
++
+ /**
+  * act_user_get_x_session:
+  * @user: a #ActUser
+@@ -1310,6 +1337,34 @@ act_user_get_password_expiration_policy (ActUser *user,
+         }
+ }
+ 
++/**
++ * act_user_set_formats_locale:
++ * @user: the user object to alter.
++ * @formats_locale: a locale (e.g. en_US.utf8)
++ *
++ * Assigns a new formats locale for @user.
++ *
++ * Note this function is synchronous and ignores errors.
++ **/
++void
++act_user_set_formats_locale (ActUser    *user,
++                             const char *formats_locale)
++{
++        g_autoptr(GError) error = NULL;
++
++        g_return_if_fail (ACT_IS_USER (user));
++        g_return_if_fail (formats_locale != NULL);
++        g_return_if_fail (ACCOUNTS_IS_USER (user->accounts_proxy));
++
++        if (!accounts_user_call_set_formats_locale_sync (user->accounts_proxy,
++                                                         formats_locale,
++                                                         NULL,
++                                                         &error)) {
++                g_warning ("SetFormatsLocale call failed: %s", error->message);
++                return;
++        }
++}
++
+ /**
+  * act_user_set_email:
+  * @user: the user object to alter.
+diff --git a/src/libaccountsservice/act-user.h b/src/libaccountsservice/act-user.h
+index 34d7fe3..323e3a5 100644
+--- a/src/libaccountsservice/act-user.h
++++ b/src/libaccountsservice/act-user.h
+@@ -78,6 +78,7 @@ gboolean       act_user_is_local_account          (ActUser   *user);
+ gboolean       act_user_is_nonexistent            (ActUser   *user);
+ const char    *act_user_get_icon_file             (ActUser   *user);
+ const char    *act_user_get_language              (ActUser   *user);
++const char    *act_user_get_formats_locale        (ActUser   *user);
+ const char    *act_user_get_x_session             (ActUser   *user);
+ const char    *act_user_get_session               (ActUser   *user);
+ const char    *act_user_get_session_type          (ActUser   *user);
+@@ -99,6 +100,8 @@ void           act_user_set_email                 (ActUser    *user,
+                                                    const char *email);
+ void           act_user_set_language              (ActUser    *user,
+                                                    const char *language);
++void           act_user_set_formats_locale        (ActUser    *user,
++                                                   const char *formats_locale);
+ void           act_user_set_x_session             (ActUser    *user,
+                                                    const char *x_session);
+ void           act_user_set_session               (ActUser    *user,
+diff --git a/src/user.c b/src/user.c
+index 9f57af5..beb36a3 100644
+--- a/src/user.c
++++ b/src/user.c
+@@ -256,6 +256,12 @@ user_update_from_keyfile (User     *user,
+                 g_clear_pointer (&s, g_free);
+         }
+ 
++        s = g_key_file_get_string (keyfile, "User", "FormatsLocale", NULL);
++        if (s != NULL) {
++                accounts_user_set_formats_locale (ACCOUNTS_USER (user), s);
++                g_clear_pointer (&s, g_free);
++        }
++
+         s = g_key_file_get_string (keyfile, "User", "XSession", NULL);
+         if (s != NULL) {
+                 accounts_user_set_xsession (ACCOUNTS_USER (user), s);
+@@ -348,6 +354,9 @@ user_save_to_keyfile (User     *user,
+         if (accounts_user_get_session_type (ACCOUNTS_USER (user)))
+                 g_key_file_set_string (keyfile, "User", "SessionType", accounts_user_get_session_type (ACCOUNTS_USER (user)));
+ 
++        if (accounts_user_get_formats_locale (ACCOUNTS_USER (user)))
++                g_key_file_set_string (keyfile, "User", "FormatsLocale", accounts_user_get_formats_locale (ACCOUNTS_USER (user)));
++
+         if (accounts_user_get_xsession (ACCOUNTS_USER (user)))
+                 g_key_file_set_string (keyfile, "User", "XSession", accounts_user_get_xsession (ACCOUNTS_USER (user)));
+ 
+@@ -1152,6 +1161,55 @@ user_set_session_type (AccountsUser          *auser,
+         return TRUE;
+ }
+ 
++static void
++user_change_formats_locale_authorized_cb (Daemon                *daemon,
++                                          User                  *user,
++                                          GDBusMethodInvocation *context,
++                                          gpointer               user_data)
++
++{
++        const gchar *formats_locale = user_data;
++
++        if (g_strcmp0 (accounts_user_get_formats_locale (ACCOUNTS_USER (user)), formats_locale) != 0) {
++                accounts_user_set_formats_locale (ACCOUNTS_USER (user), formats_locale);
++
++                save_extra_data (user);
++        }
++
++        accounts_user_complete_set_formats_locale (ACCOUNTS_USER (user), context);
++}
++
++static gboolean
++user_set_formats_locale (AccountsUser          *auser,
++                         GDBusMethodInvocation *context,
++                         const gchar           *formats_locale)
++{
++        User *user = (User*)auser;
++        int uid;
++        const gchar *action_id;
++
++        if (!get_caller_uid (context, &uid)) {
++                throw_error (context, ERROR_FAILED, "identifying caller failed");
++                return FALSE;
++        }
++
++        if (accounts_user_get_uid (ACCOUNTS_USER (user)) == (uid_t) uid)
++                action_id = "org.freedesktop.accounts.change-own-user-data";
++        else
++                action_id = "org.freedesktop.accounts.user-administration";
++
++        daemon_local_check_auth (user->daemon,
++                                 user,
++                                 action_id,
++                                 TRUE,
++                                 user_change_formats_locale_authorized_cb,
++                                 context,
++                                 g_strdup (formats_locale),
++                                 (GDestroyNotify) g_free);
++
++        return TRUE;
++}
++
+ static void
+ user_change_x_session_authorized_cb (Daemon                *daemon,
+                                      User                  *user,
+@@ -2110,6 +2168,7 @@ user_accounts_user_iface_init (AccountsUserIface *iface)
+         iface->handle_set_account_type = user_set_account_type;
+         iface->handle_set_automatic_login = user_set_automatic_login;
+         iface->handle_set_email = user_set_email;
++        iface->handle_set_formats_locale = user_set_formats_locale;
+         iface->handle_set_home_directory = user_set_home_directory;
+         iface->handle_set_icon_file = user_set_icon_file;
+         iface->handle_set_language = user_set_language;
+-- 
+2.20.1
+

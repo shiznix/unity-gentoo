@@ -1,0 +1,27 @@
+From: =?utf-8?q?Lo=C3=AFc_Minier?= <lool@dooz.org>
+Date: Fri, 18 May 2007 19:02:20 +0200
+Subject: Set the default gtk-fallback-icon-theme
+
+[jbicha: Use Adwaita instead of gnome to match gtk3]
+
+Similar to GTK 3 commit 2488b954f24c01f99995ff22898628c57b4aedc1 in
+3.13.2.
+
+Bug-Debian: https://bugs.debian.org/421353
+---
+ gtk/gtksettings.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gtk/gtksettings.c b/gtk/gtksettings.c
+index 3fbbf00..dca040e 100644
+--- a/gtk/gtksettings.c
++++ b/gtk/gtksettings.c
+@@ -331,7 +331,7 @@ gtk_settings_class_init (GtkSettingsClass *class)
+                                              g_param_spec_string ("gtk-fallback-icon-theme",
+ 								  P_("Fallback Icon Theme Name"),
+ 								  P_("Name of a icon theme to fall back to"),
+-								  NULL,
++								  "Adwaita",
+ 								  GTK_PARAM_READWRITE),
+                                              NULL);
+   g_assert (result == PROP_FALLBACK_ICON_THEME);

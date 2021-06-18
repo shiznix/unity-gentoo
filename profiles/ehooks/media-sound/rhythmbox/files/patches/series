@@ -1,0 +1,13 @@
+multiarch_fallback.patch
+plugins-Update-website-links.patch
+02_use_escaped_podcast_uri.patch
+03_magnatune_partner.patch
+05_hide_on_quit.patch
+07_quicklists.patch
+08_stop_quit.patch
+10_encoding_use_ubuntu_profiles.patch
+make-shuffle-repeat-proper-toggle-actions.patch
+0002-grilo-container-max-tracks.patch
+git_icons_fixes.patch
+gitlab_lyrics_resources.patch
+git_xfade_gstreamer.patch

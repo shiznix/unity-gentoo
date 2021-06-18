@@ -1,0 +1,50 @@
+From 6b97432b90c595ed799dce681101748568ae7f20 Mon Sep 17 00:00:00 2001
+From: Iain Lane <iain.lane@canonical.com>
+Date: Mon, 26 Aug 2019 09:50:30 +0100
+Subject: gconf/gconf-value.h: Use G_GNUC_{BEGIN_END}_DEPRECATIONS
+
+GLib 2.62 has deprecated GTime, but this is in our public API.
+---
+ gconf/gconf-value.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/gconf/gconf-value.h b/gconf/gconf-value.h
+index 5b37b841..c47255fc 100644
+--- a/gconf/gconf-value.h
++++ b/gconf/gconf-value.h
+@@ -133,15 +133,19 @@ gchar*      gconf_value_encode               (GConfValue  *val);
+  */
+ typedef struct _GConfMetaInfo GConfMetaInfo;
+ 
++G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+ struct _GConfMetaInfo {
+   gchar* schema;
+   gchar* mod_user; /* user owning the daemon that made the last modification */
+   GTime  mod_time; /* time of the modification */
+ };
++G_GNUC_END_IGNORE_DEPRECATIONS
+ 
+ const char* gconf_meta_info_get_schema   (GConfMetaInfo *gcmi);
+ const char* gconf_meta_info_get_mod_user (GConfMetaInfo *gcmi);
++G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+ GTime       gconf_meta_info_mod_time     (GConfMetaInfo *gcmi);
++G_GNUC_END_IGNORE_DEPRECATIONS
+ 
+ GConfMetaInfo* gconf_meta_info_new          (void);
+ void           gconf_meta_info_free         (GConfMetaInfo *gcmi);
+@@ -149,10 +153,10 @@ void           gconf_meta_info_set_schema   (GConfMetaInfo *gcmi,
+                                              const gchar   *schema_name);
+ void           gconf_meta_info_set_mod_user (GConfMetaInfo *gcmi,
+                                              const gchar   *mod_user);
++G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+ void           gconf_meta_info_set_mod_time (GConfMetaInfo *gcmi,
+                                              GTime          mod_time);
+-
+-
++G_GNUC_END_IGNORE_DEPRECATIONS
+ 
+ /* Key-value pairs; used to list the contents of
+  *  a directory
+-- 
+2.20.1
+

@@ -21,7 +21,7 @@ SRC_URI+=" ${UURL/\/f\/${PN}}/l/language-selector/language-selector_${LSVER}.tar
 
 LICENSE="OFL-1.1"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="extra"
 
 RESTRICT="mirror binchecks strip"
@@ -51,6 +51,7 @@ src_install() {
 		! -name "*CJK-Bold.ttc" \
 			-delete
 
+	mv "${WORKDIR}"/noto-cjk-20201206-cjk/* "${WORKDIR}"
 	font_src_install
 
 	local \
