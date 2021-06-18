@@ -57,9 +57,9 @@ src_install() {
 		-e "/org.gnome.desktop.sound/,+2 d" \
 		"${ED}${gschema_dir}/${gschema}"
 
-#	sed -i \
-#		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${URELEASE}.xml/}" \
-#		"${ED}${gschema_dir}/${gschema}"
+	sed -i \
+		-e "/picture-uri/{s/warty-final-ubuntu.png/contest\/${URELEASE}.xml/}" \
+		"${ED}${gschema_dir}/${gschema}"
 
 	use lowgfx && echo -e \
 		"\n[com.canonical.Unity:Unity]\nlowgfx = true" \

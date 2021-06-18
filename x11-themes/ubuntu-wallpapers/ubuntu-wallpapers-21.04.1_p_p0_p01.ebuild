@@ -14,7 +14,7 @@ HOMEPAGE="https://launchpad.net/ubuntu-wallpapers"
 
 ## Main repo (URELEASE source files) ##
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}_all.deb
-	${UURL}/${PN}-groovy_${PV}${UVER_PREFIX}-${UVER}_all.deb"
+	${UURL}/${PN}-${URELEASE/-*}_${PV}${UVER_PREFIX}-${UVER}_all.deb"
 
 ## Universe repo (older source files) ##
 CODE_NAME="karmic lucid maverick natty oneiric precise quantal raring
