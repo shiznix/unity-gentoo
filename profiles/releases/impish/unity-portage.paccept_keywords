@@ -252,6 +252,7 @@ x11-libs/dee-qt **
 x11-libs/gsettings-qt **
 x11-libs/topmenu-gtk **
 x11-misc/gtk3-nocsd **
+x11-misc/lightdm **
 x11-misc/mate-dock-applet **
 x11-misc/notify-osd **
 x11-misc/plank **

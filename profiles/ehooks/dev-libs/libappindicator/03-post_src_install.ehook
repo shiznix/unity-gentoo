@@ -1,0 +1,11 @@
+ebuild_hook() {
+	build-gtk2_src_install() {
+		mkdir -p "${BUILD_DIR}" || die
+		pushd "${BUILD_DIR}" >/dev/null || die
+			emake -j1 DESTDIR="${D}" install
+		popd >/dev/null || die
+	}
+
+	BUILD_DIR="build-gtk2" multilib_foreach_abi build-gtk2_src_install
+	find "${ED}" -name '*.la' -delete || die
+}

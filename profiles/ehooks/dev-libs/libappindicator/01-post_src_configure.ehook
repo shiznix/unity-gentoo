@@ -1,0 +1,17 @@
+ebuild_hook() {
+	local -x VALAC VALA_API_GEN
+	use introspection && export VALAC=$(type -P valac-$(vala_best_api_version)) && export VALA_API_GEN="${VAPIGEN}"
+
+	build-gtk2_src_configure() {
+		mkdir -p "${BUILD_DIR}" || die
+		pushd "${BUILD_DIR}" >/dev/null || die
+			ECONF_SOURCE="${S}" \
+			econf \
+				--disable-static \
+				--with-gtk=2 \
+				$(multilib_native_use_enable introspection)
+		popd >/dev/null || die
+	}
+
+	BUILD_DIR="build-gtk2" multilib_foreach_abi build-gtk2_src_configure
+}
