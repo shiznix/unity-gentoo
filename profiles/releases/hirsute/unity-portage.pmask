@@ -31,6 +31,5 @@ dev-util/gdbus-codegen::gentoo
 x11-misc/lightdm::gentoo
 x11-misc/notify-osd::gentoo
 x11-misc/x11vnc::gentoo
-x11-plugins/pidgin-libnotify::gentoo
 x11-themes/notify-osd-icons::gentoo
 x11-themes/ubuntu-wallpapers::gentoo
