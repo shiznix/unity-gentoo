@@ -1,0 +1,3 @@
+ebuild_hook() {
+	cp src/pidgin-libnotify.c src/pidgin-libnotify.c.bak
+}

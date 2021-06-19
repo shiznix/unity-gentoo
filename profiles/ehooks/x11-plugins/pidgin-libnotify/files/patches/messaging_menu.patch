@@ -1,0 +1,592 @@
+=== modified file 'configure.ac'
+--- a/configure.ac
++++ b/configure.ac
+@@ -74,6 +74,15 @@
+ AC_SUBST(LIBNOTIFY_LIBS)
+ 
+ #
++# Check for libmessaging-menu
++#
++
++PKG_CHECK_MODULES(LIBMESSAGINGMENU, messaging-menu >= 12.10.4)
++
++AC_SUBST(LIBMESSAGINGMENU_CFLAGS)
++AC_SUBST(LIBMESSAGINGMENU_LIBS)
++
++#
+ # Check for GTK+
+ #
+ PKG_CHECK_MODULES(GTK, gtk+-2.0)
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -13,7 +13,7 @@
+ 	request.c \
+ 	gln_intl.h
+ 
+-pidgin_libnotify_la_LIBADD = $(LIBNOTIFY_LIBS) $(DBUS_LIBS) $(GTK_LIBS)
++pidgin_libnotify_la_LIBADD = $(LIBMESSAGINGMENU_LIBS) $(LIBNOTIFY_LIBS) $(DBUS_LIBS) $(GTK_LIBS)
+ 
+ endif
+ 
+@@ -27,6 +27,7 @@
+ 	$(PIDGIN_CFLAGS) \
+ 	$(LIBPURPLE_CFLAGS) \
+ 	$(LIBNOTIFY_CFLAGS) \
++	$(LIBMESSAGINGMENU_CFLAGS) \
+ 	$(DBUS_CFLAGS) \
+ 	$(GTK_CFLAGS)
+ 
+--- a/src/pidgin-libnotify.c
++++ b/src/pidgin-libnotify.c
+@@ -24,6 +24,8 @@
+ #include "common.h"
+ #include "gln_intl.h"
+ 
++#include <purple.h>
++
+ #ifndef PURPLE_PLUGINS
+ #define PURPLE_PLUGINS
+ #endif
+@@ -39,6 +41,7 @@
+ #include <gtkblist.h>
+ 
+ #include <libnotify/notify.h>
++#include <messaging-menu.h>
+ 
+ #include <string.h>
+ 
+@@ -49,7 +52,7 @@
+ #endif
+ #define G_LOG_DOMAIN "pidgin-libnotify-plugin"
+ 
+-#define PIDGIN_DESKTOP_FILE  "/usr/share/applications/pidgin.desktop"
++#define PIDGIN_DESKTOP_FILE  "pidgin.desktop"
+ #define BLACKLIST_FILENAME   "pidgin-libnotify"
+ #define BLACKLIST_DIR        "indicators/messages/applications-blacklist"
+ 
+@@ -59,6 +62,8 @@
+ /* Globals */
+ static GHashTable *buddy_hash;
+ 
++static MessagingMenuApp *m_menu_app = NULL;
++
+ static gboolean  notify_supports_actions = FALSE;
+ static gboolean  notify_supports_append = FALSE;
+ static gboolean  notify_supports_truncation = FALSE;
+@@ -844,10 +849,422 @@
+ extern void attach_request_ui_ops ();
+ extern void detach_request_ui_ops ();
+ 
++static gchar *
++messaging_unique_id (const char    *type,
++					 PurpleAccount *account,
++					 const char    *name)
++{
++	g_return_val_if_fail (type != NULL, NULL);
++	g_return_val_if_fail (account != NULL, NULL);
++	g_return_val_if_fail (name != NULL, NULL);
++
++	gchar *escaped_type = g_uri_escape_string (type, NULL, TRUE);
++	gchar *buddy_name = g_uri_escape_string (name, NULL, TRUE);
++	gchar *account_name = g_uri_escape_string (purple_account_get_username (account), NULL, TRUE);
++	gchar *protocol_id = g_uri_escape_string (purple_account_get_protocol_id (account), NULL, TRUE);
++	gchar *unique_id = g_strconcat (escaped_type, ":", protocol_id, ":", account_name,
++			":", buddy_name, NULL);
++
++	g_free (escaped_type);
++	g_free (buddy_name);
++	g_free (account_name);
++	g_free (protocol_id);
++
++	return unique_id;
++}
++
++static PurpleConversation *
++messaging_conversation_for_unique_id (const gchar *unique_id)
++{
++	g_return_val_if_fail (unique_id != NULL, NULL);
++
++	gchar **tokens = g_strsplit(unique_id, ":", 0);
++	guint n_tokens = g_strv_length(tokens);
++
++	if (n_tokens != 4) {
++		purple_debug_warning (PLUGIN_ID, "Invalid unique_id '%s'\n", unique_id);
++		g_strfreev (tokens);
++		return NULL;
++	}
++
++	gchar *type_id = g_uri_unescape_string(tokens[0], NULL);
++	gchar *protocol_id = g_uri_unescape_string(tokens[1], NULL);
++	gchar *account_name = g_uri_unescape_string(tokens[2], NULL);
++	gchar *buddy_name = g_uri_unescape_string(tokens[3], NULL);
++
++	PurpleAccount *account = purple_accounts_find (account_name, protocol_id);
++
++	if (account == NULL) {
++		g_free (type_id);
++		g_free (protocol_id);
++		g_free (account_name);
++		g_free (buddy_name);
++		g_strfreev (tokens);
++		return NULL;
++	}
++
++	PurpleConversationType conv_type = PURPLE_CONV_TYPE_IM;
++	if (g_strcmp0 (type_id, "chat") == 0)
++		conv_type = PURPLE_CONV_TYPE_CHAT;
++
++	PurpleConversation *conv = purple_find_conversation_with_account (conv_type,
++			buddy_name, account);
++
++	g_free (type_id);
++	g_free (protocol_id);
++	g_free (account_name);
++	g_free (buddy_name);
++	g_strfreev (tokens);
++
++	return conv;
++}
++
++static const char *
++messaging_type_from_conv_type (PurpleConversationType type)
++{
++	const char *messaging_type;
++
++	switch (type) {
++		case PURPLE_CONV_TYPE_IM:
++			messaging_type = "im";
++			break;
++		case PURPLE_CONV_TYPE_CHAT:
++			messaging_type = "chat";
++			break;
++		default:
++			purple_debug_warning (PLUGIN_ID, "Unsupported conversation type\n");
++			messaging_type = "unknown";
++			break;
++	}
++
++	return messaging_type;
++}
++
++static const char *
++messaging_conversation_get_name (PurpleConversation *conv,
++								 PurpleAccount      *account)
++{
++	PurpleBuddy *buddy = NULL;
++
++	if (purple_conversation_get_type (conv) == PURPLE_CONV_TYPE_IM)
++		buddy = purple_find_buddy (account, purple_conversation_get_name (conv));
++	if (buddy != NULL)
++		return purple_buddy_get_name (buddy);
++	return purple_conversation_get_name (conv);
++}
++
++static void
++messaging_conversation_updated_cb (PurpleConversation  *conv,
++								   PurpleConvUpdateType type,
++								   gpointer 		    user_data)
++{
++	g_return_if_fail (m_menu_app != NULL);
++
++	const char *type_name;
++	const char *conv_type = messaging_type_from_conv_type (purple_conversation_get_type (conv));
++	PurpleAccount *account;
++	gchar *buddy_id;
++	int unseen_count;
++
++	switch (type) {
++		case PURPLE_CONV_UPDATE_ADD:
++			type_name = "ADD";
++			break;
++		case PURPLE_CONV_UPDATE_REMOVE:
++			type_name = "REMOVE";
++			break;
++		case PURPLE_CONV_UPDATE_ACCOUNT:
++			type_name = "ACCOUNT";
++			break;
++		case PURPLE_CONV_UPDATE_TYPING:
++			type_name = "TYPING";
++			break;
++		case PURPLE_CONV_UPDATE_UNSEEN:
++			type_name = "UNSEEN";
++			break;
++		case PURPLE_CONV_UPDATE_LOGGING:
++			type_name = "LOGGING";
++			break;
++		case PURPLE_CONV_UPDATE_TOPIC:
++			type_name = "TOPIC";
++			break;
++		default:
++			type_name = "OTHER";
++	}
++	purple_debug_info (PLUGIN_ID, "Conversation Updated (%s)\n", type_name);
++
++	/* Remove the attention */
++	if (type == PURPLE_CONV_UPDATE_UNSEEN) {
++		unseen_count = GPOINTER_TO_INT(purple_conversation_get_data (conv, "unseen-count"));
++		account = purple_conversation_get_account (conv);
++		buddy_id = messaging_unique_id (conv_type, account,
++			messaging_conversation_get_name (conv, account));
++
++		if (buddy_id != NULL) {
++			if (messaging_menu_app_has_source (m_menu_app, buddy_id)) {
++				if (unseen_count == 0) {
++					purple_debug_info (PLUGIN_ID, "REMOVING ATTENTION FOR (%s) (%d)\n",
++							buddy_id, unseen_count);
++					messaging_menu_app_remove_attention (m_menu_app, buddy_id);
++				}
++				else if (purple_conversation_get_type (conv) == PURPLE_CONV_TYPE_IM) {
++					messaging_menu_app_draw_attention (m_menu_app, buddy_id);
++				}
++			}
++		}
++		g_free (buddy_id);
++	}
++}
++
++static void
++messaging_conversation_deleted_cb (PurpleConversation *conv,
++								   gpointer 		   user_data)
++{
++	g_return_if_fail (conv != NULL);
++
++	PurpleAccount *account;
++	const char *conv_type = messaging_type_from_conv_type (purple_conversation_get_type (conv));
++	gchar *buddy_id;
++
++	account = purple_conversation_get_account (conv);
++	buddy_id = messaging_unique_id (conv_type, account,
++		messaging_conversation_get_name (conv, account));
++
++	if (buddy_id != NULL) {
++		if (messaging_menu_app_has_source (m_menu_app, buddy_id)) {
++			purple_debug_info (PLUGIN_ID, "Removing source (%s)\n", buddy_id);
++			messaging_menu_app_remove_source (m_menu_app, buddy_id);
++		}
++	}
++
++	g_free (buddy_id);
++}
++
++static gboolean
++pidgin_conversation_has_focus (PurpleConversation *conv)
++{
++	if (conv == NULL)
++		return FALSE;
++
++	PidginConversation * pconv = PIDGIN_CONVERSATION(conv);
++
++	if (pconv != NULL) {
++		if (pconv->entry != NULL && pconv->imhtml != NULL) {
++			if (GTK_WIDGET_HAS_FOCUS(pconv->entry) || GTK_WIDGET_HAS_FOCUS(pconv->imhtml)) {
++				return TRUE;
++			}
++		}
++	}
++
++	return FALSE;
++}
++
++static void
++messaging_new_message_cb (PurpleAccount *account,
++					   	  const gchar   *sender,
++					   	  const gchar   *message,
++					   	  int 			 flags,
++					   	  gpointer 		 user_data)
++{
++	g_return_if_fail (m_menu_app != NULL);
++
++	PurpleBuddy *buddy = NULL;
++	gchar *buddy_id;
++	const char *buddy_name = NULL;
++
++	if (name_blacklisted(account, sender))
++		return;
++
++	if (g_list_find (just_signed_on_accounts, account))
++		return;
++
++	if (account == NULL || sender == NULL)
++		return;
++
++	buddy = purple_find_buddy (account, sender);
++
++	if (buddy != NULL)
++		buddy_name = purple_buddy_get_name (buddy);
++
++	buddy_id = messaging_unique_id ("im", account, buddy_name != NULL ? buddy_name : sender);
++
++	if (buddy_id != NULL) {
++		purple_debug_info (PLUGIN_ID, "Sender: (%s) ID (%s) \n", sender, buddy_id);
++		if (messaging_menu_app_has_source (m_menu_app, buddy_id)) {
++			messaging_menu_app_set_source_time (m_menu_app, buddy_id, g_get_real_time ());
++		}
++		else {
++			messaging_menu_app_append_source (m_menu_app, buddy_id, NULL,
++					buddy != NULL ? best_name (buddy) : sender);
++		}
++	}
++
++	g_free (buddy_id);
++}
++
++static void
++messaging_new_chat_cb (PurpleAccount      *account,
++				  	   const gchar 		  *sender,
++				  	   const gchar 		  *message,
++				  	   PurpleConversation *conv,
++				       gpointer 		   user_data)
++{
++	g_return_if_fail (m_menu_app != NULL);
++
++	purple_debug_info (PLUGIN_ID, "Chat (%s) (%s)\n", sender, message);
++
++	if (name_blacklisted(account, sender)) return;
++
++	const char *nick = purple_conv_chat_get_nick (PURPLE_CONV_CHAT(conv));
++	if (nick && !g_strcmp0 (sender, nick))
++		return;
++
++	if (!purple_utf8_has_word (message, nick))
++		return;
++
++	char *buddy_id = messaging_unique_id ("chat", account, purple_conversation_get_name (conv));
++
++	if (buddy_id != NULL) {
++		if (messaging_menu_app_has_source (m_menu_app, buddy_id)) {
++			messaging_menu_app_set_source_time (m_menu_app, buddy_id, g_get_real_time ());
++		}
++		else {
++			messaging_menu_app_append_source (m_menu_app, buddy_id, NULL,
++					purple_conversation_get_title (conv));
++		}
++		if (!pidgin_conversation_has_focus (conv))
++			messaging_menu_app_draw_attention (m_menu_app, buddy_id);
++	}
++
++	g_free (buddy_id);
++}
++
++static MessagingMenuStatus
++purple_status_to_messaging_status (PurpleStatusPrimitive status)
++{
++	MessagingMenuStatus messaging_status_value;
++
++	switch (status) {
++	  	case PURPLE_STATUS_AVAILABLE:
++			messaging_status_value = MESSAGING_MENU_STATUS_AVAILABLE;
++			break;
++		case PURPLE_STATUS_AWAY:
++			messaging_status_value = MESSAGING_MENU_STATUS_AWAY;
++			break;
++		case PURPLE_STATUS_UNAVAILABLE:
++			messaging_status_value = MESSAGING_MENU_STATUS_BUSY;
++			break;
++		case PURPLE_STATUS_INVISIBLE:
++			messaging_status_value = MESSAGING_MENU_STATUS_INVISIBLE;
++			break;
++		case PURPLE_STATUS_OFFLINE:
++			messaging_status_value = MESSAGING_MENU_STATUS_OFFLINE;
++			break;
++		default:
++			messaging_status_value = MESSAGING_MENU_STATUS_AVAILABLE;
++	}
++
++	return messaging_status_value;
++}
++
++static void
++messaging_set_status_from_savedstatus (PurpleSavedStatus *status)
++{
++	g_return_if_fail (m_menu_app != NULL);
++
++	PurpleStatusPrimitive purple_status = purple_savedstatus_get_type (status);
++	const char *status_id = purple_primitive_get_id_from_type (purple_status);
++	MessagingMenuStatus messaging_status = purple_status_to_messaging_status (purple_status);
++	messaging_menu_app_set_status (m_menu_app, messaging_status);
++	purple_debug_info (PLUGIN_ID, "Updating status set from pidgin to '%s'\n", status_id);
++}
++
++static void
++messaging_savedstatus_changed_cb (PurpleSavedStatus *now,
++								  PurpleSavedStatus *old,
++								  gpointer 			 user_data)
++{
++	messaging_set_status_from_savedstatus (now);
++}
++
++static PurpleStatusPrimitive
++messaging_status_to_purple_status (MessagingMenuStatus status)
++{
++	PurpleStatusPrimitive purple_status_value;
++
++	switch (status) {
++	  	case MESSAGING_MENU_STATUS_AVAILABLE:
++			purple_status_value = PURPLE_STATUS_AVAILABLE;
++			break;
++		case MESSAGING_MENU_STATUS_AWAY:
++			purple_status_value = PURPLE_STATUS_AWAY;
++			break;
++		case MESSAGING_MENU_STATUS_BUSY:
++			purple_status_value = PURPLE_STATUS_UNAVAILABLE;
++			break;
++		case MESSAGING_MENU_STATUS_INVISIBLE:
++			purple_status_value = PURPLE_STATUS_INVISIBLE;
++			break;
++		case MESSAGING_MENU_STATUS_OFFLINE:
++			purple_status_value = PURPLE_STATUS_OFFLINE;
++			break;
++		default:
++			purple_status_value = PURPLE_STATUS_UNSET;
++	}
++
++	return purple_status_value;
++}
++
++static void
++messaging_status_changed_cb (MessagingMenuApp   *app,
++							 MessagingMenuStatus status,
++							 gpointer            user_data)
++{
++	g_return_if_fail (app != NULL);
++
++	PurpleStatusPrimitive status_type = messaging_status_to_purple_status (status);
++	const char *status_id = purple_primitive_get_id_from_type (status_type);
++	PurpleSavedStatus *saved_status;
++
++	purple_debug_info (PLUGIN_ID, "Updating accounts to status '%s'\n", status_id);
++
++	saved_status = purple_savedstatus_find_transient_by_type_and_message (status_type, NULL);
++
++	if (saved_status == NULL) {
++		saved_status = purple_savedstatus_new (NULL, status_type);
++		purple_debug_info (PLUGIN_ID, "Status not found\n");
++	}
++	purple_savedstatus_activate (saved_status);
++	messaging_menu_app_set_status (app, status);
++}
++
++static void
++messaging_source_activated_cb (MessagingMenuApp *app,
++							   const gchar      *source_id,
++							   gpointer          user_data)
++{
++	PurpleConversation *conv;
++	PidginConversation *gtkconv;
++	purple_debug_info (PLUGIN_ID, "SOURCE activated '%s'\n", source_id);
++	/* find conversation with given source id */
++	conv = messaging_conversation_for_unique_id (source_id);
++
++	if (conv) {
++		gtkconv = PIDGIN_CONVERSATION (conv);
++		if (gtkconv == NULL) {
++			purple_debug_warning (PLUGIN_ID, "NULL gtkconv '%s'\n", source_id);
++			return;
++		}
++		pidgin_conv_switch_active_conversation(conv);
++		pidgin_conv_window_switch_gtkconv(gtkconv->win, gtkconv);
++		gtk_window_present(GTK_WINDOW(gtkconv->win->window));
++	}
++}
++
+ static gboolean
+ plugin_load (PurplePlugin *plugin)
+ {
+-	void *conv_handle, *blist_handle, *conn_handle;
++	void *conv_handle, *blist_handle, *conn_handle, *savedstatus_handle;
+ 
+ 	if (!notify_is_initted () && !notify_init ("Pidgin")) {
+ 		purple_debug_error (PLUGIN_ID, "libnotify not running!\n");
+@@ -862,9 +1279,21 @@
+ 
+ 	notify_check_caps();
+ 
++	if (m_menu_app == NULL) {
++		m_menu_app = messaging_menu_app_new (PIDGIN_DESKTOP_FILE);
++		messaging_menu_app_register (m_menu_app);
++		g_signal_connect(m_menu_app, "status-changed",
++							G_CALLBACK(messaging_status_changed_cb), NULL);
++		g_signal_connect(m_menu_app, "activate-source",
++							G_CALLBACK(messaging_source_activated_cb), NULL);
++		messaging_set_status_from_savedstatus (purple_savedstatus_get_current ());
++		pidgin_blist_visibility_manager_add ();
++	}
++
+ 	conv_handle = purple_conversations_get_handle ();
+ 	blist_handle = purple_blist_get_handle ();
+ 	conn_handle = purple_connections_get_handle();
++	savedstatus_handle = purple_savedstatuses_get_handle ();
+ 
+ 	buddy_hash = g_hash_table_new (NULL, NULL);
+ 
+@@ -883,6 +1312,21 @@
+ 	purple_signal_connect (conv_handle, "deleting-conversation", plugin,
+ 	                    PURPLE_CALLBACK(conv_delete_cb), NULL);
+ 
++	purple_signal_connect (conv_handle, "conversation-updated", plugin,
++						PURPLE_CALLBACK(messaging_conversation_updated_cb), NULL);
++
++	purple_signal_connect (conv_handle, "deleting-conversation", plugin,
++	                    PURPLE_CALLBACK(messaging_conversation_deleted_cb), NULL);
++
++	purple_signal_connect (conv_handle, "received-im-msg", plugin,
++						PURPLE_CALLBACK(messaging_new_message_cb), NULL);
++
++	purple_signal_connect (conv_handle, "received-chat-msg", plugin,
++						PURPLE_CALLBACK(messaging_new_chat_cb), NULL);
++
++	purple_signal_connect (savedstatus_handle, "savedstatus-changed", plugin,
++						PURPLE_CALLBACK(messaging_savedstatus_changed_cb), NULL);
++
+ 	/* used just to not display the flood of guifications we'd get */
+ 	purple_signal_connect (conn_handle, "signed-on", plugin,
+ 						PURPLE_CALLBACK(event_connection_throttle), NULL);
+@@ -895,11 +1339,12 @@
+ static gboolean
+ plugin_unload (PurplePlugin *plugin)
+ {
+-	void *conv_handle, *blist_handle, *conn_handle;
++	void *conv_handle, *blist_handle, *conn_handle, *savedstatus_handle;
+ 
+ 	conv_handle = purple_conversations_get_handle ();
+ 	blist_handle = purple_blist_get_handle ();
+ 	conn_handle = purple_connections_get_handle();
++	savedstatus_handle = purple_savedstatuses_get_handle ();
+ 
+ 	purple_signal_disconnect (blist_handle, "buddy-signed-on", plugin,
+ 							PURPLE_CALLBACK(notify_buddy_signon_cb));
+@@ -916,6 +1361,21 @@
+ 	purple_signal_disconnect (conv_handle, "deleting-conversation", plugin,
+ 							PURPLE_CALLBACK(conv_delete_cb));
+ 
++	purple_signal_disconnect (conv_handle, "conversation-updated", plugin,
++							PURPLE_CALLBACK(messaging_conversation_updated_cb));
++
++	purple_signal_disconnect (conv_handle, "deleting-conversation", plugin,
++							PURPLE_CALLBACK(messaging_conversation_deleted_cb));
++
++	purple_signal_disconnect (conv_handle, "received-im-msg", plugin,
++							PURPLE_CALLBACK(messaging_new_message_cb));
++
++	purple_signal_disconnect (conv_handle, "received-chat-msg", plugin,
++							PURPLE_CALLBACK(messaging_new_chat_cb));
++
++	purple_signal_disconnect (savedstatus_handle, "savedstatus-changed", plugin,
++							PURPLE_CALLBACK(messaging_savedstatus_changed_cb));
++
+ 	purple_signal_disconnect (conn_handle, "signed-on", plugin,
+ 							PURPLE_CALLBACK(event_connection_throttle));
+ 
+@@ -925,6 +1385,12 @@
+ 
+ 	notify_uninit ();
+ 
++	if (m_menu_app) {
++		g_object_unref (m_menu_app);
++		m_menu_app = NULL;
++		pidgin_blist_visibility_manager_remove ();
++	}
++
+ 	/* If this goes off, we were unloaded by the user
+ 	   and not by shutdown.  Same thing as us never
+ 	   getting loaded at all. */

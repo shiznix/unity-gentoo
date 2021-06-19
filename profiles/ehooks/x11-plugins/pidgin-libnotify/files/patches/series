@@ -1,0 +1,8 @@
+#de_po.diff
+force-load.patch
+best_name.patch
+#it_po.diff
+add-cs-translation.diff
+replace-pidgin-action-requests.diff
+ubuntu_notify_support.patch
+messaging_menu.patch
