@@ -133,11 +133,7 @@ PVR_PL_MINOR="${PVR_PL_MINOR%%-r*}"	# Strip revision strings
 PVR_PL_MINOR_tmp="${strarray[@]}"
 PVR_PL_MINOR="${PVR_PL_MINOR_tmp// /.}"
 
-if [ "${PN}" = "ubuntu-sources" ]; then
-	UVER="${PVR_PL_MAJOR}.${PVR_PL_MINOR}"
-else
-	UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
-fi
+UVER="${PVR_PL_MAJOR}ubuntu${PVR_PL_MINOR}"
 
 # @FUNCTION: ubuntu-versionator_pkg_setup
 # @DESCRIPTION:
@@ -229,7 +225,7 @@ ubuntu-versionator_src_prepare() {
 
 # @FUNCTION: ubuntu-versionator_pkg_postinst
 # @DESCRIPTION:
-# Re-create bamf.index and trigger re-profile of ureadahead if installed
+# Re-create bamf.index
 ubuntu-versionator_pkg_postinst() {
 	debug-print-function ${FUNCNAME} "$@"
 
@@ -237,15 +233,5 @@ ubuntu-versionator_pkg_postinst() {
 	if [[ -x /usr/bin/bamf-index-create ]]; then
 		einfo "Checking bamf-2.index"
 			/usr/bin/bamf-index-create triggered
-	fi
-
-	## If sys-apps/ureadahead is installed, force re-profiling of ureadahead's database at next boot ##
-	if [[ -n "$(systemctl list-unit-files --no-pager | grep ureadahead)" ]] && \
-		[[ "$(systemctl is-enabled ureadahead-collect.service)" = "enabled" ]]; then
-			if [[ -w /var/lib/ureadahead/pack ]] && \
-				[[ -d "${ED}etc" ]]; then
-					elog "Ureadahead will be reprofiled on next reboot"
-						rm -f /var/lib/ureadahead/pack /var/lib/ureadahead/*.pack 2> /dev/null
-			fi
 	fi
 }
