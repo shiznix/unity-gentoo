@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="hirsute"
+URELEASE="focal"
 inherit autotools gnome2-utils ubuntu-versionator
 
 MY_PN="evolution-indicator"

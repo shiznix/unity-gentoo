@@ -3,7 +3,7 @@
 
 EAPI=6
 
-URELEASE="hirsute"
+URELEASE="focal"
 inherit autotools eutils ubuntu-versionator
 
 DESCRIPTION="pidgin-libnotify provides popups for pidgin via a libnotify interface"

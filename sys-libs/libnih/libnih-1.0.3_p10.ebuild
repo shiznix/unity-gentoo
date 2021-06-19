@@ -3,13 +3,15 @@
 
 EAPI=6
 
-URELEASE="cosmic"
+URELEASE="disco"
 inherit versionator eutils autotools toolchain-funcs multilib flag-o-matic usr-ldscript ubuntu-versionator
+
+UVER="${PVR_MICRO}"
 
 DESCRIPTION="Light-weight 'standard library' of C functions"
 HOMEPAGE="https://launchpad.net/libnih"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-        ${UURL}/${MY_P}-${UVER}.diff.gz"
+        ${UURL}/${MY_P}-${UVER}.debian.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -24,10 +26,10 @@ RESTRICT="mirror"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	epatch -p1 "${WORKDIR}/${MY_P}-${UVER}.diff"	# This needs to be applied for the debian/ directory to be present #
 	epatch "${FILESDIR}"/${PN}-1.0.3-optional-dbus.patch
 	epatch "${FILESDIR}"/${PN}-1.0.3-pkg-config.patch
 	epatch "${FILESDIR}"/${PN}-1.0.3-signal-race.patch
+	sed -i -e "s/char \*output_package/extern char \*output_package/" nih-dbus-tool/output.h
 	eautoreconf
 }
 
