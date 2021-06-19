@@ -1,6 +1,5 @@
-* USE="doc debug mono tests"
+* USE="doc debug tests"
 * Audit DEPEND and RDEPEND lists
 * Convert all ebuilds to EAPI=6 and remove use of base.eclass
 	('autotools-{multilib,utils}','gnome2','kde-4' and 'qt4-r2' block EAPI6 upgrade)
 	- See dev-libs/libwacom ebuild as example converting from old 'autotools-{multilib,utils}'
-* Audit Gnome/Ubuntu Online Accounts support
