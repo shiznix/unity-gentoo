@@ -22,137 +22,16 @@ x11-themes/mate-themes-meta
 x11-terms/mate-terminal
 x11-wm/marco
 
-# Unmask up to Gnome-3.40 #
-=*/gnome*-*40*::gentoo
-=*/gnome*-*38*::gentoo
-=*/gnome*-*36*::gentoo
-=*/gnome*-*34*::gentoo
-=*/gnome*-*32*::gentoo
-=*/gnome*-*30*::gentoo
-=*/gnome*-*28*::gentoo
-=*/gnome*-*26*::gentoo
-=gnome-base/*-*40*::gentoo
-=gnome-base/*-*38*::gentoo
-=gnome-base/*-*36*::gentoo
-=gnome-base/*-*34*::gentoo
-=gnome-base/*-*32*::gentoo
-=gnome-base/*-*31*::gentoo
-=gnome-base/*-*30*::gentoo
-=gnome-base/*-*28*::gentoo
-=gnome-base/*-*26*::gentoo
-=gnome-extra/*-*40*::gentoo
-=gnome-extra/*-*38*::gentoo
-=gnome-extra/*-*36*::gentoo
-=gnome-extra/*-*34*::gentoo
-=gnome-extra/*-*32*::gentoo
-=gnome-extra/*-*30*::gentoo
-=gnome-extra/*-*28*::gentoo
-=gnome-extra/*-*26*::gentoo
-=games-puzzle/*-*40*::gentoo
-=games-puzzle/*-*38*::gentoo
-=games-puzzle/*-*36*::gentoo
-=games-puzzle/*-*34*::gentoo
-=games-puzzle/*-*32*::gentoo
-=games-puzzle/*-*30*::gentoo
-=games-puzzle/*-*28*::gentoo
-=games-puzzle/*-*26*::gentoo
-=app-i18n/unicode-data-10*
->=app-accessibility/at-spi2-atk-2.26::gentoo
->=app-accessibility/at-spi2-core-2.26::gentoo
-# >=app-accessibility/orca-3.24::gentoo
->=app-arch/file-roller-3.26::gentoo
-# >=app-cdr/brasero-3.12::gentoo
->=app-crypt/gcr-3.38::gentoo
->=app-crypt/seahorse-3.38::gentoo
->=app-editors/gedit-3.38::gentoo
-app-text/enchant:2::gentoo
->=app-text/evince-3.38::gentoo
-app-text/gspell::gentoo
-app-text/gtkspell:3::gentoo
-# >=app-text/yelp-tools-3.18::gentoo
-# >=dev-cpp/gtkmm-3.22::gentoo
->=dev-libs/atk-2.36::gentoo
->=dev-libs/gjs-1.64::gentoo
-dev-libs/libdazzle::gentoo
-# ~dev-libs/libgudev-232::gentoo
->=dev-libs/libgweather-3.38::gentoo
-dev-python/nototools::gentoo
-# >=dev-python/pygobject-3.36::gentoo
->=dev-python/pyatspi-2.36.0::gentoo
->=dev-util/gtk-update-icon-cache-3.24::gentoo
->=dev-util/devhelp-3.38::gentoo
-# >=dev-vcs/gitg-3.32::gentoo
-games-board/gnome*::gentoo
->=gnome-base/gvfs-1.44::gentoo
-gnome-base/librsvg::gentoo
-# gnome-extra/gucharmap:2.90::gentoo
->=gnome-extra/evolution-data-server-3.38::gentoo
-# >=gnome-extra/zenity-3.32::gentoo
-gui-libs/libhandy::gentoo
->=mail-client/evolution-3.38::gentoo
-media-fonts/cantarell::gentoo
->=media-gfx/eog-3.38::gentoo
-# >=media-libs/clutter-gtk-1.8.4::gentoo
-media-sound/paprefs::gentoo
-media-sound/pulseaudio::gentoo
-# >=media-sound/sound-juicer-3.24::gentoo
->=media-video/cheese-3.38::gentoo
->=media-video/totem-3.34::gentoo
-# >=net-misc/vinagre-3.22::gentoo
-# >=net-wireless/gnome-bluetooth-3.20::gentoo
-# >=sci-geosciences/geocode-glib-3.24::gentoo
->=sys-apps/baobab-3.34::gentoo
-sys-apps/bubblewrap::gentoo
-sys-fs/fuse:3::gentoo
-sys-fs/fuse-common::gentoo
-# >=x11-libs/gtksourceview-3.24::gentoo
->=x11-libs/libwnck-3.30::gentoo
-# >=x11-libs/pango-1.42::gentoo
-# >=x11-libs/vte-0.62::gentoo
->=x11-themes/adwaita-icon-theme-3.38::gentoo
->=x11-wm/mutter-3.36::gentoo
-media-libs/grilo:0.3::gentoo
-media-plugins/grilo-plugins:0.3::gentoo
-
 # www-client/firefox related #
 dev-libs/nspr::gentoo
 dev-libs/nss::gentoo
-dev-util/cbindgen::gentoo
-media-libs/dav1d::gentoo
-media-libs/libaom::gentoo
-media-libs/libvpx:0/6::gentoo
-media-libs/libwebp::gentoo
-virtual/cargo::gentoo
+www-client/firefox
 
 ## Other packages keyword unmasking ##
-app-admin/cgmanager
 app-backup/deja-dup
-app-eselect/eselect-opengl
-dev-lang/spidermonkey:68
-dev-libs/capnproto
-dev-libs/folks
 dev-libs/libappindicator
-dev-libs/libdbusmenu-qt
-=dev-libs/xapian-1.4*
-=dev-libs/xapian-bindings-1.4*
 dev-util/gn
 dev-util/sysprof-capture
-dev-util/valgrind
-dev-python/python-prctl
-dev-util/umockdev
-media-fonts/nanum
-media-fonts/quivira
-=media-libs/libpng-1.6*
-sys-devel/clang:4
-sys-devel/llvm:4
-sys-fs/lxcfs
 sys-libs/db:5.1
-sys-libs/db:5.3
-sys-power/upower
-www-client/firefox
-=x11-drivers/xf86-input-evdev-2.10*
-x11-libs/xapps
 x11-misc/copyq
-x11-misc/xvfb-run
-=x11-themes/adwaita-icon-theme-3.24*
 x11-wm/metacity
