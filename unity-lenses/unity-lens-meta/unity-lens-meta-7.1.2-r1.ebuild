@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=4
+EAPI=7
 
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity lenses"
 HOMEPAGE="http://unity.ubuntu.com/"
@@ -12,7 +12,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+files +music +photos plugins +video"
 RESTRICT="mirror"
 
-DEPEND="unity-lenses/unity-lens-applications
+RDEPEND="unity-lenses/unity-lens-applications
 	unity-scopes/unity-scope-home
 
 	files? ( unity-lenses/unity-lens-files )
@@ -20,5 +20,4 @@ DEPEND="unity-lenses/unity-lens-applications
 	photos? ( unity-lenses/unity-lens-photos )
 	plugins? ( unity-scopes/smart-scopes )
 	video? ( unity-lenses/unity-lens-video )"
-RDEPEND="${DEPEND}"
 PDEPEND="unity-base/unity-settings[files=,music=,photos=,video=]"

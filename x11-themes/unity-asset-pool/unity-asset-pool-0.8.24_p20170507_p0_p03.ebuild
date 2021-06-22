@@ -1,11 +1,10 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
-GCONF_DEBUG="yes"
+EAPI=7
 
 URELEASE="hirsute"
-inherit eutils gnome2 ubuntu-versionator
+inherit eutils ubuntu-versionator xdg-utils
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"
 
@@ -22,16 +21,11 @@ RESTRICT="mirror"
 RDEPEND="x11-themes/adwaita-icon-theme
 	x11-themes/hicolor-icon-theme"
 
-DEPEND="${RDEPEND}
-	dev-util/intltool
+BDEPEND="dev-util/intltool
 	sys-devel/gettext
 	virtual/pkgconfig"
 
 S="${WORKDIR}"
-
-src_prepare() { :; }
-src_configure() { :; }
-src_compile() { :; }
 
 src_install() {
 	insinto /usr/share/unity/themes
@@ -40,9 +34,9 @@ src_install() {
 	insinto /usr/share/icons
 	doins -r unity-icon-theme
 
-	dodoc COPYRIGHT
+	local DOCS=( COPYRIGHT README.txt )
+	einstalldocs
 }
 
-pkg_preinst() { gnome2_icon_savelist; }
-pkg_postinst() { gnome2_icon_cache_update; }
-pkg_postrm() { gnome2_icon_cache_update; }
+pkg_postinst() { xdg_icon_cache_update; }
+pkg_postrm() { xdg_icon_cache_update; }
