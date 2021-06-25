@@ -18,9 +18,7 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
 * Reasons for patching/maintaining packages:
 dev-libs/dee				# Portage tree versions can lag and is now being removed, maintained for patches and version control
-dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
-dev-util/gdbus-codegen			# Needs to be maintained in line with dev-libs/glib (see above)
 gnome-extra/activity-log-manager	# Adds unity-control-center integration
 gnome-extra/zeitgeist			# Removed from main tree, patched to perform VACUUM SQLite database on startups every 10 days and to pre-populate the log with some events so that the dash isn't empty on first run
 media-fonts/fonts-noto-cjk		# Repacked version with reduced size
@@ -31,6 +29,7 @@ app-accessibility/at-spi2-core		# Start 'accessibility bus' by default (https://
 app-admin/system-config-printer		# Fix Unity Control Center icon and About dialog icon
 app-backup/deja-dup			# Enable Unity desktop options
 dev-cpp/gtest				# Customised ebuild to install /usr/src/{gmock,gtest}/* source files lacking from main tree ebuild
+dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/libappindicator		# See "Using portage tree libindicate packages" item above
 gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
 gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
