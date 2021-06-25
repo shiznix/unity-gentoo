@@ -33,4 +33,4 @@ RDEPEND="app-i18n/ibus[introspection]
 	x11-libs/gtk+:3[introspection]"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+S="${WORKDIR}"

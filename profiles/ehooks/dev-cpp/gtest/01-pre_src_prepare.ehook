@@ -1,0 +1,11 @@
+ebuild_hook() {
+	# From: Steve Robbins <steve@sumost.ca>
+	# Date: Sun, 25 Oct 2020 23:29:36 -0500
+	# Subject: Add GoogleTest version to each sub-project to allow builds from the
+	#  sub-project. Work around for upstream
+	#  https://github.com/google/googletest/issues/2950
+
+	sed -i \
+		-e "/For more options, run/a set(GOOGLETEST_VERSION ${PV%_*})" \
+		google{mock,test}/CMakeLists.txt
+}

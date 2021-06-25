@@ -24,8 +24,11 @@
 # complicated dep is needed.
 # You can specify the variable BEFORE inherit to add more dependencies.
 XDUMMY_DEPEND="${XDUMMY_DEPEND}
-	!prefix? ( x11-misc/x11vnc[dummy] )
 	x11-apps/xhost
+
+	!prefix? (
+		x11-misc/x11vnc
+		x11-drivers/xf86-video-dummy )
 "
 
 # @ECLASS-VARIABLE: XDUMMY_COMMAND

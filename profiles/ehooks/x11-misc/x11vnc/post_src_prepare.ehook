@@ -1,0 +1,6 @@
+ebuild_hook() {
+	# Correct hard coded local prefix in Xdummy #
+	sed -i \
+		-e 's:/usr/local:/usr:g' \
+		misc/Xdummy.in
+}
