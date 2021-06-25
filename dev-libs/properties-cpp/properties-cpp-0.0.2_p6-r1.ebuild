@@ -4,16 +4,14 @@
 EAPI=6
 
 URELEASE="hirsute"
-inherit cmake-utils
+inherit cmake-utils ubuntu-versionator
 
-# Handle version strings here so as not to use 'ubuntu-versionator' eclass #
-MY_PV="${PV:0:5}"
-MY_P="${PN}-${MY_PV}"
-UVER="-${PVR_MICRO}"
+UVER="${PVR_MICRO}"
 
 DESCRIPTION="Simple convenience library for handling properties and signals in C++11"
 HOMEPAGE="https://launchpad.net/properties-cpp"
-SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/${PN}_${MY_PV}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -25,10 +23,11 @@ DEPEND="dev-libs/boost
 	doc? ( app-doc/doxygen )
         test? ( >=dev-cpp/gtest-1.8.1 )"
 
-S="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/${PN}-${PV}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	ubuntu-versionator_src_prepare
 	use !doc && truncate -s0 doc/CMakeLists.txt
 	use !test && truncate -s0 tests/CMakeLists.txt
 	cmake-utils_src_prepare
