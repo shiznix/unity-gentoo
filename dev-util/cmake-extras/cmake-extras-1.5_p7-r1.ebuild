@@ -6,12 +6,12 @@ EAPI=6
 URELEASE="hirsute"
 inherit cmake-utils ubuntu-versionator
 
-UVER="${PVR_MICRO}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Extra CMake utility modules"
 HOMEPAGE="http://launchpad.net/cmake-extras"
 SRC_URI="${UURL}/${MY_P}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 LICENSE="LGPL-3"
 SLOT="0"

@@ -6,12 +6,12 @@ EAPI=6
 URELEASE="hirsute"
 inherit cmake-utils ubuntu-versionator
 
-UVER="${PVR_MICRO}"
+UVER="-${PVR_MICRO}"
 
 DESCRIPTION="Simple convenience library for handling properties and signals in C++11"
 HOMEPAGE="https://launchpad.net/properties-cpp"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 LICENSE="LGPL-3"
 SLOT="0"

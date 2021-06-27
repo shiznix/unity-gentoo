@@ -8,12 +8,12 @@ DISTUTILS_USE_SETUPTOOLS=no
 URELEASE="hirsute"
 inherit distutils-r1 ubuntu-versionator
 
-UVER="${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
+UVER="-${PVR_PL_MAJOR}build${PVR_PL_MINOR}"
 
 DESCRIPTION="PyUnit extension for reporting in JUnit compatible XML"
 HOMEPAGE="https://launchpad.net/pyjunitxml"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 LICENSE="LGPL-3"
 SLOT="0"

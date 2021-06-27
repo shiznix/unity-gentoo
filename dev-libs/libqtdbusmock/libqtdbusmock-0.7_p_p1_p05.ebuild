@@ -7,12 +7,12 @@ URELEASE="hirsute"
 inherit cmake-utils ubuntu-versionator
 
 UVER_PREFIX="+bzr49+repack${PVR_PL_MAJOR}"
-UVER="${PVR_PL_MINOR}"
+UVER="-${PVR_PL_MINOR}"
 
 DESCRIPTION="Qt Bindings for python-dbusmock"
 HOMEPAGE="https://launchpad.net/libqtdbustest"
 SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.xz
-	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.debian.tar.xz"
+	${UURL}/${MY_P}${UVER_PREFIX}${UVER}.debian.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
