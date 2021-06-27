@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 DESCRIPTION="Unity Desktop - merge this to pull in all Unity indicators"
 HOMEPAGE="http://unity.ubuntu.com/"
@@ -12,7 +12,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+battery bluetooth +cups +datetime +keyboard paste sensors +session +sound weather"
 RESTRICT="mirror"
 
-DEPEND="unity-indicators/indicator-application
+RDEPEND="unity-indicators/indicator-application
 	unity-indicators/indicator-appmenu
 	battery? ( unity-indicators/indicator-power )
 	bluetooth? ( unity-indicators/indicator-bluetooth )
@@ -24,4 +24,3 @@ DEPEND="unity-indicators/indicator-application
 	session? ( unity-indicators/indicator-session )
 	sound? ( unity-indicators/indicator-sound )
 	weather? ( unity-extra/meteo-qt )"
-RDEPEND="${DEPEND}"

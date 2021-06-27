@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE="+audacity_menu +copyq_theme +eog_menu +evince_menu +fontconfig_adjust +gnome-screenshot_adjust +gnome-terminal_theme +headerbar_adjust +libreoffice_theme +nemo_noroot +pidgin_chat +telegram_theme +totem_menu +zim_theme"
 
-BDEPEND="unity-base/unity-build-env"
+DEPEND="unity-base/unity-build-env"
 
 RDEPEND="fontconfig_adjust? ( media-libs/freetype:2[adobe-cff,cleartype_hinting,-bindist,-infinality] )
 	headerbar_adjust? ( x11-misc/gtk3-nocsd )"

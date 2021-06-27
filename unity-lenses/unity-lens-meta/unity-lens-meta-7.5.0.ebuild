@@ -20,4 +20,5 @@ RDEPEND="unity-lenses/unity-lens-applications
 	photos? ( unity-lenses/unity-lens-photos )
 	plugins? ( unity-scopes/smart-scopes )
 	video? ( unity-lenses/unity-lens-video )"
+
 PDEPEND="unity-base/unity-settings[files=,music=,photos=,video=]"

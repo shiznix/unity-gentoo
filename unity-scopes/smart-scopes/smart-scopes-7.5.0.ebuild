@@ -1,12 +1,11 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
-PYTHON_COMPAT=( python{3_7,3_8,3_9} )
+EAPI=7
+PYTHON_COMPAT=( python3_{7..9} )
 
 inherit distutils-r1 eutils ubuntu-versionator
 
-URELEASE="hirsute"
 UURL="http://archive.ubuntu.com/ubuntu/pool/universe/u"	# Mirrors can be unpredictable #
 
 DESCRIPTION="Online scopes for the Unity Dash"
@@ -74,8 +73,7 @@ done
 
 SRC_URI="${SRC_URI_array[@]}"
 
-DEPEND="${RDEPEND}
-	test? ( dev-python/nose )
+BDEPEND="test? ( dev-python/nose )
 	${PYTHON_DEPS}"
 
 S="${WORKDIR}"

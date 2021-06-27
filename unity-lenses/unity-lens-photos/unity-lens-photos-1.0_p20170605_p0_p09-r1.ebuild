@@ -3,9 +3,8 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python{3_7,3_8,3_9} )
+PYTHON_COMPAT=( python3_{7..9} )
 DISTUTILS_SINGLE_IMPL=1
-DISTUTILS_USE_SETUPTOOLS=no
 
 URELEASE="hirsute"
 inherit distutils-r1 eutils ubuntu-versionator
@@ -66,7 +65,7 @@ src_prepare() {
 
 src_configure() {
 	# Workaround for distutils-r1.eclass: install --skip-build #
-	mydistutilsargs=( build )
+	local mydistutilsargs=( build )
 	distutils-r1_src_configure
 }
 
@@ -85,9 +84,9 @@ src_install() {
 
 pkg_postinst() {
 	if use gnome-online-accounts; then
-		echo
+		ewarn
 		ewarn "USE-flag 'gnome-online-accounts' declared:"
 		ewarn "Facebook, Flickr and Picasa scopes are installed but not maintained and tested anymore."
-		echo
+		ewarn
 	fi
 }

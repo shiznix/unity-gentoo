@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit ubuntu-versionator
 
@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility +apps chat extras +fonts +games +utils +xdm"
 RESTRICT="mirror"
 
-DEPEND="unity-base/unity-build-env
+BDEPEND="unity-base/unity-build-env
 	unity-extra/ehooks"
 
 RDEPEND="gnome-base/gnome-core-libs

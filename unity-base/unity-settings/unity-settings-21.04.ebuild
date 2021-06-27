@@ -1,28 +1,28 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-URELEASE="hirsute"
 inherit gnome2-utils
-
-UVER=
 
 DESCRIPTION="Default settings for the Unity"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/ubuntu-settings"
 SRC_URI="" ## We are providing own gschema overrides based on Zesty ##
+
+URELEASE="hirsute"
+UVER=
 
 LICENSE="GPL-2+"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+files lowgfx +music +photos +ubuntu-cursor +ubuntu-sounds +video"
 
-DEPEND="x11-themes/ubuntu-wallpapers:=" # change picture_uri
-RDEPEND="${DEPEND}
-	media-fonts/ubuntu-font-family
+RDEPEND="media-fonts/ubuntu-font-family
 	x11-themes/ubuntu-themes
+	x11-themes/ubuntu-wallpapers:=
 	ubuntu-cursor? ( x11-themes/vanilla-dmz-xcursors )
 	ubuntu-sounds? ( x11-themes/ubuntu-sounds )"
+
 PDEPEND="unity-lenses/unity-lens-meta[files=,music=,photos=,video=]"
 
 S="${FILESDIR}"

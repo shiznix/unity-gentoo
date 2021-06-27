@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 DESCRIPTION="Merge this to setup the Unity desktop build environment package.{accept_keywords,mask,use} files"
 HOMEPAGE="http://unity.ubuntu.com/"
