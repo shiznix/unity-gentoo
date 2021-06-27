@@ -3,16 +3,17 @@
 
 EAPI=7
 
+inherit ubuntu-versionator
+
 DESCRIPTION="Ebuild hooks patching system"
 HOMEPAGE="https://github.com/shiznix/unity-gentoo"
-SRC_URI=""
 
 URELEASE="hirsute"
+UVER=
 
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-
 IUSE="+audacity_menu +copyq_theme +eog_menu +evince_menu +fontconfig_adjust +gnome-screenshot_adjust +gnome-terminal_theme +headerbar_adjust +libreoffice_theme +nemo_noroot +pidgin_chat +telegram_theme +totem_menu +zim_theme"
 
 DEPEND="unity-base/unity-build-env"
