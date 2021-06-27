@@ -43,8 +43,7 @@ MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-#	eapply "${FILESDIR}/01-${PN}-remove-url-dispatcher_17.10.patch"
-	eapply "${FILESDIR}/02-${PN}-optional-eds_19.10.patch"
+	eapply "${FILESDIR}/${PN}-optional-eds_19.10.patch"
 
 	# Fix schema errors and sandbox violations #
 	sed -e 's:SEND_ERROR:WARNING:g' \
@@ -63,10 +62,6 @@ src_prepare() {
 		-e "/add_subdirectory(tests)/d" \
 		CMakeLists.txt
 
-	# Fix building with GCC 10 #
-	sed -i '/#include <limits>/a #include <string>' src/awake.cpp
-	sed -i '/#include <datetime\/date-time.h>/a #include <string>' src/date-time.cpp
-
 	cmake-utils_src_prepare
 }
 
@@ -80,14 +75,12 @@ src_configure() {
 
 pkg_preinst() {
         gnome2_schemas_savelist
-        gnome2_icon_savelist
 }
+
 pkg_postinst() {
 	gnome2_schemas_update
-	gnome2_icon_cache_update
 }
 
 pkg_postrm() {
 	gnome2_schemas_update
-	gnome2_icon_cache_update
 }

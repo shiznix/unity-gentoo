@@ -13,6 +13,7 @@ app-i18n/ibus gtk gtk2 python vala
 app-text/gtkspell vala
 dev-cpp/gtest test
 dev-lang/python sqlite
+dev-libs/boost python					# dev-libs/libcolumbus
 dev-libs/folks vala
 dev-libs/glib utils
 dev-libs/libdbusmenu gtk3 test
@@ -55,7 +56,6 @@ sys-apps/dbus user-session
 sys-apps/systemd nat pam
 sys-libs/talloc python
 sys-libs/zlib minizip
-unity-lenses/unity-lens-photos -gnome-online-accounts	# Facebook, Flickr and Picasa scopes are not maintained and tested anymore
 virtual/notification-daemon -gnome			# Needed to avoid blocks because of 'x11-misc/notify-osd' if 'gnome-base/gnome-shell' is not installed
 www-client/firefox -system-sqlite			# dev-db/sqlite[secure-delete] breaks net-irc/quassel[-postgres]
 x11-base/xorg-server dmx xvfb

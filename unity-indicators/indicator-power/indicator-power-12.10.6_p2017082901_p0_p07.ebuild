@@ -10,7 +10,8 @@ UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="Indicator showing power state used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-power"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -31,11 +32,12 @@ S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/sandbox_violations_fix.diff"
-
-	# Disable url-dispatcher when not using unity8-desktop-session
-	eapply "${FILESDIR}/disable-url-dispatcher.diff"
+	# Fix schema errors and sandbox violations #
+        sed -e 's:SEND_ERROR:WARNING:g' \
+                -e '/Compiling GSettings schemas/,+1 d' \
+                        -i cmake/UseGSettings.cmake
 
 	# Deactivate gnome-power-statistics launcher
 	use powerman \

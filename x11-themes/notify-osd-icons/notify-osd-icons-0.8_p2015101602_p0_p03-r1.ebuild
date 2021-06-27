@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="hirsute"
 inherit ubuntu-versionator
@@ -18,7 +18,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="x11-misc/notify-osd"
-DEPEND=""
+DEPEND="media-gfx/scour"
 
 RESTRICT="mirror"
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
@@ -30,4 +30,9 @@ src_install() {
 	local path=/usr/share/notify-osd/icons/Humanity/scalable/status
 	dosym notification-battery-000.svg ${path}/notification-battery-empty.svg
 	dosym notification-battery-020.svg ${path}/notification-battery-low.svg
+
+	# Optimize SVG files
+	for f in "${ED}${path}"/*.svg; do
+		[[ -f ${f} ]] && scour -i "${f}" -o "${f}.tmp" && mv "${f}.tmp" "${f}" || rm "${f}.tmp"
+	done
 }

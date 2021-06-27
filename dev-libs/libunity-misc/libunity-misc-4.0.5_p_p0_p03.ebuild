@@ -10,7 +10,8 @@ UVER_PREFIX="+14.04.20140115"
 
 DESCRIPTION="Miscellaneous modules for the Unity desktop"
 HOMEPAGE="https://launchpad.net/libunity-misc"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0/4.1.0"
@@ -26,15 +27,14 @@ DEPEND="x11-libs/gtk+:3
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
-	epatch "${FILESDIR}/libunity-misc-4.0.5b-deprecated-api.patch"
 
 	# Make docs optional #
 	! use doc && \
 		sed -e 's:unity-misc doc:unity-misc:' \
 			-i Makefile.am
 	eautoreconf
-	append-cflags -Wno-error
 }
 
 src_install() {

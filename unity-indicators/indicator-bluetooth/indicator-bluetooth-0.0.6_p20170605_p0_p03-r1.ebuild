@@ -10,7 +10,8 @@ UVER_PREFIX="+17.10.${PVR_MICRO}"
 
 DESCRIPTION="System bluetooth indicator used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-bluetooth"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -34,10 +35,8 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}"
 
 src_prepare() {
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
-
-	# Disable url-dispatcher when not using unity8-desktop-session
-	eapply "${FILESDIR}/disable-url-dispatcher.diff"
 
 	# Disable all language files as they can be incomplete #
         #  due to being provided by Ubuntu's language-pack packages #

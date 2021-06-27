@@ -10,7 +10,8 @@ UVER_PREFIX="daily13.06.05+16.10.${PVR_MICRO}"
 
 DESCRIPTION="uTouch Frame Library"
 HOMEPAGE="https://launchpad.net/frame"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -29,11 +30,7 @@ DEPEND="app-text/asciidoc
 S="${WORKDIR}"
 
 src_prepare() {
-	# fix building with GCC 10 #
-	sed -i \
-		-e '/#include "device.h"/a #include <stdio.h>' \
-		src/device.cpp
-
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
 	eautoreconf
 }

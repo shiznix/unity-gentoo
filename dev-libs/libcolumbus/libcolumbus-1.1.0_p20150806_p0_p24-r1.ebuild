@@ -11,7 +11,8 @@ UVER_PREFIX="+15.10.${PVR_MICRO}"
 
 DESCRIPTION="Error tolerant matching engine used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/libcolumbus"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-2"
 SLOT="0/${PV}"
@@ -21,20 +22,15 @@ REQUIRED_USE="test? ( debug )"
 RESTRICT="mirror"
 
 DEPEND="dev-cpp/sparsehash
-	dev-libs/boost:=[${PYTHON_USEDEP}]
+	dev-libs/boost:=[python,${PYTHON_USEDEP}]
 	>=dev-libs/icu-52:=
 	${PYTHON_DEPS}"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
-	# Let cmake find python (Gentoo does not install a custom python3.pc pkgconfig file like Ubuntu does) #
-	epatch -p1 "${FILESDIR}/cmake_find-python.diff"
-	sed -e 's:PYTHONLIBS_INCLUDE_DIRS:PYTHON_INCLUDE_DIRS:g' \
-		-i python/CMakeLists.txt || die
-	sed -e 's:COMMAND ${CMAKE_SOURCE_DIR}/cmake/pysoabi.py:COMMAND cmake/pysoabi.py:g' \
-		-i cmake/python.cmake || die
 
 	python_copy_sources
 	preparation() {
@@ -72,4 +68,7 @@ src_install() {
 		cmake-utils_src_install
 	}
 	python_foreach_impl run_in_build_dir installation
+
+	local DOCS=( 'coding style.txt' COPYING hacking.txt readme.txt )
+	einstalldocs
 }

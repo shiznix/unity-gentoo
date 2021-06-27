@@ -10,7 +10,8 @@ UVER_PREFIX="+18.10.${PVR_MICRO}"
 
 DESCRIPTION="Indicator that collects messages that need a response used by the Unity desktop"
 HOMEPAGE="https://launchpad.net/indicator-messages"
-SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
+SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz
+	${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.diff.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -27,9 +28,9 @@ DEPEND="!net-im/indicator-messages
 S="${WORKDIR}"
 
 src_prepare() {
+	eapply "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 	ubuntu-versionator_src_prepare
 	eautoreconf
-	append-cflags -Wno-error
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
