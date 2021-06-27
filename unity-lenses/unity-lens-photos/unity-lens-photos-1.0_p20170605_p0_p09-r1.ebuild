@@ -84,9 +84,9 @@ src_install() {
 
 pkg_postinst() {
 	if use gnome-online-accounts; then
-		ewarn
+		echo
 		ewarn "USE-flag 'gnome-online-accounts' declared:"
 		ewarn "Facebook, Flickr and Picasa scopes are installed but not maintained and tested anymore."
-		ewarn
+		echo
 	fi
 }

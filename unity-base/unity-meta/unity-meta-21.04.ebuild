@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility +apps chat extras +fonts +games +utils +xdm"
 RESTRICT="mirror"
 
-BDEPEND="unity-base/unity-build-env
+DEPEND="unity-base/unity-build-env
 	unity-extra/ehooks"
 
 RDEPEND="gnome-base/gnome-core-libs

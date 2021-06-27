@@ -40,8 +40,8 @@ src_install() {
 		# Do the following only if there #
 		#  is no file collision detected #
 		local index_dir="/usr/share/cursors/xorg-x11/default"
-		[[ -e "${EROOT%/}${index_dir}"/index.theme ]] \
-			&& local index_owner=$(portageq owners "${EROOT}" "${EROOT%/}${index_dir}"/index.theme 2>/dev/null | grep "${CATEGORY}/${PN}-[0-9]" 2>/dev/null)
+		[[ -e "${EROOT}${index_dir}"/index.theme ]] \
+			&& local index_owner=$(portageq owners "${EROOT}/" "${EROOT}${index_dir}"/index.theme 2>/dev/null | grep "${CATEGORY}/${PN}-[0-9]" 2>/dev/null)
 		## pass when not null or unset
 		if [[ -n "${index_owner-unset}" ]]; then
 			insinto "${index_dir}"
@@ -83,7 +83,7 @@ src_install() {
 
 pkg_preinst() {
 	# Modified gnome2_schemas_savelist to find *.gschema.override files #
-	export GNOME2_ECLASS_GLIB_SCHEMAS=$(find "${ED}usr/share/glib-2.0/schemas" -name "*.gschema.override" 2>/dev/null)
+	export GNOME2_ECLASS_GLIB_SCHEMAS=$(find "${ED}/usr/share/glib-2.0/schemas" -name "*.gschema.override" 2>/dev/null)
 }
 
 pkg_postinst() {
