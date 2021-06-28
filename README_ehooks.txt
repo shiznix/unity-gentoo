@@ -92,6 +92,7 @@ EBUILD HOOKS
 * ${EHOOK_FILESDIR}
 	- path to ${pkgdir}/files
 	- used for patches and miscellaneous files
+	- used for 'patches' directory from debian archive file
 
 * Patch file format:
 	- extensions: *.patch or *.diff

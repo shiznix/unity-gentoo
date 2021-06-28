@@ -1,11 +1,9 @@
 ebuild_hook() {
 	local x
 
-	if [[ -r "${EHOOK_FILESDIR}/patches/series" ]]; then
-		for x in $(grep -v \# "${EHOOK_FILESDIR}/patches/series"); do
-			eapply "${EHOOK_FILESDIR}/patches/${x}"
-		done
-	fi
+	for x in $(grep -v \# "${EHOOK_FILESDIR}/patches/series" 2>/dev/null); do
+		eapply "${EHOOK_FILESDIR}/patches/${x}"
+	done
 
 	for x in "${EHOOK_FILESDIR}"/*.{diff,patch}; do
 		[[ -r ${x} ]] && eapply "${x}"
