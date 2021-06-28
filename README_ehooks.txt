@@ -77,15 +77,14 @@ EBUILD HOOKS
 
 	- templates are in .../ehooks/templates directory
 	  the preferred way of using templates are symbolic links:
-		ln -s ../../templates/cb-post_pkg_postinst.ehook 04-post_pkg_postinst.ehook
+		ln -s ../../templates/ubuntu-versionator_pkg_postinst.ehook 04-post_pkg_postinst.ehook
 
 	- command to apply patches in 'prepare' phase:
 		eapply "${EHOOK_FILESDIR}"
 
-	- command to trigger 'eautoreconf'
-	  in pre_src_prepare phase:
+	- command to trigger 'eautoreconf':
 		eautoreconf
-	  and in post_src_prepare phase:
+	  and in post_src_prepare phase when 'eautoreconf' already used:
 		AT_NOELIBTOOLIZE="yes" eautoreconf
 
 	- errors log is located at ${T}/ehook.log
@@ -110,7 +109,7 @@ EBUILD HOOKS
 				sed -i \
 					-e "/gboolean show_open_as_root/{s/no_selection_or_one_dir/FALSE/}" \
 					src/nemo-view.c || die
-				einfo "  Open as Root context menu action removed"
+				einfo "'Open as Root' context menu action removed"
 			fi
 		}
 
@@ -121,7 +120,7 @@ EBUILD HOOKS
 	  see x11-terms/gnome-terminal:
 		01-post_src_prepare.ehook
 	  and x11-libs/vte:2.91:
-		01-pre_src_prepare.ehook
+		01-post_src_prepare.ehook
 
 * EHOOK_PATH variable defines the location of additional ebuild hooks. It provides a way
   for users to apply their own ebuild hooks. It's set through /etc/portage/make.conf
