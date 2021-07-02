@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="hirsute"
-inherit cmake-utils eutils gnome2-utils ubuntu-versionator vala
+inherit eutils gnome2-utils meson ubuntu-versionator vala
 
 UVER="+dfsg1"
 UVER_SUFFIX="-${PVR_PL_MINOR}"
@@ -17,7 +17,7 @@ SRC_URI="${UURL}/${MY_P}${UVER}.orig.tar.xz
 LICENSE="LGPL-3"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
-IUSE="+vala-panel mate xfce +wnck"
+IUSE="+bamf +vala-panel mate xfce"
 REQUIRED_USE="|| ( xfce vala-panel )"
 RESTRICT="mirror"
 
@@ -27,7 +27,7 @@ RDEPEND=">=x11-libs/gtk+-3.12.0:3
 	unity-base/bamf
 	mate? ( mate-base/mate-panel )
 	vala-panel? ( x11-misc/vala-panel )
-	wnck? ( >=x11-libs/libwnck-3.4.0 )
+	bamf? ( unity-base/bamf )
 	xfce? ( >=xfce-base/xfce4-panel-4.11.2 )"
 DEPEND="${RDEPEND}
 	dev-util/cmake
@@ -38,36 +38,18 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-
-	# Remove build failure triggers #
-	sed -e '/RPM/d' \
-		-e '/subprojects/d' -i CMakeLists.txt
-
-	# Remove gio-addons as also done in x11-misc/vala-panel #
-	rm -v vapi/gio-addons-2.0.vapi
-	sed -e '/gio-addons-2.0/d' -i lib/CMakeLists.txt
-
 	vala_src_prepare
-	cmake-utils_src_prepare
 }
 
 src_configure() {
-	local mycmakeargs=(
-		-DENABLE_BUDGIE=OFF \
-		-DENABLE_MATE=$(usex mate) \
-		-DENABLE_WNCK=$(usex wnck) \
-		-DENABLE_XFCE=$(usex xfce) \
-		-DENABLE_VALAPANEL=$(usex vala-panel) \
-		-DENABLE_REGISTRAR=ON \
-		-DENABLE_UNITY_GTK_MODULE=OFF \
-		-DGSETTINGS_COMPILE=OFF \
-		-DVALA_EXECUTABLE="${VALAC}"
+	local emesonargs=(
+		-Dwm_backend=$(usex bamf auto) \
 	)
-	cmake-utils_src_configure
+	meson_src_configure
 }
 
 src_install () {
-	cmake-utils_src_install
+	meson_src_install
 	insinto /usr/share/glib-2.0/schemas
 	doins ${WORKDIR}/debian/10_mate*
 	insinto /etc/profile.d

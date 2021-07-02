@@ -15,4 +15,4 @@ A Gentoo overlay to install the Unity desktop (requires systemd)
 
 * ***emerge --backtrack=30 -uDNvta unity-meta***
 
-* For questions/support, join us on irc.freenode.net #unity-gentoo
+* For questions/support, join us on irc.libera.chat #unity-gentoo

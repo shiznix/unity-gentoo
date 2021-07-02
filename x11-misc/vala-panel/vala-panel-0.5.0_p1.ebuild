@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="hirsute"
-inherit cmake-utils eutils gnome2-utils ubuntu-versionator vala
+inherit eutils gnome2-utils meson ubuntu-versionator vala
 
 UVER="-${PVR_MICRO}"
 
@@ -29,7 +29,7 @@ RDEPEND=">=x11-libs/gtk+-3.12.0:3
 	x11-libs/gdk-pixbuf
 	>=dev-libs/libpeas-1.2.0
 	X? ( x11-libs/libX11 )
-	wnck? ( >=x11-libs/libwnck-3.4.0:3 )"
+	wnck? ( >=x11-libs/libwnck-3.4.8:3 )"
 DEPEND="${RDEPEND}
 	dev-util/cmake
 	dev-util/cmake-vala
@@ -42,25 +42,26 @@ GNOME2_ECLASS_GLIB_SCHEMAS="org.valapanel.gschema.xml"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	mkdir ${S}/cmake
-	cp -rfv ${WORKDIR}/vala-panel-appmenu-${VALA_PANEL_APPMENU_VER}/cmake/*.cmake ${S}/cmake
+#	mkdir ${S}/cmake
+#	cp -rfv ${WORKDIR}/vala-panel-appmenu-${VALA_PANEL_APPMENU_VER}/cmake/*.cmake ${S}/cmake
 	vala_src_prepare
-	cmake-utils_src_prepare
+#	cmake-utils_src_prepare
 }
 
-src_configure() {
-	local mycmakeargs=(
-		-DENABLE_WNCK=$(usex wnck)
-		-DX11=$(usex X)
-		-DGSETTINGS_COMPILE=OFF
-		-DCMAKE_INSTALL_SYSCONFDIR=/etc
-		-DVALA_EXECUTABLE="${VALAC}"
-	)
-	cmake-utils_src_configure
-}
+#src_configure() {
+#	local mycmakeargs=(
+#		-DENABLE_WNCK=$(usex wnck)
+#		-DX11=$(usex X)
+#		-DGSETTINGS_COMPILE=OFF
+#		-DCMAKE_INSTALL_SYSCONFDIR=/etc
+#		-DVALA_EXECUTABLE="${VALAC}"
+#	)
+#	cmake-utils_src_configure
+#}
 
 src_install () {
-	cmake-utils_src_install
+#	cmake-utils_src_install
+	meson_src_install
 }
 
 pkg_postinst() {
