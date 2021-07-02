@@ -56,13 +56,6 @@ src_prepare() {
 	sed -e 's/const struct inode_operations \*iops))$/const struct inode_operations *iops)/' \
 		-i include/linux/security.h
 
-	# Omit building Ubuntu's VBox kernel modules, these are provided by package app-emulation/virtualbox-modules #
-#	epatch -p1 "${FILESDIR}/omit-vbox.diff"
-
-	# Revert kernel commit https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1455cf8dbfd06aa7651dcfccbadb7a093944ca65 #
-	#	until systemd, userspace and kernel devs. can arrive at a working solution (broken bluetooth, racing systemd-udevd causing 100% CPU, stale USB devices, etc.) #
-	epatch -p1 "${FILESDIR}/revert-bind_unbind-uevents.patch"
-
 	sed -i -e "s:^\(EXTRAVERSION =\).*:\1 ${EXTRAVERSION}:" Makefile || die
 	sed -i -e 's:#export\tINSTALL_PATH:export\tINSTALL_PATH:' Makefile || die
 	rm -f .config >/dev/null
