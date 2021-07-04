@@ -23,6 +23,7 @@ DEPEND="dev-libs/glib:2
 	>=dev-libs/json-c-0.12
 	dev-libs/libappindicator
 	dev-libs/libatasmart
+	dev-libs/libayatana-appindicator
 	dev-libs/libunity
 	gnome-base/gconf
 	gnome-base/libgtop

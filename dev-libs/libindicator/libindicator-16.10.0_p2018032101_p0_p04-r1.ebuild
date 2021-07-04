@@ -91,4 +91,6 @@ src_install() {
 	popd
 
 	prune_libtool_files --modules
+	# Remove dummy files as per Ubuntu, unused and file collide with dev-libs/libayatana-indicator #
+	rm -fv "${ED}"/usr/$(get_libdir)/libdummy-indicator*
 }
