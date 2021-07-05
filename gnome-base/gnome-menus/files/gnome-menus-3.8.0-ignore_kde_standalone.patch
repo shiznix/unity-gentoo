@@ -1,0 +1,23 @@
+diff -urN gnome-menus-3.13.3/layout/gnome-applications.menu gnome-menus-3.13.3-patched/layout/gnome-applications.menu
+--- gnome-menus-3.13.3/layout/gnome-applications.menu	2015-09-20 06:48:02.214677891 +0930
++++ gnome-menus-3.13.3-patched/layout/gnome-applications.menu	2015-09-20 06:50:14.946684315 +0930
+@@ -533,6 +533,19 @@
+         <Not><Category>Network</Category></Not>
+         <Not><Category>Office</Category></Not>
+         <Not><Category>Utility</Category></Not>
++        <Not><Category>X-KDE-settings-accessibility</Category></Not>
++        <Not><Category>X-KDE-settings-components</Category></Not>
++        <Not><Category>X-KDE-settings-desktop</Category></Not>
++        <Not><Category>X-KDE-settings-looknfeel</Category></Not>
++        <Not><Category>X-KDE-settings-network</Category></Not>
++        <Not><Category>X-KDE-settings-webbrowsing</Category></Not>
++        <Not><Category>X-KDE-settings-peripherals</Category></Not>
++        <Not><Category>X-KDE-settings-hardware</Category></Not>
++        <Not><Category>X-KDE-settings-power</Category></Not>
++        <Not><Category>X-KDE-settings-security</Category></Not>
++        <Not><Category>X-KDE-settings-sound</Category></Not>
++        <Not><Category>X-KDE-settings-system</Category></Not>
++        <Not><Category>X-KDE-information</Category></Not>
+         <!-- Really Fedora ??? -->
+         <Not><Filename>gnome-eog.desktop</Filename></Not>
+         <Not><Filename>gnome-file-roller.desktop</Filename></Not>

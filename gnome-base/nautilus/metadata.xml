@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>larry@gentoo.org</email>
+		<name>unity-gentoo overlay</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">shiznix</remote-id>
+		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
+	</upstream>
+	<use>
+		<flag name="packagekit">Use packagekit to search for programs to open
+			unknown file types</flag>
+		<flag name="previewer">Use <pkg>gnome-extra/sushi</pkg> to preview files
+			from the file mananger</flag>
+		<flag name="sendto">Enable the nautilus-sendto extension to send files to
+			various locations/devices</flag>
+		<flag name="tracker">Add support for <pkg>app-misc/tracker</pkg> search</flag>
+	</use>
+</pkgmetadata>

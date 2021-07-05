@@ -1,5 +1,0 @@
-ebuild_hook() {
-	sed -i \
-		-e "s/if-session gnome-fallback/unless-session gnome/" \
-		"${ED}"/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
-}

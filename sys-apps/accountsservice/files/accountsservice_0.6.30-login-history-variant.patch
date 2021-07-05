@@ -1,0 +1,43 @@
+From f950d51aa018c171b98602787598e6b841ab1f6c Mon Sep 17 00:00:00 2001
+From: Giovanni Campagna <gcampagna@src.gnome.org>
+Date: Tue, 18 Dec 2012 16:36:12 +0100
+Subject: [PATCH] Fix login history variant handling
+
+g_variant_compare() returns 0 when the values are equal, and non-zero
+otherwise, which is the opposite of what the check wants.
+Also, it is valid for the login history variant to be null, when the
+library is working with an older daemon. Don't emit a critical in that
+case.
+
+See: https://bugzilla.gnome.org/show_bug.cgi?id=690413
+
+https://bugs.freedesktop.org/show_bug.cgi?id=58466
+---
+ src/libaccountsservice/act-user.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/libaccountsservice/act-user.c b/src/libaccountsservice/act-user.c
+index 2c1fcb8..80db669 100644
+--- a/src/libaccountsservice/act-user.c
++++ b/src/libaccountsservice/act-user.c
+@@ -1120,7 +1120,7 @@ collect_props (const gchar *key,
+                 GVariant *new_login_history = value;
+ 
+                 if (user->login_history == NULL ||
+-                    !g_variant_compare (user->login_history, new_login_history)) {
++                    !g_variant_equal (user->login_history, new_login_history)) {
+                         if (user->login_history)
+                           g_variant_unref (user->login_history);
+                         user->login_history = g_variant_ref (new_login_history);
+@@ -1375,7 +1375,7 @@ _act_user_load_from_user (ActUser    *user,
+         user->login_time = user_to_copy->login_time;
+         g_object_notify (G_OBJECT (user), "login-time");
+ 
+-        user->login_history = g_variant_ref (user_to_copy->login_history);
++        user->login_history = user_to_copy->login_history ? g_variant_ref (user_to_copy->login_history) : NULL;
+         g_object_notify (G_OBJECT (user), "login-history");
+ 
+         user->account_type = user_to_copy->account_type;
+-- 
+1.8.1
+

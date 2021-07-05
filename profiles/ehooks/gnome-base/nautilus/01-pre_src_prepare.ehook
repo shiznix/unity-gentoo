@@ -1,5 +1,0 @@
-ebuild_hook() {
-	ehook_use headerbar_adjust && sed -i \
-		-e "/show_close_button/{s/True/False/}" \
-		src/resources/ui/nautilus-{properties-window,toolbar}.ui
-}

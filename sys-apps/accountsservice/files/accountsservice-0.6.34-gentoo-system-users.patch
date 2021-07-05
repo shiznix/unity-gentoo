@@ -1,0 +1,44 @@
+diff -Naur accountsservice-0.6.34_orig/src/daemon.c accountsservice-0.6.34/src/daemon.c
+--- accountsservice-0.6.34_orig/src/daemon.c	2013-06-11 17:50:37.000000000 +0200
++++ accountsservice-0.6.34/src/daemon.c	2013-06-30 13:59:43.384350860 +0200
+@@ -82,6 +82,40 @@
+         "at",
+         "gdm",
+         "gnome-initial-setup",
++/* Additional Gentoo system users with non-trivial login shell */
++        "amanda",
++        "backuppc",
++        "drqueue",
++        "firebird",
++        "flexlm",
++        "foldingathome",
++        "geneweb",
++        "git",
++        "gnump3d",
++        "hacluster",
++        "hg",
++        "hsqldb",
++        "infinote",
++        "jffnms",
++        "klive",
++        "mailman",
++        "mpd",
++        "mythtv",
++        "nagios",
++        "nx",
++        "oneadmin",
++        "openvpn",
++        "p2p",
++        "phxd",
++        "resin",
++        "rplayd",
++        "scponly",
++        "secoff",
++        "tinyproxy",
++        "ttrssd",
++        "vboxguest",
++        "vdr",
++        "vdradmin",
+         NULL
+ };
+ 

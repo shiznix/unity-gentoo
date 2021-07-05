@@ -52,7 +52,19 @@ dev-python/autopilot **
 dev-python/pyjunitxml **
 dev-util/cmake-extras **
 dev-util/cmake-vala **
+gnome-base/gnome-control-center **
+gnome-base/gnome-core-apps **
+gnome-base/gnome-core-libs **
+gnome-base/gnome-desktop **
+gnome-base/gnome-menus **
+gnome-base/gnome-panel **
+gnome-base/gnome-session **
+gnome-base/gnome-settings-daemon **
+gnome-base/gsettings-desktop-schemas **
+gnome-base/nautilus **
 gnome-extra/activity-log-manager **
+gnome-extra/nm-applet **
+gnome-extra/polkit-gnome **
 gnome-extra/zeitgeist **
 mate-extra/brisk-menu **
 mate-extra/mate-hud **
@@ -62,6 +74,7 @@ mate-extra/ubuntu-mate-settings **
 media-fonts/fonts-noto-cjk **
 net-libs/geonames **
 net-libs/telepathy-indicator **
+sys-apps/accountsservice **
 sys-apps/xorg-gtest **
 unity-base/bamf **
 unity-base/compiz **
@@ -113,6 +126,8 @@ unity-scopes/smart-scopes **
 unity-scopes/unity-scope-home **
 x11-libs/dee-qt **
 x11-libs/gsettings-qt **
+x11-libs/gtk+:2 **
+x11-libs/gtk+:3 **
 x11-misc/gtk3-nocsd **
 x11-misc/lightdm **
 x11-misc/mate-dock-applet **

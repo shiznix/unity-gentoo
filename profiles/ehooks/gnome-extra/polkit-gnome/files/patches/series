@@ -1,6 +1,0 @@
-0001-Select-the-current-user-to-authenticate-with-by-defa.patch
-0002-Auth-dialog-Make-the-label-wrap-at-70-chars.patch
-0003-Get-user-icon-from-accountsservice-instead-of-lookin.patch
-0004-Use-fresh-X11-timestamps-when-displaying-authenticat.patch
-04-autorestart.patch
-06-authentication-failure-string.patch

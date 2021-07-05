@@ -1,0 +1,156 @@
+diff -Nur a/meson.build b/meson.build
+--- a/meson.build	2021-01-27 14:00:13.851575000 +0100
++++ b/meson.build	2021-01-27 14:04:28.427714522 +0100
+@@ -89,25 +89,25 @@
+ 
+ add_project_arguments(common_flags + compiler_flags, language: 'c')
+ 
+-accountsservice_dep = dependency('accountsservice')
+-glib_dep = dependency('glib-2.0', version: '>=' + glib_min_version)
+-geocode_glib_dep = dependency('geocode-glib-1.0', version: '>= 3.10.0')
+-gio_dep = dependency('gio-2.0', version: '>= 2.53.0')
+-gio_unix_dep = dependency('gio-unix-2.0')
+-gnome_desktop_dep = dependency('gnome-desktop-3.0', version: '>= 3.34.2')
++#accountsservice_dep = dependency('accountsservice')
++#glib_dep = dependency('glib-2.0', version: '>=' + glib_min_version)
++#geocode_glib_dep = dependency('geocode-glib-1.0', version: '>= 3.10.0')
++#gio_dep = dependency('gio-2.0', version: '>= 2.53.0')
++#gio_unix_dep = dependency('gio-unix-2.0')
++#gnome_desktop_dep = dependency('gnome-desktop-3.0', version: '>= 3.34.2')
+ gsettings_desktop_dep = dependency('gsettings-desktop-schemas', version: '>= 3.35.91')
+-gtk_dep = dependency('gtk+-3.0', version: '>= 3.15.3')
+-gtk_x11_dep = dependency('gtk+-x11-3.0')
+-gweather_dep = dependency('gweather-3.0', version: '>= 3.9.5')
+-lcms_dep = dependency('lcms2', version: '>= 2.2')
+-libcanberra_gtk_dep = dependency('libcanberra-gtk3')
+-libgeoclue_dep = dependency('libgeoclue-2.0', version: '>= 2.3.1')
+-libnotify_dep = dependency('libnotify', version: '>= 0.7.3')
+-libpulse_mainloop_glib_dep = dependency('libpulse-mainloop-glib', version: '>= 2.0')
+-pango_dep = dependency('pango', version: '>= 1.20.0')
+-polkit_gobject_dep = dependency('polkit-gobject-1', version: '>= 0.105')
+-upower_glib_dep = dependency('upower-glib', version: '>= 0.99.8')
+-x11_dep = dependency('x11')
++#gtk_dep = dependency('gtk+-3.0', version: '>= 3.15.3')
++#gtk_x11_dep = dependency('gtk+-x11-3.0')
++#gweather_dep = dependency('gweather-3.0', version: '>= 3.9.5')
++#lcms_dep = dependency('lcms2', version: '>= 2.2')
++#libcanberra_gtk_dep = dependency('libcanberra-gtk3')
++#libgeoclue_dep = dependency('libgeoclue-2.0', version: '>= 2.3.1')
++#libnotify_dep = dependency('libnotify', version: '>= 0.7.3')
++#libpulse_mainloop_glib_dep = dependency('libpulse-mainloop-glib', version: '>= 2.0')
++#pango_dep = dependency('pango', version: '>= 1.20.0')
++#polkit_gobject_dep = dependency('polkit-gobject-1', version: '>= 0.105')
++#upower_glib_dep = dependency('upower-glib', version: '>= 0.99.8')
++#x11_dep = dependency('x11')
+ 
+ enable_systemd = get_option('systemd')
+ if enable_systemd
+@@ -118,20 +118,20 @@
+                                                             define_variable: ['prefix', gsd_prefix])
+ endif
+ 
+-m_dep = cc.find_library('m')
++#m_dep = cc.find_library('m')
+ 
+ # ALSA integration (default enabled)
+ enable_alsa = get_option('alsa')
+ assert(enable_alsa or not host_is_linux, 'ALSA is not optional on Linux platforms')
+ 
+-libgvc = subproject(
+-  'gvc',
+-  default_options: [
+-    'static=true',
+-    'alsa=' + enable_alsa.to_string()
+-  ]
+-)
+-libgvc_dep = libgvc.get_variable('libgvc_dep')
++#libgvc = subproject(
++#  'gvc',
++#  default_options: [
++#    'static=true',
++#    'alsa=' + enable_alsa.to_string()
++#  ]
++#)
++#libgvc_dep = libgvc.get_variable('libgvc_dep')
+ 
+ # GUdev integration (default enabled)
+ enable_gudev = get_option('gudev')
+@@ -144,16 +144,16 @@
+ endif
+ 
+ # Check for colord
+-enable_colord = get_option('colord')
++enable_colord = false
+ if enable_colord
+   colord_dep = dependency('colord', version: '>= 1.3.5')
+ endif
+ 
+-has_timerfd_create = cc.has_function('timerfd_create')
++has_timerfd_create = false
+ config_h.set10('HAVE_TIMERFD', has_timerfd_create)
+ 
+ # Check for wayland dependencies
+-enable_wayland = get_option('wayland')
++enable_wayland = false
+ if enable_wayland
+   assert(enable_gudev, 'GUDev support is required for wayland support.')
+   wayland_client_dep = dependency('wayland-client')
+@@ -162,7 +162,7 @@
+ config_h.set10('HAVE_WAYLAND', enable_wayland)
+ 
+ # wacom
+-enable_wacom = get_option('wacom')
++enable_wacom = false
+ if enable_wacom
+   assert(enable_gudev, 'GUDev support is required for wacom support.')
+   libwacom_dep = dependency('libwacom', version: '>= 0.7')
+@@ -170,7 +170,7 @@
+ config_h.set10('HAVE_WACOM', enable_wacom)
+ 
+ # smartcard section
+-enable_smartcard = get_option('smartcard')
++enable_smartcard = false
+ if enable_smartcard
+   nss_dep = dependency('nss', version: '>= 3.11.2')
+ 
+@@ -183,7 +183,7 @@
+ enable_usb_protection = get_option('usb-protection')
+ 
+ # CUPS
+-enable_cups = get_option('cups')
++enable_cups = false
+ if enable_cups
+   cups_dep = dependency('cups', version : '>= 1.4', required: false)
+   assert(cups_dep.found(), 'CUPS 1.4 or newer not found')
+@@ -203,8 +203,8 @@
+ endif
+ 
+ # Rfkill
+-enable_rfkill = get_option('rfkill')
+-assert(enable_rfkill or not host_is_linux, 'rfkill is not optional on Linux platforms')
++enable_rfkill = false
++#assert(enable_rfkill or not host_is_linux, 'rfkill is not optional on Linux platforms')
+ if enable_rfkill
+   assert(cc.has_header('linux/rfkill.h'), 'rfkill support requested but RFKill headers not found')
+   assert(enable_gudev, 'GUdev is required for rfkill support')
+@@ -216,7 +216,7 @@
+ endif
+ 
+ # wwan
+-enable_wwan = get_option('wwan')
++enable_wwan = false
+ if enable_wwan
+   gcr_base_dep = dependency('gcr-base-3', version: '>= 3.7.5')
+   mm_glib_dep = dependency('mm-glib', version: '>= 1.0')
+@@ -245,9 +245,9 @@
+ 
+ top_inc = include_directories('.')
+ 
+-subdir('gnome-settings-daemon')
++#subdir('gnome-settings-daemon')
+ subdir('data')
+-subdir('plugins')
++#subdir('plugins')
+ subdir('po')
+ 
+ configure_file(

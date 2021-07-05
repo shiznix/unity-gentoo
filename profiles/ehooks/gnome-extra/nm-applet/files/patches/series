@@ -1,6 +1,0 @@
-Force-online-state-with-unmanaged-devices.patch
-lp341684_device_sensitive_disconnect_notify.patch
-lp460144_correctly_update_notification.patch
-Have-the-appindicator-enabled-by-default.patch
-Make-policykit-restricted-actions-insensitive.patch
-Support-hiding-rather-than-desensitizing-disallowed-items.patch

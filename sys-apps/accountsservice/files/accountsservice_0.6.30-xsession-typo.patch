@@ -1,0 +1,28 @@
+From 5b2b8e554d19a37ea5b5e0a1ba2d1b67328863f5 Mon Sep 17 00:00:00 2001
+From: Colin Walters <walters@verbum.org>
+Date: Tue, 18 Dec 2012 19:09:15 -0500
+Subject: [PATCH] user: Fix x-session -> xsession property notification
+
+Introduced by commit 9982e50b891074a711c43c5d7acc71cb793eb14d
+
+https://bugs.freedesktop.org/show_bug.cgi?id=58493
+---
+ src/user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/user.c b/src/user.c
+index 9d84e11..bc54a38 100644
+--- a/src/user.c
++++ b/src/user.c
+@@ -315,7 +315,7 @@ user_update_from_keyfile (User     *user,
+         if (s != NULL) {
+                 g_free (user->x_session);
+                 user->x_session = s;
+-                g_object_notify (G_OBJECT (user), "x-session");
++                g_object_notify (G_OBJECT (user), "xsession");
+         }
+ 
+         s = g_key_file_get_string (keyfile, "User", "Email", NULL);
+-- 
+1.8.1
+
