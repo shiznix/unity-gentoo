@@ -40,7 +40,6 @@ src_prepare() {
 	eapply "${S}/${MY_P}${UVER_PREFIX}${UVER}.diff"
 	rm -r "${S}"/debian/patches     # patches already applied
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/${PN}-fix-build-against-vala-0.52.patch"
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf

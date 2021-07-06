@@ -3,6 +3,9 @@
 
 EAPI=6
 
+VALA_MIN_API_VERSION=0.44
+VALA_MAX_API_VERSION=0.44
+
 URELEASE="hirsute"
 inherit autotools eutils ubuntu-versionator vala
 
@@ -37,8 +40,6 @@ PDEPEND="|| ( media-sound/rhythmbox
 		unity-scopes/smart-scopes[soundcloud] )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
-
-PATCHES=( "${FILESDIR}/fix-vala.patch" )
 
 src_prepare() {
 	PATCHES+=( "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff" )

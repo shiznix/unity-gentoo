@@ -3,6 +3,9 @@
 
 EAPI=6
 
+VALA_MIN_API_VERSION=0.44
+VALA_MAX_API_VERSION=0.44
+
 URELEASE="hirsute"
 inherit autotools eutils gnome2-utils ubuntu-versionator vala
 
@@ -33,7 +36,6 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/${PN}-fix-build-against-vala-0.52.patch"
 
 	# Disable all language files as they can be incomplete #
 	#  due to being provided by Ubuntu's language-pack packages #

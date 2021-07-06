@@ -20,7 +20,6 @@ IUSE="+charmap +fcitx"
 RESTRICT="mirror"
 
 RDEPEND="gnome-base/gnome-desktop:3=
-
 	charmap? ( gnome-extra/gucharmap )"
 DEPEND="${RDEPEND}
 	app-i18n/ibus[vala]
@@ -36,9 +35,7 @@ DEPEND="${RDEPEND}
 	x11-libs/libxklavier
 	x11-libs/pango
 	x11-misc/lightdm
-
 	fcitx? ( >=app-i18n/fcitx-4.2.8.5 )
-
 	$(vala_depend)
 	${PYTHON_DEPS}"
 
@@ -46,7 +43,6 @@ S="${WORKDIR}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/${PN}-fix-build-against-vala-0.52.patch"
 	eapply "${FILESDIR}/${PN}-optional-fcitx.patch"
 
 	! use charmap && sed -i \
