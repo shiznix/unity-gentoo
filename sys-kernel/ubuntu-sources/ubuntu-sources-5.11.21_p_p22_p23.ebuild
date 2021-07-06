@@ -12,12 +12,12 @@ MY_PV="${PV}"
 BASE_PV="5.11.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
 KCONFIG_URELEASE="xenial/linux/4.4.0-185.215"
 UURL="mirror://unity/pool/main/l/${MY_PN}"
-UVER="${PVR_PL_MAJOR}.${PVR_PL_MINOR}"
+UVER=-"${PVR_PL_MAJOR}.${PVR_PL_MINOR}"
 
 DESCRIPTION="Ubuntu patched kernel sources"
 HOMEPAGE="https://launchpad.net/ubuntu/+source/linux"
 SRC_URI="${UURL}/${MY_PN}_${BASE_PV}.orig.tar.gz
-	${UURL}/${MY_PN}_${BASE_PV}-${UVER}.diff.gz
+	${UURL}/${MY_PN}_${BASE_PV}${UVER}.diff.gz
 	amd64? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/amd64-config.flavour.generic )
 	x86? ( http://kernel.ubuntu.com/~kernel-ppa/configs/${KCONFIG_URELEASE}/i386-config.flavour.generic )"
 LICENSE="GPL-2"
