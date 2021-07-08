@@ -16,12 +16,33 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 	dev-libs/libunity
 	unity-lenses/unity-lens-video
 
+
 * Reasons for patching/maintaining packages:
 dev-libs/dee				# Portage tree versions can lag and is now being removed, maintained for patches and version control
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
+------ GNOME ----------------------------
+gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
+gnome-base/gnome			# Needed to lock correct Gnome version to Ubuntu release (portage Gnome versions sometimes lag or dropped prematurely)
+gnome-base/gnome-control-center		# Needed to lock correct Gnome version to Ubuntu release (portage Gnome versions sometimes lag or dropped prematurely)
+gnome-base/gnome-core-{libs,apps}	# Included to pull in sometimes higher/lower versions of x11-libs/gtk+:3 + Gnome (depending on main tree versions available)
+gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen  
+gnome-base/gnome-menus			# Needs some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
+gnome-base/gnome-session		# Installs session files for launching Unity desktop
+gnome-base/gnome-settings-daemon	# unity-base/unity-settings-daemon relies on files created from patchset
+					# compiz at runtime needs 'terminal' key in 'org.gnome.settings-daemon.plugins.media-keys' schema
+					# unity-greeter at runtime needs 'active' key in 'org.gnome.settings-daemon.plugins.housekeeping' schema
+gnome-base/gnome-shell-extensions	# Needed to lock correct Gnome version to Ubuntu release (portage Gnome versions sometimes lag or dropped prematurely)
+gnome-base/gsettings-desktop-schemas	# Includes Unity desktop settings patches
+gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
+gnome-extra/nemo			# Patches nemo-autostart.desktop to allow starting in Unity desktop
+gnome-extra/nm-applet			# Shows nm-applet in indicator panel
+gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 gnome-extra/activity-log-manager	# Adds unity-control-center integration
 gnome-extra/zeitgeist			# Removed from main tree, patched to perform VACUUM SQLite database on startups every 10 days and to pre-populate the log with some events so that the dash isn't empty on first run
+-----------------------------------------
 media-fonts/fonts-noto-cjk		# Repacked version with reduced size
+sys-apps/accountsservice		# Requires patching for SetInputSources as needed by unity-indicators/indicator-keyboard and u-c-c text entry settings
+x11-libs/gtk+				# Needed for global appmenu
 x11-misc/lightdm			# Custom fixes for Xsession profile sourcing and multi-monitor display
 
 * Reasons for maintaining ebuild hooks:
@@ -31,19 +52,6 @@ app-backup/deja-dup			# Enable Unity desktop options
 dev-cpp/gtest				# Customised ebuild to install /usr/src/{gmock,gtest}/* source files lacking from main tree ebuild
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/libappindicator		# See "Using portage tree libindicate packages" item above
-gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to install compizconfig default settings into gconf registry
-gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen
-gnome-base/gnome-menus			# Needed for some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
-gnome-base/gnome-session		# Installs session files for launching Unity desktop
-gnome-base/gnome-settings-daemon	# unity-settings-daemon relies on files created from patchset
-					# compiz at runtime needs 'terminal' key in 'org.gnome.settings-daemon.plugins.media-keys' schema
-					# unity-greeter at runtime needs 'active' key in 'org.gnome.settings-daemon.plugins.housekeeping' schema
-
-gnome-base/gsettings-desktop-schemas	# Includes Unity desktop settings patches
-gnome-base/nautilus			# Give progressbar on Dash launcher nautilus icon
-gnome-extra/nemo			# Patches nemo-autostart.desktop to allow starting in Unity desktop
-gnome-extra/nm-applet			# Shows nm-applet in indicator panel
-gnome-extra/polkit-gnome		# Patched to have polkit-gnome-authentication-agent-1 xdg-autostart on Unity login
 mail-client/thunderbird			# Add Unity menubar and desktop launcher with quicklist and translations
 mate-base/mate-panel			# Disable not working high dpi scaling and prevent menu-bar being hidden when Global Menus are enabled
 media-fonts/ubuntu-font-family		# Add Ubuntu medium font (e.g. used by unity-indicators/indicator-keyboard)
@@ -52,17 +60,14 @@ media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu qui
 net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 net-irc/quassel				# Fix notification icon not appearing in Unity
 net-libs/libsoup			# Portage tree version forces '--without-gnome' and has removed net-libs/libsoup-gnome which provided '--with-gnome'
-sys-apps/accountsservice		# Requires patching for SetInputSources as needed by unity-indicators/indicator-keyboard and u-c-c text entry settings
 sys-auth/polkit-pkla-compat		# Fix localstatedir path (/var/lib)
 www-client/chromium			# Required to support Unity Launcher icon effects (no duplicate icons, quicklist menu, progress bar, window title bar fixes etc.)
 www-client/firefox			# Add Unity menubar and desktop launcher with quicklist and translations
-x11-libs/gtk+				# Needed for global appmenu
 
 * Optional ebuild hooks managed via unity-extra/ehooks USE-flags:
 app-office/libreoffice			# Add Human icon theme and make it the default
 					# Add custom icons (savemodified_{large,small}.png)
 					# https://github.com/LibreOffice/core/tree/3498ed37527b7af795f00dc6a55c11e65a313186/icon-themes/human
-
 app-text/evince				# Add traditional menu bar (https://bugzilla.gnome.org/show_bug.cgi?id=736419), add menu translations
 gnome-extra/nemo			# Remove 'Open as Root' context menu action
 media-gfx/eog				# Add traditional menu bar (https://bugzilla.gnome.org/749976, https://bugs.debian.org/793445), add menu translations
@@ -73,10 +78,10 @@ net-im/pidgin				# Add chat section into messaging menu (Available, Away, Busy, 
 net-im/telegram-desktop			# Add ubuntu-mono-dark tray icons and disable tray counter
 x11-libs/vte:2.91			# Add the style context provider with FALLBACK priority
 					# NOTE: see x11-terms/gnome-terminal
-
 x11-misc/copyq				# Set ubuntu-mono-dark tray icon color
 x11-misc/zim				# Install Ubuntu theme (/usr/share/icons/ubuntu-mono-{dark,light})
 x11-terms/gnome-terminal		# Add style classes and CSS names to some of our widgets, use theme transparency, draw proper background under the scrollbar (https://bugzilla.gnome.org/show_bug.cgi?id=754796, LP #1493964)
+
 
 * By design, some indicators or their features will not appear until they meet certain criteria
 	- indicator-messages	# Won't appear until a messaging type application is run first (eg. empathy, evolution (via indicator-evolution), pidgin, webapp)

@@ -15,7 +15,9 @@
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 dev-libs/libindicator::gentoo
+
 gnome-base/gconf::gentoo
+>=gnome-base/gnome-3.40::gentoo
 gnome-base/gnome-control-center::gentoo
 gnome-base/gnome-core-apps::gentoo
 gnome-base/gnome-core-libs::gentoo
@@ -24,10 +26,14 @@ gnome-base/gnome-menus::gentoo
 gnome-base/gnome-panel::gentoo
 gnome-base/gnome-session::gentoo
 gnome-base/gnome-settings-daemon::gentoo
+>=gnome-base/gnome-shell-3.40::gentoo
 gnome-base/gsettings-desktop-schemas::gentoo
 gnome-base/nautilus::gentoo
+>=gnome-extra/gnome-shell-extensions-3.40::gentoo
 gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
+>=x11-wm/mutter-3.40::gentoo
+
 sys-apps/accountsservice::gentoo
 x11-libs/gtk+:2::gentoo
 x11-libs/gtk+:3::gentoo
