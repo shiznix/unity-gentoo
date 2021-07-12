@@ -3,8 +3,7 @@
 
 EAPI=6
 
-URELEASE="hirsute"
-
+URELEASE="hirsute-updates"
 inherit gnome.org gnome2-utils meson readme.gentoo-r1 ubuntu-versionator virtualx xdg
 
 DESCRIPTION="Default file manager for the GNOME desktop patched for the Unity desktop"

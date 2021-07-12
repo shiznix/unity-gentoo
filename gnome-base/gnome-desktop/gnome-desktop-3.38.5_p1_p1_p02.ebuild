@@ -3,10 +3,10 @@
 
 EAPI=6
 
-URELEASE="hirsute"
+URELEASE="hirsute-updates"
 inherit gnome2 meson ubuntu-versionator virtualx xdg
 
-#UVER_SUFFIX="~${UVER_RELEASE}.${PVR_MICRO}"
+UVER_SUFFIX="~${UVER_RELEASE}.${PVR_MICRO}"
 MY_PN="${PN}3"
 MY_P="${MY_PN}_${PV}"
 
