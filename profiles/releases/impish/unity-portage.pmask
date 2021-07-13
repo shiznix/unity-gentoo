@@ -9,7 +9,7 @@
 >=media-sound/rhythmbox-3.4.5
 >=media-video/totem-3.39
 >=net-im/empathy-3.12.15
->=www-client/firefox-90
+>=www-client/firefox-91
 >=x11-libs/vte-0.64.3
 >=x11-terms/gnome-terminal-3.41
 
