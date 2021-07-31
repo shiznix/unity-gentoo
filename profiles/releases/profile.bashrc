@@ -91,7 +91,8 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 			x \
 			log="${T}/ehook.log" \
 			color_norm=$(tput sgr0) \
-			color_bold=$(tput bold)
+			color_bold=$(tput bold) \
+			color_red=$(tput setaf 1)
 
 		## Append bug information to 'die' command.
 		local \
@@ -106,7 +107,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		[[ -s ${log} ]] \
 			&& die "ebuild_hook: function name collision"
 
-		echo "${color_bold}>>> Loading unity-gentoo ebuild hooks${color_norm} from ${EHOOK_SOURCE[0]%/*} ..."
+		echo "${color_red}${color_bold}>>> Loading unity-gentoo ebuild hooks${color_norm} from ${EHOOK_SOURCE[0]%/*} ..."
 		for x in "${EHOOK_SOURCE[@]}"; do
 
 		## Process current phase ebuild hook.
@@ -125,19 +126,8 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 		local EHOOK_FILESDIR=${x%/*}/files
 
-		## Check for eapply and eautoreconf.
+		## Check for eautoreconf.
 		if [[ ${EBUILD_PHASE} == prepare ]]; then
-
-		if declare -f ebuild_hook | grep -q "eapply"; then
-			if [[ ${EAPI} -lt 6 ]]; then
-				x=${PORTAGE_BIN_PATH%/}/phase-helpers.sh
-				[[ -f ${x} ]] \
-					|| die "${x}: file not found"
-				source <(awk "/^(\t|)eapply\() {\$/ { p = 1 } p { print } /^(\t|)}\$/ { p = 0 }" ${x} 2>/dev/null)
-				declare -F eapply 1>/dev/null \
-					|| die "eapply: function not found"
-			fi
-		fi
 
 		if declare -f ebuild_hook | grep -q "eautoreconf"; then
 			if ! declare -F eautoreconf 1>/dev/null; then
@@ -164,7 +154,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 
 		fi
 
-		fi ## End of checking for eapply and eautoreconf.
+		fi ## End of checking for eautoreconf.
 
 		## Output information messages to fd 3 instead of stderr (issue #193).
 		local msgfunc_names="einfo einfon ewarn ebegin __eend __vecho"
@@ -193,7 +183,6 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 			source <(declare -f ${x} | sed "s/\(1>&\)3/\12/")
 		done
 		unset -f ebuild_hook
-		[[ ${EAPI} -lt 6 ]] && unset -f eapply
 		if [[ -n ${eautoreconf_names} ]]; then
 			eautoreconf_names="${eautoreconf_names/ elibtoolize tc-getLD tc-getPROG _tc-getPROG}"
 			for x in ${eautoreconf_names}; do
@@ -207,7 +196,7 @@ if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		fi ## End of processing current phase ebuild hook.
 
 		done
-		echo "${color_bold}>>> Done.${color_norm}"
+		echo "${color_red}${color_bold}>>> Done.${color_norm}"
 
 		## Sanitize 'die' command.
 		source <(declare -f die | sed "/ehook/d")
