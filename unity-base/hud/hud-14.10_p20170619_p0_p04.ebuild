@@ -58,12 +58,6 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	vala_src_prepare
 
-	# Fix "field ‘m_name’ has incomplete type ‘std::string’ #
-	#  {aka ‘std::__cxx11::basic_string<char>’}" compile failure #
-	sed -i \
-		-e '/#include <glib-object.h>/a #include <string>' \
-		common/HudDee.cpp
-
 	# Fix "except ..., e: SyntaxError: invalid syntax" #
 	sed -i \
 		-e '/except /{s/,/ as/}' \
@@ -101,6 +95,7 @@ src_install() {
 	pushd tools/hudkeywords
 		distutils-r1_src_install
 		python_fix_shebang "${ED}"
+		python_optimize
 	popd
 }
 

@@ -42,11 +42,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 "
 
-PATCHES=(
-	# As of vala 0.51.1, PtrArray is a subclass of GenericArray
-	"${FILESDIR}"/0001-use-genericarray-api-only.patch
-)
-
 src_prepare() {
 	# Fix pre-populator
 	sed -i \
