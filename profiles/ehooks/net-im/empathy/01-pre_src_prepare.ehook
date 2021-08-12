@@ -1,5 +1,0 @@
-ebuild_hook() {
-	sed -i \
-		-e "/appdatadir/{s/\/appdata/\/metainfo/}" \
-		data/Makefile.am
-}

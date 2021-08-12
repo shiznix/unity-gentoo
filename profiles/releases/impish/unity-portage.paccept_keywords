@@ -28,16 +28,12 @@ dev-libs/nss::gentoo
 www-client/firefox
 
 ## Other packages keyword unmasking ##
-app-backup/deja-dup
-dev-libs/libappindicator
 dev-util/gn
-dev-util/sysprof-capture
-sys-libs/db:5.1
 x11-misc/copyq
-x11-wm/metacity
 
 ## Overlay missing keyword unmasking ##
 app-accessibility/onboard **
+app-backup/deja-dup **
 dev-libs/dee **
 dev-libs/libcolumbus **
 dev-libs/libindicator **
@@ -72,6 +68,8 @@ mate-extra/mate-menu **
 mate-extra/mate-tweak **
 mate-extra/ubuntu-mate-settings **
 media-fonts/fonts-noto-cjk **
+media-sound/rhythmbox **
+net-im/empathy **
 net-libs/geonames **
 net-libs/telepathy-indicator **
 sys-apps/accountsservice **
@@ -135,9 +133,11 @@ x11-misc/notify-osd **
 x11-misc/plank **
 x11-misc/vala-panel-appmenu **
 x11-misc/vala-panel **
+x11-plugins/pidgin-libnotify **
 x11-themes/humanity-icon-theme **
 x11-themes/notify-osd-icons **
 x11-themes/ubuntu-sounds **
 x11-themes/ubuntu-themes **
 x11-themes/ubuntu-wallpapers **
 x11-themes/unity-asset-pool **
+x11-wm/metacity **

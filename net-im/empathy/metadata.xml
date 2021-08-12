@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>larry@gentoo.org</email>
+		<name>unity-gentoo overlay</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">shiznix</remote-id>
+		<bugs-to>https://github.com/shiznix/unity-gentoo/issues</bugs-to>
+	</upstream>
+	<use>
+		<flag name="chat">Enable Unity's Messaging menu support</flag>
+		<flag name="geoloc">Enable geolocation support through
+			<pkg>app-misc/geoclue</pkg></flag>
+		<flag name="gnome-online-accounts">Enable using
+			<pkg>net-libs/gnome-online-accounts</pkg> for authorization (e.g.
+			for Google Talk)</flag>
+		<flag name="map">Enable world map support through
+		<pkg>media-libs/libchamplain</pkg></flag>
+	</use>
+</pkgmetadata>

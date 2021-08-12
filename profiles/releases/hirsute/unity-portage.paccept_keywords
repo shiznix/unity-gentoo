@@ -28,10 +28,5 @@ dev-libs/nss::gentoo
 www-client/firefox
 
 ## Other packages keyword unmasking ##
-app-backup/deja-dup
-dev-libs/libappindicator
 dev-util/gn
-dev-util/sysprof-capture
-sys-libs/db:5.1
 x11-misc/copyq
-x11-wm/metacity
