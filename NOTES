@@ -18,6 +18,7 @@ emerge -1 `qdepends -CNQ x11-libs/gtk+ 2> /dev/null`
 
 
 * Reasons for patching/maintaining packages:
+app-backup/deja-dup			# Enable Unity desktop options, add ~x86 KEYWORD
 dev-libs/dee				# Portage tree versions can lag and is now being removed, maintained for patches and version control
 dev-libs/libindicator			# See "Using portage tree libindicate packages" above
 ------ GNOME ----------------------------
@@ -41,14 +42,16 @@ gnome-extra/activity-log-manager	# Adds unity-control-center integration
 gnome-extra/zeitgeist			# Removed from main tree, patched to perform VACUUM SQLite database on startups every 10 days and to pre-populate the log with some events so that the dash isn't empty on first run
 -----------------------------------------
 media-fonts/fonts-noto-cjk		# Repacked version with reduced size
+media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu quicklist, Magnatune and other Ubuntu UI improvements
+net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 sys-apps/accountsservice		# Requires patching for SetInputSources as needed by unity-indicators/indicator-keyboard and u-c-c text entry settings
 x11-libs/gtk+				# Needed for global appmenu
 x11-misc/lightdm			# Custom fixes for Xsession profile sourcing and multi-monitor display
+x11-wm/metacity				# Add ~x86 KEYWORD
 
 * Reasons for maintaining ebuild hooks:
 app-accessibility/at-spi2-core		# Start 'accessibility bus' by default (https://wiki.debian.org/accessibility-devel)
 app-admin/system-config-printer		# Fix Unity Control Center icon and About dialog icon
-app-backup/deja-dup			# Enable Unity desktop options
 dev-cpp/gtest				# Customised ebuild to install /usr/src/{gmock,gtest}/* source files lacking from main tree ebuild
 dev-libs/glib				# Critical underlying package to function of Unity, maintained for patches and version control
 dev-libs/libappindicator		# See "Using portage tree libindicate packages" item above
@@ -56,8 +59,6 @@ mail-client/thunderbird			# Add Unity menubar and desktop launcher with quicklis
 mate-base/mate-panel			# Disable not working high dpi scaling and prevent menu-bar being hidden when Global Menus are enabled
 media-fonts/ubuntu-font-family		# Add Ubuntu medium font (e.g. used by unity-indicators/indicator-keyboard)
 media-gfx/shotwell			# Patched for integration with Unity online accounts
-media-sound/rhythmbox			# Patched/compiled for indicator-sound support, menu quicklist, Magnatune and other Ubuntu UI improvements
-net-im/empathy				# Integrates with Unity online accounts, associated plugins and the messages indicator
 net-irc/quassel				# Fix notification icon not appearing in Unity
 net-libs/libsoup			# Portage tree version forces '--without-gnome' and has removed net-libs/libsoup-gnome which provided '--with-gnome'
 sys-auth/polkit-pkla-compat		# Fix localstatedir path (/var/lib)
