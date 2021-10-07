@@ -7,7 +7,7 @@
 >=media-gfx/eog-41
 >=media-gfx/gnome-screenshot-41
 >=media-video/totem-3.39
->=www-client/firefox-93
+>=www-client/firefox-94
 >=x11-libs/vte-0.64.3
 >=x11-terms/gnome-terminal-3.41
 
