@@ -1,6 +1,6 @@
 ## These are packages maintained via ehooks that must be checked before bump ##
 >=app-text/evince-41
->=dev-libs/glib-2.69
+#>=dev-libs/glib-2.69
 >=gnome-extra/gnome-calendar-41
 >=gnome-extra/nemo-6
 >=mail-client/thunderbird-79
@@ -31,7 +31,7 @@ gnome-base/nautilus::gentoo
 >=gnome-extra/gnome-shell-extensions-3.40::gentoo
 gnome-extra/nm-applet::gentoo
 gnome-extra/polkit-gnome::gentoo
->=x11-wm/mutter-3.40::gentoo
+#>=x11-wm/mutter-3.40::gentoo
 
 media-sound/rhythmbox::gentoo
 net-im/empathy::gentoo

@@ -10,7 +10,7 @@ local_to_upstream_packnames() {
 	if [ -n "`echo "${packbasename}" | grep 'chromium-[0-9]'`" ]; then treepackname="${packname}"; packname="chromium-browser"
 	elif [ -n "`echo "${packbasename}" | grep 'fixesproto'`" ]; then treepackname="${packname}"; packname="x11proto-fixes"
 	elif [ -n "`echo "${packbasename}" | grep '^glib-[0-9]'`" ]; then treepackname="${packname}"; packname="glib2.0"
-	elif [ -n "`echo "${packbasename}" | grep 'gnome-desktop'`" ]; then treepackname="${packname}"; packname="gnome-desktop3"
+#	elif [ -n "`echo "${packbasename}" | grep 'gnome-desktop'`" ]; then treepackname="${packname}"; packname="gnome-desktop3"
 	elif [ -n "`echo "${packbasename}" | grep 'gobject-introspection-common'`" ]; then treepackname="${packname}"; packname="gobject-introspection"
 	elif [ -n "`echo "${packbasename}" | grep '^gtest'`" ]; then treepackname="${packname}"; packname="googletest"
 	elif [ -n "`echo "${packbasename}" | grep 'gtk+-2'`" ]; then treepackname="${packname}"; packname="gtk+2.0"
@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="hirsute hirsute-security hirsute-updates impish impish-security impish-updates"
+RELEASES="hirsute hirsute-security hirsute-updates jammy jammy-security jammy-updates"
 SOURCES="main universe"
 
 sources_download() {
@@ -238,6 +238,7 @@ uver() {
 	[[ "${URELEASE}" == *groovy* ]] && UVER_RELEASE="20.10"
 	[[ "${URELEASE}" == *hirsute* ]] && UVER_RELEASE="21.04"
 	[[ "${URELEASE}" == *impish* ]] && UVER_RELEASE="21.10"
+	[[ "${URELEASE}" == *jammy* ]] && UVER_RELEASE="22.04"
 	PVR=`echo "${packbasename}" | sed -e 's/.*-\([0-9]\)/\1/' -e 's:-r[0-9].*$::g'`
 	PVR="_${PVR#*_}"
 

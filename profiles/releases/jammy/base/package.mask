@@ -1,0 +1,7 @@
+# Mask all other releases #
+>unity-base/unity-build-env-22.05
+<unity-base/unity-build-env-22.04
+
+>unity-base/unity-meta-22.05
+<unity-base/unity-meta-22.04
+

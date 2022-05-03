@@ -10,7 +10,9 @@ app-editors/pluma
 app-text/atril
 dev-libs/libmateweather
 dev-python/distro
-gui-libs/gtk-layer-shell
+gui-libs/egl-gbm
+gui-libs/libhandy
+#gui-libs/gtk-layer-shell
 media-gfx/eom
 x11-misc/mate-notification-daemon
 x11-misc/mozo

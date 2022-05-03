@@ -27,8 +27,8 @@ EXPORT_FUNCTIONS pkg_setup pkg_postinst
 
 ## vala.eclass ##
 # Set base sane vala version for all packages requiring vala, override in ebuild if or when specific higher/lower versions are needed #
-export VALA_MIN_API_VERSION=${VALA_MIN_API_VERSION:=0.48}	# Needs to be >=${minimal_supported_minor_version} from vala.eclass
-export VALA_MAX_API_VERSION=${VALA_MAX_API_VERSION:=0.48}
+export VALA_MIN_API_VERSION=${VALA_MIN_API_VERSION:=0.50}	# Needs to be >=${minimal_supported_minor_version} from vala.eclass
+export VALA_MAX_API_VERSION=${VALA_MAX_API_VERSION:=0.50}
 export VALA_USE_DEPEND="vapigen"
 
 ## Ubuntu delete superceded release tarballs from their mirrors if the release is not Long Term Supported (LTS) ##
@@ -53,6 +53,7 @@ UURL="https://launchpad.net/ubuntu/+archive/primary/+files"
 [[ "${URELEASE}" == *groovy* ]] && UVER_RELEASE="20.10"
 [[ "${URELEASE}" == *hirsute* ]] && UVER_RELEASE="21.04"
 [[ "${URELEASE}" == *impish* ]] && UVER_RELEASE="21.10"
+[[ "${URELEASE}" == *jammy* ]] && UVER_RELEASE="22.04"
 
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02
