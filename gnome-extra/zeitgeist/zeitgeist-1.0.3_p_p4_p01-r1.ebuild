@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 URELEASE="hirsute"
-inherit autotools bash-completion-r1 python-r1 vala ubuntu-versionator xdg
+inherit autotools bash-completion-r1 python-r1 ubuntu-versionator xdg
 
 DESCRIPTION="Service to log activities and present to other apps"
 HOMEPAGE="https://launchpad.net/zeitgeist/"
@@ -36,11 +36,13 @@ RDEPEND="${PYTHON_DEPS}
 	telepathy? ( net-libs/telepathy-glib )
 "
 DEPEND="${RDEPEND}
-	$(vala_depend)
-	>=sys-devel/automake-1.15:1.15
+	dev-lang/vala:0.44
+	>=sys-devel/automake-1.15
 	>=sys-devel/gettext-0.19
 	virtual/pkgconfig
 "
+
+export VALAC=$(type -P valac-0.44)
 
 src_prepare() {
 	# Fix pre-populator
@@ -59,7 +61,6 @@ src_prepare() {
 	# XDG autostart only in Unity
 	echo "OnlyShowIn=Unity;" >> data/zeitgeist-datahub.desktop.in
 
-	vala_src_prepare
 	xdg_src_prepare
 	eautoreconf
 }

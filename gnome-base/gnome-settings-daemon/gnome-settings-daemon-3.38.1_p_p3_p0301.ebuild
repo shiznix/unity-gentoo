@@ -3,7 +3,7 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 URELEASE="hirsute-updates"
 inherit flag-o-matic gnome2 meson python-any-r1 systemd udev virtualx ubuntu-versionator

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python3_{8..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 URELEASE="jammy"
 inherit autotools eutils python-single-r1 ubuntu-versionator vala xdummy
