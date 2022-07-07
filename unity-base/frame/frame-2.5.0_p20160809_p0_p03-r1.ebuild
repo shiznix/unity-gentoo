@@ -23,7 +23,7 @@ DEPEND="app-text/asciidoc
 	>=sys-devel/gcc-4.6
 	sys-libs/mtdev
 	unity-base/evemu
-	x11-base/xorg-server[dmx]
+	x11-base/xorg-server
 	x11-libs/libXi
 	test? ( sys-apps/xorg-gtest )"
 

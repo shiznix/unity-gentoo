@@ -39,7 +39,7 @@ COMMONDEPEND="!!x11-wm/compiz
 	media-libs/glew:=
 	media-libs/libpng:0=
 	media-libs/mesa[gallium,llvm]
-	x11-base/xorg-server[dmx]
+	x11-base/xorg-server
 	>=x11-libs/cairo-1.0
 	x11-libs/gtk+:3
 	x11-libs/libnotify

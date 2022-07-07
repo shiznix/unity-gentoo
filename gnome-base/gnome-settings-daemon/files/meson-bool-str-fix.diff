@@ -1,0 +1,12 @@
+diff -urN gnome-settings-daemon-3.38.1/meson.build gnome-settings-daemon-3.38.1-patched/meson.build
+--- gnome-settings-daemon-3.38.1/meson.build	2022-05-08 14:58:45.711401779 +0930
++++ gnome-settings-daemon-3.38.1-patched/meson.build	2022-05-08 17:15:39.496394605 +0930
+@@ -83,7 +83,7 @@
+ 
+ # Workaround for meson's bug
+ # https://github.com/mesonbuild/meson/pull/1896
+-if get_option('b_ndebug') == true
++if get_option('b_ndebug') == 'true'
+   common_flags += ['-DG_DISABLE_ASSERT']
+ endif
+ 

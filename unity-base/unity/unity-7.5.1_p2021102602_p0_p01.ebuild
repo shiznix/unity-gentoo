@@ -69,7 +69,7 @@ DEPEND="${RDEPEND}
 	unity-base/overlay-scrollbar
 	unity-base/unity-control-center
 	unity-base/unity-settings-daemon
-	x11-base/xorg-server[dmx]
+	x11-base/xorg-server
 	>=x11-libs/cairo-1.13.1
 	x11-libs/libXfixes
 	x11-libs/startup-notification

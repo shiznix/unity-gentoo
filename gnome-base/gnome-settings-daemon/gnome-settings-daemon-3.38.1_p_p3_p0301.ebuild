@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python3_{8..10} )
 
@@ -106,6 +106,7 @@ DEPEND="${COMMON_DEPEND}
 src_prepare() {
 	ubuntu-versionator_src_prepare
 	eapply "${FILESDIR}/3.38.1-build-Make-colord-and-wacom-optional-and-controllabl.patch"
+	eapply "${FILESDIR}/meson-bool-str-fix.diff"
 	gnome2_src_prepare
 
 	use schemas && eapply "${FILESDIR}/${PN}-3.38-schemas.diff"

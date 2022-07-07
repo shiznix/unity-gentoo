@@ -10,6 +10,7 @@
 >=www-client/firefox-92
 >=x11-libs/vte-0.68
 >=x11-terms/gnome-terminal-3.44
+>=x11-wm/mutter-42.2
 
 ## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
 app-backup/deja-dup::gentoo
@@ -38,3 +39,5 @@ x11-plugins/pidgin-libnotify::gentoo
 x11-themes/notify-osd-icons::gentoo
 x11-themes/ubuntu-wallpapers::gentoo
 x11-wm/metacity::gentoo
+x11-wm/mutter::gentoo	# >=x11-wm/mutter-41 requires >=x11-libs/gtk+-3.24.34:3
+
