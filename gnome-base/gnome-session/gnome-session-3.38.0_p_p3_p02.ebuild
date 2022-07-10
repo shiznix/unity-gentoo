@@ -32,7 +32,7 @@ COMMON_DEPEND="
 	>=gnome-base/gnome-desktop-3.27.90:3
 	elibc_FreeBSD? ( dev-libs/libexecinfo )
 
-	media-libs/mesa[egl,gles2]
+	media-libs/mesa[gles2]
 
 	media-libs/libepoxy
 	x11-libs/libSM

@@ -105,9 +105,9 @@ BDEPEND="
 	)
 "
 
-PATCHES=(
-	"${FILESDIR}"/${PN}-42.0-Disable-anonymous-file-test.patch
-)
+#PATCHES=(
+#	"${FILESDIR}"/${PN}-42.0-Disable-anonymous-file-test.patch
+#)
 
 python_check_deps() {
 	if use test; then

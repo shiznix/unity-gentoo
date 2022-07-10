@@ -6,10 +6,10 @@ EAPI=6
 PYTHON_COMPAT=( python3_{8..10} )
 DISTUTILS_SINGLE_IMPL=1
 
-URELEASE="jammy"
+URELEASE="hirsute"
 inherit cmake-utils distutils-r1 eutils gnome2-utils pam systemd toolchain-funcs ubuntu-versionator xdummy
 
-UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
+UVER_PREFIX="+20.04.${PVR_MICRO}"
 GLEWMX="glew-1.13.0"
 
 DESCRIPTION="The Ubuntu Unity Desktop"
@@ -19,13 +19,13 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}-${UVER}.tar.xz
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+branding debug doc +hud +nemo pch +systray test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}"
 
-RDEPEND="app-i18n/ibus[gtk,gtk2]
+RDEPEND="app-i18n/ibus[gtk3]
 	>=sys-apps/systemd-232
 	sys-auth/polkit-pkla-compat
 	unity-base/gsettings-ubuntu-touch-schemas
@@ -61,7 +61,7 @@ DEPEND="${RDEPEND}
 	gnome-extra/polkit-gnome:0
 	media-libs/glew:=
 	media-libs/mesa
-	sys-apps/dbus[systemd,user-session,X]
+	sys-apps/dbus[systemd,X]
 	sys-auth/pambase
 	unity-base/bamf:=
 	unity-base/compiz:=
@@ -176,6 +176,9 @@ src_prepare() {
 	sed -i '/#include <core\/screen.h>/a #include <iostream>' unity-shared/CompizUtils.cpp
 	sed -i '/#include "GLibWrapper.h"/a #include <vector>' UnityCore/ScopeData.h
 	sed -i '/#include <NuxCore\/Property.h>/a #include <vector>' unity-shared/ThemeSettings.h
+
+	eapply "${FILESDIR}/keep-const.patch"
+	eapply "${FILESDIR}/use-proper-casting.patch"
 
 	cmake-utils_src_prepare
 }

@@ -1,0 +1,43 @@
+## These are packages maintained via ehooks that must be checked before bump ##
+>=app-text/evince-43
+#>=dev-libs/glib-2.69
+>=gnome-extra/gnome-calendar-43
+>=gnome-extra/nemo-6
+>=mail-client/thunderbird-92
+>=media-gfx/eog-43
+>=media-gfx/gnome-screenshot-43
+>=media-video/totem-43
+>=www-client/firefox-92
+#>=x11-libs/vte-0.68
+>=x11-terms/gnome-terminal-3.44
+>=x11-wm/mutter-42.2
+
+## These are packages maintained within the overlay that must not be emerged from the main portage tree ##
+app-backup/deja-dup::gentoo
+dev-libs/libindicator::gentoo
+gnome-base/gconf::gentoo
+gnome-base/gnome-control-center::gentoo
+#gnome-base/gnome-core-apps::gentoo
+gnome-base/gnome-core-libs::gentoo
+#gnome-base/gnome-desktop::gentoo
+gnome-base/gnome-menus::gentoo
+gnome-base/gnome-panel::gentoo
+gnome-base/gnome-session::gentoo
+gnome-base/gnome-settings-daemon::gentoo
+gnome-base/gsettings-desktop-schemas::gentoo
+gnome-base/nautilus::gentoo
+gnome-extra/nm-applet::gentoo
+gnome-extra/polkit-gnome::gentoo
+media-sound/rhythmbox::gentoo
+net-im/empathy::gentoo
+sys-apps/accountsservice::gentoo
+x11-libs/gtk+:2::gentoo
+x11-libs/gtk+:3::gentoo
+x11-misc/lightdm::gentoo
+x11-misc/notify-osd::gentoo
+x11-plugins/pidgin-libnotify::gentoo
+x11-themes/notify-osd-icons::gentoo
+x11-themes/ubuntu-wallpapers::gentoo
+x11-wm/metacity::gentoo
+x11-wm/mutter::gentoo	# >=x11-wm/mutter-41 requires >=x11-libs/gtk+-3.24.34:3
+
