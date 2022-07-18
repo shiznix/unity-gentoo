@@ -1,10 +1,10 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 MY_PV=${PV}
 
-URELEASE="hirsute"
+URELEASE="jammy"
 inherit qmake-utils ubuntu-versionator
 
 UVER="-${PVR_PL_MINOR}"

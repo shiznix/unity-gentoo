@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -19,7 +19,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz
 	${UURL}/vala-panel-appmenu_${VALA_PANEL_APPMENU_VER}.debian.tar.xz"
 
 LICENSE="LGPL-3"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+wnck +X"
 RESTRICT="mirror"

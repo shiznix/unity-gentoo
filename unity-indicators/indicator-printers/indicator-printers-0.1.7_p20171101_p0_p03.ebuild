@@ -1,10 +1,10 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
 
-URELEASE="hirsute"
+URELEASE="jammy"
 inherit autotools eutils gnome2 ubuntu-versionator
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"

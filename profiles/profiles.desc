@@ -2,11 +2,11 @@
 # Run app-portage/unsymlink-lib *before* switching the profile
 
 # == STABLE == #
-amd64	linux/amd64/17.0/hirsute	stable
-amd64	linux/amd64/17.1/hirsute	stable
-x86	linux/x86/17.0/hirsute		stable
+amd64	linux/amd64/17.0/jammy	stable
+amd64	linux/amd64/17.1/jammy	stable
+x86	linux/x86/17.0/jammy	stable
 
 # == DEVELOPING === #
-amd64	linux/amd64/17.0/jammy		dev
-amd64	linux/amd64/17.1/jammy		dev
-x86	linux/x86/17.0/jammy		dev
+amd64	linux/amd64/17.0/kinetic	dev
+amd64	linux/amd64/17.1/kinetic	dev
+x86	linux/x86/17.0/kinetic		dev

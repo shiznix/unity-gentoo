@@ -1,9 +1,9 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-URELEASE="hirsute"
+URELEASE="jammy"
 inherit autotools eutils ubuntu-versionator
 
 UVER_PREFIX="daily13.06.05+16.10.${PVR_MICRO}"

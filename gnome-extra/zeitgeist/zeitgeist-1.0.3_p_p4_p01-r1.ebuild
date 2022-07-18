@@ -1,10 +1,10 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 PYTHON_COMPAT=( python3_{8..10} )
 
-URELEASE="hirsute"
+URELEASE="jammy"
 inherit autotools bash-completion-r1 python-r1 ubuntu-versionator xdg
 
 DESCRIPTION="Service to log activities and present to other apps"

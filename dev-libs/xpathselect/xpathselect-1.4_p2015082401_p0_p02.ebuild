@@ -1,10 +1,10 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 GTESTVER="1.8.1"
 
-URELEASE="hirsute"
+URELEASE="jammy"
 inherit cmake-utils ubuntu-versionator
 
 UVER_PREFIX="+15.10.${PVR_MICRO}"

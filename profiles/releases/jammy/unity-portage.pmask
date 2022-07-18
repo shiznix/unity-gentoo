@@ -1,6 +1,7 @@
 ## These are packages maintained via ehooks that must be checked before bump ##
 >=app-text/evince-43
 #>=dev-libs/glib-2.69
+>=gnome-base/gnome-desktop-43
 >=gnome-extra/gnome-calendar-43
 >=gnome-extra/nemo-6
 >=mail-client/thunderbird-92
@@ -19,7 +20,6 @@ gnome-base/gconf::gentoo
 gnome-base/gnome-control-center::gentoo
 #gnome-base/gnome-core-apps::gentoo
 gnome-base/gnome-core-libs::gentoo
-#gnome-base/gnome-desktop::gentoo
 gnome-base/gnome-menus::gentoo
 gnome-base/gnome-panel::gentoo
 gnome-base/gnome-session::gentoo

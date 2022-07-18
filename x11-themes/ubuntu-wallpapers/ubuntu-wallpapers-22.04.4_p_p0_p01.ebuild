@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -26,7 +26,7 @@ for cn in ${CODE_NAME}; do
 done
 
 LICENSE="CC-BY-SA-3.0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0/${URELEASE}"
 IUSE="gnome ${CODE_NAME} +${URELEASE/-*}"
 RESTRICT="mirror"

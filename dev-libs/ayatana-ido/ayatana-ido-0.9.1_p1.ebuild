@@ -1,11 +1,11 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-#VALA_USE_DEPEND="vapigen"
-inherit autotools ubuntu-versionator vala
+VALA_USE_DEPEND="vapigen"
+inherit cmake-utils ubuntu-versionator vala
 
 UVER="-${PVR_MICRO}"
 
@@ -15,7 +15,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 RDEPEND="dev-libs/glib:2
@@ -26,15 +26,10 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	$(vala_depend)"
 
-src_prepare() {
-	ubuntu-versionator_src_prepare
-	vala_src_prepare
-	export VALA_API_GEN="$VAPIGEN"
-	eautoreconf
-}
 
-src_install() {
-	emake DESTDIR="${ED}" install
-	# Delete some files that are only useful on Ubuntu
-#	rm -rf "${ED}"{etc,usr/share}/apport
+src_configure() {
+	mycmakeargs+=( -DVALA_COMPILER=$(type -P valac-${VALA_MIN_API_VERSION})
+			-DVAPI_GEN=$(type -P vapigen-${VALA_MIN_API_VERSION})
+			-DCMAKE_INSTALL_DATADIR=/usr/share )
+	cmake-utils_src_configure
 }

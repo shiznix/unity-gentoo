@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -16,7 +16,7 @@ SRC_URI="${UURL}/${MY_P}.orig.tar.xz
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="cdr daap dbus ipod libnotify libsecret lirc mtp nsplugin +python test +udev upnp-av visualizer zeitgeist"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 REQUIRED_USE="
 	ipod? ( udev )
 	mtp? ( udev )

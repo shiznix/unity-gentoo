@@ -26,7 +26,6 @@ gnome-base/gconf			# Installs 'update-gconf-defaults' script used by compiz to i
 gnome-base/gnome			# Needed to lock correct Gnome version to Ubuntu release (portage Gnome versions sometimes lag or dropped prematurely)
 gnome-base/gnome-control-center		# Needed to lock correct Gnome version to Ubuntu release (portage Gnome versions sometimes lag or dropped prematurely)
 gnome-base/gnome-core-{libs,apps}	# Included to pull in sometimes higher/lower versions of x11-libs/gtk+:3 + Gnome (depending on main tree versions available)
-gnome-base/gnome-desktop		# Patched to sync user selected background to accountsservice as used by lightdm background screen  
 gnome-base/gnome-menus			# Needs some menu patches but mostly to set XDG_MENU_PREFIX when running in gnome fallback mode
 gnome-base/gnome-session		# Installs session files for launching Unity desktop
 gnome-base/gnome-settings-daemon	# unity-base/unity-settings-daemon relies on files created from patchset

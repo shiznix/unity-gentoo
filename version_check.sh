@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="hirsute hirsute-security hirsute-updates jammy jammy-security jammy-updates"
+RELEASES="jammy jammy-security jammy-updates kinetic kinetic-security kinetic-updates"
 SOURCES="main universe"
 
 sources_download() {

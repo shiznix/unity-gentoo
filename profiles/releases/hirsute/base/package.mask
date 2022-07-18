@@ -1,7 +1,0 @@
-# Mask all other releases #
->unity-base/unity-build-env-21.05
-<unity-base/unity-build-env-21.04
-
->unity-base/unity-meta-21.05
-<unity-base/unity-meta-21.04
-
