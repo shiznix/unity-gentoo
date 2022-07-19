@@ -34,6 +34,7 @@ COMMON_DEPEND="dev-libs/glib:2
 	audit? ( sys-process/audit )
 	introspection? ( >=dev-libs/gobject-introspection-1 )
 	qt5? (
+		dev-qt/qtchooser
 		dev-qt/qtcore:5
 		dev-qt/qtdbus:5
 		dev-qt/qtgui:5
