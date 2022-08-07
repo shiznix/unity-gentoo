@@ -2,12 +2,12 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python3_{8..10} )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="jammy"
-inherit cmake-utils distutils-r1 eutils gnome2-utils pam systemd toolchain-funcs ubuntu-versionator xdummy
+inherit cmake distutils-r1 eutils gnome2-utils pam systemd toolchain-funcs ubuntu-versionator xdummy
 
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 GLEWMX="glew-1.13.0"
@@ -24,6 +24,7 @@ IUSE="+branding debug doc +hud +nemo pch +systray test"
 RESTRICT="mirror"
 
 S="${WORKDIR}/${PN}"
+CMAKE_MAKEFILE_GENERATOR="emake"	# cmake.eclass forces ninja but suffers from lexing errors
 
 RDEPEND="app-i18n/ibus[gtk3]
 	>=sys-apps/systemd-232
@@ -95,12 +96,12 @@ src_prepare() {
 
 	# Fix build failure with >=media-libs/mesa-18.2.5 due to header conflicts with media-libs/glew (see https://github.com/shiznix/unity-gentoo/issues/205) #
 	pushd "${WORKDIR}/${GLEWMX}"
-		epatch -p1 "${FILESDIR}/glew-1.13.0-mesa-compat.patch"
+		eapply -p1 "${FILESDIR}/glew-1.13.0-mesa-compat.patch"
 	popd
 
 	# Taken from http://ppa.launchpad.net/timekiller/unity-systrayfix/ubuntu/pool/main/u/unity/ #
 	if use systray; then
-		epatch -p1 "${FILESDIR}/systray-fix_disco.diff"
+		eapply -p1 "${FILESDIR}/systray-fix_disco.diff"
 	fi
 
 	# Setup Unity side launcher default applications #
@@ -117,7 +118,7 @@ src_prepare() {
 	sed -e '/setup.py install/d' \
 			-i tests/CMakeLists.txt || die "Sed failed for tests/CMakeLists.txt"
 
-	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to 'append-cppflags -DNDEBUG' #
+	# Unset CMAKE_BUILD_TYPE env variable so that cmake.eclass doesn't try to 'append-cppflags -DNDEBUG' #
 	#       resulting in build failure with 'fatal error: unitycore_pch.hh: No such file or directory' #
 	export CMAKE_BUILD_TYPE=none
 
@@ -177,7 +178,7 @@ src_prepare() {
 	sed -i '/#include "GLibWrapper.h"/a #include <vector>' UnityCore/ScopeData.h
 	sed -i '/#include <NuxCore\/Property.h>/a #include <vector>' unity-shared/ThemeSettings.h
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -207,7 +208,7 @@ src_configure() {
 		-DCMAKE_INSTALL_SYSCONFDIR=/etc
 		-DCMAKE_INSTALL_LOCALSTATEDIR=/var)
 	CXXFLAGS+=" -I${WORKDIR}/${GLEWMX}/include"
-	cmake-utils_src_configure || die
+	cmake_src_configure || die
 }
 
 src_compile() {
@@ -217,20 +218,20 @@ src_compile() {
 		popd
 	fi
 
-	cmake-utils_src_compile || die
+	cmake_src_compile || die
 }
 
 src_test() {
-	pushd ${CMAKE_BUILD_DIR}
+	pushd ${BUILD_DIR}
 		local XDUMMY_COMMAND="make check-headless"
 		xdummymake
 	popd
 }
 
 src_install() {
-	pushd ${CMAKE_BUILD_DIR}
+	pushd ${BUILD_DIR}
 		addpredict /usr/share/glib-2.0/schemas/	# FIXME
-		emake DESTDIR="${D}" install
+		emake DESTDIR="${ED}" install
 	popd
 
 	if use debug; then
@@ -269,7 +270,7 @@ src_install() {
 		-i "${ED}/usr/${fixlib}/unity/compiz-profile-selector" || die
 
 	# Clean up pam file installation as used in lockscreen (LP# 1305440) #
-	rm -rf "${ED}etc/pam.d"
+	rm -rf "${ED}"/etc/pam.d || die
 	pamd_mimic system-local-login ${PN} auth account session
 
 	# Set base desktop user privileges #

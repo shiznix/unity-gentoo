@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils gnome2-utils ubuntu-versionator
+inherit cmake gnome2-utils ubuntu-versionator
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"
 
@@ -55,7 +55,7 @@ src_prepare() {
 		-e "/add_subdirectory(tests)/d" \
 		CMakeLists.txt
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -63,7 +63,7 @@ src_configure() {
 		-DCMAKE_INSTALL_FULL_LOCALEDIR=/usr/share/locale
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 pkg_preinst() {

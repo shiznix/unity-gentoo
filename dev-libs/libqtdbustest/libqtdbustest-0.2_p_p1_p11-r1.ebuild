@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils ubuntu-versionator
+inherit cmake ubuntu-versionator
 
 UVER_PREFIX="+bzr42+repack${PVR_PL_MAJOR}"
 UVER="-${PVR_PL_MINOR}"
@@ -37,6 +37,6 @@ src_prepare() {
 		-e "/find_package/{s/GMock/GTest/}" \
 		tests/CMakeLists.txt
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 	ubuntu-versionator_src_prepare
 }

@@ -4,7 +4,7 @@
 EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils ubuntu-versionator
+inherit cmake ubuntu-versionator
 
 UVER_PREFIX="+bzr49+repack${PVR_PL_MAJOR}"
 UVER="-${PVR_PL_MINOR}"
@@ -32,5 +32,5 @@ src_prepare() {
 
 	# Disable build of tests #
 	sed '/add_subdirectory(tests)/d' -i CMakeLists.txt || die
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }

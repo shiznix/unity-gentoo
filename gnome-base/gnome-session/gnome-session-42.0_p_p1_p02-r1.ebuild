@@ -150,16 +150,16 @@ src_install() {
 		sed -e 's:^Exec=gnome-session:Exec=gnome-session --session=gnome:g' \
 			-e 's:TryExec=gnome-session:TryExec=gnome-shell:g' \
 				-i "${ED}usr/share/xsessions/gnome-xorg.desktop"
-		rm "${ED}usr/share/xsessions/gnome.desktop"
+		rm "${ED}"/usr/share/xsessions/gnome.desktop
 	else
-		rm "${ED}usr/share/xsessions/gnome-xorg.desktop"
-		rm "${ED}usr/share/wayland-sessions/gnome.desktop"
+		rm "${ED}"/usr/share/xsessions/gnome-xorg.desktop
+		rm "${ED}"/usr/share/wayland-sessions/gnome.desktop
 	fi
 
 	# Remove Ubuntu only session files #
-	rm "${ED}"usr/share/wayland-sessions/ubuntu*.desktop
-	rm "${ED}"usr/share/xsessions/ubuntu*.desktop
-	rm "${ED}"usr/share/gnome-session/sessions/ubuntu.session
+	rm "${ED}"/usr/share/wayland-sessions/ubuntu*.desktop
+	rm "${ED}"/usr/share/xsessions/ubuntu*.desktop
+	rm "${ED}"/usr/share/gnome-session/sessions/ubuntu.session
 
 	mv "${ED%/}/usr/share/doc/${PN}" "${ED%/}/usr/share/doc/${PF}"
 	einstalldocs

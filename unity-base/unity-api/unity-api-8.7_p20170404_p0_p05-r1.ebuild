@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils ubuntu-versionator
+inherit cmake ubuntu-versionator
 
 UVER_PREFIX="+17.04.${PVR_MICRO}"
 
@@ -29,11 +29,11 @@ S="${WORKDIR}"
 export QT_SELECT=5
 
 src_prepare() {
-	epatch -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
+	eapply -p1 "${WORKDIR}/${MY_P}${UVER_PREFIX}-${UVER}.diff"
 
 	sed -e 's:set(LIB_INSTALL_PREFIX lib/${CMAKE_LIBRARY_ARCHITECTURE}):set(LIB_INSTALL_PREFIX ${CMAKE_INSTALL_LIBDIR}):g' \
-	-i ${S}/CMakeLists.txt || die
+		-i ${S}/CMakeLists.txt || die
 
-	epatch "${FILESDIR}/gcc-7.patch"
-	cmake-utils_src_prepare
+	eapply "${FILESDIR}/gcc-7.patch"
+	cmake_src_prepare
 }

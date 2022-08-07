@@ -41,5 +41,5 @@ src_prepare() {
 src_install() {
 	emake DESTDIR="${ED}" install
 	# Delete some files that are only useful on Ubuntu
-	rm -rf "${ED}"{etc,usr/share}/apport
+	rm -rf "${ED}"/{etc,usr/share}/apport
 }

@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils
+inherit cmake
 
 # Handle version strings here so as not to use 'ubuntu-versionator' eclass #
 MY_PV="${PV:0:5}"
@@ -36,5 +36,5 @@ src_prepare() {
 
 	use !doc && truncate -s0 doc/CMakeLists.txt
 	use !test && truncate -s0 tests/CMakeLists.txt
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }

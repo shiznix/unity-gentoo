@@ -1,12 +1,12 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python3_{8..10} )
 DISTUTILS_SINGLE_IMPL=1
 
 URELEASE="jammy"
-inherit cmake-utils distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
+inherit cmake distutils-r1 flag-o-matic gnome2-utils ubuntu-versionator vala
 
 UVER_PREFIX="+17.10.${PVR_MICRO}"
 
@@ -47,6 +47,7 @@ DEPEND=">=dev-cpp/gtest-1.8.1
 	test? ( dev-util/dbus-test-runner )"
 
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
+CMAKE_MAKEFILE_GENERATOR="emake"
 
 pkg_setup() {
 	ubuntu-versionator_pkg_setup
@@ -70,28 +71,34 @@ src_prepare() {
 	# disable build of tests
 	sed -i '/add_subdirectory(tests)/d' "${S}/CMakeLists.txt" || die
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
+	# cmake.eclass >=EAPI-7 forces -DBUILD_SHARED_LIBS=ON, explicitly keep it OFF so as not to break internal linking #
+	#  Build failure example:
+	#   Linking CXX executable hud-service
+	#   GMenuCollector.cpp:(.text+0x885): undefined reference to `qtgmenu::QtGMenuImporter::GetQMenu() const'
+	mycmakeargs+=( -DBUILD_SHARED_LIBS=OFF )
+
 	mycmakeargs+=( -DENABLE_TESTS="$(usex test)"
 			-DENABLE_DOCUMENTATION="$(usex doc)"
 			-DENABLE_BAMF=ON
 			-DVALA_COMPILER=$(type -P valac-${VALA_MIN_API_VERSION})
 			-DVAPI_GEN=$(type -P vapigen-${VALA_MIN_API_VERSION})
 			-DCMAKE_INSTALL_DATADIR=/usr/share )
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_compile() {
-	cmake-utils_src_compile
+	cmake_src_compile
 	pushd tools/hudkeywords
 		distutils-r1_src_compile
 	popd
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	pushd tools/hudkeywords
 		distutils-r1_src_install
 		python_fix_shebang "${ED}"

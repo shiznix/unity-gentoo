@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils ubuntu-versionator
+inherit cmake ubuntu-versionator
 
 UVER_PREFIX="+14.04.${PVR_MICRO}"
 
@@ -39,12 +39,12 @@ src_prepare() {
 	sed \
 		-e 's:lib/@CMAKE_LIBRARY_ARCHITECTURE@:lib@CMAKE_LIBRARY_ARCHITECTURE@@LIB_SUFFIX@:' \
 		-i libdee-qt.pc.in
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
 	mycmakeargs+=(-DWITHQT5=1
 		-DCMAKE_INSTALL_PREFIX=/usr
 		-DCMAKE_BUILD_TYPE=Release)
-	cmake-utils_src_configure
+	cmake_src_configure
 }

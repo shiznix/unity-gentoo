@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils gnome2-utils ubuntu-versionator xdg-utils
+inherit cmake gnome2-utils ubuntu-versionator xdg-utils
 
 UVER_PREFIX="+21.10.${PVR_MICRO}"
 
@@ -66,11 +66,11 @@ src_prepare() {
 		-e "/add_subdirectory (tests)/d" \
 		CMakeLists.txt
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	use help && domenu "${FILESDIR}/unity-yelp.desktop"
 }

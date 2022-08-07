@@ -41,15 +41,15 @@ src_install() {
 	doins etc/X11/Xsession.d/80mate-environment
 
 	# Delete some files that are only useful on Ubuntu #
-	rm -rf "${ED}etc/apport"
-	rm -rf "${ED}etc/X11/Xsession.d"
-	rm -rf "${ED}usr/share/ubiquity"
+	rm -rf "${ED}"/etc/apport
+	rm -rf "${ED}"/etc/X11/Xsession.d
+	rm -rf "${ED}"/usr/share/ubiquity
 
 	# Respect Gentoo MATE defaults and don't collide with mate-base/mate-session-manager #
-	rm -f "${ED}usr/share/mate/applications/defaults.list"
+	rm -f "${ED}"/usr/share/mate/applications/defaults.list
 
 	# Remove all autostart *.desktop files except those we need #
-	find "${ED}usr/share/mate/autostart/" -type f \
+	find "${ED}/usr/share/mate/autostart/" -type f \
 		! -name 'ubuntu-mate-settings-overlay.desktop' \
 		! -name 'mate-hud.desktop' \
 			-delete || die

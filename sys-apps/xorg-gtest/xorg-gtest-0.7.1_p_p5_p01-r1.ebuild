@@ -36,9 +36,9 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install
+	emake DESTDIR="${ED}" install
 
 	# Remove files that collide with dev-cpp/gtest #
-	rm "${ED}"usr/include/gtest/gtest-spi.h
-	rm "${ED}"usr/include/gtest/gtest.h
+	rm "${ED}"/usr/include/gtest/gtest-spi.h
+	rm "${ED}"/usr/include/gtest/gtest.h
 }

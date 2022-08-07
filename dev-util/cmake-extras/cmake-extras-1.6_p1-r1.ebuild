@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils ubuntu-versionator
+inherit cmake ubuntu-versionator
 
 UVER="-${PVR_MICRO}"
 
@@ -21,11 +21,11 @@ RESTRICT="mirror"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	if use examples; then
 		insinto /usr/share/doc/${PF}/

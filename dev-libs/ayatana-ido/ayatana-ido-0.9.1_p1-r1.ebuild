@@ -5,7 +5,7 @@ EAPI=7
 
 URELEASE="jammy"
 VALA_USE_DEPEND="vapigen"
-inherit cmake-utils ubuntu-versionator vala
+inherit cmake ubuntu-versionator vala
 
 UVER="-${PVR_MICRO}"
 
@@ -31,5 +31,5 @@ src_configure() {
 	mycmakeargs+=( -DVALA_COMPILER=$(type -P valac-${VALA_MIN_API_VERSION})
 			-DVAPI_GEN=$(type -P vapigen-${VALA_MIN_API_VERSION})
 			-DCMAKE_INSTALL_DATADIR=/usr/share )
-	cmake-utils_src_configure
+	cmake_src_configure
 }

@@ -206,11 +206,11 @@ ubuntu-versionator_src_prepare() {
 		done
 		[[ ${UBUNTU_PATCHES[@]} ]] && echo "${color_bold}>>> Processing Ubuntu patchset${color_norm} ..."
 	fi
-	# Many eclasses (cmake-utils,distutils-r1,qt5-build,xdg) apply their own 'default' command for EAPI=6 or 'epatch ${PATCHES[@]}' command for EAPI <6 so let them #
+	# Many eclasses (cmake,distutils-r1,qt5-build,xdg) apply their own 'default' command for EAPI>=6 or 'epatch ${PATCHES[@]}' command for EAPI <6 so let them #
 	#	'declare' checks to see if any of those functions are set/inherited and only apply 'default' if they are not
 	if [ "${EAPI}" -ge 6 ]; then
 		[[ ${UBUNTU_PATCHES[@]} ]] && eapply "${UBUNTU_PATCHES[@]}" && echo "${color_bold}>>> Done.${color_norm}"
-		[[ $(declare -Ff cmake-utils_src_prepare) ]] || \
+		[[ $(declare -Ff cmake_src_prepare) ]] || \
 		[[ $(declare -Ff distutils-r1_src_prepare) ]] || \
 		[[ $(declare -Ff qt5-build_src_prepare) ]] || \
 		[[ $(declare -Ff xdg_src_prepare) ]] || \

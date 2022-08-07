@@ -1,11 +1,11 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python3_{8..10} )
 
 URELEASE="jammy"
-inherit gnome2-utils cmake-utils eutils python-r1 ubuntu-versionator xdummy
+inherit gnome2-utils cmake eutils python-r1 ubuntu-versionator xdg-utils xdummy
 
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
 
@@ -77,24 +77,12 @@ RDEPEND="${COMMONDEPEND}
 src_prepare() {
 	ubuntu-versionator_src_prepare
 
-	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
-	#	(the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
-	# Workaround by changing into a re-defined "${S}" #
-#	mkdir "${WORKDIR}/${P}"
-#	mv "${WORKDIR}"/* "${WORKDIR}/${P}" &> /dev/null
-#	export S="${WORKDIR}/${P}"
-#	cd "${S}"
-
 	# Gentoo's www-client/chromium Window Class ID is "Chromium-browser-chromium" for CCSMs Composite plugin "Undirect" list #
 	#	www-client/google-chrome Window Class ID is "Google-chrome"
 	#	media-tv/kodi Window Class ID is "Kodi"
 	#  Fixes desktop freeze when returning from fullscreen video when using proprietary gfx drivers #
 	sed -e 's:!(class=chromium-browser):!(class=chromium-browser) \&amp; !(class=Chromium-browser-chromium) \&amp; !(class=Google-chrome) \&amp; !(class=Kodi):g' \
 		-i plugins/composite/composite.xml.in
-
-	# Set DESKTOP_SESSION so correct profile and it's plugins get loaded at Xsession start #
-#	sed -e 's:xubuntu:xunity:g' \
-#		-i debian/65compiz_profile-on-session || die
 
 	# Don't let compiz install /etc/compizconfig/config, violates sandbox and we install it from "${WORKDIR}/debian/compizconfig" anyway #
 	sed '/add_subdirectory (config)/d' \
@@ -104,7 +92,7 @@ src_prepare() {
 	sed "s:/lib/:/$(get_libdir)/:g" \
 		-i compizconfig/compizconfig-python/CMakeLists.txt || die
 
-	# Unset CMAKE_BUILD_TYPE env variable so that cmake-utils.eclass doesn't try to "append-cppflags -DNDEBUG" #
+	# Unset CMAKE_BUILD_TYPE env variable so that cmake.eclass doesn't try to "append-cppflags -DNDEBUG" #
 	#	resulting in compiz window placement not working #
 	export CMAKE_BUILD_TYPE=none
 
@@ -116,10 +104,7 @@ src_prepare() {
 	sed -e 's:cython3:cython:g' \
 		-i compizconfig/compizconfig-python/CMakeLists.txt || die
 
-	# Need to do a 'python_foreach_impl' run from python-r1 eclass to workaround corrupt generated python shebang for /usr/bin/ccsm #
-	#  Due to the way CMake invokes distutils setup.py, shebang will be inherited from the sandbox leading to runtime failure #
-	python_copy_sources
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -127,13 +112,14 @@ src_configure() {
 		mycmakeargs+=(-DCOMPIZ_BUILD_TESTING=ON) || \
 		mycmakeargs+=(-DCOMPIZ_BUILD_TESTING=OFF)
 	mycmakeargs+=(
+		-Wno-dev
 		-DCMAKE_INSTALL_PREFIX="/usr"
 		-DCOMPIZ_BUILD_WITH_RPATH=FALSE
 		-DCOMPIZ_PACKAGING_ENABLED=TRUE
 		-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF
 		-DCOMPIZ_DEFAULT_PLUGINS="ccp")
 	configuration() {
-		cmake-utils_src_configure
+		cmake_src_configure
 	}
 	python_foreach_impl run_in_build_dir configuration
 }
@@ -144,28 +130,28 @@ src_test() {
 	# The following tests FAILED: #
 	#       15 - GWDMockSettingsTest.TestMock (Failed) #
 
-	local XDUMMY_COMMAND="cmake-utils_src_test"
+	local XDUMMY_COMMAND="cmake_src_test"
 	xdummymake
 }
 
 src_compile() {
 	# Disable unitymtgrabhandles plugin #
-	sed -e "s:unitymtgrabhandles;::g" \
-		-i "${CMAKE_USE_DIR}"/debian/unity{,-lowgfx}.ini
+#	sed -e "s:unitymtgrabhandles;::g" \
+#		-i "${CMAKE_USE_DIR}"/debian/unity{,-lowgfx}.ini
 	sed -e "s:'unitymtgrabhandles',::g" \
 		-i "${CMAKE_USE_DIR}/debian/compiz-gnome.gsettings-override"
 
 	compilation() {
-		cmake-utils_src_compile VERBOSE=1
+		cmake_src_compile
 	}
 	python_foreach_impl run_in_build_dir compilation
 }
 
 src_install() {
 	installation() {
-		pushd ${CMAKE_BUILD_DIR}
+		pushd ${BUILD_DIR}
 			addpredict /usr/share/glib-2.0/schemas/
-			emake DESTDIR="${ED}" install
+			DESTDIR="${ED}" cmake_build install
 
 			# Window manager desktop file for GNOME #
 			insinto /usr/share/gnome/wm-properties/
@@ -189,22 +175,6 @@ src_install() {
 		dodoc AUTHORS NEWS README
 		doman debian/{ccsm,compiz,gtk-window-decorator}.1
 
-		# X11 startup script #
-#		exeinto /etc/X11/xinit/xinitrc.d/
-#		doexe debian/65compiz_profile-on-session
-
-## PROVIDED BY unity-base/unity ##
-		# Unity Compiz profile configuration file #
-#		insinto /etc/compizconfig
-#		newins debian/compizconfig config
-#		doins debian/unity.ini
-#		doins debian/unity-lowgfx.ini
-
-		# Compiz profile upgrade helper files for ensuring smooth upgrades from older configuration files #
-#		insinto /etc/compizconfig/upgrades/
-#		doins debian/profile_upgrades/*.upgrade
-##################################
-
 		insinto /usr/$(get_libdir)/compiz/migration/
 		doins postinst/convert-files/*.convert
 
@@ -221,13 +191,12 @@ src_install() {
 pkg_preinst() {
 	gnome2_gconf_savelist
 	gnome2_schemas_savelist
-	gnome2_icon_savelist
 }
 
 pkg_postinst() {
 	gnome2_gconf_install
 	gnome2_schemas_update
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {

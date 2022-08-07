@@ -233,8 +233,8 @@ multilib_src_install_all() {
 	einstalldocs
 
 	# dev-util/gtk-builder-convert split off into a separate package, #402905
-	rm "${ED}"usr/bin/gtk-builder-convert || die
-	rm "${ED}"usr/share/man/man1/gtk-builder-convert.* || die
+	rm "${ED}"/usr/bin/gtk-builder-convert || die
+	rm "${ED}"/usr/share/man/man1/gtk-builder-convert.* || die
 
 	readme.gentoo_create_doc
 }

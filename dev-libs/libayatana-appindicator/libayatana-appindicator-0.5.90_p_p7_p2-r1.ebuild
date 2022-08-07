@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils ubuntu-versionator vala
+inherit cmake ubuntu-versionator vala
 
 #UVER="-${PVR_MICRO}"
 
@@ -31,5 +31,5 @@ src_configure() {
 		-DVAPI_GEN=$(type -P vapigen-${VALA_MIN_API_VERSION})
 		-DENABLE_BINDINGS_MONO=OFF
 		-DCMAKE_INSTALL_DATADIR=/usr/share )
-	cmake-utils_src_configure
+	cmake_src_configure
 }

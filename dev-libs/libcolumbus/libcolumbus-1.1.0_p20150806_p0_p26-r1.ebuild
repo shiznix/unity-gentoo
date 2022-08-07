@@ -1,11 +1,11 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python3_{8..10} )
 
 URELEASE="jammy"
-inherit cmake-utils eutils python-r1 ubuntu-versionator
+inherit cmake eutils python-r1 ubuntu-versionator
 
 UVER_PREFIX="+15.10.${PVR_MICRO}"
 
@@ -33,11 +33,13 @@ src_prepare() {
 	rm -r "${S}"/debian/patches     # patches already applied
 	ubuntu-versionator_src_prepare
 
+	# Unset BUILD_DIR so python_copy_sources uses S source directory #
+	unset BUILD_DIR
 	python_copy_sources
 	preparation() {
 		python_fix_shebang .
 		cp -rfv python/pch/colpython_pch.hh "${BUILD_DIR}/python/colpython_pch.hh"
-		cmake-utils_src_prepare
+		cmake_src_prepare
 	}
 	python_foreach_impl run_in_build_dir preparation
 }
@@ -45,28 +47,28 @@ src_prepare() {
 src_configure() {
 	configuration() {
 		mycmakeargs+=(-DPYTHONDIR="$(python_get_sitedir)")
-		cmake-utils_src_configure
+		cmake_src_configure
 	}
 	python_foreach_impl run_in_build_dir configuration
 }
 
 src_compile() {
 	compilation() {
-		cmake-utils_src_compile
+		cmake_src_compile
 	}
 	python_foreach_impl run_in_build_dir compilation
 }
 
 src_test() {
 	testing() {
-		cmake-utils_src_test
+		cmake_src_test
 	}
 	python_foreach_impl run_in_build_dir testing
 }
 
 src_install() {
 	installation() {
-		cmake-utils_src_install
+		cmake_src_install
 	}
 	python_foreach_impl run_in_build_dir installation
 

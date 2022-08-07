@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils gnome2-utils ubuntu-versionator vala
+inherit cmake gnome2-utils ubuntu-versionator vala
 
 UVER_PREFIX="+18.10.${PVR_MICRO}"
 
@@ -59,7 +59,7 @@ src_prepare() {
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -67,11 +67,11 @@ src_configure() {
 		-DVALA_COMPILER=$VALAC
 		-DVAPI_GEN=$VAPIGEN
 		-DCMAKE_INSTALL_FULL_DATADIR=/usr/share)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	find "${ED}" -name "*.pkla" -exec chown root:polkitd {} \;
 }
 
