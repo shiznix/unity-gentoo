@@ -1,10 +1,10 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 URELEASE="jammy"
-inherit cmake-utils ubuntu-versionator
+inherit cmake ubuntu-versionator
 
 UVER="-${PV}${PVR_PL_MINOR}"
 
@@ -17,7 +17,5 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
-
-DEPEND="dev-util/cmake"
 
 S="${WORKDIR}/${PN}-r${PV}"

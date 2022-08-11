@@ -1,9 +1,9 @@
 # Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils java-utils-2
+inherit cmake java-utils-2
 
 DESCRIPTION="Global Menu for Java applications"
 HOMEPAGE="https://gitlab.com/vala-panel-project/vala-panel-appmenu/tree/master/subprojects/jayatana
@@ -37,11 +37,11 @@ src_configure() {
 		-DENABLE_JAYATANA=ON
 		-DSTANDALONE=OFF
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	rm -rf "${ED%/}"/usr/share/java || die
 	java-pkg_dojar "${BUILD_DIR}"/java/"${PN}".jar "${BUILD_DIR}"/java/"${PN}"ag.jar

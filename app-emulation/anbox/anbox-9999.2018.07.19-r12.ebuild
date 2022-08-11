@@ -1,16 +1,16 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python3_{8..10} )
 
-inherit cmake-utils git-r3 linux-info python-single-r1 systemd udev versionator
+inherit cmake git-r3 linux-info python-single-r1 systemd udev
 
 DESCRIPTION="Run Android applications on any GNU/Linux operating system"
 HOMEPAGE="https://anbox.io/"
 EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
-IMG_PATH="$(get_version_component_range 2)/$(get_version_component_range 3)/$(get_version_component_range 4)"
-SRC_URI="http://build.anbox.io/android-images/${IMG_PATH}/android_amd64.img
+IMG_PATH="$(ver_cut 2)/$(ver_cut 3)/$(ver_cut 4)"
+SRC_URI="https://build.anbox.io/android-images/${IMG_PATH}/android_amd64.img
 	playstore? ( http://dl.android-x86.org/houdini/7_y/houdini.sfs -> houdini_y.sfs
 			http://dl.android-x86.org/houdini/7_z/houdini.sfs -> houdini_z.sfs )"
 LICENSE="GPL-3"
@@ -53,19 +53,19 @@ RDEPEND="dev-util/android-tools
 	net-firewall/iptables
 	softrender? ( media-libs/swiftshader )"
 DEPEND="${RDEPEND}
-	>=app-emulation/lxc-3
+	>=app-containers/lxc-3
 	dev-cpp/gtest
-	dev-libs/boost:=[threads]
+	dev-libs/boost:=
 	dev-libs/glib:2
 	dev-libs/properties-cpp
 	dev-libs/protobuf
 	media-libs/glm
 	media-libs/libsdl2[wayland?,X?]
-	>=media-libs/mesa-19.3.5[egl,gles2]
+	>=media-libs/mesa-19.3.5[gles2]
 	media-libs/sdl2-image
 	sys-apps/dbus
 	sys-libs/libcap
-	sys-apps/systemd[nat]
+	sys-apps/systemd[iptables]
 	playstore? ( app-arch/lzip
 			app-arch/tar
 			app-arch/unzip
@@ -115,7 +115,7 @@ src_prepare() {
 		-i src/anbox/graphics/gl_renderer_server.cpp
 	! use test && \
 		truncate -s0 cmake/FindGMock.cmake tests/CMakeLists.txt
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -123,11 +123,11 @@ src_configure() {
 		-DENABLE_WAYLAND="$(usex wayland)"
 		-DENABLE_X11="$(usex X)"
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	# 'anbox-container-manager.service' is started as root #
 	insinto $(systemd_get_systemunitdir)
