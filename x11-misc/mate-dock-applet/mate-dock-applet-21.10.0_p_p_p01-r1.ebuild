@@ -19,7 +19,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-DEPEND=">=sys-devel/automake-1.15:1.15"
+DEPEND=">=sys-devel/automake-1.15"
 RDEPEND="
 	dev-python/python-xlib[${PYTHON_USEDEP}]
 	dev-python/pygobject:3[${PYTHON_USEDEP}]

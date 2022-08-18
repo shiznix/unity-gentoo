@@ -39,6 +39,7 @@ RDEPEND="
 	mate-extra/mate-netbook
 	mate-extra/ubuntu-mate-settings
 	unity-base/compiz
+	unity-indicators/ayatana-indicator-application
 	unity-indicators/indicator-application
 	unity-indicators/indicator-messages
 	unity-indicators/indicator-power
@@ -49,11 +50,11 @@ RDEPEND="
 	x11-libs/libnotify
 	x11-libs/topmenu-gtk[mate]
 	x11-wm/metacity
-	x11-misc/compton
 	x11-misc/mate-dock-applet
 	x11-misc/plank
 	x11-misc/vala-panel-appmenu[mate]
 	x11-misc/xcompmgr
+	x11-terms/tilda
 	${PYTHON_DEPS}"
 DEPEND="${RDEPEND}"
 
@@ -71,7 +72,7 @@ src_prepare() {
 		-e "s:/usr/lib/MULTIARCH:MULTIARCH:g" \
 		-e "s:'/usr/lib/' + self.multiarch + :self.multiarch + :g" \
 		-e "/self.multiarch = sysconfig.get_config_var/c\        self.multiarch = os.path.join('/','usr','libexec')" \
-		-e "s:self.multiarch + '/mate-panel/libappmenu-mate.so':'/usr/lib/mate-panel/libappmenu-mate.so':g" \
+		-e "s:self.multiarch + '/mate-panel/libappmenu-mate.so':'/usr/$(get_libdir)/mate-panel/libappmenu-mate.so':g" \
 			-i mate-tweak || die
 	distutils-r1_src_prepare
 }

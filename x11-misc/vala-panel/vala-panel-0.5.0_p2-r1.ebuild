@@ -24,45 +24,32 @@ SLOT="0"
 IUSE="+wnck +X"
 RESTRICT="mirror"
 
-RDEPEND=">=x11-libs/gtk+-3.12.0:3
+RDEPEND="gui-libs/gtk-layer-shell
+	>=x11-libs/gtk+-3.12.0:3
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	>=dev-libs/libpeas-1.2.0
 	X? ( x11-libs/libX11 )
 	wnck? ( >=x11-libs/libwnck-3.4.8:3 )"
 DEPEND="${RDEPEND}
+	dev-lang/vala:0.44
 	dev-util/cmake
 	dev-util/cmake-vala
 	dev-lang/vala
 	virtual/pkgconfig
-	sys-devel/gettext
-	$(vala_depend)"
+	sys-devel/gettext"
 
 GNOME2_ECLASS_GLIB_SCHEMAS="org.valapanel.gschema.xml"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-#	mkdir ${S}/cmake
-#	cp -rfv ${WORKDIR}/vala-panel-appmenu-${VALA_PANEL_APPMENU_VER}/cmake/*.cmake ${S}/cmake
 	vala_src_prepare
-#	cmake-utils_src_prepare
+	export VALAC=$(type -P valac-0.44)
 }
 
-#src_configure() {
-#	local mycmakeargs=(
-#		-DENABLE_WNCK=$(usex wnck)
-#		-DX11=$(usex X)
-#		-DGSETTINGS_COMPILE=OFF
-#		-DCMAKE_INSTALL_SYSCONFDIR=/etc
-#		-DVALA_EXECUTABLE="${VALAC}"
-#	)
-#	cmake-utils_src_configure
+#src_install () {
+#	meson_src_install
 #}
-
-src_install () {
-#	cmake-utils_src_install
-	meson_src_install
-}
 
 pkg_postinst() {
 	ubuntu-versionator_pkg_postinst
