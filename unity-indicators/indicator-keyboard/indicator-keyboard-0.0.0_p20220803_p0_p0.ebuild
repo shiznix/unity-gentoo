@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python3_{8..10} )
 
-URELEASE="jammy"
+URELEASE="kinetic"
 inherit autotools eutils flag-o-matic gnome2-utils python-r1 ubuntu-versionator vala
 
 UVER_PREFIX="+19.10.${PVR_MICRO}"
@@ -16,12 +16,13 @@ SRC_URI="${UURL}/${MY_P}${UVER_PREFIX}.orig.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+charmap +fcitx"
+IUSE="+charmap"
 RESTRICT="mirror"
 
 RDEPEND="gnome-base/gnome-desktop:3=
 	charmap? ( gnome-extra/gucharmap )"
 DEPEND="${RDEPEND}
+	app-i18n/fcitx
 	app-i18n/ibus[vala]
 	>=dev-libs/glib-2.37
 	dev-libs/libappindicator
@@ -35,15 +36,13 @@ DEPEND="${RDEPEND}
 	x11-libs/libxklavier
 	x11-libs/pango
 	x11-misc/lightdm
-	fcitx? ( >=app-i18n/fcitx-4.2.8.5 )
-	$(vala_depend)
-	${PYTHON_DEPS}"
+	${PYTHON_DEPS}
+	$(vala_depend)"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 
 src_prepare() {
 	ubuntu-versionator_src_prepare
-	eapply "${FILESDIR}/${PN}-optional-fcitx.patch"
 
 	! use charmap && sed -i \
 		-e "/Character Map/d" \
@@ -57,10 +56,10 @@ src_prepare() {
 	# 'python-copy-sources' will not work if S="${WORKDIR}" because it bails if 'cp' prints anything to stderr #
 	#       (the 'cp' command works but prints "cp: cannot copy a directory into itself" to stderr) #
 	# Workaround by changing into a re-defined "${S}" #
-	mkdir "${WORKDIR}/${P}"
-	mv "${WORKDIR}"/* "${WORKDIR}/${P}" &> /dev/null
-	export S="${WORKDIR}/${P}"
-	cd "${S}"
+#	mkdir "${WORKDIR}/${P}"
+#	mv "${WORKDIR}"/* "${WORKDIR}/${P}" &> /dev/null
+#	export S="${WORKDIR}/${P}"
+#	cd "${S}"
 
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
@@ -70,8 +69,7 @@ src_prepare() {
 src_configure() {
 	python_copy_sources
 	configuration() {
-		econf \
-			$(use_enable fcitx)
+		econf
 	}
 	python_foreach_impl run_in_build_dir configuration
 }

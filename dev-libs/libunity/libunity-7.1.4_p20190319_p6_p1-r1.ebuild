@@ -4,9 +4,6 @@
 EAPI=6
 PYTHON_COMPAT=( python3_{8..10} )
 
-VALA_MIN_API_VERSION=0.52
-VALA_MAX_API_VERSION=0.52
-
 MY_PV="${PV}"
 URELEASE="jammy"
 inherit autotools eutils python-r1 ubuntu-versionator vala
@@ -25,11 +22,11 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/dee-1.2.5:=
+DEPEND="dev-lang/vala:0.52
+	>=dev-libs/dee-1.2.5:=
 	dev-libs/libdbusmenu:=
 	x11-libs/gtk+:3
-	${PYTHON_DEPS}
-	$(vala_depend)"
+	${PYTHON_DEPS}"
 
 S="${WORKDIR}/${PN}-${MY_PV}${UVER_PREFIX}"
 

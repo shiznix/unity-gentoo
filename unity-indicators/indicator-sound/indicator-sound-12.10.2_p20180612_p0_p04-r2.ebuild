@@ -23,6 +23,7 @@ RDEPEND="sys-auth/polkit-pkla-compat
 	unity-base/gsettings-ubuntu-touch-schemas"
 DEPEND="${RDEPEND}
 	sys-apps/accountsservice
+	dev-lang/vala:0.52
 	dev-libs/libappindicator
 	dev-libs/libgee:0.8
 	dev-libs/libdbusmenu:=
@@ -34,9 +35,7 @@ DEPEND="${RDEPEND}
 	>=x11-libs/libnotify-0.7.6
 	test? ( >=dev-cpp/gtest-1.8.1
 		dev-libs/libqtdbusmock
-		dev-libs/libqtdbustest )
-
-	$(vala_depend)"
+		dev-libs/libqtdbustest )"
 
 S="${WORKDIR}"
 MAKEOPTS="${MAKEOPTS} -j1"
@@ -58,6 +57,7 @@ src_prepare() {
 		CMakeLists.txt
 
 	vala_src_prepare
+	export VALAC=$(type -P valac-0.52)
 	export VALA_API_GEN="$VAPIGEN"
 	cmake_src_prepare
 }
@@ -77,15 +77,13 @@ src_install() {
 
 pkg_preinst() {
 	gnome2_schemas_savelist
-	gnome2_icon_savelist
 }
 
 pkg_postinst() {
 	gnome2_schemas_update
-	gnome2_icon_cache_update
+	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {
 	gnome2_schemas_update
-	gnome2_icon_cache_update
 }

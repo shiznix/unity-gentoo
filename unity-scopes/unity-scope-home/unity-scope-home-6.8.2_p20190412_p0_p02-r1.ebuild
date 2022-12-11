@@ -18,7 +18,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 RESTRICT="mirror"
 
-DEPEND="dev-libs/dee:=
+DEPEND="dev-lang/vala:0.52
+	dev-libs/dee:=
 	dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libgee
@@ -26,8 +27,7 @@ DEPEND="dev-libs/dee:=
 	net-libs/libsoup
 	net-libs/liboauth
 	sys-apps/util-linux
-	unity-base/unity
-	$(vala_depend)"
+	unity-base/unity"
 
 S="${WORKDIR}"
 
@@ -35,6 +35,7 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 	epatch -p1 "${FILESDIR}/0002-productsearch.ubuntu.com-only-accepts-locale-string.patch"
 	vala_src_prepare
+	export VALAC=$(type -P valac-0.52)
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf
 }
