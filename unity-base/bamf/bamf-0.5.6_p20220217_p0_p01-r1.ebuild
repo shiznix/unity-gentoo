@@ -27,7 +27,7 @@ DEPEND="dev-libs/gobject-introspection
 	x11-libs/gtk+:2
 	x11-libs/gtk+:3
 	x11-libs/libwnck:1
-	x11-libs/libwnck:3
+	>=x11-libs/libwnck-0.43:3
 	x11-libs/libXfixes
 	$(python_gen_cond_dep '
 		dev-libs/libunity[${PYTHON_USEDEP}]

@@ -1,0 +1,13 @@
+diff -urN libwnck-43.0/libwnck/wnck-handle.c libwnck-43.0-patched/libwnck/wnck-handle.c
+--- libwnck-43.0/libwnck/wnck-handle.c	2022-09-16 23:15:59.000000000 +0930
++++ libwnck-43.0-patched/libwnck/wnck-handle.c	2022-12-03 20:01:06.180324605 +1030
+@@ -70,6 +70,9 @@
+   Display *xdisplay;
+   int i;
+ 
++  if (self->screens == NULL)
++    return;
++
+   xdisplay = _wnck_get_default_display ();
+ 
+   for (i = 0; i < ScreenCount (xdisplay); ++i)

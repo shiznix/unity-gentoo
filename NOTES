@@ -142,6 +142,9 @@ x11-terms/gnome-terminal		# Add style classes and CSS names to some of our widge
 	- Check ~/.xsession-errors and syslog
 	- gsettings get org.compiz.core:/org/compiz/profiles/unity/plugins/core/ active-plugins
 
+* Debugging top panel global menu and Alt+Tab app switcher
+	- /usr/libexec/bamf/bamfdaemon (unity-base/bamf) uses x11-libs/libwnck
+
 * Debugging top panel systray/indicator icons and menus
 	- In desktop user's xterm, issue the following command:
 		killall indicator-application-service; G_MESSAGES_DEBUG=all /usr/libexec/indicator-application/indicator-application-service
