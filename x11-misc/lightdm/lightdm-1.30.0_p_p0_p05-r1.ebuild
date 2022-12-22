@@ -4,7 +4,7 @@
 EAPI=6
 
 URELEASE="jammy"
-inherit autotools eutils pam readme.gentoo-r1 systemd user ubuntu-versionator vala
+inherit autotools eutils pam readme.gentoo-r1 systemd ubuntu-versionator vala
 
 DESCRIPTION="A lightweight display manager"
 HOMEPAGE="https://launchpad.net/lightdm"
@@ -21,7 +21,7 @@ for greeters in ${IUSE_LIGHTDM_GREETERS}; do
 done
 
 # add and enable 'unity' greeter by default
-IUSE+=" +lightdm_greeters_unity audit +introspection qt5 test"
+IUSE+=" +lightdm_greeters_unity audit +introspection non-root qt5 test"
 RESTRICT="mirror"
 
 COMMON_DEPEND="dev-libs/glib:2
@@ -40,6 +40,9 @@ COMMON_DEPEND="dev-libs/glib:2
 		dev-qt/qtgui:5
 		)"
 RDEPEND="${COMMON_DEPEND}
+	acct-group/lightdm
+	acct-group/video
+	acct-user/lightdm
 	sys-auth/pambase
 	x11-apps/xrandr
 	>=app-eselect/eselect-lightdm-0.2"
@@ -88,6 +91,17 @@ src_prepare() {
 }
 
 src_configure() {
+	# Set default values if global vars unset
+	local _greeter _session _user
+	_greeter=${LIGHTDM_GREETER:=unity-greeter}
+	_session=${LIGHTDM_SESSION:=unity}
+	_user="$(usex non-root "${LIGHTDM_USER}" root)"
+	# Let user know how lightdm is configured
+	einfo "Gentoo configuration"
+	einfo "Default greeter: ${_greeter}"
+	einfo "Default session: ${_session}"
+	einfo "Greeter user: ${_user}"
+
 	econf \
 		--localstatedir=/var \
 		--disable-static \
@@ -96,14 +110,10 @@ src_configure() {
 		$(use_enable introspection) \
 		$(use_enable qt5 liblightdm-qt5) \
 		$(use_enable test tests) \
+		--with-user-session=${_session} \
+		--with-greeter-session=${_greeter} \
+		--with-greeter-user=${_user} \
 		--with-html-dir="${EPREFIX}"/usr/share/gtk-doc/html/${PF}
-}
-
-pkg_preinst() {
-	enewgroup lightdm || die "problem adding 'lightdm' group"
-	enewgroup video
-	enewgroup vboxguest
-	enewuser lightdm -1 -1 /var/lib/lightdm "lightdm,video,vboxguest" || die "problem adding 'lightdm' user"
 }
 
 src_install() {
