@@ -1,0 +1,4 @@
+ebuild_hook() {
+	# Force ./configure to use Ayatana Indicators
+	sed -i "s/with_ayatana_indicators='no'/with_ayatana_indicators='yes'/g" configure
+}
