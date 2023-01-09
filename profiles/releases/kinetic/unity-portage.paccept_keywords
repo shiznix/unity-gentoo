@@ -6,6 +6,7 @@
 mate-base/*
 mate-extra/*
 app-arch/engrampa
+#app-crypt/gcr:4
 app-editors/pluma
 app-text/atril
 dev-libs/libmateweather

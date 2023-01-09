@@ -2,8 +2,12 @@
 >=app-text/evince-43
 #>=dev-libs/glib-2.69
 >=gnome-base/gnome-desktop-43
+>=gnome-base/gnome-shell-43
+>=gnome-extra/evolution-data-server-3.46	# Needs >=gnome-shell-43
+>=gnome-extra/gnome-shell-extensions-43
 >=gnome-extra/gnome-calendar-43
 >=gnome-extra/nemo-6
+>=mail-client/evolution-3.46			# Needs >=gnome-shell-43
 >=mail-client/thunderbird-92
 >=media-gfx/eog-43
 >=media-gfx/gnome-screenshot-43
