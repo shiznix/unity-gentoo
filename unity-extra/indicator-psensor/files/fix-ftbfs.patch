@@ -1,0 +1,20 @@
+Description: Fix FTBFS with gcc-11
+ Fix the indentation while keeping the logic same as before.
+
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+---
+
+Bug-Debian: https://bugs.debian.org/984298
+Forwarded: no
+
+--- psensor-1.1.5.orig/src/lib/pudisks2.c
++++ psensor-1.1.5/src/lib/pudisks2.c
+@@ -83,7 +83,7 @@ static void smart_update(struct psensor
+ 			PROVIDER_NAME,
+ 			data->path);
+ 
+-		data->last_smart_update = t;
++	data->last_smart_update = t;
+ }
+ 
+ void udisks2_psensor_list_update(struct psensor **sensors)

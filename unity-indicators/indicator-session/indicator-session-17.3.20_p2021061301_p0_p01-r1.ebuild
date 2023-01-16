@@ -4,7 +4,7 @@
 EAPI=7
 
 URELEASE="jammy"
-inherit cmake gnome2-utils ubuntu-versionator xdg-utils
+inherit cmake desktop gnome2-utils ubuntu-versionator xdg-utils
 
 UVER_PREFIX="+21.10.${PVR_MICRO}"
 
@@ -77,18 +77,18 @@ src_install() {
 
 pkg_preinst() {
 	gnome2_schemas_savelist
-	gnome2_icon_savelist
+#	gnome2_icon_savelist
 }
 
 pkg_postinst() {
 	gnome2_schemas_update
-	gnome2_icon_cache_update
+#	gnome2_icon_cache_update
 	xdg_desktop_database_update
 	ubuntu-versionator_pkg_postinst
 }
 
 pkg_postrm() {
 	gnome2_schemas_update
-	gnome2_icon_cache_update
+#	gnome2_icon_cache_update
 	xdg_desktop_database_update
 }
