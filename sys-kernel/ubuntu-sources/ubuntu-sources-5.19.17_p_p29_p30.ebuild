@@ -4,12 +4,12 @@
 EAPI=7
 ETYPE="sources"
 
-URELEASE="jammy-security"
+URELEASE="kinetic-security"
 inherit eutils mount-boot kernel-2 ubuntu-versionator
 
 MY_PN="linux"
 MY_PV="${PV}"
-BASE_PV="5.15.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
+BASE_PV="5.19.0"	# ${PV} is taken from VERSION,PATCHLEVEL,SUBLEVEL in Makefile
 KCONFIG_URELEASE="xenial/linux/4.4.0-210.242"
 UURL="mirror://unity/pool/main/l/${MY_PN}"
 UVER=-"${PVR_PL_MAJOR}.${PVR_PL_MINOR}"

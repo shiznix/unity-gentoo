@@ -32,7 +32,7 @@ www-client/firefox
 dev-util/gn
 gui-libs/libadwaita
 gui-libs/libhandy
-net-libs/libnma
+#net-libs/libnma
 net-wireless/gnome-bluetooth
 sys-power/upower
 x11-misc/copyq

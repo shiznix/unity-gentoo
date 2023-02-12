@@ -54,6 +54,7 @@ UURL="https://launchpad.net/ubuntu/+archive/primary/+files"
 [[ "${URELEASE}" == *hirsute* ]] && UVER_RELEASE="21.04"
 [[ "${URELEASE}" == *impish* ]] && UVER_RELEASE="21.10"
 [[ "${URELEASE}" == *jammy* ]] && UVER_RELEASE="22.04"
+[[ "${URELEASE}" == *kinetic* ]] && UVER_RELEASE="22.10"
 
 
 PV="${PV%%[a-z]_p*}"	# For package-3.6.0a_p0_p02

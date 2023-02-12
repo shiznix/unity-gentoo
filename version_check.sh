@@ -45,7 +45,7 @@ local_to_upstream_packnames() {
 	fi
 }
 
-RELEASES="jammy jammy-security jammy-updates kinetic kinetic-security kinetic-updates"
+RELEASES="jammy jammy-security jammy-updates kinetic kinetic-security kinetic-updates lunar lunar-security lunar-updates"
 SOURCES="main universe"
 
 sources_download() {
@@ -239,6 +239,7 @@ uver() {
 	[[ "${URELEASE}" == *hirsute* ]] && UVER_RELEASE="21.04"
 	[[ "${URELEASE}" == *impish* ]] && UVER_RELEASE="21.10"
 	[[ "${URELEASE}" == *jammy* ]] && UVER_RELEASE="22.04"
+	[[ "${URELEASE}" == *kinetic* ]] && UVER_RELEASE="22.10"
 	PVR=`echo "${packbasename}" | sed -e 's/.*-\([0-9]\)/\1/' -e 's:-r[0-9].*$::g'`
 	PVR="_${PVR#*_}"
 

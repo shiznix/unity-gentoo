@@ -3,7 +3,7 @@
 
 EAPI=7
 
-URELEASE="jammy-updates"
+URELEASE="jammy-security"
 inherit gnome.org gnome2-utils meson readme.gentoo-r1 ubuntu-versionator virtualx xdg
 
 DESCRIPTION="Default file manager for the GNOME desktop patched for the Unity desktop"

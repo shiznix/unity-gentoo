@@ -52,20 +52,20 @@ src_prepare() {
 	ubuntu-versionator_src_prepare
 
 	# Do not start gconfd when installing schemas, fix bug #238276, upstream #631983
-	epatch "${FILESDIR}/${PN}-2.24.0-no-gconfd.patch"
+	eapply "${FILESDIR}/${PN}-2.24.0-no-gconfd.patch"
 
 	# Do not crash in gconf_entry_set_value() when entry pointer is NULL, upstream #631985
-	epatch "${FILESDIR}/${PN}-2.28.0-entry-set-value-sigsegv.patch"
+	eapply "${FILESDIR}/${PN}-2.28.0-entry-set-value-sigsegv.patch"
 
 	# From 'master'
 	# mconvert: enable recursive scheme lookup and fix a crasher
-	epatch "${FILESDIR}/${PN}-3.2.6-mconvert-crasher.patch"
+	eapply "${FILESDIR}/${PN}-3.2.6-mconvert-crasher.patch"
 
 	# dbus: Don't spew to console when unable to connect to dbus daemon
-	epatch "${FILESDIR}/${PN}-3.2.6-spew-console-error.patch"
+	eapply "${FILESDIR}/${PN}-3.2.6-spew-console-error.patch"
 
 	# gsettings-data-convert: Warn (and fix) invalid schema paths
-	epatch "${FILESDIR}/${PN}-3.2.6-gsettings-data-convert-paths.patch"
+	eapply "${FILESDIR}/${PN}-3.2.6-gsettings-data-convert-paths.patch"
 
 	gnome2_src_prepare
 }
